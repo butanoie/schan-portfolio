@@ -29,11 +29,38 @@ See [docs/MODERNIZATION_PLAN.md](docs/MODERNIZATION_PLAN.md) for the complete mo
 
 ## Development
 
-> Development setup instructions will be added once Phase 1 is complete.
+### Prerequisites
+- Node.js 18+ LTS (v25.4.0 recommended)
+- npm 11+ (v11.7.0 recommended)
+
+### Setup
+
+1. Navigate to the v2 directory:
+   ```bash
+   cd v2
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+For detailed setup instructions, see [v2/README.md](v2/README.md).
 
 ## Accessibility
 
 This project is committed to WCAG 2.2 Level AA accessibility compliance. All components and pages are developed with accessibility as a core requirement, not an afterthought.
+
+## Security
+
+All sensitive information (API keys, tokens, credentials) must be stored in environment variables and never committed to source control. See [Security Requirements](docs/MODERNIZATION_PLAN.md#security-requirements) for details.
 
 ## License
 
@@ -41,8 +68,8 @@ This project is committed to WCAG 2.2 Level AA accessibility compliance. All com
 
 ## Project Timeline
 
-- **Phase 1:** Foundation & Setup (In Progress)
-- **Phase 2:** Data Migration
+- ✅ **Phase 1:** Foundation & Setup (Complete)
+- 🔄 **Phase 2:** Data Migration (Next)
 - **Phase 3:** Core Pages Development
 - **Phase 4:** Enhanced Features
 - **Phase 5:** Performance & Optimization

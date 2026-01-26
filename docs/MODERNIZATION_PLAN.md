@@ -21,112 +21,89 @@ This document outlines the plan to modernize portfolio.singchan.com from a 2013-
 
 ---
 
-## Phase 1: Foundation & Setup
+## Phase 1: Foundation & Setup ✅
 
 **Goal:** Establish modern development environment
 
 **Duration:** 1-2 weeks
 
+**Status:** ✅ COMPLETED (2026-01-25)
+
 ### Tasks
 
-- [ ] Initialize Next.js project with TypeScript
-  ```bash
-  npx create-next-app@latest portfolio-modern --typescript --app --tailwind
-  ```
-- [ ] Install and configure Material UI
-  - Install @mui/material, @emotion/react, @emotion/styled
-  - Set up MUI theme provider
-  - Create custom theme matching current design palette
-- [ ] Set up project structure
-  ```
-  /src
-    /app
-    /components
-    /types
-    /utils
-    /lib
-    /styles
-  ```
-- [ ] Configure development tools
-  - ESLint configuration with accessibility plugins
-    - eslint-plugin-jsx-a11y (accessibility rules for JSX)
-    - eslint-plugin-react (React best practices)
-    - @next/eslint-plugin-next (Next.js specific rules)
-    ```bash
-    npm install --save-dev eslint-plugin-jsx-a11y
-    ```
-    Example .eslintrc.json:
-    ```json
-    {
-      "extends": [
-        "next/core-web-vitals",
-        "plugin:jsx-a11y/recommended"
-      ],
-      "plugins": ["jsx-a11y"],
-      "rules": {
-        "jsx-a11y/alt-text": "error",
-        "jsx-a11y/anchor-has-content": "error",
-        "jsx-a11y/aria-props": "error",
-        "jsx-a11y/aria-role": "error",
-        "jsx-a11y/click-events-have-key-events": "error",
-        "jsx-a11y/heading-has-content": "error",
-        "jsx-a11y/no-noninteractive-element-interactions": "error"
-      }
-    }
-    ```
-  - Prettier for code formatting
-  - TypeScript strict mode (tsconfig.json with "strict": true)
-  - Git hooks (Husky) for pre-commit linting
-    ```bash
-    npm install --save-dev husky lint-staged
-    npx husky init
-    ```
-  - Install accessibility testing tools
-    - axe-core (automated accessibility testing)
-    - @axe-core/react (React integration)
-    ```bash
-    npm install --save-dev @axe-core/react axe-core
-    ```
-- [ ] Create basic layout components
-  - Header/Navigation component
-  - Footer component
-  - Main layout wrapper
-  - Responsive container components
-- [ ] Implement responsive design system
-  - Configure MUI breakpoints
-  - Create responsive utilities
-  - Test on multiple screen sizes
-- [ ] Set up npm scripts for quality checks
-  ```json
-  {
-    "scripts": {
-      "dev": "next dev",
-      "build": "next build",
-      "start": "next start",
-      "lint": "next lint",
-      "lint:fix": "next lint --fix",
-      "type-check": "tsc --noEmit",
-      "format": "prettier --write .",
-      "format:check": "prettier --check .",
-      "a11y": "eslint . --ext .js,.jsx,.ts,.tsx --config .eslintrc.json"
-    }
-  }
-  ```
+- [x] Initialize Next.js project with TypeScript
+  - Created Next.js 16.1.4 project with TypeScript, App Router, and Tailwind
+  - Project located in `/v2` directory
+  - Installed Node.js v25.4.0 and npm v11.7.0
+- [x] Install and configure Material UI
+  - Installed @mui/material v7.3.7, @emotion/react, @emotion/styled
+  - Created MUI theme provider component
+  - Configured custom theme with portfolio color palette (Sakura, Duck Egg, Sky Blue, Graphite)
+  - Integrated Google Fonts (Open Sans, Oswald, Gochi Hand)
+- [x] Set up project structure
+  - Created organized directory structure:
+    - `/v2/src/components` - React components
+    - `/v2/src/lib` - Libraries and utilities
+    - `/v2/src/types` - TypeScript type definitions
+    - `/v2/src/utils` - Utility functions
+    - `/v2/src/styles` - Style utilities
+- [x] Configure development tools
+  - ESLint 9 configured with Next.js defaults and accessibility rules
+  - eslint-plugin-jsx-a11y installed for accessibility linting
+  - Next.js already includes jsx-a11y plugin in core-web-vitals config
+  - Prettier 3.8 configured with formatting rules and .prettierignore
+  - TypeScript strict mode enabled (default in tsconfig.json)
+  - Git hooks configured with Husky 9 and lint-staged
+    - Pre-commit hook runs linting and formatting
+    - Hook located at `/.husky/pre-commit`
+  - Accessibility testing tools installed:
+    - @axe-core/react for React integration
+    - axe-core for automated accessibility testing
+- [x] Create basic layout components
+  - Header component with accessible navigation and active page indication
+  - Footer component with copyright and navigation links
+  - MainLayout wrapper with skip-to-content link
+  - ThemeProvider for MUI integration
+- [x] Implement responsive design system
+  - MUI responsive breakpoints configured in theme
+  - Theme integrated into root layout
+  - Components use MUI's responsive utilities
+- [x] Set up npm scripts for quality checks
+  - `npm run dev` - Start development server
+  - `npm run build` - Build for production
+  - `npm run start` - Start production server
+  - `npm run lint` - Run ESLint
+  - `npm run lint:fix` - Auto-fix ESLint errors
+  - `npm run type-check` - Run TypeScript type checking
+  - `npm run format` - Format code with Prettier
+  - `npm run format:check` - Check code formatting
+- [x] Security configuration
+  - Updated .gitignore with comprehensive environment variable exclusions
+  - Created .env.example template for documentation
+  - Added security requirements to modernization plan
 
 ### Deliverables
 
-- [ ] Working Next.js application running on localhost
-- [ ] MUI configured with custom theme
-- [ ] Basic routing structure in place
-- [ ] Development environment documented
+- [x] Working Next.js application running on localhost
+- [x] MUI configured with custom theme
+- [x] Basic routing structure in place
+- [x] Development environment documented (v2/README.md)
 
 ### Success Criteria
 
-- npm run dev launches successfully
-- Basic page renders with MUI components
-- TypeScript compilation has no errors
-- ESLint passes with no accessibility violations
-- All accessibility linters configured and running
+- ✅ npm run dev launches successfully on http://localhost:3000
+- ✅ Basic page renders with MUI components
+- ✅ TypeScript compilation has no errors
+- ✅ ESLint passes with no accessibility violations
+- ✅ All accessibility linters configured and running
+
+### Components Created
+
+- `v2/src/components/Header.tsx` - Navigation with ARIA support
+- `v2/src/components/Footer.tsx` - Site footer with semantic markup
+- `v2/src/components/MainLayout.tsx` - Main layout with skip link
+- `v2/src/components/ThemeProvider.tsx` - MUI theme provider
+- `v2/src/lib/theme.ts` - Custom theme configuration
 
 ---
 
@@ -184,6 +161,18 @@ This document outlines the plan to modernize portfolio.singchan.com from a 2013-
   - Configure next.config.js for images
   - Replace img tags with Next/Image component
   - Implement responsive image loading
+- [ ] Set up unit testing framework
+  - Install and configure Vitest (or Jest)
+  - Install @testing-library/react for component testing
+  - Configure test scripts in package.json
+  - Set up test file structure
+- [ ] Create unit tests for project data
+  - Test TypeScript interfaces and type guards
+  - Test data validation functions
+  - Test getProjects() utility function
+  - Test pagination and filtering logic
+  - Test data transformation utilities
+  - Aim for >80% code coverage on data layer
 
 ### Deliverables
 
@@ -191,12 +180,17 @@ This document outlines the plan to modernize portfolio.singchan.com from a 2013-
 - [ ] All project data in JSON/TS format
 - [ ] Image assets organized and optimized
 - [ ] Data fetching utilities created
+- [ ] Unit tests for all data layer functions
+- [ ] Test coverage report
 
 ### Success Criteria
 
 - All project data accessible via TypeScript functions
 - Images load properly with Next.js Image
 - Type checking catches data inconsistencies
+- All unit tests pass
+- Test coverage >80% for data layer
+- Data validation prevents invalid entries
 
 ---
 
@@ -601,6 +595,9 @@ This document outlines the plan to modernize portfolio.singchan.com from a 2013-
 | Prettier | Code formatting |
 | Husky | Git hooks |
 | TypeScript | Static type checking |
+| Vitest (or Jest) | Unit testing framework |
+| @testing-library/react | React component testing |
+| @testing-library/jest-dom | DOM matchers for testing |
 | axe-core | Automated accessibility testing |
 | @axe-core/react | React accessibility testing integration |
 
@@ -722,8 +719,8 @@ const theme = createTheme({
 
 | Phase | Duration | Status |
 |-------|----------|--------|
-| Phase 1: Foundation & Setup | 1-2 weeks | ⬜ Not Started |
-| Phase 2: Data Migration | 1-2 weeks | ⬜ Not Started |
+| Phase 1: Foundation & Setup | 1-2 weeks | ✅ Complete (2026-01-25) |
+| Phase 2: Data Migration | 1-2 weeks | 🔄 Next |
 | Phase 3: Core Pages Development | 3-4 weeks | ⬜ Not Started |
 | Phase 4: Enhanced Features | 2-3 weeks | ⬜ Not Started |
 | Phase 5: Performance & Optimization | 1-2 weeks | ⬜ Not Started |
@@ -732,15 +729,22 @@ const theme = createTheme({
 
 **Total Estimated Time:** 10-16 weeks
 
+**Time Spent:** Phase 1 completed in 1 session
+
 ---
 
 ## Next Steps
 
-1. Review and approve this plan
-2. Set up development environment
-3. Begin Phase 1: Foundation & Setup
-4. Schedule regular check-ins to review progress
-5. Adjust timeline based on actual progress
+1. ✅ ~~Review and approve this plan~~ - COMPLETE
+2. ✅ ~~Set up development environment~~ - COMPLETE
+3. ✅ ~~Begin Phase 1: Foundation & Setup~~ - COMPLETE
+4. 🔄 **Begin Phase 2: Data Migration**
+   - Analyze PHP data structure from v1
+   - Create TypeScript interfaces
+   - Set up unit testing framework
+   - Migrate project data to JSON/TypeScript
+5. Schedule regular check-ins to review progress
+6. Adjust timeline based on actual progress
 
 ---
 
@@ -838,6 +842,63 @@ This project **must** meet WCAG 2.2 Level AA standards. The following are key re
 
 ---
 
+## Security Requirements
+
+### Secrets Management
+
+**CRITICAL:** Secrets, tokens, API keys, and other sensitive information must **NEVER** be stored in source control.
+
+#### Requirements
+
+1. **Environment Variables**
+   - All sensitive data must be stored in environment variables
+   - Use `.env.local` for local development (automatically gitignored by Next.js)
+   - Configure environment variables in hosting platform (Vercel/Netlify) for production
+
+2. **Git Protection**
+   - Ensure `.env`, `.env.local`, `.env.production` are in `.gitignore`
+   - Never commit files containing:
+     - API keys
+     - Authentication tokens
+     - Database credentials
+     - Private keys
+     - OAuth secrets
+     - Third-party service credentials
+
+3. **Example `.gitignore` entries:**
+   ```
+   # Environment variables
+   .env
+   .env*.local
+   .env.development
+   .env.production
+
+   # Secrets and credentials
+   *.key
+   *.pem
+   secrets.json
+   credentials.json
+   ```
+
+4. **Documentation**
+   - Provide `.env.example` file with dummy values showing required variables
+   - Document all required environment variables in README
+   - Never include actual values in documentation
+
+5. **Code Review**
+   - Review all commits for accidentally committed secrets
+   - Use git hooks to scan for potential secrets before commit
+   - Consider tools like `git-secrets` or `truffleHog` for automated scanning
+
+#### If Secrets Are Accidentally Committed
+
+1. **Immediately rotate/revoke** the exposed credentials
+2. Remove from git history using `git filter-branch` or BFG Repo-Cleaner
+3. Force push the cleaned history (coordinate with team)
+4. Treat the secret as compromised even after removal
+
+---
+
 ## References
 
 - [Next.js Documentation](https://nextjs.org/docs)
@@ -852,9 +913,11 @@ This project **must** meet WCAG 2.2 Level AA standards. The following are key re
 
 ---
 
-**Document Version:** 1.1
+**Document Version:** 1.3
 **Last Updated:** 2026-01-25
 **Author:** Sing Chan (with Claude Code)
 **Changelog:**
+- v1.3: Marked Phase 1 as complete with detailed completion notes and components created
+- v1.2: Added unit testing requirements for Phase 2 (project data validation)
 - v1.1: Added WCAG 2.2 Level AA compliance requirements and accessibility linters
 - v1.0: Initial version
