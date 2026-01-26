@@ -35,7 +35,58 @@ This shows:
 - Actual code changes (git diff)
 - Recent commit messages for style reference (git log)
 
-### 2. Stage Files
+### 2. Verify Documentation Requirements
+
+**CRITICAL**: Before staging any code changes, verify that all code is properly documented:
+
+**For all code changes, ensure:**
+- All new functions have JSDoc/TSDoc comments explaining:
+  - Purpose of the function
+  - Parameters with types and descriptions
+  - Return value with type and description
+  - Any side effects or important behavior
+- All new classes have documentation explaining their purpose and responsibility
+- All new interfaces/types have comments explaining their purpose
+- Complex logic has inline comments explaining the "why"
+- Public APIs are fully documented
+
+**Documentation Examples:**
+
+TypeScript/JavaScript:
+```typescript
+/**
+ * Calculates the total price including tax and discounts.
+ *
+ * @param basePrice - The initial price before any modifications
+ * @param taxRate - The tax rate as a decimal (e.g., 0.08 for 8%)
+ * @param discountPercent - Optional discount percentage (0-100)
+ * @returns The final price after tax and discounts
+ */
+function calculateTotal(basePrice: number, taxRate: number, discountPercent?: number): number {
+  // Implementation
+}
+```
+
+React Components:
+```typescript
+/**
+ * A button component that displays a loading spinner while an async action is in progress.
+ *
+ * @param onClick - Async function to execute when clicked
+ * @param children - Button label text
+ * @param variant - Visual style variant (default: 'primary')
+ */
+export function AsyncButton({ onClick, children, variant = 'primary' }: AsyncButtonProps) {
+  // Implementation
+}
+```
+
+**If documentation is missing:**
+- Stop the commit process
+- Add the required documentation first
+- Then proceed with the commit
+
+### 3. Stage Files
 
 **If $ARGUMENTS is provided** (e.g., `/git-commit README.md src/`):
 ```bash
@@ -48,7 +99,7 @@ git add $ARGUMENTS
 - Example: `git add README.md docs/PLAN.md src/ .husky/`
 - Avoid `git add .` or `git add -A` unless explicitly requested
 
-### 3. Create Commit Message
+### 4. Create Commit Message
 
 Based on the diff and changes, create a commit message following this format:
 
@@ -78,7 +129,7 @@ EOF
 )"
 ```
 
-### 4. Verify Success
+### 5. Verify Success
 
 After committing, verify:
 
@@ -114,8 +165,10 @@ This confirms:
 
 ## Notes
 
+- **All code MUST be documented before committing** - this is a strict requirement
 - Never use `--amend` unless explicitly requested by the user
 - Never use `--no-verify` to skip hooks
 - Never force push or use destructive git commands
 - Ask user for clarification if commit scope is unclear
 - Keep commits focused and atomic when possible
+- Documentation is not optional - treat missing documentation as a blocker

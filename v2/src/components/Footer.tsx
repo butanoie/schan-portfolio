@@ -2,6 +2,12 @@
 
 import { Box, Container, Typography, Link } from "@mui/material";
 
+/**
+ * Footer component displaying copyright information and footer navigation links.
+ * Includes links to Portfolio, Resume, and Colophon pages with accessible navigation.
+ *
+ * @returns A footer section with copyright notice and navigation links
+ */
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 

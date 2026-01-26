@@ -4,6 +4,14 @@ import { Box, Container } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 
+/**
+ * Main layout component that provides the overall page structure.
+ * Includes header, footer, main content area, and a skip-to-content link for keyboard navigation accessibility.
+ *
+ * @param props - The component props
+ * @param props.children - The page content to be rendered in the main content area
+ * @returns A full-height layout with header, main content, and footer sections
+ */
 export default function MainLayout({
   children,
 }: {

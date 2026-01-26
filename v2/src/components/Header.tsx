@@ -4,6 +4,12 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+/**
+ * Header component with site branding and main navigation.
+ * Displays the site name and navigation buttons with active page indication.
+ *
+ * @returns An app bar with site branding and accessible navigation menu
+ */
 export default function Header() {
   const pathname = usePathname();
 

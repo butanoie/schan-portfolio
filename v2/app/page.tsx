@@ -1,5 +1,11 @@
 import Image from "next/image";
 
+/**
+ * Home page component displaying the landing page content.
+ * Currently shows Next.js starter content with links to documentation and deployment.
+ *
+ * @returns The home page layout with introductory content and action buttons
+ */
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
