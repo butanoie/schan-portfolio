@@ -1,0 +1,6 @@
+You have reached the portfolio site of Sing Chan. On this site you will find
+selected projects from his 25+ years experience with software development.
+
+Sing is responsible for working with customers and stakeholders to determine 
+the product and feature roadmaps for Collabware's Collabspace solution 
+and manages the Product and Quality Assurance teams.

@@ -1,0 +1,116 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" itemscope itemtype="https://schema.org/Product"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Sing Chan's Body of Work</title>
+  <meta name="description" content="Sing Chan's Portfolio - On this site you will find select projects from his over 25 years experience with software development." />
+  <meta name="keywords" content="Sing Chan, ux, ue, ui, user experience, user interface, interface, interaction, design, developer, portfolio, projects, work" />
+  <meta name="author" content="humans.txt">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+
+  <link rel="stylesheet" href="css/gumby.css">
+  <link rel="stylesheet" href="css/swipebox.css">
+
+  <script src="js/libs/modernizr-2.6.2.min.js"></script>
+</head>
+
+<body>
+	<div id="outer" class="container">
+		<div class="row">
+			<div class="twelve columns centered image" id="logo">
+				<img src="img/pork_cuts.png" gumby-retina alt="Sing Chan's Body of Work" /><br />
+			</div>
+		</div>
+			
+		<section class="row">
+			<div class="twelve columns" id="content">
+				<h1>Sing Chan</h1>
+				<div class="deck">
+					<p>On this page you will find select projects that represent my knowledge and experience in the realms of web application development, design, usability and accessibility. I have over 25 years experience in software development where I work with customers, stakeholders, information architects, interaction designers, developers, and quality assurance to create usable and visually engaging solutions.</p>
+					<p>I was involved in these projects either as the lead User Experience Developer responsible for implementing custom UI functionality, controls and branding, or as the User Experience Architect, responsible for determining development approaches and assisting other team members with their tasks.</p>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	<div id="footer">
+		<div class="container">
+			<footer class="row">
+				<div class="seven columns">
+					<ul>
+						<li>
+							<div class="medium metro rounded primary btn icon-left entypo icon-picture">
+								<a href="/">Portfolio</a>
+							</div>
+						</li>
+						<li>
+							<div class="medium metro rounded secondary btn icon-left entypo icon-doc-text">
+								<a href="/resume.html">R&#233;sum&#233;</a>
+							</div>
+						</li>		
+						<li>
+							<div class="medium metro rounded secondary btn icon-left entypo icon-info-circled">
+								<a href="/colophon.html">Colophon</a>
+							</div>
+						</li>
+					</ul>
+					<div class="copyright">2013-2026 Sing Chan<br />All trademarks are the property of their respective owners.</div>
+				</div>
+				
+				<div id="msg"><div class="loadingMsg">Fetching projects...</div></div>
+				
+				<img src="img/buta.png" gumby-retina id="buta"/>
+			</footer>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  
+	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.9.1.min.js"><\/script>')</script>
+
+	<script src="js/libs/gumby.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script>
+  
+	<script>
+		var prjPage = 0,
+			prjSize = 4,
+			isLoading = true;
+
+		jQuery(function($) {
+			var $win = $(window);
+			$win.resize(setOuterMinHeight).scroll(getMoreProjects);
+			$(document).on("click", ".btnLoad", getProjects);
+			
+			$("html").addClass(typeof swfobject !== "undefined" && swfobject.getFlashPlayerVersion().major > 6 ? "flash" : "");
+
+			setOuterMinHeight();
+			getProjects();
+		});
+		
+		window._gaq = [["_setAccount","UA-672294-1"],["_setDomainName","singchan.com"],["_trackPageview"],["_trackPageLoadTime"]];
+		Modernizr.load({
+		  load: ("https:" == location.protocol ? "//ssl" : "//www") + ".google-analytics.com/ga.js"
+		});
+  </script>
+
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+  <![endif]-->
+
+  </body>
+</html>

@@ -1,0 +1,8 @@
+[15-Jan-2026 23:43:54 America/Boise] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ProjectVideo::__construct(), 2 passed in /home1/singchan/public_html/portfolio/get_projects/index.php on line 323 and exactly 4 expected in /home1/singchan/public_html/portfolio/get_projects/index.php:28
+Stack trace:
+#0 /home1/singchan/public_html/portfolio/get_projects/index.php(323): ProjectVideo->__construct('vimeo', '64123615')
+#1 {main}
+  thrown in /home1/singchan/public_html/portfolio/get_projects/index.php on line 28
+[24-Jan-2026 17:04:04 America/Boise] PHP Parse error:  syntax error, unexpected token "new", expecting ")" in /home1/singchan/public_html/portfolio/get_projects/index.php on line 157
+[24-Jan-2026 17:04:07 America/Boise] PHP Parse error:  syntax error, unexpected token "new", expecting ")" in /home1/singchan/public_html/portfolio/get_projects/index.php on line 157
+[24-Jan-2026 17:11:40 America/Boise] PHP Parse error:  syntax error, unexpected token "new", expecting ")" in /home1/singchan/public_html/portfolio/get_projects/index.php on line 157
