@@ -5,11 +5,11 @@
 This document outlines the plan to modernize portfolio.singchan.com from a 2013-era technology stack (Gumby Framework, jQuery, PHP) to a modern React-based application using Next.js, TypeScript, and Material UI.
 
 **Current Stack:**
-- Gumby Framework (2013 responsive framework)
+- Gumby Framework 2.0 (2013 responsive framework)
 - jQuery 1.9.1
 - PHP backend with JSON API
 - Static HTML pages
-- IE6-9 compatibility code
+- IE6-9 compatibility code (removed)
 
 **Target Stack:**
 - Next.js 14+ (React framework)
@@ -18,6 +18,84 @@ This document outlines the plan to modernize portfolio.singchan.com from a 2013-
 - Static Site Generation (SSG/ISR)
 - Modern deployment (Vercel/Netlify)
 - **WCAG 2.2 Level AA Accessibility Compliance**
+
+---
+
+## Gumby Framework Migration
+
+The V1 site uses Gumby Framework 2.0 for layout, styling, and basic UI components. This section documents what features are being replaced and with what modern equivalents.
+
+### Gumby Features Used in V1
+
+Based on analysis of the V1 codebase, Gumby is used for:
+
+1. **12-Column Grid System**
+   - Classes: `container`, `row`, `twelve columns`, `seven columns`, etc.
+   - Used throughout all pages for responsive layout
+   - Files: [v1/index.html](../v1/index.html), [v1/colophon.html](../v1/colophon.html), [v1/resume.html](../v1/resume.html)
+
+2. **Button Components**
+   - Classes: `btn`, `metro`, `rounded`, `primary`, `secondary`, `medium`
+   - Icon integration: `icon-left`, `entypo`
+   - Used in footer navigation
+   - Files: [v1/colophon.html:100-113](../v1/colophon.html#L100-L113)
+
+3. **Entypo Icon Font**
+   - Icons: `icon-picture`, `icon-doc-text`, `icon-info-circled`
+   - Used in navigation buttons
+   - Included in Gumby CSS bundle
+
+4. **Retina Image Support**
+   - Custom attribute: `gumby-retina`
+   - Automatically swaps to @2x images on high-DPI displays
+   - Used on logo, Buta character images
+   - Files: [v1/colophon.html:34](../v1/colophon.html#L34), [v1/colophon.html:120](../v1/colophon.html#L120)
+
+5. **Typography System**
+   - Base styles for headings (h1-h6)
+   - Font families: Open Sans, Oswald, Gochi Hand
+   - Defined in [v1/css/gumby.css](../v1/css/gumby.css)
+
+6. **CSS Reset & Base Styles**
+   - Normalize.css-style reset
+   - Box-sizing: border-box on all elements
+   - Base color and spacing values
+
+7. **Minimal JavaScript**
+   - `Gumby.ready()` initialization
+   - Old IE placeholder polyfill
+   - `Gumby.isOldie` browser detection
+   - Files: [v1/js/main.js:1-9](../v1/js/main.js#L1-L9), [v1/js/libs/gumby.js](../v1/js/libs/gumby.js)
+
+### Migration Mapping
+
+| Gumby Feature | Modern Replacement | Implementation Phase |
+|---------------|-------------------|---------------------|
+| Grid system (`container`, `row`, `columns`) | Material UI Grid v2 or CSS Grid | Phase 1 ✅ (MUI Grid available) |
+| Button styles (`btn`, `metro`, `rounded`) | Material UI Button component | Phase 3 |
+| Icon font (Entypo) | Material UI Icons (@mui/icons-material) | Phase 3 |
+| Retina images (`gumby-retina`) | Next.js Image component (automatic optimization) | Phase 2 |
+| Typography styles | Material UI Typography + custom theme | Phase 1 ✅ (Theme configured) |
+| CSS reset | Material UI CssBaseline | Phase 1 ✅ (Already applied) |
+| Old IE support (IE6-9) | **Removed** - Next.js supports modern browsers only | Phase 1 ✅ |
+| `Gumby.ready()` initialization | React useEffect hooks | Phase 3 |
+
+### Removed Features
+
+The following Gumby features are being **completely removed** in V2:
+
+- **IE6-9 Support**: Conditional comments, IE-specific stylesheets, oldIE detection
+- **jQuery Dependency**: Replaced with React state management and hooks
+- **PHP Backend**: Replaced with Next.js API routes or static JSON files
+- **Gumby JavaScript Plugins**: Most unnecessary in React (tabs, toggles, checkboxes handled by MUI)
+
+### Notes for Implementation
+
+1. **Grid System**: Material UI Grid v2 (already configured) provides similar responsive breakpoints to Gumby's 12-column system
+2. **Icons**: Material UI Icons package should be installed during Phase 3. Choose icons that match the visual style of Entypo icons used in V1
+3. **Retina Images**: Next.js Image component handles responsive images and high-DPI displays automatically - no need for separate @2x files
+4. **Typography**: V1 fonts (Open Sans, Oswald, Gochi Hand) already configured in V2 theme
+5. **Browser Support**: V2 will support modern browsers only (last 2 versions, no IE)
 
 ---
 
@@ -913,10 +991,11 @@ This project **must** meet WCAG 2.2 Level AA standards. The following are key re
 
 ---
 
-**Document Version:** 1.3
-**Last Updated:** 2026-01-25
+**Document Version:** 1.4
+**Last Updated:** 2026-01-26
 **Author:** Sing Chan (with Claude Code)
 **Changelog:**
+- v1.4: Added comprehensive Gumby Framework migration section with feature mapping and replacement strategy
 - v1.3: Marked Phase 1 as complete with detailed completion notes and components created
 - v1.2: Added unit testing requirements for Phase 2 (project data validation)
 - v1.1: Added WCAG 2.2 Level AA compliance requirements and accessibility linters
