@@ -27,6 +27,7 @@ All Phase 1 tasks from the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) h
 - **Styling:** Emotion + Tailwind CSS v4
 
 ### Development Tools
+- **Testing:** Vitest 4 + React Testing Library
 - **Linting:** ESLint 9 with Next.js and accessibility rules
 - **Formatting:** Prettier 3.8
 - **Git Hooks:** Husky 9 + lint-staged
@@ -60,9 +61,18 @@ All Phase 1 tasks from the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) h
 
 ## Available Scripts
 
+### Development
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
+
+### Testing
+- `npm test` - Run all tests once
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run test:ui` - Run tests with interactive UI
+
+### Code Quality
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint errors
 - `npm run type-check` - Run TypeScript type checking
@@ -78,6 +88,11 @@ v2/
 │   ├── page.tsx           # Homepage
 │   └── globals.css        # Global styles
 ├── src/
+│   ├── __tests__/        # Test files
+│   │   ├── components/   # Component tests
+│   │   ├── lib/          # Library tests
+│   │   ├── utils/        # Utility tests
+│   │   └── README.md     # Testing guide
 │   ├── components/        # React components
 │   │   ├── Header.tsx    # Navigation header
 │   │   ├── Footer.tsx    # Site footer
@@ -104,6 +119,49 @@ v2/
 - **Body:** Open Sans
 - **Headings:** Oswald
 - **Buta's Bubbles:** Gochi Hand
+
+## Testing
+
+This project uses **Vitest** and **React Testing Library** for comprehensive test coverage.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode (for development)
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+
+# Run tests with interactive UI
+npm run test:ui
+```
+
+### Test Coverage Goals
+
+Per the [modernization plan](../docs/MODERNIZATION_PLAN.md):
+- **80%+ coverage** for data layer utilities
+- **100% coverage** for critical business logic
+- All tests must pass before committing
+
+### Writing Tests
+
+See [src/__tests__/README.md](src/__tests__/README.md) for testing conventions and best practices.
+
+Example test structure:
+```typescript
+import { describe, it, expect } from 'vitest';
+import { formatDate } from '@/src/utils/formatDate';
+
+describe('formatDate', () => {
+  it('should format dates correctly', () => {
+    expect(formatDate('2024-01-15T12:00:00Z')).toBe('January 15, 2024');
+  });
+});
+```
 
 ## Accessibility
 
