@@ -2,78 +2,71 @@
 
 Modern portfolio website built with Next.js, TypeScript, and Material UI.
 
-## Project Status
+## Status
 
-🚧 **In Development** - Modernization in progress
+🚧 **Modernization In Progress** - Migrating from 2013 legacy stack to modern React
 
-This project is being modernized from a 2013-era technology stack (Gumby Framework, jQuery, PHP) to a modern React-based application.
+**Current Phase:** Phase 2 - Data Migration
+**Completion:** Phase 1 ✅ | Testing Infrastructure ✅
 
-## Technology Stack
+## Stack
 
-### Current (v2 - In Development)
-- **Framework:** Next.js 14+
-- **Language:** TypeScript 5+
-- **UI Library:** Material UI v5/v6
-- **Accessibility:** WCAG 2.2 Level AA Compliant
-- **Deployment:** Vercel/Netlify
+**v2 (Modern)**
+- Next.js 16+ | TypeScript 5+ | Material UI v7
+- Vitest + React Testing Library (80% coverage)
+- WCAG 2.2 Level AA Accessible
 
-### Legacy (v1)
-- Gumby Framework
-- jQuery 1.9.1
-- PHP backend
-- See `v1/` directory for legacy code
+**v1 (Legacy)**
+- Gumby Framework | jQuery | PHP
+- See `v1/` for legacy code
+
+## Quick Start
+
+```bash
+cd v2
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+## Commands
+
+```bash
+npm run dev           # Start dev server
+npm run build         # Production build
+npm test              # Run tests
+npm run test:coverage # Coverage report
+npm run lint          # ESLint check
+npm run type-check    # TypeScript check
+```
 
 ## Documentation
 
-See [docs/MODERNIZATION_PLAN.md](docs/MODERNIZATION_PLAN.md) for the complete modernization plan.
+- **[Modernization Plan](docs/MODERNIZATION_PLAN.md)** - Complete roadmap
+- **[Phase 2 Detailed Plan](docs/PHASE2_DETAILED_PLAN.md)** - Current phase guide
+- **[Testing Setup](docs/TESTING_SETUP.md)** - Testing infrastructure
+- **[v2 README](v2/README.md)** - Detailed v2 documentation
 
-## Development
+## Project Phases
 
-### Prerequisites
-- Node.js 18+ LTS (v25.4.0 recommended)
-- npm 11+ (v11.7.0 recommended)
+| Phase | Status | Description |
+|-------|--------|-------------|
+| 1. Foundation & Setup | ✅ Complete | Next.js, TypeScript, MUI, ESLint, Prettier, Git hooks |
+| 2. Data Migration | 🔄 In Progress | Testing setup ✅, TypeScript interfaces, data layer |
+| 3. Core Pages | ⬜ Planned | Homepage, Resume, Colophon/About |
+| 4. Enhanced Features | ⬜ Planned | Dark mode, animations, SEO, accessibility |
+| 5. Performance | ⬜ Planned | SSG, optimization, CDN |
+| 6. Deployment | ⬜ Planned | Vercel/Netlify, CI/CD, production launch |
+| 7. Post-Launch | ⬜ Planned | Monitoring, updates, enhancements |
 
-### Setup
+## Key Requirements
 
-1. Navigate to the v2 directory:
-   ```bash
-   cd v2
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-For detailed setup instructions, see [v2/README.md](v2/README.md).
-
-## Accessibility
-
-This project is committed to WCAG 2.2 Level AA accessibility compliance. All components and pages are developed with accessibility as a core requirement, not an afterthought.
-
-## Security
-
-All sensitive information (API keys, tokens, credentials) must be stored in environment variables and never committed to source control. See [Security Requirements](docs/MODERNIZATION_PLAN.md#security-requirements) for details.
+- **Accessibility:** WCAG 2.2 Level AA compliance (mandatory)
+- **Testing:** 80%+ coverage for data layer, 100% for critical paths
+- **Documentation:** All code must have JSDoc comments
+- **Security:** No secrets in source control (use .env.local)
 
 ## License
 
 © 2013-2026 Sing Chan. All rights reserved.
-
-## Project Timeline
-
-- ✅ **Phase 1:** Foundation & Setup (Complete)
-- 🔄 **Phase 2:** Data Migration (Next)
-- **Phase 3:** Core Pages Development
-- **Phase 4:** Enhanced Features
-- **Phase 5:** Performance & Optimization
-- **Phase 6:** Deployment & Migration
-- **Phase 7:** Post-Launch
-
-For detailed timeline and tasks, see the [Modernization Plan](docs/MODERNIZATION_PLAN.md).
