@@ -1,0 +1,20 @@
+/**
+ * Project data type definitions and validators.
+ *
+ * @module types
+ */
+
+export type {
+  Project,
+  ProjectImage,
+  ProjectVideo,
+  ProjectsResponse,
+  ProjectQueryOptions,
+} from './project';
+
+export {
+  isProject,
+  isProjectImage,
+  isProjectVideo,
+  validateProjects,
+} from './typeGuards';
