@@ -18,7 +18,7 @@ const theme = createTheme({
       contrastText: "#212121",
     },
     background: {
-      default: "#FFF0F5", // Sakura (Cherry Blossom pink)
+      default: "#FFFFFF",
       paper: "#FFFFFF",
     },
     text: {
@@ -51,13 +51,6 @@ const theme = createTheme({
     h6: {
       fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
       fontWeight: 500,
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Oswald:wght@500;600;700&family=Gochi+Hand&display=swap');
-      `,
     },
   },
 });

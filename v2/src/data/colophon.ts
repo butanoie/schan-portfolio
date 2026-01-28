@@ -24,6 +24,11 @@ export const colophonData: ColophonData = {
     currentRole: 'VP of Product',
     company: 'Collabware Systems',
     bio: 'A creative technologist with 25+ years of experience bridging design and development.',
+    deck: [
+      'Sing Chan is currently the VP of Product at Collabware Systems.',
+      "Sing is responsible for working with customers and stakeholders to determine the product and feature roadmaps for Collabware's Collabspace solution and manages the Product and Quality Assurance teams.",
+      "He is also responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings.",
+    ],
     responsibilities: [
       'Working with customers and stakeholders to determine product and feature roadmaps for Collabware\'s Collabspace solution',
       'Managing the Product and Quality Assurance teams',
@@ -244,9 +249,9 @@ export const colophonData: ColophonData = {
       'In early 2004, Yoshinoya introduced a pork-centric menu due to the rising cost of beef in Japan when U.S. beef imports were banned in December 2003 after a case of bovine spongiform encephalopathy was reported in the United States. I take it the marketing folk at Yoshinoya decided the best way to promote their new pork-based menu was to create a new mascot.',
       'When I went to Japan in March 2005, Yoshinoya was celebrating the 1-year anniversary of the introduction of their pork menu. Boo-chan was all over their in-store merchandising and there was a funny TV commercial of him dressed in a tuxedo giving a press conference. Boo-chan was an easy choice to become my new avatar.',
     ],
-    mainImage: '/images/buta/buta.png',
+    mainImage: '/images/buta/buta@2x.png',
     mainImageAlt: 'Buta, a pig mascot wearing a business suit',
-    versusImage: '/images/buta/boo-vs-bu.png',
+    versusImage: '/images/buta/boo-vs-bu@2x.png',
     versusImageAlt: 'Boo vs Bu - comparing the original Yoshinoya mascot with Buta',
   },
 };

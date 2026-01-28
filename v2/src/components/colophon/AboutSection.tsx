@@ -1,21 +1,7 @@
 "use client";
 
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import EmailIcon from "@mui/icons-material/Email";
-import LanguageIcon from "@mui/icons-material/Language";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import type { AboutContent, SocialLink } from "../../types/colophon";
+import { Box, Typography } from "@mui/material";
+import type { AboutContent } from "../../types/colophon";
 
 /**
  * Props for the AboutSection component.
@@ -26,172 +12,64 @@ export interface AboutSectionProps {
 }
 
 /**
- * Maps icon identifiers to MUI icon components.
- *
- * @param icon - The icon identifier string
- * @returns The corresponding MUI icon component
- */
-function getIconComponent(icon: SocialLink["icon"]) {
-  switch (icon) {
-    case "linkedin":
-      return <LinkedInIcon />;
-    case "github":
-      return <GitHubIcon />;
-    case "email":
-      return <EmailIcon />;
-    case "website":
-      return <LanguageIcon />;
-    default:
-      return <LanguageIcon />;
-  }
-}
-
-/**
- * AboutSection displays biographical information and current role details.
+ * AboutSection displays the colophon intro with V1-style deck paragraphs.
  *
  * Features:
- * - Name and current position with company
- * - Brief biography
- * - List of responsibilities
- * - Optional social/contact links
+ * - "Colophon" heading styled in Oswald font
+ * - Centered deck paragraphs describing the site creator
  *
  * @param props - Component props containing about content
  * @param props.content - Content data for the about section
- * @returns A section displaying bio and role information
+ * @returns A section displaying the colophon intro
  *
  * @example
  * <AboutSection content={colophonData.about} />
  */
 export default function AboutSection({ content }: AboutSectionProps) {
-  const { name, currentRole, company, bio, responsibilities, links } = content;
+  const { deck } = content;
 
   return (
     <Box
       component="section"
-      aria-labelledby="about-heading"
+      aria-labelledby="colophon-heading"
       sx={{ mb: 6 }}
     >
       <Typography
-        id="about-heading"
-        variant="h2"
-        component="h2"
+        id="colophon-heading"
+        variant="h1"
+        component="h1"
         sx={{
           fontFamily: '"Oswald", sans-serif',
           fontWeight: 700,
-          color: "#8B1538",
-          fontSize: { xs: "1.75rem", md: "2rem" },
+          color: "#2C2C2C",
+          fontSize: { xs: "2rem", md: "2.5rem" },
           mb: 3,
+          textAlign: "center",
         }}
       >
-        About
+        Colophon
       </Typography>
 
-      <Typography
-        variant="h3"
-        component="p"
+      {/* V1-style deck paragraphs */}
+      <Box
         sx={{
-          fontFamily: '"Oswald", sans-serif',
-          fontWeight: 600,
-          fontSize: { xs: "1.25rem", md: "1.5rem" },
-          mb: 1,
+          textAlign: "center",
         }}
       >
-        {name}
-      </Typography>
-
-      <Typography
-        variant="subtitle1"
-        component="p"
-        sx={{
-          color: "text.secondary",
-          mb: 2,
-          fontSize: "1.1rem",
-        }}
-      >
-        {currentRole} at {company}
-      </Typography>
-
-      <Typography
-        variant="body1"
-        sx={{
-          mb: 3,
-          lineHeight: 1.7,
-          maxWidth: "65ch",
-        }}
-      >
-        {bio}
-      </Typography>
-
-      {responsibilities.length > 0 && (
-        <Box sx={{ mb: 3 }}>
+        {deck.map((paragraph, index) => (
           <Typography
-            variant="h4"
-            component="h3"
+            key={index}
+            variant="body1"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
-              fontWeight: 600,
-              fontSize: "1.1rem",
-              mb: 1.5,
+              mb: 2,
+              lineHeight: 1.7,
+              fontSize: { xs: "1rem", md: "1.1rem" },
             }}
           >
-            Responsibilities
+            {paragraph}
           </Typography>
-          <List
-            dense
-            sx={{ pl: 0 }}
-            aria-label="List of current responsibilities"
-          >
-            {responsibilities.map((responsibility, index) => (
-              <ListItem key={index} sx={{ pl: 0, alignItems: "flex-start" }}>
-                <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}>
-                  <CheckCircleOutlineIcon
-                    sx={{ fontSize: 18, color: "secondary.dark" }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primary={responsibility}
-                  primaryTypographyProps={{
-                    variant: "body2",
-                    sx: { lineHeight: 1.6 },
-                  }}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      )}
-
-      {links && links.length > 0 && (
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            flexWrap: "wrap",
-          }}
-          aria-label="Social and contact links"
-        >
-          {links.map((link) => (
-            <Tooltip key={link.url} title={link.label}>
-              <IconButton
-                component="a"
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${link.label} (opens in new tab)`}
-                sx={{
-                  color: "text.primary",
-                  "&:hover": {
-                    color: "primary.dark",
-                    backgroundColor: "primary.light",
-                  },
-                }}
-              >
-                {getIconComponent(link.icon)}
-              </IconButton>
-            </Tooltip>
-          ))}
-        </Box>
-      )}
+        ))}
+      </Box>
     </Box>
   );
 }

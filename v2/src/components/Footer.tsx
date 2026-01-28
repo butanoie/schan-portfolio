@@ -4,8 +4,6 @@ import { Box, Container, Typography, Button } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import DescriptionIcon from "@mui/icons-material/Description";
 import InfoIcon from "@mui/icons-material/Info";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,24 +20,12 @@ interface NavLink {
   icon: React.ReactNode;
 }
 
-/**
- * Social link configuration for the footer.
- */
-interface SocialLink {
-  /** Display label for accessibility */
-  label: string;
-  /** External URL */
-  url: string;
-  /** Icon component to display */
-  icon: React.ReactNode;
-}
 
 /**
- * Footer component displaying navigation, social links, Buta mascot, and copyright.
+ * Footer component displaying navigation, Buta mascot, and copyright.
  * Styled to match the V1 portfolio footer with:
  * - Sage green background
  * - Navigation buttons (Portfolio, Résumé, Colophon)
- * - Social links (LinkedIn, GitHub)
  * - Buta mascot with thought bubble positioned on the right
  * - Copyright notice
  *
@@ -58,21 +44,6 @@ export default function Footer() {
     { label: "Colophon", href: "/colophon", icon: <InfoIcon /> },
   ];
 
-  /**
-   * Social media links for the footer.
-   */
-  const socialLinks: SocialLink[] = [
-    {
-      label: "LinkedIn",
-      url: "https://www.linkedin.com/in/singchan/",
-      icon: <LinkedInIcon />,
-    },
-    {
-      label: "GitHub",
-      url: "https://github.com/singchan",
-      icon: <GitHubIcon />,
-    },
-  ];
 
   /**
    * Check if a link is the current active page.
@@ -184,7 +155,7 @@ export default function Footer() {
             }}
           >
             <Image
-              src="/images/buta/buta.png"
+              src="/images/buta/buta@2x.png"
               alt="Buta, a pig mascot wearing a business suit"
               width={300}
               height={209}
@@ -237,47 +208,6 @@ export default function Footer() {
                       backgroundColor: isActive(link.href)
                         ? "#8B1538"
                         : "#5a7a6a",
-                    },
-                  }}
-                >
-                  {link.label}
-                </Button>
-              ))}
-            </Box>
-
-            {/* Social Links */}
-            <Box
-              component="nav"
-              aria-label="Social media links"
-              sx={{
-                display: "flex",
-                gap: 1,
-                mb: 1,
-              }}
-            >
-              {socialLinks.map((link) => (
-                <Button
-                  key={link.label}
-                  component="a"
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="contained"
-                  startIcon={link.icon}
-                  size="small"
-                  aria-label={`${link.label} (opens in new tab)`}
-                  sx={{
-                    backgroundColor: "#4a6a5a",
-                    color: "#ffffff",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontWeight: 600,
-                    textTransform: "none",
-                    borderRadius: 1,
-                    px: 1.5,
-                    py: 0.5,
-                    fontSize: "0.8125rem",
-                    "&:hover": {
-                      backgroundColor: "#3a5a4a",
                     },
                   }}
                 >

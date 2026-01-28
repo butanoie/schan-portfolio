@@ -43,7 +43,6 @@ vi.mock('next/navigation', () => ({
  *
  * The Footer includes:
  * - Navigation links (Portfolio, Résumé, Colophon)
- * - Social links (LinkedIn, GitHub)
  * - Buta mascot with thought bubble
  * - Copyright notice
  */
@@ -54,26 +53,6 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: /portfolio/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /résumé/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /colophon/i })).toBeInTheDocument();
-  });
-
-  it('should render social links with proper attributes', () => {
-    render(<Footer />);
-
-    const linkedInLink = screen.getByRole('link', {
-      name: /linkedin.*opens in new tab/i,
-    });
-    expect(linkedInLink).toHaveAttribute(
-      'href',
-      'https://www.linkedin.com/in/singchan/'
-    );
-    expect(linkedInLink).toHaveAttribute('target', '_blank');
-    expect(linkedInLink).toHaveAttribute('rel', 'noopener noreferrer');
-
-    const githubLink = screen.getByRole('link', {
-      name: /github.*opens in new tab/i,
-    });
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/singchan');
-    expect(githubLink).toHaveAttribute('target', '_blank');
   });
 
   it('should render copyright information', () => {
@@ -90,7 +69,7 @@ describe('Footer', () => {
 
     const butaImg = screen.getByAltText(/buta.*pig mascot/i);
     expect(butaImg).toBeInTheDocument();
-    expect(butaImg).toHaveAttribute('src', '/images/buta/buta.png');
+    expect(butaImg).toHaveAttribute('src', '/images/buta/buta@2x.png');
   });
 
   it('should render the thought bubble', () => {
@@ -110,15 +89,6 @@ describe('Footer', () => {
       name: /footer navigation/i,
     });
     expect(footerNav).toBeInTheDocument();
-  });
-
-  it('should have proper social links accessibility', () => {
-    render(<Footer />);
-
-    const socialNav = screen.getByRole('navigation', {
-      name: /social media links/i,
-    });
-    expect(socialNav).toBeInTheDocument();
   });
 
   it('should highlight the active page link', () => {

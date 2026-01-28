@@ -40,11 +40,16 @@ export default function ButaStory({ content }: ButaStoryProps) {
         variant="h2"
         component="h2"
         sx={{
-          fontFamily: '"Oswald", sans-serif',
-          fontWeight: 700,
-          color: "#8B1538",
-          fontSize: { xs: "1.75rem", md: "2rem" },
-          mb: 3,
+          // Visually hidden but accessible to screen readers
+          position: "absolute",
+          width: 1,
+          height: 1,
+          padding: 0,
+          margin: -1,
+          overflow: "hidden",
+          clip: "rect(0, 0, 0, 0)",
+          whiteSpace: "nowrap",
+          border: 0,
         }}
       >
         The Story of Buta
@@ -63,15 +68,15 @@ export default function ButaStory({ content }: ButaStoryProps) {
           sx={{
             p: 2,
             backgroundColor: "transparent",
-            maxWidth: 400,
+            maxWidth: 700,
             width: "100%",
           }}
         >
           <Image
             src={versusImage}
             alt={versusImageAlt}
-            width={400}
-            height={150}
+            width={700}
+            height={80}
             style={{
               width: "100%",
               height: "auto",
