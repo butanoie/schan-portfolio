@@ -33,6 +33,9 @@ export interface AboutContent {
   /** Brief biography paragraph */
   bio: string;
 
+  /** V1-style deck paragraphs for the intro section */
+  deck: string[];
+
   /** List of current responsibilities */
   responsibilities: string[];
 

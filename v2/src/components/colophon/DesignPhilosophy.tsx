@@ -59,7 +59,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: "#f5f9fd"
+        backgroundColor: "#f5f9fd",
       }}
     >
       <Box
@@ -96,7 +96,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
         >
           {color.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.primary">
           {color.description}
         </Typography>
       </CardContent>
@@ -119,9 +119,16 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+        backgroundColor: "#f5f9fd",
       }}
     >
-      <CardContent sx={{ flexGrow: 1 }}>
+      <CardContent
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -158,8 +165,8 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
 
         <Typography
           variant="body2"
-          color="text.secondary"
-          sx={{ mb: 2 }}
+          color="text.primary"
+          sx={{ mb: 2, flexGrow: 1 }}
         >
           {font.usage}
         </Typography>
@@ -170,6 +177,10 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             backgroundColor: "background.default",
             borderRadius: 1,
             textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 80,
           }}
           aria-label={`Sample of ${font.name} font`}
         >
@@ -229,6 +240,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
           color: "#8B1538",
           fontSize: { xs: "1.75rem", md: "2rem" },
           mb: 3,
+          textAlign: "center",
         }}
       >
         Design & Typography

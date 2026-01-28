@@ -80,7 +80,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
             </MuiLink>
           )}
         </Box>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.primary">
           {tech.description}
         </Typography>
       </CardContent>

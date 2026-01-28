@@ -1,96 +1,70 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import AboutSection from '../../../components/colophon/AboutSection';
-import type { AboutContent } from '../../../types/colophon';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import AboutSection from "../../../components/colophon/AboutSection";
+import type { AboutContent } from "../../../types/colophon";
 
 /**
  * Tests for the AboutSection component.
+ * Verifies the V1-style colophon intro with heading and deck paragraphs.
  */
-describe('AboutSection', () => {
+describe("AboutSection", () => {
   const mockContent: AboutContent = {
-    name: 'Test User',
-    currentRole: 'Software Engineer',
-    company: 'Test Company',
-    bio: 'A passionate developer.',
+    name: "Test User",
+    currentRole: "Software Engineer",
+    company: "Test Company",
+    bio: "A passionate developer.",
+    deck: [
+      "First paragraph of the deck.",
+      "Second paragraph with more details.",
+      "Third paragraph to conclude.",
+    ],
     responsibilities: [
-      'Building features',
-      'Code review',
-      'Documentation',
+      "Building features",
+      "Code review",
+      "Documentation",
     ],
     links: [
-      { label: 'LinkedIn', url: 'https://linkedin.com/in/test', icon: 'linkedin' },
-      { label: 'GitHub', url: 'https://github.com/test', icon: 'github' },
+      { label: "LinkedIn", url: "https://linkedin.com/in/test", icon: "linkedin" },
+      { label: "GitHub", url: "https://github.com/test", icon: "github" },
     ],
   };
 
-  it('should render the section heading', () => {
+  it("should render the Colophon heading", () => {
     render(<AboutSection content={mockContent} />);
 
-    expect(screen.getByRole('heading', { name: /about/i, level: 2 })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /colophon/i, level: 1 })
+    ).toBeInTheDocument();
   });
 
-  it('should render name and role', () => {
+  it("should render all deck paragraphs", () => {
     render(<AboutSection content={mockContent} />);
 
-    expect(screen.getByText('Test User')).toBeInTheDocument();
-    expect(screen.getByText(/Software Engineer at Test Company/)).toBeInTheDocument();
+    expect(screen.getByText("First paragraph of the deck.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Second paragraph with more details.")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Third paragraph to conclude.")).toBeInTheDocument();
   });
 
-  it('should render bio text', () => {
+  it("should have proper accessibility attributes", () => {
     render(<AboutSection content={mockContent} />);
 
-    expect(screen.getByText('A passionate developer.')).toBeInTheDocument();
-  });
-
-  it('should render responsibilities list', () => {
-    render(<AboutSection content={mockContent} />);
-
-    expect(screen.getByText('Building features')).toBeInTheDocument();
-    expect(screen.getByText('Code review')).toBeInTheDocument();
-    expect(screen.getByText('Documentation')).toBeInTheDocument();
-  });
-
-  it('should render social links with proper aria labels', () => {
-    render(<AboutSection content={mockContent} />);
-
-    const linkedInLink = screen.getByRole('link', { name: /linkedin.*opens in new tab/i });
-    expect(linkedInLink).toHaveAttribute('href', 'https://linkedin.com/in/test');
-    expect(linkedInLink).toHaveAttribute('target', '_blank');
-    expect(linkedInLink).toHaveAttribute('rel', 'noopener noreferrer');
-
-    const githubLink = screen.getByRole('link', { name: /github.*opens in new tab/i });
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/test');
-  });
-
-  it('should have proper accessibility attributes', () => {
-    render(<AboutSection content={mockContent} />);
-
-    const section = screen.getByRole('region', { name: /about/i });
+    const section = screen.getByRole("region", { name: /colophon/i });
     expect(section).toBeInTheDocument();
-
-    const responsibilitiesList = screen.getByRole('list', { name: /responsibilities/i });
-    expect(responsibilitiesList).toBeInTheDocument();
   });
 
-  it('should render without links when not provided', () => {
-    const contentWithoutLinks: AboutContent = {
+  it("should render with empty deck", () => {
+    const contentWithEmptyDeck: AboutContent = {
       ...mockContent,
-      links: undefined,
+      deck: [],
     };
 
-    render(<AboutSection content={contentWithoutLinks} />);
+    render(<AboutSection content={contentWithEmptyDeck} />);
 
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
-  });
-
-  it('should render without responsibilities when empty', () => {
-    const contentWithoutResponsibilities: AboutContent = {
-      ...mockContent,
-      responsibilities: [],
-    };
-
-    render(<AboutSection content={contentWithoutResponsibilities} />);
-
-    expect(screen.queryByText('Responsibilities')).not.toBeInTheDocument();
+    // Should still render the heading
+    expect(
+      screen.getByRole("heading", { name: /colophon/i, level: 1 })
+    ).toBeInTheDocument();
   });
 });

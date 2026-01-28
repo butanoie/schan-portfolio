@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container, Divider, Box } from "@mui/material";
 import {
   AboutSection,
@@ -40,6 +41,36 @@ export default function ColophonPage() {
         py: { xs: 4, md: 6 },
       }}
     >
+      {/* Choice Cuts Header Image */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mb: 4,
+          px: { xs: 2, sm: 0 },
+        }}
+      >
+        <Box
+          sx={{
+            width: { xs: "100%", sm: 600, md: 940 },
+            maxWidth: 940,
+            height: "auto",
+          }}
+        >
+          <Image
+            src="/images/choice_cuts@2x.png"
+            alt="Choice Cuts - pork cuts diagram logo"
+            width={940}
+            height={240}
+            priority
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+          />
+        </Box>
+      </Box>
+
       <Box
         component="article"
         sx={{
@@ -50,17 +81,17 @@ export default function ColophonPage() {
         {/* About Section */}
         <AboutSection content={data.about} />
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: 6 }} />
 
         {/* Technologies Section */}
         <TechnologiesShowcase content={data.technologies} />
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: 6 }} />
 
         {/* Design Philosophy Section */}
         <DesignPhilosophy content={data.designPhilosophy} />
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: 6 }} />
 
         {/* Buta Story Section */}
         <ButaStory content={data.butaStory} />
