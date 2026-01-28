@@ -109,7 +109,7 @@ v2/src/components/
 │   ├── ProjectGrid.tsx         # Grid of project cards
 │   ├── ProjectFilters.tsx      # Tag filter chips
 │   ├── SearchBar.tsx           # Search input
-│   └── Pagination.tsx          # Pagination controls
+│   └── ButaNavigation.tsx      # Buta thought bubble load more
 ├── project/                    # Project detail components
 │   ├── ProjectDetail.tsx       # Full project view
 │   ├── ProjectHeader.tsx       # Title, tags, circa
@@ -143,7 +143,7 @@ v2/src/components/
 
 ### Overview
 
-The homepage displays a filterable, searchable grid of portfolio projects with pagination. Users can browse thumbnails, filter by technology tags, search by keyword, and click through to detailed project pages.
+The homepage displays a filterable, searchable grid of portfolio projects with a "Load More" navigation. Users can browse thumbnails, filter by technology tags, search by keyword, and click through to detailed project pages. The Buta mascot provides a charming, character-driven navigation experience.
 
 ### Requirements
 
@@ -222,42 +222,93 @@ interface ProjectCardProps {
 
 ---
 
-#### 3.1.3 Pagination
+#### 3.1.3 Buta Navigation (Load More)
 
-**Description:** Navigate through project pages with clear pagination controls.
+**Description:** A character-driven "Load More" navigation featuring Buta (the pig mascot) with a thought bubble displaying loading states and project count.
 
-**Specifications:**
-- Default page size: 6 projects
-- Controls: Previous, Next, page numbers
-- Show current page / total pages
-- Disable Previous on first page
-- Disable Next on last page
-- Option: "Load More" button as alternative
+**Design Reference:** See `docs/screenshots/projects-nav/` for visual examples.
 
-**Component:** `Pagination.tsx`
+**Visual Design:**
+- Buta mascot (pig in business suit) positioned at bottom-right of content area
+- Thought bubble with connecting circles above Buta's head
+- Text in Gochi Hand font (handwritten style)
+- Thought bubble has light background (#F5F5F5) with subtle border
+
+**Three States:**
+
+| State | Thought Bubble Content | Trigger |
+|-------|------------------------|---------|
+| **Loading** | "Fetching projects..." | While fetching next page |
+| **Load More** | "Load more projects" (clickable) + "10 / 18 projects" | More projects available |
+| **End** | "All done! Thanks for coming by!" | All projects loaded |
+
+**Component:** `ButaNavigation.tsx`
 
 ```typescript
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  pageSize?: number;
+type ButaNavigationState = 'loading' | 'load-more' | 'end';
+
+interface ButaNavigationProps {
+  state: ButaNavigationState;
+  currentCount: number;
+  totalCount: number;
+  onLoadMore: () => void;
 }
 ```
 
+**Thought Bubble Styling:**
+```typescript
+// Thought bubble visual specifications
+const thoughtBubble = {
+  background: '#F5F5F5',
+  border: '2px solid #CCCCCC',
+  borderRadius: '50%',           // Ellipse shape
+  padding: '16px 32px',
+  fontFamily: '"Gochi Hand", cursive',
+  fontSize: '1.25rem',
+  textAlign: 'center',
+};
+
+// Connecting circles (thought trail)
+const thoughtCircles = [
+  { size: 12, offset: { bottom: -20, right: 40 } },
+  { size: 8, offset: { bottom: -35, right: 30 } },
+];
+```
+
+**Text Styling:**
+- "Load more projects" - Clickable link, maroon/red color (#8B1538), underline on hover
+- "X / Y projects" - Secondary text, dark gray (#333333)
+- "Fetching projects..." - Italic, dark gray
+- "All done!" - Bold, maroon/red color
+- "Thanks for coming by!" - Regular, dark gray
+
 **Accessibility:**
-- `role="navigation"` with `aria-label="Pagination"`
-- Current page: `aria-current="page"`
-- Disabled buttons: `aria-disabled="true"`
-- Announce page changes to screen readers
+- `role="status"` on thought bubble for state announcements
+- `aria-live="polite"` for loading/completion updates
+- "Load more projects" link: `role="button"` with `aria-label="Load more projects. Currently showing X of Y projects"`
+- Counter: `aria-label="Showing X of Y projects"`
+- Buta image: `alt="Buta, the portfolio mascot"` (decorative but named)
+- Focus visible on clickable link (44px minimum touch target)
 
 **Responsive Behavior:**
-- **Mobile (`xs`):**
-  - Simplified: `[← Prev] Page 2 of 5 [Next →]`
-  - Large touch targets (44px minimum)
-- **Tablet+ (`sm`+):**
-  - Full: `[← Previous] 1 2 [3] 4 5 [Next →]`
-  - Ellipsis for many pages: `1 ... 4 [5] 6 ... 10`
+- **Mobile (`xs`, `sm`):**
+  - Buta and thought bubble scale down proportionally
+  - Thought bubble: smaller font (1rem)
+  - Buta: 60% scale
+  - Full width layout, centered
+- **Tablet+ (`md`+):**
+  - Buta positioned at right side
+  - Thought bubble: full size (1.25rem)
+  - Buta: 100% scale
+
+**Animation:**
+- Thought bubble fade-in when state changes (200ms)
+- Respect `prefers-reduced-motion` (instant state change, no animation)
+
+**Buta Image Assets:**
+- `v2/public/images/buta/buta-waving.png` - Main mascot image
+- Position: Emerging from bottom-right, waist-up visible
+- Background: Sage green footer area (#8BA888)
 
 ---
 
@@ -275,13 +326,204 @@ interface PaginationProps {
 
 **Component:** `ProjectDetail.tsx`
 
-**Sections:**
-1. **Header** - Title, circa date, tags
-2. **Description** - Full HTML description (sanitized)
-3. **Gallery** - Full image gallery with lightbox
-4. **Videos** - Embedded video players (self-hosted, Vimeo, YouTube)
-5. **Related Projects** - 3 related projects by shared tags
-6. **Navigation** - Previous/Next project links
+**Design Reference:** See `docs/screenshots/project-layout/` for visual examples.
+
+**Layout Variations:**
+
+The project detail page has different layouts based on viewport width and whether the project has video content.
+
+---
+
+**Wide Layouts (Tablet+ `md`+):**
+
+| Layout | When Used | Structure |
+|--------|-----------|-----------|
+| **Wide + Video** | Project has video | Left 1/3: tags + description \| Right 2/3: video + 4-col thumbnails |
+| **Wide + Regular** | No video, default | Left 2/3: description (tags float right) \| Right 1/3: 2-col thumbnails |
+| **Wide + Alternate** | No video, many images | Left 1/3: tags + description \| Right 2/3: 4-col thumbnails |
+
+**Wide + Video Layout** (`wide-video.png`):
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Project Title (Oswald)                    │
+├───────────────────┬─────────────────────────────────────────┤
+│ [Date Badge]      │  ┌─────────────────────────────────┐    │
+│ [Tag] [Tag] [Tag] │  │                                 │    │
+│ [Tag] [Tag]       │  │         VIDEO PLAYER            │    │
+│                   │  │                                 │    │
+│ Description text  │  └─────────────────────────────────┘    │
+│ continues here    │  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
+│ with multiple     │  │ 1  │ │ 2  │ │ 3  │ │ 4  │           │
+│ paragraphs...     │  └────┘ └────┘ └────┘ └────┘           │
+│                   │  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
+│                   │  │ 5  │ │ 6  │ │ 7  │ │ 8  │           │
+│                   │  └────┘ └────┘ └────┘ └────┘           │
+└───────────────────┴─────────────────────────────────────────┘
+```
+
+**Wide + Regular Layout** (`wide-regular.png`):
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Project Title (Oswald)                    │
+├─────────────────────────────────────┬───────────────────────┤
+│ Description text with tags          │  ┌────┐ ┌────┐       │
+│ floating to the right side.         │  │ 1  │ │ 2  │       │
+│ ┌─────────────────────────────┐     │  └────┘ └────┘       │
+│ │ [Date] [Tag] [Tag] [Tag]    │     │  ┌────┐ ┌────┐       │
+│ │ [Tag] [Tag]                 │     │  │ 3  │ │ 4  │       │
+│ └─────────────────────────────┘     │  └────┘ └────┘       │
+│ Content continues below the tags    │                       │
+│ block, wrapping around it...        │                       │
+└─────────────────────────────────────┴───────────────────────┘
+```
+
+**Wide + Alternate Layout** (`wide-alternate.png`):
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Project Title (Oswald)                    │
+├───────────────────┬─────────────────────────────────────────┤
+│ [Date Badge]      │  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
+│ [Tag] [Tag] [Tag] │  │ 1  │ │ 2  │ │ 3  │ │ 4  │           │
+│ [Tag] [Tag] [Tag] │  └────┘ └────┘ └────┘ └────┘           │
+│ [Tag] [Tag]       │  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
+│                   │  │ 5  │ │ 6  │ │ 7  │ │ 8  │           │
+│ Description text  │  └────┘ └────┘ └────┘ └────┘           │
+│ in left column    │                                         │
+└───────────────────┴─────────────────────────────────────────┘
+```
+
+---
+
+**Narrow Layouts (Mobile `xs`, `sm`):**
+
+| Layout | When Used | Structure |
+|--------|-----------|-----------|
+| **Narrow** | No video | Tags → Description → 4-col thumbnails (stacked) |
+| **Narrow + Video** | Has video | Tags → Description → Video → 4-col thumbnails (stacked) |
+
+**Narrow Layout** (`narrow.png`):
+```
+┌─────────────────────────────────────┐
+│       Project Title (Oswald)        │
+├─────────────────────────────────────┤
+│ [Date] [Tag] [Tag] [Tag] [Tag]      │
+├─────────────────────────────────────┤
+│ Description text spanning full      │
+│ width. Multiple paragraphs of       │
+│ content displayed here...           │
+├─────────────────────────────────────┤
+│ ┌────┐ ┌────┐ ┌────┐ ┌────┐        │
+│ │ 1  │ │ 2  │ │ 3  │ │ 4  │        │
+│ └────┘ └────┘ └────┘ └────┘        │
+│ ┌────┐ ┌────┐ ┌────┐ ┌────┐        │
+│ │ 5  │ │ 6  │ │ 7  │ │ 8  │        │
+│ └────┘ └────┘ └────┘ └────┘        │
+└─────────────────────────────────────┘
+```
+
+**Narrow + Video Layout** (`narrow-video.png`):
+```
+┌─────────────────────────────────────┐
+│       Project Title (Oswald)        │
+├─────────────────────────────────────┤
+│ [Date] [Tag] [Tag] [Tag] [Tag]      │
+├─────────────────────────────────────┤
+│ Description text spanning full      │
+│ width. Multiple paragraphs...       │
+├─────────────────────────────────────┤
+│ ┌─────────────────────────────────┐ │
+│ │         VIDEO PLAYER            │ │
+│ └─────────────────────────────────┘ │
+├─────────────────────────────────────┤
+│ ┌────┐ ┌────┐ ┌────┐ ┌────┐        │
+│ │ 1  │ │ 2  │ │ 3  │ │ 4  │        │
+│ └────┘ └────┘ └────┘ └────┘        │
+└─────────────────────────────────────┘
+```
+
+---
+
+**Layout Selection Logic:**
+
+```typescript
+type ProjectLayoutVariant =
+  | 'wide-video'      // Has video, tablet+
+  | 'wide-regular'    // No video, default wide
+  | 'wide-alternate'  // No video, many images, left sidebar
+  | 'narrow'          // Mobile, no video
+  | 'narrow-video';   // Mobile, has video
+
+interface ProjectDetailProps {
+  project: Project;
+  layoutHint?: 'regular' | 'alternate';  // For projects without video
+}
+
+// Layout determination
+function getLayoutVariant(
+  project: Project,
+  isMobile: boolean,
+  layoutHint?: 'regular' | 'alternate'
+): ProjectLayoutVariant {
+  const hasVideo = project.videos && project.videos.length > 0;
+
+  if (isMobile) {
+    return hasVideo ? 'narrow-video' : 'narrow';
+  }
+
+  if (hasVideo) {
+    return 'wide-video';
+  }
+
+  return layoutHint === 'alternate' ? 'wide-alternate' : 'wide-regular';
+}
+```
+
+---
+
+**Visual Design Details:**
+
+| Element | Style |
+|---------|-------|
+| Title | Oswald font, maroon (#8B1538), 2rem (mobile) / 2.5rem (desktop) |
+| Date Badge | Maroon background, white text, rounded corners |
+| Tags | Sage green (#8BA888) background, dark text, rounded chips |
+| Description | Open Sans, dark gray (#333), 1rem |
+| Thumbnails | Rounded corners (4px), subtle shadow on hover |
+
+**Thumbnail Grid Specifications:**
+
+| Layout | Columns | Gap | Thumbnail Size |
+|--------|---------|-----|----------------|
+| Wide + Video | 4 | 12px | ~150px |
+| Wide + Regular | 2 | 16px | ~180px |
+| Wide + Alternate | 4 | 12px | ~150px |
+| Narrow (all) | 4 | 8px | ~80px |
+
+---
+
+**Component Structure:**
+
+```typescript
+interface ProjectDetailProps {
+  project: Project;
+}
+
+// Sub-components
+interface ProjectHeaderProps {
+  title: string;
+  circa: string;
+  tags: string[];
+  layout: 'inline' | 'stacked' | 'floating';
+}
+
+interface ProjectGalleryProps {
+  images: ProjectImage[];
+  columns: 2 | 4;
+  onImageClick: (index: number) => void;
+}
+```
+
+---
 
 **VideoEmbed Component:**
 
@@ -426,7 +668,7 @@ interface SearchBarProps {
 - [ ] `ProjectGrid.tsx` - Responsive project grid
 - [ ] `ProjectFilters.tsx` - Tag filter chips
 - [ ] `SearchBar.tsx` - Search input with debounce
-- [ ] `Pagination.tsx` - Page navigation controls
+- [ ] `ButaNavigation.tsx` - Buta thought bubble load more UI
 - [ ] `ProjectDetail.tsx` - Full project view
 - [ ] `ProjectHeader.tsx` - Title, tags, date section
 - [ ] `ProjectDescription.tsx` - HTML description renderer
@@ -972,7 +1214,7 @@ v2/
 │   │   │   ├── ProjectGrid.tsx
 │   │   │   ├── ProjectFilters.tsx
 │   │   │   ├── SearchBar.tsx
-│   │   │   └── Pagination.tsx
+│   │   │   └── ButaNavigation.tsx
 │   │   ├── project/
 │   │   │   ├── ProjectDetail.tsx
 │   │   │   ├── ProjectHeader.tsx
@@ -1107,12 +1349,20 @@ sx={{
 | `md`+ | Logo + inline nav links | Horizontal menu |
 
 #### Project Detail Page
-| Breakpoint | Layout | Gallery Columns |
-|------------|--------|-----------------|
-| `xs` | Single column, stacked | 2 |
-| `sm` | Single column, stacked | 3 |
-| `md` | Content + sidebar | 3 |
-| `lg` | Content + sidebar | 4 |
+
+Layout varies based on video content and breakpoint (see `docs/screenshots/project-layout/`):
+
+| Breakpoint | Has Video | Layout Variant | Thumbnail Columns |
+|------------|-----------|----------------|-------------------|
+| `xs`, `sm` | No | `narrow` | 4 (small) |
+| `xs`, `sm` | Yes | `narrow-video` | 4 (small) |
+| `md`+ | Yes | `wide-video` | 4 |
+| `md`+ | No | `wide-regular` or `wide-alternate` | 2 or 4 |
+
+**Wide Layout Column Ratios:**
+- `wide-video`: 1/3 (tags/desc) + 2/3 (video + thumbnails)
+- `wide-regular`: 2/3 (desc, tags float right) + 1/3 (thumbnails)
+- `wide-alternate`: 1/3 (tags/desc) + 2/3 (thumbnails only)
 
 #### Resume Page
 | Breakpoint | Layout |
@@ -1135,7 +1385,7 @@ All interactive elements must meet minimum touch target sizes:
 | Buttons | 44px × 44px | 8px between targets |
 | Navigation links | 44px height | - |
 | Filter chips | 32px height (with 44px touch area) | 8px gap |
-| Pagination buttons | 44px × 44px | 4px gap |
+| Buta "Load more" link | 44px height | - |
 | Lightbox controls | 48px × 48px | - |
 
 **Implementation:**
@@ -1216,7 +1466,7 @@ __tests__/
 │   │   ├── ProjectGrid.test.tsx
 │   │   ├── ProjectFilters.test.tsx
 │   │   ├── SearchBar.test.tsx
-│   │   └── Pagination.test.tsx
+│   │   └── ButaNavigation.test.tsx
 │   ├── project/
 │   │   ├── ProjectDetail.test.tsx
 │   │   ├── VideoEmbed.test.tsx        # Test all 3 sources: self-hosted, Vimeo, YouTube
@@ -1305,7 +1555,7 @@ All animations MUST respect `prefers-reduced-motion`. Users who experience motio
 - [ ] Project cards keyboard accessible
 - [ ] Filter chips have checkbox semantics
 - [ ] Search has proper label
-- [ ] Pagination has navigation role
+- [ ] Buta navigation has status role and aria-live
 - [ ] Loading states announced
 - [ ] Results count announced
 
@@ -1363,15 +1613,22 @@ All animations MUST respect `prefers-reduced-motion`. Users who experience motio
 - React state for UI state (lightbox open, etc.)
 - Avoids unnecessary complexity
 
-### 3. Pagination vs Infinite Scroll
+### 3. Buta "Load More" Navigation
 
-**Decision:** Traditional pagination with page numbers
+**Decision:** Character-driven "Load More" pattern with Buta mascot thought bubble
+
+**Design:**
+- Buta (pig mascot) appears at bottom of project grid
+- Thought bubble displays: loading state, "Load more" link + counter, or completion message
+- Progressive loading: 6 projects per page, user clicks to load more
+- Counter shows progress: "X / Y projects"
 
 **Rationale:**
-- Better for portfolio viewing (intentional browsing)
-- Clear sense of content scope
-- Better accessibility
-- Simpler implementation
+- Maintains portfolio's playful, personal brand identity
+- Clear progress indicator (X of Y projects)
+- User-controlled loading (not automatic infinite scroll)
+- Charming end state ("All done! Thanks for coming by!")
+- Accessible with aria-live announcements
 
 ### 4. HTML Rendering for Descriptions
 
@@ -1541,7 +1798,7 @@ const { ref, isInView } = useInView({
 | Requirement | Acceptance Criteria |
 |-------------|---------------------|
 | Portfolio loads | All 18 projects display correctly |
-| Pagination works | Can navigate through all pages |
+| Load more works | Buta navigation loads additional projects |
 | Filtering works | Tag filters reduce results correctly |
 | Search works | Keyword search finds matching projects |
 | Project detail loads | Individual projects display fully |
@@ -1592,7 +1849,7 @@ const { ref, isInView } = useInView({
 2. Build common components (`TagChip`, `LoadingSkeleton`)
 3. Build portfolio components (`ProjectCard`, `ProjectGrid`)
 4. Implement homepage (`/app/page.tsx`)
-5. Add pagination component
+5. Add ButaNavigation component (load more with mascot)
 6. Write tests for Week 1 components
 
 **Week 2: Filtering, Search & Project Detail**
@@ -1659,11 +1916,14 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-// Pagination
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
+// ButaNavigation
+type ButaNavigationState = 'loading' | 'load-more' | 'end';
+
+interface ButaNavigationProps {
+  state: ButaNavigationState;
+  currentCount: number;
+  totalCount: number;
+  onLoadMore: () => void;
 }
 ```
 
@@ -1716,7 +1976,7 @@ interface ConferenceSpeakerProps {
 
 | V1 Page | V1 File | V2 Route | V2 Components |
 |---------|---------|----------|---------------|
-| Homepage | `index.html` | `/` | ProjectGrid, ProjectCard, Pagination |
+| Homepage | `index.html` | `/` | ProjectGrid, ProjectCard, ButaNavigation |
 | Resume | `resume.html` | `/resume` | ResumeHeader, WorkExperience, etc. |
 | Colophon | `colophon.html` | `/colophon` | AboutSection, DesignPhilosophy, etc. |
 | Project | (modal) | `/projects/[id]` | ProjectDetail, Lightbox |
