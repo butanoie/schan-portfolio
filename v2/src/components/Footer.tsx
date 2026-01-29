@@ -22,6 +22,9 @@ interface NavLink {
 }
 
 
+/** Current year, computed once at module load to avoid hydration mismatch */
+const CURRENT_YEAR = new Date().getFullYear();
+
 /**
  * Footer component displaying navigation, Buta mascot, and copyright.
  * Styled to match the V1 portfolio footer with:
@@ -32,9 +35,6 @@ interface NavLink {
  *
  * @returns A footer section with navigation, mascot, and copyright
  */
-/** Current year, computed once at module load to avoid hydration mismatch */
-const CURRENT_YEAR = new Date().getFullYear();
-
 export default function Footer() {
   const pathname = usePathname();
 

@@ -110,7 +110,7 @@ The following Gumby features are being **completely removed** in V2:
 ### Tasks
 
 - [x] Initialize Next.js project with TypeScript
-  - Created Next.js 16.1.4 project with TypeScript, App Router, and Tailwind
+  - Created Next.js 16.1.4 project with TypeScript and App Router
   - Project located in `/v2` directory
   - Installed Node.js v25.4.0 and npm v11.7.0
 - [x] Install and configure Material UI
