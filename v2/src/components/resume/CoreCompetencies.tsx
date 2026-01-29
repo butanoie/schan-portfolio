@@ -39,7 +39,7 @@ export default function CoreCompetencies({
           key={categoryIndex}
           sx={{
             mb: 3,
-            backgroundColor: "#f5f5f5",
+            backgroundColor: BRAND_COLORS.duckEgg,
             borderRadius: 2,
             p: 2.5,
           }}
@@ -56,7 +56,7 @@ export default function CoreCompetencies({
             sx={{
               fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
-              color: BRAND_COLORS.maroon,
+              color: BRAND_COLORS.graphite,
               fontSize: { xs: "1.1rem", md: "1.25rem" },
               mb: 1.5,
             }}
@@ -83,6 +83,7 @@ export default function CoreCompetencies({
                   fontWeight: 500,
                   fontSize: "0.8rem",
                   height: "28px",
+                  borderRadius: "3px",
                   "& .MuiChip-label": {
                     px: 1.5,
                   },

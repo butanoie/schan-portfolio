@@ -19,7 +19,7 @@ export const BRAND_COLORS = {
   skyBlue: "#E0EDF8",
 
   /** Pastel green - used for secondary elements and tags */
-  duckEgg: "#C8E6C9",
+  duckEgg: "#DCEBE4",
 
   /** Deep red for headings, CTAs, and active states */
   maroon: "#8B1538",

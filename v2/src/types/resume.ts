@@ -89,6 +89,9 @@ export interface SpeakingEvent {
 
   /** Optional topic or session title */
   topic?: string;
+
+  /** Optional location of the event (city, state/province, or "Virtual") */
+  location?: string;
 }
 
 /**
