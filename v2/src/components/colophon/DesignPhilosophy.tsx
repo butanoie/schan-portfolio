@@ -79,6 +79,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
             fontFamily: "monospace",
             fontWeight: 600,
             letterSpacing: 1,
+            fontSize: "1rem",
           }}
         >
           {color.hex}
@@ -92,6 +93,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 600,
             mb: 0.5,
+            fontSize: "1rem",
           }}
         >
           {color.name}
@@ -143,6 +145,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             sx={{
               fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
+              fontSize: "1rem",
             }}
           >
             {font.name}

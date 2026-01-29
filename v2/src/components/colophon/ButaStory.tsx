@@ -34,18 +34,18 @@ export default function ButaStory({ content }: ButaStoryProps) {
   const { paragraphs, versusImage, versusImageAlt } = content;
 
   return (
-    <Box component="section" aria-labelledby="buta-heading" sx={{ mb: 6 }}>
+    <Box component="section" aria-labelledby="buta-heading">
       <Typography
         id="buta-heading"
         variant="h2"
         component="h2"
         sx={{
-          // Visually hidden but accessible to screen readers
+          // Visually hidden but accessible to screen readers (sr-only)
           position: "absolute",
-          width: 1,
-          height: 1,
+          width: "1px",
+          height: "1px",
           padding: 0,
-          margin: -1,
+          margin: "-1px",
           overflow: "hidden",
           clip: "rect(0, 0, 0, 0)",
           whiteSpace: "nowrap",
@@ -68,15 +68,15 @@ export default function ButaStory({ content }: ButaStoryProps) {
           sx={{
             p: 2,
             backgroundColor: "transparent",
-            maxWidth: 700,
+            maxWidth: 1050,
             width: "100%",
           }}
         >
           <Image
             src={versusImage}
             alt={versusImageAlt}
-            width={700}
-            height={80}
+            width={1050}
+            height={120}
             style={{
               width: "100%",
               height: "auto",
