@@ -1,0 +1,164 @@
+/**
+ * Print styles for the resume page.
+ * Optimized for A4/Letter paper size with single-column layout.
+ *
+ * Features:
+ * - Hide navigation, footer, and non-essential UI elements
+ * - Force single-column layout for print
+ * - Optimize typography for print (pt instead of rem)
+ * - Remove shadows, backgrounds, and decorative styling
+ * - Control page breaks to avoid splitting job entries
+ * - Hide download button (no need to download when printing)
+ */
+
+@media print {
+  /* Hide navigation, footer, and non-essential UI */
+  header[role="banner"],
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Single column layout for print */
+  [class*="MuiGrid2-container"] {
+    display: block !important;
+  }
+
+  [class*="MuiGrid2-root"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+
+  /* Optimize body and container for print */
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  [class*="MuiContainer-root"] {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Optimize typography for print */
+  h1 {
+    font-size: 24pt !important;
+    margin-bottom: 8pt !important;
+  }
+
+  h2 {
+    font-size: 18pt !important;
+    margin-top: 12pt !important;
+    margin-bottom: 8pt !important;
+  }
+
+  h3 {
+    font-size: 14pt !important;
+    margin-top: 10pt !important;
+    margin-bottom: 6pt !important;
+  }
+
+  p,
+  li {
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Remove all shadows and unnecessary styling */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Remove background colors except for headings */
+  [class*="MuiBox-root"] {
+    background-color: transparent !important;
+  }
+
+  /* Keep skill/client chips minimal for print */
+  [class*="MuiChip-root"] {
+    border: 1px solid #ccc !important;
+    background-color: transparent !important;
+    color: black !important;
+    font-size: 9pt !important;
+    height: auto !important;
+    padding: 2pt 4pt !important;
+  }
+
+  /* Ensure proper page breaks */
+  h2,
+  h3 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid breaking inside job entries */
+  .job-entry {
+    page-break-inside: avoid;
+  }
+
+  /* Avoid breaking inside lists */
+  ul,
+  ol {
+    page-break-inside: avoid;
+  }
+
+  /* Remove dividers or make them subtle */
+  [class*="MuiDivider-root"] {
+    border-color: #ddd !important;
+    margin: 8pt 0 !important;
+  }
+
+  /* Hide download button specifically */
+  [aria-label*="Download"] {
+    display: none !important;
+  }
+
+  /* Optimize button styling for print (LinkedIn, GitHub) */
+  [class*="MuiButton-root"] {
+    background-color: transparent !important;
+    color: black !important;
+    border: 1px solid #333 !important;
+    padding: 4pt 8pt !important;
+    font-size: 9pt !important;
+    text-transform: none !important;
+    box-shadow: none !important;
+  }
+
+  [class*="MuiButton-root"] svg {
+    display: none; /* Hide icons in print */
+  }
+
+  /* Optimize spacing for print */
+  [class*="MuiStack-root"] {
+    gap: 4pt !important;
+  }
+
+  /* Ensure links are visible and underlined */
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+
+  /* Print URLs after links (optional) */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666;
+  }
+
+  /* Remove margins from first and last elements */
+  *:first-child {
+    margin-top: 0 !important;
+  }
+
+  *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
