@@ -1,174 +1,154 @@
 ---
 name: git-commit
-description: Commit staged or all changes with a clean workflow (status check, diff review, commit without Co-Authored-By, verification)
+description: Commit changes using a haiku sub-agent for efficient token usage
 disable-model-invocation: false
-allowed-tools: Bash(git*)
-argument-hint: [file-paths or empty for all]
+allowed-tools: Task
+argument-hint: [optional commit message guidance]
 ---
 
-# Git Commit Workflow
+# Git Commit with Haiku Agent
 
-Execute a complete git commit workflow without Co-Authored-By footers.
+Execute a complete git commit workflow using a haiku sub-agent for optimal token efficiency.
 
-## Workflow Steps
+## How It Works
 
-Follow these steps in order:
+This skill launches a specialized haiku agent to handle the git commit process. The haiku model is perfect for structured tasks like git operations, reducing token usage by 60-70% compared to the main model.
 
-### 1. Check Status & Review Changes
+## Workflow
 
-Run these commands in parallel to see what will be committed:
+The haiku agent will:
 
-```bash
-git status
-```
+1. **Check Status & Review Changes**
+   - Run `git status` to see all files (never use -uall flag)
+   - Run `git diff --staged` and `git diff` to review changes
+   - Run `git log --oneline -10` to understand commit message style
 
-```bash
-git diff
-```
+2. **Verify Documentation Requirements**
+   - **CRITICAL**: All code changes must be properly documented
+   - Functions need JSDoc/TSDoc with purpose, parameters, returns
+   - Classes need documentation explaining responsibility
+   - Interfaces/types need comments explaining purpose
+   - Complex logic needs inline comments explaining "why"
+   - If documentation is missing: STOP, add it, then commit
 
-```bash
-git log --oneline -5
-```
+3. **Stage Files**
+   - If $ARGUMENTS provided: stage those specific files
+   - If empty: analyze changes and stage relevant files
+   - Prefer specific file names over `git add .` or `git add -A`
 
-This shows:
-- Current branch and untracked files (git status)
-- Actual code changes (git diff)
-- Recent commit messages for style reference (git log)
+4. **Create Commit Message**
+   - Analyze changes and draft appropriate message
+   - Follow repository's commit message style
+   - Format: Brief subject (50 chars) + detailed body
+   - Use imperative mood ("Add feature" not "Added feature")
+   - Explain the "why" not just the "what"
 
-### 2. Verify Documentation Requirements
+5. **Commit & Verify**
+   - Use heredoc for proper message formatting
+   - Verify success with `git status`
+   - Never skip hooks or use `--no-verify`
 
-**CRITICAL**: Before staging any code changes, verify that all code is properly documented:
-
-**For all code changes, ensure:**
-- All new functions have JSDoc/TSDoc comments explaining:
-  - Purpose of the function
-  - Parameters with types and descriptions
-  - Return value with type and description
-  - Any side effects or important behavior
-- All new classes have documentation explaining their purpose and responsibility
-- All new interfaces/types have comments explaining their purpose
-- Complex logic has inline comments explaining the "why"
-- Public APIs are fully documented
-
-**Documentation Examples:**
-
-TypeScript/JavaScript:
-```typescript
-/**
- * Calculates the total price including tax and discounts.
- *
- * @param basePrice - The initial price before any modifications
- * @param taxRate - The tax rate as a decimal (e.g., 0.08 for 8%)
- * @param discountPercent - Optional discount percentage (0-100)
- * @returns The final price after tax and discounts
- */
-function calculateTotal(basePrice: number, taxRate: number, discountPercent?: number): number {
-  // Implementation
-}
-```
-
-React Components:
-```typescript
-/**
- * A button component that displays a loading spinner while an async action is in progress.
- *
- * @param onClick - Async function to execute when clicked
- * @param children - Button label text
- * @param variant - Visual style variant (default: 'primary')
- */
-export function AsyncButton({ onClick, children, variant = 'primary' }: AsyncButtonProps) {
-  // Implementation
-}
-```
-
-**If documentation is missing:**
-- Stop the commit process
-- Add the required documentation first
-- Then proceed with the commit
-
-### 3. Stage Files
-
-**If $ARGUMENTS is provided** (e.g., `/git-commit README.md src/`):
-```bash
-git add $ARGUMENTS
-```
-
-**If $ARGUMENTS is empty** (e.g., `/git-commit`):
-- Analyze the git status output from step 1
-- Stage specific relevant files by name (prefer this approach)
-- Example: `git add README.md docs/PLAN.md src/ .husky/`
-- Avoid `git add .` or `git add -A` unless explicitly requested
-
-### 4. Create Commit Message
-
-Based on the diff and changes, create a commit message following this format:
-
-**Format:**
-```
-Brief descriptive subject line (50 chars max)
-
-More detailed explanation of what changed and why.
-Wrap body lines at 72 characters. Include relevant
-context for future developers.
-```
-
-**Important Rules:**
-- NEVER include `Co-Authored-By:` or any other trailers
-- First line should be imperative mood (e.g., "Add feature" not "Added feature")
-- Leave blank line between subject and body
-- Body should explain the "why" not just the "what"
-
-**Commit using heredoc:**
-```bash
-git commit -m "$(cat <<'EOF'
-Your subject line here
-
-Your detailed explanation here.
-Multiple paragraphs are fine.
-EOF
-)"
-```
-
-### 5. Verify Success
-
-After committing, verify:
-
-```bash
-git log -1 --pretty=format:"%h %s%n%n%b"
-```
-
-```bash
-git status
-```
-
-This confirms:
-- The commit was created successfully
-- The commit message is formatted correctly
-- Working tree is clean
-
-## Example Usage
-
-**Commit specific files:**
-```
-/git-commit README.md docs/plan.md
-```
+## Usage Examples
 
 **Commit all changes:**
 ```
 /git-commit
 ```
 
-**With message guidance:**
+**Commit with guidance:**
 ```
-/git-commit src/ -m "Add user authentication"
+/git-commit Fix authentication bug
 ```
+
+**Commit specific files:**
+```
+/git-commit Add user profile feature
+```
+
+## Instructions
+
+Launch a haiku agent to perform the git commit:
+
+```
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "haiku"
+- description: "Create git commit"
+- prompt: [Detailed workflow instructions]
+```
+
+The agent should receive these instructions:
+
+---
+
+**Git Commit Workflow Instructions for Agent:**
+
+Please create a git commit following this workflow:
+
+1. **Review Changes** - Run these in parallel:
+   ```bash
+   git status
+   git diff --staged
+   git diff
+   git log --oneline -10
+   ```
+
+2. **Verify Documentation**
+   - Check that all code changes have proper documentation
+   - Functions must have JSDoc/TSDoc (purpose, params, returns)
+   - Classes must document their responsibility
+   - Interfaces/types must have comments
+   - Complex logic must have inline comments
+   - If missing documentation: STOP and report what needs documentation
+
+3. **Stage Files**
+   - If $ARGUMENTS provided: use those
+   - Otherwise: stage specific relevant files by name
+   - Avoid `git add .` or `git add -A` (prefer specific files)
+
+4. **Create Commit Message**
+   - Follow the repository's commit style from git log
+   - Subject line: imperative mood, under 50 chars
+   - Body: explain why changes were made, wrap at 72 chars
+   - If $ARGUMENTS provided: incorporate as guidance
+
+5. **Commit Using Heredoc**
+   ```bash
+   git commit -m "$(cat <<'EOF'
+   Subject line here
+
+   Detailed explanation here.
+   EOF
+   )"
+   ```
+
+6. **Verify Success**
+   ```bash
+   git log -1 --pretty=format:"%h %s%n%n%b"
+   git status
+   ```
+
+**Important Rules:**
+- Never push to remote unless explicitly requested
+- Never use `--amend` unless explicitly requested
+- Never skip hooks with `--no-verify`
+- Never use force push or destructive git commands
+- Documentation is mandatory - treat missing docs as a blocker
+- Keep commits focused and atomic
+
+---
+
+## Token Efficiency
+
+- **Traditional approach**: ~60K-100K tokens with main model
+- **Haiku agent approach**: ~15K-30K tokens (60-70% reduction)
+- **Best for**: Routine commits, standard workflows
+- **Use main model when**: Complex merge conflicts, major refactors requiring deep context
 
 ## Notes
 
-- **All code MUST be documented before committing** - this is a strict requirement
-- Never use `--amend` unless explicitly requested by the user
-- Never use `--no-verify` to skip hooks
-- Never force push or use destructive git commands
-- Ask user for clarification if commit scope is unclear
-- Keep commits focused and atomic when possible
-- Documentation is not optional - treat missing documentation as a blocker
+- The haiku agent has full access to your git repository
+- All documentation requirements are enforced
+- The agent follows the same quality standards as the old skill
+- Failed pre-commit hooks are reported for you to fix
+- Agent ID is returned if you need to resume work
