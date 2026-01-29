@@ -43,7 +43,7 @@ export default function ColophonPage() {
         sx={{
           display: "flex",
           justifyContent: "center",
-          mb: 4,
+          mb: 6,
           px: { xs: 2, sm: 0 },
         }}
       >
@@ -78,17 +78,17 @@ export default function ColophonPage() {
         {/* About Section */}
         <AboutSection content={data.about} />
 
-        <Divider sx={{ my: 6 }} />
+        <Divider sx={{ my: 7 }} />
 
         {/* Technologies Section */}
         <TechnologiesShowcase content={data.technologies} />
 
-        <Divider sx={{ my: 6 }} />
+        <Divider sx={{ my: 7 }} />
 
         {/* Design Philosophy Section */}
         <DesignPhilosophy content={data.designPhilosophy} />
 
-        <Divider sx={{ my: 6 }} />
+        <Divider sx={{ my: 7 }} />
 
         {/* Buta Story Section */}
         <ButaStory content={data.butaStory} />
