@@ -1,14 +1,18 @@
-# Changelog Creation Skill
-
-**Skill Name:** changelog-create
-**Alias:** `/changelog-create`
-**Purpose:** Create comprehensive changelog entries for significant project changes
-
 ---
+name: changelog-create
+description: Create comprehensive changelog entries using a haiku sub-agent for efficient token usage
+disable-model-invocation: false
+allowed-tools: Task
+argument-hint: [optional brief description of change]
+---
+
+# Changelog Creation with Haiku Agent
+
+Create comprehensive changelog entries for significant project changes using a haiku sub-agent for optimal token efficiency.
 
 ## When to Use This Skill
 
-Use `/changelog-create` when you've completed significant work that should be documented:
+Use `/changelog-create` for significant work that should be documented:
 
 - ✅ **Phase Completions** - Major phase of work is complete
 - ✅ **Infrastructure Changes** - New tools, frameworks, or development setup
@@ -23,64 +27,91 @@ Use `/changelog-create` when you've completed significant work that should be do
 - ❌ Documentation typo fixes
 - ❌ Dependency updates (unless major version bump)
 
----
+## How It Works
 
-## How to Use
+This skill launches a specialized haiku agent to create the changelog. The haiku model is well-suited for structured documentation tasks, reducing token usage by 60-70% while maintaining comprehensive detail.
+
+## Usage
 
 ```bash
 /changelog-create
 ```
 
-The skill will guide you through creating a comprehensive changelog entry following the project's standards.
+**With brief description:**
+```bash
+/changelog-create Testing infrastructure setup
+```
+
+## Token Efficiency
+
+- **Traditional approach**: 80K-150K tokens with main model
+- **Haiku agent approach**: 25K-50K tokens (60-70% reduction)
+- **Quality**: Same comprehensive documentation standards
+
+## Instructions
+
+Launch a haiku agent to create the changelog:
+
+```
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "haiku"
+- description: "Create changelog entry"
+- prompt: [Detailed changelog creation instructions]
+```
+
+The agent should receive these comprehensive instructions:
 
 ---
 
-## Workflow
+**Changelog Creation Instructions for Agent:**
 
-When you invoke this skill, follow these steps:
+You are creating a comprehensive changelog entry for significant project changes. Follow this workflow:
 
-### Step 1: Gather Information
-
-**Ask yourself these questions:**
-1. What was accomplished?
-2. What files were created, modified, or deleted?
-3. What configuration changes were made?
-4. What tests or validation was performed?
-5. What is the immediate and long-term impact?
-6. What are the next steps or future enhancements?
-
-### Step 2: Generate Timestamp
+## Step 1: Generate Timestamp and Filename
 
 ```bash
 date '+%Y-%m-%dT%H%M%S'
 ```
 
-**Example output:** `2026-01-27T082828`
-
-### Step 3: Create Filename
-
-**Format:** `YYYY-MM-DDTHHMMSS_descriptive-name.md`
-
-**Examples:**
-- `2026-01-27T082828_testing-infrastructure-setup.md`
-- `2026-01-25T233843_static-analysis-documentation-enforcement.md`
-- `2026-01-25T231357_phase1-completion.md`
+**Create filename:** `changelog/YYYY-MM-DDTHHMMSS_descriptive-name.md`
 
 **Descriptive name guidelines:**
-- Use lowercase with hyphens
-- Be specific but concise (3-5 words)
-- Focus on WHAT was accomplished, not HOW
-- Examples: `testing-infrastructure-setup`, `phase1-completion`, `data-migration-complete`
+- Lowercase with hyphens
+- Specific but concise (3-5 words)
+- Focus on WHAT was accomplished
+- Examples: `testing-infrastructure-setup`, `phase1-completion`, `git-commit-haiku-agent`
 
-### Step 4: Fill Out Header Metadata
+## Step 2: Gather Information
+
+Before writing, collect:
+1. What was accomplished?
+2. What files were created, modified, or deleted?
+3. What configuration changes were made?
+4. What tests or validation was performed?
+5. What is the immediate and long-term impact?
+6. What are next steps or future enhancements?
+
+**Use these tools to gather information:**
+- `git diff` - See recent changes
+- `git log --oneline -10` - See recent commits
+- `find` or `ls` - List new files/directories
+- `wc -l` - Count lines in files
+- Review test output, lint results, build logs
+
+## Step 3: Create Changelog File
+
+**Location:** `changelog/YYYY-MM-DDTHHMMSS_descriptive-name.md`
+
+### Required Header Metadata
 
 ```markdown
 # [Title] - [Brief Description]
 
 **Date:** YYYY-MM-DD
-**Time:** HH:MM:SS PST  # (or your timezone)
-**Type:** [Type from list below]
-**Phase:** [If applicable, e.g., "Phase 2 Prerequisites"]
+**Time:** HH:MM:SS PST
+**Type:** [Type from list]
+**Phase:** [If applicable]
 **Version:** vX.Y.Z
 ```
 
@@ -95,23 +126,22 @@ date '+%Y-%m-%dT%H%M%S'
 - Performance Optimization
 - Security Enhancement
 
-### Step 5: Write Summary (Required)
+### Required Section 1: Summary
 
-Write a 2-3 sentence overview that answers:
+Write 2-3 sentences answering:
 - What was accomplished?
 - Why was it important?
 - What is the key outcome?
 
-**Example:**
 ```markdown
 ## Summary
 
-Successfully implemented comprehensive testing infrastructure using Vitest and React Testing Library. This setup establishes the foundation for Phase 2 data migration with 80%+ coverage requirements, test-driven development practices, and modern testing tooling optimized for Next.js 16+ and React 19.
+[2-3 sentence overview]
 ```
 
-### Step 6: Document Changes Implemented (Required)
+### Required Section 2: Changes Implemented
 
-Break down ALL changes into categories:
+Break down ALL changes into categories with subsections:
 
 ```markdown
 ## Changes Implemented
@@ -119,58 +149,52 @@ Break down ALL changes into categories:
 ### 1. [Category Name]
 
 **[Subcategory]**
-- Bullet points describing changes
-- Include specific versions, configurations, and details
+- Specific changes with versions and details
 
 **Created:**
-- `file/path/here.ts` - Description
+- `path/to/file.ext` - Purpose (X lines)
 
 **Modified:**
-- `file/path/here.json` - What changed
+- `path/to/file.ext` - What changed
 
 **Configuration:**
 ```language
-// Code examples showing configuration
+// Code examples
 ```
 ```
 
-**Categories might include:**
+**Common categories:**
 - Dependencies Installation
 - Configuration Files Created
 - Directory Structure
-- Sample Code/Implementation
+- Implementation Details
 - NPM Scripts Added
 - Documentation Updates
-- TypeScript Configuration
 
-### Step 7: Technical Details (Required)
+### Required Section 3: Technical Details
 
-Include:
-- Configuration code snippets
-- File content examples
-- Command outputs
-- Before/after comparisons
-- Architecture decisions
+Include detailed technical information:
 
 ```markdown
 ## Technical Details
 
 ### [Subsection]
 
-[Explanation]
+[Explanation of technical decisions]
 
 ```language
-// Code example
+// Configuration code snippets
+// File content examples
 ```
 
 **Key Points:**
-- Point 1
-- Point 2
+- Important detail 1
+- Important detail 2
 ```
 
-### Step 8: Validation & Testing (Required)
+### Required Section 4: Validation & Testing
 
-Prove that the changes work:
+**CRITICAL:** Prove that changes work by showing actual command output:
 
 ```markdown
 ## Validation & Testing
@@ -180,53 +204,54 @@ Prove that the changes work:
 **TypeScript Compilation:**
 ```bash
 $ npm run type-check
-> tsc --noEmit
-✅ No errors
+[Show actual output]
+✅ Result
 ```
 
 **ESLint Validation:**
 ```bash
 $ npm run lint
-> eslint .
-✅ No errors
+[Show actual output]
+✅ Result
 ```
 
 **Tests:**
 ```bash
 $ npm test
-> vitest run
-✅ Test Files: X passed (X)
-✅ Tests: X passed (X)
+[Show actual output]
+✅ Result
 ```
 ```
 
-### Step 9: Impact Assessment (Required)
+**Run these commands and include ACTUAL output:**
+- `npm run type-check` or `tsc --noEmit`
+- `npm run lint`
+- `npm test` or `npm run test:unit`
+- `npm run build` (if applicable)
 
-Describe the impact on:
-- Development workflow
-- Code quality
-- Team collaboration
-- Project direction
+### Required Section 5: Impact Assessment
+
+Describe short and long-term impact:
 
 ```markdown
 ## Impact Assessment
 
 ### Immediate Impact
-- ✅ Item 1
-- ✅ Item 2
+- ✅ Impact item 1
+- ✅ Impact item 2
 
 ### Development Workflow Impact
 - **Before:** Old workflow
-- **During:** New workflow steps
-- **After:** Outcome
+- **During:** Transition steps
+- **After:** New workflow
 
 ### Long-term Benefits
-- 🔒 **Prevents:** What problems this prevents
-- 📊 **Measures:** What metrics this provides
-- 🚀 **Enables:** What new capabilities this unlocks
+- 🔒 **Prevents:** Problems this prevents
+- 📊 **Measures:** Metrics this provides
+- 🚀 **Enables:** New capabilities this unlocks
 ```
 
-### Step 10: Related Files (Required)
+### Required Section 6: Related Files
 
 List ALL files affected:
 
@@ -235,17 +260,20 @@ List ALL files affected:
 
 ### Created Files (N)
 1. **`path/file.ext`** - Description (X lines)
-2. **`path/file.ext`** - Description (X lines)
 
 ### Modified Files (N)
-1. **`path/file.ext`** - What changed
-2. **`path/file.ext`** - What changed
+1. **`path/file.ext`** - Changes made
 
 ### Generated Directories (N)
 1. **`path/dir/`** - Purpose
 ```
 
-### Step 11: Summary Statistics (Optional but Recommended)
+**Get file line counts:**
+```bash
+wc -l path/to/file.ext
+```
+
+### Optional Section: Summary Statistics
 
 Provide measurable metrics:
 
@@ -254,160 +282,115 @@ Provide measurable metrics:
 
 - **Files Created:** N
 - **Files Modified:** N
+- **Lines Added:** ~N
 - **Tests Added:** N
 - **Coverage:** X%
 - **NPM Packages:** N
-- **Time Spent:** N hours/minutes
 ```
 
-### Step 12: References (Optional)
+### Optional Section: References
 
-Link to related documentation:
+Link related documentation:
 
 ```markdown
 ## References
 
-- **Documentation:** `path/to/file.md`
-- **External Link:** [Description](https://example.com)
-- **Related Changelog:** `changelog/YYYY-MM-DDTHHMMSS_name.md`
+- **Documentation:** `path/to/docs.md`
+- **External:** [Name](https://url.com)
+- **Related Changelog:** `changelog/timestamp_name.md`
 ```
 
-### Step 13: Status and Final Summary (Required)
-
-End with status and brief summary:
+### Required: Status and Final Summary
 
 ```markdown
 ---
 
 **Status:** ✅ COMPLETE
 
-[One sentence final summary of what was accomplished and its significance]
+[One sentence final summary of accomplishment and significance]
 ```
 
----
+## Quality Standards
 
-## Changelog Quality Checklist
+Your changelog must be:
 
-Before finalizing your changelog, verify:
+### Comprehensive
+- Include ALL files, configurations, and changes
+- Don't assume readers know context
+- Think "future developer reading this in 6 months"
+
+### Evidence-Based
+- Show actual test output, not just "tests pass"
+- Include real command results
+- Prove changes work
+
+### Well-Structured
+- Use clear headings and subsections
+- Tables for structured data
+- Code blocks for examples
+- Bullet points for lists
+- Checkmarks (✅) for completed items
+
+### Explanatory
+- Explain WHY changes were made
+- Provide context and reasoning
+- Don't just list WHAT changed
+
+### Accurate
+- Use correct timestamps
+- Count files and lines accurately
+- Verify all information
+
+## Quality Checklist
+
+Before finalizing, verify:
 
 - [ ] Filename uses correct timestamp format
-- [ ] Header metadata is complete (Date, Time, Type, Version)
-- [ ] Summary section is clear and concise (2-3 sentences)
-- [ ] Changes Implemented section lists ALL changes
+- [ ] Header metadata is complete
+- [ ] Summary is clear and concise (2-3 sentences)
+- [ ] Changes Implemented lists ALL changes
 - [ ] Technical Details include code examples
-- [ ] Validation & Testing section shows proof of success
-- [ ] Impact Assessment describes short and long-term effects
-- [ ] Related Files lists ALL created/modified files
-- [ ] Summary Statistics provides measurable metrics
-- [ ] Status is clearly marked (✅ COMPLETE)
-- [ ] Final summary statement is present
+- [ ] Validation & Testing shows ACTUAL command output
+- [ ] Impact Assessment describes effects
+- [ ] Related Files lists ALL affected files
+- [ ] Summary Statistics provides metrics
+- [ ] Status is marked (✅ COMPLETE)
+- [ ] Final summary statement present
 
----
+## Reference Examples
 
-## Examples
-
-**Excellent changelog examples to reference:**
-
-1. **`changelog/2026-01-27T082828_testing-infrastructure-setup.md`**
-   - Comprehensive technical details
-   - Detailed validation results
-   - Clear impact assessment
-   - 650+ lines, very thorough
-
-2. **`changelog/2026-01-25T233843_static-analysis-documentation-enforcement.md`**
-   - Great structure and organization
-   - Multiple subsections per category
-   - Before/after examples
-   - Enforcement mechanism documentation
-
-3. **`changelog/2026-01-25T231357_phase1-completion.md`**
-   - Good phase completion template
-   - Clear accomplishments listing
-   - Next steps section
-   - Concise but complete
-
----
-
-## Tips for Great Changelogs
-
-### Be Comprehensive
-- **Do:** Include all files, configurations, and metrics
-- **Don't:** Leave out details or assume readers know context
-
-### Show Your Work
-- **Do:** Include test output, linting results, build success
-- **Don't:** Just say "tests pass" without showing proof
-
-### Explain WHY
-- **Do:** Explain the reasoning behind decisions
-- **Don't:** Just list WHAT changed without context
-
-### Use Code Examples
-- **Do:** Show configuration changes with code blocks
-- **Don't:** Describe code changes in prose only
-
-### Make It Scannable
-- **Do:** Use headings, tables, bullet points, and checkmarks
-- **Don't:** Write long paragraphs without structure
-
-### Think Future You
-- **Do:** Write for someone reading this in 6 months
-- **Don't:** Assume readers have context from recent work
-
----
+Review these excellent examples:
+- `changelog/2026-01-27T082828_testing-infrastructure-setup.md` (650+ lines, very thorough)
+- `changelog/2026-01-25T233843_static-analysis-documentation-enforcement.md` (well-structured)
+- `changelog/2026-01-25T231357_phase1-completion.md` (good phase template)
 
 ## Common Mistakes to Avoid
 
-❌ **Too Brief** - "Added tests" (needs WAY more detail)
-❌ **Missing Files** - Not listing all created/modified files
-❌ **No Validation** - No proof that changes work
-❌ **No Impact** - Not explaining why this matters
-❌ **Poor Formatting** - Wall of text without structure
-❌ **Incorrect Timestamp** - Using wrong format or old timestamp
-❌ **Missing Status** - No final status marker
+❌ Too brief - needs comprehensive detail
+❌ Missing files - must list all created/modified files
+❌ No validation - must show proof changes work
+❌ No impact - must explain why this matters
+❌ Poor formatting - use structure and headings
+❌ Incorrect timestamp - use proper format
+❌ Missing status - must have final status marker
 
----
+## Tips for Success
 
-## Quick Reference
-
-**Generate Timestamp:**
-```bash
-date '+%Y-%m-%dT%H%M%S'
-```
-
-**Filename Format:**
-```
-changelog/YYYY-MM-DDTHHMMSS_descriptive-name.md
-```
-
-**Required Sections:**
-1. Header Metadata
-2. Summary
-3. Changes Implemented
-4. Technical Details
-5. Validation & Testing
-6. Impact Assessment
-7. Related Files
-8. Status
-
-**Optional Sections:**
-- Documentation Benefits
-- Next Steps
-- Future Enhancements
-- References
-- Summary Statistics
-- Comparison
-- Bug Fixes
-
----
+1. **Be thorough** - This is a permanent historical record
+2. **Show your work** - Include actual command output
+3. **Use code blocks** - Show configurations and examples
+4. **Count accurately** - Verify file counts and line numbers
+5. **Explain reasoning** - Future readers need context
+6. **Make it scannable** - Use headings, bullets, tables
+7. **Verify everything** - Run commands to get accurate output
 
 ## After Creating Changelog
 
-1. **Review** - Read through for completeness and clarity
-2. **Link in Commit** - Reference changelog in commit message if committing
-3. **Update Documentation** - Update README or other docs if needed
-4. **Archive** - Changelog is now part of project history
+1. Save the file to `changelog/` directory
+2. Verify it follows all quality standards
+3. Consider referencing it in commit messages
+4. The changelog is now part of permanent project history
 
 ---
 
-**Remember:** Changelogs are permanent historical records. Be thorough, accurate, and clear. Future developers (including you) will thank you!
+**Remember:** Changelogs document project evolution. Be comprehensive, accurate, and clear!
