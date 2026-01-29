@@ -12,6 +12,15 @@
  * Primary brand colors used for key UI elements.
  */
 export const BRAND_COLORS = {
+  /** Cherry blossom pink - inspirational pastel color */
+  sakura: "#FFF0F5",
+
+  /** Light blue - primary accent color for interactive elements */
+  skyBlue: "#E0EDF8",
+
+  /** Pastel green - used for secondary elements and tags */
+  duckEgg: "#C8E6C9",
+
   /** Deep red for headings, CTAs, and active states */
   maroon: "#8B1538",
 
@@ -22,7 +31,7 @@ export const BRAND_COLORS = {
   graphite: "#2C2C2C",
 
   /** Sage green for footer background */
-  sage: "#85b09c",
+  sage: "#85B09C",
 } as const;
 
 /**
@@ -63,10 +72,51 @@ export const NAV_COLORS = {
 } as const;
 
 /**
+ * MUI theme palette colors.
+ * These are used to configure the Material UI theme.
+ */
+export const THEME_COLORS = {
+  /** Primary palette - Sky Blue tones */
+  primary: {
+    /** Main sky blue for primary actions */
+    main: "#87CEEB",
+    /** Lighter sky blue variant */
+    light: "#B0E0E6",
+    /** Darker steel blue variant */
+    dark: "#4682B4",
+  },
+
+  /** Secondary palette - extends Duck Egg green */
+  secondary: {
+    /** Lighter mint green variant */
+    light: "#E8F5E9",
+    /** Darker green variant */
+    dark: "#81C784",
+  },
+
+  /** Background colors */
+  background: {
+    /** Default page background */
+    default: "#FFFFFF",
+    /** Paper/card background */
+    paper: "#FFFFFF",
+  },
+
+  /** Text colors */
+  text: {
+    /** Dark gray for secondary text */
+    secondary: "#5A5A5A",
+    /** Near-black for contrast text on light backgrounds */
+    contrast: "#212121",
+  },
+} as const;
+
+/**
  * All colors exported as a single object for convenience.
  */
 export const COLORS = {
   brand: BRAND_COLORS,
   ui: UI_COLORS,
   nav: NAV_COLORS,
+  theme: THEME_COLORS,
 } as const;

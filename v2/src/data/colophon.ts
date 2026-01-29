@@ -9,6 +9,7 @@
  */
 
 import type { ColophonData } from '../types/colophon';
+import { BRAND_COLORS } from '../constants';
 
 /**
  * Complete colophon page content.
@@ -179,32 +180,32 @@ export const colophonData: ColophonData = {
     colors: [
       {
         name: 'Sakura',
-        hex: '#FFF0F5',
+        hex: BRAND_COLORS.sakura,
         description: 'Cherry blossom pink - more inspirational than actual implementation',
       },
       {
         name: 'Duck Egg',
-        hex: '#C8E6C9',
+        hex: BRAND_COLORS.duckEgg,
         description: 'Pastel green - used for secondary elements and tags',
       },
       {
         name: 'Sky Blue',
-        hex: '#E0EDF8',
+        hex: BRAND_COLORS.skyBlue,
         description: 'Primary accent color for interactive elements',
       },
       {
         name: 'Graphite',
-        hex: '#2C2C2C',
+        hex: BRAND_COLORS.graphite,
         description: 'Dark charcoal for primary text',
       },
       {
         name: 'Sage',
-        hex: '#8BA888',
+        hex: BRAND_COLORS.sage,
         description: 'Muted green for the footer background',
       },
       {
         name: 'Maroon',
-        hex: '#8B1538',
+        hex: BRAND_COLORS.maroon,
         description: 'Deep red for headings and call-to-action elements',
       },
     ],

@@ -1,29 +1,33 @@
 "use client";
 
 import { createTheme } from "@mui/material/styles";
+import { BRAND_COLORS, THEME_COLORS } from "../constants";
 
-// Color palette from original design
+/**
+ * MUI theme configuration for the portfolio site.
+ * Uses centralized color constants from constants/colors.ts.
+ */
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#87CEEB", // Sky Blue
-      light: "#B0E0E6", // Lighter blue
-      dark: "#4682B4", // Darker blue
-      contrastText: "#212121",
+      main: THEME_COLORS.primary.main,
+      light: THEME_COLORS.primary.light,
+      dark: THEME_COLORS.primary.dark,
+      contrastText: THEME_COLORS.text.contrast,
     },
     secondary: {
-      main: "#C8E6C9", // Duck Egg (pastel green)
-      light: "#E8F5E9",
-      dark: "#81C784",
-      contrastText: "#212121",
+      main: BRAND_COLORS.duckEgg,
+      light: THEME_COLORS.secondary.light,
+      dark: THEME_COLORS.secondary.dark,
+      contrastText: THEME_COLORS.text.contrast,
     },
     background: {
-      default: "#FFFFFF",
-      paper: "#FFFFFF",
+      default: THEME_COLORS.background.default,
+      paper: THEME_COLORS.background.paper,
     },
     text: {
-      primary: "#2C2C2C", // Graphite
-      secondary: "#5A5A5A",
+      primary: BRAND_COLORS.graphite,
+      secondary: THEME_COLORS.text.secondary,
     },
   },
   typography: {
