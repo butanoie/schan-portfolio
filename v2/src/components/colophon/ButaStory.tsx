@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import type { ButaStoryContent } from "../../types/colophon";
@@ -61,30 +61,16 @@ export default function ButaStory({ content }: ButaStoryProps) {
           display: "flex",
           justifyContent: "center",
           mb: 4,
+          overflowX: "auto",
         }}
       >
-        <Paper
-          elevation={0}
-          sx={{
-            p: 2,
-            backgroundColor: "transparent",
-            maxWidth: 1050,
-            width: "100%",
-          }}
-        >
-          <Image
-            src={versusImage}
-            alt={versusImageAlt}
-            width={1050}
-            height={120}
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "contain",
-            }}
-            priority={false}
-          />
-        </Paper>
+        <Image
+          src={versusImage}
+          alt={versusImageAlt}
+          width={1050}
+          height={120}
+          priority={false}
+        />
       </Box>
 
       {/* Story Paragraphs */}
