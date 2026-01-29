@@ -254,7 +254,6 @@ Provide measurable metrics:
 
 - **Files Created:** N
 - **Files Modified:** N
-- **Lines of Code:** N
 - **Tests Added:** N
 - **Coverage:** X%
 - **NPM Packages:** N
