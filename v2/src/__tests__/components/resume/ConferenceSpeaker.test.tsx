@@ -15,15 +15,18 @@ describe("ConferenceSpeaker", () => {
         conference: "React Conf 2023",
         year: "2023",
         topic: "Advanced React Patterns",
+        location: "San Francisco, CA",
       },
       {
         conference: "JavaScript Summit 2022",
         year: "2022",
+        location: "Virtual",
       },
       {
         conference: "DevOps Days 2021",
         year: "2021",
         topic: "CI/CD Best Practices",
+        location: "Seattle, WA",
       },
     ],
   };
@@ -70,6 +73,38 @@ describe("ConferenceSpeaker", () => {
     expect(jssummit.textContent).not.toContain(" - ");
   });
 
+  it("should render locations when present", () => {
+    render(<ConferenceSpeaker content={mockContent} />);
+
+    expect(
+      screen.getByText(/react conf 2023.*san francisco, ca/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/javascript summit 2022.*virtual/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/devops days 2021.*seattle, wa/i)
+    ).toBeInTheDocument();
+  });
+
+  it("should render without location when not provided", () => {
+    const noLocationContent: SpeakingContent = {
+      intro: "I have presented at conferences:",
+      events: [
+        {
+          conference: "Tech Conference 2020",
+          year: "2020",
+        },
+      ],
+    };
+
+    render(<ConferenceSpeaker content={noLocationContent} />);
+
+    const eventText = screen.getByText(/tech conference 2020, 2020/i);
+    expect(eventText).toBeInTheDocument();
+    expect(eventText.textContent).not.toContain("(");
+  });
+
   it("should have proper accessibility attributes", () => {
     render(<ConferenceSpeaker content={mockContent} />);
 
@@ -91,7 +126,7 @@ describe("ConferenceSpeaker", () => {
     render(<ConferenceSpeaker content={singleEvent} />);
 
     expect(screen.getByText("I spoke at one conference:")).toBeInTheDocument();
-    expect(screen.getByText("Tech Talk 2020")).toBeInTheDocument();
+    expect(screen.getByText(/tech talk 2020, 2020/i)).toBeInTheDocument();
   });
 
   it("should render with empty events array", () => {
@@ -126,16 +161,16 @@ describe("ConferenceSpeaker", () => {
           conference: "Complete Conference 2024",
           year: "2024",
           topic: "Full Stack Development",
+          location: "Austin, TX",
         },
       ],
     };
 
     render(<ConferenceSpeaker content={fullEvent} />);
 
-    expect(
-      screen.getByText(
-        /complete conference 2024.*full stack development/i
-      )
-    ).toBeInTheDocument();
+    const eventText = screen.getByText(
+      /complete conference 2024.*austin, tx.*full stack development/i
+    );
+    expect(eventText).toBeInTheDocument();
   });
 });

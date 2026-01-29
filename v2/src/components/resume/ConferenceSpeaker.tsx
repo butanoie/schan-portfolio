@@ -17,7 +17,8 @@ export interface ConferenceSpeakerProps {
  *
  * Features:
  * - Introduction text explaining the speaking experience
- * - List of conferences with years
+ * - List of conferences with years and locations
+ * - Optional topic display for each event
  * - Bullet list format for clear presentation
  * - Compact layout suitable for sidebar
  *
@@ -37,7 +38,7 @@ export default function ConferenceSpeaker({
     <Box component="section" aria-labelledby="speaking-heading">
       <Box
         sx={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: BRAND_COLORS.duckEgg,
           borderRadius: 2,
           p: 2.5,
         }}
@@ -50,7 +51,7 @@ export default function ConferenceSpeaker({
           sx={{
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 600,
-            color: BRAND_COLORS.maroon,
+            color: BRAND_COLORS.graphite,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
@@ -88,7 +89,8 @@ export default function ConferenceSpeaker({
         >
           {events.map((event, index) => (
             <li key={index}>
-              {event.conference}
+              {event.conference}, {event.year}
+              {event.location && ` (${event.location})`}
               {event.topic && ` - ${event.topic}`}
             </li>
           ))}

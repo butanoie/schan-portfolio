@@ -43,7 +43,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
         sx={{
           fontFamily: '"Oswald", sans-serif',
           fontWeight: 600,
-          color: BRAND_COLORS.maroon,
+          color: BRAND_COLORS.graphite,
           fontSize: { xs: "1.75rem", md: "2rem" },
           mb: 3,
         }}
@@ -91,7 +91,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 variant="body1"
                 component="div"
                 sx={{
-                  fontWeight: 500,
+                  fontWeight: 600,
                   fontSize: { xs: "0.95rem", md: "1rem" },
                   color: BRAND_COLORS.graphite,
                   flex: { md: "1" },
@@ -105,9 +105,9 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 variant="body2"
                 component="div"
                 sx={{
-                  fontSize: { xs: "0.875rem", md: "0.95rem" },
+                  fontWeight: 600,
+                  fontSize: { xs: "0.95rem", md: "1rem" },
                   color: BRAND_COLORS.graphite,
-                  opacity: 0.8,
                   textAlign: { xs: "left", md: "right" },
                   flex: { md: "0 0 auto" },
                   minWidth: { md: "180px" },

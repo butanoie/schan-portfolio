@@ -33,7 +33,7 @@ export default function ClientList({ clients }: ClientListProps) {
     <Box component="section" aria-labelledby="clients-heading">
       <Box
         sx={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: BRAND_COLORS.duckEgg,
           borderRadius: 2,
           p: 2.5,
         }}
@@ -46,7 +46,7 @@ export default function ClientList({ clients }: ClientListProps) {
           sx={{
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 600,
-            color: BRAND_COLORS.maroon,
+            color: BRAND_COLORS.graphite,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
@@ -70,9 +70,10 @@ export default function ClientList({ clients }: ClientListProps) {
               sx={{
                 backgroundColor: BRAND_COLORS.sage,
                 color: "#ffffff",
-                fontWeight: 500,
+                fontWeight: 600,
                 fontSize: "0.75rem",
                 height: "26px",
+                borderRadius: "3px",
                 "& .MuiChip-label": {
                   px: 1.25,
                 },
