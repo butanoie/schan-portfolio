@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { DesignPhilosophyContent, ColorSwatch, TypographyEntry } from "../../types/colophon";
+import { BRAND_COLORS, UI_COLORS } from "../../constants";
 
 /**
  * Props for the DesignPhilosophy component.
@@ -38,7 +39,7 @@ function getContrastTextColor(hexColor: string): string {
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
   // Return white for dark backgrounds, dark for light backgrounds
-  return luminance > 0.5 ? "#2C2C2C" : "#FFFFFF";
+  return luminance > 0.5 ? BRAND_COLORS.graphite : "#FFFFFF";
 }
 
 /**
@@ -59,7 +60,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: "#f5f9fd",
+        backgroundColor: UI_COLORS.cardBackground,
       }}
     >
       <Box
@@ -121,7 +122,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#f5f9fd",
+        backgroundColor: UI_COLORS.cardBackground,
       }}
     >
       <CardContent
@@ -191,12 +192,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             sx={{
               fontFamily: font.fontFamily,
               fontWeight: font.fontWeight || 400,
-              fontSize:
-                font.name === "Oswald"
-                  ? "1.5rem"
-                  : font.name === "Gochi Hand"
-                    ? "1.25rem"
-                    : "1rem",
+              fontSize: font.sampleFontSize || "1rem",
               lineHeight: 1.4,
             }}
           >
@@ -231,7 +227,10 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
     <Box
       component="section"
       aria-labelledby="design-heading"
-      sx={{ mb: 6 }}
+      sx={{ 
+        mb: 6,
+        pb: 1
+      }}
     >
       <Typography
         id="design-heading"
@@ -240,8 +239,9 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         sx={{
           fontFamily: '"Oswald", sans-serif',
           fontWeight: 700,
-          color: "#8B1538",
+          color: BRAND_COLORS.maroon,
           fontSize: { xs: "1.75rem", md: "2rem" },
+          mt: 0,
           mb: 3,
           textAlign: "center",
         }}

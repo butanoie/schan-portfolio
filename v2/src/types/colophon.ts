@@ -115,6 +115,9 @@ export interface TypographyEntry {
   /** Font weight for the sample */
   fontWeight?: number | string;
 
+  /** Font size for the sample display (e.g., "1rem", "1.5rem") */
+  sampleFontSize?: string;
+
   /** Optional URL to font specimen page */
   url?: string;
 }

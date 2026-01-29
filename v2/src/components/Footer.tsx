@@ -7,6 +7,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BRAND_COLORS, UI_COLORS, NAV_COLORS } from "../constants";
 
 /**
  * Navigation link configuration for the footer.
@@ -31,8 +32,10 @@ interface NavLink {
  *
  * @returns A footer section with navigation, mascot, and copyright
  */
+/** Current year, computed once at module load to avoid hydration mismatch */
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
   const pathname = usePathname();
 
   /**
@@ -70,121 +73,136 @@ export default function Footer() {
         },
       }}
     >
-      {/* Buta Mascot - positioned in the padding area, behind the green footer on mobile */}
-      <Box
+      {/* Positioning container for Buta - aligned to centered column */}
+      <Container
+        maxWidth="lg"
         sx={{
           position: "absolute",
-          bottom: 80,
-          right: 12,
-          width: 180,
-          height: 125,
-          margin: 0,
-          zIndex: 0,
-          "@media (min-width: 720px)": {
-            bottom: -56,
-            right: 12,
-            width: 300,
-            height: 209,
-            zIndex: 5,
-          },
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          pointerEvents: "none",
         }}
       >
-        <Image
-          src="/images/buta/buta@2x.png"
-          alt="Buta, a pig mascot wearing a business suit"
-          width={300}
-          height={209}
-          style={{
-            width: "100%",
-            height: "auto",
-            objectFit: "contain",
-          }}
-          priority={false}
-        />
-      </Box>
-
-      {/* Thought Bubble - positioned above Buta */}
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 220,
-          right: 145,
-          width: 180,
-          height: 90,
-          padding: "15px 16px",
-          border: "2px solid #333",
-          textAlign: "center",
-          color: "#555555",
-          backgroundColor: "#f5f9fd",
-          borderRadius: "160px / 80px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 10,
-          "@media (min-width: 720px)": {
-            bottom: 160,
-            right: 225,
-            width: 250,
-            height: 125,
-            padding: "25px 20px",
-          },
-          // Small thought bubble circles
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            zIndex: 10,
-            bottom: -25,
-            right: 30,
-            width: 17,
-            height: 17,
-            border: "2px solid #333",
-            backgroundColor: "#f5f9fd",
-            borderRadius: "50%",
-            display: "block",
-            "@media (min-width: 720px)": {
-              right: 52,
-            },
-          },
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            zIndex: 10,
-            bottom: -35,
-            right: 20,
-            width: 8,
-            height: 8,
-            border: "2px solid #333",
-            backgroundColor: "#f5f9fd",
-            borderRadius: "50%",
-            display: "block",
-            "@media (min-width: 720px)": {
-              right: 35,
-            },
-          },
-        }}
-        role="img"
-        aria-label="Buta's thought bubble saying: Pork products FTW!"
-      >
-        <Typography
+        {/* Buta Mascot - positioned relative to centered column */}
+        <Box
           sx={{
-            fontFamily: '"Gochi Hand", cursive',
-            fontSize: "1rem",
-            color: "#555555",
+            position: "absolute",
+            bottom: 80,
+            right: 16,
+            width: 180,
+            height: 125,
+            margin: 0,
+            zIndex: 0,
+            pointerEvents: "auto",
             "@media (min-width: 720px)": {
-              fontSize: "1.125rem",
+              bottom: -56,
+              right: 16,
+              width: 300,
+              height: 209,
+              zIndex: 5,
             },
           }}
         >
-          Pork products FTW!
-        </Typography>
-      </Box>
+          <Image
+            src="/images/buta/buta@2x.png"
+            alt="Buta, a pig mascot wearing a business suit"
+            width={300}
+            height={209}
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "contain",
+            }}
+            priority={false}
+          />
+        </Box>
+
+        {/* Thought Bubble - positioned above Buta */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 220,
+            right: 135,
+            width: 180,
+            height: 90,
+            padding: "15px 16px",
+            border: `2px solid ${UI_COLORS.border}`,
+            textAlign: "center",
+            color: UI_COLORS.secondaryText,
+            backgroundColor: UI_COLORS.cardBackground,
+            borderRadius: "160px / 80px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10,
+            pointerEvents: "auto",
+            "@media (min-width: 720px)": {
+              bottom: 160,
+              right: 215,
+              width: 250,
+              height: 125,
+              padding: "25px 20px",
+            },
+            // Small thought bubble circles
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              zIndex: 10,
+              bottom: -25,
+              right: 30,
+              width: 17,
+              height: 17,
+              border: `2px solid ${UI_COLORS.border}`,
+              backgroundColor: UI_COLORS.cardBackground,
+              borderRadius: "50%",
+              display: "block",
+              "@media (min-width: 720px)": {
+                right: 52,
+              },
+            },
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              zIndex: 10,
+              bottom: -35,
+              right: 20,
+              width: 8,
+              height: 8,
+              border: `2px solid ${UI_COLORS.border}`,
+              backgroundColor: UI_COLORS.cardBackground,
+              borderRadius: "50%",
+              display: "block",
+              "@media (min-width: 720px)": {
+                right: 35,
+              },
+            },
+          }}
+          role="img"
+          aria-label="Buta's thought bubble saying: Pork products FTW!"
+        >
+          <Typography
+            sx={{
+              fontFamily: '"Gochi Hand", cursive',
+              fontSize: "1rem",
+              color: UI_COLORS.secondaryText,
+              "@media (min-width: 720px)": {
+                fontSize: "1.125rem",
+              },
+            }}
+          >
+            Pork products FTW!
+          </Typography>
+        </Box>
+      </Container>
 
       {/* Footer Container with Sage Green Background */}
       <Container
         maxWidth={false}
         disableGutters
         sx={{
-          backgroundColor: "#85b09c",
+          backgroundColor: BRAND_COLORS.sage,
           pt: 1.25,
           position: "relative",
           zIndex: 1,
@@ -223,19 +241,21 @@ export default function Footer() {
                   size="medium"
                   sx={{
                     backgroundColor: isActive(link.href)
-                      ? "#ae113d"
-                      : "#6a8a7a",
-                    color: "#ffffff",
+                      ? NAV_COLORS.active
+                      : BRAND_COLORS.sage,
+                    color: NAV_COLORS.text,
                     fontFamily: '"Open Sans", sans-serif',
                     fontWeight: 600,
                     textTransform: "none",
                     borderRadius: 1,
+                    boxShadow: 0,
                     px: 2,
                     py: 0.75,
                     "&:hover": {
                       backgroundColor: isActive(link.href)
-                        ? "#8B1538"
-                        : "#5a7a6a",
+                        ? NAV_COLORS.activeHover
+                        : NAV_COLORS.inactiveHover,
+                      boxShadow: 0,
                     },
                   }}
                 >
@@ -248,13 +268,13 @@ export default function Footer() {
             <Typography
               variant="body2"
               sx={{
-                color: "#f1f1f1",
+                color: UI_COLORS.copyrightText,
                 fontSize: "0.8125rem",
                 lineHeight: 1.4,
                 py: 1.25,
               }}
             >
-              2013-{currentYear} Sing Chan
+              2013-{CURRENT_YEAR} Sing Chan
               <br />
               All trademarks are the property of their respective owners.
             </Typography>

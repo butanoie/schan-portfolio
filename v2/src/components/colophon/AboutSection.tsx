@@ -2,6 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import type { AboutContent } from "../../types/colophon";
+import { BRAND_COLORS } from "../../constants";
 
 /**
  * Props for the AboutSection component.
@@ -32,7 +33,6 @@ export default function AboutSection({ content }: AboutSectionProps) {
     <Box
       component="section"
       aria-labelledby="colophon-heading"
-      sx={{ mb: 6 }}
     >
       <Typography
         id="colophon-heading"
@@ -41,7 +41,7 @@ export default function AboutSection({ content }: AboutSectionProps) {
         sx={{
           fontFamily: '"Oswald", sans-serif',
           fontWeight: 700,
-          color: "#2C2C2C",
+          color: BRAND_COLORS.graphite,
           fontSize: { xs: "2rem", md: "2.5rem" },
           mb: 3,
           textAlign: "center",

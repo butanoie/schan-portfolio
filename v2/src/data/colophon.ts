@@ -180,7 +180,7 @@ export const colophonData: ColophonData = {
       {
         name: 'Sakura',
         hex: '#FFF0F5',
-        description: 'Cherry blossom pink - used as the page background',
+        description: 'Cherry blossom pink - more inspirational than actual implementation',
       },
       {
         name: 'Duck Egg',
@@ -213,7 +213,7 @@ export const colophonData: ColophonData = {
       'The colour palette is comprised of some of my favourite pastels—sakura (cherry blossom), duck egg, and sky blue — graphite and maroon are included as background colours for instances of white text.',
 
     typographyIntro:
-      'For typography, I use Open Source web fonts available through Google Fonts:',
+      'Open source web fonts available through Google Fonts:',
 
     typography: [
       {
@@ -222,6 +222,7 @@ export const colophonData: ColophonData = {
         sample: 'The quick brown fox jumps over the lazy dog.',
         fontFamily: '"Open Sans", sans-serif',
         fontWeight: 400,
+        sampleFontSize: '1rem',
         url: 'https://fonts.google.com/specimen/Open+Sans',
       },
       {
@@ -230,6 +231,7 @@ export const colophonData: ColophonData = {
         sample: 'CHOICE CUTS',
         fontFamily: '"Oswald", sans-serif',
         fontWeight: 700,
+        sampleFontSize: '1.5rem',
         url: 'https://fonts.google.com/specimen/Oswald',
       },
       {
@@ -238,6 +240,7 @@ export const colophonData: ColophonData = {
         sample: 'Oink oink!',
         fontFamily: '"Gochi Hand", cursive',
         fontWeight: 400,
+        sampleFontSize: '1.25rem',
         url: 'https://fonts.google.com/specimen/Gochi+Hand',
       },
     ],

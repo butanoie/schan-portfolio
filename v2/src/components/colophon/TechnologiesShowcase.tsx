@@ -5,7 +5,6 @@ import {
   Typography,
   Card,
   CardContent,
-  Chip,
   Link as MuiLink,
   Accordion,
   AccordionSummary,
@@ -14,6 +13,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { TechnologiesContent, Technology } from "../../types/colophon";
+import { BRAND_COLORS, UI_COLORS } from "../../constants";
 
 /**
  * Props for the TechnologiesShowcase component.
@@ -38,7 +38,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#f5f9fd",
+        backgroundColor: UI_COLORS.cardBackground,
       }}
     >
       <CardContent sx={{ flexGrow: 1 }}>
@@ -108,7 +108,10 @@ export default function TechnologiesShowcase({
     <Box
       component="section"
       aria-labelledby="technologies-heading"
-      sx={{ mb: 6 }}
+      sx={{
+        mb: 6,
+        pb: 1
+      }}
     >
       <Typography
         id="technologies-heading"
@@ -117,8 +120,9 @@ export default function TechnologiesShowcase({
         sx={{
           fontFamily: '"Oswald", sans-serif',
           fontWeight: 700,
-          color: "#8B1538",
+          color: BRAND_COLORS.maroon,
           fontSize: { xs: "1.75rem", md: "2rem" },
+          mt: 0,
           mb: 3,
           textAlign: "center"
         }}
