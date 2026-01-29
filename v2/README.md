@@ -36,7 +36,7 @@ All Phase 1 tasks from the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) h
 - **Framework:** Next.js 16.1.4 (React 19.2.3)
 - **Language:** TypeScript 5+
 - **UI Library:** Material UI v7.3.7
-- **Styling:** Emotion + Tailwind CSS v4
+- **Styling:** Emotion (MUI's styling solution)
 
 ### Development Tools
 - **Testing:** Vitest 4 + React Testing Library

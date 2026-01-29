@@ -1,8 +1,10 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
-import type { ProjectImage as ProjectImageType } from '../types';
+import Image from "next/image";
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material/styles";
+import type { ProjectImage as ProjectImageType } from "../types";
 
 /**
  * Props for the ProjectImage component.
@@ -12,7 +14,7 @@ interface ProjectImageProps {
   image: ProjectImageType;
 
   /** Display size variant */
-  size?: 'thumbnail' | 'full';
+  size?: "thumbnail" | "full";
 
   /** Priority loading for above-the-fold images */
   priority?: boolean;
@@ -20,8 +22,8 @@ interface ProjectImageProps {
   /** Click handler for image interactions */
   onClick?: () => void;
 
-  /** Additional CSS classes */
-  className?: string;
+  /** Additional MUI sx styles */
+  sx?: SxProps<Theme>;
 }
 
 /**
@@ -40,27 +42,29 @@ interface ProjectImageProps {
  * @param props.size - Display size variant
  * @param props.priority - Priority loading for above-the-fold images
  * @param props.onClick - Click handler for image interactions
- * @param props.className - Additional CSS classes
+ * @param props.sx - Additional MUI sx styles
  * @returns Optimized image element
  *
  * @example
+ * ```tsx
  * <ProjectImage
- * image={project.images[0]}
- * size="thumbnail"
- * priority={false}
- * onClick={() => openLightbox(0)}
+ *   image={project.images[0]}
+ *   size="thumbnail"
+ *   priority={false}
+ *   onClick={() => openLightbox(0)}
  * />
+ * ```
  */
 export function ProjectImage({
   image,
-  size = 'thumbnail',
+  size = "thumbnail",
   priority = false,
   onClick,
-  className = '',
+  sx,
 }: ProjectImageProps) {
   const [imageError, setImageError] = useState(false);
 
-  const imageSrc = size === 'thumbnail' ? image.tnUrl : image.url;
+  const imageSrc = size === "thumbnail" ? image.tnUrl : image.url;
 
   /**
    * Handles image load errors by setting error state.
@@ -72,29 +76,40 @@ export function ProjectImage({
   if (imageError) {
     // Fallback UI for broken images
     return (
-      <div
-        className={`flex items-center justify-center bg-gray-200 ${className}`}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "grey.200",
+          ...sx,
+        }}
         role="img"
         aria-label={image.caption}
       >
-        <span className="text-gray-500">Image unavailable</span>
-      </div>
+        <Typography sx={{ color: "grey.500" }}>Image unavailable</Typography>
+      </Box>
     );
   }
 
   return (
-    <Image
-      src={imageSrc}
-      alt={image.caption}
-      width={size === 'thumbnail' ? 400 : 1200}
-      height={size === 'thumbnail' ? 300 : 900}
-      className={className}
-      priority={priority}
-      onClick={onClick}
-      onError={handleError}
-      placeholder="blur"
-      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg=="
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
-    />
+    <Box sx={sx}>
+      <Image
+        src={imageSrc}
+        alt={image.caption}
+        width={size === "thumbnail" ? 400 : 1200}
+        height={size === "thumbnail" ? 300 : 900}
+        priority={priority}
+        onClick={onClick}
+        onError={handleError}
+        placeholder="blur"
+        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg=="
+        style={{
+          cursor: onClick ? "pointer" : "default",
+          width: "100%",
+          height: "auto",
+        }}
+      />
+    </Box>
   );
 }

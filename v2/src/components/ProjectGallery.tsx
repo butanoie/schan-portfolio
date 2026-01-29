@@ -1,8 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ProjectImage } from './ProjectImage';
-import type { ProjectImage as ProjectImageType } from '../types';
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material/styles";
+import { ProjectImage } from "./ProjectImage";
+import type { ProjectImage as ProjectImageType } from "../types";
 
 /**
  * Props for the ProjectGallery component.
@@ -14,8 +16,8 @@ interface ProjectGalleryProps {
   /** Enable alternate grid layout */
   altGrid?: boolean;
 
-  /** Additional CSS classes */
-  className?: string;
+  /** Additional MUI sx styles */
+  sx?: SxProps<Theme>;
 }
 
 /**
@@ -25,7 +27,7 @@ interface ProjectGalleryProps {
  * @param props - Component props
  * @param props.images - Array of project images
  * @param props.altGrid - Enable alternate grid layout
- * @param props.className - Additional CSS classes
+ * @param props.sx - Additional MUI sx styles
  * @returns Image gallery with lightbox functionality
  *
  * @example
@@ -34,7 +36,7 @@ interface ProjectGalleryProps {
 export function ProjectGallery({
   images,
   altGrid = false,
-  className = '',
+  sx,
 }: ProjectGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -55,14 +57,16 @@ export function ProjectGallery({
   };
 
   return (
-    <div className={className}>
+    <Box sx={sx}>
       {/* Thumbnail Grid */}
-      <div
-        className={
-          altGrid
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-            : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
-        }
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: altGrid
+            ? { xs: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }
+            : { xs: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" },
+          gap: 2,
+        }}
       >
         {images.map((image, index) => (
           <ProjectImage
@@ -70,24 +74,41 @@ export function ProjectGallery({
             image={image}
             size="thumbnail"
             onClick={() => openLightbox(index)}
-            className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            sx={{
+              borderRadius: 2,
+              boxShadow: 2,
+              transition: "box-shadow 0.2s ease-in-out",
+              "&:hover": {
+                boxShadow: 4,
+              },
+            }}
           />
         ))}
-      </div>
+      </Box>
 
       {/* Lightbox Modal (to be implemented in Phase 3) */}
       {selectedIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+        <Box
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
           aria-label="Image lightbox"
+          sx={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
+          }}
         >
           {/* Lightbox content will be implemented in Phase 3 */}
-          <p className="text-white">Lightbox placeholder - to be implemented</p>
-        </div>
+          <Typography sx={{ color: "white" }}>
+            Lightbox placeholder - to be implemented
+          </Typography>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
