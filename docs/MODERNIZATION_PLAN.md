@@ -465,11 +465,23 @@ The following Gumby features are being **completely removed** in V2:
 
 ### Tasks
 
-- [ ] Implement dark mode
-  - MUI theme switcher (light/dark)
+- [ ] Implement theme switching
+  - MUI theme switcher supporting multiple themes:
+    - Light theme (default)
+    - Dark theme
+    - High contrast black and white theme (accessibility)
   - Persist user preference (localStorage)
+  - Respect prefers-color-scheme and prefers-contrast media queries
   - Smooth theme transitions
-  - Toggle button in header
+  - Theme toggle in header with accessible controls
+  - Ensure all themes meet WCAG 2.2 AA contrast requirements
+- [ ] Implement localization (i18n)
+  - String externalization for all user-facing text
+  - Number formatting (locale-aware formatting for dates, numbers, currencies)
+  - Support for multiple locales (start with en-US, structure for expansion)
+  - Use next-intl or react-i18next for internationalization
+  - RTL (right-to-left) layout support foundation
+  - Language switcher component (if multiple languages added)
 - [ ] Add animations and transitions
   - Page transition animations
   - Hover effects on cards
@@ -532,7 +544,10 @@ The following Gumby features are being **completely removed** in V2:
 
 ### Deliverables
 
-- [ ] Dark mode fully implemented (with WCAG 2.2 AA compliant color schemes)
+- [ ] Theme switching fully implemented (light, dark, high contrast B&W)
+- [ ] All themes WCAG 2.2 AA compliant color schemes
+- [ ] Localization infrastructure in place with externalized strings
+- [ ] Locale-aware number/date formatting implemented
 - [ ] Polished animations throughout (respecting prefers-reduced-motion)
 - [ ] WCAG 2.2 Level AA accessibility compliance achieved
 - [ ] Accessibility statement published
@@ -546,8 +561,11 @@ The following Gumby features are being **completely removed** in V2:
 - axe DevTools reports zero critical or serious issues
 - Screen reader testing passes on NVDA, JAWS, and VoiceOver
 - All color contrast ratios meet WCAG 2.2 AA standards
+- High contrast theme passes WCAG AAA contrast requirements (7:1)
 - Keyboard navigation works for all interactive elements
-- Dark mode toggles smoothly with accessible color schemes
+- Theme switching works smoothly with user preference persistence
+- Localization strings externalized (no hardcoded user-facing text)
+- Number/date formatting respects user locale
 - Analytics capturing data correctly
 - SEO meta tags validated
 
@@ -771,6 +789,9 @@ The following Gumby features are being **completely removed** in V2:
 | Contentful/Sanity | Headless CMS |
 | Cloudinary | Image CDN |
 | Plausible/GA4 | Analytics |
+| next-intl | Internationalization for Next.js |
+| react-i18next | Alternative i18n library |
+| Intl API | Native number/date formatting |
 
 ---
 
@@ -1071,10 +1092,11 @@ This project **must** meet WCAG 2.2 Level AA standards. The following are key re
 
 ---
 
-**Document Version:** 1.5
-**Last Updated:** 2026-01-27
+**Document Version:** 1.6
+**Last Updated:** 2026-01-28
 **Author:** Sing Chan (with Claude Code)
 **Changelog:**
+- v1.6: Added localization (i18n) requirements and expanded theme switching to include high contrast black and white theme for accessibility. Updated Phase 4 deliverables and success criteria.
 - v1.5: Updated Phase 2 with completed testing infrastructure setup (Vitest, React Testing Library, 80% coverage thresholds, sample tests with 100% coverage). Analyzed PHP data structure from v1. Updated Timeline and Next Steps to reflect Phase 2 progress.
 - v1.4: Added comprehensive Gumby Framework migration section with feature mapping and replacement strategy
 - v1.3: Marked Phase 1 as complete with detailed completion notes and components created
