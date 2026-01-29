@@ -1,6 +1,18 @@
 # Portfolio v2 - Modern Next.js Application
 
-Modern portfolio website for Sing Chan, built with Next.js 14+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
+Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
+
+## Current Status: Phase 3 - Core Pages Development 🔄
+
+**Completed:**
+- ✅ Phase 1: Foundation & Setup
+- ✅ Phase 2: Data Migration (18 projects, 239 images, full TypeScript types)
+- ✅ Task 3.3: Colophon/About Page ([PR #3](https://github.com/butanoie/schan-portfolio/pull/3))
+
+**In Progress:**
+- ⬜ Task 3.1: Homepage (Portfolio)
+- ⬜ Task 3.2: Resume Page
+- ⬜ Task 3.4: Shared Components (Lightbox, etc.)
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
@@ -86,24 +98,45 @@ v2/
 ├── app/                    # Next.js App Router pages
 │   ├── layout.tsx         # Root layout with theme
 │   ├── page.tsx           # Homepage
+│   ├── colophon/          # Colophon/About page ✅
+│   │   └── page.tsx
 │   └── globals.css        # Global styles
 ├── src/
 │   ├── __tests__/        # Test files
+│   │   ├── app/          # Page tests
+│   │   │   └── colophon/ # Colophon page tests ✅
 │   │   ├── components/   # Component tests
+│   │   │   └── colophon/ # Colophon component tests ✅
 │   │   ├── lib/          # Library tests
 │   │   ├── utils/        # Utility tests
 │   │   └── README.md     # Testing guide
 │   ├── components/        # React components
 │   │   ├── Header.tsx    # Navigation header
-│   │   ├── Footer.tsx    # Site footer
+│   │   ├── Footer.tsx    # Site footer (with Buta positioning)
 │   │   ├── MainLayout.tsx # Main layout wrapper
-│   │   └── ThemeProvider.tsx # MUI theme provider
+│   │   ├── ThemeProvider.tsx # MUI theme provider
+│   │   └── colophon/     # Colophon components ✅
+│   │       ├── AboutSection.tsx
+│   │       ├── TechnologiesShowcase.tsx
+│   │       ├── DesignPhilosophy.tsx
+│   │       └── ButaStory.tsx
+│   ├── constants/        # Centralized constants ✅
+│   │   ├── index.ts      # Barrel export
+│   │   └── colors.ts     # Brand & UI colors
+│   ├── data/             # Content data files
+│   │   ├── projects.ts   # Portfolio projects (18)
+│   │   └── colophon.ts   # Colophon page content ✅
 │   ├── lib/              # Libraries and utilities
 │   │   └── theme.ts      # MUI theme configuration
 │   ├── types/            # TypeScript type definitions
+│   │   ├── project.ts    # Project types
+│   │   └── colophon.ts   # Colophon types ✅
 │   ├── utils/            # Utility functions
 │   └── styles/           # Style utilities
 ├── public/               # Static assets
+│   └── images/
+│       ├── gallery/      # Project images (239)
+│       └── buta/         # Buta mascot images ✅
 └── .husky/               # Git hooks
 ```
 
@@ -350,10 +383,10 @@ Tests run automatically:
 
 ### Test Metrics (Current)
 
-- **Total Tests:** 11 (sample utility)
-- **Test Files:** 1
-- **Coverage:** 100% (sample code)
-- **Average Test Time:** <10ms per test
+- **Total Tests:** 50+ (Phase 2 data layer + Phase 3 colophon components)
+- **Test Files:** 15+
+- **Coverage:** 88%+ (data layer) / Growing (components)
+- **Average Test Time:** <50ms per test
 - **Status:** ✅ All passing
 
 ## Accessibility
@@ -378,12 +411,17 @@ This project is committed to WCAG 2.2 Level AA compliance:
 ## Next Steps
 
 See the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) for the full roadmap:
-- Phase 2: Data Migration
-- Phase 3: Core Pages Development
-- Phase 4: Enhanced Features
-- Phase 5: Performance & Optimization
-- Phase 6: Deployment & Migration
-- Phase 7: Post-Launch
+- ✅ Phase 1: Foundation & Setup
+- ✅ Phase 2: Data Migration
+- 🔄 Phase 3: Core Pages Development (current - [detailed plan](../docs/PHASE3_DETAILED_PLAN.md))
+  - ✅ Task 3.3: Colophon/About Page
+  - ⬜ Task 3.1: Homepage (Portfolio)
+  - ⬜ Task 3.2: Resume Page
+  - ⬜ Task 3.4: Shared Components
+- ⬜ Phase 4: Enhanced Features
+- ⬜ Phase 5: Performance & Optimization
+- ⬜ Phase 6: Deployment & Migration
+- ⬜ Phase 7: Post-Launch
 
 ## Learn More
 
