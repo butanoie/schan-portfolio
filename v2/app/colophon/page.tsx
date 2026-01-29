@@ -37,9 +37,6 @@ export default function ColophonPage() {
     <Container
       component="main"
       maxWidth="lg"
-      sx={{
-        py: { xs: 4, md: 6 },
-      }}
     >
       {/* Choice Cuts Header Image */}
       <Box

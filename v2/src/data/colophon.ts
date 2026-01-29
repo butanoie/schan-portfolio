@@ -210,7 +210,7 @@ export const colophonData: ColophonData = {
     ],
 
     colorDescription:
-      'The colour palette is comprised of some of my favourite pastels—sakura (cherry blossom), duck egg, and sky blue—but darkened so they can be used as background colours contrasted against white text.',
+      'The colour palette is comprised of some of my favourite pastels—sakura (cherry blossom), duck egg, and sky blue — graphite and maroon are included as background colours for instances of white text.',
 
     typographyIntro:
       'For typography, I use Open Source web fonts available through Google Fonts:',

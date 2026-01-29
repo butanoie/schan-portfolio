@@ -38,10 +38,6 @@ function TechnologyCard({ tech }: { tech: Technology }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        transition: "box-shadow 0.2s ease",
-        "&:hover": {
-          boxShadow: 2,
-        },
         backgroundColor: "#f5f9fd",
       }}
     >
@@ -55,7 +51,6 @@ function TechnologyCard({ tech }: { tech: Technology }) {
           }}
         >
           <Typography
-            variant="h6"
             component="h4"
             sx={{
               fontFamily: '"Oswald", sans-serif',
@@ -152,22 +147,10 @@ export default function TechnologiesShowcase({
               fontWeight: 600,
               fontSize: { xs: "1.1rem", md: "1.25rem" },
               mb: 2,
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
             }}
           >
-            <Chip
-              label={category.label}
-              size="small"
-              sx={{
-                backgroundColor: "secondary.main",
-                fontFamily: '"Oswald", sans-serif',
-                fontWeight: 600,
-              }}
-            />
+            { category.label }
           </Typography>
-
           <Box
             sx={{
               display: "grid",
