@@ -63,10 +63,122 @@ export default function Footer() {
       component="footer"
       sx={{
         position: "relative",
-        pt: { xs: 30, sm: 25 },
+        pt: 25,
         overflow: "hidden",
+        "@media (min-width: 720px)": {
+          pt: 23,
+        },
       }}
     >
+      {/* Buta Mascot - positioned in the padding area, behind the green footer on mobile */}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 80,
+          right: 12,
+          width: 180,
+          height: 125,
+          margin: 0,
+          zIndex: 0,
+          "@media (min-width: 720px)": {
+            bottom: -56,
+            right: 12,
+            width: 300,
+            height: 209,
+            zIndex: 5,
+          },
+        }}
+      >
+        <Image
+          src="/images/buta/buta@2x.png"
+          alt="Buta, a pig mascot wearing a business suit"
+          width={300}
+          height={209}
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "contain",
+          }}
+          priority={false}
+        />
+      </Box>
+
+      {/* Thought Bubble - positioned above Buta */}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 220,
+          right: 145,
+          width: 180,
+          height: 90,
+          padding: "15px 16px",
+          border: "2px solid #333",
+          textAlign: "center",
+          color: "#555555",
+          backgroundColor: "#f5f9fd",
+          borderRadius: "160px / 80px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 10,
+          "@media (min-width: 720px)": {
+            bottom: 160,
+            right: 225,
+            width: 250,
+            height: 125,
+            padding: "25px 20px",
+          },
+          // Small thought bubble circles
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            zIndex: 10,
+            bottom: -25,
+            right: 30,
+            width: 17,
+            height: 17,
+            border: "2px solid #333",
+            backgroundColor: "#f5f9fd",
+            borderRadius: "50%",
+            display: "block",
+            "@media (min-width: 720px)": {
+              right: 52,
+            },
+          },
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            zIndex: 10,
+            bottom: -35,
+            right: 20,
+            width: 8,
+            height: 8,
+            border: "2px solid #333",
+            backgroundColor: "#f5f9fd",
+            borderRadius: "50%",
+            display: "block",
+            "@media (min-width: 720px)": {
+              right: 35,
+            },
+          },
+        }}
+        role="img"
+        aria-label="Buta's thought bubble saying: Pork products FTW!"
+      >
+        <Typography
+          sx={{
+            fontFamily: '"Gochi Hand", cursive',
+            fontSize: "1rem",
+            color: "#555555",
+            "@media (min-width: 720px)": {
+              fontSize: "1.125rem",
+            },
+          }}
+        >
+          Pork products FTW!
+        </Typography>
+      </Box>
+
       {/* Footer Container with Sage Green Background */}
       <Container
         maxWidth={false}
@@ -74,6 +186,8 @@ export default function Footer() {
         sx={{
           backgroundColor: "#85b09c",
           pt: 1.25,
+          position: "relative",
+          zIndex: 1,
         }}
       >
         <Container
@@ -82,92 +196,6 @@ export default function Footer() {
             position: "relative",
           }}
         >
-          {/* Thought Bubble - positioned above the footer content */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: { xs: 110, sm: 160 },
-              right: { xs: 140, sm: 225 },
-              width: { xs: 180, sm: 250 },
-              height: { xs: 90, sm: 125 },
-              padding: { xs: "15px 16px", sm: "25px 20px" },
-              border: "2px solid #333",
-              textAlign: "center",
-              color: "#555555",
-              backgroundColor: "#f5f9fd",
-              borderRadius: "160px / 80px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 10,
-              // Small thought bubble circles
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                zIndex: 10,
-                bottom: -25,
-                right: { xs: 30, sm: 52 },
-                width: 17,
-                height: 17,
-                border: "2px solid #333",
-                backgroundColor: "#f5f9fd",
-                borderRadius: "50%",
-                display: "block",
-              },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                zIndex: 10,
-                bottom: -35,
-                right: { xs: 20, sm: 35 },
-                width: 8,
-                height: 8,
-                border: "2px solid #333",
-                backgroundColor: "#f5f9fd",
-                borderRadius: "50%",
-                display: "block",
-              },
-            }}
-            role="img"
-            aria-label="Buta's thought bubble saying: Pork products FTW!"
-          >
-            <Typography
-              sx={{
-                fontFamily: '"Gochi Hand", cursive',
-                fontSize: { xs: "1rem", sm: "1.125rem" },
-                color: "#555555",
-              }}
-            >
-              Pork products FTW!
-            </Typography>
-          </Box>
-
-          {/* Buta Mascot - positioned absolutely on the right of the centered container */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: { xs: -30, sm: -56 },
-              right: { xs: 12, sm: 12 },
-              width: { xs: 180, sm: 300 },
-              height: { xs: 125, sm: 209 },
-              margin: 0,
-              zIndex: 5,
-            }}
-          >
-            <Image
-              src="/images/buta/buta@2x.png"
-              alt="Buta, a pig mascot wearing a business suit"
-              width={300}
-              height={209}
-              style={{
-                width: "100%",
-                height: "auto",
-                objectFit: "contain",
-              }}
-              priority={false}
-            />
-          </Box>
-
           <Box
             sx={{
               display: "flex",
