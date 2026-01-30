@@ -5,16 +5,17 @@
 
 /**
  * Contact or social link with icon identifier for resume header buttons.
+ * URLs can use special protocols like mailto:, tel:, or https://
  */
 export interface ContactLink {
   /** Display label for the button (e.g., "linkedin.com/in/sing-chan") */
   label: string;
 
-  /** URL to navigate to */
+  /** URL to navigate to. Supports standard URLs and special protocols (mailto:, tel:) */
   url: string;
 
   /** Icon identifier for the button */
-  icon: "linkedin" | "github" | "email" | "download";
+  icon: "linkedin" | "github" | "email" | "download" | "phone";
 }
 
 /**

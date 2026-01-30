@@ -5,8 +5,10 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import DownloadIcon from "@mui/icons-material/Download";
 import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
 import type { ResumeHeaderContent } from "../../types/resume";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
+import { rot13 } from "../../utils/obfuscation";
 
 /**
  * Props for the ResumeHeader component.
@@ -24,6 +26,7 @@ const iconMap = {
   github: GitHubIcon,
   download: DownloadIcon,
   email: EmailIcon,
+  phone: PhoneIcon,
 };
 
 /**
@@ -57,7 +60,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
         flexDirection: { xs: "column", md: "row" },
         gap: { xs: 3, md: 4 },
         justifyContent: "space-between",
-        alignItems: { xs: "stretch", md: "flex-start" },
+        alignItems: { xs: "stretch", md: "flex-end" },
       }}
     >
       {/* Left Section: Name and Tagline */}
@@ -65,6 +68,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
         sx={{
           flex: 1,
           minWidth: 0,
+          pb: 1,
         }}
       >
         {/* Name */}
@@ -108,22 +112,24 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
         {contactLinks.map((link, index) => {
           const IconComponent = iconMap[link.icon];
           const isDownload = link.icon === "download";
+          const isSageColor = ["download", "email", "phone"].includes(link.icon);
+          // Decode obfuscated email and phone labels and URLs
+          const shouldDecode = ["email", "phone"].includes(link.icon);
+          const displayLabel = shouldDecode ? rot13(link.label) : link.label;
+          const displayUrl = shouldDecode ? rot13(link.url) : link.url;
 
           return (
             <Button
               key={index}
               variant="contained"
-              href={link.url}
+              href={displayUrl}
               target={isDownload ? "_blank" : undefined}
               rel={isDownload ? "noopener noreferrer" : undefined}
               startIcon={<IconComponent />}
-              aria-label={`${link.label}${isDownload ? " (opens in new tab)" : ""}`}
+              aria-label={`${displayLabel}${isDownload ? " (opens in new tab)" : ""}`}
               className={isDownload ? "no-print" : undefined}
               sx={{
-                backgroundColor:
-                  link.icon === "download"
-                    ? BRAND_COLORS.sage
-                    : BRAND_COLORS.maroon,
+                backgroundColor: isSageColor ? BRAND_COLORS.sage : BRAND_COLORS.maroon,
                 color: "#ffffff",
                 textTransform: "none",
                 fontSize: "0.95rem",
@@ -132,17 +138,17 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
                 py: 1,
                 width: "100%",
                 justifyContent: "flex-start",
+                gap: 1,
                 boxShadow: "none",
                 "&:hover": {
-                  backgroundColor:
-                    link.icon === "download"
-                      ? NAV_COLORS.inactiveHover
-                      : BRAND_COLORS.maroonDark,
+                  backgroundColor: isSageColor
+                    ? NAV_COLORS.inactiveHover
+                    : BRAND_COLORS.maroonDark,
                   boxShadow: "none",
                 },
               }}
             >
-              {link.label}
+              {displayLabel}
             </Button>
           );
         })}

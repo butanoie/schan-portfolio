@@ -38,6 +38,16 @@ export const resumeData: ResumeData = {
         icon: "github",
       },
       {
+        label: "fvat@fvatpuna.pbz",
+        url: "znvygb:fvat@fvatpuna.pbz?fhowrpg=Pbagnpg ivn Cbegsbyvb Fvgr",
+        icon: "email",
+      },
+      {
+        label: "+6-159-228-7398",
+        url: "gry:+6-159-228-7398",
+        icon: "phone",
+      },
+      {
         label: "Download Résumé",
         url: "/Sing_Chan_Resume.pdf",
         icon: "download",

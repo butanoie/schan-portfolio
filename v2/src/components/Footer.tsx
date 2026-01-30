@@ -251,7 +251,7 @@ export default function Footer() {
                     textTransform: "none",
                     borderRadius: 1,
                     boxShadow: 0,
-                    px: 2,
+                    px: 3,
                     py: 0.75,
                     "&:hover": {
                       backgroundColor: isActive(link.href)
