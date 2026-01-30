@@ -89,7 +89,7 @@ export default function Footer() {
         <Box
           sx={{
             position: "absolute",
-            bottom: 80,
+            bottom: 90,
             right: 16,
             width: 180,
             height: 125,
@@ -123,8 +123,8 @@ export default function Footer() {
         <Box
           sx={{
             position: "absolute",
-            bottom: 220,
-            right: 135,
+            bottom: 230,
+            right: 145,
             width: 180,
             height: 90,
             padding: "15px 16px",
@@ -139,8 +139,8 @@ export default function Footer() {
             zIndex: 10,
             pointerEvents: "auto",
             "@media (min-width: 720px)": {
-              bottom: 160,
-              right: 215,
+              bottom: 165,
+              right: 225,
               width: 250,
               height: 125,
               padding: "25px 20px",
@@ -203,7 +203,9 @@ export default function Footer() {
         disableGutters
         sx={{
           backgroundColor: BRAND_COLORS.sage,
-          pt: 1.25,
+          pt: 2,
+          pb: 1,
+          pl: { xs: 3, md: 5 },
           position: "relative",
           zIndex: 1,
         }}

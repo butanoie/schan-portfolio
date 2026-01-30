@@ -46,7 +46,8 @@ export default function ResumePage() {
       component="main"
       maxWidth="lg"
       sx={{
-        py: { xs: 2, md: 4 },
+        py: { xs: 2, md: 0 },
+        px: { xs: 2, sm: 3, md: 3 },
       }}
     >
       {/* Header - Full Width */}
@@ -68,6 +69,7 @@ export default function ResumePage() {
           sx={{
             order: { xs: 1, md: 2 },
             flex: { xs: "1", md: "0 0 33%" },
+            minWidth: "320px",
           }}
         >
           <CoreCompetencies categories={data.skillCategories} />
