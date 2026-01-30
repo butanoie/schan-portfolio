@@ -1,7 +1,7 @@
 # Task 3.1: Homepage (Portfolio) Implementation Plan
 
 **Created:** 2026-01-29
-**Status:** In Progress (Phase 1, 2 & 3 Complete)
+**Status:** In Progress (Phase 1-4 Complete)
 **Last Updated:** 2026-01-30
 **Related:** [PHASE3_DETAILED_PLAN.md](./PHASE3_DETAILED_PLAN.md)
 
@@ -111,7 +111,7 @@ interface ProjectGridProps {
 
 ### Phase 3: Filtering & Search (2 files) ✅ COMPLETED
 
-**Completed:** 2026-01-30 | **Commit:** TBD | **Files:** 2 components + 2 tests
+**Completed:** 2026-01-30 | **Commit:** 643821e | **Files:** 2 components + 2 tests
 
 **3.1 ProjectFilters** (`/v2/src/components/portfolio/ProjectFilters.tsx`)
 
@@ -163,7 +163,9 @@ interface SearchBarProps {
 - `aria-describedby` pointing to results text
 - Type: `search` for semantic HTML
 
-### Phase 4: Pagination (1 file)
+### Phase 4: Pagination (1 file) ✅ COMPLETED
+
+**Completed:** 2026-01-30 | **Commit:** TBD | **Files:** 1 component + 1 test
 
 **4.1 ButaNavigation** (`/v2/src/components/portfolio/ButaNavigation.tsx`)
 
