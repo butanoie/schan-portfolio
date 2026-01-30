@@ -348,6 +348,8 @@ The following Gumby features are being **completely removed** in V2:
 
 **Duration:** 3-4 weeks
 
+**Status:** 🔄 In Progress (2 of 3 tasks complete)
+
 ### Tasks
 
 #### 3.1 Homepage (Portfolio)
@@ -375,39 +377,64 @@ The following Gumby features are being **completely removed** in V2:
   - Search by title/description
   - Clear filters functionality
 
-#### 3.2 Resume Page
+#### 3.2 Resume Page ✅
 
-- [ ] Create resume layout components
-  - Header with contact info
-  - Work experience section
-  - Skills/competencies sidebar
-  - Clients list
-  - Conference speaking section
-- [ ] Implement responsive resume layout
-  - Desktop: two-column layout
-  - Mobile: single column stacked
-- [ ] Add print stylesheet
-  - Optimize for PDF generation
-  - Hide/show print-specific elements
-- [ ] Create PDF download functionality
-  - Link to static PDF or generate on-the-fly
-  - Download button with icon
+**Status:** ✅ COMPLETED (2026-01-29)
 
-#### 3.3 Colophon/About Page
+- [x] Create resume layout components
+  - [x] Header with contact info (ResumeHeader.tsx)
+  - [x] Work experience section (WorkExperience.tsx)
+  - [x] Skills/competencies sidebar (CoreCompetencies.tsx)
+  - [x] Clients list (ClientList.tsx)
+  - [x] Conference speaking section (ConferenceSpeaker.tsx)
+- [x] Implement responsive resume layout
+  - [x] Desktop: two-column layout (70% / 30%)
+  - [x] Mobile: single column stacked
+- [x] Add print stylesheet
+  - [x] Optimize for PDF generation
+  - [x] Hide/show print-specific elements
+- [x] Create PDF download functionality
+  - [x] Link to static PDF with download button
 
-- [ ] Build about section
-  - Bio and current role
-  - Responsibilities
-- [ ] Create technologies showcase
-  - List of technologies used
-  - Visual presentation (cards or grid)
-- [ ] Add design philosophy section
-  - Color palette swatches
-  - Typography examples
-  - Design inspiration
-- [ ] Include "Buta" story and images
-  - Image gallery for Buta
-  - Story text
+**Implementation Summary:**
+- 5 React components with full JSDoc documentation
+- 8 TypeScript interfaces for complete type safety
+- Contact obfuscation (ROT13/ROT5) for email/phone
+- 71 unit tests with 100% pass rate
+- Responsive two-column desktop layout, single column mobile
+- Print-friendly CSS with 15 organized sections
+- 0 TypeScript errors, 0 ESLint errors
+- **Changelog:** [changelog/2026-01-29T212054_phase-3-2-resume-page-complete.md](../changelog/2026-01-29T212054_phase-3-2-resume-page-complete.md)
+
+#### 3.3 Colophon/About Page ✅
+
+**Status:** ✅ COMPLETED (2026-01-27)
+
+- [x] Build about section
+  - [x] Bio and current role
+  - [x] Responsibilities
+  - [x] Social links
+- [x] Create technologies showcase
+  - [x] V2 tech stack grid (Framework, UI, Tools, Testing)
+  - [x] V1 technologies accordion (historical context)
+- [x] Add design philosophy section
+  - [x] Color palette swatches (Sakura, Duck Egg, Sky Blue, Graphite, Sage, Maroon)
+  - [x] Typography examples (Open Sans, Oswald, Gochi Hand)
+  - [x] Design inspiration documentation
+- [x] Include "Buta" story and images
+  - [x] Buta story with paragraphs and images
+  - [x] Buta vs. Boo comparison image
+  - [x] Thought bubble styling
+
+**Implementation Summary:**
+- 4 React components with full JSDoc documentation
+- 10 TypeScript interfaces for complete type safety
+- HTML sanitization with isomorphic-dompurify for SSR compatibility
+- 54 unit tests with 100% pass rate
+- Responsive mobile-first design
+- Accessibility attributes throughout (aria-labels, roles, landmarks)
+- 0 TypeScript errors, 0 ESLint errors
+- **Changelog:** [changelog/2026-01-27T202317_phase3-1-colophon-page.md](../changelog/2026-01-27T202317_phase3-1-colophon-page.md)
 
 #### 3.4 Shared Components
 
@@ -439,11 +466,11 @@ The following Gumby features are being **completely removed** in V2:
 
 ### Deliverables
 
-- [ ] Fully functional homepage with project grid
-- [ ] Complete resume page
-- [ ] Complete colophon/about page
-- [ ] Reusable component library
-- [ ] Responsive layouts for all pages
+- [ ] Fully functional homepage with project grid (In Progress)
+- [x] Complete resume page ✅ (2026-01-29)
+- [x] Complete colophon/about page ✅ (2026-01-27)
+- [x] Reusable component library ✅ (partially: 9 components created)
+- [x] Responsive layouts for all pages ✅ (for completed pages)
 
 ### Success Criteria
 
@@ -889,8 +916,8 @@ const theme = createTheme({
 | Phase | Duration | Status |
 |-------|----------|--------|
 | Phase 1: Foundation & Setup | 1-2 weeks | ✅ Complete (2026-01-25) |
-| Phase 2: Data Migration | 1-2 weeks | 🔄 In Progress (Testing infrastructure complete 2026-01-27) |
-| Phase 3: Core Pages Development | 3-4 weeks | ⬜ Not Started |
+| Phase 2: Data Migration | 1-2 weeks | ✅ Complete (2026-01-27) |
+| Phase 3: Core Pages Development | 3-4 weeks | 🔄 In Progress (Task 3.2 & 3.3 ✅, Task 3.1 pending) |
 | Phase 4: Enhanced Features | 2-3 weeks | ⬜ Not Started |
 | Phase 5: Performance & Optimization | 1-2 weeks | ⬜ Not Started |
 | Phase 6: Deployment & Migration | 1-2 weeks | ⬜ Not Started |
@@ -908,22 +935,33 @@ const theme = createTheme({
 
 1. ✅ ~~Review and approve this plan~~ - COMPLETE
 2. ✅ ~~Set up development environment~~ - COMPLETE
-3. ✅ ~~Begin Phase 1: Foundation & Setup~~ - COMPLETE
-4. 🔄 **Continue Phase 2: Data Migration**
-   - ✅ ~~Analyze PHP data structure from v1~~ - COMPLETE (2026-01-27)
-   - ✅ ~~Set up unit testing framework~~ - COMPLETE (2026-01-27)
-     - Vitest 4.0.18 configured with 80% coverage thresholds
-     - React Testing Library installed
-     - Test directory structure created
-     - Sample tests with 100% coverage
-     - Documentation complete
-   - Create TypeScript interfaces for Project, ProjectImage, ProjectVideo
-   - Migrate project data to JSON/TypeScript format
-   - Migrate image assets to /public/images
-   - Implement data fetching utilities
-   - Write unit tests for data layer (infrastructure ready)
-5. Schedule regular check-ins to review progress
-6. Adjust timeline based on actual progress
+3. ✅ ~~Begin Phase 1: Foundation & Setup~~ - COMPLETE (2026-01-25)
+4. ✅ ~~Complete Phase 2: Data Migration~~ - COMPLETE (2026-01-27)
+   - ✅ TypeScript interfaces for Project, ProjectImage, ProjectVideo
+   - ✅ Migrated project data to JSON/TypeScript format
+   - ✅ Migrated image assets to /public/images
+   - ✅ Implemented data fetching utilities
+   - ✅ Unit tests for data layer with 88.13% coverage
+5. 🔄 **Continue Phase 3: Core Pages Development**
+   - ✅ Task 3.3: Colophon/About Page - COMPLETE (2026-01-27)
+     - 4 components, 10 TypeScript interfaces, 54 tests
+     - Changelog: [changelog/2026-01-27T202317_phase3-1-colophon-page.md](../changelog/2026-01-27T202317_phase3-1-colophon-page.md)
+   - ✅ Task 3.2: Resume Page - COMPLETE (2026-01-29)
+     - 5 components, 8 TypeScript interfaces, 71 tests
+     - Changelog: [changelog/2026-01-29T212054_phase-3-2-resume-page-complete.md](../changelog/2026-01-29T212054_phase-3-2-resume-page-complete.md)
+   - 🔄 Task 3.1: Homepage (Portfolio) - Ready to start
+     - Create project grid layout with responsive columns
+     - Implement project cards with filtering and search
+     - Add pagination or infinite scroll
+     - Create project detail modal/page
+   - 🔄 Task 3.4: Shared Components
+     - Navigation component (accessible)
+     - Footer component (accessible)
+     - Image gallery modal (accessible lightbox)
+     - Loading states
+6. After Task 3.1: Merge Resume PR to main and plan Task 3.4 shared components
+7. Schedule regular check-ins to review progress
+8. Adjust timeline based on actual progress
 
 ---
 
@@ -1092,10 +1130,11 @@ This project **must** meet WCAG 2.2 Level AA standards. The following are key re
 
 ---
 
-**Document Version:** 1.6
-**Last Updated:** 2026-01-28
+**Document Version:** 1.7
+**Last Updated:** 2026-01-29
 **Author:** Sing Chan (with Claude Code)
 **Changelog:**
+- v1.7: Updated Phase 3 status to reflect Task 3.2 (Resume Page) and Task 3.3 (Colophon/About Page) completion. Updated Timeline, Deliverables, and Next Steps to show 2 of 3 Phase 3 tasks complete. Added implementation summaries and changelog references for both completed tasks.
 - v1.6: Added localization (i18n) requirements and expanded theme switching to include high contrast black and white theme for accessibility. Updated Phase 4 deliverables and success criteria.
 - v1.5: Updated Phase 2 with completed testing infrastructure setup (Vitest, React Testing Library, 80% coverage thresholds, sample tests with 100% coverage). Analyzed PHP data structure from v1. Updated Timeline and Next Steps to reflect Phase 2 progress.
 - v1.4: Added comprehensive Gumby Framework migration section with feature mapping and replacement strategy

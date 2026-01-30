@@ -858,15 +858,19 @@ interface ConferenceSpeakerProps {
 
 ### 3.2 Deliverables Checklist
 
-- [ ] `ResumeHeader.tsx` - Name and contact info
-- [ ] `WorkExperience.tsx` - Job history section
-- [ ] `CoreCompetencies.tsx` - Skills tags
-- [ ] `ClientList.tsx` - Client grid
-- [ ] `ConferenceSpeaker.tsx` - Speaking history
-- [ ] `/app/resume/page.tsx` - Resume page implementation
-- [ ] Print stylesheet for resume
-- [ ] Resume data file (`v2/src/data/resume.ts`)
-- [ ] Unit tests for resume components
+- [x] `ResumeHeader.tsx` - Name and contact info ✅
+- [x] `WorkExperience.tsx` - Job history section ✅
+- [x] `CoreCompetencies.tsx` - Skills tags ✅
+- [x] `ClientList.tsx` - Client grid ✅
+- [x] `ConferenceSpeaker.tsx` - Speaking history ✅
+- [x] `/app/resume/page.tsx` - Resume page implementation ✅
+- [x] Print stylesheet for resume (`v2/app/resume/print.css`) ✅
+- [x] Resume data file (`v2/src/data/resume.ts`) ✅
+- [x] Resume types (`v2/src/types/resume.ts`) ✅
+- [x] Unit tests for resume components ✅
+- [x] Quality improvements (typed constants, accessibility, CSS organization) ✅
+
+**PR:** [Resume Page - Task 3.2](https://github.com/butanoie/schan-portfolio/tree/sc/resume)
 
 ---
 
@@ -2006,12 +2010,12 @@ interface ConferenceSpeakerProps {
 
 **Progress:**
 - [x] Task 3.3: Colophon/About Page ✅ Complete (2026-01-28)
+- [x] Task 3.2: Resume Page ✅ Complete (2026-01-29)
 - [ ] Task 3.1: Homepage (Portfolio)
-- [ ] Task 3.2: Resume Page
 - [ ] Task 3.4: Shared Components (Lightbox, etc.)
 
 **Next Steps:**
-1. Merge Colophon PR (#3) to main
+1. Merge Resume PR to main (after code review)
 2. Begin Task 3.1: Homepage (Portfolio) implementation
 3. Track progress in TODO list
 4. Create changelog entry on completion
