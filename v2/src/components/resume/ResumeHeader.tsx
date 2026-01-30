@@ -133,7 +133,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
                 color: "#ffffff",
                 textTransform: "none",
                 fontSize: "0.95rem",
-                fontWeight: 500,
+                fontWeight: 600,
                 px: 3,
                 py: 1,
                 width: "100%",

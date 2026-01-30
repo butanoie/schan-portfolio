@@ -80,7 +80,7 @@ export default function CoreCompetencies({
                 sx={{
                   backgroundColor: BRAND_COLORS.sage,
                   color: "#ffffff",
-                  fontWeight: 500,
+                  fontWeight: 600,
                   fontSize: "0.8rem",
                   height: "28px",
                   borderRadius: "3px",
