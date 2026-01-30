@@ -19,7 +19,7 @@ export const BRAND_COLORS = {
   skyBlue: "#E0EDF8",
 
   /** Pastel green - used for secondary elements and tags */
-  duckEgg: "#C8E6C9",
+  duckEgg: "#DCEBE4",
 
   /** Deep red for headings, CTAs, and active states */
   maroon: "#8B1538",
@@ -56,7 +56,7 @@ export const UI_COLORS = {
  */
 export const NAV_COLORS = {
   /** Active navigation button background */
-  active: "#ae113d",
+  active: "#8B1538",
 
   /** Active navigation button hover */
   activeHover: "#8B1538",
