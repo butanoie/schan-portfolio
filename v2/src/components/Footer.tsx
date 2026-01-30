@@ -115,7 +115,6 @@ export default function Footer() {
               height: "auto",
               objectFit: "contain",
             }}
-            priority={false}
           />
         </Box>
 

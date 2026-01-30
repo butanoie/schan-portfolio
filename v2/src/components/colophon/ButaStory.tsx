@@ -81,7 +81,6 @@ export default function ButaStory({ content }: ButaStoryProps) {
               height: "auto",
               objectFit: "cover",
             }}
-            priority={false}
           />
         </Paper>
       </Box>
