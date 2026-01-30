@@ -263,8 +263,7 @@ export const resumeData: ResumeData = {
 /**
  * Get the complete resume data.
  *
- * @returns The full resume page content including header, work experience,
- *          skills, clients, and speaking history
+ * @returns The full resume page content including header, work experience, skills, clients, and speaking history
  *
  * @example
  * const data = getResumeData();

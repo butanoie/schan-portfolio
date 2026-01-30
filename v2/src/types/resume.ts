@@ -112,17 +112,17 @@ export interface SpeakingContent {
  *
  * @example
  * const resumeData: ResumeData = {
- *   pageTitle: "Resume | Sing Chan's Portfolio",
- *   pageDescription: "Sing Chan's resume...",
- *   header: {
- *     name: "Sing Chan",
- *     tagline: "I develop useful, intuitive applications...",
- *     contactLinks: [...]
- *   },
- *   jobs: [...],
- *   skillCategories: [...],
- *   clients: [...],
- *   speaking: {...}
+ * pageTitle: "Resume | Sing Chan's Portfolio",
+ * pageDescription: "Sing Chan's resume...",
+ * header: {
+ * name: "Sing Chan",
+ * tagline: "I develop useful, intuitive applications...",
+ * contactLinks: [...]
+ * },
+ * jobs: [...],
+ * skillCategories: [...],
+ * clients: [...],
+ * speaking: {...}
  * };
  */
 export interface ResumeData {

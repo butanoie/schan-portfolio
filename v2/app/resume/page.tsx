@@ -33,8 +33,8 @@ export const metadata: Metadata = {
  * Layout:
  * - Mobile: Single column, stacked sections
  * - Desktop: Two columns (8/4 split - 70/30 approximately)
- *   - Left: Header + Work Experience
- *   - Right: Skills + Clients + Speaking
+ * - Left: Header + Work Experience
+ * - Right: Skills + Clients + Speaking
  *
  * @returns The complete resume page with print-friendly styling
  */
