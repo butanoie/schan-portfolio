@@ -12,9 +12,17 @@
  * - Control page breaks to avoid splitting job entries
  */
 
+/* ============================================================================
+   PAGE SETUP
+   ========================================================================== */
+
 @page {
   margin: 0.5in 0.75in;
 }
+
+/* ============================================================================
+   HIDE NON-ESSENTIAL ELEMENTS
+   ========================================================================== */
 
 @media print {
   /* Hide navigation, footer, and non-essential UI */
@@ -49,6 +57,10 @@
   [class*="Footer"] {
     display: none !important;
   }
+
+  /* ========================================================================
+     CONTAINER AND LAYOUT OPTIMIZATION
+     ======================================================================== */
 
   /* Optimize body and container for print */
   body {
@@ -90,6 +102,10 @@
     display: none !important;
   }
 
+  /* ========================================================================
+     COLUMN LAYOUT AND SIZING
+     ======================================================================== */
+
   /* Two column layout container (the Box after the divider) */
   [class*="MuiContainer-root"] > div:last-of-type {
     display: flex !important;
@@ -118,6 +134,10 @@
     display: flex !important;
   }
 
+  /* ========================================================================
+     RESUME HEADER STYLING
+     ======================================================================== */
+
   /* Remove top spacing from resume header */
   section[aria-labelledby="resume-name"] {
     padding-top: 0 !important;
@@ -144,7 +164,10 @@
     margin: 0 !important;
   }
 
-  /* Optimize typography for print */
+  /* ========================================================================
+     TYPOGRAPHY OPTIMIZATION
+     ======================================================================== */
+
   h1 {
     font-size: 22pt !important;
     margin: 0 0 4pt 0 !important;
@@ -171,6 +194,24 @@
     font-weight: 600 !important;
   }
 
+  p,
+  li {
+    font-size: 10pt !important;
+    line-height: 1.6 !important;
+  }
+
+  p {
+    margin: 10pt 0 0 0 !important;
+  }
+
+  li {
+    margin: 0 0 4pt 0 !important;
+  }
+
+  /* ========================================================================
+     WORK EXPERIENCE STYLING
+     ======================================================================== */
+
   /* Work experience - keep role and dates side by side */
   .job-entry > div {
     display: flex !important;
@@ -193,32 +234,44 @@
     font-size: 10pt !important;
   }
 
-  p,
-  li {
-    font-size: 10pt !important;
-    line-height: 1.6 !important;
+  /* ========================================================================
+     SKILLS AND COMPETENCIES STYLING
+     ======================================================================== */
+
+  /* Skill/competency category boxes - use duckEgg color */
+  section > div[style*="backgroundColor"],
+  div[style*="backgroundColor: rgb"] {
+    background-color: #DCEBE4 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  p {
-    margin: 10pt 0 0 0 !important;
+  /* Right column box elements - remove padding and margin */
+  [class*="MuiContainer-root"] > div:last-of-type > div:first-child .MuiBox-root {
+    padding: 0 !important;
+    margin: 0 0 16pt 0 !important;
   }
 
-  li {
-    margin: 0 0 4pt 0 !important;
-  }
-
-  /* Remove all shadows and unnecessary styling */
-  * {
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  /* Remove background colors */
-  [class*="MuiBox-root"],
-  [class*="MuiPaper-root"] {
-    background-color: transparent !important;
+  /* Keep skill/client chips styled for print - use sage color */
+  .MuiChip-root {
+    display: inline-block !important;
+    background-color: #85B09C !important;
+    color: white !important;
     border: none !important;
+    font-size: 7pt !important;
+    height: auto !important;
+    padding: 2pt 4pt !important;
+    margin: 0 4pt 0 0 !important;
   }
+
+  .MuiChip-label {
+    padding: 0 !important;
+  }
+
+  /* ========================================================================
+     CONTACT BUTTONS
+     ======================================================================== */
 
   /* Optimize contact buttons for print */
   button.MuiButton-root {
@@ -262,46 +315,86 @@
     gap: 2pt !important;
   }
 
-  /* Skill/competency category boxes - use duckEgg color */
-  section > div[style*="backgroundColor"],
-  div[style*="backgroundColor: rgb"] {
-    background-color: #DCEBE4 !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
+  /* ========================================================================
+     RIGHT COLUMN ADJUSTMENTS
+     ======================================================================== */
+
+  /* Right column heading adjustments */
+  [class*="MuiContainer-root"] > div:last-of-type > div:first-child h2 {
+    margin: 4pt 0 2pt 0 !important;
   }
 
-  /* Right column box elements - remove padding and margin */
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child .MuiBox-root {
-    padding: 0 !important;
-    margin: 0 0 16pt 0 !important;
+  [class*="MuiContainer-root"] > div:last-of-type > div:first-child h3 {
+    font-size: 11pt !important;
+    font-weight: 600 !important;
+    margin: 8pt 0 2pt 0 !important;
   }
 
-    /* Keep skill/client chips styled for print - use sage color */
-  .MuiChip-root {
-    display: inline-block !important;
-    background-color: #85B09C !important;
-    color: white !important;
+  [class*="MuiContainer-root"] > div:last-of-type > div:first-child p {
+    margin: 4pt 0 4pt 0 !important;
+  }
+
+  /* ========================================================================
+     CONFERENCE/SPEAKING SECTION
+     ======================================================================== */
+
+  /* Prevent conference speaker section from breaking across pages */
+  section[aria-labelledby="speaking-heading"] {
+    page-break-inside: avoid;
+  }
+
+  /* Indent conference list in print */
+  section[aria-labelledby="speaking-heading"] li {
+    margin-left: 18pt !important;
+    padding-left: 0 !important;
+  }
+
+  /* ========================================================================
+     LINKS
+     ========================================================================= */
+
+  /* Ensure links are visible */
+  a {
+    color: #00008b !important;
+    text-decoration: none !important;
+  }
+
+  /* Remove URL printing for links */
+  a[href^="http"]:after {
+    content: "" !important;
+  }
+
+  /* ========================================================================
+     REMOVE DECORATIVE ELEMENTS
+     ======================================================================== */
+
+  /* Remove all shadows and unnecessary styling */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Remove background colors */
+  [class*="MuiBox-root"],
+  [class*="MuiPaper-root"] {
+    background-color: transparent !important;
     border: none !important;
-    font-size: 7pt !important;
-    height: auto !important;
-    padding: 2pt 4pt !important;
-    margin: 0 4pt 0 0 !important;
   }
 
-  .MuiChip-label {
-    padding: 0 !important;
+  /* Hide all dividers in print */
+  [class*="MuiDivider-root"],
+  hr {
+    display: none !important;
   }
+
+  /* ========================================================================
+     PAGE BREAKS AND SPACING
+     ======================================================================== */
 
   /* Ensure proper page breaks */
   h2,
   h3 {
     page-break-after: avoid;
-    page-break-inside: avoid;
-  }
-
-  /* Prevent conference speaker section from breaking across pages */
-  section[aria-labelledby="speaking-heading"] {
     page-break-inside: avoid;
   }
 
@@ -319,43 +412,9 @@
     padding-left: 18pt !important;
   }
 
-  /* Hide all dividers in print */
-  [class*="MuiDivider-root"],
-  hr {
-    display: none !important;
-  }
-
-  /* Reduce margins in right column sections */
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child h2 {
-    margin: 4pt 0 2pt 0 !important;
-  }
-
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child h3 {
-    font-size: 11pt !important;
-    font-weight: 600 !important;
-    margin: 8pt 0 2pt 0 !important;
-  }
-
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child p {
-    margin: 4pt 0 4pt 0 !important;
-  }
-
-  /* Indent conference list in print */
-  section[aria-labelledby="speaking-heading"] li {
-    margin-left: 18pt !important;
-    padding-left: 0 !important;
-  }
-
-  /* Ensure links are visible */
-  a {
-    color: #00008b !important;
-    text-decoration: none !important;
-  }
-
-  /* Remove URL printing for links */
-  a[href^="http"]:after {
-    content: "" !important;
-  }
+  /* ========================================================================
+     FINAL CLEANUP
+     ======================================================================== */
 
   /* Compact margins */
   *:first-child {

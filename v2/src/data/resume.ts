@@ -11,7 +11,56 @@
  * Content migrated from V1 resume.html and updated for V2.
  */
 
-import type { ResumeData } from "../types/resume";
+import type { ContactLink, ResumeData } from "../types/resume";
+
+/**
+ * Typed contact link constants for the resume header.
+ * These are centralized constants for better type safety and maintainability.
+ */
+const LINKEDIN_LINK: ContactLink = {
+  label: "linkedin.com/in/sing-chan",
+  url: "https://www.linkedin.com/in/sing-chan/",
+  icon: "linkedin",
+};
+
+/**
+ * GitHub contact link with direct URL to profile.
+ */
+const GITHUB_LINK: ContactLink = {
+  label: "github.com/butanoie",
+  url: "https://github.com/butanoie",
+  icon: "github",
+};
+
+/**
+ * Email contact link with obfuscated ROT13/ROT5 encoding.
+ * Contact: sing@singchan.com (obfuscated as fvat@fvatpuna.pbz)
+ * Decodes to: mailto:sing@singchan.com?subject=Contact via Portfolio Site
+ */
+const EMAIL_LINK: ContactLink = {
+  label: "fvat@fvatpuna.pbz",
+  url: "znvygb:fvat@fvatpuna.pbz?fhowrpg=Pbagnpg ivn Cbegsbyvb Fvgr",
+  icon: "email",
+};
+
+/**
+ * Phone contact link with obfuscated ROT13/ROT5 encoding.
+ * Contact: +1-604-773-2843 (obfuscated as +6-159-228-7398)
+ */
+const PHONE_LINK: ContactLink = {
+  label: "+6-159-228-7398",
+  url: "gry:+6-159-228-7398",
+  icon: "phone",
+};
+
+/**
+ * Download resume PDF link.
+ */
+const DOWNLOAD_LINK: ContactLink = {
+  label: "Download Résumé",
+  url: "/Sing_Chan_Resume.pdf",
+  icon: "download",
+};
 
 /**
  * Complete resume page content.
@@ -27,31 +76,11 @@ export const resumeData: ResumeData = {
     tagline:
       "I develop useful, intuitive, and engaging applications that better people's lives.",
     contactLinks: [
-      {
-        label: "linkedin.com/in/sing-chan",
-        url: "https://www.linkedin.com/in/sing-chan/",
-        icon: "linkedin",
-      },
-      {
-        label: "github.com/butanoie",
-        url: "https://github.com/butanoie",
-        icon: "github",
-      },
-      {
-        label: "fvat@fvatpuna.pbz",
-        url: "znvygb:fvat@fvatpuna.pbz?fhowrpg=Pbagnpg ivn Cbegsbyvb Fvgr",
-        icon: "email",
-      },
-      {
-        label: "+6-159-228-7398",
-        url: "gry:+6-159-228-7398",
-        icon: "phone",
-      },
-      {
-        label: "Download Résumé",
-        url: "/Sing_Chan_Resume.pdf",
-        icon: "download",
-      },
+      LINKEDIN_LINK,
+      GITHUB_LINK,
+      EMAIL_LINK,
+      PHONE_LINK,
+      DOWNLOAD_LINK,
     ],
   },
 

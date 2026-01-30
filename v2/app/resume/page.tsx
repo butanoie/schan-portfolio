@@ -44,6 +44,7 @@ export default function ResumePage() {
   return (
     <Container
       component="main"
+      role="article"
       maxWidth="lg"
       sx={{
         py: { xs: 2, md: 0 },
