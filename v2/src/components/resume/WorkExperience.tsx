@@ -56,7 +56,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           key={jobIndex}
           className="job-entry"
           sx={{
-            mb: 4,
+            mb: 5,
             pageBreakInside: "avoid",
           }}
         >
