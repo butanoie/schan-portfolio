@@ -25,7 +25,7 @@ export const resumeData: ResumeData = {
   header: {
     name: "Sing Chan",
     tagline:
-      "I develop useful, intuitive and engaging applications that better people's lives.",
+      "I develop useful, intuitive, and engaging applications that better people's lives.",
     contactLinks: [
       {
         label: "linkedin.com/in/sing-chan",
@@ -68,7 +68,7 @@ export const resumeData: ResumeData = {
       description:
         "My responsibilities as VP of Product were to drive product execution for Collabware's enterprise collaboration solutions. I led cross-functional UX and QA teams and integrated with cloud operations and engineering to deliver customer-centric features while optimizing operational efficiency.",
       keyContributions: [
-        "Requirements gathering with customers and stakeholders, translating business needs into actionable product features and roadmap priorities",
+        "Requirements gathering with customers and stakeholders, translate business needs into actionable product features and roadmap priorities",
         "Collaborate with engineering teams on product backlog definition and sprint planning",
         "Manage quality assurance team to develop comprehensive test cases and automation frameworks to maintain product quality standards",
         "Partner with cloud operations to monitor system health and ensure platform reliability",

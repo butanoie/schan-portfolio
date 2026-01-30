@@ -6,7 +6,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import DownloadIcon from "@mui/icons-material/Download";
 import EmailIcon from "@mui/icons-material/Email";
 import type { ResumeHeaderContent } from "../../types/resume";
-import { BRAND_COLORS } from "../../constants";
+import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 
 /**
  * Props for the ResumeHeader component.
@@ -32,8 +32,9 @@ const iconMap = {
  * Features:
  * - Name in Oswald font with responsive sizing
  * - Professional tagline below name
- * - Contact buttons (LinkedIn, GitHub, Download) with icons
- * - Buttons stack vertically on mobile, display in row on desktop
+ * - Contact buttons (LinkedIn, GitHub, Download) with icons on the right
+ * - Two-column layout: left side for name/tagline, right side for buttons
+ * - Buttons stack vertically on desktop, stack below content on mobile
  *
  * @param props - Component props containing resume header content
  * @param props.content - Header content data (name, tagline, contact links)
@@ -51,44 +52,57 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
       aria-labelledby="resume-name"
       sx={{
         pt: { xs: 4, md: 6 },
-        pb: { xs: 2, md: 3 },
+        pb: { xs: 0, md: 0 },
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        gap: { xs: 3, md: 4 },
+        justifyContent: "space-between",
+        alignItems: { xs: "stretch", md: "flex-start" },
       }}
     >
-      {/* Name */}
-      <Typography
-        id="resume-name"
-        variant="h1"
-        component="h1"
+      {/* Left Section: Name and Tagline */}
+      <Box
         sx={{
-          fontFamily: '"Oswald", sans-serif',
-          fontWeight: 700,
-          color: BRAND_COLORS.graphite,
-          fontSize: { xs: "2rem", md: "2.5rem" },
-          mb: 2,
+          flex: 1,
+          minWidth: 0,
         }}
       >
-        {name}
-      </Typography>
+        {/* Name */}
+        <Typography
+          id="resume-name"
+          variant="h1"
+          component="h1"
+          sx={{
+            fontFamily: '"Oswald", sans-serif',
+            fontWeight: 700,
+            color: BRAND_COLORS.graphite,
+            fontSize: { xs: "2rem", md: "2.5rem" },
+            mb: 2,
+          }}
+        >
+          {name}
+        </Typography>
 
-      {/* Tagline */}
-      <Typography
-        variant="body1"
-        sx={{
-          mb: 3,
-          fontSize: { xs: "1rem", md: "1.1rem" },
-          lineHeight: 1.6,
-          color: BRAND_COLORS.graphite,
-        }}
-      >
-        {tagline}
-      </Typography>
+        {/* Tagline */}
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "1rem", md: "1.1rem" },
+            lineHeight: 1.6,
+            color: BRAND_COLORS.graphite,
+          }}
+        >
+          {tagline}
+        </Typography>
+      </Box>
 
-      {/* Contact Buttons */}
+      {/* Right Section: Contact Buttons */}
       <Stack
-        direction={{ xs: "column", sm: "row" }}
-        spacing={2}
+        direction="column"
+        spacing={1}
         sx={{
-          mt: 3,
+          flex: { xs: "100%", md: "0 0 33%" },
+          minWidth: "320px",
         }}
       >
         {contactLinks.map((link, index) => {
@@ -108,25 +122,24 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
               sx={{
                 backgroundColor:
                   link.icon === "download"
-                    ? BRAND_COLORS.duckEgg
+                    ? BRAND_COLORS.sage
                     : BRAND_COLORS.maroon,
-                color:
-                  link.icon === "download"
-                    ? BRAND_COLORS.graphite
-                    : "#ffffff",
+                color: "#ffffff",
                 textTransform: "none",
                 fontSize: "0.95rem",
                 fontWeight: 500,
                 px: 3,
-                py: 1.5,
+                py: 1,
+                width: "100%",
+                justifyContent: "flex-start",
+                boxShadow: "none",
                 "&:hover": {
                   backgroundColor:
                     link.icon === "download"
-                      ? "#b8d6b9"
+                      ? NAV_COLORS.inactiveHover
                       : BRAND_COLORS.maroonDark,
+                  boxShadow: "none",
                 },
-                // Full width on mobile for better touch targets
-                width: { xs: "100%", sm: "auto" },
               }}
             >
               {link.label}

@@ -43,6 +43,7 @@ export default function ColophonPage() {
         sx={{
           display: "flex",
           justifyContent: "center",
+          mt: 2,
           mb: 6,
           px: { xs: 2, sm: 0 },
         }}

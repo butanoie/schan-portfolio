@@ -56,7 +56,7 @@ export const UI_COLORS = {
  */
 export const NAV_COLORS = {
   /** Active navigation button background */
-  active: "#ae113d",
+  active: "#8B1538",
 
   /** Active navigation button hover */
   activeHover: "#8B1538",
