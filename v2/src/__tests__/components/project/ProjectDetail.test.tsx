@@ -85,8 +85,9 @@ vi.mock('@mui/material', async () => {
         down: (key: string) => `(max-width: ${key === 'md' ? '900px' : '600px'})`,
       },
     }),
+    // @ts-expect-error - Mock function with spread args
     // eslint-disable-next-line jsdoc/require-jsdoc
-    useMediaQuery: (...args: unknown[]) => mockUseMediaQuery(...args),
+    useMediaQuery: (...args) => mockUseMediaQuery(...args),
   };
 });
 
