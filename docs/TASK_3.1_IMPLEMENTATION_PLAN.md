@@ -1,7 +1,7 @@
 # Task 3.1: Homepage (Portfolio) Implementation Plan
 
 **Created:** 2026-01-29
-**Status:** In Progress (Phase 1-4 Complete)
+**Status:** In Progress (Phase 1-5 Complete)
 **Last Updated:** 2026-01-30
 **Related:** [PHASE3_DETAILED_PLAN.md](./PHASE3_DETAILED_PLAN.md)
 
@@ -165,7 +165,7 @@ interface SearchBarProps {
 
 ### Phase 4: Pagination (1 file) ✅ COMPLETED
 
-**Completed:** 2026-01-30 | **Commit:** TBD | **Files:** 1 component + 1 test
+**Completed:** 2026-01-30 | **Commit:** daef687 | **Files:** 1 component + 1 test
 
 **4.1 ButaNavigation** (`/v2/src/components/portfolio/ButaNavigation.tsx`)
 
@@ -204,7 +204,9 @@ padding: { xs: '15px 16px', md: '25px 20px' }
 - Link: 44px minimum touch target
 - Counter: `aria-label="Showing X of Y projects"`
 
-### Phase 5: Project Detail Components (5 files)
+### Phase 5: Project Detail Components (5 files) ✅ COMPLETED
+
+**Completed:** 2026-01-30 | **Commits:** 8a9d706 (components), 9d86c8a (tests) | **Files:** 5 components + 5 tests
 
 **5.1 ProjectHeader** (`/v2/src/components/project/ProjectHeader.tsx`)
 
