@@ -67,25 +67,30 @@ The haiku agent will:
 
 ## Instructions
 
-Launch a haiku agent to perform the git commit:
+Launch the custom git-commit agent to perform the git commit:
 
 ```
 Use the Task tool with:
-- subagent_type: "general-purpose"
-- model: "haiku"
+- subagent_type: "git-commit"
 - description: "Create git commit"
-- prompt: [Detailed workflow instructions]
+- prompt: [Brief commit instructions]
 ```
 
-The agent should receive these instructions:
+The git-commit agent has been configured with:
+- ✅ System prompt with all commit guidelines
+- ✅ Documentation validation requirements
+- ✅ Conventional commits format
+- ✅ Quality standards and best practices
+
+**Pass these instructions to the agent:**
 
 ---
 
-**Git Commit Workflow Instructions for Agent:**
+**Git Commit Instructions:**
 
-Please create a git commit following this workflow:
+Execute a git commit following this workflow:
 
-1. **Review Changes** - Run these in parallel:
+1. **Review Changes** - Run in parallel:
    ```bash
    git status
    git diff --staged
@@ -93,48 +98,36 @@ Please create a git commit following this workflow:
    git log --oneline -10
    ```
 
-2. **Verify Documentation**
-   - Check that all code changes have proper documentation
-   - Functions must have JSDoc/TSDoc (purpose, params, returns)
-   - Classes must document their responsibility
-   - Interfaces/types must have comments
-   - Complex logic must have inline comments
-   - If missing documentation: STOP and report what needs documentation
+2. **Verify Documentation Requirements**
+   - All new code must have JSDoc/TSDoc comments
+   - Functions: purpose, parameters, return value
+   - Classes/interfaces: responsibility and purpose
+   - Complex logic: inline comments explaining "why"
+   - **STOP and report** if documentation is missing
 
 3. **Stage Files**
-   - If $ARGUMENTS provided: use those
-   - Otherwise: stage specific relevant files by name
-   - Avoid `git add .` or `git add -A` (prefer specific files)
+   - Use `$ARGUMENTS` if provided (specific files)
+   - Otherwise: stage relevant files by name
+   - Avoid `git add .` or `git add -A`
 
 4. **Create Commit Message**
-   - Follow the repository's commit style from git log
-   - Subject line: imperative mood, under 50 chars
-   - Body: explain why changes were made, wrap at 72 chars
-   - If $ARGUMENTS provided: incorporate as guidance
+   - Follow repository's commit style (from git log)
+   - Subject: imperative, ≤50 chars
+   - Body: explain why, wrap at 72 chars
+   - Include `Closes #N` for related issues
+   - Use heredoc format for message
 
-5. **Commit Using Heredoc**
-   ```bash
-   git commit -m "$(cat <<'EOF'
-   Subject line here
-
-   Detailed explanation here.
-   EOF
-   )"
-   ```
-
-6. **Verify Success**
+5. **Verify Success**
    ```bash
    git log -1 --pretty=format:"%h %s%n%n%b"
    git status
    ```
 
-**Important Rules:**
-- Never push to remote unless explicitly requested
-- Never use `--amend` unless explicitly requested
-- Never skip hooks with `--no-verify`
-- Never use force push or destructive git commands
+**Rules:**
 - Documentation is mandatory - treat missing docs as a blocker
-- Keep commits focused and atomic
+- Never push unless explicitly requested
+- Never use `--amend` or `--no-verify`
+- Keep commits atomic and focused
 
 ---
 
