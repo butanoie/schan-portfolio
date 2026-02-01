@@ -14,6 +14,7 @@ import { ProjectTagsContainer } from './ProjectTagsContainer';
  * @property {string[]} [tags] - Technology/skill tags to display with the description
  * @property {string} [circa] - Timeline or date range for the project
  * @property {boolean} [floatTags] - Whether to float tags to the right of description (default: false)
+ * @property {SxProps<Theme>} [floatedTagsMaxWidth] - Max-width for floated tags container (only used when floatTags is true)
  * @property {SxProps<Theme>} [sx] - Material-UI sx prop for custom styling
  */
 interface ProjectDescriptionProps {
@@ -21,6 +22,7 @@ interface ProjectDescriptionProps {
   tags?: string[];
   circa?: string;
   floatTags?: boolean;
+  floatedTagsMaxWidth?: SxProps<Theme>;
   sx?: SxProps<Theme>;
 }
 
@@ -86,6 +88,7 @@ export function ProjectDescription({
   tags,
   circa,
   floatTags = false,
+  floatedTagsMaxWidth,
   sx,
 }: ProjectDescriptionProps) {
   /**
@@ -161,6 +164,7 @@ export function ProjectDescription({
             float: 'right',
             ml: { xs: 1, sm: 2, md: 2 },
             mb: 1,
+            ...floatedTagsMaxWidth,
           }}
         >
           <ProjectTagsContainer tags={tags} circa={circa} />

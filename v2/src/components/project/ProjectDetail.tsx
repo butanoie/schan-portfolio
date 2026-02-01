@@ -128,12 +128,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   return (
     <Box component="section" sx={{ mb: 8, scrollMarginTop: '80px' }}>
       {/* Project title always full width */}
-      <ProjectHeader
-        title={project.title}
-        circa={project.circa}
-        tags={project.tags}
-        layout={layoutVariant.startsWith('wide') ? 'inline' : 'stacked'}
-      />
+      <ProjectHeader title={project.title} />
 
       {/* Layout-specific content */}
       {layoutVariant === 'wide-video' && (
@@ -175,9 +170,13 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
         gap: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      {/* Left column: Description */}
+      {/* Left column: Tags + Date + Description */}
       <Box sx={{ pt: { xs: 0, md: 1 } }}>
-        <ProjectDescription html={project.desc} />
+        <ProjectDescription
+          html={project.desc}
+          tags={project.tags}
+          circa={project.circa}
+        />
       </Box>
 
       {/* Right column: Video + Gallery */}
@@ -195,7 +194,7 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
  * Desktop layout without video (default grid layout).
  *
  * Structure:
- * - Left 2/3: Description
+ * - Left 2/3: Description with tags floating to the right
  * - Right 1/3: 2-column thumbnail grid
  *
  * @param {ProjectDetailProps} props - Component props
@@ -210,14 +209,20 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
         gap: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      {/* Left column: Description */}
+      {/* Left column: Description with floating tags and date */}
       <Box>
-        <ProjectDescription html={project.desc} />
+        <ProjectDescription
+          html={project.desc}
+          tags={project.tags}
+          circa={project.circa}
+          floatTags
+          floatedTagsMaxWidth={{ maxWidth: { md: '50%' } }}
+        />
       </Box>
 
       {/* Right column: Gallery */}
       <Box>
-        <ProjectGallery images={project.images} />
+        <ProjectGallery images={project.images} narrow />
       </Box>
     </Box>
   );
@@ -227,7 +232,7 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
  * Desktop layout without video (alternate grid layout).
  *
  * Structure:
- * - Left 1/3: Description
+ * - Left 1/3: Tags + Description
  * - Right 2/3: 4-column thumbnail grid
  *
  * @param {ProjectDetailProps} props - Component props
@@ -242,9 +247,13 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
         gap: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      {/* Left column: Description */}
+      {/* Left column: Tags + Date + Description */}
       <Box sx={{ pt: { xs: 0, md: 1 } }}>
-        <ProjectDescription html={project.desc} />
+        <ProjectDescription
+          html={project.desc}
+          tags={project.tags}
+          circa={project.circa}
+        />
       </Box>
 
       {/* Right column: Gallery (4-column grid) */}
@@ -259,8 +268,9 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
  * Mobile layout without video.
  *
  * Structure: Stacked vertically
- * 1. Description
- * 2. 4-column thumbnail grid
+ * 1. Tags
+ * 2. Description
+ * 3. 4-column thumbnail grid
  *
  * @param {ProjectDetailProps} props - Component props
  * @returns The rendered narrow layout
@@ -268,7 +278,12 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
 function NarrowLayout({ project }: ProjectDetailProps) {
   return (
     <Box>
-      <ProjectDescription html={project.desc} sx={{ mb: 3 }} />
+      <ProjectDescription
+        html={project.desc}
+        tags={project.tags}
+        circa={project.circa}
+        sx={{ mb: 3 }}
+      />
       <ProjectGallery images={project.images} altGrid />
     </Box>
   );
@@ -278,9 +293,10 @@ function NarrowLayout({ project }: ProjectDetailProps) {
  * Mobile layout with video.
  *
  * Structure: Stacked vertically
- * 1. Description
- * 2. Video player
- * 3. 4-column thumbnail grid
+ * 1. Tags
+ * 2. Description
+ * 3. Video player
+ * 4. 4-column thumbnail grid
  *
  * @param {ProjectDetailProps} props - Component props
  * @returns The rendered narrow-video layout
@@ -288,7 +304,12 @@ function NarrowLayout({ project }: ProjectDetailProps) {
 function NarrowVideoLayout({ project }: ProjectDetailProps) {
   return (
     <Box>
-      <ProjectDescription html={project.desc} sx={{ mb: 3 }} />
+      <ProjectDescription
+        html={project.desc}
+        tags={project.tags}
+        circa={project.circa}
+        sx={{ mb: 3 }}
+      />
       {project.videos && project.videos.length > 0 && (
         <VideoEmbed video={project.videos[0]} sx={{ mb: 3 }} />
       )}
