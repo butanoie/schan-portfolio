@@ -97,16 +97,18 @@ export function ProjectImage({
   return (
     <Box
       sx={{
+        position: "relative",
         width: "100%",
-        height: "auto",
+        aspectRatio: "4 / 3",
+        overflow: "hidden",
         ...sx,
       }}
     >
       <Image
         src={imageSrc}
         alt={image.caption}
-        width={size === "thumbnail" ? 400 : 1200}
-        height={size === "thumbnail" ? 300 : 900}
+        fill
+        sizes={size === "thumbnail" ? "100vw" : "100vw"}
         priority={priority}
         onClick={onClick}
         onError={handleError}
@@ -114,8 +116,7 @@ export function ProjectImage({
         blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg=="
         style={{
           cursor: onClick ? "pointer" : "default",
-          width: "100%",
-          height: "auto",
+          objectFit: "cover",
         }}
       />
     </Box>
