@@ -140,7 +140,9 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       {layoutVariant === 'wide-alternate' && (
         <WideAlternateLayout project={project} />
       )}
-      {layoutVariant === 'narrow' && <NarrowLayout project={project} />}
+      {layoutVariant === 'narrow' && (
+        <NarrowLayout project={project} />
+      )}
       {layoutVariant === 'narrow-video' && (
         <NarrowVideoLayout project={project} />
       )}
@@ -184,7 +186,7 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
         {project.videos && project.videos.length > 0 && (
           <VideoEmbed video={project.videos[0]} />
         )}
-        <ProjectGallery images={project.images} />
+        <ProjectGallery images={project.images} fourColumns />
       </Box>
     </Box>
   );
@@ -258,7 +260,7 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
 
       {/* Right column: Gallery (4-column grid) */}
       <Box>
-        <ProjectGallery images={project.images} fourColumnAtMd />
+        <ProjectGallery images={project.images} fourColumns />
       </Box>
     </Box>
   );
@@ -284,7 +286,7 @@ function NarrowLayout({ project }: ProjectDetailProps) {
         circa={project.circa}
         sx={{ mb: 3 }}
       />
-      <ProjectGallery images={project.images} altGrid />
+      <ProjectGallery images={project.images} />
     </Box>
   );
 }
@@ -313,7 +315,7 @@ function NarrowVideoLayout({ project }: ProjectDetailProps) {
       {project.videos && project.videos.length > 0 && (
         <VideoEmbed video={project.videos[0]} sx={{ mb: 3 }} />
       )}
-      <ProjectGallery images={project.images} altGrid />
+      <ProjectGallery images={project.images} />
     </Box>
   );
 }

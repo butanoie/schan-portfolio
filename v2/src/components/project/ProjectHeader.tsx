@@ -42,9 +42,11 @@ export function ProjectHeader({
       variant="h4"
       sx={{
         fontFamily: 'Oswald, sans-serif',
+        textAlign: 'center',
         color: BRAND_COLORS.graphite,
-        fontWeight: 600,
-        mb: 3,
+        fontWeight: 400,
+        mt: 0,
+        mb: 2,
         ...sx,
       }}
     >
