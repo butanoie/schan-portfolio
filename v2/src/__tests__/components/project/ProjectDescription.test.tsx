@@ -180,4 +180,106 @@ describe('ProjectDescription', () => {
     expect(screen.getByText(/complex/)).toBeInTheDocument();
     expect(screen.getByText(/Feature 1/)).toBeInTheDocument();
   });
+
+  /**
+   * Test: Renders tags in stacked layout
+   */
+  it('renders tags in stacked layout', () => {
+    const html = '<p>Test description</p>';
+    const tags = ['React', 'TypeScript', 'MUI'];
+    render(<ProjectDescription html={html} tags={tags} />);
+    tags.forEach((tag) => {
+      expect(screen.getByText(tag)).toBeInTheDocument();
+    });
+  });
+
+  /**
+   * Test: Renders tags in floated layout
+   */
+  it('renders tags in floated layout', () => {
+    const html = '<p>Test description</p>';
+    const tags = ['React', 'TypeScript', 'MUI'];
+    render(<ProjectDescription html={html} tags={tags} floatTags />);
+    tags.forEach((tag) => {
+      expect(screen.getByText(tag)).toBeInTheDocument();
+    });
+  });
+
+  /**
+   * Test: Works without tags
+   */
+  it('works without tags', () => {
+    const html = '<p>Test description without tags</p>';
+    render(<ProjectDescription html={html} />);
+    expect(screen.getByText('Test description without tags')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Works with empty tags array
+   */
+  it('works with empty tags array', () => {
+    const html = '<p>Test description with empty tags</p>';
+    render(<ProjectDescription html={html} tags={[]} />);
+    expect(screen.getByText('Test description with empty tags')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Renders tags and description together
+   */
+  it('renders tags and description together', () => {
+    const html = '<p>This is a project about building web apps</p>';
+    const tags = ['Frontend', 'JavaScript'];
+    render(<ProjectDescription html={html} tags={tags} />);
+    expect(screen.getByText('This is a project about building web apps')).toBeInTheDocument();
+    expect(screen.getByText('Frontend')).toBeInTheDocument();
+    expect(screen.getByText('JavaScript')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: floatTags defaults to false
+   */
+  it('floatTags defaults to false when not specified', () => {
+    const html = '<p>Test description</p>';
+    const tags = ['React'];
+    const { container } = render(<ProjectDescription html={html} tags={tags} />);
+    expect(container).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Renders circa/date chip with tags
+   */
+  it('renders circa/date chip with tags', () => {
+    const html = '<p>Test description</p>';
+    const tags = ['React', 'TypeScript'];
+    const circa = '2022-2023';
+    render(<ProjectDescription html={html} tags={tags} circa={circa} />);
+    expect(screen.getByText('React')).toBeInTheDocument();
+    expect(screen.getByText('TypeScript')).toBeInTheDocument();
+    expect(screen.getByText('2022-2023')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Renders circa chip without tags
+   */
+  it('renders circa chip without tags', () => {
+    const html = '<p>Test description</p>';
+    const circa = '2022-2023';
+    render(<ProjectDescription html={html} circa={circa} />);
+    expect(screen.getByText('2022-2023')).toBeInTheDocument();
+    expect(screen.getByText('Test description')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Renders circa in floated layout
+   */
+  it('renders circa in floated layout', () => {
+    const html = '<p>Test description</p>';
+    const tags = ['React'];
+    const circa = '2022-2023';
+    render(
+      <ProjectDescription html={html} tags={tags} circa={circa} floatTags />
+    );
+    expect(screen.getByText('React')).toBeInTheDocument();
+    expect(screen.getByText('2022-2023')).toBeInTheDocument();
+  });
 });

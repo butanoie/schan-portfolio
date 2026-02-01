@@ -4,7 +4,7 @@ import { Box, SxProps, Theme } from '@mui/material';
 import { useMemo } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { BRAND_COLORS } from '../../constants';
-import { ProjectTagsContainer } from './ProjectTagsContainer';
+import { ProjectTagsContainer } from './ProjectTags';
 
 /**
  * Props for the ProjectDescription component.
@@ -106,7 +106,7 @@ export function ProjectDescription({
     return (
       <Box sx={sx}>
         {/* Tags and Date */}
-        <ProjectTagsContainer tags={tags} circa={circa} />
+        <ProjectTagsContainer tags={tags} circa={circa} sx={{mb:2}} />
 
         {/* Description */}
         <Box

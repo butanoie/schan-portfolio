@@ -22,14 +22,17 @@ vi.mock('@mui/material', async () => {
  */
 vi.mock('../../../components/ProjectGallery', () => ({
   /**
-   * Mock ProjectGallery component that displays image count
+   * Mock ProjectGallery component that displays image count and narrow prop
    *
    * @param root0 - Component props
    * @param root0.images - Array of project images
+   * @param root0.narrow - Whether gallery is in narrow container
    * @returns Mock gallery element
    */
-  ProjectGallery: ({ images }: { images: Project['images'] }) => (
-    <div data-testid="project-gallery">Gallery: {images.length} images</div>
+  ProjectGallery: ({ images, narrow }: { images: Project['images']; narrow?: boolean }) => (
+    <div data-testid="project-gallery" data-narrow={narrow ? 'true' : 'false'}>
+      Gallery: {images.length} images
+    </div>
   ),
 }));
 
@@ -338,5 +341,16 @@ describe('ProjectDetail', () => {
     };
     render(<ProjectDetail project={htmlProject} />);
     expect(screen.getByText('Vue.js')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Passes narrow prop to ProjectGallery in wide-regular layout
+   */
+  it('passes narrow prop to ProjectGallery in wide-regular layout', () => {
+    const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
+    mockUseMediaQuery.mockReturnValue(false); // Desktop
+    const { container } = render(<ProjectDetail project={baseProject} />);
+    const gallery = container.querySelector('[data-testid="project-gallery"]');
+    expect(gallery).toHaveAttribute('data-narrow', 'true');
   });
 });

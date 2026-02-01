@@ -55,7 +55,7 @@ export function ProjectTagsContainer({
         gap: 0.75,
         backgroundColor: BRAND_COLORS.duckEgg,
         borderRadius: 2,
-        p: 2.5,
+        p: 1.5,
         ...sx,
       }}
     >
