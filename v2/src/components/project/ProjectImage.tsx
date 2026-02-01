@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
-import type { ProjectImage as ProjectImageType } from "../types";
+import type { ProjectImage as ProjectImageType } from "../../types";
 
 /**
  * Props for the ProjectImage component.
@@ -74,7 +74,7 @@ export function ProjectImage({
   };
 
   if (imageError) {
-    // Fallback UI for broken images
+    // Fallback UI for broken images, maintains aspect ratio
     return (
       <Box
         sx={{
@@ -82,6 +82,8 @@ export function ProjectImage({
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "grey.200",
+          width: "100%",
+          aspectRatio: "4 / 3",
           ...sx,
         }}
         role="img"
@@ -93,7 +95,13 @@ export function ProjectImage({
   }
 
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        width: "100%",
+        height: "auto",
+        ...sx,
+      }}
+    >
       <Image
         src={imageSrc}
         alt={image.caption}

@@ -19,13 +19,13 @@ vi.mock('@mui/material', async () => {
 /**
  * Mock ProjectGallery to simplify testing
  */
-vi.mock('../../../components/ProjectGallery', () => ({
+vi.mock('../../../components/project/ProjectGallery', () => ({
   /**
    * Mock ProjectGallery component
    *
    * @returns Mock gallery element
    */
-  ProjectGallery: () => <div data-testid="gallery">Gallery</div>,
+  ProjectGallery: () => <div data-testid="project-gallery">Gallery</div>,
 }));
 
 /**
@@ -258,7 +258,7 @@ describe('ProjectsList', () => {
     ];
     render(<ProjectsList projects={projects} />);
 
-    const galleries = screen.getAllByTestId('gallery');
+    const galleries = screen.getAllByTestId('project-gallery');
     expect(galleries.length).toBe(2);
   });
 

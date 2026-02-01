@@ -5,7 +5,7 @@ import { useMediaQuery, useTheme, Box, Divider } from '@mui/material';
 import { ProjectHeader } from './ProjectHeader';
 import { ProjectDescription } from './ProjectDescription';
 import { VideoEmbed } from './VideoEmbed';
-import { ProjectGallery } from '../ProjectGallery';
+import { ProjectGallery } from './ProjectGallery';
 
 /**
  * Props for the ProjectDetail component.
@@ -258,7 +258,7 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
 
       {/* Right column: Gallery (4-column grid) */}
       <Box>
-        <ProjectGallery images={project.images} altGrid />
+        <ProjectGallery images={project.images} fourColumnAtMd />
       </Box>
     </Box>
   );

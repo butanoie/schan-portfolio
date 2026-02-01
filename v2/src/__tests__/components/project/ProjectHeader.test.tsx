@@ -4,13 +4,12 @@ import { describe, it, expect } from 'vitest';
 
 /**
  * Test suite for ProjectHeader component.
- * Verifies that the component correctly renders project titles, dates, and tags.
+ * Verifies that the component correctly renders project titles only.
+ * Tags and dates are now handled by the ProjectDescription component.
  */
 describe('ProjectHeader', () => {
   const mockProps = {
     title: 'Mobile App Design',
-    circa: '2022-2023',
-    tags: ['React Native', 'UI/UX', 'Firebase'],
   };
 
   /**
@@ -29,63 +28,6 @@ describe('ProjectHeader', () => {
     const title = screen.getByText('Mobile App Design');
     expect(title).toBeInTheDocument();
     expect(title.tagName).toBe('H2');
-  });
-
-  /**
-   * Test: Displays circa/date information
-   */
-  it('displays the circa/date information', () => {
-    render(<ProjectHeader {...mockProps} />);
-    expect(screen.getByText('2022-2023')).toBeInTheDocument();
-  });
-
-  /**
-   * Test: Renders all tags
-   */
-  it('renders all tags', () => {
-    render(<ProjectHeader {...mockProps} />);
-    mockProps.tags.forEach((tag) => {
-      expect(screen.getByText(tag)).toBeInTheDocument();
-    });
-  });
-
-  /**
-   * Test: Works with empty tags array
-   */
-  it('works with empty tags array', () => {
-    const { container } = render(
-      <ProjectHeader {...mockProps} tags={[]} />
-    );
-    expect(container).toBeInTheDocument();
-    expect(screen.getByText('Mobile App Design')).toBeInTheDocument();
-  });
-
-  /**
-   * Test: Accepts layout prop for inline layout
-   */
-  it('accepts layout prop for inline layout', () => {
-    const { container } = render(
-      <ProjectHeader {...mockProps} layout="inline" />
-    );
-    expect(container).toBeInTheDocument();
-  });
-
-  /**
-   * Test: Accepts layout prop for stacked layout
-   */
-  it('accepts layout prop for stacked layout', () => {
-    const { container } = render(
-      <ProjectHeader {...mockProps} layout="stacked" />
-    );
-    expect(container).toBeInTheDocument();
-  });
-
-  /**
-   * Test: Defaults to stacked layout when not specified
-   */
-  it('defaults to stacked layout when not specified', () => {
-    const { container } = render(<ProjectHeader {...mockProps} />);
-    expect(container).toBeInTheDocument();
   });
 
   /**

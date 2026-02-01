@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ProjectTagsContainer } from '../../../components/project/ProjectTagsContainer';
+import { ProjectTagsContainer } from '../../../components/project/ProjectTags';
 import { describe, it, expect } from 'vitest';
 
 /**
