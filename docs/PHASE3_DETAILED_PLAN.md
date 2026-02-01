@@ -142,6 +142,16 @@ v2/src/components/
 
 ## Task 3.1: Homepage (Portfolio)
 
+> **⚠️ OBSOLETE - This comprehensive implementation plan has been superseded**
+>
+> This detailed planning document was deemed too complex for initial implementation. A simplified MVP approach is now being used instead.
+>
+> **See:** [docs/PROJECTS_PAGE_MVP_PLAN.md](./PROJECTS_PAGE_MVP_PLAN.md) for the new MVP implementation plan.
+>
+> The sections below are preserved for reference but should not be used for implementation.
+
+---
+
 ### Overview
 
 The homepage displays a filterable, searchable grid of portfolio projects with a "Load More" navigation. Users can browse thumbnails, filter by technology tags, search by keyword, and click through to detailed project pages. The Buta mascot provides a charming, character-driven navigation experience.
@@ -664,6 +674,8 @@ interface SearchBarProps {
 ---
 
 ### 3.1 Deliverables Checklist
+
+> **⚠️ OBSOLETE - See [PROJECTS_PAGE_MVP_PLAN.md](./PROJECTS_PAGE_MVP_PLAN.md) for updated deliverables**
 
 - [ ] `ProjectCard.tsx` - Project thumbnail card
 - [ ] `ProjectGrid.tsx` - Responsive project grid
