@@ -75,7 +75,6 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
         <Typography
           id="resume-name"
           variant="h1"
-          component="h1"
           sx={{
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 700,

@@ -235,12 +235,9 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       <Typography
         id="design-heading"
         variant="h2"
-        component="h2"
         sx={{
-          fontFamily: '"Oswald", sans-serif',
-          fontWeight: 700,
           color: BRAND_COLORS.maroon,
-          fontSize: { xs: "1.75rem", md: "2rem" },
+          fontSize: "2rem",
           mt: 0,
           mb: 3,
           textAlign: "center",
@@ -303,7 +300,6 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       <Box>
         <Typography
           variant="h3"
-          component="h3"
           sx={{
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 600,
