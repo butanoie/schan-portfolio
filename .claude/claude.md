@@ -233,6 +233,24 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 - Reference issue numbers when applicable
 - Keep commits atomic and focused
 
+### Automatic Git Commits
+
+**IMPORTANT: Never automatically create git commits unless explicitly requested.**
+
+Git commits should ONLY be created when:
+- The user explicitly calls the `/git-commit` skill or `git-commit` command
+- The user directly requests a commit in their message
+- You receive explicit permission to commit
+
+**What this means:**
+- Do NOT commit after completing a task unless asked
+- Do NOT commit after running tests successfully unless asked
+- Do NOT commit after fixing all errors unless asked
+- Always ask the user if you think a commit is needed
+- Wait for the user to say "create a commit" or call `/git-commit`
+
+This ensures full control over what gets committed and maintains the user's preferred workflow.
+
 ## Changelog Requirements
 
 **IMPORTANT: All significant changes must be documented in the project changelog.**

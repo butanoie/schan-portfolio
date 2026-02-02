@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { ProjectImage } from "./ProjectImage";
+import { ProjectLightbox } from "./ProjectLightbox";
 import type { ProjectImage as ProjectImageType } from "../../types";
 
 /**
@@ -85,6 +86,26 @@ export function ProjectGallery({
     setSelectedIndex(null);
   };
 
+  /**
+   * Navigates to the previous image with circular wrap-around.
+   * If at the first image, wraps to the last image.
+   */
+  const handlePreviousImage = () => {
+    setSelectedIndex((prev) =>
+      prev === null || prev === 0 ? images.length - 1 : prev - 1
+    );
+  };
+
+  /**
+   * Navigates to the next image with circular wrap-around.
+   * If at the last image, wraps to the first image.
+   */
+  const handleNextImage = () => {
+    setSelectedIndex((prev) =>
+      prev === null || prev === images.length - 1 ? 0 : prev + 1
+    );
+  };
+
   return (
     <Box
       sx={sx}
@@ -123,29 +144,14 @@ export function ProjectGallery({
         ))}
       </Box>
 
-      {/* Lightbox Modal (to be implemented in Phase 3) */}
-      {selectedIndex !== null && (
-        <Box
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Image lightbox"
-          sx={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 50,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-          }}
-        >
-          {/* Lightbox content will be implemented in Phase 3 */}
-          <Typography sx={{ color: "white" }}>
-            Lightbox placeholder - to be implemented
-          </Typography>
-        </Box>
-      )}
+      {/* Lightbox Modal */}
+      <ProjectLightbox
+        images={images}
+        selectedIndex={selectedIndex}
+        onClose={closeLightbox}
+        onPrevious={handlePreviousImage}
+        onNext={handleNextImage}
+      />
     </Box>
   );
 }
