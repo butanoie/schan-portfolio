@@ -1,47 +1,9 @@
 /**
  * TypeScript types for the Colophon/About page data.
- * Defines the structure for bio, technologies, design philosophy, and Buta story.
+ * Defines the structure for technologies, design philosophy, and Buta story.
  */
 
-/**
- * Contact or social link with icon identifier.
- */
-export interface SocialLink {
-  /** Display label for the link */
-  label: string;
-
-  /** URL to navigate to */
-  url: string;
-
-  /** Icon identifier (e.g., "linkedin", "github", "email") */
-  icon: 'linkedin' | 'github' | 'email' | 'website';
-}
-
-/**
- * About section content - bio and current role information.
- */
-export interface AboutContent {
-  /** Full name */
-  name: string;
-
-  /** Current job title */
-  currentRole: string;
-
-  /** Current employer/company name */
-  company: string;
-
-  /** Brief biography paragraph */
-  bio: string;
-
-  /** V1-style deck paragraphs for the intro section */
-  deck: string[];
-
-  /** List of current responsibilities */
-  responsibilities: string[];
-
-  /** Optional social/contact links */
-  links?: SocialLink[];
-}
+import { PageDeckData } from "./pageDeck";
 
 /**
  * Individual technology entry with details.
@@ -173,7 +135,7 @@ export interface ColophonData {
   pageDescription: string;
 
   /** About section content */
-  about: AboutContent;
+  pageDeck: PageDeckData;
 
   /** Technologies section content */
   technologies: TechnologiesContent;

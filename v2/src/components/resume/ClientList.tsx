@@ -44,7 +44,6 @@ export default function ClientList({ clients }: ClientListProps) {
           variant="h3"
           component="h3"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
             fontWeight: 600,
             color: BRAND_COLORS.graphite,
             fontSize: { xs: "1.1rem", md: "1.25rem" },

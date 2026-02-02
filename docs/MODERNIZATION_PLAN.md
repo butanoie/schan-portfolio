@@ -354,6 +354,12 @@ The following Gumby features are being **completely removed** in V2:
 
 #### 3.1 Homepage (Portfolio)
 
+> **⚠️ OBSOLETE - Original implementation plan superseded by MVP approach**
+>
+> **See:** [docs/PROJECTS_PAGE_MVP_PLAN.md](./PROJECTS_PAGE_MVP_PLAN.md) for the new simplified MVP plan.
+>
+> The checklist below represents the original comprehensive approach and is preserved for reference only.
+
 - [ ] Create project grid layout
   - MUI Grid or Masonry component
   - Responsive column layout (12/8/4 columns)
