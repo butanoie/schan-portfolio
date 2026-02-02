@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ProjectsList } from '../../../components/portfolio/ProjectsList';
+import { ProjectsList } from '../../../components/project/ProjectsList';
 import type { Project } from '../../../types';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 

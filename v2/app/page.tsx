@@ -1,17 +1,18 @@
 import { fetchProjects } from '../src/lib/projectDataServer';
-import { ProjectsList } from '../src/components/portfolio/ProjectsList';
-import { Container, Typography } from '@mui/material';
-import { BRAND_COLORS } from '../src/constants';
+import { ProjectsList } from '../src/components/project/ProjectsList';
+import PageDeck from '../src/components/PageDeck';
+import { Container } from '@mui/material';
+import { portfolioData } from '../src/data/portfolio';
 
 /**
  * Projects page displaying all portfolio projects inline.
  *
- * This is the main portfolio page that displays all 18 projects in a single,
+ * This is the main portfolio page that displays all projects in a single,
  * scrollable view. Each project is rendered with the appropriate responsive
  * layout variant based on viewport size, video presence, and configuration.
  *
  * **Page Structure:**
- * 1. Container with "Projects" heading
+ * 1. PageDeck with logo, name, and intro deck paragraphs
  * 2. ProjectsList component mapping all projects to ProjectDetail
  * 3. Each project displays full details (title, tags, description, images, videos)
  * 4. Responsive layouts from mobile to desktop
@@ -28,7 +29,7 @@ import { BRAND_COLORS } from '../src/constants';
  *
  * **Accessibility:**
  * - Semantic HTML structure with proper heading hierarchy
- * - Page title as h1 for screen readers
+ * - Page title as h1 for screen readers via PageDeck
  * - Proper heading levels throughout (h2 for project titles)
  * - ARIA labels where necessary
  * - Keyboard navigation fully supported
@@ -39,7 +40,7 @@ import { BRAND_COLORS } from '../src/constants';
  * // This is the main home page route at /
  * // Displays all 18 projects on a single scrollable page
  */
-export default async function ProjectsPage() {
+export default async function PortfolioPage() {
   /**
    * Fetch all projects server-side.
    * Using pageSize: 100 ensures all projects are retrieved without pagination.
@@ -48,26 +49,12 @@ export default async function ProjectsPage() {
 
   return (
     <Container
+      component="main"
+      role="article"
       maxWidth="lg"
-      sx={{
-        py: { xs: 3, sm: 4, md: 6 },
-        px: { xs: 2, sm: 3, md: 3 },
-      }}
     >
-      {/* Page heading */}
-      <Typography
-        variant="h1"
-        component="h1"
-        sx={{
-          mb: { xs: 4, sm: 5, md: 6 },
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-          fontFamily: 'Oswald, sans-serif',
-          color: BRAND_COLORS.maroon,
-          fontWeight: 600,
-        }}
-      >
-        Projects
-      </Typography>
+      {/* Projects header with logo, name, and intro */}
+      <PageDeck content={portfolioData.pageDeck} />
 
       {/* Projects list */}
       <ProjectsList projects={items} />

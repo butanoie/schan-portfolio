@@ -54,7 +54,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
       component="section"
       aria-labelledby="resume-name"
       sx={{
-        pt: { xs: 4, md: 6 },
+        pt: 4,
         pb: { xs: 0, md: 0 },
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
