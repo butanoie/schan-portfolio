@@ -16,6 +16,7 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
+import { useSwipe } from "../../hooks";
 
 /**
  * Props for the ProjectLightbox component.
@@ -94,7 +95,6 @@ export function ProjectLightbox({
   onPrevious,
   onNext,
 }: ProjectLightboxProps) {
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -127,69 +127,18 @@ export function ProjectLightbox({
   }, [validIndex, images.length, onNext]);
 
   /**
-   * Handles touch start event to capture initial touch position.
-   * Used for detecting swipe gestures (horizontal and vertical).
-   *
-   * @param e - Touch event from the dialog
+   * Set up touch swipe gesture detection for the lightbox.
+   * - Swipe left: navigate to next image
+   * - Swipe right: navigate to previous image
+   * - Swipe down: close lightbox
+   * Configured with maxImages to prevent horizontal navigation on single-image galleries.
    */
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart({
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-    });
-  };
-
-  /**
-   * Handles touch end event to detect swipe direction and trigger navigation or close.
-   * Supports:
-   * - Horizontal swipes: left (next image), right (previous image)
-   * - Vertical swipes: down (close lightbox)
-   * Requires minimum 50px swipe distance to prevent accidental triggers.
-   *
-   * @param e - Touch event from the dialog
-   */
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStart === null) {
-      setTouchStart(null);
-      return;
-    }
-
-    const touchEnd = {
-      x: e.changedTouches[0].clientX,
-      y: e.changedTouches[0].clientY,
-    };
-
-    const horizontalDistance = touchStart.x - touchEnd.x;
-    const verticalDistance = touchEnd.y - touchStart.y; // Positive = downward
-    const threshold = 50; // Minimum swipe distance in pixels
-
-    // Check for downward swipe to close (works regardless of image count)
-    if (verticalDistance > threshold && Math.abs(horizontalDistance) < threshold) {
-      // Downward swipe with minimal horizontal movement: close lightbox
-      onClose();
-      setTouchStart(null);
-      return;
-    }
-
-    // Only trigger horizontal navigation if image count > 1
-    if (images.length <= 1) {
-      setTouchStart(null);
-      return;
-    }
-
-    // Check for horizontal swipes to navigate
-    if (Math.abs(horizontalDistance) > threshold && Math.abs(verticalDistance) < threshold) {
-      if (horizontalDistance > 0) {
-        // Swipe left: go to next image
-        handleNext();
-      } else {
-        // Swipe right: go to previous image
-        handlePrevious();
-      }
-    }
-
-    setTouchStart(null);
-  };
+  const { onTouchStart, onTouchEnd } = useSwipe(
+    handleNext,    // onSwipeLeft
+    handlePrevious, // onSwipeRight
+    onClose,       // onSwipeDown
+    { maxImages: images.length, threshold: 50 }
+  );
 
   /**
    * Handles keyboard navigation for arrow keys and Escape.
@@ -313,8 +262,8 @@ export function ProjectLightbox({
           timeout: 300,
         },
       }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       aria-label="Image lightbox"
     >
       {/* Close Button - Top Right */}
