@@ -1,51 +1,63 @@
 import { fetchProjects } from '../src/lib/projectDataServer';
-import { ProjectsList } from '../src/components/project/ProjectsList';
+import { AsyncProjectsList } from '../src/components/project/AsyncProjectsList';
 import PageDeck from '../src/components/common/PageDeck';
 import { Container } from '@mui/material';
 import { portfolioData } from '../src/data/portfolio';
 
 /**
- * Projects page displaying all portfolio projects inline.
+ * Projects page displaying portfolio projects with asynchronous loading.
  *
- * This is the main portfolio page that displays all projects in a single,
- * scrollable view. Each project is rendered with the appropriate responsive
- * layout variant based on viewport size, video presence, and configuration.
+ * This is the main portfolio page that displays projects progressively:
+ * - Initial 5 projects load immediately from server
+ * - User can click "Load More" to fetch additional batches
+ * - All 18 projects can be loaded on demand
  *
  * **Page Structure:**
  * 1. PageDeck with logo, name, and intro deck paragraphs
- * 2. ProjectsList component mapping all projects to ProjectDetail
- * 3. Each project displays full details (title, tags, description, images, videos)
- * 4. Responsive layouts from mobile to desktop
+ * 2. AsyncProjectsList managing progressive loading
+ * 3. Initially shows 5 projects with Load More button
+ * 4. Each project displays full details (title, tags, description, images, videos)
+ * 5. Responsive layouts from mobile to desktop
  *
  * **Rendering:**
  * - Server Component (async)
- * - Fetches all projects server-side with pageSize: 100 (no pagination)
- * - Passes projects to ProjectsList Client Component
+ * - Fetches initial 5 projects server-side (fast initial load)
+ * - Passes projects to AsyncProjectsList Client Component
+ * - Client component manages additional loads on demand
  *
  * **Performance:**
- * - Data fetching happens at build time for static generation
- * - Images are optimized by Next.js Image component
- * - No client-side data loading delay
+ * - Fast initial page load (only 5 projects)
+ * - Server-side data fetching for excellent LCP
+ * - On-demand client-side loading for remaining projects
+ * - Images optimized by Next.js Image component
+ *
+ * **User Experience:**
+ * - Immediate content display (no skeleton on first load)
+ * - Clear "Load 13 more" button in footer thought bubble
+ * - Batch loading of 5 projects at a time
+ * - Visual feedback with skeleton loaders during load
  *
  * **Accessibility:**
  * - Semantic HTML structure with proper heading hierarchy
  * - Page title as h1 for screen readers via PageDeck
  * - Proper heading levels throughout (h2 for project titles)
- * - ARIA labels where necessary
+ * - ARIA labels and live regions for loading state
  * - Keyboard navigation fully supported
+ * - Respects user's reduced motion preferences
  *
- * @returns The rendered projects page
+ * @returns The rendered projects page with async loading
  *
  * @example
  * // This is the main home page route at /
- * // Displays all 18 projects on a single scrollable page
+ * // Displays 5 projects initially, rest load on demand
  */
 export default async function PortfolioPage() {
   /**
-   * Fetch all projects server-side.
-   * Using pageSize: 100 ensures all projects are retrieved without pagination.
+   * Fetch initial batch of projects server-side.
+   * Fetching only 5 projects ensures fast initial page load.
+   * User can load more projects on demand via AsyncProjectsList component.
    */
-  const { items } = await fetchProjects({ pageSize: 100 });
+  const { items } = await fetchProjects({ page: 1, pageSize: 5 });
 
   return (
     <Container
@@ -56,8 +68,12 @@ export default async function PortfolioPage() {
       {/* Projects header with logo, name, and intro */}
       <PageDeck content={portfolioData.pageDeck} />
 
-      {/* Projects list */}
-      <ProjectsList projects={items} />
+      {/* Async projects list with progressive loading */}
+      <AsyncProjectsList
+        initialProjects={items}
+        pageSize={5}
+        isHomePage={true}
+      />
     </Container>
   );
 }
