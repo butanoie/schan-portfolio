@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import PageDeck from "../../../components/PageDeck";
-import type { PageDeckData } from "../../../types/colophon";
+import PageDeck from "../../components/PageDeck";
+import type { PageDeckData } from "../../types/pageDeck";
 
 /**
  * Tests for the PageDeck component.
