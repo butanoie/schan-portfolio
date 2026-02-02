@@ -1,6 +1,6 @@
 import { fetchProjects } from '../src/lib/projectDataServer';
 import { ProjectsList } from '../src/components/project/ProjectsList';
-import PageDeck from '../src/components/PageDeck';
+import PageDeck from '../src/components/common/PageDeck';
 import { Container } from '@mui/material';
 import { portfolioData } from '../src/data/portfolio';
 

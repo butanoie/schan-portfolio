@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import type { PageDeckData } from "../types";
-import { BRAND_COLORS } from "../constants";
+import type { PageDeckData } from "../../types";
+import { BRAND_COLORS } from "../../constants";
 
 /**
  * Props for the PageDeck component.
