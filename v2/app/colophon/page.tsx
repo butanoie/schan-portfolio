@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Container, Divider, Box } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import {
-  AboutSection,
   TechnologiesShowcase,
   DesignPhilosophy,
   ButaStory,
 } from "../../src/components/colophon";
+import PageDeck from "../../src/components/PageDeck";
 import { getColophonData } from "../../src/data/colophon";
 
 /**
@@ -22,8 +21,8 @@ export const metadata: Metadata = {
 /**
  * Colophon page component.
  *
- * Displays information about the site creator, including:
- * - About section with bio and current role
+ * Displays information about the site, including:
+ * - About section with intro image, heading, and deck paragraphs
  * - Technologies used to build the portfolio
  * - Design philosophy with color palette and typography
  * - The story of Buta, the portfolio mascot
@@ -36,64 +35,26 @@ export default function ColophonPage() {
   return (
     <Container
       component="main"
+      role="article"
       maxWidth="lg"
     >
-      {/* Choice Cuts Header Image */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mt: 2,
-          mb: 6,
-          px: { xs: 2, sm: 0 },
-        }}
-      >
-        <Box
-          sx={{
-            width: { xs: "100%", sm: 600, md: 940 },
-            maxWidth: 940,
-            height: "auto",
-          }}
-        >
-          <Image
-            src="/images/choice_cuts@2x.png"
-            alt="Choice Cuts - pork cuts diagram logo"
-            width={940}
-            height={240}
-            priority
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-          />
-        </Box>
-      </Box>
+      {/* About Section */}
+      <PageDeck content={data.pageDeck} />
 
-      <Box
-        component="article"
-        sx={{
-          maxWidth: 900,
-          mx: "auto",
-        }}
-      >
-        {/* About Section */}
-        <AboutSection content={data.about} />
+      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
 
-        <Divider sx={{ my: 7 }} />
+      {/* Technologies Section */}
+      <TechnologiesShowcase content={data.technologies} />
 
-        {/* Technologies Section */}
-        <TechnologiesShowcase content={data.technologies} />
+      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
 
-        <Divider sx={{ my: 7 }} />
+      {/* Design Philosophy Section */}
+      <DesignPhilosophy content={data.designPhilosophy} />
+    
+      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
 
-        {/* Design Philosophy Section */}
-        <DesignPhilosophy content={data.designPhilosophy} />
-
-        <Divider sx={{ my: 7 }} />
-
-        {/* Buta Story Section */}
-        <ButaStory content={data.butaStory} />
-      </Box>
+      {/* Buta Story Section */}
+      <ButaStory content={data.butaStory} />
     </Container>
   );
 }

@@ -12,6 +12,15 @@ export type {
   ProjectQueryOptions,
 } from './project';
 
+export type {
+  ProjectsPageData,
+} from './porfolio';
+
+
+export type {
+  PageDeckData,
+} from './pageDeck';
+
 export {
   isProject,
   isProjectImage,

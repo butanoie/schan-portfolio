@@ -242,7 +242,7 @@ export const PROJECTS: readonly Project[] = [
   // Project 6: Servus Credit Union Cafe
   {
     id: 'servusCafe',
-    title: 'Servus Credit Union - <em>cafe</em>',
+    title: 'Servus Credit Union - cafe',
     desc:
       '<p><em>cafe</em> is a crowdsourcing solution designed to empower employees to engage in open dialogue aimed at improving the organization and establishing a sense of community across Servus. Employees are given the opportunity to anonymously pose questions of interest and others can rate and respond to these questions.</p>' +
       '<p><em>cafe</em> also allows the executive team to respond to the top ideas and move appropriate items into a separate notes area. The executive leadership team can communicate on the status of each noted idea and employees can continue to comment on these items, fostering increased collaboration between the executive leadership team and the organization\'s employees.</p>' +
@@ -602,7 +602,7 @@ export const PROJECTS: readonly Project[] = [
   // Project 16: Granville Island
   {
     id: 'gi',
-    title: 'Granvile Island - External Website',
+    title: 'Granville Island - External Website',
     desc:
       '<p>Granville Island is one of Vancouver\'s world renowned destination experiences.</p>' +
       '<p>GranvilleIsland.com was developed on top of Grey Vancouver\'s grASP CMS and included both HTML and, for-the-time, high-bandwidth Flash interfaces. The Flash web site included many discoverable interactive elements, videos and 360&#176; panoramas.</p>' +

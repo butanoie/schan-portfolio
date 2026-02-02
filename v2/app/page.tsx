@@ -1,71 +1,63 @@
-import Image from "next/image";
+import { fetchProjects } from '../src/lib/projectDataServer';
+import { ProjectsList } from '../src/components/project/ProjectsList';
+import PageDeck from '../src/components/PageDeck';
+import { Container } from '@mui/material';
+import { portfolioData } from '../src/data/portfolio';
 
 /**
- * Home page component displaying the landing page content.
- * Currently shows Next.js starter content with links to documentation and deployment.
+ * Projects page displaying all portfolio projects inline.
  *
- * @returns The home page layout with introductory content and action buttons
+ * This is the main portfolio page that displays all projects in a single,
+ * scrollable view. Each project is rendered with the appropriate responsive
+ * layout variant based on viewport size, video presence, and configuration.
+ *
+ * **Page Structure:**
+ * 1. PageDeck with logo, name, and intro deck paragraphs
+ * 2. ProjectsList component mapping all projects to ProjectDetail
+ * 3. Each project displays full details (title, tags, description, images, videos)
+ * 4. Responsive layouts from mobile to desktop
+ *
+ * **Rendering:**
+ * - Server Component (async)
+ * - Fetches all projects server-side with pageSize: 100 (no pagination)
+ * - Passes projects to ProjectsList Client Component
+ *
+ * **Performance:**
+ * - Data fetching happens at build time for static generation
+ * - Images are optimized by Next.js Image component
+ * - No client-side data loading delay
+ *
+ * **Accessibility:**
+ * - Semantic HTML structure with proper heading hierarchy
+ * - Page title as h1 for screen readers via PageDeck
+ * - Proper heading levels throughout (h2 for project titles)
+ * - ARIA labels where necessary
+ * - Keyboard navigation fully supported
+ *
+ * @returns The rendered projects page
+ *
+ * @example
+ * // This is the main home page route at /
+ * // Displays all 18 projects on a single scrollable page
  */
-export default function Home() {
+export default async function PortfolioPage() {
+  /**
+   * Fetch all projects server-side.
+   * Using pageSize: 100 ensures all projects are retrieved without pagination.
+   */
+  const { items } = await fetchProjects({ pageSize: 100 });
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Container
+      component="main"
+      role="article"
+      maxWidth="lg"
+    >
+      {/* Projects header with logo, name, and intro */}
+      <PageDeck content={portfolioData.pageDeck} />
+
+      {/* Projects list */}
+      <ProjectsList projects={items} />
+    </Container>
   );
 }
