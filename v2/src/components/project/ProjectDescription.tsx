@@ -26,6 +26,42 @@ interface ProjectDescriptionProps {
   sx?: SxProps<Theme>;
 }
 
+const DESCRIPTION_SX = {
+  '& p': {
+    margin: '0 0 1rem 0',
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  '& a': {
+    color: BRAND_COLORS.maroon,
+    textDecoration: 'underline',
+    '&:hover': {
+      color: BRAND_COLORS.maroonDark,
+    },
+  },
+  '& strong': {
+    fontWeight: 600,
+    color: BRAND_COLORS.graphite,
+  },
+  '& em': {
+    fontStyle: 'italic',
+  },
+  '& ul, & ol': {
+    marginLeft: '1.5rem',
+    marginBottom: '1rem',
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  '& li': {
+    marginBottom: '0.5rem',
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+};
+
 /**
  * Configuration for HTML sanitization.
  * Defines which HTML tags and attributes are allowed for security.
@@ -111,42 +147,8 @@ export function ProjectDescription({
         {/* Description */}
         <Box
           sx={{
-            fontSize: { xs: '0.95rem', sm: '1rem', md: '1.05rem' },
-            lineHeight: 1.7,
-            color: BRAND_COLORS.graphite,
-            '& p': {
-              margin: '0 0 1rem 0',
-              '&:last-child': {
-                marginBottom: 0,
-              },
-            },
-            '& a': {
-              color: BRAND_COLORS.maroon,
-              textDecoration: 'underline',
-              '&:hover': {
-                color: BRAND_COLORS.maroonDark,
-              },
-            },
-            '& strong': {
-              fontWeight: 600,
-              color: BRAND_COLORS.graphite,
-            },
-            '& em': {
-              fontStyle: 'italic',
-            },
-            '& ul, & ol': {
-              marginLeft: '1.5rem',
-              marginBottom: '1rem',
-              '&:last-child': {
-                marginBottom: 0,
-              },
-            },
-            '& li': {
-              marginBottom: '0.5rem',
-              '&:last-child': {
-                marginBottom: 0,
-              },
-            },
+            ...DESCRIPTION_SX,
+            ...sx,            
           }}
           dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
         />
@@ -170,45 +172,11 @@ export function ProjectDescription({
           <ProjectTagsContainer tags={tags} circa={circa} />
         </Box>
 
-        {/* Description with floated tags and date */}
+        {/* Description */}
         <Box
           sx={{
-            fontSize: { xs: '0.95rem', sm: '1rem', md: '1.05rem' },
-            lineHeight: 1.7,
-            color: BRAND_COLORS.graphite,
-            '& p': {
-              margin: '0 0 1rem 0',
-              '&:last-child': {
-                marginBottom: 0,
-              },
-            },
-            '& a': {
-              color: BRAND_COLORS.maroon,
-              textDecoration: 'underline',
-              '&:hover': {
-                color: BRAND_COLORS.maroonDark,
-              },
-            },
-            '& strong': {
-              fontWeight: 600,
-              color: BRAND_COLORS.graphite,
-            },
-            '& em': {
-              fontStyle: 'italic',
-            },
-            '& ul, & ol': {
-              marginLeft: '1.5rem',
-              marginBottom: '1rem',
-              '&:last-child': {
-                marginBottom: 0,
-              },
-            },
-            '& li': {
-              marginBottom: '0.5rem',
-              '&:last-child': {
-                marginBottom: 0,
-              },
-            },
+            ...DESCRIPTION_SX,
+            ...sx,            
           }}
           dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
         />
@@ -222,42 +190,7 @@ export function ProjectDescription({
   return (
     <Box
       sx={{
-        fontSize: { xs: '0.95rem', sm: '1rem', md: '1.05rem' },
-        lineHeight: 1.7,
-        color: BRAND_COLORS.graphite,
-        '& p': {
-          margin: '0 0 1rem 0',
-          '&:last-child': {
-            marginBottom: 0,
-          },
-        },
-        '& a': {
-          color: BRAND_COLORS.maroon,
-          textDecoration: 'underline',
-          '&:hover': {
-            color: BRAND_COLORS.maroonDark,
-          },
-        },
-        '& strong': {
-          fontWeight: 600,
-          color: BRAND_COLORS.graphite,
-        },
-        '& em': {
-          fontStyle: 'italic',
-        },
-        '& ul, & ol': {
-          marginLeft: '1.5rem',
-          marginBottom: '1rem',
-          '&:last-child': {
-            marginBottom: 0,
-          },
-        },
-        '& li': {
-          marginBottom: '0.5rem',
-          '&:last-child': {
-            marginBottom: 0,
-          },
-        },
+        ...DESCRIPTION_SX,
         ...sx,
       }}
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}

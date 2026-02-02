@@ -42,19 +42,19 @@ const theme = createTheme({
     },
     h3: {
       fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
-      fontWeight: 600,
+      fontWeight: 400,
     },
     h4: {
       fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
-      fontWeight: 600,
+      fontWeight: 400,
     },
     h5: {
       fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
-      fontWeight: 500,
+      fontWeight: 400,
     },
     h6: {
       fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
-      fontWeight: 500,
+      fontWeight: 400,
     },
   },
 });

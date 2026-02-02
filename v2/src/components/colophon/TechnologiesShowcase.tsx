@@ -118,12 +118,10 @@ export default function TechnologiesShowcase({
         variant="h2"
         component="h2"
         sx={{
-          fontFamily: '"Oswald", sans-serif',
-          fontWeight: 700,
           color: BRAND_COLORS.maroon,
-          fontSize: { xs: "1.75rem", md: "2rem" },
+          fontSize: "2rem",
           mt: 0,
-          mb: 3,
+          mb: 2,
           textAlign: "center"
         }}
       >
@@ -149,7 +147,7 @@ export default function TechnologiesShowcase({
             sx={{
               fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
-              fontSize: { xs: "1.1rem", md: "1.25rem" },
+              fontSize: "1.25rem",
               mb: 2,
             }}
           >
@@ -192,7 +190,7 @@ export default function TechnologiesShowcase({
             sx={{
               fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
-              fontSize: "1.1rem",
+              fontSize: "1.25rem",
             }}
           >
             Original V1 Technologies (Historical)

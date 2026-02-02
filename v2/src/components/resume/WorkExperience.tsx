@@ -39,9 +39,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
       <Typography
         id="work-experience-heading"
         variant="h2"
-        component="h2"
         sx={{
-          fontFamily: '"Oswald", sans-serif',
           fontWeight: 600,
           color: BRAND_COLORS.graphite,
           fontSize: { xs: "1.75rem", md: "2rem" },
@@ -63,9 +61,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           {/* Company Name */}
           <Typography
             variant="h3"
-            component="h3"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
               color: BRAND_COLORS.maroon,
               fontSize: { xs: "1.35rem", md: "1.5rem" },

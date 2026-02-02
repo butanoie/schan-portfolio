@@ -128,20 +128,18 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   return (
     <Box component="section">
       {/* Divider between projects */}
-      <Divider sx={{ my: 6, mx: 8 }} />
+      <Divider sx={{ mt: 6, mb: 4, mx: 8 }} />
 
       {/* Project title always full width */}
     <Typography
       component="h2"
-      variant="h4"
       sx={{
         fontFamily: 'Oswald, sans-serif',
         textAlign: 'center',
         color: BRAND_COLORS.graphite,
-        fontWeight: "normal",
-        fontSize: 30,
+        fontSize: "2rem",
         mt: 0,
-        mb: 3,
+        mb: 2,
       }}
     >
       {project.title}

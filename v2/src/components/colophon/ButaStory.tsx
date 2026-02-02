@@ -38,7 +38,6 @@ export default function ButaStory({ content }: ButaStoryProps) {
       <Typography
         id="buta-heading"
         variant="h2"
-        component="h2"
         sx={{
           // Visually hidden but accessible to screen readers (sr-only)
           position: "absolute",
@@ -56,13 +55,6 @@ export default function ButaStory({ content }: ButaStoryProps) {
       </Typography>
 
       {/* Boo vs Bu Image */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mb: 1,
-        }}
-      >
         <Paper
           elevation={0}
           sx={{
@@ -83,8 +75,6 @@ export default function ButaStory({ content }: ButaStoryProps) {
             }}
           />
         </Paper>
-      </Box>
-
 
       {/* Story Paragraphs */}
       <Box>
@@ -92,10 +82,8 @@ export default function ButaStory({ content }: ButaStoryProps) {
           <Typography
             key={index}
             variant="body1"
-            component="div"
             sx={{
               mb: 2,
-              lineHeight: 1.7,
               "& a": {
                 color: "primary.dark",
                 textDecoration: "underline",

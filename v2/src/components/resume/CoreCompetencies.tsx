@@ -47,14 +47,12 @@ export default function CoreCompetencies({
           {/* Category Heading */}
           <Typography
             variant="h3"
-            component="h3"
             id={
               categoryIndex === 0
                 ? "skills-heading"
                 : `skills-${category.label.toLowerCase().replace(/\s+/g, "-")}`
             }
             sx={{
-              fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
               color: BRAND_COLORS.graphite,
               fontSize: { xs: "1.1rem", md: "1.25rem" },
