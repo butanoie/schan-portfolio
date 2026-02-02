@@ -2,7 +2,7 @@
 
 import type { Project } from '../../types';
 import { Box } from '@mui/material';
-import { ProjectDetail } from '../project/ProjectDetail';
+import { ProjectDetail } from './ProjectDetail';
 
 /**
  * Props for the ProjectsList component.

@@ -1,8 +1,8 @@
 /**
- * Colophon page data - information about the site creator, technologies, and design.
+ * Colophon page data - information about the site, technologies, and design.
  *
  * This data is used by the /colophon page to display:
- * - About section with bio and current role
+ * - About section with page deck intro (image, heading, paragraphs)
  * - Technologies used in V1 and V2 of the portfolio
  * - Design philosophy including color palette and typography
  * - The story of Buta, the portfolio mascot
@@ -20,32 +20,15 @@ export const colophonData: ColophonData = {
   pageDescription:
     "About Sing Chan, the technologies behind this portfolio site, design philosophy, and the story of Buta the mascot.",
 
-  about: {
-    name: 'Sing Chan',
-    currentRole: 'VP of Product',
-    company: 'Collabware Systems',
-    bio: 'A creative technologist with 25+ years of experience bridging design and development.',
+  pageDeck: {
+    imageUrl: '/images/choice_cuts@2x.png',
+    imageAlt: 'Choice Cuts - pork cuts diagram logo',
+    headingId: 'colophon-heading',
+    heading: 'Colophon',
     deck: [
       'Sing Chan is currently the VP of Product at Collabware Systems.',
       "Sing is responsible for working with customers and stakeholders to determine the product and feature roadmaps for Collabware's Collabspace solution and manages the Product and Quality Assurance teams.",
       "He is also responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings.",
-    ],
-    responsibilities: [
-      'Working with customers and stakeholders to determine product and feature roadmaps for Collabware\'s Collabspace solution',
-      'Managing the Product and Quality Assurance teams',
-      'Responsible for interaction design, user experience, and front-end development frameworks for Collabware\'s software offerings',
-    ],
-    links: [
-      {
-        label: 'LinkedIn',
-        url: 'https://www.linkedin.com/in/singchan/',
-        icon: 'linkedin',
-      },
-      {
-        label: 'GitHub',
-        url: 'https://github.com/singchan',
-        icon: 'github',
-      },
     ],
   },
 

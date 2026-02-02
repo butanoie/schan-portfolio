@@ -22,29 +22,27 @@ describe('Colophon Data', () => {
   });
 
   describe('About Section', () => {
-    const { about } = colophonData;
+    const { pageDeck } = colophonData;
 
-    it('should have required about fields', () => {
-      expect(about.name).toBeTruthy();
-      expect(about.currentRole).toBeTruthy();
-      expect(about.company).toBeTruthy();
-      expect(about.bio).toBeTruthy();
+    it('should have pageDeck content', () => {
+      expect(pageDeck).toBeDefined();
+      expect(pageDeck.imageUrl).toBeTruthy();
+      expect(pageDeck.imageAlt).toBeTruthy();
+      expect(pageDeck.headingId).toBeTruthy();
+      expect(pageDeck.heading).toBeTruthy();
     });
 
-    it('should have responsibilities array', () => {
-      expect(Array.isArray(about.responsibilities)).toBe(true);
-      expect(about.responsibilities.length).toBeGreaterThan(0);
-    });
+    it('should have deck paragraphs', () => {
+      expect(Array.isArray(pageDeck.deck)).toBe(true);
+      expect(pageDeck.deck.length).toBeGreaterThan(0);
 
-    it('should have valid social links', () => {
-      expect(about.links).toBeDefined();
-      expect(Array.isArray(about.links)).toBe(true);
-
-      about.links?.forEach((link) => {
-        expect(link.label).toBeTruthy();
-        expect(link.url).toMatch(/^https?:\/\//);
-        expect(['linkedin', 'github', 'email', 'website']).toContain(link.icon);
+      pageDeck.deck.forEach((paragraph) => {
+        expect(paragraph).toBeTruthy();
       });
+    });
+
+    it('should have valid image path', () => {
+      expect(pageDeck.imageUrl).toMatch(/^\/images\//);
     });
   });
 

@@ -1,8 +1,8 @@
 'use client';
 
 import type { Project } from '../../types';
-import { useMediaQuery, useTheme, Box, Divider } from '@mui/material';
-import { ProjectHeader } from './ProjectHeader';
+import { useMediaQuery, useTheme, Box, Divider, Typography } from '@mui/material';
+import { BRAND_COLORS } from '../../constants';
 import { ProjectDescription } from './ProjectDescription';
 import { VideoEmbed } from './VideoEmbed';
 import { ProjectGallery } from './ProjectGallery';
@@ -126,9 +126,26 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   const layoutVariant = getLayoutVariant(project, isMobile);
 
   return (
-    <Box component="section" sx={{ mb: 8, scrollMarginTop: '80px' }}>
+    <Box component="section">
+      {/* Divider between projects */}
+      <Divider sx={{ my: 6, mx: 8 }} />
+
       {/* Project title always full width */}
-      <ProjectHeader title={project.title} />
+    <Typography
+      component="h2"
+      variant="h4"
+      sx={{
+        fontFamily: 'Oswald, sans-serif',
+        textAlign: 'center',
+        color: BRAND_COLORS.graphite,
+        fontWeight: "normal",
+        fontSize: 30,
+        mt: 0,
+        mb: 3,
+      }}
+    >
+      {project.title}
+    </Typography>
 
       {/* Layout-specific content */}
       {layoutVariant === 'wide-video' && (
@@ -146,9 +163,6 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       {layoutVariant === 'narrow-video' && (
         <NarrowVideoLayout project={project} />
       )}
-
-      {/* Divider between projects */}
-      <Divider sx={{ mt: 6 }} />
     </Box>
   );
 }
