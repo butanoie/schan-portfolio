@@ -5,7 +5,7 @@ import {
   DesignPhilosophy,
   ButaStory,
 } from "../../src/components/colophon";
-import PageDeck from "../../src/components/PageDeck";
+import PageDeck from "../../src/components/common/PageDeck";
 import { getColophonData } from "../../src/data/colophon";
 
 /**

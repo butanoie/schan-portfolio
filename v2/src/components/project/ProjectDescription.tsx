@@ -48,14 +48,14 @@ const DESCRIPTION_SX = {
     fontStyle: 'italic',
   },
   '& ul, & ol': {
-    marginLeft: '1.5rem',
+    marginLeft: 0,
     marginBottom: '1rem',
     '&:last-child': {
       marginBottom: 0,
     },
   },
   '& li': {
-    marginBottom: '0.5rem',
+    marginBottom: '0.2rem',
     '&:last-child': {
       marginBottom: 0,
     },

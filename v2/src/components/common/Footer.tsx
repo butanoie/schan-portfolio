@@ -7,7 +7,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BRAND_COLORS, UI_COLORS, NAV_COLORS } from "../constants";
+import { BRAND_COLORS, UI_COLORS, NAV_COLORS } from "../../constants";
 
 /**
  * Navigation link configuration for the footer.

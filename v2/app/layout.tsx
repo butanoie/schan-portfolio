@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/src/components/ThemeProvider";
-import MainLayout from "@/src/components/MainLayout";
+import MainLayout from "@/src/components/common/MainLayout";
 
 export const metadata: Metadata = {
   title: "Sing Chan - Portfolio",
