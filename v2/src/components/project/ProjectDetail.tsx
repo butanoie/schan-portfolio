@@ -185,13 +185,11 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
       }}
     >
       {/* Left column: Tags + Date + Description */}
-      <Box sx={{ pt: { xs: 0, md: 1 } }}>
-        <ProjectDescription
-          html={project.desc}
-          tags={project.tags}
-          circa={project.circa}
-        />
-      </Box>
+      <ProjectDescription
+        html={project.desc}
+        tags={project.tags}
+        circa={project.circa}
+      />
 
       {/* Right column: Video + Gallery */}
       <Box>
@@ -224,20 +222,16 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
       }}
     >
       {/* Left column: Description with floating tags and date */}
-      <Box>
-        <ProjectDescription
-          html={project.desc}
-          tags={project.tags}
-          circa={project.circa}
-          floatTags
-          floatedTagsMaxWidth={{ maxWidth: { md: '50%' } }}
-        />
-      </Box>
+      <ProjectDescription
+        html={project.desc}
+        tags={project.tags}
+        circa={project.circa}
+        floatTags
+        floatedTagsMaxWidth={{ maxWidth: { md: '50%' } }}
+      />
 
       {/* Right column: Gallery */}
-      <Box>
-        <ProjectGallery images={project.images} narrow />
-      </Box>
+      <ProjectGallery images={project.images} narrow />
     </Box>
   );
 }
@@ -262,18 +256,14 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
       }}
     >
       {/* Left column: Tags + Date + Description */}
-      <Box sx={{ pt: { xs: 0, md: 1 } }}>
-        <ProjectDescription
-          html={project.desc}
-          tags={project.tags}
-          circa={project.circa}
-        />
-      </Box>
+      <ProjectDescription
+        html={project.desc}
+        tags={project.tags}
+        circa={project.circa}
+      />
 
       {/* Right column: Gallery (4-column grid) */}
-      <Box>
-        <ProjectGallery images={project.images} fourColumns />
-      </Box>
+      <ProjectGallery images={project.images} fourColumns />
     </Box>
   );
 }
