@@ -7,7 +7,6 @@ import {
   NetworkError,
   getUserFriendlyMessage,
   isAppError,
-  type ErrorCategory,
 } from '../../utils/errors';
 
 /**
@@ -473,8 +472,9 @@ describe('Error Hierarchy', () => {
      */
     it('handles video ID validation errors', () => {
       /**
+       * Validates that video ID is in correct format (8-11 digits).
        *
-       * @param id
+       * @param id - The video ID to validate
        */
       const validateVideoId = (id: string): void => {
         if (!/^\d{8,11}$/.test(id)) {
@@ -494,8 +494,9 @@ describe('Error Hierarchy', () => {
      */
     it('handles security validation errors', () => {
       /**
+       * Validates that URL does not contain insecure protocols.
        *
-       * @param url
+       * @param url - The URL to validate
        */
       const validateUrl = (url: string): void => {
         if (url.includes('javascript:')) {
@@ -515,7 +516,7 @@ describe('Error Hierarchy', () => {
      */
     it('handles data loading errors', async () => {
       /**
-       *
+       * Simulates loading projects from an API that throws an error.
        */
       const loadProjects = async (): Promise<void> => {
         try {
@@ -537,8 +538,10 @@ describe('Error Hierarchy', () => {
      */
     it('handles errors by category in catch block', () => {
       /**
+       * Categorizes errors and returns appropriate error type string.
        *
-       * @param error
+       * @param error - The error to categorize
+       * @returns The error category as a string
        */
       const handleError = (error: unknown): string => {
         if (error instanceof ValidationError) {

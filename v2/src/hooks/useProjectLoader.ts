@@ -51,19 +51,19 @@ interface UseProjectLoaderReturn {
  * This design provides several benefits:
  *
  * 1. **Future API Migration Path:** When transitioning from static data to a real API,
- *    no hook interface changes are needed. The async structure is already in place.
+ * no hook interface changes are needed. The async structure is already in place.
  *
  * 2. **Simulated Network Delay:** The SIMULATED_LOAD_DELAY allows testing loading states
- *    and skeleton UI animations without making real network requests. Set the delay to 0
- *    in production for instant loading.
+ * and skeleton UI animations without making real network requests. Set the delay to 0
+ * in production for instant loading.
  *
  * 3. **Consistent Async Pattern:** Users of this hook expect async operations. Even though
- *    the data is currently synchronous, wrapping it in async/await maintains consistency
- *    with real async operations they may implement later.
+ * the data is currently synchronous, wrapping it in async/await maintains consistency
+ * with real async operations they may implement later.
  *
  * 4. **Loading State Management:** The async wrapper naturally allows `setLoading(true)`
- *    at the start and `setLoading(false)` after the delay, enabling proper skeleton
- *    placeholder display.
+ * at the start and `setLoading(false)` after the delay, enabling proper skeleton
+ * placeholder display.
  *
  * **Implementation Detail:**
  * - `getProjects()` is called after `await Promise.resolve(SIMULATED_LOAD_DELAY)`
@@ -74,25 +74,25 @@ interface UseProjectLoaderReturn {
  * **Usage Example:**
  * ```typescript
  * function ProjectsList({ initialProjects }: { initialProjects: Project[] }) {
- *   const { projects, loading, error, loadMore, hasMore, remainingCount } =
- *     useProjectLoader(initialProjects, 5);
+ * const { projects, loading, error, loadMore, hasMore, remainingCount } =
+ * useProjectLoader(initialProjects, 5);
  *
- *   return (
- *     <>
- *       <div>
- *         {projects.map(project => (
- *           <ProjectCard key={project.id} project={project} />
- *         ))}
- *       </div>
- *       {loading && <div>Loading...</div>}
- *       {error && <div>Error: {error.message}</div>}
- *       {hasMore && (
- *         <button onClick={loadMore}>
- *           Load {remainingCount} more
- *         </button>
- *       )}
- *     </>
- *   );
+ * return (
+ * <>
+ * <div>
+ * {projects.map(project => (
+ * <ProjectCard key={project.id} project={project} />
+ * ))}
+ * </div>
+ * {loading && <div>Loading...</div>}
+ * {error && <div>Error: {error.message}</div>}
+ * {hasMore && (
+ * <button onClick={loadMore}>
+ * Load {remainingCount} more
+ * </button>
+ * )}
+ * </>
+ * );
  * }
  * ```
  *

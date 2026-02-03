@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { useMemo, useEffect, useContext, useState } from 'react';
+import { useMemo, useEffect, useContext } from 'react';
 import type { Project } from '../../types';
 import { ProjectsList } from './ProjectsList';
 import { ProjectSkeleton } from './ProjectSkeleton';

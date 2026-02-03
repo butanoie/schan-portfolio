@@ -180,17 +180,17 @@ export function isValidVideoId(id: string, platform: 'vimeo' | 'youtube'): boole
  *
  * @example
  * isProjectImage({
- *   url: '/images/photo.jpg',
- *   tnUrl: '/images/thumb.jpg',
- *   caption: 'A beautiful photo',
- *   tnUrl2x: '/images/thumb@2x.jpg'
+ * url: '/images/photo.jpg',
+ * tnUrl: '/images/thumb.jpg',
+ * caption: 'A beautiful photo',
+ * tnUrl2x: '/images/thumb@2x.jpg'
  * }) // true
  *
  * @example
  * isProjectImage({
- *   url: '../../etc/passwd',  // Path traversal attempt
- *   tnUrl: '/images/thumb.jpg',
- *   caption: 'Malicious'
+ * url: '../../etc/passwd',  // Path traversal attempt
+ * tnUrl: '/images/thumb.jpg',
+ * caption: 'Malicious'
  * }) // false
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -257,26 +257,26 @@ export function isProjectImage(obj: any): obj is ProjectImage {
  *
  * @example
  * isProjectVideo({
- *   type: 'youtube',
- *   id: 'dQw4w9WgXcQ',
- *   width: 560,
- *   height: 315
+ * type: 'youtube',
+ * id: 'dQw4w9WgXcQ',
+ * width: 560,
+ * height: 315
  * }) // true
  *
  * @example
  * isProjectVideo({
- *   type: 'youtube',
- *   id: 'invalid!id',  // Invalid character
- *   width: 560,
- *   height: 315
+ * type: 'youtube',
+ * id: 'invalid!id',  // Invalid character
+ * width: 560,
+ * height: 315
  * }) // false
  *
  * @example
  * isProjectVideo({
- *   type: 'youtube',
- *   id: 'dQw4w9WgXcQ',
- *   width: 999999,     // Dimension too large
- *   height: 315
+ * type: 'youtube',
+ * id: 'dQw4w9WgXcQ',
+ * width: 999999,     // Dimension too large
+ * height: 315
  * }) // false
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -73,7 +73,7 @@ export function isValidUrlProtocol(url: string): boolean {
  *
  * @see https://owasp.org/www-community/attacks/xss/
  */
-export const SANITIZATION_CONFIG: DOMPurify.Config = {
+export const SANITIZATION_CONFIG = {
   ALLOWED_TAGS: ['p', 'a', 'strong', 'em', 'ul', 'ol', 'li', 'br'],
   ALLOWED_ATTR: ['href', 'title'],
   // KEEP_CONTENT: true preserves text content when unsafe tags are removed
@@ -125,7 +125,7 @@ export function sanitizeHtml(htmlContent: string): string {
   }
 
   // Configure custom hooks for security validation
-  const config: DOMPurify.Config = {
+  const config = {
     ...SANITIZATION_CONFIG,
     ALLOW_UNKNOWN_PROTOCOLS: false,
   };
@@ -152,7 +152,7 @@ export function sanitizeHtml(htmlContent: string): string {
     // Remove the hook to prevent interference with other sanitization calls
     DOMPurify.removeHook('afterSanitizeAttributes');
 
-    return sanitized;
+    return String(sanitized);
   } catch (error) {
     // Remove hook on error as well
     DOMPurify.removeHook('afterSanitizeAttributes');

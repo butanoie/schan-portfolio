@@ -17,11 +17,11 @@
  * @example
  * // Import and use constants
  * import {
- *   TOTAL_PROJECTS,
- *   DEFAULT_PAGE_SIZE,
- *   LOADING_DELAY,
- *   DIALOG_FADE_DURATION,
- *   LIGHTBOX_CONTROL_OFFSET,
+ * TOTAL_PROJECTS,
+ * DEFAULT_PAGE_SIZE,
+ * LOADING_DELAY,
+ * DIALOG_FADE_DURATION,
+ * LIGHTBOX_CONTROL_OFFSET,
  * } from '@/constants/app';
  *
  * // Use in code
