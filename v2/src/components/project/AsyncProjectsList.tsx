@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { useMemo, useEffect, useContext } from 'react';
+import { useMemo, useEffect, useContext, useState } from 'react';
 import type { Project } from '../../types';
 import { ProjectsList } from './ProjectsList';
 import { ProjectSkeleton } from './ProjectSkeleton';
@@ -49,13 +49,14 @@ interface AsyncProjectsListProps {
  * - ErrorBoundary protects against rendering errors
  *
  * **Loading Flow:**
- * 1. Initial render shows 5 projects from server
- * 2. User clicks "Load More" in footer
- * 3. Component shows 5 skeleton placeholders
- * 4. Fetches next 5 projects in background
- * 5. Replaces skeletons with actual projects
- * 6. Updates button state (more to load or completion)
- * 7. User can click again or sees "All loaded" message
+ * 1. Page loads, component briefly shows skeleton placeholders (300ms)
+ * 2. Skeletons transition to 5 projects from server
+ * 3. User clicks "Load More" in footer
+ * 4. Component shows 5 skeleton placeholders
+ * 5. Fetches next 5 projects in background
+ * 6. Replaces skeletons with actual projects
+ * 7. Updates button state (more to load or completion)
+ * 8. User can click again or sees "All loaded" message
  *
  * **State Management:**
  * Uses `useProjectLoader` hook which provides:
@@ -85,8 +86,9 @@ interface AsyncProjectsListProps {
  * - Preserves loaded projects on error
  *
  * **Performance:**
- * - Initial render shows content immediately (no skeleton)
- * - Only loads when user requests
+ * - Shows skeleton briefly on mount (300ms) for perceived performance
+ * - Transitions smoothly to actual content from server
+ * - Only additional batches load when user requests
  * - Batch size of 5 balances UX and performance
  * - No unnecessary re-renders
  *
@@ -124,6 +126,7 @@ export function AsyncProjectsList({
 }: AsyncProjectsListProps) {
   const pathname = usePathname();
   const isActuallyOnHomePage = pathname === '/';
+  const [showInitialSkeleton, setShowInitialSkeleton] = useState(true);
 
   // Use isHomePage prop if provided, otherwise detect from pathname
   const shouldShowLoadMore = isHomePage || isActuallyOnHomePage;
@@ -138,6 +141,20 @@ export function AsyncProjectsList({
     remainingCount,
     allLoaded,
   } = useProjectLoader(initialProjects, pageSize);
+
+  /**
+   * Show skeleton briefly on mount for better perceived performance,
+   * then transition to showing the actual projects.
+   * This creates a smooth loading experience even though the projects
+   * are already loaded from the server.
+   */
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowInitialSkeleton(false);
+    }, 300); // Brief delay to show skeleton animation
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Get the bridge context to report loading state to MainLayout
   const bridge = useContext(ProjectLoadingStateBridgeContext);
@@ -180,21 +197,36 @@ export function AsyncProjectsList({
    */
   const content = (
     <ErrorBoundary>
-      {/* Display all loaded projects */}
-      <ProjectsList projects={projects} />
-
-      {/* Show loading skeletons while fetching next batch */}
-      {loading && (
+      {/* Show initial skeletons while page is loading */}
+      {showInitialSkeleton && projects.length > 0 ? (
         <Box
           role="region"
           aria-live="polite"
-          aria-label="Loading more projects"
-          sx={{ mt: 4 }}
+          aria-label="Loading projects"
         >
-          {Array.from({ length: pageSize }).map((_, i) => (
-            <ProjectSkeleton key={`skeleton-${i}`} variant="wide-regular" />
+          {Array.from({ length: projects.length }).map((_, i) => (
+            <ProjectSkeleton key={`initial-skeleton-${i}`} variant="wide-regular" />
           ))}
         </Box>
+      ) : (
+        <>
+          {/* Display all loaded projects */}
+          <ProjectsList projects={projects} />
+
+          {/* Show loading skeletons while fetching next batch */}
+          {loading && (
+            <Box
+              role="region"
+              aria-live="polite"
+              aria-label="Loading more projects"
+              sx={{ mt: 4 }}
+            >
+              {Array.from({ length: pageSize }).map((_, i) => (
+                <ProjectSkeleton key={`skeleton-${i}`} variant="wide-regular" />
+              ))}
+            </Box>
+          )}
+        </>
       )}
 
       {/* Display error if loading fails */}
