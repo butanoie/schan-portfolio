@@ -31,18 +31,19 @@ type LayoutVariant =
  * Determines which layout variant to use for a project.
  *
  * The layout is determined by:
+ *
  * 1. Viewport size (mobile vs desktop)
  * 2. Presence of video content
  * 3. The `altGrid` flag on the project (for desktop without video)
  *
  * **Layout Decision Tree:**
- * - Mobile (xs/sm breakpoint):
- *   - Has video → `narrow-video`
- *   - No video → `narrow`
- * - Desktop (md+ breakpoint):
- *   - Has video → `wide-video`
- *   - No video + altGrid=true → `wide-alternate`
- *   - No video + altGrid=false → `wide-regular`
+ * Mobile (xs/sm breakpoint):
+ * - Has video → `narrow-video`
+ * - No video → `narrow`
+ * Desktop (md+ breakpoint):
+ * - Has video → `wide-video`
+ * - No video + altGrid=true → `wide-alternate`
+ * - No video + altGrid=false → `wide-regular`
  *
  * @param {Project} project - Project object to evaluate
  * @param {boolean} isMobile - Whether viewport is mobile-sized
@@ -86,23 +87,23 @@ function getLayoutVariant(
  *
  * **Layout Variants:**
  *
- * 1. **wide-video** (Desktop + Video)
- *    - Left 1/3: Tags + Description
- *    - Right 2/3: Video player + 4-column thumbnail grid
+ * wide-video (Desktop + Video):
+ * - Left 1/3: Tags + Description
+ * - Right 2/3: Video player + 4-column thumbnail grid
  *
- * 2. **wide-regular** (Desktop, No video, altGrid=false)
- *    - Left 2/3: Description with tags floating to the right
- *    - Right 1/3: 2-column thumbnail grid
+ * wide-regular (Desktop, No video, altGrid=false):
+ * - Left 2/3: Description with tags floating to the right
+ * - Right 1/3: 2-column thumbnail grid
  *
- * 3. **wide-alternate** (Desktop, No video, altGrid=true)
- *    - Left 1/3: Tags + Description
- *    - Right 2/3: 4-column thumbnail grid
+ * wide-alternate (Desktop, No video, altGrid=true):
+ * - Left 1/3: Tags + Description
+ * - Right 2/3: 4-column thumbnail grid
  *
- * 4. **narrow** (Mobile, No video)
- *    - Stacked vertically: Title, Tags, Description, 4-column grid
+ * narrow (Mobile, No video):
+ * - Stacked vertically: Title, Tags, Description, 4-column grid
  *
- * 5. **narrow-video** (Mobile + Video)
- *    - Stacked vertically: Title, Tags, Description, Video, 4-column grid
+ * narrow-video (Mobile + Video):
+ * - Stacked vertically: Title, Tags, Description, Video, 4-column grid
  *
  * **Features:**
  * - Responsive layout selection based on viewport

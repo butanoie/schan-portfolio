@@ -18,18 +18,31 @@ import { afterEach, beforeAll } from 'vitest';
  * This is essential for useReducedMotion hook and responsive components.
  */
 beforeAll(() => {
+  /**
+   * Mock implementation of window.matchMedia for testing environments.
+   *
+   * @param {string} query - The media query string to test
+   * @returns {MediaQueryList} A mock MediaQueryList object with required properties and methods
+   */
+  const mockMatchMedia = (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    /** Mock listener registration method */
+    addListener: () => {},
+    /** Mock listener removal method */
+    removeListener: () => {},
+    /** Mock event listener registration method */
+    addEventListener: () => {},
+    /** Mock event listener removal method */
+    removeEventListener: () => {},
+    /** Mock event dispatch method */
+    dispatchEvent: () => {},
+  });
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
-    value: (query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: () => {},
-      removeListener: () => {},
-      addEventListener: () => {},
-      removeEventListener: () => {},
-      dispatchEvent: () => {},
-    }),
+    value: mockMatchMedia,
   });
 });
 

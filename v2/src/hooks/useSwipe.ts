@@ -26,6 +26,7 @@ interface UseSwipeResult {
  * Custom hook to detect and handle touch swipe gestures.
  *
  * Detects swipe direction and triggers appropriate callbacks:
+ *
  * - **Horizontal swipes**: Left (>50px) triggers onSwipeLeft, Right (>50px) triggers onSwipeRight
  * - **Vertical swipes**: Down (>50px) triggers onSwipeDown
  * - **Thresholds**: Requires minimum 50px movement and isolated direction (prevents diagonal detection)
@@ -103,20 +104,21 @@ export function useSwipe(
    * Handles touch end event to detect swipe direction and trigger appropriate callback.
    *
    * Swipe detection logic:
-   * 1. **Vertical swipes (down)**: verticalDistance > threshold AND minimal horizontal movement
-   *    - Triggered regardless of image count
-   *    - Typical use case: closing modal/lightbox
    *
-   * 2. **Horizontal swipes (left/right)**: horizontalDistance > threshold AND minimal vertical movement
-   *    - Only triggered if maxImages > 1 (prevents navigation with single image)
-   *    - Left swipe: typically "next" action
-   *    - Right swipe: typically "previous" action
+   * Vertical swipes (down): verticalDistance > threshold AND minimal horizontal movement
+   * - Triggered regardless of image count
+   * - Typical use case: closing modal/lightbox
    *
-   * 3. **Diagonal swipes**: Ignored (requires movement to be primarily in one direction)
-   *    - Must satisfy: Math.abs(movement1) > threshold AND Math.abs(movement2) < threshold
-   *    - Prevents accidental navigation from diagonal touches
+   * Horizontal swipes (left/right): horizontalDistance > threshold AND minimal vertical movement
+   * - Only triggered if maxImages > 1 (prevents navigation with single image)
+   * - Left swipe: typically "next" action
+   * - Right swipe: typically "previous" action
    *
-   * @param e - React touch event with changedTouches containing end position
+   * Diagonal swipes: Ignored (requires movement to be primarily in one direction)
+   * - Must satisfy: Math.abs(movement1) > threshold AND Math.abs(movement2) < threshold
+   * - Prevents accidental navigation from diagonal touches
+   *
+   * @param {React.TouchEvent} e - React touch event with changedTouches containing end position
    */
   const handleTouchEnd = useCallback(
     (e: React.TouchEvent) => {

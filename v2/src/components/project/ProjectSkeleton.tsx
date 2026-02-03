@@ -23,6 +23,7 @@ interface ProjectSkeletonProps {
    * - 'narrow': Mobile layout, stacked vertically
    * - 'wide-regular': Desktop without video, 2fr-1fr grid
    * - 'wide-video': Desktop with video, 1fr-2fr grid with video placeholder
+   *
    * @default 'wide-regular'
    */
   variant?: 'narrow' | 'wide-regular' | 'wide-video';
@@ -40,19 +41,11 @@ interface ProjectSkeletonProps {
  *
  * **Layout Variants:**
  *
- * 1. **narrow** (Mobile, default)
- *    - Stacked vertically: Title → Tags → Description → Image Grid
- *    - Used on mobile devices and small viewports
+ * 1. **narrow** (Mobile, default) - Stacked vertically: Title → Tags → Description → Image Grid. Used on mobile devices and small viewports.
  *
- * 2. **wide-regular** (Desktop, no video)
- *    - Left 2/3: Description with tags
- *    - Right 1/3: Narrow image grid (2 columns)
- *    - Used on desktop when project has no video
+ * 2. **wide-regular** (Desktop, no video) - Left 2/3: Description with tags. Right 1/3: Narrow image grid (2 columns). Used on desktop when project has no video.
  *
- * 3. **wide-video** (Desktop with video)
- *    - Left 1/3: Tags + Description
- *    - Right 2/3: Video placeholder + 4-column image grid
- *    - Used on desktop when project has video
+ * 3. **wide-video** (Desktop with video) - Left 1/3: Tags + Description. Right 2/3: Video placeholder + 4-column image grid. Used on desktop when project has video.
  *
  * **Animation Behavior:**
  * - Shows wave animation by default (shimmer effect)
@@ -86,6 +79,8 @@ interface ProjectSkeletonProps {
  * ```
  *
  * @param props - Component props
+ * @param props.variant - Layout variant: 'narrow' for mobile, 'wide-regular' for desktop without video, 'wide-video' for desktop with video (default: 'narrow')
+ * @param props.sx - Optional MUI sx styles to apply to the root container
  * @returns A skeleton placeholder matching ProjectDetail structure
  *
  * @example
@@ -95,12 +90,8 @@ interface ProjectSkeletonProps {
  * <ProjectSkeleton variant="narrow" />
  *
  * @example
- * import { useReducedMotion } from 'hooks';
- *
- * function SkeletonLoader() {
- *   const prefersReducedMotion = useReducedMotion();
- *   return <ProjectSkeleton variant="wide-regular" />;
- * }
+ * // Responsive skeleton with auto-variant selection
+ * <ProjectSkeleton variant="wide-regular" />
  */
 export function ProjectSkeleton({
   variant = 'narrow',
@@ -175,10 +166,18 @@ export function ProjectSkeleton({
 /**
  * Skeleton for mobile narrow layout.
  *
- * Structure: Stacked vertically
- * 1. Tags row
- * 2. Description paragraphs
- * 3. 4-column Image grid
+ * Displays a stacked vertical layout skeleton that matches the mobile view of ProjectDetail.
+ * Shows placeholder skeletons for tags, description paragraphs, and a 4-column image grid.
+ *
+ * **Structure:**
+ * 1. Tags row (3 placeholder tags)
+ * 2. Description paragraphs (3 skeleton lines)
+ * 3. Image grid (4 images in 2 columns on xs, 4 columns on sm+)
+ *
+ * @param props - Component props
+ * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
+ * @param props.prefersReducedMotion - Whether user prefers reduced motion
+ * @returns A skeleton container with narrow layout structure
  */
 function NarrowLayoutSkeleton({
   animationMode,
@@ -247,9 +246,19 @@ function NarrowLayoutSkeleton({
 /**
  * Skeleton for desktop wide-regular layout (no video).
  *
- * Structure:
- * - Left 2/3: Description with tags floating to the right
- * - Right 1/3: 2-column image grid
+ * Displays a two-column grid layout skeleton that matches the desktop view of ProjectDetail
+ * when no video is present. Features a left column with description and right-floated tags,
+ * and a right column with a 2-column image grid.
+ *
+ * **Structure:**
+ * - Left 2/3: Description with 3 placeholder tags floating to the right
+ * - Right 1/3: 2-column image grid with 4 placeholder images
+ * - Description: 4 skeleton lines with the last one at 80% width
+ *
+ * @param props - Component props
+ * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
+ * @param props.prefersReducedMotion - Whether user prefers reduced motion
+ * @returns A skeleton container with wide-regular layout structure
  */
 function WideRegularLayoutSkeleton({
   animationMode,
@@ -338,9 +347,19 @@ function WideRegularLayoutSkeleton({
 /**
  * Skeleton for desktop wide-video layout.
  *
- * Structure:
- * - Left 1/3: Tags + Description
- * - Right 2/3: Video placeholder + 4-column image grid
+ * Displays a two-column grid layout skeleton that matches the desktop view of ProjectDetail
+ * when a video is present. Features a left column with tags and description, and a right
+ * column with a video placeholder and 4-column image grid.
+ *
+ * **Structure:**
+ * - Left 1/3: 3 placeholder tags + 3 description skeleton lines
+ * - Right 2/3: Video placeholder (16:9 aspect ratio) + 8 images in 4-column grid
+ * - All images use 4:3 aspect ratio (75% padding-bottom)
+ *
+ * @param props - Component props
+ * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
+ * @param props.prefersReducedMotion - Whether user prefers reduced motion
+ * @returns A skeleton container with wide-video layout structure
  */
 function WideVideoLayoutSkeleton({
   animationMode,

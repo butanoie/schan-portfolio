@@ -5,6 +5,10 @@ import ErrorBoundary from '../../../components/common/ErrorBoundary';
 /**
  * Mock component that throws an error.
  * Used to test error boundary error catching.
+ *
+ * @param props - Component props
+ * @param props.shouldThrow - Whether the component should throw an error (default: true)
+ * @returns A JSX element that either throws an error or renders successfully
  */
 function ThrowError({ shouldThrow = true }: { shouldThrow?: boolean }) {
   if (shouldThrow) {
@@ -15,6 +19,8 @@ function ThrowError({ shouldThrow = true }: { shouldThrow?: boolean }) {
 
 /**
  * Mock component that renders normally (no errors).
+ *
+ * @returns A JSX element indicating the component rendered successfully
  */
 function HealthyComponent() {
   return <div>Healthy component</div>;

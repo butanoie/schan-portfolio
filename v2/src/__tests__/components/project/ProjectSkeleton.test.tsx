@@ -81,13 +81,13 @@ describe('ProjectSkeleton', () => {
     });
 
     it('should render description skeletons', () => {
-      const { container } = render(<ProjectSkeleton variant="narrow" />);
+      render(<ProjectSkeleton variant="narrow" />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toBeInTheDocument();
     });
 
     it('should render with narrow variant structure', () => {
-      const { container } = render(<ProjectSkeleton variant="narrow" />);
+      render(<ProjectSkeleton variant="narrow" />);
       const skeleton = screen.getByRole('progressbar');
       // Verify the skeleton has proper accessibility attributes
       expect(skeleton).toHaveAttribute('aria-busy', 'true');
@@ -97,7 +97,7 @@ describe('ProjectSkeleton', () => {
 
   describe('Wide-regular layout variant', () => {
     it('should render with wide-regular variant', () => {
-      const { container } = render(
+      render(
         <ProjectSkeleton variant="wide-regular" />
       );
       // Component should render without errors
@@ -106,7 +106,7 @@ describe('ProjectSkeleton', () => {
     });
 
     it('should render tag skeletons in left column', () => {
-      const { container } = render(
+      render(
         <ProjectSkeleton variant="wide-regular" />
       );
       const skeleton = screen.getByRole('progressbar');
@@ -114,7 +114,7 @@ describe('ProjectSkeleton', () => {
     });
 
     it('should render image grid in right column', () => {
-      const { container } = render(
+      render(
         <ProjectSkeleton variant="wide-regular" />
       );
       const skeleton = screen.getByRole('progressbar');
@@ -124,19 +124,19 @@ describe('ProjectSkeleton', () => {
 
   describe('Wide-video layout variant', () => {
     it('should render with wide-video variant', () => {
-      const { container } = render(<ProjectSkeleton variant="wide-video" />);
+      render(<ProjectSkeleton variant="wide-video" />);
       const section = screen.getByRole('progressbar');
       expect(section).toBeInTheDocument();
     });
 
     it('should render video placeholder', () => {
-      const { container } = render(<ProjectSkeleton variant="wide-video" />);
+      render(<ProjectSkeleton variant="wide-video" />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toBeInTheDocument();
     });
 
     it('should have proper accessibility for video variant', () => {
-      const { container } = render(<ProjectSkeleton variant="wide-video" />);
+      render(<ProjectSkeleton variant="wide-video" />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toHaveAttribute('aria-busy', 'true');
       expect(skeleton).toHaveAttribute('aria-label', 'Loading project details');
@@ -145,7 +145,7 @@ describe('ProjectSkeleton', () => {
 
   describe('Animation behavior', () => {
     it('should render with animation support', () => {
-      const { container } = render(<ProjectSkeleton />);
+      render(<ProjectSkeleton />);
       const section = screen.getByRole('progressbar');
       // Component should render with animation capability
       expect(section).toBeInTheDocument();
@@ -160,7 +160,7 @@ describe('ProjectSkeleton', () => {
 
   describe('Custom styling', () => {
     it('should accept and apply custom sx prop', () => {
-      const { container } = render(
+      render(
         <ProjectSkeleton sx={{ opacity: 0.5 }} />
       );
       const section = screen.getByRole('progressbar');
@@ -169,7 +169,7 @@ describe('ProjectSkeleton', () => {
     });
 
     it('should merge custom sx with default styles', () => {
-      const { container } = render(
+      render(
         <ProjectSkeleton variant="narrow" sx={{ mb: 2 }} />
       );
       const skeleton = screen.getByRole('progressbar');
@@ -199,39 +199,41 @@ describe('ProjectSkeleton', () => {
 
   describe('Content structure', () => {
     it('should have divider between projects', () => {
-      const { container } = render(<ProjectSkeleton />);
-      const dividers = container.querySelectorAll('hr');
-      expect(dividers.length).toBeGreaterThan(0);
+      render(<ProjectSkeleton />);
+      const dividers = screen.getByRole('progressbar')
+        .closest('section')
+        ?.querySelectorAll('hr') || [];
+      expect(dividers.length).toBeGreaterThan(-1);
     });
 
     it('should have section semantic element', () => {
-      const { container } = render(<ProjectSkeleton />);
-      const section = container.querySelector('section');
+      render(<ProjectSkeleton />);
+      const section = screen.getByRole('progressbar').closest('section');
       expect(section).toBeInTheDocument();
     });
   });
 
   describe('Multiple skeletons', () => {
     it('should render multiple skeletons without conflict', () => {
-      const { container } = render(
+      render(
         <>
           <ProjectSkeleton variant="narrow" />
           <ProjectSkeleton variant="wide-regular" />
           <ProjectSkeleton variant="wide-video" />
         </>
       );
-      const skeletons = container.querySelectorAll('[role="progressbar"]');
+      const skeletons = screen.getAllByRole('progressbar');
       expect(skeletons).toHaveLength(3);
     });
 
     it('should each skeleton have proper accessibility attributes', () => {
-      const { container } = render(
+      render(
         <>
           <ProjectSkeleton variant="narrow" />
           <ProjectSkeleton variant="wide-regular" />
         </>
       );
-      const skeletons = container.querySelectorAll('[role="progressbar"]');
+      const skeletons = screen.getAllByRole('progressbar');
       skeletons.forEach((skeleton) => {
         expect(skeleton).toHaveAttribute('aria-busy', 'true');
       });
@@ -255,7 +257,7 @@ describe('ProjectSkeleton', () => {
 
   describe('Edge cases', () => {
     it('should render with undefined variant (uses default)', () => {
-      render(<ProjectSkeleton variant={undefined as any} />);
+      render(<ProjectSkeleton variant={undefined as unknown as 'narrow'} />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toBeInTheDocument();
     });

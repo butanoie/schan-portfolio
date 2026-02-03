@@ -11,10 +11,22 @@ class MockMediaQueryList {
   matches: boolean;
   listeners: Set<(event: MediaQueryListEvent) => void> = new Set();
 
+  /**
+   * Creates a new MockMediaQueryList instance.
+   *
+   * @param matches - Initial state of the media query match
+   */
   constructor(matches: boolean) {
     this.matches = matches;
   }
 
+  /**
+   * Adds an event listener to the mock media query.
+   *
+   * @param _event - Event name (unused, for interface compatibility)
+   * @param listener - Callback function to invoke when media query changes
+   * @returns void
+   */
   addEventListener(
     _event: string,
     listener: (event: MediaQueryListEvent) => void
@@ -22,6 +34,13 @@ class MockMediaQueryList {
     this.listeners.add(listener);
   }
 
+  /**
+   * Removes an event listener from the mock media query.
+   *
+   * @param _event - Event name (unused, for interface compatibility)
+   * @param listener - Callback function to remove
+   * @returns void
+   */
   removeEventListener(
     _event: string,
     listener: (event: MediaQueryListEvent) => void
@@ -53,7 +72,7 @@ describe('useReducedMotion', () => {
     // Mock window.matchMedia
     global.matchMedia = vi.fn((query: string) => {
       if (query === '(prefers-reduced-motion: reduce)') {
-        return mockMediaQuery as any;
+        return mockMediaQuery as unknown as MediaQueryList;
       }
       throw new Error(`Unexpected matchMedia query: ${query}`);
     });

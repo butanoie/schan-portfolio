@@ -63,15 +63,17 @@ import { useState, useEffect } from 'react';
  * @see {@link https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions} WCAG: Animation from Interactions
  */
 export function useReducedMotion(): boolean {
-  // Default to false (allow motion) - will be updated after mount if SSR
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  // Initialize with media query value on first render
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false; // SSR: default to false
+    }
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
 
   useEffect(() => {
     // Create media query list for prefers-reduced-motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    // Set initial value based on current preference
-    setPrefersReducedMotion(mediaQuery.matches);
 
     /**
      * Listener function to update state when user changes their motion preference.
