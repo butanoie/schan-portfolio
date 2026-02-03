@@ -2,6 +2,8 @@
 
 import { Box, SxProps, Theme } from '@mui/material';
 import { useMemo } from 'react';
+import { isValidVideoId } from '../../types/typeGuards';
+import { SecurityError } from '../../utils/errors';
 import type { ProjectVideo } from '../../types';
 
 /**
@@ -27,6 +29,12 @@ interface VideoEmbedProps {
  * - Vimeo: `player.vimeo.com/video/{id}`
  * - YouTube: `youtube.com/embed/{id}`
  *
+ * **Security:**
+ * - Validates video IDs against platform-specific format requirements
+ * - Prevents URL injection attacks by blocking malformed IDs
+ * - Blocks special characters that could alter embed URLs
+ * - Throws SecurityError on validation failures
+ *
  * **Features:**
  * - Responsive iframe that scales with container width
  * - Maintains 16:9 aspect ratio (padding-bottom technique)
@@ -35,6 +43,7 @@ interface VideoEmbedProps {
  * - Respects `prefers-reduced-motion` for animations
  * - Proper `title` attribute for accessibility
  * - No autoplay (respects user preference)
+ * - Video ID validation for security
  *
  * **Accessibility:**
  * - iframe has descriptive `title` attribute
@@ -45,7 +54,8 @@ interface VideoEmbedProps {
  * @param {VideoEmbedProps} props - Component props
  * @returns The rendered responsive video embed
  *
- * @throws {Error} If video type is not 'vimeo' or 'youtube'
+ * @throws {SecurityError} If video ID does not match platform-specific format requirements
+ * @throws {SecurityError} If video type is not 'vimeo' or 'youtube'
  *
  * @example
  * <VideoEmbed
@@ -70,15 +80,29 @@ interface VideoEmbedProps {
 export function VideoEmbed({ video, sx }: VideoEmbedProps) {
   /**
    * Memoize the embed URL construction to avoid rebuilding on every render.
+   * Validates the video ID before constructing the URL to prevent security issues.
+   * Throws SecurityError if validation fails (prevents URL injection attacks).
    */
   const embedUrl = useMemo(() => {
+    // Validate video ID format for the given platform
+    if (!isValidVideoId(video.id, video.type)) {
+      throw new SecurityError(
+        `Invalid ${video.type} video ID: "${video.id}". ` +
+        `Expected ${video.type === 'vimeo' ? '8-11 digits' : '11 alphanumeric characters (including - and _)'}.`,
+        'SEC_003'
+      );
+    }
+
     switch (video.type) {
       case 'vimeo':
         return `https://player.vimeo.com/video/${video.id}`;
       case 'youtube':
         return `https://www.youtube.com/embed/${video.id}`;
       default:
-        throw new Error(`Unsupported video type: ${video.type}`);
+        throw new SecurityError(
+          `Unsupported video type: ${video.type}`,
+          'SEC_003'
+        );
     }
   }, [video.type, video.id]);
 

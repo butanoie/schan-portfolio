@@ -17,6 +17,12 @@ import {
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
 import { useSwipe } from "../../hooks";
+import { VisuallyHidden } from "../common/VisuallyHidden";
+import {
+  SWIPE_THRESHOLD,
+  DIALOG_FADE_DURATION,
+  LIGHTBOX_CONTROL_OFFSET,
+} from "../../constants/app";
 
 /**
  * Props for the ProjectLightbox component.
@@ -48,8 +54,17 @@ interface ProjectLightboxProps {
  * - Image counter display (e.g., "3 of 8")
  * - Responsive image sizing
  * - Circular navigation (wraps around at boundaries)
- * - Accessibility (ARIA labels, focus management)
+ * - Enhanced accessibility (ARIA announcements, screen reader support)
  * - Prevents body scroll when open
+ * - Memory-efficient event listener management
+ *
+ * **Accessibility Features:**
+ * - Assertive ARIA live region announces image changes immediately to screen readers
+ * - VisuallyHidden component provides full context (image number, total, and caption)
+ * - Visual counter hidden from screen readers (aria-hidden) to prevent duplication
+ * - Keyboard navigation fully supported
+ * - Proper ARIA labels on all interactive elements
+ * - Focus management when lightbox opens
  *
  * This is a controlled component that relies on the parent to manage navigation state.
  * When navigation is triggered (via buttons, keyboard, or touch), it calls the
@@ -98,6 +113,16 @@ export function ProjectLightbox({
   const [isLoading, setIsLoading] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  /**
+   * Ref to store the keyboard handler function.
+   * Using a ref prevents the event listener from being re-attached when callback dependencies change.
+   * The ref is updated in a separate useEffect, decoupling handler logic from event listener lifecycle.
+   *
+   * Pattern: Store mutable handler in ref, attach listener once, update ref when handlers change.
+   * This prevents memory leaks that occur when event listeners are constantly removed/re-added.
+   */
+  const handleKeyDownRef = useRef<(event: KeyboardEvent) => void>(() => {});
+
   // Validate that selectedIndex is within bounds
   const validIndex =
     selectedIndex !== null && selectedIndex >= 0 && selectedIndex < images.length
@@ -137,20 +162,27 @@ export function ProjectLightbox({
     handleNext,    // onSwipeLeft
     handlePrevious, // onSwipeRight
     onClose,       // onSwipeDown
-    { maxImages: images.length, threshold: 50 }
+    { maxImages: images.length, threshold: SWIPE_THRESHOLD }
   );
 
   /**
-   * Handles keyboard navigation for arrow keys and Escape.
-   * Memoized with useCallback to maintain stable reference across renders.
-   * - ArrowLeft: Navigate to previous image
-   * - ArrowRight: Navigate to next image
-   * - Escape: Close lightbox
+   * Updates the keyboard handler ref whenever navigation callbacks change.
+   * This effect is separate from the event listener attachment to prevent
+   * unnecessary cleanup/re-attachment cycles.
    *
-   * @param event - Keyboard event
+   * By storing the handler in a ref and updating it here, we ensure:
+   * 1. The event listener is attached only once when lightbox opens
+   * 2. The listener stays active even when callbacks change
+   * 3. No memory leaks from repeated attachment/detachment
+   * 4. Handlers always have access to latest callback functions
    */
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
+  useEffect(() => {
+    /**
+     * Handles keyboard events for lightbox navigation and closing.
+     *
+     * @param event - The keyboard event
+     */
+    handleKeyDownRef.current = (event: KeyboardEvent) => {
       // Prevent keyboard navigation if it would interfere with other controls
       if (
         event.target instanceof HTMLInputElement ||
@@ -175,12 +207,31 @@ export function ProjectLightbox({
         default:
           break;
       }
-    },
-    [handlePrevious, handleNext, onClose]
-  );
+    };
+  }, [handlePrevious, handleNext, onClose]);
 
+  /**
+   * Attaches keyboard event listener when lightbox opens.
+   * Uses a stable handler reference (from handleKeyDownRef) to prevent
+   * unnecessary listener cleanup/re-attachment when callbacks change.
+   *
+   * Empty dependency array (except validIndex) ensures:
+   * 1. Listener attached exactly once when lightbox opens
+   * 2. Listener removed exactly once when lightbox closes
+   * 3. No repeated attachment cycles causing memory leaks
+   * 4. Updates to callbacks don't trigger cleanup/re-attachment
+   */
   useEffect(() => {
     if (validIndex === null) return;
+
+    /**
+     * Wrapper function that delegates to the ref-stored handler.
+     *
+     * @param event - The keyboard event
+     */
+    const handleKeyDown = (event: KeyboardEvent) => {
+      handleKeyDownRef.current(event);
+    };
 
     window.addEventListener("keydown", handleKeyDown);
 
@@ -188,7 +239,7 @@ export function ProjectLightbox({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [validIndex, images.length, handleKeyDown]);
+  }, [validIndex]);
 
   // Don't render if no valid index
   if (validIndex === null || images.length === 0) {
@@ -196,6 +247,21 @@ export function ProjectLightbox({
   }
 
   const currentImage = images[validIndex];
+
+  /**
+   * Explicit null check after array access for safety.
+   * Although validIndex is validated above, this defensive check ensures
+   * we don't attempt to render if the image is undefined.
+   * This handles edge cases where images array might be modified unexpectedly.
+   */
+  if (!currentImage) {
+    console.error(
+      `ProjectLightbox: currentImage is undefined at index ${validIndex}. ` +
+      `Images array length: ${images.length}. This should not happen with valid validIndex.`
+    );
+    return null;
+  }
+
   const showNavigation = images.length > 1;
 
   /**
@@ -259,7 +325,7 @@ export function ProjectLightbox({
           },
         },
         transition: {
-          timeout: 300,
+          timeout: DIALOG_FADE_DURATION,
         },
       }}
       onTouchStart={onTouchStart}
@@ -273,8 +339,8 @@ export function ProjectLightbox({
         aria-label="Close lightbox"
         sx={{
           position: "fixed",
-          top: 16,
-          right: 16,
+          top: LIGHTBOX_CONTROL_OFFSET,
+          right: LIGHTBOX_CONTROL_OFFSET,
           zIndex: 52,
           color: "#FFFFFF",
           backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -333,7 +399,7 @@ export function ProjectLightbox({
           aria-label="Previous image"
           sx={{
             ...navButtonSx,
-            left: 16,
+            left: LIGHTBOX_CONTROL_OFFSET,
           }}
         >
           <ArrowBackIcon fontSize="large" sx={{pl:1}} />
@@ -347,29 +413,45 @@ export function ProjectLightbox({
           aria-label="Next image"
           sx={{
             ...navButtonSx,
-            right: 16,
+            right: LIGHTBOX_CONTROL_OFFSET,
           }}
         >
           <ArrowForwardIcon fontSize="large" sx={{pl:.5}}  />
         </IconButton>
       )}
 
-      {/* Image Counter - Bottom Center */}
+      {/* Image Counter and Accessibility Announcements - Bottom Center */}
       {showNavigation && (
         <Box
           sx={{
             position: "fixed",
-            bottom: 16,
+            bottom: LIGHTBOX_CONTROL_OFFSET,
             left: "50%",
             transform: "translateX(-50%)",
             zIndex: 51,
           }}
-          aria-live="polite"
-          aria-atomic="true"
           role="status"
+          aria-live="assertive"
+          aria-atomic="true"
         >
+          {/*
+           * Screen reader announcement with full context.
+           * Uses assertive live region for immediate announcement when image changes.
+           * Includes image position, total count, and caption for comprehensive context.
+           * This is hidden visually but announced by screen readers.
+           */}
+          <VisuallyHidden>
+            Viewing image {validIndex + 1} of {images.length}: {currentImage.caption}
+          </VisuallyHidden>
+
+          {/*
+           * Visual counter display for sighted users.
+           * Marked with aria-hidden since screen readers announce via VisuallyHidden above.
+           * This prevents duplicate announcements.
+           */}
           <Typography
             variant="body2"
+            aria-hidden="true"
             sx={{
               color: "#FFFFFF",
               backgroundColor: "rgba(0, 0, 0, 0.5)",

@@ -2,7 +2,7 @@
 
 import { Box, SxProps, Theme } from '@mui/material';
 import { useMemo } from 'react';
-import DOMPurify from 'isomorphic-dompurify';
+import { sanitizeDescriptionHtml } from '../../utils/sanitization';
 import { BRAND_COLORS } from '../../constants';
 import { ProjectTagsContainer } from './ProjectTags';
 
@@ -62,15 +62,6 @@ const DESCRIPTION_SX = {
   },
 };
 
-/**
- * Configuration for HTML sanitization.
- * Defines which HTML tags and attributes are allowed for security.
- */
-const SANITIZE_CONFIG = {
-  ALLOWED_TAGS: ['p', 'a', 'strong', 'em', 'ul', 'ol', 'li', 'br'],
-  ALLOWED_ATTR: ['href', 'title'],
-  KEEP_CONTENT: true,
-};
 
 /**
  * Renders HTML project description with optional tags, circa date, and sanitization.
@@ -129,10 +120,11 @@ export function ProjectDescription({
 }: ProjectDescriptionProps) {
   /**
    * Memoize the sanitized HTML to avoid re-sanitizing on every render.
-   * DOMPurify sanitization is an expensive operation.
+   * This uses a centralized sanitization utility that ensures consistent
+   * security measures across all components that handle user-provided HTML.
    */
   const sanitizedHtml = useMemo(
-    () => DOMPurify.sanitize(html, SANITIZE_CONFIG),
+    () => sanitizeDescriptionHtml(html),
     [html]
   );
 

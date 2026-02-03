@@ -151,4 +151,94 @@ describe('VideoEmbed', () => {
     iframe = container.querySelector('iframe');
     expect(iframe?.src).toContain('youtube');
   });
+
+  /**
+   * Test: Edge case - Handles very wide aspect ratio (ultra-wide cinema)
+   */
+  it('handles ultra-wide aspect ratio (2.35:1)', () => {
+    const ultraWideVideo: ProjectVideo = {
+      type: 'vimeo',
+      id: '123456789',
+      width: 2350,
+      height: 1000,
+    };
+    const { container } = render(<VideoEmbed video={ultraWideVideo} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles square aspect ratio (1:1)
+   */
+  it('handles square aspect ratio (1:1)', () => {
+    const squareVideo: ProjectVideo = {
+      type: 'youtube',
+      id: 'dQw4w9WgXcQ',
+      width: 1000,
+      height: 1000,
+    };
+    const { container } = render(<VideoEmbed video={squareVideo} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles very tall aspect ratio (portrait mode)
+   */
+  it('handles portrait aspect ratio (9:16)', () => {
+    const portraitVideo: ProjectVideo = {
+      type: 'vimeo',
+      id: '123456789',
+      width: 720,
+      height: 1280,
+    };
+    const { container } = render(<VideoEmbed video={portraitVideo} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles minimal dimensions
+   */
+  it('handles minimal dimensions', () => {
+    const minimalVideo: ProjectVideo = {
+      type: 'youtube',
+      id: 'dQw4w9WgXcQ',
+      width: 100,
+      height: 100,
+    };
+    const { container } = render(<VideoEmbed video={minimalVideo} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles very large dimensions
+   */
+  it('handles very large dimensions (4K and beyond)', () => {
+    const largeVideo: ProjectVideo = {
+      type: 'vimeo',
+      id: '123456789',
+      width: 7680,
+      height: 4320,
+    };
+    const { container } = render(<VideoEmbed video={largeVideo} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles unusual but valid aspect ratio
+   */
+  it('handles unusual aspect ratio (3:2)', () => {
+    const unusualVideo: ProjectVideo = {
+      type: 'youtube',
+      id: 'dQw4w9WgXcQ',
+      width: 1500,
+      height: 1000,
+    };
+    const { container } = render(<VideoEmbed video={unusualVideo} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+  });
 });
