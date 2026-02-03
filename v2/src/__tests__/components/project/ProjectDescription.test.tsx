@@ -282,4 +282,62 @@ describe('ProjectDescription', () => {
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('2022-2023')).toBeInTheDocument();
   });
+
+  /**
+   * Test: Edge case - Handles malformed HTML gracefully
+   */
+  it('handles malformed HTML gracefully', () => {
+    const malformedHtml = '<p>Unclosed paragraph<p>Another paragraph</p>';
+    const { container } = render(<ProjectDescription html={malformedHtml} />);
+    expect(container).toBeInTheDocument();
+    expect(screen.getByText(/Unclosed paragraph/)).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles very long content without crashing
+   */
+  it('handles very long content without crashing', () => {
+    const longContent =
+      '<p>' + 'Lorem ipsum dolor sit amet. '.repeat(500) + '</p>';
+    const { container } = render(<ProjectDescription html={longContent} />);
+    expect(container).toBeInTheDocument();
+    expect(screen.getByText(/Lorem ipsum/)).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles nested malformed tags
+   */
+  it('handles nested malformed tags', () => {
+    const html = '<p><strong><em>Bold and italic</p></strong></em>';
+    render(<ProjectDescription html={html} />);
+    expect(screen.getByText(/Bold and italic/)).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles empty tags
+   */
+  it('handles empty tags', () => {
+    const html = '<p></p><p>Content</p>';
+    render(<ProjectDescription html={html} />);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles whitespace-only HTML
+   */
+  it('handles whitespace-only HTML', () => {
+    const html = '<p>   </p>';
+    const { container } = render(<ProjectDescription html={html} />);
+    expect(container).toBeInTheDocument();
+  });
+
+  /**
+   * Test: Edge case - Handles many tags with no content between them
+   */
+  it('handles many consecutive tags', () => {
+    const html =
+      '<strong></strong><em></em><span></span><p>Finally some content</p>';
+    render(<ProjectDescription html={html} />);
+    expect(screen.getByText('Finally some content')).toBeInTheDocument();
+  });
 });

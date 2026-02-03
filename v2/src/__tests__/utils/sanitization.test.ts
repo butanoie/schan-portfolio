@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import {
   sanitizeHtml,
   sanitizeDescriptionHtml,
@@ -58,7 +58,7 @@ describe('sanitization utilities', () => {
     afterEach(() => {
       // Clean up any hooks left behind
       try {
-        // @ts-ignore - accessing private method for cleanup
+        // @ts-expect-error - accessing private method for cleanup
         const hooks = DOMPurify?.hooks?.afterSanitizeAttributes;
         if (hooks) {
           // Clear hooks array

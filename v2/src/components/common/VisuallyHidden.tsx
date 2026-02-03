@@ -37,7 +37,6 @@ interface VisuallyHiddenProps {
  * </VisuallyHidden>
  * ```
  *
- * @component
  * @param props - Component props
  * @param props.children - Content to hide visually
  * @param props.className - Optional additional CSS classes
@@ -46,10 +45,10 @@ interface VisuallyHiddenProps {
  * @example
  * // For ARIA live region announcements with full context
  * <Box aria-live="assertive" aria-atomic="true">
- *   <VisuallyHidden>
- *     Viewing image {currentIndex + 1} of {total}: {caption}
- *   </VisuallyHidden>
- *   <Typography>{currentIndex + 1} of {total}</Typography>
+ * <VisuallyHidden>
+ * Viewing image {currentIndex + 1} of {total}: {caption}
+ * </VisuallyHidden>
+ * <Typography>{currentIndex + 1} of {total}</Typography>
  * </Box>
  */
 export function VisuallyHidden({ children, className = '' }: VisuallyHiddenProps) {

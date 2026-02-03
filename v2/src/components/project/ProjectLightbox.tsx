@@ -178,8 +178,9 @@ export function ProjectLightbox({
    */
   useEffect(() => {
     /**
+     * Handles keyboard events for lightbox navigation and closing.
      *
-     * @param event
+     * @param event - The keyboard event
      */
     handleKeyDownRef.current = (event: KeyboardEvent) => {
       // Prevent keyboard navigation if it would interfere with other controls
@@ -224,8 +225,9 @@ export function ProjectLightbox({
     if (validIndex === null) return;
 
     /**
+     * Wrapper function that delegates to the ref-stored handler.
      *
-     * @param event
+     * @param event - The keyboard event
      */
     const handleKeyDown = (event: KeyboardEvent) => {
       handleKeyDownRef.current(event);

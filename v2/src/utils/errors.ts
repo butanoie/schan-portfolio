@@ -89,9 +89,9 @@ export class AppError extends Error {
    *
    * @example
    * const error = new AppError(
-   *   'Invalid configuration provided',
-   *   'generic',
-   *   'APP_001'
+   * 'Invalid configuration provided',
+   * 'generic',
+   * 'APP_001'
    * );
    */
   constructor(
@@ -149,8 +149,8 @@ export class ValidationError extends AppError {
    *
    * @example
    * throw new ValidationError(
-   *   'Video ID must be 8-11 digits for Vimeo',
-   *   'VAL_002'
+   * 'Video ID must be 8-11 digits for Vimeo',
+   * 'VAL_002'
    * );
    */
   constructor(message: string, code: string = 'VAL_001', originalError?: Error) {
@@ -199,8 +199,8 @@ export class SecurityError extends AppError {
    *
    * @example
    * throw new SecurityError(
-   *   'Script tag injection attempt blocked',
-   *   'SEC_001'
+   * 'Script tag injection attempt blocked',
+   * 'SEC_001'
    * );
    */
   constructor(message: string, code: string = 'SEC_001', originalError?: Error) {
@@ -252,9 +252,9 @@ export class DataError extends AppError {
    *
    * @example
    * throw new DataError(
-   *   'Failed to parse project JSON',
-   *   'DATA_002',
-   *   parseError
+   * 'Failed to parse project JSON',
+   * 'DATA_002',
+   * parseError
    * );
    */
   constructor(message: string, code: string = 'DATA_001', originalError?: Error) {
@@ -307,20 +307,21 @@ export class NetworkError extends AppError {
    *
    * @example
    * throw new NetworkError(
-   *   'Server returned 500 Internal Server Error',
-   *   'NET_003',
-   *   serverError,
-   *   500
+   * 'Server returned 500 Internal Server Error',
+   * 'NET_003',
+   * serverError,
+   * 500
    * );
    */
   statusCode?: number;
 
   /**
+   * Creates a new NetworkError instance.
    *
-   * @param message
-   * @param code
-   * @param originalError
-   * @param statusCode
+   * @param message - The error message
+   * @param code - The error code (default: 'NET_001')
+   * @param originalError - Optional original error for error chaining
+   * @param statusCode - Optional HTTP status code associated with the error
    */
   constructor(
     message: string,

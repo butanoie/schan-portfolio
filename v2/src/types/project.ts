@@ -5,18 +5,18 @@
  * @example
  * // Standard image with thumbnails
  * const image: ProjectImage = {
- *   url: '/projects/my-project/hero.jpg',
- *   tnUrl: '/projects/my-project/hero-thumb.jpg',
- *   tnUrl2x: '/projects/my-project/hero-thumb@2x.jpg',
- *   caption: 'Hero image showing the project design'
+ * url: '/projects/my-project/hero.jpg',
+ * tnUrl: '/projects/my-project/hero-thumb.jpg',
+ * tnUrl2x: '/projects/my-project/hero-thumb@2x.jpg',
+ * caption: 'Hero image showing the project design'
  * };
  *
  * @example
  * // Image without retina variant (still valid)
  * const simpleImage: ProjectImage = {
- *   url: '/images/photo.jpg',
- *   tnUrl: '/images/photo-thumb.jpg',
- *   caption: 'A project screenshot'
+ * url: '/images/photo.jpg',
+ * tnUrl: '/images/photo-thumb.jpg',
+ * caption: 'A project screenshot'
  * };
  */
 export interface ProjectImage {
@@ -40,28 +40,28 @@ export interface ProjectImage {
  * @example
  * // Vimeo video (8-11 digit ID)
  * const vimeoVideo: ProjectVideo = {
- *   type: 'vimeo',
- *   id: '123456789',
- *   width: 560,
- *   height: 315
+ * type: 'vimeo',
+ * id: '123456789',
+ * width: 560,
+ * height: 315
  * };
  *
  * @example
  * // YouTube video (11 character ID)
  * const youtubeVideo: ProjectVideo = {
- *   type: 'youtube',
- *   id: 'dQw4w9WgXcQ',
- *   width: 560,
- *   height: 315
+ * type: 'youtube',
+ * id: 'dQw4w9WgXcQ',
+ * width: 560,
+ * height: 315
  * };
  *
  * @example
  * // Wide format video (16:9 aspect ratio)
  * const wideVideo: ProjectVideo = {
- *   type: 'youtube',
- *   id: 'dQw4w9WgXcQ',
- *   width: 1920,
- *   height: 1080
+ * type: 'youtube',
+ * id: 'dQw4w9WgXcQ',
+ * width: 1920,
+ * height: 1080
  * };
  */
 export interface ProjectVideo {
@@ -85,70 +85,70 @@ export interface ProjectVideo {
  * @example
  * // Complete project with images and video
  * const project: Project = {
- *   id: 'amazing-website',
- *   title: '<strong>Amazing</strong> Website Redesign',
- *   desc: '<p>A complete redesign of the client website...</p><ul><li>Modern design</li><li>Responsive</li></ul>',
- *   circa: 'Fall 2023 - Winter 2024',
- *   tags: ['React', 'TypeScript', 'Node.js', 'PostgreSQL'],
- *   images: [
- *     {
- *       url: '/projects/amazing-website/hero.jpg',
- *       tnUrl: '/projects/amazing-website/hero-thumb.jpg',
- *       caption: 'Homepage hero section'
- *     },
- *     {
- *       url: '/projects/amazing-website/dashboard.jpg',
- *       tnUrl: '/projects/amazing-website/dashboard-thumb.jpg',
- *       tnUrl2x: '/projects/amazing-website/dashboard-thumb@2x.jpg',
- *       caption: 'User dashboard interface'
- *     }
- *   ],
- *   videos: [
- *     {
- *       type: 'youtube',
- *       id: 'dQw4w9WgXcQ',
- *       width: 560,
- *       height: 315
- *     }
- *   ],
- *   altGrid: false
+ * id: 'amazing-website',
+ * title: '<strong>Amazing</strong> Website Redesign',
+ * desc: '<p>A complete redesign of the client website...</p><ul><li>Modern design</li><li>Responsive</li></ul>',
+ * circa: 'Fall 2023 - Winter 2024',
+ * tags: ['React', 'TypeScript', 'Node.js', 'PostgreSQL'],
+ * images: [
+ * {
+ * url: '/projects/amazing-website/hero.jpg',
+ * tnUrl: '/projects/amazing-website/hero-thumb.jpg',
+ * caption: 'Homepage hero section'
+ * },
+ * {
+ * url: '/projects/amazing-website/dashboard.jpg',
+ * tnUrl: '/projects/amazing-website/dashboard-thumb.jpg',
+ * tnUrl2x: '/projects/amazing-website/dashboard-thumb@2x.jpg',
+ * caption: 'User dashboard interface'
+ * }
+ * ],
+ * videos: [
+ * {
+ * type: 'youtube',
+ * id: 'dQw4w9WgXcQ',
+ * width: 560,
+ * height: 315
+ * }
+ * ],
+ * altGrid: false
  * };
  *
  * @example
  * // Project without video (common case)
  * const simpleProject: Project = {
- *   id: 'logo-design',
- *   title: 'Company Logo Design',
- *   desc: '<p>Logo design for XYZ company...</p>',
- *   circa: 'Spring 2024',
- *   tags: ['Design', 'Branding'],
- *   images: [
- *     {
- *       url: '/projects/logo/final.png',
- *       tnUrl: '/projects/logo/final-thumb.png',
- *       caption: 'Final logo design'
- *     }
- *   ],
- *   videos: [],
- *   altGrid: false
+ * id: 'logo-design',
+ * title: 'Company Logo Design',
+ * desc: '<p>Logo design for XYZ company...</p>',
+ * circa: 'Spring 2024',
+ * tags: ['Design', 'Branding'],
+ * images: [
+ * {
+ * url: '/projects/logo/final.png',
+ * tnUrl: '/projects/logo/final-thumb.png',
+ * caption: 'Final logo design'
+ * }
+ * ],
+ * videos: [],
+ * altGrid: false
  * };
  *
  * @example
  * // Project with alternate grid layout for complex image arrangements
  * const altGridProject: Project = {
- *   id: 'gallery-project',
- *   title: 'Photo Gallery',
- *   desc: '<p>A gallery showcasing various works...</p>',
- *   circa: '2024',
- *   tags: ['Photography', 'Curation'],
- *   images: [
- *     { url: '/projects/gallery/1.jpg', tnUrl: '/projects/gallery/1-thumb.jpg', caption: 'Image 1' },
- *     { url: '/projects/gallery/2.jpg', tnUrl: '/projects/gallery/2-thumb.jpg', caption: 'Image 2' },
- *     { url: '/projects/gallery/3.jpg', tnUrl: '/projects/gallery/3-thumb.jpg', caption: 'Image 3' },
- *     { url: '/projects/gallery/4.jpg', tnUrl: '/projects/gallery/4-thumb.jpg', caption: 'Image 4' }
- *   ],
- *   videos: [],
- *   altGrid: true
+ * id: 'gallery-project',
+ * title: 'Photo Gallery',
+ * desc: '<p>A gallery showcasing various works...</p>',
+ * circa: '2024',
+ * tags: ['Photography', 'Curation'],
+ * images: [
+ * { url: '/projects/gallery/1.jpg', tnUrl: '/projects/gallery/1-thumb.jpg', caption: 'Image 1' },
+ * { url: '/projects/gallery/2.jpg', tnUrl: '/projects/gallery/2-thumb.jpg', caption: 'Image 2' },
+ * { url: '/projects/gallery/3.jpg', tnUrl: '/projects/gallery/3-thumb.jpg', caption: 'Image 3' },
+ * { url: '/projects/gallery/4.jpg', tnUrl: '/projects/gallery/4-thumb.jpg', caption: 'Image 4' }
+ * ],
+ * videos: [],
+ * altGrid: true
  * };
  */
 export interface Project {
@@ -194,39 +194,39 @@ export interface Project {
  * @example
  * // First page of results
  * const response: ProjectsResponse = {
- *   total: 18,
- *   start: 0,
- *   end: 4,
- *   items: [
- *     { id: 'project-1', title: 'First Project', ... },
- *     { id: 'project-2', title: 'Second Project', ... },
- *     // ... 3 more projects
- *   ]
+ * total: 18,
+ * start: 0,
+ * end: 4,
+ * items: [
+ * { id: 'project-1', title: 'First Project', ... },
+ * { id: 'project-2', title: 'Second Project', ... },
+ * // ... 3 more projects
+ * ]
  * };
  *
  * @example
  * // Second page of results
  * const page2: ProjectsResponse = {
- *   total: 18,
- *   start: 5,
- *   end: 9,
- *   items: [
- *     { id: 'project-6', title: 'Sixth Project', ... },
- *     // ... 4 more projects
- *   ]
+ * total: 18,
+ * start: 5,
+ * end: 9,
+ * items: [
+ * { id: 'project-6', title: 'Sixth Project', ... },
+ * // ... 4 more projects
+ * ]
  * };
  *
  * @example
  * // Last page with fewer items
  * const lastPage: ProjectsResponse = {
- *   total: 18,
- *   start: 15,
- *   end: 17,
- *   items: [
- *     { id: 'project-16', title: 'Sixteenth Project', ... },
- *     { id: 'project-17', title: 'Seventeenth Project', ... },
- *     { id: 'project-18', title: 'Eighteenth Project', ... }
- *   ]
+ * total: 18,
+ * start: 15,
+ * end: 17,
+ * items: [
+ * { id: 'project-16', title: 'Sixteenth Project', ... },
+ * { id: 'project-17', title: 'Seventeenth Project', ... },
+ * { id: 'project-18', title: 'Eighteenth Project', ... }
+ * ]
  * };
  */
 export interface ProjectsResponse {
@@ -253,31 +253,31 @@ export interface ProjectsResponse {
  * @example
  * // Get second page with custom page size
  * const options2: ProjectQueryOptions = {
- *   page: 2,
- *   pageSize: 10
+ * page: 2,
+ * pageSize: 10
  * };
  *
  * @example
  * // Filter projects by multiple technologies (AND logic)
  * const options3: ProjectQueryOptions = {
- *   tags: ['React', 'TypeScript'],  // Projects must have BOTH tags
- *   page: 1,
- *   pageSize: 5
+ * tags: ['React', 'TypeScript'],  // Projects must have BOTH tags
+ * page: 1,
+ * pageSize: 5
  * };
  *
  * @example
  * // Search for projects by title or description
  * const options4: ProjectQueryOptions = {
- *   search: 'website redesign',  // Case-insensitive search
- *   page: 1
+ * search: 'website redesign',  // Case-insensitive search
+ * page: 1
  * };
  *
  * @example
  * // Combine search with tag filtering
  * const options5: ProjectQueryOptions = {
- *   search: 'e-commerce',
- *   tags: ['React', 'Node.js'],
- *   pageSize: 20
+ * search: 'e-commerce',
+ * tags: ['React', 'Node.js'],
+ * pageSize: 20
  * };
  */
 export interface ProjectQueryOptions {
