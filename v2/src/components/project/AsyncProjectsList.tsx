@@ -184,7 +184,7 @@ export function AsyncProjectsList({
           sx={{ mt: 4 }}
         >
           {Array.from({ length: pageSize }).map((_, i) => (
-            <ProjectSkeleton key={`skeleton-${i}`} variant="narrow" />
+            <ProjectSkeleton key={`skeleton-${i}`} variant="wide-regular" />
           ))}
         </Box>
       )}

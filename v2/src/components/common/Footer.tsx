@@ -80,10 +80,10 @@ export default function Footer() {
       component="footer"
       sx={{
         position: "relative",
-        pt: 25,
+        pt: 30,
         overflow: "hidden",
-        "@media (min-width: 720px)": {
-          pt: 23,
+        "@media (min-width: 760px)": {
+          pt: 25,
         },
       }}
     >
@@ -110,7 +110,7 @@ export default function Footer() {
             margin: 0,
             zIndex: 0,
             pointerEvents: "auto",
-            "@media (min-width: 720px)": {
+            "@media (min-width: 760px)": {
               bottom: -56,
               right: 16,
               width: 300,
@@ -159,11 +159,12 @@ export default function Footer() {
               backgroundColor: UI_COLORS.cardBackground,
               borderRadius: "160px / 80px",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
               zIndex: 10,
               pointerEvents: "auto",
-              "@media (min-width: 720px)": {
+              "@media (min-width: 760px)": {
                 bottom: 165,
                 right: 225,
                 width: 250,
@@ -183,7 +184,7 @@ export default function Footer() {
                 backgroundColor: UI_COLORS.cardBackground,
                 borderRadius: "50%",
                 display: "block",
-                "@media (min-width: 720px)": {
+                "@media (min-width: 760px)": {
                   right: 52,
                 },
               },
@@ -199,26 +200,32 @@ export default function Footer() {
                 backgroundColor: UI_COLORS.cardBackground,
                 borderRadius: "50%",
                 display: "block",
-                "@media (min-width: 720px)": {
+                "@media (min-width: 760px)": {
                   right: 35,
                 },
               },
             }}
             role="img"
-            aria-label="All projects loaded"
+            aria-label="All projects loaded!"
           >
+            <Typography sx={{
+                fontFamily: '"Gochi Hand", cursive',
+                margin: 0,
+                color: BRAND_COLORS.maroon,
+                "@media (min-width: 760px)": {
+                  fontSize: "1.125rem",
+                },
+              }}>All projects loaded!</Typography>
             <Typography
               sx={{
                 fontFamily: '"Gochi Hand", cursive',
                 fontSize: "1rem",
                 color: UI_COLORS.secondaryText,
-                "@media (min-width: 720px)": {
+                "@media (min-width: 760px)": {
                   fontSize: "1.125rem",
                 },
               }}
-            >
-              All projects loaded!
-            </Typography>
+            >Thanks for coming by!</Typography>
           </Box>
         ) : (
           /* Normal Thought Bubble (not home page or still loading) */
@@ -240,7 +247,7 @@ export default function Footer() {
               justifyContent: "center",
               zIndex: 10,
               pointerEvents: "auto",
-              "@media (min-width: 720px)": {
+              "@media (min-width: 760px)": {
                 bottom: 165,
                 right: 225,
                 width: 250,
@@ -260,7 +267,7 @@ export default function Footer() {
                 backgroundColor: UI_COLORS.cardBackground,
                 borderRadius: "50%",
                 display: "block",
-                "@media (min-width: 720px)": {
+                "@media (min-width: 760px)": {
                   right: 52,
                 },
               },
@@ -276,7 +283,7 @@ export default function Footer() {
                 backgroundColor: UI_COLORS.cardBackground,
                 borderRadius: "50%",
                 display: "block",
-                "@media (min-width: 720px)": {
+                "@media (min-width: 760px)": {
                   right: 35,
                 },
               },
@@ -289,7 +296,7 @@ export default function Footer() {
                 fontFamily: '"Gochi Hand", cursive',
                 fontSize: "1rem",
                 color: UI_COLORS.secondaryText,
-                "@media (min-width: 720px)": {
+                "@media (min-width: 760px)": {
                   fontSize: "1.125rem",
                 },
               }}
