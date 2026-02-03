@@ -169,6 +169,17 @@ function calculateShipping(weight: number, distance: number): number {
 }
 ```
 
+### Documentation Resources
+
+**Detailed Examples:** See [JSDOC_EXAMPLES.md](../docs/JSDOC_EXAMPLES.md) for comprehensive real-world patterns and templates:
+- Simple functions and async operations
+- React components with complex props
+- Custom hooks with state and effects
+- Type definitions and interfaces
+- Error handling patterns
+- Common anti-patterns to avoid
+- Quick copy-paste templates
+
 ### Documentation Enforcement
 
 - **No exceptions**: All code must be documented before committing
@@ -421,7 +432,6 @@ $ npm test
 
 - **Files Created:** N
 - **Files Modified:** N
-- **Lines Added:** N
 - **[Metric]:** Value
 
 ---
