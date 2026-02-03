@@ -23,7 +23,7 @@ interface ProjectSkeletonProps {
    * - 'narrow': Mobile layout, stacked vertically
    * - 'wide-regular': Desktop without video, 2fr-1fr grid
    * - 'wide-video': Desktop with video, 1fr-2fr grid with video placeholder
-   * @default 'narrow'
+   * @default 'wide-regular'
    */
   variant?: 'narrow' | 'wide-regular' | 'wide-video';
 
@@ -178,7 +178,7 @@ export function ProjectSkeleton({
  * Structure: Stacked vertically
  * 1. Tags row
  * 2. Description paragraphs
- * 3. Image grid
+ * 3. 4-column Image grid
  */
 function NarrowLayoutSkeleton({
   animationMode,
@@ -222,11 +222,11 @@ function NarrowLayoutSkeleton({
         ))}
       </Box>
 
-      {/* Image grid - 2 columns for narrow */}
+      {/* Image grid - 2 columns on xs, 4 columns on sm and wider */}
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
           gap: 2,
         }}
       >
@@ -236,7 +236,7 @@ function NarrowLayoutSkeleton({
             animation={animationMode}
             variant="rectangular"
             width="100%"
-            sx={{ paddingBottom: '100%', position: 'relative' }}
+            sx={{ paddingBottom: '75%', position: 'relative' }}
           />
         ))}
       </Box>
@@ -248,7 +248,7 @@ function NarrowLayoutSkeleton({
  * Skeleton for desktop wide-regular layout (no video).
  *
  * Structure:
- * - Left 2/3: Description with tags
+ * - Left 2/3: Description with tags floating to the right
  * - Right 1/3: 2-column image grid
  */
 function WideRegularLayoutSkeleton({
@@ -269,11 +269,22 @@ function WideRegularLayoutSkeleton({
           : 'opacity 0.2s ease-in-out',
       }}
     >
-      {/* Left column: Tags + Description */}
+      {/* Left column: Description with floated tags */}
       <Box>
-        {/* Tags row */}
-        <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
-          {Array.from({ length: 4 }).map((_, i) => (
+        {/* Floated tags row */}
+        <Box
+          sx={{
+            float: 'right',
+            ml: { xs: 1, sm: 2, md: 2 },
+            mb: 1,
+            display: 'flex',
+            gap: 1,
+            flexWrap: 'wrap',
+            maxWidth: { md: '50%' },
+            justifyContent: 'flex-end',
+          }}
+        >
+          {Array.from({ length: 3 }).map((_, i) => (
             <Skeleton
               key={`tag-${i}`}
               animation={animationMode}
@@ -297,6 +308,9 @@ function WideRegularLayoutSkeleton({
             />
           ))}
         </Box>
+
+        {/* Clear float after content */}
+        <Box sx={{ clear: 'both' }} />
       </Box>
 
       {/* Right column: Image grid (2 columns for narrow) */}
@@ -313,7 +327,7 @@ function WideRegularLayoutSkeleton({
             animation={animationMode}
             variant="rectangular"
             width="100%"
-            sx={{ paddingBottom: '100%', position: 'relative' }}
+            sx={{ paddingBottom: '75%', position: 'relative' }}
           />
         ))}
       </Box>
@@ -400,7 +414,7 @@ function WideVideoLayoutSkeleton({
               animation={animationMode}
               variant="rectangular"
               width="100%"
-              sx={{ paddingBottom: '100%', position: 'relative' }}
+              sx={{ paddingBottom: '75%', position: 'relative' }}
             />
           ))}
         </Box>

@@ -111,7 +111,7 @@ export function useProjectLoader(
   const SIMULATED_LOAD_DELAY =
     typeof window === 'undefined' || process.env.NODE_ENV === 'test'
       ? 0 // Instant loading in tests and SSR
-      : parseInt(process.env.NEXT_PUBLIC_LOAD_DELAY || '5000', 10);
+      : parseInt(process.env.NEXT_PUBLIC_LOAD_DELAY || '1500', 10);
 
   // Calculate if more projects are available
   const hasMore = projects.length < TOTAL_PROJECTS;

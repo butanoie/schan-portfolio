@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Box, CircularProgress, useTheme, useMediaQuery } from '@mui/material';
+import { Button, Box, CircularProgress } from '@mui/material';
 import { UI_COLORS } from '../../constants';
 import { useReducedMotion } from '../../hooks';
 
@@ -124,19 +124,7 @@ export function LoadMoreButton({
   remainingCount,
   sx,
 }: LoadMoreButtonProps) {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const prefersReducedMotion = useReducedMotion();
-
-  // Calculate button dimensions based on viewport
-  const buttonDimensions = isDesktop
-    ? { width: 250, height: 125, padding: '25px 20px' }
-    : { width: 180, height: 90, padding: '15px 16px' };
-
-  // Calculate thought dot positions based on viewport
-  const dotPositions = isDesktop
-    ? { large: { bottom: -25, right: 52 }, small: { bottom: -35, right: 35 } }
-    : { large: { bottom: -25, right: 30 }, small: { bottom: -35, right: 20 } };
 
   // Button text based on remaining count
   const buttonText = remainingCount > 0 ? `Load ${remainingCount} more` : 'Load more';
@@ -155,11 +143,11 @@ export function LoadMoreButton({
       sx={{
         // Thought bubble shape and positioning
         position: 'absolute',
-        bottom: { xs: 230, md: 165 },
-        right: { xs: 145, md: 225 },
-        width: { xs: buttonDimensions.width, md: isDesktop ? 250 : 180 },
-        height: { xs: buttonDimensions.height, md: isDesktop ? 125 : 90 },
-        padding: { xs: '15px 16px', md: '25px 20px' },
+        bottom: 230,
+        right: 145,
+        width: 180,
+        height: 90,
+        padding: '15px 16px',
         minWidth: 'unset',
         minHeight: 'unset',
 
@@ -169,11 +157,21 @@ export function LoadMoreButton({
         backgroundColor: UI_COLORS.cardBackground,
         color: UI_COLORS.secondaryText,
         fontFamily: '"Gochi Hand", cursive',
-        fontSize: { xs: '1rem', md: '1.125rem' },
+        fontSize: '1rem',
         fontWeight: 400,
         textTransform: 'none',
         zIndex: 10,
         pointerEvents: 'auto',
+
+        // Desktop breakpoint at 760px
+        '@media (min-width: 760px)': {
+          bottom: 165,
+          right: 225,
+          width: 250,
+          height: 125,
+          padding: '25px 20px',
+          fontSize: '1.125rem',
+        },
 
         // Transition effects
         transition: prefersReducedMotion
@@ -206,14 +204,17 @@ export function LoadMoreButton({
           content: '""',
           position: 'absolute',
           zIndex: 10,
-          bottom: { xs: dotPositions.large.bottom, md: -25 },
-          right: { xs: dotPositions.large.right, md: 52 },
+          bottom: -25,
+          right: 30,
           width: 17,
           height: 17,
           border: `2px solid ${UI_COLORS.border}`,
           backgroundColor: UI_COLORS.cardBackground,
           borderRadius: '50%',
           display: 'block',
+          '@media (min-width: 760px)': {
+            right: 52,
+          },
         },
 
         // Thought dot - small circle
@@ -221,14 +222,17 @@ export function LoadMoreButton({
           content: '""',
           position: 'absolute',
           zIndex: 10,
-          bottom: { xs: dotPositions.small.bottom, md: -35 },
-          right: { xs: dotPositions.small.right, md: 35 },
+          bottom: -35,
+          right: 20,
           width: 8,
           height: 8,
           border: `2px solid ${UI_COLORS.border}`,
           backgroundColor: UI_COLORS.cardBackground,
           borderRadius: '50%',
           display: 'block',
+          '@media (min-width: 760px)': {
+            right: 35,
+          },
         },
 
         ...sx,
