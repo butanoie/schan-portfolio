@@ -286,7 +286,7 @@ export default function Footer() {
           backgroundColor: BRAND_COLORS.sage,
           pt: 2,
           pb: 0,
-          pl: { xs: 2, sm:3, md: 4 },
+          pl: { xs: 2, sm:3, md: 4, lg: 10 },
           pr: { xs: 3, md: 5 },
           position: "relative",
           zIndex: 1,

@@ -2,6 +2,7 @@
 
 import { Box, SxProps, Theme } from '@mui/material';
 import { useMemo } from 'react';
+import { isValidVideoId } from '../../types/typeGuards';
 import type { ProjectVideo } from '../../types';
 
 /**
@@ -27,6 +28,11 @@ interface VideoEmbedProps {
  * - Vimeo: `player.vimeo.com/video/{id}`
  * - YouTube: `youtube.com/embed/{id}`
  *
+ * **Security:**
+ * - Validates video IDs against platform-specific format requirements
+ * - Prevents URL injection attacks by blocking malformed IDs
+ * - Blocks special characters that could alter embed URLs
+ *
  * **Features:**
  * - Responsive iframe that scales with container width
  * - Maintains 16:9 aspect ratio (padding-bottom technique)
@@ -35,6 +41,7 @@ interface VideoEmbedProps {
  * - Respects `prefers-reduced-motion` for animations
  * - Proper `title` attribute for accessibility
  * - No autoplay (respects user preference)
+ * - Video ID validation for security
  *
  * **Accessibility:**
  * - iframe has descriptive `title` attribute
@@ -46,6 +53,7 @@ interface VideoEmbedProps {
  * @returns The rendered responsive video embed
  *
  * @throws {Error} If video type is not 'vimeo' or 'youtube'
+ * @throws {Error} If video ID does not match platform-specific format requirements
  *
  * @example
  * <VideoEmbed
@@ -70,8 +78,17 @@ interface VideoEmbedProps {
 export function VideoEmbed({ video, sx }: VideoEmbedProps) {
   /**
    * Memoize the embed URL construction to avoid rebuilding on every render.
+   * Validates the video ID before constructing the URL to prevent security issues.
    */
   const embedUrl = useMemo(() => {
+    // Validate video ID format for the given platform
+    if (!isValidVideoId(video.id, video.type)) {
+      throw new Error(
+        `Invalid ${video.type} video ID: "${video.id}". ` +
+        `Expected ${video.type === 'vimeo' ? '8-11 digits' : '11 alphanumeric characters (including - and _)'}.`
+      );
+    }
+
     switch (video.type) {
       case 'vimeo':
         return `https://player.vimeo.com/video/${video.id}`;
