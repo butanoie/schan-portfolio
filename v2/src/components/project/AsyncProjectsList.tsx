@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useContext } from 'react';
 import type { Project } from '../../types';
 import { ProjectsList } from './ProjectsList';
 import { ProjectSkeleton } from './ProjectSkeleton';
@@ -9,7 +9,7 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import { ProjectLoadingProvider } from '../../contexts/ProjectLoadingContext';
 import { useProjectLoader } from '../../hooks/useProjectLoader';
 import { usePathname } from 'next/navigation';
-import { useReportProjectLoadingState } from '../common/MainLayout';
+import { ProjectLoadingStateBridgeContext } from '../common/MainLayout';
 
 /**
  * Props for the AsyncProjectsList component.
@@ -139,6 +139,9 @@ export function AsyncProjectsList({
     allLoaded,
   } = useProjectLoader(initialProjects, pageSize);
 
+  // Get the bridge context to report loading state to MainLayout
+  const bridge = useContext(ProjectLoadingStateBridgeContext);
+
   /**
    * Memoize context value to prevent unnecessary re-renders.
    * Only updates when loading state or remaining count changes.
@@ -160,10 +163,15 @@ export function AsyncProjectsList({
    * This allows Footer (rendered in MainLayout) to access the loading state
    * through ProjectLoadingContext without requiring it to be nested within
    * this component.
+   *
+   * When navigating away from the home page, clear the state so Footer shows
+   * the normal thought bubble instead of retaining the last home page state.
    */
-  if (shouldShowLoadMore) {
-    useReportProjectLoadingState(contextValue);
-  }
+  useEffect(() => {
+    if (bridge) {
+      bridge.onStateChange(shouldShowLoadMore ? contextValue : null);
+    }
+  }, [bridge, shouldShowLoadMore, contextValue]);
 
   /**
    * Render layout depends on whether we should show Load More button.

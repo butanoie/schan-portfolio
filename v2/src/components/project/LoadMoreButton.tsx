@@ -1,7 +1,8 @@
 'use client';
 
 import { Button, Box, CircularProgress } from '@mui/material';
-import { UI_COLORS } from '../../constants';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { NAV_COLORS, BRAND_COLORS, THEME_COLORS } from '../../constants';
 import { useReducedMotion } from '../../hooks';
 
 /**
@@ -32,75 +33,53 @@ interface LoadMoreButtonProps {
 }
 
 /**
- * Button component styled as a thought bubble to replace Buta's thought bubble.
+ * Button component for loading more projects within the Footer thought bubble.
  *
- * This button replaces the original "Pork products FTW!" thought bubble above Buta
- * when displaying the Load More functionality on the home page. It maintains the
- * exact visual styling of the thought bubble while providing interactive button behavior.
+ * This button is rendered inside the Footer's thought bubble container on the
+ * home page. It displays a loading spinner while fetching projects and shows
+ * the count of remaining projects to load. Styled as a nav button matching
+ * the Header and Footer navigation items.
  *
  * **Visual Design:**
- * - Elliptical shape matching the original thought bubble
- * - Light blue background (`#f5f9fd`) matching the original color
- * - Two circular thought dots (::before, ::after pseudo-elements)
- * - Uses "Gochi Hand" cursive font for handwritten appearance
- * - Responsive sizing: smaller on mobile, larger on desktop
- * - Dark border and text matching original bubble styling
+ * - Sage green background with white text (matching nav items)
+ * - Open Sans font, 600 weight
+ * - Rounded corners with padding
+ * - Expand icon on the left side of text
+ * - Darker green hover state for user feedback
  *
  * **States:**
- * 1. **Idle**: Shows "Load X more" text, clickable
- * 2. **Loading**: Shows CircularProgress spinner instead of text
- * 3. **Disabled**: Grayed out appearance, not clickable
- * 4. **Hover**: Subtle shadow and opacity change for feedback
+ * 1. **Idle**: Shows expand icon with "Load X more" text, clickable with sage green background
+ * 2. **Loading**: Shows rotating CircularProgress spinner instead of icon, text changes to "Loading projects..."
+ * 3. **Disabled**: Reduced opacity (60%), not clickable
+ * 4. **Hover**: Darker green background for visual feedback
  *
- * **Positioning:**
- * This component should be positioned absolutely to appear where the thought
- * bubble would be. It's typically rendered within the footer's positioning container.
+ * **Icon Behavior:**
+ * - Idle: Displays ExpandMoreIcon before the text
+ * - Loading: Replaces icon with white rotating spinner
+ * - Icon and spinner are 20px-24px in size with consistent spacing
  *
  * **Accessibility:**
  * - Semantic button element for keyboard and screen reader support
- * - ARIA labels describing the action and number of projects
+ * - ARIA labels describing the action, loading state, or completion
  * - Proper disabled state handling
- * - Focus visible for keyboard navigation
+ * - Focus visible outline for keyboard navigation
  * - Loading state announced via aria-busy attribute
- *
- * **Responsive Behavior:**
- * - Mobile (xs): Smaller dimensions (180x90px)
- * - Desktop (md+): Larger dimensions (250x125px)
- * - Maintains proper positioning at all breakpoints
  *
  * **Usage Example:**
  * ```typescript
- * function ProjectLoadingFooter() {
- *   const [loading, setLoading] = useState(false);
- *   const { remainingCount, hasMore, loadMore } = useProjectLoader(
- *     initialProjects
- *   );
- *
- *   const handleLoadMore = async () => {
- *     setLoading(true);
- *     try {
- *       await loadMore();
- *     } finally {
- *       setLoading(false);
- *     }
- *   };
- *
- *   return (
- *     <LoadMoreButton
- *       onClick={handleLoadMore}
- *       loading={loading}
- *       disabled={!hasMore}
- *       remainingCount={remainingCount}
- *       sx={{ position: 'absolute', bottom: 230, right: 145 }}
- *     />
- *   );
- * }
+ * <LoadMoreButton
+ *   onClick={handleLoadMore}
+ *   loading={false}
+ *   disabled={false}
+ *   remainingCount={13}
+ * />
  * ```
  *
  * @param props - Component props
- * @returns A button styled as a thought bubble with loading indicator
+ * @returns A button with loading indicator displayed inside a thought bubble container
  *
  * @example
+ * // Idle state showing remaining count
  * <LoadMoreButton
  *   onClick={handleLoadMore}
  *   loading={false}
@@ -109,7 +88,7 @@ interface LoadMoreButtonProps {
  * />
  *
  * @example
- * // During loading with spinner
+ * // Loading state with spinner
  * <LoadMoreButton
  *   onClick={handleLoadMore}
  *   loading={true}
@@ -126,13 +105,15 @@ export function LoadMoreButton({
 }: LoadMoreButtonProps) {
   const prefersReducedMotion = useReducedMotion();
 
-  // Button text based on remaining count
-  const buttonText = remainingCount > 0 ? `Load ${remainingCount} more` : 'Load more';
+  // Button text based on state
+  const buttonText = loading ? 'Loading projects...' : 'Load more projects';
 
   // ARIA label with additional context
   const ariaLabel = disabled
     ? 'All projects loaded'
-    : `Load ${remainingCount} more projects`;
+    : loading
+      ? 'Loading more projects'
+      : `Load ${remainingCount} more projects`;
 
   return (
     <Button
@@ -140,125 +121,85 @@ export function LoadMoreButton({
       disabled={disabled || loading}
       aria-label={ariaLabel}
       aria-busy={loading}
+      variant="contained"
       sx={{
-        // Thought bubble shape and positioning
-        position: 'absolute',
-        bottom: 230,
-        right: 145,
-        width: 180,
-        height: 90,
-        padding: '15px 16px',
-        minWidth: 'unset',
-        minHeight: 'unset',
-
-        // Bubble styling
-        border: `2px solid ${UI_COLORS.border}`,
-        borderRadius: '160px / 80px',
-        backgroundColor: UI_COLORS.cardBackground,
-        color: UI_COLORS.secondaryText,
-        fontFamily: '"Gochi Hand", cursive',
-        fontSize: '1rem',
-        fontWeight: 400,
+        // Nav button styling
+        backgroundColor: NAV_COLORS.active,
+        color: NAV_COLORS.text,
+        fontFamily: '"Open Sans", sans-serif',
+        fontsize: { xs: "8pt", '@media (min-width: 760px)': "1rem" },
+        fontWeight: 600,
         textTransform: 'none',
-        zIndex: 10,
-        pointerEvents: 'auto',
-
-        // Desktop breakpoint at 760px
-        '@media (min-width: 760px)': {
-          bottom: 165,
-          right: 225,
-          width: 250,
-          height: 125,
-          padding: '25px 20px',
-          fontSize: '1.125rem',
-        },
+        borderRadius: 1,
+        boxShadow: 0,
+        px: { xs: 0.5, '@media (min-width: 760px)': 2 },
+        py: { xs: 0.5, '@media (min-width: 760px)': 1 },
+        minWidth: "95%",
+        minHeight: 'unset',
 
         // Transition effects
         transition: prefersReducedMotion
           ? 'none'
-          : 'all 0.2s ease-in-out',
+          : 'background-color 0.2s ease-in-out',
 
         // Hover and focus states
         '&:hover:not(:disabled)': {
-          opacity: 0.85,
-          boxShadow: 1,
-          backgroundColor: UI_COLORS.cardBackground,
-          borderColor: UI_COLORS.border,
+          backgroundColor: NAV_COLORS.activeHover,
+          boxShadow: 0,
         },
 
         '&:focus-visible': {
-          outline: `2px solid ${UI_COLORS.border}`,
+          outline: `2px solid ${NAV_COLORS.text}`,
           outlineOffset: '2px',
         },
 
         '&:disabled': {
           opacity: 0.6,
           cursor: 'not-allowed',
-          backgroundColor: UI_COLORS.cardBackground,
-          borderColor: UI_COLORS.border,
-          color: UI_COLORS.secondaryText,
-        },
-
-        // Thought dot - large circle
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          zIndex: 10,
-          bottom: -25,
-          right: 30,
-          width: 17,
-          height: 17,
-          border: `2px solid ${UI_COLORS.border}`,
-          backgroundColor: UI_COLORS.cardBackground,
-          borderRadius: '50%',
-          display: 'block',
-          '@media (min-width: 760px)': {
-            right: 52,
-          },
-        },
-
-        // Thought dot - small circle
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          zIndex: 10,
-          bottom: -35,
-          right: 20,
-          width: 8,
-          height: 8,
-          border: `2px solid ${UI_COLORS.border}`,
-          backgroundColor: UI_COLORS.cardBackground,
-          borderRadius: '50%',
-          display: 'block',
-          '@media (min-width: 760px)': {
-            right: 35,
-          },
+          backgroundColor: BRAND_COLORS.sage,
+          color: "#010101",
         },
 
         ...sx,
       }}
     >
-      {/* Show spinner during loading, text otherwise */}
-      {loading ? (
+      {/* Icon or spinner with text label */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+        }}
+      >
+        {/* Icon or spinner - hidden on mobile (under 760px) */}
         <Box
           sx={{
-            display: 'flex',
+            display: 'none',
             alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
+            '@media (min-width: 760px)': {
+              display: 'flex',
+            },
           }}
         >
-          <CircularProgress
-            size={24}
-            thickness={4}
-            sx={{
-              color: UI_COLORS.secondaryText,
-            }}
-          />
+          {loading ? (
+            <CircularProgress
+              size={20}
+              thickness={4}
+              sx={{
+                color: "#111111",
+              }}
+            />
+          ) : (
+            <ExpandMoreIcon
+              sx={{
+                fontSize: '1.25rem',
+              }}
+            />
+          )}
         </Box>
-      ) : (
-        buttonText
-      )}
+        {/* Button text */}
+        {buttonText}
+      </Box>
     </Button>
   );
 }

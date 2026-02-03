@@ -107,6 +107,9 @@ export default function MainLayout({
  * to communicate its loading state to the Footer component, which is rendered at the
  * layout level. It uses Context to pass this information.
  *
+ * When navigating to non-home pages, this component clears the loading state so Footer
+ * displays the normal thought bubble instead of retaining stale home page context.
+ *
  * @param props - Component props
  * @param props.children - The page children
  * @param props.onStateChange - Callback when loading state changes
@@ -119,6 +122,19 @@ function LoadingStateBridge({
   children: React.ReactNode;
   onStateChange: (state: any) => void;
 }) {
+  const pathname = usePathname();
+
+  /**
+   * Clear loading state when navigating away from home page.
+   * This ensures Footer displays the normal thought bubble on non-home pages
+   * instead of showing stale LoadMoreButton state from previous home page visits.
+   */
+  useEffect(() => {
+    if (pathname !== '/') {
+      onStateChange(null);
+    }
+  }, [pathname, onStateChange]);
+
   // Provide a context that AsyncProjectsList can use to report its state
   return (
     <ProjectLoadingStateBridgeProvider onStateChange={onStateChange}>
@@ -127,7 +143,8 @@ function LoadingStateBridge({
   );
 }
 
-import { createContext, useContext, ReactNode } from "react";
+import { createContext, useContext, ReactNode, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Context for communicating loading state from AsyncProjectsList to MainLayout.
@@ -137,7 +154,7 @@ import { createContext, useContext, ReactNode } from "react";
  *
  * @internal Used internally for bridging component hierarchy
  */
-const ProjectLoadingStateBridgeContext = createContext<{
+export const ProjectLoadingStateBridgeContext = createContext<{
   onStateChange: (state: any) => void;
 } | null>(null);
 
