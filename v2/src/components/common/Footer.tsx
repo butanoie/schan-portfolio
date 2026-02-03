@@ -134,13 +134,77 @@ export default function Footer() {
 
         {/* Thought Bubble or Load More Button - positioned above Buta */}
         {loadingContext && loadingContext.isHomePage && loadingContext.hasMore ? (
-          /* Load More Button (styled as thought bubble) */
-          <LoadMoreButton
-            onClick={loadingContext.onLoadMore}
-            loading={loadingContext.loading}
-            disabled={false}
-            remainingCount={loadingContext.remainingCount}
-          />
+          /* Load More Button inside thought bubble */
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 230,
+              right: 145,
+              width: 180,
+              height: 90,
+              padding: "15px 16px",
+              border: `2px solid ${UI_COLORS.border}`,
+              textAlign: "center",
+              color: UI_COLORS.secondaryText,
+              backgroundColor: UI_COLORS.cardBackground,
+              borderRadius: "160px / 80px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 10,
+              pointerEvents: "auto",
+              fontFamily: '\"Gochi Hand\", cursive',
+              fontSize: "1rem",
+              "@media (min-width: 760px)": {
+                bottom: 165,
+                right: 225,
+                width: 250,
+                height: 125,
+                padding: "25px 20px",
+                fontSize: "1.125rem",
+              },
+              // Small thought bubble circles
+              "&::before": {
+                content: '\"\"',
+                position: "absolute",
+                zIndex: 10,
+                bottom: -25,
+                right: 30,
+                width: 17,
+                height: 17,
+                border: `2px solid ${UI_COLORS.border}`,
+                backgroundColor: UI_COLORS.cardBackground,
+                borderRadius: "50%",
+                display: "block",
+                "@media (min-width: 760px)": {
+                  right: 52,
+                },
+              },
+              "&::after": {
+                content: '\"\"',
+                position: "absolute",
+                zIndex: 10,
+                bottom: -35,
+                right: 20,
+                width: 8,
+                height: 8,
+                border: `2px solid ${UI_COLORS.border}`,
+                backgroundColor: UI_COLORS.cardBackground,
+                borderRadius: "50%",
+                display: "block",
+                "@media (min-width: 760px)": {
+                  right: 35,
+                },
+              },
+            }}
+          >
+            <LoadMoreButton
+              onClick={loadingContext.onLoadMore}
+              loading={loadingContext.loading}
+              disabled={false}
+              remainingCount={loadingContext.remainingCount}
+            />
+          </Box>
         ) : loadingContext &&
           loadingContext.isHomePage &&
           loadingContext.allLoaded ? (
