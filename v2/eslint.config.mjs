@@ -4,6 +4,15 @@ import nextTs from "eslint-config-next/typescript";
 import jsdoc from "eslint-plugin-jsdoc";
 
 const eslintConfig = defineConfig([
+  // Define global ignores first
+  {
+    ignores: [
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+    ],
+  },
   ...nextVitals,
   ...nextTs,
   {
@@ -68,15 +77,6 @@ const eslintConfig = defineConfig([
       "jsdoc/multiline-blocks": "warn",
       "jsdoc/tag-lines": ["warn", "any", { startLines: 1 }],
     },
-  },
-  // Override default ignores of eslint-config-next
-  {
-    ignores: [
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
   },
 ]);
 
