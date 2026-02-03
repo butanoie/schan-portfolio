@@ -114,9 +114,11 @@ export function ProjectGallery({
             sx={{
               borderRadius: 2,
               boxShadow: 2,
+              opacity: 0.4,
               transition: "box-shadow 0.2s ease-in-out",
               "&:hover": {
                 boxShadow: 4,
+                opacity: 1,
               },
             }}
           />

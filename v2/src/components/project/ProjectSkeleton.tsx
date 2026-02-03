@@ -236,7 +236,7 @@ function NarrowLayoutSkeleton({
             animation={animationMode}
             variant="rectangular"
             width="100%"
-            sx={{ paddingBottom: '75%', position: 'relative' }}
+            sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2, }}
           />
         ))}
       </Box>
@@ -327,7 +327,7 @@ function WideRegularLayoutSkeleton({
             animation={animationMode}
             variant="rectangular"
             width="100%"
-            sx={{ paddingBottom: '75%', position: 'relative' }}
+            sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2, }}
           />
         ))}
       </Box>
@@ -414,7 +414,7 @@ function WideVideoLayoutSkeleton({
               animation={animationMode}
               variant="rectangular"
               width="100%"
-              sx={{ paddingBottom: '75%', position: 'relative' }}
+              sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2, }}
             />
           ))}
         </Box>
