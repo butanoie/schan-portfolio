@@ -32,10 +32,21 @@ describe('useSwipe', () => {
     onSwipeDown = vi.fn();
   });
 
+  /**
+   * Helper to cast mock functions to callbacks for the hook.
+   * This allows using vi.fn() mocks while maintaining type safety.
+   */
+  const castToCallbacks = (left: ReturnType<typeof vi.fn>, right: ReturnType<typeof vi.fn>, down: ReturnType<typeof vi.fn>) => ({
+    left: left as () => void,
+    right: right as () => void,
+    down: down as () => void,
+  });
+
   describe('Basic swipe detection', () => {
     it('should detect left swipe with default threshold (50px)', () => {
+      const { left, right, down } = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        useSwipe(left, right, down)
       );
 
       act(() => {
@@ -53,7 +64,7 @@ describe('useSwipe', () => {
 
     it('should detect right swipe with default threshold (50px)', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -71,7 +82,7 @@ describe('useSwipe', () => {
 
     it('should detect downward swipe with default threshold (50px)', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -91,7 +102,7 @@ describe('useSwipe', () => {
   describe('Threshold enforcement', () => {
     it('should not trigger swipe if distance is below threshold', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -109,7 +120,7 @@ describe('useSwipe', () => {
 
     it('should respect custom threshold configuration', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { threshold: 100 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { threshold: 100 }); })()
       );
 
       act(() => {
@@ -136,7 +147,7 @@ describe('useSwipe', () => {
 
     it('should trigger swipe at threshold distance boundary', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { threshold: 50 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { threshold: 50 }); })()
       );
 
       // Test at exactly threshold distance (50px)
@@ -155,7 +166,7 @@ describe('useSwipe', () => {
   describe('Direction isolation', () => {
     it('should ignore diagonal swipes (left movement with vertical movement)', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -172,7 +183,7 @@ describe('useSwipe', () => {
 
     it('should detect left swipe with minimal vertical movement', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -189,7 +200,7 @@ describe('useSwipe', () => {
 
     it('should detect down swipe with minimal horizontal movement', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -208,7 +219,7 @@ describe('useSwipe', () => {
   describe('maxImages configuration', () => {
     it('should skip horizontal navigation when maxImages is 1', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { maxImages: 1 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 1 }); })()
       );
 
       act(() => {
@@ -225,7 +236,7 @@ describe('useSwipe', () => {
 
     it('should skip horizontal navigation when maxImages is 0', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { maxImages: 0 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 0 }); })()
       );
 
       act(() => {
@@ -242,7 +253,7 @@ describe('useSwipe', () => {
 
     it('should allow horizontal navigation when maxImages > 1', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { maxImages: 5 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 5 }); })()
       );
 
       act(() => {
@@ -258,7 +269,7 @@ describe('useSwipe', () => {
 
     it('should allow down swipe regardless of maxImages setting', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { maxImages: 1 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 1 }); })()
       );
 
       act(() => {
@@ -276,7 +287,7 @@ describe('useSwipe', () => {
   describe('Edge cases and special scenarios', () => {
     it('should handle multiple swipes in sequence', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -313,7 +324,7 @@ describe('useSwipe', () => {
 
     it('should handle touch end without prior touch start', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -327,7 +338,7 @@ describe('useSwipe', () => {
 
     it('should handle upward swipe (ignored)', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -345,7 +356,7 @@ describe('useSwipe', () => {
 
     it('should handle very large swipe distances', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -361,7 +372,7 @@ describe('useSwipe', () => {
 
     it('should handle zero movement (no swipe)', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -379,7 +390,7 @@ describe('useSwipe', () => {
 
     it('should reset state after touch end', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -403,7 +414,7 @@ describe('useSwipe', () => {
   describe('Callback execution and independence', () => {
     it('should only call the triggered swipe callback', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       act(() => {
@@ -422,12 +433,13 @@ describe('useSwipe', () => {
 
   describe('Configuration combinations', () => {
     it('should work with both custom threshold and maxImages', () => {
-      const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, {
+      const { result } = renderHook(() => {
+        const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+        return useSwipe(c.left, c.right, c.down, {
           threshold: 100,
           maxImages: 2,
-        })
-      );
+        });
+      });
 
       act(() => {
         result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
@@ -451,12 +463,13 @@ describe('useSwipe', () => {
     });
 
     it('should enforce maxImages boundary even with sufficient swipe distance', () => {
-      const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, {
+      const { result } = renderHook(() => {
+        const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+        return useSwipe(c.left, c.right, c.down, {
           threshold: 30,
           maxImages: 1,
-        })
-      );
+        });
+      });
 
       act(() => {
         result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
@@ -473,7 +486,7 @@ describe('useSwipe', () => {
   describe('Touch event handler return values', () => {
     it('should return valid touch event handlers', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       expect(result.current).toHaveProperty('onTouchStart');
@@ -484,7 +497,7 @@ describe('useSwipe', () => {
 
     it('should return stable handler functions across re-renders', () => {
       const { result, rerender } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown)
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
       );
 
       const initialHandlers = result.current;
@@ -499,7 +512,7 @@ describe('useSwipe', () => {
   describe('Practical usage scenarios', () => {
     it('should support image gallery navigation pattern', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { maxImages: 10 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 10 }); })()
       );
 
       act(() => {
@@ -526,7 +539,7 @@ describe('useSwipe', () => {
 
     it('should support modal close pattern', () => {
       const { result } = renderHook(() =>
-        useSwipe(onSwipeLeft, onSwipeRight, onSwipeDown, { maxImages: 1 })
+        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 1 }); })()
       );
 
       act(() => {
