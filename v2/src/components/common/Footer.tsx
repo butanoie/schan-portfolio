@@ -133,7 +133,88 @@ export default function Footer() {
         </Box>
 
         {/* Thought Bubble or Load More Button - positioned above Buta */}
-        {loadingContext && loadingContext.isHomePage && loadingContext.hasMore ? (
+        {/* Only show thought bubbles on non-home pages, or Load More/All Loaded states on home page */}
+        {pathname !== '/' && (
+          /* Normal Thought Bubble (not home page) */
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 230,
+              right: 145,
+              width: 180,
+              height: 90,
+              padding: "15px 16px",
+              border: `2px solid ${UI_COLORS.border}`,
+              textAlign: "center",
+              color: UI_COLORS.secondaryText,
+              backgroundColor: UI_COLORS.cardBackground,
+              borderRadius: "160px / 80px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 10,
+              pointerEvents: "auto",
+              "@media (min-width: 760px)": {
+                bottom: 165,
+                right: 225,
+                width: 250,
+                height: 125,
+                padding: "25px 20px",
+              },
+              // Small thought bubble circles
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                zIndex: 10,
+                bottom: -25,
+                right: 30,
+                width: 17,
+                height: 17,
+                border: `2px solid ${UI_COLORS.border}`,
+                backgroundColor: UI_COLORS.cardBackground,
+                borderRadius: "50%",
+                display: "block",
+                "@media (min-width: 760px)": {
+                  right: 52,
+                },
+              },
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                zIndex: 10,
+                bottom: -35,
+                right: 20,
+                width: 8,
+                height: 8,
+                border: `2px solid ${UI_COLORS.border}`,
+                backgroundColor: UI_COLORS.cardBackground,
+                borderRadius: "50%",
+                display: "block",
+                "@media (min-width: 760px)": {
+                  right: 35,
+                },
+              },
+            }}
+            role="img"
+            aria-label="Buta's thought bubble saying: Pork products FTW!"
+          >
+            <Typography
+              sx={{
+                fontFamily: '"Gochi Hand", cursive',
+                fontSize: "1rem",
+                color: UI_COLORS.secondaryText,
+                "@media (min-width: 760px)": {
+                  fontSize: "1.125rem",
+                },
+              }}
+            >
+              Pork products FTW!
+            </Typography>
+          </Box>
+        )}
+
+        {/* Home page Load More Button */}
+        {pathname === '/' && loadingContext && loadingContext.isHomePage && loadingContext.hasMore ? (
           /* Load More Button inside thought bubble */
           <Box
             sx={{
@@ -205,9 +286,7 @@ export default function Footer() {
               remainingCount={loadingContext.remainingCount}
             />
           </Box>
-        ) : loadingContext &&
-          loadingContext.isHomePage &&
-          loadingContext.allLoaded ? (
+        ) : pathname === '/' && loadingContext && loadingContext.isHomePage && loadingContext.allLoaded ? (
           /* Completion Thought Bubble (all projects loaded) */
           <Box
             sx={{
@@ -291,84 +370,7 @@ export default function Footer() {
               }}
             >Thanks for coming by!</Typography>
           </Box>
-        ) : (
-          /* Normal Thought Bubble (not home page or still loading) */
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 230,
-              right: 145,
-              width: 180,
-              height: 90,
-              padding: "15px 16px",
-              border: `2px solid ${UI_COLORS.border}`,
-              textAlign: "center",
-              color: UI_COLORS.secondaryText,
-              backgroundColor: UI_COLORS.cardBackground,
-              borderRadius: "160px / 80px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 10,
-              pointerEvents: "auto",
-              "@media (min-width: 760px)": {
-                bottom: 165,
-                right: 225,
-                width: 250,
-                height: 125,
-                padding: "25px 20px",
-              },
-              // Small thought bubble circles
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                zIndex: 10,
-                bottom: -25,
-                right: 30,
-                width: 17,
-                height: 17,
-                border: `2px solid ${UI_COLORS.border}`,
-                backgroundColor: UI_COLORS.cardBackground,
-                borderRadius: "50%",
-                display: "block",
-                "@media (min-width: 760px)": {
-                  right: 52,
-                },
-              },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                zIndex: 10,
-                bottom: -35,
-                right: 20,
-                width: 8,
-                height: 8,
-                border: `2px solid ${UI_COLORS.border}`,
-                backgroundColor: UI_COLORS.cardBackground,
-                borderRadius: "50%",
-                display: "block",
-                "@media (min-width: 760px)": {
-                  right: 35,
-                },
-              },
-            }}
-            role="img"
-            aria-label="Buta's thought bubble saying: Pork products FTW!"
-          >
-            <Typography
-              sx={{
-                fontFamily: '"Gochi Hand", cursive',
-                fontSize: "1rem",
-                color: UI_COLORS.secondaryText,
-                "@media (min-width: 760px)": {
-                  fontSize: "1.125rem",
-                },
-              }}
-            >
-              Pork products FTW!
-            </Typography>
-          </Box>
-        )}
+        ) : null}
       </Container>
 
       {/* Footer Container with Sage Green Background */}
