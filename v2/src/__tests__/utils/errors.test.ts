@@ -472,6 +472,10 @@ describe('Error Hierarchy', () => {
      * Test: Video ID validation error handling
      */
     it('handles video ID validation errors', () => {
+      /**
+       *
+       * @param id
+       */
       const validateVideoId = (id: string): void => {
         if (!/^\d{8,11}$/.test(id)) {
           throw new ValidationError(
@@ -489,6 +493,10 @@ describe('Error Hierarchy', () => {
      * Test: Security validation error handling
      */
     it('handles security validation errors', () => {
+      /**
+       *
+       * @param url
+       */
       const validateUrl = (url: string): void => {
         if (url.includes('javascript:')) {
           throw new SecurityError(
@@ -506,6 +514,9 @@ describe('Error Hierarchy', () => {
      * Test: Data loading error handling
      */
     it('handles data loading errors', async () => {
+      /**
+       *
+       */
       const loadProjects = async (): Promise<void> => {
         try {
           throw new Error('API timeout');
@@ -525,6 +536,10 @@ describe('Error Hierarchy', () => {
      * Test: Catch block with error categorization
      */
     it('handles errors by category in catch block', () => {
+      /**
+       *
+       * @param error
+       */
       const handleError = (error: unknown): string => {
         if (error instanceof ValidationError) {
           return 'validation_failed';

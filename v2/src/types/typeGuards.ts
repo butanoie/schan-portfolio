@@ -1,38 +1,21 @@
 import { Project, ProjectImage, ProjectVideo } from './project';
+import { VIDEO_ID_PATTERNS, STRING_CONSTRAINTS, DIMENSION_CONSTRAINTS } from '../constants/app';
 
 /**
  * Regex pattern for valid Vimeo video IDs.
  * Vimeo IDs are 8-11 digits only.
+ *
  * @internal
  */
-const VIMEO_ID_PATTERN = /^\d{8,11}$/;
+const VIMEO_ID_PATTERN = VIDEO_ID_PATTERNS.vimeo;
 
 /**
  * Regex pattern for valid YouTube video IDs.
  * YouTube IDs are 11 alphanumeric characters (including hyphens and underscores).
+ *
  * @internal
  */
-const YOUTUBE_ID_PATTERN = /^[a-zA-Z0-9_-]{11}$/;
-
-/**
- * String length constraints for content validation.
- * Used to prevent extremely large payloads and DoS attacks.
- * @internal
- */
-const STRING_CONSTRAINTS = {
-  MIN_LENGTH: 1,
-  MAX_LENGTH: 10000,
-};
-
-/**
- * Image dimension constraints in pixels.
- * Used to validate reasonable image sizes.
- * @internal
- */
-const DIMENSION_CONSTRAINTS = {
-  MIN: 1,
-  MAX: 10000,
-};
+const YOUTUBE_ID_PATTERN = VIDEO_ID_PATTERNS.youtube;
 
 /**
  * Validates that a string is within acceptable length bounds.

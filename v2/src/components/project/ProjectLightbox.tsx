@@ -18,6 +18,11 @@ import {
 import type { ProjectImage as ProjectImageType } from "../../types";
 import { useSwipe } from "../../hooks";
 import { VisuallyHidden } from "../common/VisuallyHidden";
+import {
+  SWIPE_THRESHOLD,
+  DIALOG_FADE_DURATION,
+  LIGHTBOX_CONTROL_OFFSET,
+} from "../../constants/app";
 
 /**
  * Props for the ProjectLightbox component.
@@ -157,7 +162,7 @@ export function ProjectLightbox({
     handleNext,    // onSwipeLeft
     handlePrevious, // onSwipeRight
     onClose,       // onSwipeDown
-    { maxImages: images.length, threshold: 50 }
+    { maxImages: images.length, threshold: SWIPE_THRESHOLD }
   );
 
   /**
@@ -172,6 +177,10 @@ export function ProjectLightbox({
    * 4. Handlers always have access to latest callback functions
    */
   useEffect(() => {
+    /**
+     *
+     * @param event
+     */
     handleKeyDownRef.current = (event: KeyboardEvent) => {
       // Prevent keyboard navigation if it would interfere with other controls
       if (
@@ -214,6 +223,10 @@ export function ProjectLightbox({
   useEffect(() => {
     if (validIndex === null) return;
 
+    /**
+     *
+     * @param event
+     */
     const handleKeyDown = (event: KeyboardEvent) => {
       handleKeyDownRef.current(event);
     };
@@ -310,7 +323,7 @@ export function ProjectLightbox({
           },
         },
         transition: {
-          timeout: 300,
+          timeout: DIALOG_FADE_DURATION,
         },
       }}
       onTouchStart={onTouchStart}
@@ -324,8 +337,8 @@ export function ProjectLightbox({
         aria-label="Close lightbox"
         sx={{
           position: "fixed",
-          top: 16,
-          right: 16,
+          top: LIGHTBOX_CONTROL_OFFSET,
+          right: LIGHTBOX_CONTROL_OFFSET,
           zIndex: 52,
           color: "#FFFFFF",
           backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -384,7 +397,7 @@ export function ProjectLightbox({
           aria-label="Previous image"
           sx={{
             ...navButtonSx,
-            left: 16,
+            left: LIGHTBOX_CONTROL_OFFSET,
           }}
         >
           <ArrowBackIcon fontSize="large" sx={{pl:1}} />
@@ -398,7 +411,7 @@ export function ProjectLightbox({
           aria-label="Next image"
           sx={{
             ...navButtonSx,
-            right: 16,
+            right: LIGHTBOX_CONTROL_OFFSET,
           }}
         >
           <ArrowForwardIcon fontSize="large" sx={{pl:.5}}  />
@@ -410,7 +423,7 @@ export function ProjectLightbox({
         <Box
           sx={{
             position: "fixed",
-            bottom: 16,
+            bottom: LIGHTBOX_CONTROL_OFFSET,
             left: "50%",
             transform: "translateX(-50%)",
             zIndex: 51,
