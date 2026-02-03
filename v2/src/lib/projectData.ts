@@ -165,6 +165,26 @@ export function getRelatedProjects(projectId: string, limit: number = 3): Projec
 }
 
 /**
+ * Gets the total number of projects in the portfolio.
+ * Dynamically computed from the actual project data, so it automatically
+ * updates when new projects are added to the PROJECTS array.
+ *
+ * **Design Note:** This is a function (not a constant) to ensure the count
+ * always reflects the current project data. If this were a hardcoded constant,
+ * it would become stale whenever projects are added, leading to bugs where
+ * pagination limits don't match actual data.
+ *
+ * @returns Total count of all projects in the portfolio
+ *
+ * @example
+ * const totalProjects = getTotalProjectCount();
+ * // Returns: 18 (or more if new projects are added)
+ */
+export function getTotalProjectCount(): number {
+  return PROJECTS.length;
+}
+
+/**
  * Calculates pagination metadata for UI display.
  *
  * @param total - Total number of items

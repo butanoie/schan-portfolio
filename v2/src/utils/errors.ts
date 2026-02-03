@@ -315,6 +315,13 @@ export class NetworkError extends AppError {
    */
   statusCode?: number;
 
+  /**
+   *
+   * @param message
+   * @param code
+   * @param originalError
+   * @param statusCode
+   */
   constructor(
     message: string,
     code: string = 'NET_001',
