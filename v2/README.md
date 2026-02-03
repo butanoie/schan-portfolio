@@ -2,17 +2,21 @@
 
 Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
 
-## Current Status: Phase 3 - Core Pages Development 🔄
+## Current Status: Phase 3 - Core Pages Development ✅ **COMPLETE**
 
 **Completed:**
 - ✅ Phase 1: Foundation & Setup
 - ✅ Phase 2: Data Migration (18 projects, 239 images, full TypeScript types)
-- ✅ Task 3.3: Colophon/About Page ([PR #3](https://github.com/butanoie/schan-portfolio/pull/3))
+- ✅ Task 3.1: Homepage/Portfolio with project grid, filtering, and load more ([PR #4](https://github.com/butanoie/schan-portfolio/pull/4))
+- ✅ Task 3.2: Resume Page with work experience, skills, and clients ([PR #5](https://github.com/butanoie/schan-portfolio/pull/5))
+- ✅ Task 3.3: Colophon/About Page with design system and mascot story ([PR #3](https://github.com/butanoie/schan-portfolio/pull/3))
+- ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles, and more ([PR #6](https://github.com/butanoie/schan-portfolio/pull/6))
 
-**In Progress:**
-- ⬜ Task 3.1: Homepage (Portfolio)
-- ⬜ Task 3.2: Resume Page
-- ⬜ Task 3.4: Shared Components (Lightbox, etc.)
+**Next: Phase 4 - Enhanced Features**
+- 🔄 Theme switching (light, dark, high contrast modes)
+- 🔄 Advanced animations and transitions
+- 🔄 SEO optimization (metadata, structured data)
+- 🔄 Additional accessibility refinements
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
@@ -97,46 +101,81 @@ All Phase 1 tasks from the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) h
 v2/
 ├── app/                    # Next.js App Router pages
 │   ├── layout.tsx         # Root layout with theme
-│   ├── page.tsx           # Homepage
+│   ├── page.tsx           # Homepage/Portfolio ✅
+│   ├── resume/            # Resume page ✅
+│   │   └── page.tsx
 │   ├── colophon/          # Colophon/About page ✅
 │   │   └── page.tsx
+│   ├── projects/          # Project detail pages ✅
+│   │   └── [id]/
+│   │       └── page.tsx
 │   └── globals.css        # Global styles
 ├── src/
 │   ├── __tests__/        # Test files
 │   │   ├── app/          # Page tests
-│   │   │   └── colophon/ # Colophon page tests ✅
+│   │   │   ├── portfolio/ # Homepage tests ✅
+│   │   │   ├── resume/    # Resume page tests ✅
+│   │   │   └── colophon/  # Colophon page tests ✅
 │   │   ├── components/   # Component tests
-│   │   │   └── colophon/ # Colophon component tests ✅
+│   │   │   ├── portfolio/ # Portfolio components ✅
+│   │   │   ├── gallery/   # Lightbox component tests ✅
+│   │   │   ├── resume/    # Resume component tests ✅
+│   │   │   └── colophon/  # Colophon component tests ✅
 │   │   ├── lib/          # Library tests
 │   │   ├── utils/        # Utility tests
 │   │   └── README.md     # Testing guide
 │   ├── components/        # React components
-│   │   ├── Header.tsx    # Navigation header
-│   │   ├── Footer.tsx    # Site footer (with Buta positioning)
+│   │   ├── Header.tsx    # Navigation header ✅
+│   │   ├── Footer.tsx    # Site footer (with Buta) ✅
 │   │   ├── MainLayout.tsx # Main layout wrapper
 │   │   ├── ThemeProvider.tsx # MUI theme provider
-│   │   └── colophon/     # Colophon components ✅
-│   │       ├── AboutSection.tsx
-│   │       ├── TechnologiesShowcase.tsx
-│   │       ├── DesignPhilosophy.tsx
-│   │       └── ButaStory.tsx
+│   │   ├── portfolio/    # Portfolio page components ✅
+│   │   │   ├── ProjectCard.tsx
+│   │   │   ├── ProjectGrid.tsx
+│   │   │   ├── LoadMoreButton.tsx
+│   │   │   └── VideoEmbed.tsx
+│   │   ├── gallery/      # Gallery components ✅
+│   │   │   ├── Lightbox.tsx
+│   │   │   └── ThoughtBubble.tsx
+│   │   ├── resume/       # Resume components ✅
+│   │   │   ├── ResumeHeader.tsx
+│   │   │   ├── WorkExperience.tsx
+│   │   │   ├── CoreCompetencies.tsx
+│   │   │   ├── ClientList.tsx
+│   │   │   └── ConferenceSpeaker.tsx
+│   │   ├── colophon/     # Colophon components ✅
+│   │   │   ├── AboutSection.tsx
+│   │   │   ├── TechnologiesShowcase.tsx
+│   │   │   ├── DesignPhilosophy.tsx
+│   │   │   └── ButaStory.tsx
+│   │   └── common/       # Common/shared components ✅
+│   │       ├── LoadingSkeleton.tsx
+│   │       ├── LoadingSpinner.tsx
+│   │       └── TagChip.tsx
 │   ├── constants/        # Centralized constants ✅
 │   │   ├── index.ts      # Barrel export
 │   │   └── colors.ts     # Brand & UI colors
 │   ├── data/             # Content data files
-│   │   ├── projects.ts   # Portfolio projects (18)
-│   │   └── colophon.ts   # Colophon page content ✅
+│   │   ├── projects.ts   # Portfolio projects (18) ✅
+│   │   ├── resume.ts     # Resume content ✅
+│   │   └── colophon.ts   # Colophon content ✅
+│   ├── hooks/            # Custom React hooks
+│   │   ├── useSwipe.ts   # Touch gesture detection ✅
+│   │   └── useInView.ts  # Intersection observer ✅
 │   ├── lib/              # Libraries and utilities
-│   │   └── theme.ts      # MUI theme configuration
+│   │   ├── theme.ts      # MUI theme configuration
+│   │   └── sanitize.ts   # HTML sanitization ✅
 │   ├── types/            # TypeScript type definitions
 │   │   ├── project.ts    # Project types
+│   │   ├── resume.ts     # Resume types ✅
 │   │   └── colophon.ts   # Colophon types ✅
 │   ├── utils/            # Utility functions
 │   └── styles/           # Style utilities
 ├── public/               # Static assets
-│   └── images/
-│       ├── gallery/      # Project images (239)
-│       └── buta/         # Buta mascot images ✅
+│   ├── images/
+│   │   ├── gallery/      # Project images (239) ✅
+│   │   └── buta/         # Buta mascot images ✅
+│   └── videos/           # Self-hosted videos (as needed) ✅
 └── .husky/               # Git hooks
 ```
 
@@ -381,12 +420,16 @@ Tests run automatically:
 - **Pre-push:** All tests must pass before pushing
 - **CI Pipeline:** (Coming in Phase 6) Tests run on every PR
 
-### Test Metrics (Current)
+### Test Metrics (Phase 3 Complete)
 
-- **Total Tests:** 50+ (Phase 2 data layer + Phase 3 colophon components)
-- **Test Files:** 15+
-- **Coverage:** 88%+ (data layer) / Growing (components)
+- **Total Tests:** 125+ (Phase 2 data layer + Phase 3 all components)
+- **Test Files:** 25+
+- **Coverage:** 85%+ overall
+- **Components:** 13+ new components with comprehensive tests
 - **Average Test Time:** <50ms per test
+- **Linting:** 0 ESLint violations
+- **Type Safety:** 0 TypeScript errors
+- **Accessibility:** WCAG 2.2 Level AA compliance
 - **Status:** ✅ All passing
 
 ## Accessibility
@@ -408,20 +451,32 @@ This project is committed to WCAG 2.2 Level AA compliance:
 - Secrets like API keys should never be committed
 - See [Security Requirements](../docs/MODERNIZATION_PLAN.md#security-requirements) for details
 
-## Next Steps
+## Project Roadmap
 
-See the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) for the full roadmap:
-- ✅ Phase 1: Foundation & Setup
-- ✅ Phase 2: Data Migration
-- 🔄 Phase 3: Core Pages Development (current - [detailed plan](../docs/PHASE3_DETAILED_PLAN.md))
-  - ✅ Task 3.3: Colophon/About Page
-  - ⬜ Task 3.1: Homepage (Portfolio)
-  - ⬜ Task 3.2: Resume Page
-  - ⬜ Task 3.4: Shared Components
-- ⬜ Phase 4: Enhanced Features
-- ⬜ Phase 5: Performance & Optimization
-- ⬜ Phase 6: Deployment & Migration
-- ⬜ Phase 7: Post-Launch
+See the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) for the complete roadmap:
+
+### Completed Phases
+- ✅ **Phase 1:** Foundation & Setup - Next.js, TypeScript, MUI, testing infrastructure
+- ✅ **Phase 2:** Data Migration - 18 projects, 239 images, full data layer
+- ✅ **Phase 3:** Core Pages Development ([detailed plan](../docs/PHASE3_DETAILED_PLAN.md))
+  - ✅ Task 3.1: Homepage/Portfolio - Project grid with load more, responsive design
+  - ✅ Task 3.2: Resume Page - 5 components, work experience, skills, clients
+  - ✅ Task 3.3: Colophon/About Page - Design system, technologies, Buta story
+  - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles
+
+### Upcoming Phases
+- ⬜ **Phase 4:** Enhanced Features - Theme switching, animations, SEO optimization
+- ⬜ **Phase 5:** Performance & Optimization - Image optimization, SSG, CDN
+- ⬜ **Phase 6:** Deployment & Migration - Vercel/Netlify, CI/CD, production launch
+- ⬜ **Phase 7:** Post-Launch - Monitoring, analytics, ongoing enhancements
+
+### Key Achievements in Phase 3
+- **13+ new components** built with full TypeScript types
+- **125+ unit tests** with 85%+ coverage
+- **WCAG 2.2 Level AA** compliance on all pages
+- **Responsive design** across mobile, tablet, and desktop
+- **Full accessibility** with keyboard navigation and screen reader support
+- **Zero lint violations** and **zero TypeScript errors**
 
 ## Learn More
 
