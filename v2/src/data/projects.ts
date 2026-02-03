@@ -425,7 +425,7 @@ export const PROJECTS: readonly Project[] = [
     desc:
       '<p>Microsoft approached Habanero to create a membership application that provided a fresh user experience and demonstrated the use of Windows Live services for the development community as part of the <a target="_blank" href="http://wlquickapps.codeplex.com/wikipage?title=Contoso%20Riders&referringTitle=Home&ProjectName=wlquickapps">Windows Live Quick Applications</a> project on CodePlex.</p>' +
       '<p>The result was Contoso Riders, which leveraged the following Windows Live services:</p>' +
-      '<div class="row"><div class="six columns"><ul class="disc"><li>Windows Live ID Web Authentication</li><li>Windows Live Presence</li><li>Windows Live Messenger IM Control</li><li>Windows Live Spaces</li></ul></div><div class="six columns"><ul class="disc"><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul></div></div>' +
+      '<ul class="disc"><li>Windows Live ID Web Authentication</li><li>Windows Live Presence</li><li>Windows Live Messenger IM Control</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul>' +
       '<p>I was also asked to present Contoso Riders at Microsoft\'s EnergizeIT conference.</p>',
     circa: 'Spring 2008',
     tags: ['Windows Live Services', 'Silverlight', 'Bing Maps', 'ASP.Net', 'C#', 'ASP.Net AJAX'],

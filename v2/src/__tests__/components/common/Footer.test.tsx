@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Footer from '../../components/Footer';
+import Footer from '../../../components/common/Footer';
 
 /**
  * Mock Next.js Image component for testing.

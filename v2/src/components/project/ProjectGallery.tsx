@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Box } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { ProjectImage } from "./ProjectImage";
 import { ProjectLightbox } from "./ProjectLightbox";
+import { useLightbox } from "../../hooks";
 import type { ProjectImage as ProjectImageType } from "../../types";
 
 /**
@@ -68,43 +68,22 @@ export function ProjectGallery({
   fourColumns = false,
   sx,
 }: ProjectGalleryProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
   /**
-   * Opens the lightbox at the specified image index.
-   *
-   * @param index - Index of the image to display
+   * Manage lightbox state and image navigation.
+   * The hook provides:
+   * - selectedIndex: currently displayed image index (null when closed)
+   * - openLightbox: function to open lightbox at specific index
+   * - closeLightbox: function to close lightbox
+   * - handlePreviousImage: navigate to previous image with wrap-around
+   * - handleNextImage: navigate to next image with wrap-around
    */
-  const openLightbox = (index: number) => {
-    setSelectedIndex(index);
-  };
-
-  /**
-   * Closes the lightbox modal.
-   */
-  const closeLightbox = () => {
-    setSelectedIndex(null);
-  };
-
-  /**
-   * Navigates to the previous image with circular wrap-around.
-   * If at the first image, wraps to the last image.
-   */
-  const handlePreviousImage = () => {
-    setSelectedIndex((prev) =>
-      prev === null || prev === 0 ? images.length - 1 : prev - 1
-    );
-  };
-
-  /**
-   * Navigates to the next image with circular wrap-around.
-   * If at the last image, wraps to the first image.
-   */
-  const handleNextImage = () => {
-    setSelectedIndex((prev) =>
-      prev === null || prev === images.length - 1 ? 0 : prev + 1
-    );
-  };
+  const {
+    selectedIndex,
+    openLightbox,
+    closeLightbox,
+    handlePreviousImage,
+    handleNextImage,
+  } = useLightbox(images.length);
 
   return (
     <Box
@@ -135,9 +114,11 @@ export function ProjectGallery({
             sx={{
               borderRadius: 2,
               boxShadow: 2,
+              opacity: 0.4,
               transition: "box-shadow 0.2s ease-in-out",
               "&:hover": {
                 boxShadow: 4,
+                opacity: 1,
               },
             }}
           />
