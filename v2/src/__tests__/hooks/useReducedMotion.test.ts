@@ -7,7 +7,7 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
  * This allows us to simulate different motion preferences and
  * trigger changes to test the hook's reactivity.
  */
-class MockMediaQueryList implements Partial<MediaQueryList> {
+class MockMediaQueryList {
   matches: boolean;
   listeners: Set<(event: MediaQueryListEvent) => void> = new Set();
 

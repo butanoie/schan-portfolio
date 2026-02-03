@@ -40,7 +40,7 @@ describe('LoadMoreButton', () => {
   });
 
   describe('Content', () => {
-    it('should display remaining count in button text', () => {
+    it('should display "Load more projects" button text', () => {
       render(
         <LoadMoreButton
           onClick={mockOnClick}
@@ -49,10 +49,10 @@ describe('LoadMoreButton', () => {
           remainingCount={13}
         />
       );
-      expect(screen.getByText('Load 13 more')).toBeInTheDocument();
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
     });
 
-    it('should handle different remaining counts', () => {
+    it('should display consistent button text regardless of remaining count', () => {
       const { rerender } = render(
         <LoadMoreButton
           onClick={mockOnClick}
@@ -61,7 +61,7 @@ describe('LoadMoreButton', () => {
           remainingCount={5}
         />
       );
-      expect(screen.getByText('Load 5 more')).toBeInTheDocument();
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
 
       rerender(
         <LoadMoreButton
@@ -71,10 +71,10 @@ describe('LoadMoreButton', () => {
           remainingCount={1}
         />
       );
-      expect(screen.getByText('Load 1 more')).toBeInTheDocument();
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
     });
 
-    it('should show "Load more" when remainingCount is 0', () => {
+    it('should show "Load more projects" even when remainingCount is 0', () => {
       render(
         <LoadMoreButton
           onClick={mockOnClick}
@@ -83,7 +83,19 @@ describe('LoadMoreButton', () => {
           remainingCount={0}
         />
       );
-      expect(screen.getByText('Load more')).toBeInTheDocument();
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
+    });
+
+    it('should display "Loading projects..." when loading', () => {
+      render(
+        <LoadMoreButton
+          onClick={mockOnClick}
+          loading={true}
+          disabled={false}
+          remainingCount={13}
+        />
+      );
+      expect(screen.getByText('Loading projects...')).toBeInTheDocument();
     });
   });
 
@@ -141,7 +153,7 @@ describe('LoadMoreButton', () => {
       expect(spinner).toBeInTheDocument();
     });
 
-    it('should not show text when loading', () => {
+    it('should show loading text when loading', () => {
       render(
         <LoadMoreButton
           onClick={mockOnClick}
@@ -150,7 +162,7 @@ describe('LoadMoreButton', () => {
           remainingCount={13}
         />
       );
-      expect(screen.queryByText('Load 13 more')).not.toBeInTheDocument();
+      expect(screen.getByText('Loading projects...')).toBeInTheDocument();
     });
   });
 
@@ -231,6 +243,19 @@ describe('LoadMoreButton', () => {
       expect(button).toHaveAttribute('aria-label', 'All projects loaded');
     });
 
+    it('should have aria-label when loading', () => {
+      render(
+        <LoadMoreButton
+          onClick={mockOnClick}
+          loading={true}
+          disabled={false}
+          remainingCount={13}
+        />
+      );
+      const button = screen.getByRole('button');
+      expect(button).toHaveAttribute('aria-label', 'Loading more projects');
+    });
+
     it('should have aria-busy when loading', () => {
       render(
         <LoadMoreButton
@@ -301,7 +326,7 @@ describe('LoadMoreButton', () => {
           remainingCount={999}
         />
       );
-      expect(screen.getByText('Load 999 more')).toBeInTheDocument();
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
     });
 
     it('should render correctly when transitioning from loading to loaded', () => {
@@ -313,7 +338,7 @@ describe('LoadMoreButton', () => {
           remainingCount={13}
         />
       );
-      expect(screen.queryByText('Load 13 more')).not.toBeInTheDocument();
+      expect(screen.getByText('Loading projects...')).toBeInTheDocument();
 
       rerender(
         <LoadMoreButton
@@ -323,7 +348,22 @@ describe('LoadMoreButton', () => {
           remainingCount={8}
         />
       );
-      expect(screen.getByText('Load 8 more')).toBeInTheDocument();
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
+    });
+
+    it('should preserve remaining count in aria-label even with generic button text', () => {
+      render(
+        <LoadMoreButton
+          onClick={mockOnClick}
+          loading={false}
+          disabled={false}
+          remainingCount={42}
+        />
+      );
+      const button = screen.getByRole('button');
+      // Button text is generic but aria-label has the count for screen readers
+      expect(screen.getByText('Load more projects')).toBeInTheDocument();
+      expect(button).toHaveAttribute('aria-label', 'Load 42 more projects');
     });
   });
 });
