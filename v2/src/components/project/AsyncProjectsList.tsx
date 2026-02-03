@@ -110,14 +110,13 @@ interface AsyncProjectsListProps {
  * ```
  *
  * @param props - Component props
- * @returns Component with progressive loading, skeletons, and context provider
+ * @param props.initialProjects - The initial projects to display (typically from server)
+ * @param props.pageSize - Number of projects to load per batch (default: 5)
+ * @param props.isHomePage - Whether this is the home page variant (default: false)
+ * @returns A JSX element rendering the async projects list with progressive loading
  *
  * @example
- * <AsyncProjectsList
- *   initialProjects={serverProjects}
- *   pageSize={5}
- *   isHomePage={true}
- * />
+ * <AsyncProjectsList initialProjects={serverProjects} pageSize={5} isHomePage={true} />
  */
 export function AsyncProjectsList({
   initialProjects,

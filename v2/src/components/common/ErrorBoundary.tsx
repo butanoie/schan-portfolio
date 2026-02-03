@@ -48,6 +48,12 @@ export interface ErrorBoundaryProps {
   onErrorRecovery?: (error: Error) => boolean;
 }
 
+/**
+ * Internal state for the ErrorBoundary component.
+ *
+ * Tracks error state and provides information about caught errors
+ * for display and debugging purposes.
+ */
 interface ErrorBoundaryState {
   /** Whether an error has been caught */
   hasError: boolean;
@@ -78,6 +84,11 @@ interface ErrorBoundaryState {
  * - Errors thrown in the error boundary itself
  */
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  /**
+   * Creates a new ErrorBoundary instance.
+   *
+   * @param props - Component props containing children and optional callbacks
+   */
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
@@ -144,8 +155,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     });
   };
 
+  /**
+   * Renders the component or error fallback UI.
+   *
+   * @returns Child components if no error, otherwise renders fallback error UI
+   */
   render(): ReactNode {
-    const { hasError, error, errorInfo } = this.state;
+    const { hasError, error } = this.state;
     const { children, fallback } = this.props;
 
     // If error occurred, show fallback or default error UI
@@ -166,8 +182,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
  * - Retry button to recover from error
  * - Accessible focus management
  *
- * @param error - The error that was caught
- * @param onRetry - Callback to attempt recovery
+ * @param props - Component props
+ * @param props.error - The error that was caught
+ * @param props.onRetry - Callback to attempt recovery
+ * @returns A JSX element displaying the error UI
  */
 function DefaultErrorFallback({
   error,

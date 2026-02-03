@@ -178,7 +178,7 @@ export function useProjectLoader(
     } finally {
       setLoading(false);
     }
-  }, [allLoaded, pageSize]);
+  }, [allLoaded, pageSize, SIMULATED_LOAD_DELAY]);
 
   return {
     projects,

@@ -16,8 +16,8 @@ function createTouchEvent(type: 'touchstart' | 'touchend', clientX: number, clie
   const changedTouches = [{ clientX, clientY }];
 
   return {
-    touches: touches as any,
-    changedTouches: changedTouches as any,
+    touches: touches as unknown as React.TouchList,
+    changedTouches: changedTouches as unknown as React.TouchList,
   } as React.TouchEvent;
 }
 
@@ -33,13 +33,18 @@ describe('useSwipe', () => {
   });
 
   /**
-   * Helper to cast mock functions to callbacks for the hook.
+   * Helper function to cast mock functions to callbacks for the hook.
    * This allows using vi.fn() mocks while maintaining type safety.
+   *
+   * @param left - Mock function for left swipe callback
+   * @param right - Mock function for right swipe callback
+   * @param down - Mock function for down swipe callback
+   * @returns Object containing cast callback functions with proper typing
    */
   const castToCallbacks = (left: ReturnType<typeof vi.fn>, right: ReturnType<typeof vi.fn>, down: ReturnType<typeof vi.fn>) => ({
-    left: left as () => void,
-    right: right as () => void,
-    down: down as () => void,
+    left: left as unknown as () => void,
+    right: right as unknown as () => void,
+    down: down as unknown as () => void,
   });
 
   describe('Basic swipe detection', () => {
@@ -50,11 +55,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -68,11 +73,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 50, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 50, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeRight).toHaveBeenCalledOnce();
@@ -86,11 +91,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 150) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 150) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -106,11 +111,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 90, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 90, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -124,22 +129,22 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
 
       onSwipeLeft.mockClear();
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', -10, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', -10, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -152,11 +157,11 @@ describe('useSwipe', () => {
 
       // Test at exactly threshold distance (50px)
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -170,11 +175,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 160) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 40, 160) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -187,11 +192,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 90) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 40, 90) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -204,11 +209,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 90, 160) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 90, 160) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -223,11 +228,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -240,11 +245,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -257,11 +262,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -273,11 +278,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 160) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 160) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -291,32 +296,32 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 40, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
 
       onSwipeLeft.mockClear();
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 40, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 40, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeRight).toHaveBeenCalledOnce();
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 160) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 160) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -328,7 +333,7 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -342,11 +347,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 40) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 40) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeDown).not.toHaveBeenCalled();
@@ -360,11 +365,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', -500, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', -500, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -376,11 +381,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -394,17 +399,17 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       onSwipeLeft.mockClear();
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 40, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -418,11 +423,11 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -442,21 +447,21 @@ describe('useSwipe', () => {
       });
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 60, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 60, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', -20, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', -20, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -472,11 +477,11 @@ describe('useSwipe', () => {
       });
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -516,22 +521,22 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 140, 300) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 140, 300) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
 
       onSwipeLeft.mockClear();
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 140, 300) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 140, 300) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 200, 300) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 200, 300) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeRight).toHaveBeenCalledOnce();
@@ -543,21 +548,21 @@ describe('useSwipe', () => {
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 140, 300) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 140, 300) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as any);
+        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as unknown as React.TouchEvent);
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 200, 400) as any);
+        result.current.onTouchEnd(createTouchEvent('touchend', 200, 400) as unknown as React.TouchEvent);
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();

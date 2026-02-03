@@ -1,8 +1,10 @@
 'use client';
 
 import { Button, Box, CircularProgress } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
+import type { SxProps } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { NAV_COLORS, BRAND_COLORS, THEME_COLORS } from '../../constants';
+import { NAV_COLORS, BRAND_COLORS } from '../../constants';
 import { useReducedMotion } from '../../hooks';
 
 /**
@@ -29,7 +31,7 @@ interface LoadMoreButtonProps {
   remainingCount: number;
 
   /** Optional additional MUI sx styles */
-  sx?: any;
+  sx?: SxProps<Theme>;
 }
 
 /**
@@ -76,25 +78,20 @@ interface LoadMoreButtonProps {
  * ```
  *
  * @param props - Component props
- * @returns A button with loading indicator displayed inside a thought bubble container
+ * @param props.onClick - Callback function triggered when the button is clicked
+ * @param props.loading - Whether the button is currently in a loading state
+ * @param props.disabled - Whether the button should be disabled
+ * @param props.remainingCount - Number of projects remaining to load
+ * @param props.sx - Optional MUI sx styles to merge with button styling
+ * @returns A button component with loading indicator and expand icon
  *
  * @example
  * // Idle state showing remaining count
- * <LoadMoreButton
- *   onClick={handleLoadMore}
- *   loading={false}
- *   disabled={false}
- *   remainingCount={13}
- * />
+ * <LoadMoreButton onClick={handleLoadMore} loading={false} disabled={false} remainingCount={13} />
  *
  * @example
  * // Loading state with spinner
- * <LoadMoreButton
- *   onClick={handleLoadMore}
- *   loading={true}
- *   disabled={true}
- *   remainingCount={13}
- * />
+ * <LoadMoreButton onClick={handleLoadMore} loading={true} disabled={true} remainingCount={13} />
  */
 export function LoadMoreButton({
   onClick,

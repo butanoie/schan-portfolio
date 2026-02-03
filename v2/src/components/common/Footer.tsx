@@ -42,8 +42,9 @@ const CURRENT_YEAR = new Date().getFullYear();
  * A reusable thought bubble component positioned above the Buta mascot.
  * Provides consistent styling and positioning for all bubble variations.
  *
- * @param children - Content to display inside the bubble
- * @param ariaLabel - Accessibility label for the bubble
+ * @param props - Component props
+ * @param props.children - Content to display inside the bubble
+ * @param props.ariaLabel - Accessibility label for the bubble
  * @returns A styled thought bubble container
  */
 function ThoughtBubble({ children, ariaLabel}: ThoughtBubbleProps) {

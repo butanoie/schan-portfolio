@@ -2,7 +2,6 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { useProjectLoader } from '../../hooks/useProjectLoader';
 import { PROJECTS } from '../../data/projects';
-import type { Project } from '../../types';
 
 /**
  * Tests for the useProjectLoader hook.

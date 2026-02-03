@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Box, Container } from "@mui/material";
 import { useState, useMemo } from "react";
 import Header from "./Header";
@@ -7,9 +8,30 @@ import Footer from "./Footer";
 import { ProjectLoadingProvider } from "../../contexts/ProjectLoadingContext";
 
 /**
- * Main layout component that provides the overall page structure.
- * Includes header, footer, main content area, and a skip-to-content link for keyboard navigation accessibility.
+ * Represents the loading state for projects in the async list.
  *
+ * This interface is used to communicate project loading state from AsyncProjectsList
+ * to Footer through the MainLayout component via Context.
+ */
+interface ProjectLoadingState {
+  /** Whether the component is rendering on the home page */
+  isHomePage: boolean;
+  /** Whether projects are currently being loaded */
+  loading: boolean;
+  /** Whether there are more projects available to load */
+  hasMore: boolean;
+  /** Whether all projects have been loaded */
+  allLoaded: boolean;
+  /** Number of projects remaining to be loaded */
+  remainingCount: number;
+  /** Callback function to trigger loading more projects */
+  onLoadMore: () => void | Promise<void>;
+}
+
+/**
+ * Main layout component that provides the overall page structure.
+ *
+ * Includes header, footer, main content area, and a skip-to-content link for keyboard navigation accessibility.
  * This component also provides the ProjectLoadingContext that bridges project loading state
  * from AsyncProjectsList (home page only) to Footer (all pages). The context state is managed
  * here so both the main content and footer can access the same loading state.
@@ -22,9 +44,9 @@ export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): React.JSX.Element {
   // Project loading context state - shared between AsyncProjectsList and Footer
-  const [projectLoadingState, setProjectLoadingState] = useState<any>(null);
+  const [projectLoadingState, setProjectLoadingState] = useState<ProjectLoadingState | null>(null);
 
   // Provide the context if state is set (i.e., on home page with AsyncProjectsList)
   // Otherwise Footer will render normally without Load More button
@@ -112,16 +134,16 @@ export default function MainLayout({
  *
  * @param props - Component props
  * @param props.children - The page children
- * @param props.onStateChange - Callback when loading state changes
- * @returns The wrapped children
+ * @param props.onStateChange - Callback invoked when loading state changes
+ * @returns The wrapped children with loading state bridge provider
  */
 function LoadingStateBridge({
   children,
   onStateChange,
 }: {
   children: React.ReactNode;
-  onStateChange: (state: any) => void;
-}) {
+  onStateChange: (state: ProjectLoadingState | null) => void;
+}): React.ReactNode {
   const pathname = usePathname();
 
   /**
@@ -155,11 +177,19 @@ import { usePathname } from "next/navigation";
  * @internal Used internally for bridging component hierarchy
  */
 export const ProjectLoadingStateBridgeContext = createContext<{
-  onStateChange: (state: any) => void;
+  onStateChange: (state: ProjectLoadingState | null) => void;
 } | null>(null);
 
 /**
  * Provider for the loading state bridge.
+ *
+ * Wraps components and provides a context that allows child components to report
+ * their loading state to the parent MainLayout through the ProjectLoadingStateBridgeContext.
+ *
+ * @param props - Provider props
+ * @param props.children - Child components to wrap
+ * @param props.onStateChange - Callback invoked when child components report state changes
+ * @returns The context provider wrapping the children
  *
  * @internal Used internally by MainLayout
  */
@@ -168,8 +198,8 @@ function ProjectLoadingStateBridgeProvider({
   onStateChange,
 }: {
   children: ReactNode;
-  onStateChange: (state: any) => void;
-}) {
+  onStateChange: (state: ProjectLoadingState | null) => void;
+}): React.ReactElement {
   return (
     <ProjectLoadingStateBridgeContext.Provider value={{ onStateChange }}>
       {children}
@@ -183,18 +213,18 @@ function ProjectLoadingStateBridgeProvider({
  * When AsyncProjectsList mounts on the home page, it calls this hook to provide
  * its loading context to the parent MainLayout, which makes it available to Footer.
  *
+ * This hook memoizes the state to prevent unnecessary updates and notifies the bridge
+ * context of any changes to the loading state.
+ *
  * @param state - The loading state from AsyncProjectsList
+ * @returns void
+ *
  * @internal Used internally by AsyncProjectsList
  */
-export function useReportProjectLoadingState(state: any) {
+export function useReportProjectLoadingState(state: ProjectLoadingState | null): void {
   const bridge = useContext(ProjectLoadingStateBridgeContext);
   const memoizedState = useMemo(() => state, [
-    state?.isHomePage,
-    state?.loading,
-    state?.hasMore,
-    state?.allLoaded,
-    state?.remainingCount,
-    state?.onLoadMore,
+    state,
   ]);
 
   if (bridge) {

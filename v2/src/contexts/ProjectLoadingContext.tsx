@@ -88,10 +88,13 @@ interface ProjectLoadingProviderProps {
  * - `remainingCount`: Number remaining to load
  * - `onLoadMore`: Function to trigger next batch load
  *
- * @param props - Provider props with value and children
- * @returns A provider component wrapping children
+ * @param {ProjectLoadingProviderProps} props - Provider props with value and children
+ * @param {ProjectLoadingContextValue} props.value - The loading state and callbacks to provide to children
+ * @param {ReactNode} props.children - React components that can access this context
+ * @returns {JSX.Element} A provider component wrapping children
  *
  * @example
+ * ```typescript
  * const [projects, setProjects] = useState(initialProjects);
  *
  * <ProjectLoadingProvider value={{
@@ -104,6 +107,7 @@ interface ProjectLoadingProviderProps {
  * }}>
  *   {children}
  * </ProjectLoadingProvider>
+ * ```
  */
 export function ProjectLoadingProvider({
   value,
