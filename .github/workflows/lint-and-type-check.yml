@@ -25,10 +25,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        working-directory: v2
         run: npm ci
 
       - name: Run ESLint
+        working-directory: v2
         run: npm run lint
 
       - name: Run Type Check
+        working-directory: v2
         run: npm run type-check
