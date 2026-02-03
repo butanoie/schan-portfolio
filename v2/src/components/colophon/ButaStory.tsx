@@ -2,7 +2,7 @@
 
 import { Box, Typography, Paper } from "@mui/material";
 import Image from "next/image";
-import DOMPurify from "isomorphic-dompurify";
+import { sanitizeDescriptionHtml } from "../../utils/sanitization";
 import type { ButaStoryContent } from "../../types/colophon";
 
 /**
@@ -93,10 +93,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
               },
             }}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(paragraph, {
-                ALLOWED_TAGS: ["a", "strong", "em", "br"],
-                ALLOWED_ATTR: ["href", "target", "rel"],
-              }),
+              __html: sanitizeDescriptionHtml(paragraph),
             }}
           />
         ))}
