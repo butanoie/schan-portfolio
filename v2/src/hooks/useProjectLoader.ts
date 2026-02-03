@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { getProjects } from '../lib/projectData';
+import { getProjects, getTotalProjectCount } from '../lib/projectData';
+import { LOADING_DELAY } from '../constants/app';
 import type { Project } from '../types';
 
 /**
@@ -45,28 +46,53 @@ interface UseProjectLoaderReturn {
  * - Calculates `remainingCount` for UI feedback
  * - Handles errors gracefully without losing loaded projects
  *
+ * **Design Note - Async Wrapper for Synchronous Function:**
+ * The `loadMore` function is async, but the underlying `getProjects()` is synchronous.
+ * This design provides several benefits:
+ *
+ * 1. **Future API Migration Path:** When transitioning from static data to a real API,
+ * no hook interface changes are needed. The async structure is already in place.
+ *
+ * 2. **Simulated Network Delay:** The SIMULATED_LOAD_DELAY allows testing loading states
+ * and skeleton UI animations without making real network requests. Set the delay to 0
+ * in production for instant loading.
+ *
+ * 3. **Consistent Async Pattern:** Users of this hook expect async operations. Even though
+ * the data is currently synchronous, wrapping it in async/await maintains consistency
+ * with real async operations they may implement later.
+ *
+ * 4. **Loading State Management:** The async wrapper naturally allows `setLoading(true)`
+ * at the start and `setLoading(false)` after the delay, enabling proper skeleton
+ * placeholder display.
+ *
+ * **Implementation Detail:**
+ * - `getProjects()` is called after `await Promise.resolve(SIMULATED_LOAD_DELAY)`
+ * - No actual async work happens in the Promise (it's just a delay)
+ * - Function returns synchronously retrieved data
+ * - This pattern prepares the code for real async operations (real API calls)
+ *
  * **Usage Example:**
  * ```typescript
  * function ProjectsList({ initialProjects }: { initialProjects: Project[] }) {
- *   const { projects, loading, error, loadMore, hasMore, remainingCount } =
- *     useProjectLoader(initialProjects, 5);
+ * const { projects, loading, error, loadMore, hasMore, remainingCount } =
+ * useProjectLoader(initialProjects, 5);
  *
- *   return (
- *     <>
- *       <div>
- *         {projects.map(project => (
- *           <ProjectCard key={project.id} project={project} />
- *         ))}
- *       </div>
- *       {loading && <div>Loading...</div>}
- *       {error && <div>Error: {error.message}</div>}
- *       {hasMore && (
- *         <button onClick={loadMore}>
- *           Load {remainingCount} more
- *         </button>
- *       )}
- *     </>
- *   );
+ * return (
+ * <>
+ * <div>
+ * {projects.map(project => (
+ * <ProjectCard key={project.id} project={project} />
+ * ))}
+ * </div>
+ * {loading && <div>Loading...</div>}
+ * {error && <div>Error: {error.message}</div>}
+ * {hasMore && (
+ * <button onClick={loadMore}>
+ * Load {remainingCount} more
+ * </button>
+ * )}
+ * </>
+ * );
  * }
  * ```
  *
@@ -79,6 +105,19 @@ interface UseProjectLoaderReturn {
  * This hook is safe to use in server components that hydrate to client
  * components. The initial projects from the server are passed directly
  * without refetching.
+ *
+ * **Future Migration to Real API:**
+ * To migrate to a real API, simply replace the `getProjects()` call with
+ * an actual API fetch:
+ * ```typescript
+ * // Current code (stays the same)
+ * await new Promise((resolve) => setTimeout(resolve, SIMULATED_LOAD_DELAY));
+ * const response = getProjects({ page: nextPage, pageSize });
+ *
+ * // Future API version (same structure)
+ * const response = await fetch(`/api/projects?page=${nextPage}&pageSize=${pageSize}`)
+ *   .then(res => res.json());
+ * ```
  *
  * @param initialProjects - Projects already loaded (typically from server)
  * @param pageSize - Number of projects to load per batch (default: 5)
@@ -102,25 +141,25 @@ export function useProjectLoader(
   // Track current page - start from page 2 since page 1 is already loaded (initial 5)
   const currentPageRef = useRef<number>(1);
 
-  // Total project count (known constant - 18 projects total)
-  const TOTAL_PROJECTS = 18;
-
   // Simulated loading delay (in milliseconds) for debugging skeleton visibility
   // Set to 0 for production performance, increase for testing skeleton animations
   // In tests, the delay is automatically set to 0 for speed
   const SIMULATED_LOAD_DELAY =
     typeof window === 'undefined' || process.env.NODE_ENV === 'test'
       ? 0 // Instant loading in tests and SSR
-      : parseInt(process.env.NEXT_PUBLIC_LOAD_DELAY || '1500', 10);
+      : parseInt(process.env.NEXT_PUBLIC_LOAD_DELAY || LOADING_DELAY.toString(), 10);
+
+  // Get total project count from actual data (dynamic, not hardcoded)
+  const totalProjects = getTotalProjectCount();
 
   // Calculate if more projects are available
-  const hasMore = projects.length < TOTAL_PROJECTS;
+  const hasMore = projects.length < totalProjects;
 
   // Calculate remaining projects not yet loaded
-  const remainingCount = TOTAL_PROJECTS - projects.length;
+  const remainingCount = totalProjects - projects.length;
 
   // Check if all projects have been loaded
-  const allLoaded = projects.length >= TOTAL_PROJECTS;
+  const allLoaded = projects.length >= totalProjects;
 
   /**
    * Load the next batch of projects.

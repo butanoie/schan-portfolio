@@ -4,6 +4,9 @@ import {
   isProjectVideo,
   isProject,
   validateProjects,
+  isValidString,
+  isValidUrlPath,
+  isValidDimension,
 } from '../../types/typeGuards';
 import type { Project, ProjectImage, ProjectVideo } from '../../types';
 
@@ -228,6 +231,405 @@ describe('Type Guards', () => {
 
     it('should return true for empty array', () => {
       expect(validateProjects([])).toBe(true);
+    });
+  });
+
+  describe('isValidString', () => {
+    it('should accept valid strings', () => {
+      expect(isValidString('Hello')).toBe(true);
+      expect(isValidString('a')).toBe(true);
+      expect(isValidString('A'.repeat(10000))).toBe(true);
+    });
+
+    it('should reject empty strings', () => {
+      expect(isValidString('')).toBe(false);
+    });
+
+    it('should reject strings exceeding max length', () => {
+      expect(isValidString('A'.repeat(10001))).toBe(false);
+    });
+
+    it('should respect custom length constraints', () => {
+      expect(isValidString('ab', 1, 5)).toBe(true);
+      expect(isValidString('a', 2, 5)).toBe(false); // Too short
+      expect(isValidString('abcdef', 1, 5)).toBe(false); // Too long
+    });
+
+    it('should throw TypeError for non-string input', () => {
+      expect(() => isValidString(null as unknown as string)).toThrow(TypeError);
+      expect(() => isValidString(undefined as unknown as string)).toThrow(TypeError);
+      expect(() => isValidString(123 as unknown as string)).toThrow(TypeError);
+    });
+  });
+
+  describe('isValidUrlPath', () => {
+    it('should accept valid absolute paths', () => {
+      expect(isValidUrlPath('/images/photo.jpg')).toBe(true);
+      expect(isValidUrlPath('/path/to/image.png')).toBe(true);
+    });
+
+    it('should accept valid relative paths', () => {
+      expect(isValidUrlPath('./images/photo.jpg')).toBe(true);
+      expect(isValidUrlPath('images/photo.jpg')).toBe(true);
+    });
+
+    it('should accept valid HTTP/HTTPS URLs', () => {
+      expect(isValidUrlPath('https://example.com/image.jpg')).toBe(true);
+      expect(isValidUrlPath('http://example.com/photo.png')).toBe(true);
+    });
+
+    it('should reject path traversal attempts', () => {
+      expect(isValidUrlPath('../../etc/passwd')).toBe(false);
+      expect(isValidUrlPath('../../../evil')).toBe(false);
+      expect(isValidUrlPath('/path/../../etc')).toBe(false);
+    });
+
+    it('should reject double slashes', () => {
+      expect(isValidUrlPath('//example.com')).toBe(false);
+      expect(isValidUrlPath('/path//to//file')).toBe(false);
+    });
+
+    it('should reject command injection attempts', () => {
+      expect(isValidUrlPath('/path;command')).toBe(false);
+      expect(isValidUrlPath('/path|command')).toBe(false);
+      expect(isValidUrlPath('/path&command')).toBe(false);
+      expect(isValidUrlPath('/path`command`')).toBe(false);
+    });
+
+    it('should reject HTML/XML injection', () => {
+      expect(isValidUrlPath('/path<script>')).toBe(false);
+      expect(isValidUrlPath('/path>alert')).toBe(false);
+    });
+
+    it('should throw TypeError for non-string input', () => {
+      expect(() => isValidUrlPath(null as unknown as string)).toThrow(TypeError);
+      expect(() => isValidUrlPath(undefined as unknown as string)).toThrow(TypeError);
+      expect(() => isValidUrlPath(123 as unknown as string)).toThrow(TypeError);
+    });
+  });
+
+  describe('isValidDimension', () => {
+    it('should accept valid positive dimensions', () => {
+      expect(isValidDimension(1)).toBe(true);
+      expect(isValidDimension(100)).toBe(true);
+      expect(isValidDimension(10000)).toBe(true);
+      expect(isValidDimension(800)).toBe(true);
+    });
+
+    it('should reject zero', () => {
+      expect(isValidDimension(0)).toBe(false);
+    });
+
+    it('should reject negative numbers', () => {
+      expect(isValidDimension(-1)).toBe(false);
+      expect(isValidDimension(-100)).toBe(false);
+    });
+
+    it('should reject floating point numbers', () => {
+      expect(isValidDimension(100.5)).toBe(false);
+      expect(isValidDimension(800.1)).toBe(false);
+    });
+
+    it('should reject dimensions exceeding max', () => {
+      expect(isValidDimension(10001)).toBe(false);
+      expect(isValidDimension(999999)).toBe(false);
+    });
+
+    it('should reject Infinity', () => {
+      expect(isValidDimension(Infinity)).toBe(false);
+      expect(isValidDimension(-Infinity)).toBe(false);
+    });
+
+    it('should reject NaN', () => {
+      expect(isValidDimension(NaN)).toBe(false);
+    });
+
+    it('should respect custom constraints', () => {
+      expect(isValidDimension(50, 10, 100)).toBe(true);
+      expect(isValidDimension(5, 10, 100)).toBe(false); // Too small
+      expect(isValidDimension(150, 10, 100)).toBe(false); // Too large
+    });
+  });
+
+  describe('Enhanced Security Validation', () => {
+    describe('isProjectImage with security validation', () => {
+      it('should reject image with path traversal in URL', () => {
+        const maliciousImage = {
+          url: '../../etc/passwd',
+          tnUrl: '/images/test_tn.jpg',
+          caption: 'Malicious',
+        };
+
+        expect(isProjectImage(maliciousImage)).toBe(false);
+      });
+
+      it('should reject image with command injection in URL', () => {
+        const maliciousImage = {
+          url: '/images/test.jpg;rm -rf /',
+          tnUrl: '/images/test_tn.jpg',
+          caption: 'Malicious',
+        };
+
+        expect(isProjectImage(maliciousImage)).toBe(false);
+      });
+
+      it('should reject image with extremely long caption', () => {
+        const oversizeImage = {
+          url: '/images/test.jpg',
+          tnUrl: '/images/test_tn.jpg',
+          caption: 'A'.repeat(10001),
+        };
+
+        expect(isProjectImage(oversizeImage)).toBe(false);
+      });
+
+      it('should reject image with empty caption', () => {
+        const emptyImage = {
+          url: '/images/test.jpg',
+          tnUrl: '/images/test_tn.jpg',
+          caption: '',
+        };
+
+        expect(isProjectImage(emptyImage)).toBe(false);
+      });
+
+      it('should accept valid image with all validations passing', () => {
+        const validImage = {
+          url: '/images/test.jpg',
+          tnUrl: '/images/test_tn.jpg',
+          tnUrl2x: '/images/test_tn@2x.jpg',
+          caption: 'Valid image caption',
+        };
+
+        expect(isProjectImage(validImage)).toBe(true);
+      });
+    });
+
+    describe('isProjectVideo with dimension validation', () => {
+      it('should reject video with dimension of 0', () => {
+        const invalidVideo = {
+          type: 'youtube' as const,
+          id: 'dQw4w9WgXcQ',
+          width: 0,
+          height: 360,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should reject video with negative dimensions', () => {
+        const invalidVideo = {
+          type: 'youtube' as const,
+          id: 'dQw4w9WgXcQ',
+          width: -560,
+          height: 360,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should reject video with floating point dimensions', () => {
+        const invalidVideo = {
+          type: 'youtube' as const,
+          id: 'dQw4w9WgXcQ',
+          width: 560.5,
+          height: 360,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should reject video with extremely large dimensions', () => {
+        const invalidVideo = {
+          type: 'youtube' as const,
+          id: 'dQw4w9WgXcQ',
+          width: 999999,
+          height: 360,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should reject video with NaN dimensions', () => {
+        const invalidVideo = {
+          type: 'youtube' as const,
+          id: 'dQw4w9WgXcQ',
+          width: NaN,
+          height: 360,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should accept video with valid dimensions', () => {
+        const validVideo = {
+          type: 'youtube' as const,
+          id: 'dQw4w9WgXcQ',
+          width: 560,
+          height: 315,
+        };
+
+        expect(isProjectVideo(validVideo)).toBe(true);
+      });
+    });
+  });
+
+  /**
+   * Edge case tests for null/undefined handling and circular references
+   */
+  describe('Edge Cases - Null/Undefined/Circular References', () => {
+    describe('isProjectImage edge cases', () => {
+      it('should reject null', () => {
+        expect(isProjectImage(null)).toBe(false);
+      });
+
+      it('should reject undefined', () => {
+        expect(isProjectImage(undefined)).toBe(false);
+      });
+
+      it('should reject image with null url', () => {
+        const invalidImage = {
+          url: null,
+          tnUrl: '/thumb.jpg',
+          caption: 'Test',
+        };
+
+        expect(isProjectImage(invalidImage)).toBe(false);
+      });
+
+      it('should reject image with undefined caption', () => {
+        const invalidImage = {
+          url: '/image.jpg',
+          tnUrl: '/thumb.jpg',
+          caption: undefined,
+        };
+
+        expect(isProjectImage(invalidImage)).toBe(false);
+      });
+
+      it('should handle image with circular reference in extra properties', () => {
+        const circularImage = {
+          url: '/image.jpg',
+          tnUrl: '/thumb.jpg',
+          caption: 'Test',
+        } as Record<string, unknown>;
+        // Create circular reference
+        circularImage.self = circularImage;
+
+        // Should still validate core properties
+        expect(isProjectImage(circularImage)).toBe(true);
+      });
+    });
+
+    describe('isProjectVideo edge cases', () => {
+      it('should reject null', () => {
+        expect(isProjectVideo(null)).toBe(false);
+      });
+
+      it('should reject undefined', () => {
+        expect(isProjectVideo(undefined)).toBe(false);
+      });
+
+      it('should reject video with null type', () => {
+        const invalidVideo = {
+          type: null,
+          id: 'dQw4w9WgXcQ',
+          width: 560,
+          height: 315,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should reject video with null id', () => {
+        const invalidVideo = {
+          type: 'youtube' as const,
+          id: null,
+          width: 560,
+          height: 315,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+
+      it('should reject video with null dimensions', () => {
+        const invalidVideo = {
+          type: 'vimeo' as const,
+          id: '123456789',
+          width: null,
+          height: 720,
+        };
+
+        expect(isProjectVideo(invalidVideo)).toBe(false);
+      });
+    });
+
+    describe('isProject edge cases', () => {
+      it('should reject null', () => {
+        expect(isProject(null)).toBe(false);
+      });
+
+      it('should reject undefined', () => {
+        expect(isProject(undefined)).toBe(false);
+      });
+
+      it('should reject project with null id', () => {
+        const invalidProject = {
+          id: null,
+          name: 'Test Project',
+          description: 'Test description',
+          href: '/test',
+          images: [],
+        };
+
+        expect(isProject(invalidProject)).toBe(false);
+      });
+
+      it('should reject project with undefined images array', () => {
+        const invalidProject = {
+          id: 'project-1',
+          name: 'Test Project',
+          description: 'Test description',
+          href: '/test',
+          images: undefined,
+        };
+
+        expect(isProject(invalidProject)).toBe(false);
+      });
+    });
+
+    describe('isValidString edge cases', () => {
+      it('should handle null input gracefully', () => {
+        expect(() => {
+          isValidString(null as unknown as string);
+        }).toThrow();
+      });
+
+      it('should handle undefined input gracefully', () => {
+        expect(() => {
+          isValidString(undefined as unknown as string);
+        }).toThrow();
+      });
+
+      it('should handle non-string input gracefully', () => {
+        expect(() => {
+          isValidString(123 as unknown as string);
+        }).toThrow();
+      });
+
+      it('should handle empty string', () => {
+        expect(isValidString('')).toBe(false);
+      });
+
+      it('should handle string at max boundary', () => {
+        const maxString = 'a'.repeat(10000);
+        expect(isValidString(maxString)).toBe(true);
+      });
+
+      it('should reject string exceeding max boundary', () => {
+        const tooLongString = 'a'.repeat(10001);
+        expect(isValidString(tooLongString)).toBe(false);
+      });
     });
   });
 });
