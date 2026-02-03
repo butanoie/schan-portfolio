@@ -68,7 +68,7 @@ describe('ProjectDetail', () => {
     videos: [
       {
         type: 'vimeo',
-        id: '123456',
+        id: '123456789',
         width: 1280,
         height: 720,
       },
