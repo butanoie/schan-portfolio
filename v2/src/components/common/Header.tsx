@@ -8,7 +8,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BRAND_COLORS, NAV_COLORS } from "../constants";
+import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 
 /**
  * Navigation link configuration for the header.
