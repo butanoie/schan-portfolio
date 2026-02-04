@@ -15,7 +15,7 @@
 
 'use client';
 
-import { useContext, useCallback } from 'react';
+import { useContext, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatDate, formatNumber, formatCurrency, type Locale } from '@/src/lib/i18n';
 import { LocaleContext } from '@/src/contexts/LocaleContext';
@@ -128,10 +128,17 @@ export function useI18n(): I18nUtils {
       // Call i18nT with namespace if provided
       let translation = namespace ? i18nT(key, { ns: namespace }) : i18nT(key);
 
-      // Replace variables in translation
+      // Replace variables in translation with sanitized values to prevent XSS
       if (variables) {
         Object.entries(variables).forEach(([varName, varValue]) => {
-          translation = translation.replace(`{${varName}}`, String(varValue));
+          // Sanitize variable values by escaping HTML entities
+          const sanitizedValue = String(varValue)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#x27;');
+          translation = translation.replace(`{${varName}}`, sanitizedValue);
         });
       }
 
@@ -140,18 +147,41 @@ export function useI18n(): I18nUtils {
     [i18nT]
   );
 
-  // Return object with all i18n utilities bound to current locale
-  /* eslint-disable jsdoc/require-jsdoc */
-  const result: I18nUtils = {
-    t,
-    formatDate: (date: Date) => formatDate(date, context.locale),
-    formatNumber: (number: number, options?: Intl.NumberFormatOptions) =>
+  /**
+   * Memoized format functions to prevent unnecessary re-renders of consumer components.
+   * These are wrapped in useCallback to maintain referential equality across renders.
+   */
+  const formatDateMemo = useCallback(
+    (date: Date) => formatDate(date, context.locale),
+    [context.locale]
+  );
+
+  const formatNumberMemo = useCallback(
+    (number: number, options?: Intl.NumberFormatOptions) =>
       formatNumber(number, context.locale, options),
-    formatCurrency: (amount: number, currency: string = 'USD') =>
+    [context.locale]
+  );
+
+  const formatCurrencyMemo = useCallback(
+    (amount: number, currency: string = 'USD') =>
       formatCurrency(amount, currency, context.locale),
-    locale: context.locale,
-  };
-  /* eslint-enable jsdoc/require-jsdoc */
+    [context.locale]
+  );
+
+  /**
+   * Memoized return object to prevent unnecessary re-renders of consumer components.
+   * The object only changes when t function, locale, or format functions change.
+   */
+  const result = useMemo<I18nUtils>(
+    () => ({
+      t,
+      formatDate: formatDateMemo,
+      formatNumber: formatNumberMemo,
+      formatCurrency: formatCurrencyMemo,
+      locale: context.locale,
+    }),
+    [t, formatDateMemo, formatNumberMemo, formatCurrencyMemo, context.locale]
+  );
 
   return result;
 }

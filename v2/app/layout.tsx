@@ -4,6 +4,7 @@ import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
 import ThemeProvider from "@/src/components/ThemeProvider";
 import MainLayout from "@/src/components/common/MainLayout";
 import { LocaleProvider } from "@/src/components/i18n/LocaleProvider";
+import LocaleProviderErrorFallback from "@/src/components/i18n/LocaleProviderErrorFallback";
 
 export const metadata: Metadata = {
   title: "Sing Chan - Portfolio",
@@ -34,13 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LocaleProvider initialLocale="en">
-          <ThemeContextProvider>
-            <ThemeProvider>
-              <MainLayout>{children}</MainLayout>
-            </ThemeProvider>
-          </ThemeContextProvider>
-        </LocaleProvider>
+        <LocaleProviderErrorFallback>
+          <LocaleProvider initialLocale="en">
+            <ThemeContextProvider>
+              <ThemeProvider>
+                <MainLayout>{children}</MainLayout>
+              </ThemeProvider>
+            </ThemeContextProvider>
+          </LocaleProvider>
+        </LocaleProviderErrorFallback>
       </body>
     </html>
   );
