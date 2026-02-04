@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { ReactNode } from "react";
 import ButaStory from "../../../components/colophon/ButaStory";
 import { ThemeContextProvider } from "../../../contexts/ThemeContext";
+import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
 import type { ButaStoryContent } from "../../../types/colophon";
 
 /**
@@ -31,14 +32,18 @@ vi.mock("next/image", () => ({
 }));
 
 /**
- * Creates a wrapper component that provides ThemeContext for testing.
+ * Creates a wrapper component that provides ThemeContext and LocaleProvider for testing.
  *
  * @param props - Wrapper props
  * @param props.children - Child components
- * @returns Wrapped component with ThemeContextProvider
+ * @returns Wrapped component with ThemeContextProvider and LocaleProvider
  */
-function ThemeWrapper({ children }: { children: ReactNode }) {
-  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+function TestWrapper({ children }: { children: ReactNode }) {
+  return (
+    <LocaleProvider initialLocale="en">
+      <ThemeContextProvider>{children}</ThemeContextProvider>
+    </LocaleProvider>
+  );
 }
 
 /**
@@ -61,7 +66,7 @@ describe("ButaStory", () => {
   };
 
   it("should render the section heading", () => {
-    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
+    render(<ButaStory content={mockContent} />, { wrapper: TestWrapper });
 
     expect(
       screen.getByRole("heading", { name: /story of buta/i, level: 2 })
@@ -69,7 +74,7 @@ describe("ButaStory", () => {
   });
 
   it("should render story paragraphs", () => {
-    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
+    render(<ButaStory content={mockContent} />, { wrapper: TestWrapper });
 
     expect(screen.getByText(/pig mascot created by/i)).toBeInTheDocument();
     expect(screen.getByText(/inspired by Yoshinoya/i)).toBeInTheDocument();
@@ -77,14 +82,14 @@ describe("ButaStory", () => {
   });
 
   it("should render HTML links in paragraphs", () => {
-    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
+    render(<ButaStory content={mockContent} />, { wrapper: TestWrapper });
 
     const artistLink = screen.getByRole("link", { name: "Artist Name" });
     expect(artistLink).toHaveAttribute("href", "https://example.com");
   });
 
   it("should render the versus image", () => {
-    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
+    render(<ButaStory content={mockContent} />, { wrapper: TestWrapper });
 
     const versusImg = screen.getByAltText("Comparison of Boo and Bu");
     expect(versusImg).toBeInTheDocument();
@@ -92,7 +97,7 @@ describe("ButaStory", () => {
   });
 
   it("should have proper section accessibility", () => {
-    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
+    render(<ButaStory content={mockContent} />, { wrapper: TestWrapper });
 
     const section = screen.getByRole("region", { name: /buta/i });
     expect(section).toBeInTheDocument();
@@ -107,7 +112,7 @@ describe("ButaStory", () => {
       ],
     };
 
-    render(<ButaStory content={maliciousContent} />, { wrapper: ThemeWrapper });
+    render(<ButaStory content={maliciousContent} />, { wrapper: TestWrapper });
 
     // Script tags should be removed
     expect(screen.queryByText(/alert/)).not.toBeInTheDocument();

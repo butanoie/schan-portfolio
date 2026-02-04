@@ -17,5 +17,22 @@
   "frenchTranslationAlert": {
     "title": "Machine Translated",
     "message": "All strings have been machine translated. French is present as a demonstration of the localization capabilities of this web application."
+  },
+  "colophon": {
+    "butaStory": {
+      "heading": "The Story of Buta"
+    },
+    "designPhilosophy": {
+      "heading": "Design & Typography",
+      "colorPaletteHeading": "Colour Palette",
+      "typographyHeading": "Typography",
+      "googleFontsAriaLabel": "View {name} on Google Fonts (opens in new tab)"
+    },
+    "technologiesShowcase": {
+      "heading": "Technologies",
+      "v1SectionHeading": "Original V1 Technologies (Historical)",
+      "v1Description": "The original portfolio site was built with these technologies:",
+      "visitWebsiteAriaLabel": "Visit {name} website (opens in new tab)"
+    }
   }
 }

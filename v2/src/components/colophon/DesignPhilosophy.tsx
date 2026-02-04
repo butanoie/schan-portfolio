@@ -12,6 +12,7 @@ import type { DesignPhilosophyContent, ColorSwatch, TypographyEntry } from "../.
 import { BRAND_COLORS } from "../../constants";
 import { getPaletteByMode } from "../../lib/themes";
 import { useThemeContext } from "../../contexts/ThemeContext";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the DesignPhilosophy component.
@@ -127,6 +128,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
 function TypographySampleCard({ font }: { font: TypographyEntry }) {
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Card
@@ -170,7 +172,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               href={font.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`View ${font.name} on Google Fonts (opens in new tab)`}
+              aria-label={t("colophon.designPhilosophy.googleFontsAriaLabel", { variables: { name: font.name }, ns: "components" })}
               sx={{
                 color: palette.card.text,
                 "&:hover": {
@@ -243,6 +245,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
   const { intro, colors, colorDescription, typography, typographyIntro } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Box
@@ -264,7 +267,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
           textAlign: "center",
         }}
       >
-        Design & Typography
+        {t("colophon.designPhilosophy.heading", { ns: "components" })}
       </Typography>
 
       <Typography
@@ -289,7 +292,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
             mb: 2,
           }}
         >
-          Colour Palette
+          {t("colophon.designPhilosophy.colorPaletteHeading", { ns: "components" })}
         </Typography>
 
         <Box
@@ -327,7 +330,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
             mb: 2,
           }}
         >
-          Typography
+          {t("colophon.designPhilosophy.typographyHeading", { ns: "components" })}
         </Typography>
 
         <Typography

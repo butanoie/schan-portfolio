@@ -24,6 +24,165 @@
     "title": "About",
     "subtitle": "About this site and Sing Chan",
     "description": "Learn about the story behind this portfolio, the design philosophy, and the technologies used to build it.",
+    "pageDeck": {
+      "imageAlt": "Choice Cuts - pork cuts diagram logo",
+      "heading": "Colophon",
+      "paragraphs": [
+        "Sing Chan is currently the VP of Product at Collabware Systems.",
+        "Sing is responsible for working with customers and stakeholders to determine the product and feature roadmaps for Collabware's Collabspace solution and manages the Product and Quality Assurance teams.",
+        "He is also responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings."
+      ]
+    },
+    "technologies": {
+      "intro": "This portfolio site has been rebuilt from the ground up. Here's what powers the current version:",
+      "categories": [
+        {
+          "label": "Framework & Runtime",
+          "items": [
+            {
+              "name": "Next.js 16",
+              "description": "React framework with App Router for server-side rendering, static generation, and optimized performance."
+            },
+            {
+              "name": "React 19",
+              "description": "UI library for building component-based interfaces with hooks and concurrent features."
+            },
+            {
+              "name": "TypeScript",
+              "description": "Static type checking for improved developer experience and code reliability."
+            }
+          ]
+        },
+        {
+          "label": "UI & Styling",
+          "items": [
+            {
+              "name": "Material UI (MUI)",
+              "description": "Comprehensive React component library implementing Material Design with customizable theming."
+            },
+            {
+              "name": "Emotion",
+              "description": "CSS-in-JS library for styled components and dynamic styling."
+            }
+          ]
+        },
+        {
+          "label": "Development Tools",
+          "items": [
+            {
+              "name": "Claude Code",
+              "description": "AI-powered coding assistant for pair programming, code review, and documentation."
+            },
+            {
+              "name": "ESLint",
+              "description": "JavaScript/TypeScript linter for code quality and consistency."
+            },
+            {
+              "name": "Prettier",
+              "description": "Opinionated code formatter for consistent style."
+            }
+          ]
+        },
+        {
+          "label": "Testing",
+          "items": [
+            {
+              "name": "Vitest",
+              "description": "Fast, Vite-native unit test framework with excellent TypeScript support."
+            },
+            {
+              "name": "React Testing Library",
+              "description": "Testing utilities focused on user behavior rather than implementation details."
+            }
+          ]
+        }
+      ],
+      "v1Section": "Original V1 Technologies (Historical)",
+      "v1Description": "The original portfolio site was built with these technologies:",
+      "v1Items": [
+        {
+          "name": "Gumby Framework",
+          "description": "Responsive grid layout, Entypo icon set, and base UI element styles."
+        },
+        {
+          "name": "jQuery",
+          "description": "Asynchronously loading portfolio projects, DOM manipulation, and UI effects."
+        },
+        {
+          "name": "PHP",
+          "description": "Simple web service to serve up the portfolio projects."
+        },
+        {
+          "name": "Swipebox",
+          "description": "jQuery plugin for the project image lightboxes."
+        },
+        {
+          "name": "SWFObject",
+          "description": "Determined whether to show links to Adobe Flash projects."
+        },
+        {
+          "name": "Sass & Compass",
+          "description": "Custom CSS written in SCSS syntax and compiled with Compass."
+        }
+      ]
+    },
+    "designPhilosophy": {
+      "intro": "The initial design was inspired by classic pork cuts diagrams. I wanted the site to feel like a menu at a butcher shop but eventually moved to a modern feel through the use of flat colours and sans-serif fonts.",
+      "colors": [
+        {
+          "name": "Sakura",
+          "description": "Cherry blossom pink - more inspirational than actual implementation"
+        },
+        {
+          "name": "Duck Egg",
+          "description": "Pastel green - used for secondary elements and tags"
+        },
+        {
+          "name": "Sky Blue",
+          "description": "Primary accent color for interactive elements"
+        },
+        {
+          "name": "Graphite",
+          "description": "Dark charcoal for primary text"
+        },
+        {
+          "name": "Sage",
+          "description": "Muted green for the footer background"
+        },
+        {
+          "name": "Maroon",
+          "description": "Deep red for headings and call-to-action elements"
+        }
+      ],
+      "colorDescription": "The colour palette is comprised of some of my favourite pastels—sakura (cherry blossom), duck egg, and sky blue — graphite and maroon are included as background colours for instances of white text.",
+      "typographyIntro": "Open source web fonts available through Google Fonts:",
+      "typography": [
+        {
+          "name": "Open Sans",
+          "usage": "Body text and UI elements",
+          "sample": "The quick brown fox jumps over the lazy dog."
+        },
+        {
+          "name": "Oswald",
+          "usage": "Headings - clean with weight, feels like a butcher's block",
+          "sample": "CHOICE CUTS"
+        },
+        {
+          "name": "Gochi Hand",
+          "usage": "Buta's thought bubble - the Comic Sans of this portfolio!",
+          "sample": "Oink oink!"
+        }
+      ]
+    },
+    "butaStory": {
+      "paragraphs": [
+        "The well-dressed Buta (pig in Japanese) caricature found in the footer was created for me by <a href=\"http://christineibbitson.blogs.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Christine Ibbitson</a>. Buta is a shameless rip-off of Yoshi Boo, or Boo-chan, a now retired mascot for <a href=\"https://www.yoshinoya.com\" target=\"_blank\" rel=\"noopener noreferrer\">Yoshinoya</a>, a famous chain of fast food restaurants in Japan (and other parts of the world).",
+        "In early 2004, Yoshinoya introduced a pork-centric menu due to the rising cost of beef in Japan when U.S. beef imports were banned in December 2003 after a case of bovine spongiform encephalopathy was reported in the United States. I take it the marketing folk at Yoshinoya decided the best way to promote their new pork-based menu was to create a new mascot.",
+        "When I went to Japan in March 2005, Yoshinoya was celebrating the 1-year anniversary of the introduction of their pork menu. Boo-chan was all over their in-store merchandising and there was a funny TV commercial of him dressed in a tuxedo giving a press conference. Boo-chan was an easy choice to become my new avatar."
+      ],
+      "mainImageAlt": "Buta, a pig mascot wearing a business suit",
+      "versusImageAlt": "Boo vs Bu - comparing the original Yoshinoya mascot with Buta"
+    },
     "sections": {
       "butaStory": "The Story of Buta",
       "designPhilosophy": "Design Philosophy",

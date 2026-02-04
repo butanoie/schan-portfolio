@@ -16,6 +16,7 @@ import type { TechnologiesContent, Technology } from "../../types/colophon";
 import { BRAND_COLORS } from "../../constants";
 import { getPaletteByMode } from "../../lib/themes";
 import { useThemeContext } from "../../contexts/ThemeContext";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the TechnologiesShowcase component.
@@ -38,6 +39,7 @@ export interface TechnologiesShowcaseProps {
 function TechnologyCard({ tech }: { tech: Technology }) {
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Card
@@ -74,7 +76,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               href={tech.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Visit ${tech.name} website (opens in new tab)`}
+              aria-label={t("colophon.technologiesShowcase.visitWebsiteAriaLabel", { variables: { name: tech.name }, ns: "components" })}
               sx={{
                 color: palette.card.text,
                 "&:hover": {
@@ -121,6 +123,7 @@ export default function TechnologiesShowcase({
   const { intro, v2Categories, v1Technologies } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Box
@@ -143,7 +146,7 @@ export default function TechnologiesShowcase({
           textAlign: "center"
         }}
       >
-        Technologies
+        {t("colophon.technologiesShowcase.heading", { ns: "components" })}
       </Typography>
 
       <Typography
@@ -211,7 +214,7 @@ export default function TechnologiesShowcase({
               fontSize: "1.25rem",
             }}
           >
-            Original V1 Technologies (Historical)
+            {t("colophon.technologiesShowcase.v1SectionHeading", { ns: "components" })}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -220,7 +223,7 @@ export default function TechnologiesShowcase({
             color="text.secondary"
             sx={{ mb: 2 }}
           >
-            The original portfolio site was built with these technologies:
+            {t("colophon.technologiesShowcase.v1Description", { ns: "components" })}
           </Typography>
           <Box
             sx={{

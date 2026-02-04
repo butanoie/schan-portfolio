@@ -24,6 +24,165 @@
     "title": "À propos",
     "subtitle": "À propos de ce site et de Sing Chan",
     "description": "Découvrez l'histoire derrière ce portfolio, la philosophie de conception et les technologies utilisées pour le créer.",
+    "pageDeck": {
+      "imageAlt": "Choice Cuts - logo de diagramme de coupes de porc",
+      "heading": "Colophon",
+      "paragraphs": [
+        "Sing Chan est actuellement vice-président des produits chez Collabware Systems.",
+        "Sing est chargé de travailler avec les clients et les parties prenantes pour déterminer les feuilles de route des produits et des fonctionnalités pour la solution Collabspace de Collabware et gère les équipes de produits et d'assurance qualité.",
+        "Il est également responsable de la conception des interactions, de l'expérience utilisateur et des cadres de développement frontaux pour les offres logicielles de Collabware."
+      ]
+    },
+    "technologies": {
+      "intro": "Ce site de portfolio a été entièrement reconstruit. Voici ce qui alimente la version actuelle :",
+      "categories": [
+        {
+          "label": "Framework & Runtime",
+          "items": [
+            {
+              "name": "Next.js 16",
+              "description": "Cadre React avec App Router pour le rendu côté serveur, la génération statique et des performances optimisées."
+            },
+            {
+              "name": "React 19",
+              "description": "Bibliothèque d'interface utilisateur pour construire des interfaces basées sur des composants avec des crochets et des fonctionnalités concurrentes."
+            },
+            {
+              "name": "TypeScript",
+              "description": "Vérification statique des types pour améliorer l'expérience du développeur et la fiabilité du code."
+            }
+          ]
+        },
+        {
+          "label": "UI & Styling",
+          "items": [
+            {
+              "name": "Material UI (MUI)",
+              "description": "Bibliothèque complète de composants React mettant en œuvre le Material Design avec des thèmes personnalisables."
+            },
+            {
+              "name": "Emotion",
+              "description": "Bibliothèque CSS-in-JS pour les composants stylisés et le stylisme dynamique."
+            }
+          ]
+        },
+        {
+          "label": "Development Tools",
+          "items": [
+            {
+              "name": "Claude Code",
+              "description": "Assistant de codage piloté par l'IA pour la programmation en binôme, la révision du code et la documentation."
+            },
+            {
+              "name": "ESLint",
+              "description": "Linter JavaScript/TypeScript pour la qualité et la cohérence du code."
+            },
+            {
+              "name": "Prettier",
+              "description": "Formateur de code pour un style cohérent."
+            }
+          ]
+        },
+        {
+          "label": "Testing",
+          "items": [
+            {
+              "name": "Vitest",
+              "description": "Cadre de test unitaire rapide et natif de Vite avec un excellent support TypeScript."
+            },
+            {
+              "name": "React Testing Library",
+              "description": "Utilitaires de test axés sur le comportement de l'utilisateur plutôt que sur les détails de l'implémentation."
+            }
+          ]
+        }
+      ],
+      "v1Section": "Original V1 Technologies (Historique)",
+      "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
+      "v1Items": [
+        {
+          "name": "Gumby Framework",
+          "description": "Grille réactive, jeu d'icônes Entypo et styles d'éléments d'interface utilisateur de base."
+        },
+        {
+          "name": "jQuery",
+          "description": "Chargement asynchrone des projets du portefeuille, manipulation du DOM et effets de l'interface utilisateur."
+        },
+        {
+          "name": "PHP",
+          "description": "Service web simple pour servir les projets du portefeuille."
+        },
+        {
+          "name": "Swipebox",
+          "description": "Plugin jQuery pour les boîtes lumineuses des images des projets."
+        },
+        {
+          "name": "SWFObject",
+          "description": "Détermination de l'affichage des liens vers les projets Adobe Flash."
+        },
+        {
+          "name": "Sass & Compass",
+          "description": "CSS personnalisé écrit en syntaxe SCSS et compilé avec Compass."
+        }
+      ]
+    },
+    "designPhilosophy": {
+      "intro": "Le design initial s'inspirait des diagrammes classiques de la viande de porc. Je voulais que le site ressemble à un menu de boucherie, mais j'ai finalement opté pour un style moderne grâce à l'utilisation de couleurs plates et de polices de caractères sans empattement.",
+      "colors": [
+        {
+          "name": "Sakura",
+          "description": "Rose fleur de cerisier - plus une source d'inspiration qu'une mise en œuvre réelle."
+        },
+        {
+          "name": "Duck Egg",
+          "description": "Vert pastel - utilisé pour les éléments secondaires et les étiquettes."
+        },
+        {
+          "name": "Sky Blue",
+          "description": "Couleur d'accentuation principale pour les éléments interactifs."
+        },
+        {
+          "name": "Graphite",
+          "description": "Fusain foncé pour le texte principal."
+        },
+        {
+          "name": "Sage",
+          "description": "Vert atténué pour l'arrière-plan du pied de page."
+        },
+        {
+          "name": "Maroon",
+          "description": "Rouge foncé pour les titres et les éléments d'appel à l'action."
+        }
+      ],
+      "colorDescription": "La palette de couleurs est composée de certains de mes pastels préférés -akura (fleur de cerisier), œuf de canard et bleu ciel - le graphite et le marron sont utilisés comme couleurs de fond pour les textes blancs.",
+      "typographyIntro": "Polices web open source disponibles sur Google Fonts :",
+      "typography": [
+        {
+          "name": "Open Sans",
+          "usage": "Corps de texte et éléments de l'interface utilisateur",
+          "sample": "Le renard brun et rapide saute par-dessus le chien paresseux."
+        },
+        {
+          "name": "Oswald",
+          "usage": "Titres - propres avec du poids, on dirait un bloc de boucher",
+          "sample": "CHOICE CUTS"
+        },
+        {
+          "name": "Gochi Hand",
+          "usage": "La bulle de pensée de Buta - le Comic Sans de ce portfolio !",
+          "sample": "Oink oink !"
+        }
+      ]
+    },
+    "butaStory": {
+      "paragraphs": [
+        "La caricature de Buta (cochon en japonais) bien habillé que l'on trouve en bas de page a été créée pour moi par <a href=\"http://christineibbitson.blogs.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Christine Ibbitson</a>. Buta est une imitation éhontée de Yoshi Boo, ou Boo-chan, une mascotte aujourd'hui à la retraite de <a href=\"https://www.yoshinoya.com\" target=\"_blank\" rel=\"noopener noreferrer\">Yoshinoya</a>, une célèbre chaîne de restauration rapide au Japon (et dans d'autres parties du monde).",
+        "Au début de l'année 2004, Yoshinoya a introduit un menu centré sur le porc en raison de l'augmentation du coût du bœuf au Japon, les importations de bœuf américain ayant été interdites en décembre 2003 après qu'un cas d'encéphalopathie spongiforme bovine ait été signalé aux États-Unis. Les responsables marketing de Yoshinoya ont donc décidé que la meilleure façon de promouvoir leur nouveau menu à base de porc était de créer une nouvelle mascotte.",
+        "Lorsque je suis allé au Japon en mars 2005, Yoshinoya célébrait le premier anniversaire de l'introduction de son menu à base de porc. Boo-chan était omniprésent dans le merchandising des magasins et il y avait une publicité télévisée amusante où il était habillé en smoking et donnait une conférence de presse. Boo-chan était un choix facile pour devenir mon nouvel avatar."
+      ],
+      "mainImageAlt": "Buta, une mascotte de cochon portant un costume d'affaires",
+      "versusImageAlt": "Boo vs Bu - comparaison entre la mascotte originale de Yoshinoya et Buta"
+    },
     "sections": {
       "butaStory": "L'histoire de Buta",
       "designPhilosophy": "Philosophie de conception",

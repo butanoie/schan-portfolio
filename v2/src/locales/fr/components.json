@@ -17,5 +17,22 @@
   "frenchTranslationAlert": {
     "title": "Traduction automatique",
     "message": "Toutes les chaînes ont été traduites automatiquement. Le français est présent comme démonstration des capacités de localisation de cette application."
+  },
+  "colophon": {
+    "butaStory": {
+      "heading": "L'histoire de Buta"
+    },
+    "designPhilosophy": {
+      "heading": "Conception et typographie",
+      "colorPaletteHeading": "Palette de couleurs",
+      "typographyHeading": "Typographie",
+      "googleFontsAriaLabel": "Voir {name} sur Google Fonts (ouvre un nouvel onglet)"
+    },
+    "technologiesShowcase": {
+      "heading": "Technologies",
+      "v1SectionHeading": "Original V1 Technologies (Historique)",
+      "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
+      "visitWebsiteAriaLabel": "Visitez le site web de {name} (s'ouvre dans un nouvel onglet)"
+    }
   }
 }

@@ -1,19 +1,25 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { ReactNode } from "react";
 import userEvent from "@testing-library/user-event";
 import TechnologiesShowcase from "../../../components/colophon/TechnologiesShowcase";
 import { ThemeContextProvider } from "../../../contexts/ThemeContext";
+import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
 import type { TechnologiesContent } from "../../../types/colophon";
 
 /**
- * Wrapper component to provide ThemeContext for testing.
+ * Wrapper component to provide ThemeContext and LocaleProvider for testing.
  *
  * @param props - Component props
  * @param props.children - Child elements to render within the context
- * @returns The children wrapped with ThemeContextProvider
+ * @returns The children wrapped with LocaleProvider and ThemeContextProvider
  */
-function Wrapper({ children }: { children: React.ReactNode }) {
-  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+function Wrapper({ children }: { children: ReactNode }) {
+  return (
+    <LocaleProvider initialLocale="en">
+      <ThemeContextProvider>{children}</ThemeContextProvider>
+    </LocaleProvider>
+  );
 }
 
 /**
