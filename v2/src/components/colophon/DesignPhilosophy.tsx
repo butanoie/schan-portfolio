@@ -9,7 +9,9 @@ import {
 } from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { DesignPhilosophyContent, ColorSwatch, TypographyEntry } from "../../types/colophon";
-import { BRAND_COLORS, UI_COLORS } from "../../constants";
+import { BRAND_COLORS } from "../../constants";
+import { getPaletteByMode } from "../../lib/themes";
+import { useThemeContext } from "../../contexts/ThemeContext";
 
 /**
  * Props for the DesignPhilosophy component.
@@ -51,6 +53,8 @@ function getContrastTextColor(hexColor: string): string {
  */
 function ColorSwatchCard({ color }: { color: ColorSwatch }) {
   const textColor = getContrastTextColor(color.hex);
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Card
@@ -60,7 +64,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: UI_COLORS.cardBackground,
+        backgroundColor: palette.card.background,
       }}
     >
       <Box
@@ -95,11 +99,17 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
             fontWeight: 600,
             mb: 0.5,
             fontSize: "1rem",
+            color: palette.card.heading,
           }}
         >
           {color.name}
         </Typography>
-        <Typography variant="body2" color="text.primary">
+        <Typography
+          variant="body2"
+          sx={{
+            color: palette.card.text,
+          }}
+        >
           {color.description}
         </Typography>
       </CardContent>
@@ -115,6 +125,9 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
  * @returns A card displaying the typography sample
  */
 function TypographySampleCard({ font }: { font: TypographyEntry }) {
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
+
   return (
     <Card
       variant="outlined"
@@ -122,7 +135,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: UI_COLORS.cardBackground,
+        backgroundColor: palette.card.background,
       }}
     >
       <CardContent
@@ -147,6 +160,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
               fontSize: "1rem",
+              color: palette.card.heading,
             }}
           >
             {font.name}
@@ -158,8 +172,10 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               rel="noopener noreferrer"
               aria-label={`View ${font.name} on Google Fonts (opens in new tab)`}
               sx={{
-                color: "text.secondary",
-                "&:hover": { color: "primary.dark" },
+                color: palette.card.text,
+                "&:hover": {
+                  color: mode === "highContrast" ? "#000000" : BRAND_COLORS.maroon,
+                },
               }}
             >
               <LaunchIcon sx={{ fontSize: 16 }} />
@@ -169,8 +185,11 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
 
         <Typography
           variant="body2"
-          color="text.primary"
-          sx={{ mb: 2, flexGrow: 1 }}
+          sx={{
+            color: palette.card.text,
+            mb: 2,
+            flexGrow: 1,
+          }}
         >
           {font.usage}
         </Typography>
@@ -222,6 +241,8 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
  */
 export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
   const { intro, colors, colorDescription, typography, typographyIntro } = content;
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box
@@ -236,7 +257,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         id="design-heading"
         variant="h2"
         sx={{
-          color: BRAND_COLORS.maroon,
+          color: palette.secondary,
           fontSize: "2rem",
           mt: 0,
           mb: 3,
@@ -290,7 +311,6 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
 
         <Typography
           variant="body1"
-          color="text.secondary"
         >
           {colorDescription}
         </Typography>
@@ -312,7 +332,6 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
 
         <Typography
           variant="body1"
-          color="text.secondary"
           sx={{ mb: 3, maxWidth: "65ch" }}
         >
           {typographyIntro}

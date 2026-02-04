@@ -47,9 +47,84 @@ beforeAll(() => {
 });
 
 /**
+ * Mock localStorage for testing environments.
+ *
+ * jsdom provides basic localStorage, but we need to ensure it's properly configured.
+ * This provides a complete mock implementation that works reliably in tests.
+ *
+ * @returns A mock Storage object with all required methods
+ */
+const localStorageMock = (() => {
+  let store: Record<string, string> = {};
+
+  return {
+    /**
+     * Get an item from localStorage.
+     *
+     * @param key - The key to retrieve
+     * @returns The stored value or null if not found
+     */
+    getItem: (key: string) => store[key] || null,
+
+    /**
+     * Set an item in localStorage.
+     *
+     * @param key - The key to store under
+     * @param value - The value to store
+     */
+    setItem: (key: string, value: string) => {
+      store[key] = value.toString();
+    },
+
+    /**
+     * Remove an item from localStorage.
+     *
+     * @param key - The key to remove
+     */
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+
+    /**
+     * Clear all items from localStorage.
+     */
+    clear: () => {
+      store = {};
+    },
+
+    /**
+     * Get a key at a specific index.
+     *
+     * @param index - The index to retrieve
+     * @returns The key at that index or null
+     */
+    key: (index: number) => {
+      const keys = Object.keys(store);
+      return keys[index] || null;
+    },
+
+    /**
+     * Get the number of items in localStorage.
+     *
+     * @returns The number of items currently in storage
+     */
+    get length() {
+      return Object.keys(store).length;
+    },
+  };
+})();
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+});
+
+/**
  * Cleanup after each test to prevent memory leaks and test pollution.
  * This ensures that each test starts with a clean DOM.
  */
 afterEach(() => {
   cleanup();
+  // Clear localStorage between tests to prevent test pollution
+  localStorage.clear();
 });

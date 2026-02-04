@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
 import ThemeProvider from "@/src/components/ThemeProvider";
 import MainLayout from "@/src/components/common/MainLayout";
 
@@ -11,7 +12,13 @@ export const metadata: Metadata = {
 
 /**
  * Root layout component that wraps the entire application.
- * Provides theme context and main layout structure for all pages.
+ *
+ * Provides theme context, MUI theme provider, and main layout structure for all pages.
+ *
+ * Features:
+ * - ThemeContextProvider: Manages theme state and persistence
+ * - EnhancedThemeProvider: Applies MUI theme based on current mode
+ * - MainLayout: Global navigation and structure
  *
  * @param props - The component props
  * @param props.children - The page content to be rendered within the layout
@@ -25,9 +32,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>
-          <MainLayout>{children}</MainLayout>
-        </ThemeProvider>
+        <ThemeContextProvider>
+          <ThemeProvider>
+            <MainLayout>{children}</MainLayout>
+          </ThemeProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );

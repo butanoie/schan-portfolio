@@ -112,6 +112,113 @@ export const THEME_COLORS = {
 } as const;
 
 /**
+ * Complete theme palette definitions for all three theme modes.
+ *
+ * Each palette includes:
+ * - Primary and secondary colors
+ * - Background and surface colors
+ * - Text colors (primary, secondary, disabled)
+ * - Border colors
+ * - Accent colors (blue, green, red)
+ * - Card-specific colors
+ */
+export const THEME_PALETTES = {
+  /**
+   * Light theme palette.
+   * Uses sage green and maroon with light backgrounds.
+   * Complies with WCAG AA contrast ratios.
+   */
+  light: {
+    mode: "light" as const,
+    primary: "#8BA888", // Sage green
+    secondary: "#8B1538", // Maroon
+    background: "#FFFFFF",
+    surface: "#FAFAFA",
+    text: {
+      primary: "#1A1A1A",
+      secondary: "#333333",
+      disabled: "#CCCCCC",
+    },
+    borders: "#EEEEEE",
+    accents: {
+      blue: "#87CEEB", // Sky blue
+      green: "#C8E6C9", // Light green
+      red: "#FFCDD2", // Light red
+    },
+    card: {
+      background: "#f5f9fd",
+      heading: "#1A1A1A",
+      text: "#333333",
+    },
+  },
+
+  /**
+   * Dark theme palette.
+   * Inverted colors for comfortable viewing in low-light environments.
+   * Complies with WCAG AA contrast ratios.
+   */
+  dark: {
+    mode: "dark" as const,
+    primary: "#A8D5A8", // Light sage
+    secondary: "#E85775", // Light maroon
+    background: "#121212",
+    surface: "#1F1F1F",
+    text: {
+      primary: "#FFFFFF",
+      secondary: "#B0B0B0",
+      disabled: "#666666",
+    },
+    borders: "#333333",
+    accents: {
+      blue: "#64B5F6", // Light blue
+      green: "#81C784", // Medium green
+      red: "#EF9A9A", // Light red
+    },
+    card: {
+      // Card colors use light palette for visual separation and content readability
+      // in dark environments. Light background (#f5f9fd) provides contrast against
+      // the dark theme background (#121212), ensuring card content is distinct
+      // and readable. Dark text (#1A1A1A) on light card background meets WCAG AA.
+      background: "#f5f9fd",
+      heading: "#1A1A1A",
+      text: "#333333",
+    },
+  },
+
+  /**
+   * High-contrast black and white theme palette.
+   * Meets WCAG AAA contrast requirements (7:1+).
+   * Maximum accessibility for users with low vision.
+   */
+  highContrast: {
+    mode: "highContrast" as const,
+    primary: "#FFFFFF",
+    secondary: "#FFFFFF",
+    background: "#000000",
+    surface: "#000000",
+    text: {
+      primary: "#FFFFFF",
+      secondary: "#FFFFFF",
+      disabled: "#CCCCCC",
+    },
+    borders: "#FFFFFF",
+    accents: {
+      blue: "#FFFF00", // Bright yellow
+      green: "#FFFF00",
+      red: "#FFFF00",
+    },
+    card: {
+      // High-contrast card uses inverted colors for maximum accessibility.
+      // White background (#FFFFFF) ensures complete separation from black (#000000)
+      // page background. Black text (#000000) on white card meets WCAG AAA (21:1).
+      background: "#FFFFFF",
+      heading: "#000000",
+      text: "#000000",
+    },
+  },
+} as const;
+
+/**
  * All colors exported as a single object for convenience.
  */
 export const COLORS = {
@@ -119,4 +226,5 @@ export const COLORS = {
   ui: UI_COLORS,
   nav: NAV_COLORS,
   theme: THEME_COLORS,
+  palettes: THEME_PALETTES,
 } as const;

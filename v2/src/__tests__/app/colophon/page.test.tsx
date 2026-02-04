@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ColophonPage from "../../../../app/colophon/page";
+import { ThemeContextProvider } from "../../../../src/contexts/ThemeContext";
 
 /**
  * Mock Next.js Image component for testing.
@@ -28,6 +29,17 @@ vi.mock("next/image", () => ({
 }));
 
 /**
+ * Wrapper component to provide ThemeContext for testing.
+ *
+ * @param props - Component props
+ * @param props.children - Child elements to render within the context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
+
+/**
  * Integration tests for the ColophonPage component.
  *
  * Verifies that the page renders all sections correctly:
@@ -39,7 +51,7 @@ vi.mock("next/image", () => ({
  */
 describe("ColophonPage", () => {
   it("should render the Choice Cuts header image", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     const headerImage = screen.getByAltText(/choice cuts.*pork cuts diagram/i);
     expect(headerImage).toBeInTheDocument();
@@ -47,7 +59,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render the About section with Colophon heading", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole("heading", { name: /colophon/i, level: 1 })
@@ -55,7 +67,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render the Technologies section", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole("heading", { name: /technologies/i, level: 2 })
@@ -63,7 +75,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render the Design & Typography section", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole("heading", { name: /design & typography/i, level: 2 })
@@ -71,7 +83,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render the Buta Story section", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     // The Buta Story has a visually hidden heading for accessibility
     expect(
@@ -80,14 +92,14 @@ describe("ColophonPage", () => {
   });
 
   it("should render the Boo vs Bu comparison image", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     const versusImage = screen.getByAltText(/boo vs bu/i);
     expect(versusImage).toBeInTheDocument();
   });
 
   it("should render all major content sections", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     // Verify all four sections are present via their aria-labeled regions
     expect(screen.getByRole("region", { name: /colophon/i })).toBeInTheDocument();
@@ -97,7 +109,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render color palette swatches", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for some of the color names from the palette
     expect(screen.getByText("Sakura")).toBeInTheDocument();
@@ -106,7 +118,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render typography samples", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for font names
     expect(screen.getByText("Open Sans")).toBeInTheDocument();
@@ -115,7 +127,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render technology categories", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for V2 technology category headings
     expect(screen.getByText("Framework & Runtime")).toBeInTheDocument();
@@ -125,7 +137,7 @@ describe("ColophonPage", () => {
   });
 
   it("should render the V1 technologies accordion", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole("button", { name: /original v1 technologies/i })
@@ -133,7 +145,7 @@ describe("ColophonPage", () => {
   });
 
   it("should have proper article landmark", () => {
-    render(<ColophonPage />);
+    render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(screen.getByRole("article")).toBeInTheDocument();
   });
