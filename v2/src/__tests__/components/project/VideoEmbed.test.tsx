@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from '../../test-utils';
 import { VideoEmbed } from '../../../components/project/VideoEmbed';
 import type { ProjectVideo } from '../../../types';
 import { describe, it, expect } from 'vitest';

@@ -16,7 +16,7 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
-import { useSwipe } from "../../hooks";
+import { useSwipe, useI18n } from "../../hooks";
 import { VisuallyHidden } from "../common/VisuallyHidden";
 import {
   SWIPE_THRESHOLD,
@@ -112,6 +112,7 @@ export function ProjectLightbox({
 }: ProjectLightboxProps) {
   const [isLoading, setIsLoading] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { t } = useI18n();
 
   /**
    * Ref to store the keyboard handler function.
@@ -330,13 +331,13 @@ export function ProjectLightbox({
       }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      aria-label="Image lightbox"
+      aria-label={t('projectLightbox.ariaLabel', { ns: 'components' })}
     >
       {/* Close Button - Top Right */}
       <IconButton
         ref={closeButtonRef}
         onClick={onClose}
-        aria-label="Close lightbox"
+        aria-label={t('projectLightbox.closeButton', { ns: 'components' })}
         sx={{
           position: "fixed",
           top: LIGHTBOX_CONTROL_OFFSET,
@@ -396,7 +397,7 @@ export function ProjectLightbox({
       {showNavigation && (
         <IconButton
           onClick={handlePrevious}
-          aria-label="Previous image"
+          aria-label={t('projectLightbox.previousButton', { ns: 'components' })}
           sx={{
             ...navButtonSx,
             left: LIGHTBOX_CONTROL_OFFSET,
@@ -410,7 +411,7 @@ export function ProjectLightbox({
       {showNavigation && (
         <IconButton
           onClick={handleNext}
-          aria-label="Next image"
+          aria-label={t('projectLightbox.nextButton', { ns: 'components' })}
           sx={{
             ...navButtonSx,
             right: LIGHTBOX_CONTROL_OFFSET,

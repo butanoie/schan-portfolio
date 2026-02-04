@@ -119,6 +119,17 @@ export function useI18n(): I18nUtils {
           // It's a TranslationOptions object
           variables = (options as TranslationOptions).variables;
           namespace = (options as TranslationOptions).ns;
+
+          // Also extract any other properties as variables (for mixed format like { ns: 'components', remainingCount })
+          const optionsObj = options as Record<string, unknown>;
+          const otherVariables: Record<string, string | number> = {};
+          for (const [key, value] of Object.entries(optionsObj)) {
+            if (key !== 'variables' && key !== 'ns' && typeof value === 'string' || typeof value === 'number') {
+              otherVariables[key] = value as string | number;
+            }
+          }
+          // Merge variables with otherVariables
+          variables = { ...otherVariables, ...variables };
         } else {
           // It's a variables Record (backwards compatibility)
           variables = options as Record<string, string | number>;
@@ -138,7 +149,7 @@ export function useI18n(): I18nUtils {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#x27;');
-          translation = translation.replace(`{${varName}}`, sanitizedValue);
+          translation = translation.replace(`{{${varName}}}`, sanitizedValue);
         });
       }
 

@@ -5,7 +5,7 @@ import type { Theme } from '@mui/material/styles';
 import type { SxProps } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { NAV_COLORS, BRAND_COLORS } from '../../constants';
-import { useReducedMotion } from '../../hooks';
+import { useReducedMotion, useI18n } from '../../hooks';
 
 /**
  * Props for the LoadMoreButton component.
@@ -101,16 +101,22 @@ export function LoadMoreButton({
   sx,
 }: LoadMoreButtonProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { t } = useI18n();
 
   // Button text based on state
-  const buttonText = loading ? 'Loading projects...' : 'Load more projects';
+  const buttonText = loading
+    ? t('loadMoreButton.loading', { ns: 'components' })
+    : t('loadMoreButton.loadMore', { ns: 'components' });
 
   // ARIA label with additional context
   const ariaLabel = disabled
-    ? 'All projects loaded'
+    ? t('loadMoreButton.allLoaded', { ns: 'components' })
     : loading
-      ? 'Loading more projects'
-      : `Load ${remainingCount} more projects`;
+      ? t('loadMoreButton.loadingAria', { ns: 'components' })
+      : t('loadMoreButton.loadMoreCountAria', {
+          ns: 'components',
+          remainingCount,
+        });
 
   return (
     <Button

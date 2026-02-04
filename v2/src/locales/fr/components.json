@@ -14,6 +14,26 @@
     "previousImage": "Image précédente",
     "nextImage": "Image suivante"
   },
+  "projectLightbox": {
+    "ariaLabel": "Galerie d'images",
+    "closeButton": "Fermer la galerie",
+    "previousButton": "Image précédente",
+    "nextButton": "Image suivante"
+  },
+  "loadMoreButton": {
+    "loading": "Chargement des projets...",
+    "loadMore": "Charger plus de projets",
+    "allLoaded": "Tous les projets chargés",
+    "loadingAria": "Chargement de plus de projets",
+    "loadMoreCountAria": "Charger {{remainingCount}} projets supplémentaires"
+  },
+  "videoEmbed": {
+    "vimeoPlayer": "Lecteur vidéo Vimeo",
+    "youtubePlayer": "Lecteur vidéo YouTube"
+  },
+  "asyncProjectsList": {
+    "loadingError": "Erreur lors du chargement des projets"
+  },
   "frenchTranslationAlert": {
     "title": "Traduction automatique",
     "message": "Toutes les chaînes ont été traduites automatiquement. Le français est présent comme démonstration des capacités de localisation de cette application."
@@ -26,13 +46,13 @@
       "heading": "Conception et typographie",
       "colorPaletteHeading": "Palette de couleurs",
       "typographyHeading": "Typographie",
-      "googleFontsAriaLabel": "Voir {name} sur Google Fonts (ouvre un nouvel onglet)"
+      "googleFontsAriaLabel": "Voir {{name}} sur Google Fonts (ouvre un nouvel onglet)"
     },
     "technologiesShowcase": {
       "heading": "Technologies",
       "v1SectionHeading": "Original V1 Technologies (Historique)",
       "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
-      "visitWebsiteAriaLabel": "Visitez le site web de {name} (s'ouvre dans un nouvel onglet)"
+      "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)"
     }
   },
   "resume": {

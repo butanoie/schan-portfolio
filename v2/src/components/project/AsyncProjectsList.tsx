@@ -9,6 +9,7 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import { ProjectLoadingProvider } from '../../contexts/ProjectLoadingContext';
 import { useProjectLoader } from '../../hooks/useProjectLoader';
 import { usePathname } from 'next/navigation';
+import { useI18n } from '../../hooks';
 import { ProjectLoadingStateBridgeContext } from '../common/MainLayout';
 
 /**
@@ -123,6 +124,7 @@ export function AsyncProjectsList({
   isHomePage = false,
 }: AsyncProjectsListProps) {
   const pathname = usePathname();
+  const { t } = useI18n();
   const isActuallyOnHomePage = pathname === '/';
 
   // Use isHomePage prop if provided, otherwise detect from pathname
@@ -210,7 +212,7 @@ export function AsyncProjectsList({
             borderRadius: 1,
           }}
         >
-          Error loading projects: {error.message}
+          {t('asyncProjectsList.loadingError', { ns: 'components' })}: {error.message}
         </Box>
       )}
     </ErrorBoundary>

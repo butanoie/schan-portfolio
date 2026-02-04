@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../test-utils';
 import Footer from '../../../components/common/Footer';
-import { LocaleProvider } from '../../../components/i18n/LocaleProvider';
 
 /**
  * Mock Next.js Image component for testing.
@@ -40,13 +39,14 @@ vi.mock('next/navigation', () => ({
 }));
 
 /**
- * Wrapper component for tests that need i18n context.
+ * Wrapper function for tests that need i18n context.
+ * Uses the test-utils render function which automatically provides LocaleProvider.
  *
  * @param component - React element to render with locale context
- * @returns Component wrapped with LocaleProvider
+ * @returns Render result from test-utils
  */
 const renderWithLocale = (component: React.ReactElement) => {
-  return render(<LocaleProvider>{component}</LocaleProvider>);
+  return render(component);
 };
 
 /**

@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../test-utils';
 import { ProjectDetail } from '../../../components/project/ProjectDetail';
 import type { Project } from '../../../types';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useMediaQuery } from '@mui/material';
 import { ThemeContextProvider } from '../../../contexts/ThemeContext';
+import { LocaleProvider } from '../../../components/i18n/LocaleProvider';
 
 /**
  * Mock the MUI useMediaQuery hook for testing different viewport sizes.
@@ -38,14 +39,18 @@ vi.mock('../../../components/ProjectGallery', () => ({
 }));
 
 /**
- * Wrapper component that provides ThemeContext to tested components.
+ * Wrapper component that provides ThemeContext and LocaleProvider to tested components.
  *
  * @param props - Component props
  * @param props.children - Child components to render within the theme context
- * @returns The children wrapped with ThemeContextProvider
+ * @returns The children wrapped with LocaleProvider and ThemeContextProvider
  */
 function Wrapper({ children }: { children: React.ReactNode }) {
-  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+  return (
+    <LocaleProvider initialLocale="en">
+      <ThemeContextProvider>{children}</ThemeContextProvider>
+    </LocaleProvider>
+  );
 }
 
 /**

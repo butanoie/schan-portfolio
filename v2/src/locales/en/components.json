@@ -14,6 +14,26 @@
     "previousImage": "Previous image",
     "nextImage": "Next image"
   },
+  "projectLightbox": {
+    "ariaLabel": "Image lightbox",
+    "closeButton": "Close lightbox",
+    "previousButton": "Previous image",
+    "nextButton": "Next image"
+  },
+  "loadMoreButton": {
+    "loading": "Loading projects...",
+    "loadMore": "Load more projects",
+    "allLoaded": "All projects loaded",
+    "loadingAria": "Loading more projects",
+    "loadMoreCountAria": "Load {{remainingCount}} more projects"
+  },
+  "videoEmbed": {
+    "vimeoPlayer": "Vimeo video player",
+    "youtubePlayer": "YouTube video player"
+  },
+  "asyncProjectsList": {
+    "loadingError": "Error loading projects"
+  },
   "frenchTranslationAlert": {
     "title": "Machine Translated",
     "message": "All strings have been machine translated. French is present as a demonstration of the localization capabilities of this web application."
@@ -26,13 +46,13 @@
       "heading": "Design & Typography",
       "colorPaletteHeading": "Colour Palette",
       "typographyHeading": "Typography",
-      "googleFontsAriaLabel": "View {name} on Google Fonts (opens in new tab)"
+      "googleFontsAriaLabel": "View {{name}} on Google Fonts (opens in new tab)"
     },
     "technologiesShowcase": {
       "heading": "Technologies",
       "v1SectionHeading": "Original V1 Technologies (Historical)",
       "v1Description": "The original portfolio site was built with these technologies:",
-      "visitWebsiteAriaLabel": "Visit {name} website (opens in new tab)"
+      "visitWebsiteAriaLabel": "Visit {{name}} website (opens in new tab)"
     }
   },
   "resume": {

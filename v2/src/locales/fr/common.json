@@ -15,7 +15,7 @@
     }
   },
   "footer": {
-    "copyright": "© {year} Sing Chan",
+    "copyright": "© {{year}} Sing Chan",
     "madeWith": "Réalisé avec Next.js, React et TypeScript",
     "designedAndBuilt": "Conçu et développé par Sing Chan",
     "butaThought": "Viva la France !",

@@ -15,7 +15,7 @@
     }
   },
   "footer": {
-    "copyright": "© {year} Sing Chan",
+    "copyright": "© {{year}} Sing Chan",
     "madeWith": "Made with Next.js, React, and TypeScript",
     "designedAndBuilt": "Designed and built by Sing Chan",
     "butaThought": "Pork products FTW!",
