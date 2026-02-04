@@ -61,7 +61,7 @@ export default function ResumePage() {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          gap: { xs: 4, md: 4 },
+          gap: { xs: 6, md: 6 },
         }}
       >
         {/* Right Column: Skills, Clients, Speaking (30% on desktop) */}

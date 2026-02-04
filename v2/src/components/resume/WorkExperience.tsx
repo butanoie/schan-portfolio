@@ -2,7 +2,8 @@
 
 import { Box, Typography } from "@mui/material";
 import type { Job } from "../../types/resume";
-import { BRAND_COLORS } from "../../constants";
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the WorkExperience component.
@@ -30,6 +31,9 @@ export interface WorkExperienceProps {
  * <WorkExperience jobs={resumeData.jobs} />
  */
 export default function WorkExperience({ jobs }: WorkExperienceProps) {
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
+
   return (
     <Box
       component="section"
@@ -41,7 +45,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
         variant="h2"
         sx={{
           fontWeight: 600,
-          color: BRAND_COLORS.graphite,
+          color: palette.text.primary,
           fontSize: { xs: "1.75rem", md: "2rem" },
           mb: 3,
         }}
@@ -63,7 +67,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
             variant="h3"
             sx={{
               fontWeight: 600,
-              color: BRAND_COLORS.maroon,
+              color: palette.secondary,
               fontSize: { xs: "1.35rem", md: "1.5rem" },
               mb: 1.5,
             }}
@@ -89,7 +93,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 sx={{
                   fontWeight: 600,
                   fontSize: { xs: "0.95rem", md: "1rem" },
-                  color: BRAND_COLORS.graphite,
+                  color: palette.text.secondary,
                   flex: { md: "1" },
                 }}
               >
@@ -103,7 +107,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 sx={{
                   fontWeight: 600,
                   fontSize: { xs: "0.95rem", md: "1rem" },
-                  color: BRAND_COLORS.graphite,
+                  color: palette.text.secondary,
                   textAlign: { xs: "left", md: "right" },
                   flex: { md: "0 0 auto" },
                   minWidth: { md: "180px" },
@@ -121,7 +125,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
               mt: 2,
               mb: job.keyContributions ? 1.5 : 0,
               lineHeight: 1.7,
-              color: BRAND_COLORS.graphite,
+              color: palette.text.primary,
               fontSize: { xs: "0.95rem", md: "1rem" },
             }}
           >
@@ -137,7 +141,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                   mt: 1.5,
                   mb: 1,
                   fontWeight: 500,
-                  color: BRAND_COLORS.graphite,
+                  color: palette.text.primary,
                   fontSize: { xs: "0.95rem", md: "1rem" },
                 }}
               >
@@ -152,7 +156,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                   "& li": {
                     mb: 0.75,
                     lineHeight: 1.6,
-                    color: BRAND_COLORS.graphite,
+                    color: palette.text.primary,
                     fontSize: { xs: "0.9rem", md: "0.95rem" },
                   },
                 }}

@@ -2,11 +2,23 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ConferenceSpeaker from "../../../components/resume/ConferenceSpeaker";
 import type { SpeakingContent } from "../../../types/resume";
+import { ThemeContextProvider } from "../../../contexts/ThemeContext";
 
 /**
  * Tests for the ConferenceSpeaker component.
  * Verifies the conference speaking history display.
  */
+
+/**
+ * Wrapper component that provides ThemeContext to tested components.
+ *
+ * @param props - Component props
+ * @param props.children - Child components to render within the theme context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
 describe("ConferenceSpeaker", () => {
   const mockContent: SpeakingContent = {
     intro: "I have presented sessions at the following conferences:",
@@ -32,7 +44,7 @@ describe("ConferenceSpeaker", () => {
   };
 
   it("should render the Conference Speaker heading", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole("heading", { name: /conference speaker/i, level: 3 })
@@ -40,7 +52,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render the intro text", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByText("I have presented sessions at the following conferences:")
@@ -48,7 +60,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render all conference names", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     expect(screen.getByText(/react conf 2023/i)).toBeInTheDocument();
     expect(screen.getByText(/javascript summit 2022/i)).toBeInTheDocument();
@@ -56,7 +68,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render topics when present", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByText(/react conf 2023.*advanced react patterns/i)
@@ -67,14 +79,14 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should not show topic separator when topic is absent", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     const jssummit = screen.getByText(/javascript summit 2022/i);
     expect(jssummit.textContent).not.toContain(" - ");
   });
 
   it("should render locations when present", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByText(/react conf 2023.*san francisco, ca/i)
@@ -98,7 +110,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={noLocationContent} />);
+    render(<ConferenceSpeaker content={noLocationContent} />, { wrapper: Wrapper });
 
     const eventText = screen.getByText(/tech conference 2020, 2020/i);
     expect(eventText).toBeInTheDocument();
@@ -106,7 +118,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should have proper accessibility attributes", () => {
-    render(<ConferenceSpeaker content={mockContent} />);
+    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     const section = screen.getByRole("region", { name: /conference speaker/i });
     expect(section).toBeInTheDocument();
@@ -123,7 +135,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={singleEvent} />);
+    render(<ConferenceSpeaker content={singleEvent} />, { wrapper: Wrapper });
 
     expect(screen.getByText("I spoke at one conference:")).toBeInTheDocument();
     expect(screen.getByText(/tech talk 2020, 2020/i)).toBeInTheDocument();
@@ -135,7 +147,7 @@ describe("ConferenceSpeaker", () => {
       events: [],
     };
 
-    render(<ConferenceSpeaker content={noEvents} />);
+    render(<ConferenceSpeaker content={noEvents} />, { wrapper: Wrapper });
 
     // Should still render the heading and intro
     expect(
@@ -147,7 +159,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render events as list items", () => {
-    const { container } = render(<ConferenceSpeaker content={mockContent} />);
+    const { container } = render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
 
     const listItems = container.querySelectorAll("ul > li");
     expect(listItems).toHaveLength(3);
@@ -166,7 +178,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={fullEvent} />);
+    render(<ConferenceSpeaker content={fullEvent} />, { wrapper: Wrapper });
 
     const eventText = screen.getByText(
       /complete conference 2024.*austin, tx.*full stack development/i

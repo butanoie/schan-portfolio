@@ -9,6 +9,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import type { ResumeHeaderContent } from "../../types/resume";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { rot13 } from "../../utils/obfuscation";
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the ResumeHeader component.
@@ -48,6 +50,8 @@ const iconMap = {
  */
 export default function ResumeHeader({ content }: ResumeHeaderProps) {
   const { name, tagline, contactLinks } = content;
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box
@@ -78,7 +82,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
           sx={{
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 700,
-            color: BRAND_COLORS.graphite,
+            color: palette.text.primary,
             fontSize: { xs: "2rem", md: "2.5rem" },
             mb: 2,
           }}
@@ -92,7 +96,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
           sx={{
             fontSize: { xs: "1rem", md: "1.1rem" },
             lineHeight: 1.6,
-            color: BRAND_COLORS.graphite,
+            color: palette.text.primary,
           }}
         >
           {tagline}

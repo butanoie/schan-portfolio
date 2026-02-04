@@ -4,6 +4,8 @@ import { Box, Typography, Paper } from "@mui/material";
 import Image from "next/image";
 import { sanitizeDescriptionHtml } from "../../utils/sanitization";
 import type { ButaStoryContent } from "../../types/colophon";
+import { getPaletteByMode } from "../../lib/themes";
+import { useThemeContext } from "../../contexts/ThemeContext";
 
 /**
  * Props for the ButaStory component.
@@ -32,6 +34,8 @@ export interface ButaStoryProps {
  */
 export default function ButaStory({ content }: ButaStoryProps) {
   const { paragraphs, versusImage, versusImageAlt } = content;
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box component="section" aria-labelledby="buta-heading">
@@ -88,7 +92,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
                 color: "primary.dark",
                 textDecoration: "underline",
                 "&:hover": {
-                  color: "#8B1538",
+                  color: palette.accents.red,
                 },
               },
             }}

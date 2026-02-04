@@ -2,6 +2,8 @@
 
 import { Box, Typography, Chip } from "@mui/material";
 import { BRAND_COLORS } from "../../constants";
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the ClientList component.
@@ -29,6 +31,9 @@ export interface ClientListProps {
  * <ClientList clients={resumeData.clients} />
  */
 export default function ClientList({ clients }: ClientListProps) {
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
+
   return (
     <Box component="section" aria-labelledby="clients-heading">
       <Box
@@ -45,7 +50,7 @@ export default function ClientList({ clients }: ClientListProps) {
           component="h3"
           sx={{
             fontWeight: 600,
-            color: BRAND_COLORS.graphite,
+            color: palette.card.text,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
