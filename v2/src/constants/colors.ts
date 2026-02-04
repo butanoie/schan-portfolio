@@ -204,8 +204,8 @@ export const THEME_PALETTES = {
     borders: "#FFFFFF",
     accents: {
       blue: "#FFFF00", // Bright yellow
-      green: "#FFFFFF",
-      red: "#FFFFFF",
+      green: "#FFFF00",
+      red: "#FFFF00",
     },
     card: {
       // High-contrast card uses inverted colors for maximum accessibility.
