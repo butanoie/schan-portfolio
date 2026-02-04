@@ -2,21 +2,23 @@
 
 Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
 
-## Current Status: Phase 3 - Core Pages Development ✅ **COMPLETE**
+## Current Status: Phase 4 - Enhanced Features 🔄 **In Progress**
 
 **Completed:**
 - ✅ Phase 1: Foundation & Setup
 - ✅ Phase 2: Data Migration (18 projects, 239 images, full TypeScript types)
-- ✅ Task 3.1: Homepage/Portfolio with project grid, filtering, and load more ([PR #4](https://github.com/butanoie/schan-portfolio/pull/4))
-- ✅ Task 3.2: Resume Page with work experience, skills, and clients ([PR #5](https://github.com/butanoie/schan-portfolio/pull/5))
-- ✅ Task 3.3: Colophon/About Page with design system and mascot story ([PR #3](https://github.com/butanoie/schan-portfolio/pull/3))
-- ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles, and more ([PR #6](https://github.com/butanoie/schan-portfolio/pull/6))
+- ✅ Phase 3: Core Pages Development
+  - ✅ Task 3.1: Homepage/Portfolio with project grid, filtering, and load more ([PR #4](https://github.com/butanoie/schan-portfolio/pull/4))
+  - ✅ Task 3.2: Resume Page with work experience, skills, and clients ([PR #5](https://github.com/butanoie/schan-portfolio/pull/5))
+  - ✅ Task 3.3: Colophon/About Page with design system and mascot story ([PR #3](https://github.com/butanoie/schan-portfolio/pull/3))
+  - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles, and more ([PR #6](https://github.com/butanoie/schan-portfolio/pull/6))
 
-**Next: Phase 4 - Enhanced Features**
-- 🔄 Theme switching (light, dark, high contrast modes)
-- 🔄 Advanced animations and transitions
-- 🔄 SEO optimization (metadata, structured data)
-- 🔄 Additional accessibility refinements
+**In Progress: Phase 4 - Enhanced Features**
+- 🔄 Task 4.1: Theme switching (light, dark, high contrast modes) ([PR #8](https://github.com/butanoie/schan-portfolio/pull/8) - Open for review)
+- ⬜ Task 4.2: Internationalization (i18n) - Infrastructure for multi-language support
+- ⬜ Task 4.3: Animations & Transitions - Polished UI with accessibility respect
+- ⬜ Task 4.4: WCAG 2.2 Level AA Compliance - Comprehensive accessibility audit
+- ⬜ Task 4.5: SEO Optimization - Meta tags, structured data, sitemap
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
@@ -465,18 +467,28 @@ See the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) for the complete roa
   - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles
 
 ### Upcoming Phases
-- ⬜ **Phase 4:** Enhanced Features - Theme switching, animations, SEO optimization
+- 🔄 **Phase 4:** Enhanced Features - Theme switching ✅, animations, SEO optimization, i18n
 - ⬜ **Phase 5:** Performance & Optimization - Image optimization, SSG, CDN
 - ⬜ **Phase 6:** Deployment & Migration - Vercel/Netlify, CI/CD, production launch
 - ⬜ **Phase 7:** Post-Launch - Monitoring, analytics, ongoing enhancements
 
-### Key Achievements in Phase 3
+### Key Achievements
+
+**Phase 3 Complete:**
 - **13+ new components** built with full TypeScript types
 - **125+ unit tests** with 85%+ coverage
 - **WCAG 2.2 Level AA** compliance on all pages
 - **Responsive design** across mobile, tablet, and desktop
 - **Full accessibility** with keyboard navigation and screen reader support
 - **Zero lint violations** and **zero TypeScript errors**
+
+**Phase 4.1 In Progress:**
+- **2 new theme modes** (Light, Dark, High Contrast - WCAG AAA compliant)
+- **Settings UI** with accessible popover and full keyboard navigation
+- **Complete theme infrastructure** (context, hooks, colors, types)
+- **41 new tests** with 100% coverage for new components
+- **833 tests passing** (Phase 2 + 3 + 4 infrastructure)
+- **Comprehensive documentation** and JSDoc on all code
 
 ## Learn More
 

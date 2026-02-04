@@ -1,9 +1,9 @@
 # Portfolio Modernization - Project Context
 
-**Version:** 1.0
-**Last Updated:** 2026-01-29
-**Current Phase:** Phase 3 - Core Pages Development (Task 3.1 in progress)
-**Current Branch:** `sc/projects-page`
+**Version:** 1.1
+**Last Updated:** 2026-02-03
+**Current Phase:** Phase 4 - Enhanced Features (Task 4.1 - Theme System in progress)
+**Current Branch:** `sc/themes`
 
 ---
 
@@ -11,14 +11,20 @@
 
 This is a portfolio modernization project migrating **portfolio.singchan.com** from a 2013-era technology stack (Gumby Framework, jQuery, PHP) to a modern React-based application using Next.js 15, TypeScript, and Material UI v7.
 
-**Project Status:** Phase 3 of 7 (2 of 3 tasks complete)
+**Project Status:** Phase 4 of 7 (Task 4.1 in progress)
 - ✅ Phase 1: Foundation & Setup (Complete)
 - ✅ Phase 2: Data Migration (Complete)
-- 🔄 Phase 3: Core Pages Development (In Progress)
-  - ✅ Task 3.3: Colophon/About Page
+- ✅ Phase 3: Core Pages Development (Complete)
+  - ✅ Task 3.1: Projects/Homepage Page
   - ✅ Task 3.2: Resume Page
-  - 🔄 Task 3.1: Projects Page (Current)
-  - ⬜ Task 3.4: Shared Components
+  - ✅ Task 3.3: Colophon/About Page
+  - ✅ Task 3.4: Shared Components
+- 🔄 Phase 4: Enhanced Features (In Progress)
+  - 🔄 Task 4.1: Theme Switching (Current - PR #8)
+  - ⬜ Task 4.2: Internationalization (i18n)
+  - ⬜ Task 4.3: Animations & Transitions
+  - ⬜ Task 4.4: WCAG 2.2 Level AA Compliance
+  - ⬜ Task 4.5: SEO Optimization
 
 ---
 
@@ -141,41 +147,49 @@ Filename format: `YYYY-MM-DDTHHMMSS_descriptive-name.md`
 
 ---
 
-## Current Work: Task 3.1 - Projects Page
+## Current Work: Task 4.1 - Theme System Implementation
 
 ### Status
-🔄 **In Progress** - Implementing homepage portfolio listing and project detail pages
+🔄 **In Progress** - Complete theme system with settings UI (PR #8 open)
 
 ### What's Being Built
 
-**Homepage (`/app/page.tsx`):**
-- Responsive project grid (3/2/1 columns desktop/tablet/mobile)
-- Tag filtering with AND logic
-- Keyword search (debounced)
-- Progressive loading with Buta navigation (load more pattern)
-- Lazy loading with fade-in animation (respects `prefers-reduced-motion`)
+**Core Theme Infrastructure:**
+- Three complete theme modes: Light, Dark, High Contrast (WCAG AAA compliant)
+- Centralized color palette management (`v2/src/constants/colors.ts`)
+- Theme creation with MUI integration (`v2/src/lib/themes.ts`)
+- Theme context for state management (`v2/src/contexts/ThemeContext.tsx`)
+- Custom hooks: `useTheme()` (state management), `useColorMode()` (system detection)
+- System preference detection (`prefers-color-scheme` media query)
+- LocalStorage persistence for user preference
+- SSR-safe implementation with hydration handling
 
-**Project Detail (`/app/projects/[id]/page.tsx`):**
-- Full project view with 5 responsive layout variants
-- Image gallery with thumbnail grid
-- Video embed support (self-hosted, Vimeo, YouTube)
-- Related projects section
-- Accessible image lightbox (keyboard + touch navigation)
+**User-Facing Settings UI:**
+- SettingsButton component (gear icon in header)
+- Theme switcher popover with toggle buttons
+- Full keyboard accessibility (Tab, Arrow keys, Enter/Space, Escape)
+- ARIA labels and expanded state attributes
+- Respects `prefers-reduced-motion` for animations
+- Popover positioning and focus management
 
-### Key Components to Build
+### Implementation Status
 
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| `ProjectCard.tsx` | Project thumbnail card | Pending |
-| `ProjectGrid.tsx` | Responsive grid layout | Pending |
-| `ProjectFilters.tsx` | Tag filter chips | Pending |
-| `SearchBar.tsx` | Search with debounce | Pending |
-| `ButaNavigation.tsx` | Character-driven load more | Pending |
-| `ProjectDetail.tsx` | Full project view | Pending |
-| `VideoEmbed.tsx` | Video player | Pending |
-| `Lightbox.tsx` | Accessible image gallery | Pending |
+✅ **Completed:**
+- Core theme system (light, dark, high contrast modes)
+- Settings UI components (SettingsButton, ThemeSwitcher)
+- Theme context and hooks
+- 41 new tests (25 SettingsButton + 16 ThemeSwitcher)
+- All 833 tests passing
+- Type-safe implementation with TypeScript
+- Comprehensive JSDoc documentation
+- WCAG compliance verification (AA on all, AAA on high contrast)
+- Changelog created
 
-See `docs/PHASE3_DETAILED_PLAN.md` for complete specifications.
+🔄 **In Progress:**
+- PR #8 open for review and merge
+- Documentation updates (this file, PHASE4_DETAILED_PLAN.md)
+
+See `docs/PHASE4_DETAILED_PLAN.md` for complete specifications and task details.
 
 ---
 
@@ -198,28 +212,46 @@ See `docs/PHASE3_DETAILED_PLAN.md` for complete specifications.
 - 87 tests with 88.13% coverage
 - Testing infrastructure: Vitest + React Testing Library
 
-### 🔄 Phase 3: Core Pages Development (In Progress)
+### ✅ Phase 3: Core Pages Development (Complete: 2026-02-03)
 
 **Completed:**
-- ✅ Task 3.3: Colophon/About Page (2026-01-27)
-  - 4 components, 54 tests, 100% pass rate
-  - PR: [#3](https://github.com/butanoie/schan-portfolio/pull/3)
+- ✅ Task 3.1: Projects/Homepage Page
+  - Homepage with responsive grid, filtering, search
+  - Project detail pages with 5 layout variants
+  - Image gallery with lightbox (keyboard + touch)
+  - Buta "Load More" navigation component
+  - PR: [#4](https://github.com/butanoie/schan-portfolio/pull/4)
+
 - ✅ Task 3.2: Resume Page (2026-01-29)
   - 5 components, 71 tests, 100% pass rate
   - Print-friendly CSS, contact obfuscation (ROT13/ROT5)
-  - Branch: `sc/resume`
+  - PR: [#5](https://github.com/butanoie/schan-portfolio/pull/5)
 
-**In Progress:**
-- 🔄 Task 3.1: Projects Page (Current)
-  - Homepage with project grid, filtering, search
-  - Project detail pages with responsive layouts
-  - Buta "Load More" navigation component
+- ✅ Task 3.3: Colophon/About Page (2026-01-27)
+  - 4 components, 54 tests, 100% pass rate
+  - Design philosophy, technologies, Buta story
+  - PR: [#3](https://github.com/butanoie/schan-portfolio/pull/3)
 
-**Pending:**
-- ⬜ Task 3.4: Shared Components
-  - Accessible lightbox with keyboard + touch navigation
-  - Loading skeletons, error boundaries
-  - Enhanced header (mobile hamburger menu)
+- ✅ Task 3.4: Shared Components
+  - Accessible lightbox, loading skeletons, thought bubbles
+  - Gallery components, common UI elements
+  - PR: [#6](https://github.com/butanoie/schan-portfolio/pull/6)
+
+### 🔄 Phase 4: Enhanced Features (In Progress)
+
+**Current Task:**
+- 🔄 Task 4.1: Theme Switching (2026-02-03)
+  - Three complete theme modes (Light, Dark, High Contrast)
+  - Settings UI with accessible popover
+  - Full keyboard and screen reader support
+  - WCAG AAA compliance on high contrast mode
+  - PR: [#8](https://github.com/butanoie/schan-portfolio/pull/8) - Open for review
+
+**Upcoming:**
+- ⬜ Task 4.2: Internationalization (i18n)
+- ⬜ Task 4.3: Animations & Transitions
+- ⬜ Task 4.4: WCAG 2.2 Level AA Compliance
+- ⬜ Task 4.5: SEO Optimization
 
 ---
 
