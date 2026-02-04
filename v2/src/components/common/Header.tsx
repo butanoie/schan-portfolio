@@ -9,7 +9,9 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
-import { ThemeToggle } from "../theme/ThemeToggle";
+import { SettingsButton } from "../settings/SettingsButton";
+import { useTheme } from "@/src/hooks/useTheme";
+import { getPaletteByMode } from "@/src/lib/themes";
 
 /**
  * Navigation link configuration for the header.
@@ -37,6 +39,8 @@ interface NavLink {
  */
 export default function Header() {
   const pathname = usePathname();
+  const { theme } = useTheme();
+  const palette = getPaletteByMode(theme);
 
   /**
    * Navigation links for the header.
@@ -92,7 +96,7 @@ export default function Header() {
                 aria-label="LinkedIn"
                 size="small"
                 sx={{
-                  color: BRAND_COLORS.graphite,
+                  color: palette.text.primary,
                   "&:hover": {
                     color: BRAND_COLORS.maroon,
                   },
@@ -107,7 +111,7 @@ export default function Header() {
                 aria-label="GitHub"
                 size="small"
                 sx={{
-                  color: BRAND_COLORS.graphite,
+                  color: palette.text.primary,
                   "&:hover": {
                     color: BRAND_COLORS.maroon,
                   },
@@ -115,7 +119,6 @@ export default function Header() {
               >
                 <GitHubIcon fontSize="medium" />
               </IconButton>
-              <ThemeToggle size="small" />
             </Box>
           </Box>
           <Box
@@ -159,6 +162,7 @@ export default function Header() {
                 {item.label}
               </Button>
             ))}
+            <SettingsButton size="small" />
           </Box>
         </Container>
       </Toolbar>
