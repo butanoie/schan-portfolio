@@ -1,7 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import DesignPhilosophy from '../../../components/colophon/DesignPhilosophy';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 import type { DesignPhilosophyContent } from '../../../types/colophon';
+
+/**
+ * Wrapper component to provide ThemeContext for testing.
+ *
+ * @param props - Component props
+ * @param props.children - Child elements to render within the context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
 
 /**
  * Tests for the DesignPhilosophy component.
@@ -48,7 +60,7 @@ describe('DesignPhilosophy', () => {
   };
 
   it('should render the section heading', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole('heading', { name: /design.*typography/i, level: 2 })
@@ -56,20 +68,20 @@ describe('DesignPhilosophy', () => {
   });
 
   it('should render intro text', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     expect(screen.getByText('The design was inspired by classic diagrams.')).toBeInTheDocument();
   });
 
   it('should render color palette section', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     expect(screen.getByRole('heading', { name: /colour palette/i })).toBeInTheDocument();
     expect(screen.getByText('Colors are chosen for accessibility.')).toBeInTheDocument();
   });
 
   it('should render color swatches with hex codes', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     expect(screen.getByText('Primary Blue')).toBeInTheDocument();
     expect(screen.getByText('#0066CC')).toBeInTheDocument();
@@ -83,14 +95,14 @@ describe('DesignPhilosophy', () => {
   });
 
   it('should render typography section', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     expect(screen.getByRole('heading', { name: /typography/i, level: 3 })).toBeInTheDocument();
     expect(screen.getByText('We use Google Fonts:')).toBeInTheDocument();
   });
 
   it('should render typography samples', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     expect(screen.getByText('Open Sans')).toBeInTheDocument();
     expect(screen.getByText('Body text')).toBeInTheDocument();
@@ -102,7 +114,7 @@ describe('DesignPhilosophy', () => {
   });
 
   it('should render font links when URL is provided', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     const openSansLink = screen.getByRole('link', {
       name: /view open sans on google fonts/i,
@@ -115,7 +127,7 @@ describe('DesignPhilosophy', () => {
   });
 
   it('should not render link when URL is not provided', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     // Oswald doesn't have a URL in our mock data
     expect(
@@ -124,14 +136,14 @@ describe('DesignPhilosophy', () => {
   });
 
   it('should have proper accessibility attributes', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     const section = screen.getByRole('region', { name: /design/i });
     expect(section).toBeInTheDocument();
   });
 
   it('should apply correct font family to typography samples', () => {
-    render(<DesignPhilosophy content={mockContent} />);
+    render(<DesignPhilosophy content={mockContent} />, { wrapper: Wrapper });
 
     const openSansSample = screen.getByText('The quick brown fox');
     expect(openSansSample).toHaveStyle({ fontFamily: '"Open Sans", sans-serif' });

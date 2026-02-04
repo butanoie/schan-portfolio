@@ -3,6 +3,8 @@
 import { Box, Typography, Chip } from "@mui/material";
 import type { SkillCategory } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the CoreCompetencies component.
@@ -32,6 +34,9 @@ export interface CoreCompetenciesProps {
 export default function CoreCompetencies({
   categories,
 }: CoreCompetenciesProps) {
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
+
   return (
     <Box component="section" aria-labelledby="skills-heading">
       {categories.map((category, categoryIndex) => (
@@ -54,7 +59,7 @@ export default function CoreCompetencies({
             }
             sx={{
               fontWeight: 600,
-              color: BRAND_COLORS.graphite,
+              color: palette.card.text,
               fontSize: { xs: "1.1rem", md: "1.25rem" },
               mb: 1.5,
             }}

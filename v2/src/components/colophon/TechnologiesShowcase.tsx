@@ -13,7 +13,9 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { TechnologiesContent, Technology } from "../../types/colophon";
-import { BRAND_COLORS, UI_COLORS } from "../../constants";
+import { BRAND_COLORS } from "../../constants";
+import { getPaletteByMode } from "../../lib/themes";
+import { useThemeContext } from "../../contexts/ThemeContext";
 
 /**
  * Props for the TechnologiesShowcase component.
@@ -26,11 +28,17 @@ export interface TechnologiesShowcaseProps {
 /**
  * Renders a single technology item with name, description, and optional link.
  *
+ * Uses theme-aware card styling to ensure proper contrast and readability
+ * across all themes (light, dark, and high-contrast).
+ *
  * @param props - Component props
  * @param props.tech - Technology data to display
  * @returns A card displaying the technology information
  */
 function TechnologyCard({ tech }: { tech: Technology }) {
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
+
   return (
     <Card
       variant="outlined"
@@ -38,7 +46,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: UI_COLORS.cardBackground,
+        backgroundColor: palette.card.background,
       }}
     >
       <CardContent sx={{ flexGrow: 1 }}>
@@ -56,6 +64,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               fontFamily: '"Oswald", sans-serif',
               fontWeight: 600,
               fontSize: "1rem",
+              color: palette.card.heading,
             }}
           >
             {tech.name}
@@ -67,15 +76,22 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               rel="noopener noreferrer"
               aria-label={`Visit ${tech.name} website (opens in new tab)`}
               sx={{
-                color: "text.secondary",
-                "&:hover": { color: "primary.dark" },
+                color: palette.card.text,
+                "&:hover": {
+                  color: mode === "highContrast" ? "#000000" : BRAND_COLORS.maroon,
+                },
               }}
             >
               <LaunchIcon sx={{ fontSize: 16 }} />
             </MuiLink>
           )}
         </Box>
-        <Typography variant="body2" color="text.primary">
+        <Typography
+          variant="body2"
+          sx={{
+            color: palette.card.text,
+          }}
+        >
           {tech.description}
         </Typography>
       </CardContent>
@@ -103,6 +119,8 @@ export default function TechnologiesShowcase({
   content,
 }: TechnologiesShowcaseProps) {
   const { intro, v2Categories, v1Technologies } = content;
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box
@@ -118,7 +136,7 @@ export default function TechnologiesShowcase({
         variant="h2"
         component="h2"
         sx={{
-          color: BRAND_COLORS.maroon,
+          color: palette.secondary,
           fontSize: "2rem",
           mt: 0,
           mb: 2,
