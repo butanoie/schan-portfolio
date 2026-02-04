@@ -302,3 +302,186 @@ export const resumeData: ResumeData = {
 export function getResumeData(): ResumeData {
   return resumeData;
 }
+
+/**
+ * Get localized resume data with translated strings.
+ *
+ * Accepts a translation function from useI18n() and returns resume data
+ * with all user-facing strings translated to the current locale.
+ * Non-translatable data (URLs, dates, company names) remain unchanged.
+ *
+ * @param t - Translation function from useI18n() hook
+ * @returns Resume data with all strings localized to the current language
+ *
+ * @example
+ * const { t } = useI18n();
+ * const data = getLocalizedResumeData(t);
+ * console.log(data.header.tagline); // Translated tagline
+ * console.log(data.jobs[0].description); // Translated job description
+ */
+export function getLocalizedResumeData(
+  t: (key: string, options?: Record<string, string | number | Record<string, string>>) => string
+): ResumeData {
+  return {
+    pageTitle: "Resume | Sing Chan's Portfolio",
+    pageDescription:
+      "Sing Chan's resume - 25+ years experience in UX, product management, and software development.",
+
+    header: {
+      name: "Sing Chan",
+      tagline: t('resume.header.tagline', { ns: 'components' }),
+      contactLinks: [
+        {
+          label: "linkedin.com/in/sing-chan",
+          url: "https://www.linkedin.com/in/sing-chan/",
+          icon: "linkedin",
+        },
+        {
+          label: "github.com/butanoie",
+          url: "https://github.com/butanoie",
+          icon: "github",
+        },
+        {
+          label: "fvat@fvatpuna.pbz",
+          url: "znvygb:fvat@fvatpuna.pbz?fhowrpg=Pbagnpg ivn Cbegsbyvb Fvgr",
+          icon: "email",
+        },
+        {
+          label: "+6-159-228-7398",
+          url: "gry:+6-159-228-7398",
+          icon: "phone",
+        },
+        {
+          label: t('resume.header.downloadLabel', { ns: 'components' }),
+          url: "/Sing_Chan_Resume.pdf",
+          icon: "download",
+        },
+      ],
+    },
+
+    jobs: [
+      {
+        company: "Collabware Systems",
+        roles: [
+          {
+            title: "VP, Product",
+            startDate: "May 2020",
+            endDate: "Present",
+          },
+          {
+            title: "Product Manager",
+            startDate: "March 2018",
+            endDate: "May 2020",
+          },
+          {
+            title: "User Experience Architect",
+            startDate: "August 2011",
+            endDate: "Present",
+          },
+        ],
+        description: t('resume.workExperience.collabware.description', { ns: 'components' }),
+        keyContributions: [
+          t('resume.workExperience.collabware.contributions.0', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.1', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.2', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.3', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.4', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.5', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.6', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.7', { ns: 'components' }),
+        ],
+      },
+      {
+        company: "Habanero Consulting Group",
+        roles: [
+          {
+            title: "User Experience Developer",
+            startDate: "May 2006",
+            endDate: "July 2011",
+          },
+        ],
+        description: t('resume.workExperience.habanero.description', { ns: 'components' }),
+      },
+      {
+        company: "Daniel Choi Design Associates",
+        roles: [
+          {
+            title: "Lead Developer (Contract)",
+            startDate: "2005",
+            endDate: "2006",
+          },
+        ],
+        description: t('resume.workExperience.danielChoi.description', { ns: 'components' }),
+      },
+      {
+        company: "Local Lola Design Team (LLDT)",
+        roles: [
+          {
+            title: "Flash and User Experience Developer (Contract)",
+            startDate: "2003",
+            endDate: "2006",
+          },
+        ],
+        description: t('resume.workExperience.localLola.description', { ns: 'components' }),
+      },
+      {
+        company: "Grey Advertising Vancouver",
+        roles: [
+          {
+            title: "Interactive Producer/Developer",
+            startDate: "July 1999",
+            endDate: "May 2006",
+          },
+        ],
+        description: t('resume.workExperience.greyAdvertising.description', { ns: 'components' }),
+      },
+    ],
+
+    skillCategories: [
+      {
+        label: t('resume.skills.coreCompetencies', { ns: 'components' }),
+        skills: [
+          "JavaScript",
+          "TypeScript",
+          "React.js",
+          "Fluent UI",
+          ".NET",
+          "C#",
+          "HTML",
+          "CSS",
+          "MS SQL Server",
+          "CosmosDB",
+          "SharePoint",
+        ],
+      },
+      {
+        label: t('resume.skills.everydayTools', { ns: 'components' }),
+        skills: [
+          "Claude Code",
+          "Azure DevOps",
+          "Application Insights",
+          "Rancher",
+          "Graphana",
+          "Visual Studio",
+          "Visual Studio Code",
+          "Kubernetes",
+          "Photoshop",
+          "Paper",
+          "Pencils",
+          "Dry-Erase Markers",
+        ],
+      },
+      {
+        label: t('resume.skills.onceInAWhile', { ns: 'components' }),
+        skills: ["Illustrator", "Premiere Pro", "Perl", "Req-n-roll"],
+      },
+    ],
+
+    clients: resumeData.clients,
+
+    speaking: {
+      intro: t('resume.conferenceSpeaker.intro', { ns: 'components' }),
+      events: resumeData.speaking.events,
+    },
+  };
+}

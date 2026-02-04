@@ -4,6 +4,7 @@ import { Box, Typography, Chip } from "@mui/material";
 import { BRAND_COLORS } from "../../constants";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { getPaletteByMode } from "../../lib/themes";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the ClientList component.
@@ -33,6 +34,7 @@ export interface ClientListProps {
 export default function ClientList({ clients }: ClientListProps) {
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Box component="section" aria-labelledby="clients-heading">
@@ -55,7 +57,7 @@ export default function ClientList({ clients }: ClientListProps) {
             mb: 1.5,
           }}
         >
-          Clients
+          {t('resume.clients.heading', { ns: 'components' })}
         </Typography>
 
         {/* Client Chips */}

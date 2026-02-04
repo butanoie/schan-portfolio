@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import type { Job } from "../../types/resume";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { getPaletteByMode } from "../../lib/themes";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the WorkExperience component.
@@ -33,6 +34,7 @@ export interface WorkExperienceProps {
 export default function WorkExperience({ jobs }: WorkExperienceProps) {
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Box
@@ -50,7 +52,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           mb: 3,
         }}
       >
-        Work Experience
+        {t('resume.workExperience.heading', { ns: 'components' })}
       </Typography>
 
       {jobs.map((job, jobIndex) => (
@@ -145,7 +147,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                   fontSize: { xs: "0.95rem", md: "1rem" },
                 }}
               >
-                Key Contributions:
+                {t('resume.workExperience.keyContributions', { ns: 'components' })}
               </Typography>
               <Box
                 component="ul"
