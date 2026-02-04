@@ -3,6 +3,7 @@ import { ProjectDetail } from '../../../components/project/ProjectDetail';
 import type { Project } from '../../../types';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useMediaQuery } from '@mui/material';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 
 /**
  * Mock the MUI useMediaQuery hook for testing different viewport sizes.
@@ -35,6 +36,17 @@ vi.mock('../../../components/ProjectGallery', () => ({
     </div>
   ),
 }));
+
+/**
+ * Wrapper component that provides ThemeContext to tested components.
+ *
+ * @param props - Component props
+ * @param props.children - Child components to render within the theme context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
 
 /**
  * Test suite for ProjectDetail component.
@@ -90,7 +102,7 @@ describe('ProjectDetail', () => {
   it('renders without crashing', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false); // Desktop
-    const { container } = render(<ProjectDetail project={baseProject} />);
+    const { container } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     expect(container).toBeInTheDocument();
   });
 
@@ -100,7 +112,7 @@ describe('ProjectDetail', () => {
   it('renders project title', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    render(<ProjectDetail project={baseProject} />);
+    render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     expect(screen.getByText('Test Project')).toBeInTheDocument();
   });
 
@@ -110,7 +122,7 @@ describe('ProjectDetail', () => {
   it('renders project tags', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    render(<ProjectDetail project={baseProject} />);
+    render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
   });
@@ -121,7 +133,7 @@ describe('ProjectDetail', () => {
   it('renders project description', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    render(<ProjectDetail project={baseProject} />);
+    render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     expect(screen.getByText('Test description')).toBeInTheDocument();
   });
 
@@ -131,7 +143,7 @@ describe('ProjectDetail', () => {
   it('renders project gallery', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    render(<ProjectDetail project={baseProject} />);
+    render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     expect(screen.getByTestId('project-gallery')).toBeInTheDocument();
   });
 
@@ -142,7 +154,8 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false); // Desktop
     const { container } = render(
-      <ProjectDetail project={baseProject} />
+      <ProjectDetail project={baseProject} />,
+      { wrapper: Wrapper }
     );
     expect(container.querySelector('section')).toBeInTheDocument();
   });
@@ -154,7 +167,8 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false); // Desktop
     const { container } = render(
-      <ProjectDetail project={projectWithVideo} />
+      <ProjectDetail project={projectWithVideo} />,
+      { wrapper: Wrapper }
     );
     // Should have video iframe
     expect(container.querySelector('iframe')).toBeInTheDocument();
@@ -167,7 +181,8 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false); // Desktop
     const { container } = render(
-      <ProjectDetail project={projectWithAltGrid} />
+      <ProjectDetail project={projectWithAltGrid} />,
+      { wrapper: Wrapper }
     );
     expect(container.querySelector('section')).toBeInTheDocument();
   });
@@ -179,7 +194,8 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(true); // Mobile
     const { container } = render(
-      <ProjectDetail project={baseProject} />
+      <ProjectDetail project={baseProject} />,
+      { wrapper: Wrapper }
     );
     expect(container.querySelector('section')).toBeInTheDocument();
   });
@@ -191,7 +207,8 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(true); // Mobile
     const { container } = render(
-      <ProjectDetail project={projectWithVideo} />
+      <ProjectDetail project={projectWithVideo} />,
+      { wrapper: Wrapper }
     );
     // Should have video iframe
     expect(container.querySelector('iframe')).toBeInTheDocument();
@@ -203,7 +220,7 @@ describe('ProjectDetail', () => {
   it('renders divider between projects', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    const { container } = render(<ProjectDetail project={baseProject} />);
+    const { container } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     const divider = container.querySelector('hr');
     expect(divider).toBeInTheDocument();
   });
@@ -214,7 +231,7 @@ describe('ProjectDetail', () => {
   it('uses section element for semantic HTML', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    const { container } = render(<ProjectDetail project={baseProject} />);
+    const { container } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     const section = container.querySelector('section');
     expect(section).toBeInTheDocument();
   });
@@ -225,7 +242,7 @@ describe('ProjectDetail', () => {
   it('project title is h2 heading', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    render(<ProjectDetail project={baseProject} />);
+    render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     const h2 = screen.getByRole('heading', {
       level: 2,
       name: 'Test Project',
@@ -240,7 +257,7 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
     const projectNoVideos: Project = { ...baseProject, videos: [] };
-    const { container } = render(<ProjectDetail project={projectNoVideos} />);
+    const { container } = render(<ProjectDetail project={projectNoVideos} />, { wrapper: Wrapper });
     expect(container).toBeInTheDocument();
   });
 
@@ -250,7 +267,7 @@ describe('ProjectDetail', () => {
   it('handles project with empty videos array', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    const { container } = render(<ProjectDetail project={baseProject} />);
+    const { container } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     expect(container).toBeInTheDocument();
     // Should not have video iframe
     expect(container.querySelector('iframe')).not.toBeInTheDocument();
@@ -263,7 +280,8 @@ describe('ProjectDetail', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
     const { container } = render(
-      <ProjectDetail project={projectWithAltGrid} />
+      <ProjectDetail project={projectWithAltGrid} />,
+      { wrapper: Wrapper }
     );
     expect(container).toBeInTheDocument();
   });
@@ -278,7 +296,7 @@ describe('ProjectDetail', () => {
       ...baseProject,
       tags: ['React', 'TypeScript', 'Next.js', 'MUI', 'GraphQL', 'Node.js'],
     };
-    render(<ProjectDetail project={projectManyTags} />);
+    render(<ProjectDetail project={projectManyTags} />, { wrapper: Wrapper });
     expect(screen.getByText('GraphQL')).toBeInTheDocument();
     expect(screen.getByText('Node.js')).toBeInTheDocument();
   });
@@ -289,7 +307,7 @@ describe('ProjectDetail', () => {
   it('maintains section with scroll margin for anchor links', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false);
-    const { container } = render(<ProjectDetail project={baseProject} />);
+    const { container } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     const section = container.querySelector('section');
     expect(section).toBeInTheDocument();
   });
@@ -299,7 +317,7 @@ describe('ProjectDetail', () => {
    */
   it('responds to viewport size changes', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
-    const { rerender } = render(<ProjectDetail project={baseProject} />);
+    const { rerender } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
 
     // Simulate desktop
     mockUseMediaQuery.mockReturnValue(false);
@@ -323,7 +341,7 @@ describe('ProjectDetail', () => {
       title:
         'A Very Long Project Title That Describes a Complex Multi-Year Enterprise Application Development Initiative',
     };
-    render(<ProjectDetail project={longTitleProject} />);
+    render(<ProjectDetail project={longTitleProject} />, { wrapper: Wrapper });
     expect(
       screen.getByText(/A Very Long Project Title/)
     ).toBeInTheDocument();
@@ -339,7 +357,7 @@ describe('ProjectDetail', () => {
       ...baseProject,
       desc: '<p>Built with <strong>Vue.js</strong> and <em>JavaScript</em></p>',
     };
-    render(<ProjectDetail project={htmlProject} />);
+    render(<ProjectDetail project={htmlProject} />, { wrapper: Wrapper });
     expect(screen.getByText('Vue.js')).toBeInTheDocument();
   });
 
@@ -349,7 +367,7 @@ describe('ProjectDetail', () => {
   it('passes narrow prop to ProjectGallery in wide-regular layout', () => {
     const mockUseMediaQuery = useMediaQuery as ReturnType<typeof vi.fn>;
     mockUseMediaQuery.mockReturnValue(false); // Desktop
-    const { container } = render(<ProjectDetail project={baseProject} />);
+    const { container } = render(<ProjectDetail project={baseProject} />, { wrapper: Wrapper });
     const gallery = container.querySelector('[data-testid="project-gallery"]');
     expect(gallery).toHaveAttribute('data-narrow', 'true');
   });

@@ -21,6 +21,13 @@ export type {
   PageDeckData,
 } from './pageDeck';
 
+export type {
+  ThemeMode,
+  ColorScheme,
+  ThemePalette,
+  ThemeConfig,
+} from './theme';
+
 export {
   isProject,
   isProjectImage,

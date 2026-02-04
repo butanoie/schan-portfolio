@@ -3,6 +3,8 @@
 import { Box, Typography } from "@mui/material";
 import type { SpeakingContent } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the ConferenceSpeaker component.
@@ -33,6 +35,8 @@ export default function ConferenceSpeaker({
   content,
 }: ConferenceSpeakerProps) {
   const { intro, events } = content;
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box component="section" aria-labelledby="speaking-heading">
@@ -49,7 +53,7 @@ export default function ConferenceSpeaker({
           variant="h3"
           sx={{
             fontWeight: 600,
-            color: BRAND_COLORS.graphite,
+            color: palette.card.text,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
@@ -62,7 +66,7 @@ export default function ConferenceSpeaker({
           variant="body2"
           sx={{
             mb: 1.5,
-            color: BRAND_COLORS.graphite,
+            color: palette.card.text,
             fontSize: "0.9rem",
             lineHeight: 1.6,
           }}
@@ -80,7 +84,7 @@ export default function ConferenceSpeaker({
             "& li": {
               mb: 0.5,
               lineHeight: 1.5,
-              color: BRAND_COLORS.graphite,
+              color: palette.card.text,
               fontSize: "0.875rem",
             },
           }}

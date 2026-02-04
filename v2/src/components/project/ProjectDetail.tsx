@@ -2,10 +2,11 @@
 
 import type { Project } from '../../types';
 import { useMediaQuery, useTheme, Box, Divider, Typography } from '@mui/material';
-import { BRAND_COLORS } from '../../constants';
 import { ProjectDescription } from './ProjectDescription';
 import { VideoEmbed } from './VideoEmbed';
 import { ProjectGallery } from './ProjectGallery';
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the ProjectDetail component.
@@ -123,8 +124,9 @@ function getLayoutVariant(
 export function ProjectDetail({ project }: ProjectDetailProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   const layoutVariant = getLayoutVariant(project, isMobile);
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box component="section">
@@ -137,7 +139,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       sx={{
         fontFamily: 'Oswald, sans-serif',
         textAlign: 'center',
-        color: BRAND_COLORS.graphite,
+        color: palette.text.primary,
         fontSize: "2rem",
         mt: 0,
         mb: 2,

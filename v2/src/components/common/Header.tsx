@@ -9,6 +9,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 /**
  * Navigation link configuration for the header.
@@ -114,6 +115,7 @@ export default function Header() {
               >
                 <GitHubIcon fontSize="medium" />
               </IconButton>
+              <ThemeToggle size="small" />
             </Box>
           </Box>
           <Box

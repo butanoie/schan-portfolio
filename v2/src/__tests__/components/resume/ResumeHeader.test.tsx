@@ -2,11 +2,23 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ResumeHeader from "../../../components/resume/ResumeHeader";
 import type { ResumeHeaderContent } from "../../../types/resume";
+import { ThemeContextProvider } from "../../../contexts/ThemeContext";
 
 /**
  * Tests for the ResumeHeader component.
  * Verifies the resume header with name, tagline, and contact buttons.
  */
+
+/**
+ * Wrapper component that provides ThemeContext to tested components.
+ *
+ * @param props - Component props
+ * @param props.children - Child components to render within the theme context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
 describe("ResumeHeader", () => {
   const mockContent: ResumeHeaderContent = {
     name: "Test User",
@@ -31,7 +43,7 @@ describe("ResumeHeader", () => {
   };
 
   it("should render name as h1", () => {
-    render(<ResumeHeader content={mockContent} />);
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByRole("heading", { name: /test user/i, level: 1 })
@@ -39,7 +51,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should render tagline", () => {
-    render(<ResumeHeader content={mockContent} />);
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
     expect(
       screen.getByText("I develop useful and engaging applications.")
@@ -47,7 +59,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should render all contact links as buttons", () => {
-    render(<ResumeHeader content={mockContent} />);
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
     const linkedInLink = screen.getByRole("link", {
       name: /linkedin\.com\/in\/test/i,
@@ -63,7 +75,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should have correct href attributes for links", () => {
-    render(<ResumeHeader content={mockContent} />);
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
     const linkedInLink = screen.getByRole("link", {
       name: /linkedin\.com\/in\/test/i,
@@ -82,7 +94,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should have target blank for download link", () => {
-    render(<ResumeHeader content={mockContent} />);
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
     const downloadLink = screen.getByRole("link", {
       name: /download résumé/i,
@@ -93,7 +105,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should have proper accessibility attributes", () => {
-    render(<ResumeHeader content={mockContent} />);
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
     const section = screen.getByRole("region", { name: /test user/i });
     expect(section).toBeInTheDocument();
@@ -105,7 +117,7 @@ describe("ResumeHeader", () => {
       contactLinks: [],
     };
 
-    render(<ResumeHeader content={contentWithNoLinks} />);
+    render(<ResumeHeader content={contentWithNoLinks} />, { wrapper: Wrapper });
 
     // Should still render name and tagline
     expect(

@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 import type { PageDeckData } from "../../types";
-import { BRAND_COLORS } from "../../constants";
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { getPaletteByMode } from "../../lib/themes";
 
 /**
  * Props for the PageDeck component.
@@ -33,6 +34,8 @@ export interface PageDeckProps {
  */
 export default function PageDeck({ content }: PageDeckProps) {
   const { imageUrl, imageAlt, headingId, heading, deck } = content;
+  const { mode } = useThemeContext();
+  const palette = getPaletteByMode(mode);
 
   return (
     <Box
@@ -63,7 +66,7 @@ export default function PageDeck({ content }: PageDeckProps) {
         sx={{
           fontFamily: '"Oswald", sans-serif',
           fontWeight: 700,
-          color: BRAND_COLORS.graphite,
+          color: palette.text.primary,
           fontSize: { xs: "2rem", md: "2.5rem" },
           mt: 6,
           mb: 3,
