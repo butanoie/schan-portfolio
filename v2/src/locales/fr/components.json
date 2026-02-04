@@ -1,0 +1,21 @@
+{
+  "header": {
+    "siteTitle": "Sing Chan"
+  },
+  "projectCard": {
+    "viewProject": "Afficher le projet",
+    "imageAlt": "Image du projet",
+    "tags": "Balises",
+    "year": "Année"
+  },
+  "projectGallery": {
+    "openImage": "Ouvrir dans la visionneuse",
+    "closeImage": "Fermer la visionneuse",
+    "previousImage": "Image précédente",
+    "nextImage": "Image suivante"
+  },
+  "frenchTranslationAlert": {
+    "title": "Traduction automatique",
+    "message": "Toutes les chaînes ont été traduites automatiquement. Le français est présent comme démonstration des capacités de localisation de cette application."
+  }
+}

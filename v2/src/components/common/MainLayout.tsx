@@ -5,7 +5,9 @@ import { Box, Container } from "@mui/material";
 import { useState, useMemo } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { FrenchTranslationAlert } from "./FrenchTranslationAlert";
 import { ProjectLoadingProvider } from "../../contexts/ProjectLoadingContext";
+import { useI18n } from "@/src/hooks/useI18n";
 
 /**
  * Represents the loading state for projects in the async list.
@@ -45,6 +47,7 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }): React.JSX.Element {
+  const { t } = useI18n();
   // Project loading context state - shared between AsyncProjectsList and Footer
   const [projectLoadingState, setProjectLoadingState] = useState<ProjectLoadingState | null>(null);
 
@@ -106,10 +109,12 @@ export default function MainLayout({
           },
         }}
       >
-        Skip to main content
+        {t('nav.skipToMain')}
       </Box>
 
       <Header />
+
+      <FrenchTranslationAlert />
 
       {shouldWrapWithProvider ? (
         <ProjectLoadingProvider value={projectLoadingState}>

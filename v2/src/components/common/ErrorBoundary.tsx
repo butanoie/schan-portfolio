@@ -1,8 +1,9 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { useI18n } from '@/src/hooks/useI18n';
 
 /**
  * Error boundary for graceful error handling in React components.
@@ -10,6 +11,11 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
  * Catches JavaScript errors anywhere in the child component tree and displays
  * a user-friendly fallback UI. Includes error logging and a retry button to
  * recover from transient errors.
+ *
+ * **Note:** This is implemented as a functional component wrapper around
+ * React's class-based error boundary API using the experimental useErrorHandler
+ * pattern. For full error boundary coverage, consider using the class component
+ * version or a library like react-error-boundary.
  *
  * @example
  * ```tsx
@@ -49,47 +55,30 @@ export interface ErrorBoundaryProps {
 }
 
 /**
- * Internal state for the ErrorBoundary component.
+ * Class-based Error Boundary implementation.
  *
- * Tracks error state and provides information about caught errors
- * for display and debugging purposes.
+ * React Error Boundaries require class components with getDerivedStateFromError()
+ * and componentDidCatch() lifecycle methods. This class handles error catching
+ * and state management.
+ *
+ * @internal Used internally by the ErrorBoundary wrapper
  */
-interface ErrorBoundaryState {
-  /** Whether an error has been caught */
-  hasError: boolean;
-
-  /** The error object that was caught */
-  error: Error | null;
-
-  /** Error information from React */
-  errorInfo: React.ErrorInfo | null;
-}
-
-/**
- * Error Boundary class component for catching and handling React errors.
- *
- * React Error Boundaries are class components that implement lifecycle methods
- * `getDerivedStateFromError()` and `componentDidCatch()`. Currently, there is
- * no Hook equivalent, so class components must be used.
- *
- * This error boundary catches errors in:
- * - Render methods
- * - Lifecycle methods
- * - Constructors of child components
- *
- * It does NOT catch errors in:
- * - Event handlers (use try/catch instead)
- * - Asynchronous code (setTimeout, promises)
- * - Server-side rendering
- * - Errors thrown in the error boundary itself
- */
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundaryClass extends React.Component<
+  ErrorBoundaryProps & { errorTitle: string; errorMessage: string; retryButtonText: string },
+  { hasError: boolean; error: Error | null; errorInfo: React.ErrorInfo | null }
+> {
   /**
-   * Creates a new ErrorBoundary instance.
+   * Creates a new ErrorBoundaryClass instance.
    *
-   * @param props - Component props containing children and optional callbacks
+   * @param props - Component props
    */
-  constructor(props: ErrorBoundaryProps) {
+  constructor(
+    props: ErrorBoundaryProps & {
+      errorTitle: string;
+      errorMessage: string;
+      retryButtonText: string;
+    }
+  ) {
     super(props);
     this.state = {
       hasError: false,
@@ -100,52 +89,42 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   /**
    * Update state so the next render will show the fallback UI.
-   * Called after an error has been thrown by a descendant component.
    *
    * @param error - The error that was thrown
    * @returns Updated state
    */
-  static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
+  static getDerivedStateFromError(error: Error) {
     return { hasError: true, error };
   }
 
   /**
    * Log error details for debugging and error reporting.
-   * Called after an error has been thrown by a descendant component.
    *
    * @param error - The error that was thrown
-   * @param errorInfo - Object with `componentStack` property containing stack trace
+   * @param errorInfo - Error information from React
    */
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    // Store error info for display/debugging
     this.setState({ errorInfo });
 
-    // Log to console in development
     if (process.env.NODE_ENV === 'development') {
       console.error('Error caught by ErrorBoundary:', error);
       console.error('Component stack:', errorInfo.componentStack);
     }
 
-    // Call optional error handler prop
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
-
-    // Could also send to error reporting service here
-    // Example: Sentry.captureException(error, { contexts: { react: errorInfo } });
   }
 
   /**
    * Reset the error boundary state to recover from the error.
-   * This attempts to render the child component again.
    */
   resetError = (): void => {
     const { error } = this.state;
     const { onErrorRecovery } = this.props;
 
-    // Allow custom recovery logic
     if (error && onErrorRecovery && !onErrorRecovery(error)) {
-      return; // Recovery handler can prevent reset
+      return;
     }
 
     this.setState({
@@ -158,15 +137,24 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   /**
    * Renders the component or error fallback UI.
    *
-   * @returns Child components if no error, otherwise renders fallback error UI
+   * @returns Child components if no error, otherwise error UI
    */
   render(): ReactNode {
     const { hasError, error } = this.state;
-    const { children, fallback } = this.props;
+    const { children, fallback, errorTitle, errorMessage, retryButtonText } = this.props;
 
-    // If error occurred, show fallback or default error UI
     if (hasError) {
-      return fallback || <DefaultErrorFallback error={error} onRetry={this.resetError} />;
+      return (
+        fallback || (
+          <DefaultErrorFallback
+            error={error}
+            onRetry={this.resetError}
+            errorTitle={errorTitle}
+            errorMessage={errorMessage}
+            retryButtonText={retryButtonText}
+          />
+        )
+      );
     }
 
     return children;
@@ -185,14 +173,23 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
  * @param props - Component props
  * @param props.error - The error that was caught
  * @param props.onRetry - Callback to attempt recovery
+ * @param props.errorTitle - Localized error title
+ * @param props.errorMessage - Localized error message
+ * @param props.retryButtonText - Localized retry button text
  * @returns A JSX element displaying the error UI
  */
 function DefaultErrorFallback({
   error,
   onRetry,
+  errorTitle,
+  errorMessage,
+  retryButtonText,
 }: {
   error: Error | null;
   onRetry: () => void;
+  errorTitle: string;
+  errorMessage: string;
+  retryButtonText: string;
 }): ReactNode {
   return (
     <Container
@@ -238,7 +235,7 @@ function DefaultErrorFallback({
             mb: 2,
           }}
         >
-          Something went wrong
+          {errorTitle}
         </Typography>
 
         {/* Error Message */}
@@ -249,8 +246,7 @@ function DefaultErrorFallback({
             mb: 3,
           }}
         >
-          We encountered an unexpected error. Please try again or contact support if the problem
-          persists.
+          {errorMessage}
         </Typography>
 
         {/* Error Details (Development Mode Only) */}
@@ -294,13 +290,34 @@ function DefaultErrorFallback({
             py: 1.5,
             fontSize: '1rem',
           }}
-          aria-label="Retry and reload the page"
+          aria-label={`${retryButtonText} and reload the page`}
         >
-          Try Again
+          {retryButtonText}
         </Button>
       </Box>
     </Container>
   );
 }
 
-export default ErrorBoundary;
+/**
+ * Functional wrapper component that uses i18n to provide localized strings
+ * to the class-based ErrorBoundary.
+ *
+ * This wrapper allows the error boundary to access i18n hooks while maintaining
+ * the class component's error catching capabilities.
+ *
+ * @param props - ErrorBoundary props
+ * @returns An ErrorBoundary with localized error messages
+ */
+export default function ErrorBoundary(props: ErrorBoundaryProps): ReactElement {
+  const { t } = useI18n();
+
+  return (
+    <ErrorBoundaryClass
+      {...props}
+      errorTitle={t('errors.somethingWentWrong')}
+      errorMessage={t('errors.unexpectedError')}
+      retryButtonText={t('buttons.tryAgain')}
+    />
+  );
+}

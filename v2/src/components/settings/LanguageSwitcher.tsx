@@ -1,0 +1,155 @@
+/**
+ * Language switcher component with toggle buttons for each supported language.
+ *
+ * Displays two buttons (English, Français) in a toggle group.
+ * Current language is highlighted. Clicking a button changes the language.
+ * Users can also navigate between languages using keyboard (Tab, Arrow keys).
+ *
+ * Accessibility features:
+ * - Keyboard navigation with Tab and Arrow keys
+ * - Enter/Space to select language
+ * - ARIA labels on all buttons describing the language
+ * - Selected state announced to screen readers
+ * - Focus visible indicator on keyboard navigation
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <LanguageSwitcher />
+ *
+ * // With callback when language changes
+ * <LanguageSwitcher onChange={() => {
+ *   console.log('Language changed');
+ *   closePopover();
+ * }} />
+ * ```
+ */
+
+'use client';
+
+import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { useLocale } from '@/src/hooks/useLocale';
+import { useI18n } from '@/src/hooks/useI18n';
+import { type Locale } from '@/src/lib/i18n';
+
+/**
+ * Props for the LanguageSwitcher component.
+ */
+interface LanguageSwitcherProps {
+  /**
+   * Optional callback fired when a language is selected.
+   * Useful for closing parent popover after selection.
+   */
+  onChange?: () => void;
+
+  /**
+   * Optional CSS class name for styling.
+   *
+   * @default undefined
+   */
+  className?: string;
+}
+
+/**
+ * Border color for the language toggle button group.
+ * A light gray that provides subtle visual separation.
+ */
+const LANGUAGE_SWITCHER_BORDER_COLOR = '#CCCCCC';
+
+/**
+ * Language switcher component.
+ *
+ * Renders a toggle button group with language options.
+ * The currently active language is highlighted.
+ * Clicking a button changes the language and triggers optional callback.
+ *
+ * @param props - Component props
+ * @param props.onChange - Optional callback when language changes
+ * @param props.className - Optional CSS class name
+ * @returns A language selector with toggle buttons
+ */
+export function LanguageSwitcher({
+  onChange,
+  className,
+}: LanguageSwitcherProps): React.ReactNode {
+  const { locale, setLocale } = useLocale();
+  const { t } = useI18n();
+
+  /**
+   * Handle language selection change.
+   * Updates the locale and triggers the optional callback.
+   *
+   * @param _event - The click event (unused)
+   * @param newLocale - The newly selected locale, or null if deselected
+   */
+  const handleChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newLocale: Locale | null
+  ): void => {
+    // Only update if a language is selected (not null)
+    // MUI ToggleButtonGroup can return null in non-exclusive mode,
+    // but this component uses exclusive mode so null means user clicked same button
+    if (newLocale !== null) {
+      setLocale(newLocale);
+      onChange?.();
+    }
+  };
+
+  return (
+    <Box className={className}>
+      <ToggleButtonGroup
+        value={locale}
+        exclusive
+        onChange={handleChange}
+        aria-label={t('settings.language')}
+        sx={{
+          display: 'flex',
+          width: '100%',
+          border: `1px solid ${LANGUAGE_SWITCHER_BORDER_COLOR}`,
+        }}
+      >
+        {/* English Button */}
+        <ToggleButton
+          value="en"
+          aria-label={t('settings.english')}
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 0.5,
+            py: 1.5,
+            px: 1,
+            textTransform: 'none',
+          }}
+        >
+          <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
+            {t('settings.english')}
+          </Typography>
+        </ToggleButton>
+
+        {/* French Button */}
+        <ToggleButton
+          value="fr"
+          aria-label={t('settings.french')}
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 0.5,
+            py: 1.5,
+            px: 1,
+            textTransform: 'none',
+          }}
+        >
+          <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
+            {t('settings.french')}
+          </Typography>
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Box>
+  );
+}
+
+export default LanguageSwitcher;

@@ -2,15 +2,17 @@
  * Provider component for managing application locale.
  *
  * Wraps the application and provides locale context to all child components.
- * Handles locale detection and persistence.
+ * Handles locale detection, persistence, and changes.
+ * Also synchronizes locale changes with i18next.
  *
  * @module components/i18n/LocaleProvider
  */
 
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
-import { LocaleContext } from '@/src/contexts/LocaleContext';
+import { ReactNode, useEffect, useState, useCallback } from 'react';
+import i18next from 'i18next';
+import { LocaleContext, type LocaleContextValue } from '@/src/contexts/LocaleContext';
 import { type Locale, DEFAULT_LOCALE, detectLocale } from '@/src/lib/i18n';
 
 /**
@@ -34,7 +36,7 @@ export interface LocaleProviderProps {
  * Features:
  * - Detects user's preferred locale from browser
  * - Persists locale selection to localStorage
- * - Provides locale context to all child components
+ * - Provides locale context and setter to all child components
  * - Prevents hydration mismatch by only rendering after mount
  *
  * Should be placed high in your component tree, ideally in the root layout.
@@ -48,12 +50,12 @@ export function LocaleProvider({
   children,
   initialLocale,
 }: LocaleProviderProps) {
-  const [locale, setLocale] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
-  const [mounted, setMounted] = useState(false);
+  const [locale, setLocaleState] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
 
   /**
    * Initialize locale on client side.
    * Loads from localStorage if available, otherwise detects from browser.
+   * Also syncs the locale with i18next.
    */
   useEffect(() => {
     // This effect initializes locale state on mount
@@ -65,17 +67,40 @@ export function LocaleProvider({
     // Only update state if it differs from initial value to avoid unnecessary updates
     if (nextLocale !== (initialLocale ?? DEFAULT_LOCALE)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setLocale(nextLocale);
+      setLocaleState(nextLocale);
     }
     localStorage.setItem('locale', nextLocale);
 
-    setMounted(true);
+    // Sync with i18next
+    i18next.changeLanguage(nextLocale).catch((err) => {
+      console.error('Failed to initialize i18next language:', err);
+    });
   }, [initialLocale]);
+
+  /**
+   * Handle locale change.
+   * Updates local state, persists to localStorage, and syncs with i18next.
+   *
+   * @param newLocale - The locale to switch to
+   */
+  const handleSetLocale = useCallback((newLocale: Locale): void => {
+    setLocaleState(newLocale);
+    localStorage.setItem('locale', newLocale);
+    // Sync locale change with i18next
+    i18next.changeLanguage(newLocale).catch((err) => {
+      console.error('Failed to change i18next language:', err);
+    });
+  }, []);
+
+  const contextValue: LocaleContextValue = {
+    locale,
+    setLocale: handleSetLocale,
+  };
 
   // Always provide context, even before mount, with the current locale value
   // This prevents tests and components from breaking, while still allowing
   // the hydration safety of useEffect
   return (
-    <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>
+    <LocaleContext.Provider value={contextValue}>{children}</LocaleContext.Provider>
   );
 }

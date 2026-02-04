@@ -1,17 +1,6 @@
 {
   "header": {
-    "siteTitle": "Sing Chan",
-    "navigation": {
-      "home": "Home",
-      "portfolio": "Portfolio",
-      "resume": "Résumé",
-      "colophon": "Colophon"
-    }
-  },
-  "footer": {
-    "copyright": "© 2013-2026 Sing Chan. All rights reserved.",
-    "madeWith": "Made with Next.js, React, and TypeScript",
-    "designedAndBuilt": "Designed and built by Sing Chan"
+    "siteTitle": "Sing Chan"
   },
   "projectCard": {
     "viewProject": "View Project",
@@ -25,27 +14,8 @@
     "previousImage": "Previous image",
     "nextImage": "Next image"
   },
-  "lightbox": {
-    "close": "Close",
-    "previous": "Previous",
-    "next": "Next",
-    "imageCounter": "Image %current% of %total%"
-  },
-  "resumeHeader": {
-    "downloadPDF": "Download as PDF",
-    "email": "Email",
-    "phone": "Phone"
-  },
-  "themeSwitcher": {
-    "theme": "Theme",
-    "lightTheme": "Light theme",
-    "darkTheme": "Dark theme",
-    "highContrastTheme": "High contrast theme",
-    "toggle": "Toggle theme"
-  },
-  "loadingSkeleton": {
-    "loadingProjects": "Loading projects...",
-    "loadMore": "Load more projects",
-    "allLoaded": "All projects loaded"
+  "frenchTranslationAlert": {
+    "title": "Machine Translated",
+    "message": "All strings have been machine translated. French is present as a demonstration of the localization capabilities of this web application."
   }
 }

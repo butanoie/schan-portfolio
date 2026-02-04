@@ -34,6 +34,7 @@ import {
   Contrast as ContrastIcon,
 } from "@mui/icons-material";
 import { useTheme } from "@/src/hooks/useTheme";
+import { useI18n } from "@/src/hooks/useI18n";
 import { ThemeMode } from "@/src/types/theme";
 
 /**
@@ -67,16 +68,6 @@ const THEME_ICONS: Record<ThemeMode, React.ReactNode> = {
 };
 
 /**
- * Maps theme modes to their display labels.
- * Used for accessibility (ARIA labels) and visual display.
- */
-const THEME_LABELS: Record<ThemeMode, string> = {
-  light: "Light",
-  dark: "Dark",
-  highContrast: "Contrast",
-};
-
-/**
  * Border color for the theme toggle button group.
  * A light gray that provides subtle visual separation.
  */
@@ -99,6 +90,7 @@ export function ThemeSwitcher({
   className,
 }: ThemeSwitcherProps): React.ReactNode {
   const { theme, setTheme } = useTheme();
+  const { t } = useI18n();
 
   /**
    * Handle theme selection change.
@@ -126,7 +118,7 @@ export function ThemeSwitcher({
         value={theme}
         exclusive
         onChange={handleChange}
-        aria-label="Select theme"
+        aria-label={t("theme.selectTheme")}
         sx={{
           display: "flex",
           width: "100%",
@@ -136,7 +128,7 @@ export function ThemeSwitcher({
         {/* Light Theme Button */}
         <ToggleButton
           value="light"
-          aria-label="Light theme"
+          aria-label={t("theme.lightAria")}
           sx={{
             flex: 1,
             display: "flex",
@@ -150,14 +142,14 @@ export function ThemeSwitcher({
         >
           {THEME_ICONS.light}
           <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
-            {THEME_LABELS.light}
+            {t("theme.lightLabel")}
           </Typography>
         </ToggleButton>
 
         {/* Dark Theme Button */}
         <ToggleButton
           value="dark"
-          aria-label="Dark theme"
+          aria-label={t("theme.darkAria")}
           sx={{
             flex: 1,
             display: "flex",
@@ -171,14 +163,14 @@ export function ThemeSwitcher({
         >
           {THEME_ICONS.dark}
           <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
-            {THEME_LABELS.dark}
+            {t("theme.darkLabel")}
           </Typography>
         </ToggleButton>
 
         {/* High Contrast Theme Button */}
         <ToggleButton
           value="highContrast"
-          aria-label="High contrast theme"
+          aria-label={t("theme.highContrastAria")}
           sx={{
             flex: 1,
             display: "flex",
@@ -192,7 +184,7 @@ export function ThemeSwitcher({
         >
           {THEME_ICONS.highContrast}
           <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
-            {THEME_LABELS.highContrast}
+            {t("theme.highContrastLabel")}
           </Typography>
         </ToggleButton>
       </ToggleButtonGroup>

@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import ErrorBoundary from "../../../components/common/ErrorBoundary";
+import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
 
 /**
  * Mock component that throws an error.
@@ -26,6 +27,16 @@ function HealthyComponent() {
   return <div>Healthy component</div>;
 }
 
+/**
+ * Wrapper component for tests that need i18n context.
+ *
+ * @param component - Component to render
+ * @returns Component wrapped with LocaleProvider
+ */
+const renderWithLocale = (component: React.ReactElement) => {
+  return render(<LocaleProvider>{component}</LocaleProvider>);
+};
+
 describe("ErrorBoundary", () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
@@ -40,7 +51,7 @@ describe("ErrorBoundary", () => {
 
   describe("Rendering with no errors", () => {
     it("should render children when no error occurs", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <HealthyComponent />
         </ErrorBoundary>
@@ -50,7 +61,7 @@ describe("ErrorBoundary", () => {
     });
 
     it("should render multiple children without errors", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <div>Child 1</div>
           <div>Child 2</div>
@@ -66,7 +77,7 @@ describe("ErrorBoundary", () => {
 
   describe("Error catching and fallback", () => {
     it("should catch errors and display default fallback UI", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -80,7 +91,7 @@ describe("ErrorBoundary", () => {
     it("should display custom fallback UI when error occurs", () => {
       const customFallback = <div>Custom error UI</div>;
 
-      render(
+      renderWithLocale(
         <ErrorBoundary fallback={customFallback}>
           <ThrowError />
         </ErrorBoundary>
@@ -93,7 +104,7 @@ describe("ErrorBoundary", () => {
     });
 
     it("should have proper accessibility attributes on error UI", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -108,7 +119,7 @@ describe("ErrorBoundary", () => {
     it("should call onError callback when error is caught", () => {
       const onErrorMock = vi.fn();
 
-      render(
+      renderWithLocale(
         <ErrorBoundary onError={onErrorMock}>
           <ThrowError />
         </ErrorBoundary>
@@ -124,7 +135,7 @@ describe("ErrorBoundary", () => {
     it("should pass correct error information to onError callback", () => {
       const onErrorMock = vi.fn();
 
-      render(
+      renderWithLocale(
         <ErrorBoundary onError={onErrorMock}>
           <ThrowError shouldThrow={true} />
         </ErrorBoundary>
@@ -141,7 +152,7 @@ describe("ErrorBoundary", () => {
     it("should not call onError if no error occurs", () => {
       const onErrorMock = vi.fn();
 
-      render(
+      renderWithLocale(
         <ErrorBoundary onError={onErrorMock}>
           <HealthyComponent />
         </ErrorBoundary>
@@ -153,7 +164,7 @@ describe("ErrorBoundary", () => {
 
   describe("Error recovery", () => {
     it("should provide a retry button to attempt recovery", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError shouldThrow={true} />
         </ErrorBoundary>
@@ -164,7 +175,7 @@ describe("ErrorBoundary", () => {
 
       // Verify retry button exists
       const retryButton = screen.getByRole("button", {
-        name: "Retry and reload the page",
+        name: "Try again and reload the page",
       });
       expect(retryButton).toBeInTheDocument();
       expect(retryButton).not.toBeDisabled();
@@ -173,14 +184,14 @@ describe("ErrorBoundary", () => {
     it("should call onErrorRecovery callback when retry button is clicked", () => {
       const onErrorRecoveryMock = vi.fn(() => true);
 
-      render(
+      renderWithLocale(
         <ErrorBoundary onErrorRecovery={onErrorRecoveryMock}>
           <ThrowError />
         </ErrorBoundary>
       );
 
       const retryButton = screen.getByRole("button", {
-        name: "Retry and reload the page",
+        name: "Try again and reload the page",
       });
       fireEvent.click(retryButton);
 
@@ -191,14 +202,14 @@ describe("ErrorBoundary", () => {
     it("should prevent reset if onErrorRecovery returns false", () => {
       const onErrorRecoveryMock = vi.fn(() => false);
 
-      render(
+      renderWithLocale(
         <ErrorBoundary onErrorRecovery={onErrorRecoveryMock}>
           <ThrowError />
         </ErrorBoundary>
       );
 
       const retryButton = screen.getByRole("button", {
-        name: "Retry and reload the page",
+        name: "Try again and reload the page",
       });
       fireEvent.click(retryButton);
 
@@ -215,7 +226,7 @@ describe("ErrorBoundary", () => {
     // These tests verify that errors are caught and displayed properly
 
     it("should render error message when error is caught", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -226,7 +237,7 @@ describe("ErrorBoundary", () => {
     });
 
     it("should render helpful error message and retry button", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -236,38 +247,38 @@ describe("ErrorBoundary", () => {
       const errorBox = screen.getByRole("alert");
       expect(errorBox).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: "Retry and reload the page" })
+        screen.getByRole("button", { name: "Try again and reload the page" })
       ).toBeInTheDocument();
     });
   });
 
   describe("Retry button accessibility", () => {
     it("should have accessible retry button", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
       const retryButton = screen.getByRole("button", {
-        name: "Retry and reload the page",
+        name: "Try again and reload the page",
       });
       expect(retryButton).toBeInTheDocument();
       expect(retryButton).toHaveAttribute(
         "aria-label",
-        "Retry and reload the page"
+        "Try again and reload the page"
       );
     });
 
     it("should be keyboard accessible", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
       const retryButton = screen.getByRole("button", {
-        name: "Retry and reload the page",
+        name: "Try again and reload the page",
       });
 
       // Verify button can receive focus and be clicked via keyboard
@@ -279,7 +290,7 @@ describe("ErrorBoundary", () => {
 
   describe("Console logging", () => {
     it("should log error to console when error is caught", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -290,7 +301,7 @@ describe("ErrorBoundary", () => {
     });
 
     it("should display error information in the fallback UI", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -305,7 +316,7 @@ describe("ErrorBoundary", () => {
 
   describe("Multiple error boundaries", () => {
     it("should handle nested error boundaries correctly", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary fallback={<div>Outer error</div>}>
           <div>Outer content</div>
           <ErrorBoundary fallback={<div>Inner error</div>}>
@@ -323,7 +334,7 @@ describe("ErrorBoundary", () => {
 
   describe("Error message display", () => {
     it("should display helpful error message to user", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
@@ -332,13 +343,13 @@ describe("ErrorBoundary", () => {
       expect(screen.getByText("Something went wrong")).toBeInTheDocument();
       expect(
         screen.getByText(
-          /We encountered an unexpected error. Please try again or contact support/i
+          /An unexpected error occurred/i
         )
       ).toBeInTheDocument();
     });
 
     it("should display error icon in error UI", () => {
-      render(
+      renderWithLocale(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>

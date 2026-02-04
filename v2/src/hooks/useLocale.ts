@@ -1,7 +1,7 @@
 /**
- * Hook to access the current application locale.
+ * Hook to access and modify the current application locale.
  *
- * Returns the current locale from LocaleContext.
+ * Returns the current locale and a function to change it from LocaleContext.
  * Must be used inside a LocaleProvider.
  *
  * @module hooks/useLocale
@@ -14,27 +14,49 @@ import { LocaleContext } from '@/src/contexts/LocaleContext';
 import { type Locale } from '@/src/lib/i18n';
 
 /**
- * Hook to get the current application locale.
+ * Interface for the return value of useLocale hook.
+ */
+export interface UseLocaleReturn {
+  /**
+   * Current locale ('en', 'fr', etc.)
+   */
+  locale: Locale;
+
+  /**
+   * Function to change the locale.
+   *
+   * @param newLocale - The locale to switch to
+   */
+  setLocale: (newLocale: Locale) => void;
+}
+
+/**
+ * Hook to get and set the current application locale.
  *
- * Returns the locale string ('en', 'fr', etc.) from context.
- * Useful when you just need the locale without other i18n utilities.
+ * Returns an object with:
+ * - locale: The current locale string ('en', 'fr', etc.)
+ * - setLocale: Function to change the locale
  *
- * @returns Current locale
+ * @returns Object with locale and setLocale function
  * @throws Error if used outside LocaleProvider
  *
  * @example
- * const locale = useLocale(); // Returns 'en'
- * // Use for html lang attribute or conditional rendering
+ * const { locale, setLocale } = useLocale();
+ * // Returns locale 'en' and function to change it
+ * // Use for html lang attribute, conditional rendering, or changing language
  */
-export function useLocale(): Locale {
-  const locale = useContext(LocaleContext);
+export function useLocale(): UseLocaleReturn {
+  const context = useContext(LocaleContext);
 
-  if (!locale) {
+  if (!context) {
     throw new Error(
       'useLocale must be used inside a LocaleProvider. ' +
         'Wrap your component tree with <LocaleProvider> in your layout.'
     );
   }
 
-  return locale;
+  return {
+    locale: context.locale,
+    setLocale: context.setLocale,
+  };
 }

@@ -230,17 +230,6 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 - Use environment variables for sensitive data
 - Never commit secrets or API keys
 
-### Localization (i18n)
-**CRITICAL: All user-facing strings MUST be localized via the i18n system. No hardcoded strings in components.**
-
-- Use `useI18n()` hook for all UI text
-- Add new translation keys to `v2/src/lib/i18n.ts`
-- Supported languages: English (en), French (fr)
-- Auto-translate new strings using DeepL MCP
-- User's language preference is persisted to localStorage
-
-**See [LOCALIZATION.md](../docs/LOCALIZATION.md) for detailed localization workflow and best practices.**
-
 ## File Organization
 
 - Keep files focused and single-purpose

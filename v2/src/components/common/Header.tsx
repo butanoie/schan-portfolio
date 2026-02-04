@@ -12,13 +12,14 @@ import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { SettingsButton } from "../settings/SettingsButton";
 import { useTheme } from "@/src/hooks/useTheme";
 import { getPaletteByMode } from "@/src/lib/themes";
+import { useI18n } from "@/src/hooks/useI18n";
 
 /**
  * Navigation link configuration for the header.
  */
 interface NavLink {
-  /** Display label for the link */
-  label: string;
+  /** Translation key for the link label */
+  labelKey: string;
   /** URL path for the link */
   href: string;
   /** Icon component to display */
@@ -40,15 +41,16 @@ interface NavLink {
 export default function Header() {
   const pathname = usePathname();
   const { theme } = useTheme();
+  const { t } = useI18n();
   const palette = getPaletteByMode(theme);
 
   /**
    * Navigation links for the header.
    */
   const navItems: NavLink[] = [
-    { label: "Portfolio", href: "/", icon: <HomeIcon /> },
-    { label: "Résumé", href: "/resume", icon: <DescriptionIcon /> },
-    { label: "Colophon", href: "/colophon", icon: <InfoIcon /> },
+    { labelKey: "nav.portfolio", href: "/", icon: <HomeIcon /> },
+    { labelKey: "nav.resume", href: "/resume", icon: <DescriptionIcon /> },
+    { labelKey: "nav.colophon", href: "/colophon", icon: <InfoIcon /> },
   ];
 
   /**
@@ -93,7 +95,7 @@ export default function Header() {
                 href="https://www.linkedin.com/in/sing-chan/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn"
+                aria-label={t("nav.social.linkedin")}
                 size="small"
                 sx={{
                   color: palette.text.primary,
@@ -108,7 +110,7 @@ export default function Header() {
                 href="https://github.com/butanoie"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub"
+                aria-label={t("nav.social.github")}
                 size="small"
                 sx={{
                   color: palette.text.primary,
@@ -159,7 +161,7 @@ export default function Header() {
                   },
                 }}
               >
-                {item.label}
+                {t(item.labelKey)}
               </Button>
             ))}
             <SettingsButton size="small" />

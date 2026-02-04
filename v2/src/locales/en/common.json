@@ -15,9 +15,13 @@
     }
   },
   "footer": {
-    "copyright": "© 2013-2026 Sing Chan. All rights reserved.",
+    "copyright": "© {year} Sing Chan",
     "madeWith": "Made with Next.js, React, and TypeScript",
-    "designedAndBuilt": "Designed and built by Sing Chan"
+    "designedAndBuilt": "Designed and built by Sing Chan",
+    "butaThought": "Pork products FTW!",
+    "allProjectsLoaded": "All projects loaded!",
+    "thankYou": "Thanks for coming by!",
+    "trademarks": "All trademarks are the property of their respective owners."
   },
   "buttons": {
     "loadMore": "Load more projects",
@@ -26,12 +30,34 @@
     "close": "Close",
     "previous": "Previous",
     "next": "Next",
-    "downloadPDF": "Download as PDF"
+    "downloadPDF": "Download as PDF",
+    "tryAgain": "Try again"
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong",
+    "unexpectedError": "An unexpected error occurred"
   },
   "accessibility": {
     "themeToggle": "Toggle theme",
     "settingsButton": "Settings",
     "closeButton": "Close",
     "openLightbox": "Open image in lightbox"
+  },
+  "settings": {
+    "openSettings": "Open settings",
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "english": "English",
+    "french": "Français"
+  },
+  "theme": {
+    "selectTheme": "Select theme",
+    "lightAria": "Light theme",
+    "lightLabel": "Light",
+    "darkAria": "Dark theme",
+    "darkLabel": "Dark",
+    "highContrastAria": "High contrast theme",
+    "highContrastLabel": "Contrast"
   }
 }

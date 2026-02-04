@@ -15,6 +15,13 @@
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "deepl": {
+      "command": "npx",
+      "args": ["deepl-mcp-server"],
+      "env": {
+        "DEEPL_API_KEY": "YOUR_DEEPL_API_KEY"
+      }
     }
   }
 }

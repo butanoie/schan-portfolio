@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { afterEach, beforeAll } from 'vitest';
+import { afterEach } from 'vitest';
 
 /**
  * Vitest setup file that runs before each test file.
@@ -10,6 +10,9 @@ import { afterEach, beforeAll } from 'vitest';
  * - Configures automatic cleanup after each test
  * - Sets up global test environment
  * - Mocks window.matchMedia for useReducedMotion hook
+ *
+ * Note: i18next is initialized in the test environment detection within
+ * i18next-config.ts which uses inline resources for testing.
  */
 
 /**

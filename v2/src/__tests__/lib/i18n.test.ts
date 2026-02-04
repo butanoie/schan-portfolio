@@ -1,13 +1,15 @@
 /**
  * Unit tests for i18n utilities.
  *
- * Tests translation lookup, date formatting, number formatting,
- * currency formatting, locale detection, and RTL checking.
+ * Tests date formatting, number formatting, currency formatting,
+ * locale detection, and RTL checking.
+ *
+ * Note: Translation lookup is now handled by i18next and is tested
+ * in the useI18n hook tests instead.
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
-  t,
   formatDate,
   formatNumber,
   formatCurrency,
@@ -16,7 +18,6 @@ import {
   LOCALES,
   DEFAULT_LOCALE,
   type Locale,
-  type TranslationKey,
 } from '@/src/lib/i18n';
 
 describe('i18n Library', () => {
@@ -28,62 +29,9 @@ describe('i18n Library', () => {
     it('should include en in supported locales', () => {
       expect(LOCALES).toContain('en');
     });
-  });
 
-  describe('t() - Translation lookup', () => {
-    it('should return translated string for valid key', () => {
-      const result = t('common.home');
-      expect(result).toBe('Home');
-    });
-
-    it('should return key if translation not found', () => {
-      const key = 'nonexistent.key' as TranslationKey;
-      const result = t(key);
-      expect(result).toBe(key);
-    });
-
-    it('should return translated string for nested keys', () => {
-      const result = t('nav.social.linkedin');
-      expect(result).toBe('LinkedIn');
-    });
-
-    it('should use default locale when not specified', () => {
-      const result = t('common.home');
-      expect(result).toBe('Home');
-    });
-
-    it('should translate all common UI strings', () => {
-      const keys: TranslationKey[] = [
-        'common.home',
-        'common.portfolio',
-        'common.resume',
-        'nav.home',
-        'buttons.loadMore',
-        'footer.copyright',
-      ];
-
-      keys.forEach((key) => {
-        const result = t(key);
-        expect(result).toBeTruthy();
-        expect(typeof result).toBe('string');
-        expect(result.length).toBeGreaterThan(0);
-      });
-    });
-
-    it('should handle all translation keys without error', () => {
-      // Test a selection of keys to ensure they all exist
-      const testKeys: TranslationKey[] = [
-        'common.home',
-        'pages.home.title',
-        'pages.resume.title',
-        'pages.colophon.title',
-        'buttons.loadMore',
-        'settings.lightTheme',
-      ];
-
-      testKeys.forEach((key) => {
-        expect(() => t(key)).not.toThrow();
-      });
+    it('should include fr in supported locales', () => {
+      expect(LOCALES).toContain('fr');
     });
   });
 
@@ -288,13 +236,6 @@ describe('i18n Library', () => {
   });
 
   describe('Type Safety', () => {
-    it('should provide type-safe translation keys', () => {
-      // This test ensures TypeScript compilation works with valid keys
-      const validKey: TranslationKey = 'common.home';
-      const result = t(validKey);
-      expect(result).toBeTruthy();
-    });
-
     it('should have Locale type for valid locales', () => {
       const validLocale: Locale = 'en';
       expect(validLocale).toBe('en');
@@ -302,12 +243,6 @@ describe('i18n Library', () => {
   });
 
   describe('Edge Cases', () => {
-    it('should handle empty translation string', () => {
-      // If a translation key exists but maps to empty string
-      const result = t('common.home');
-      expect(typeof result).toBe('string');
-    });
-
     it('should handle very large numbers', () => {
       const result = formatNumber(999999999999, 'en-US');
       expect(result).toBeTruthy();
@@ -332,13 +267,6 @@ describe('i18n Library', () => {
   });
 
   describe('Consistency', () => {
-    it('should return same result for same input', () => {
-      const key: TranslationKey = 'common.home';
-      const result1 = t(key);
-      const result2 = t(key);
-      expect(result1).toBe(result2);
-    });
-
     it('should format same number consistently', () => {
       const number = 1234.56;
       const result1 = formatNumber(number, 'en-US');

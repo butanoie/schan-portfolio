@@ -1,0 +1,63 @@
+{
+  "app": {
+    "name": "Portfolio de Sing Chan",
+    "description": "Technologue créatif avec plus de 25 ans d'expérience"
+  },
+  "nav": {
+    "home": "Accueil",
+    "portfolio": "Portfolio",
+    "resume": "Résumé",
+    "colophon": "Colophon",
+    "skipToMain": "Passer au contenu principal",
+    "social": {
+      "linkedin": "LinkedIn",
+      "github": "GitHub"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Sing Chan",
+    "madeWith": "Réalisé avec Next.js, React et TypeScript",
+    "designedAndBuilt": "Conçu et développé par Sing Chan",
+    "butaThought": "Viva la France !",
+    "allProjectsLoaded": "Tous les projets sont chargés !",
+    "thankYou": "Merci de votre visite !",
+    "trademarks": "Toutes les marques commerciales sont la propriété de leurs propriétaires respectifs."
+  },
+  "buttons": {
+    "loadMore": "Charger plus de projets",
+    "loadingProjects": "Chargement des projets...",
+    "allLoaded": "Tous les projets chargés",
+    "close": "Fermer",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "downloadPDF": "Télécharger au format PDF",
+    "tryAgain": "Réessayer"
+  },
+  "errors": {
+    "somethingWentWrong": "Une erreur s'est produite",
+    "unexpectedError": "Une erreur inattendue s'est produite"
+  },
+  "accessibility": {
+    "themeToggle": "Basculer le thème",
+    "settingsButton": "Paramètres",
+    "closeButton": "Fermer",
+    "openLightbox": "Ouvrir l'image dans la lightbox"
+  },
+  "settings": {
+    "openSettings": "Ouvrir les paramètres",
+    "title": "Paramètres",
+    "theme": "Thème",
+    "language": "Langue",
+    "english": "English",
+    "french": "Français"
+  },
+  "theme": {
+    "selectTheme": "Sélectionner un thème",
+    "lightAria": "Thème clair",
+    "lightLabel": "Clair",
+    "darkAria": "Thème sombre",
+    "darkLabel": "Sombre",
+    "highContrastAria": "Thème à contraste élevé",
+    "highContrastLabel": "Contraste"
+  }
+}

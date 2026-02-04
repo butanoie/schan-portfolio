@@ -6,12 +6,11 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { ReactNode } from 'react';
 import { useI18n } from '@/src/hooks/useI18n';
 import { useLocale } from '@/src/hooks/useLocale';
 import { LocaleProvider } from '@/src/components/i18n/LocaleProvider';
-import { type TranslationKey } from '@/src/lib/i18n';
 
 /**
  * Creates a wrapper component that provides LocaleContext for testing.
@@ -54,7 +53,7 @@ describe('useI18n Hook', () => {
         wrapper: createWrapper(),
       });
 
-      const translated = result.current.t('common.home');
+      const translated = result.current.t('nav.home');
       expect(translated).toBe('Home');
     });
 
@@ -64,8 +63,8 @@ describe('useI18n Hook', () => {
       });
 
       // Test with a key that doesn't exist in translations
-      const nonexistentKey = 'nonexistent.key' as const;
-      const fallback = result.current.t(nonexistentKey as unknown as TranslationKey);
+      const nonexistentKey = 'nonexistent.key';
+      const fallback = result.current.t(nonexistentKey);
       expect(fallback).toBe(nonexistentKey);
     });
 
@@ -74,9 +73,9 @@ describe('useI18n Hook', () => {
         wrapper: createWrapper(),
       });
 
-      const home = result.current.t('common.home');
-      const portfolio = result.current.t('common.portfolio');
-      const resume = result.current.t('common.resume');
+      const home = result.current.t('nav.home');
+      const portfolio = result.current.t('nav.portfolio');
+      const resume = result.current.t('nav.resume');
 
       expect(home).toBe('Home');
       expect(portfolio).toBe('Portfolio');
@@ -161,20 +160,23 @@ describe('useI18n Hook', () => {
 
 describe('useLocale Hook', () => {
   describe('Basic Functionality', () => {
-    it('should return current locale', () => {
+    it('should return locale and setLocale function', () => {
       const { result } = renderHook(() => useLocale(), {
         wrapper: createWrapper(),
       });
 
-      expect(result.current).toBe('en');
+      expect(result.current).toHaveProperty('locale');
+      expect(result.current).toHaveProperty('setLocale');
+      expect(typeof result.current.setLocale).toBe('function');
     });
 
-    it('should return string type', () => {
+    it('should return current locale value', () => {
       const { result } = renderHook(() => useLocale(), {
         wrapper: createWrapper(),
       });
 
-      expect(typeof result.current).toBe('string');
+      expect(result.current.locale).toBe('en');
+      expect(typeof result.current.locale).toBe('string');
     });
   });
 
@@ -200,7 +202,7 @@ describe('useLocale Hook', () => {
         wrapper: createWrapper(),
       });
 
-      const locale = result.current;
+      const locale = result.current.locale;
       expect(locale).toBeTruthy();
       // Should be valid for use in lang attribute
       expect(locale).toMatch(/^[a-z]{2}$/);
@@ -211,12 +213,27 @@ describe('useLocale Hook', () => {
         wrapper: createWrapper(),
       });
 
-      const locale = result.current;
+      const locale = result.current.locale;
       if (locale === 'en') {
         expect(true).toBe(true);
       } else {
         expect(false).toBe(true);
       }
+    });
+
+    it('should provide setLocale function to change locale', () => {
+      const { result } = renderHook(() => useLocale(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.setLocale).toBeDefined();
+      expect(typeof result.current.setLocale).toBe('function');
+      // setLocale should be callable
+      expect(() => {
+        act(() => {
+          result.current.setLocale('fr');
+        });
+      }).not.toThrow();
     });
   });
 });
@@ -230,7 +247,7 @@ describe('Hook Integration', () => {
       wrapper: createWrapper(),
     });
 
-    expect(i18nResult.current.locale).toBe(localeResult.current);
+    expect(i18nResult.current.locale).toBe(localeResult.current.locale);
   });
 
   it('should provide consistent locale', () => {
@@ -241,6 +258,6 @@ describe('Hook Integration', () => {
       wrapper: createWrapper(),
     });
 
-    expect(result1.current).toBe(result2.current);
+    expect(result1.current.locale).toBe(result2.current.locale);
   });
 });

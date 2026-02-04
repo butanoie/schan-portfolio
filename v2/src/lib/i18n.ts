@@ -3,21 +3,25 @@
  *
  * Centralizes internationalization setup including:
  * - Locale list and defaults
- * - String translation lookup
  * - Locale-aware formatting (dates, numbers, currency)
  * - RTL support foundation
  *
- * Current support: English (en)
- * Future: Add additional locales by extending LOCALES array
+ * Translation strings are loaded from JSON files in the locales directory
+ * using i18next with dynamic imports.
+ *
+ * Supported locales: English (en), French (fr)
  *
  * @module lib/i18n
  */
+
+// Initialize i18next configuration
+import '@/src/lib/i18next-config';
 
 /**
  * Supported locales in the application.
  * Add new locales here when implementing additional languages.
  */
-export const LOCALES = ['en'] as const;
+export const LOCALES = ['en', 'fr'] as const;
 
 /**
  * Default locale when no preference is specified.
@@ -28,138 +32,6 @@ export const DEFAULT_LOCALE = 'en' as const;
  * Type representing a supported locale.
  */
 export type Locale = (typeof LOCALES)[number];
-
-/**
- * Type-safe translation keys to prevent runtime errors.
- * Enables IDE autocomplete for translation strings.
- * Extend this as new translation keys are added.
- */
-export type TranslationKey =
-  // Common UI strings
-  | 'common.home'
-  | 'common.portfolio'
-  | 'common.resume'
-  | 'common.colophon'
-  | 'common.about'
-  // Navigation
-  | 'nav.home'
-  | 'nav.portfolio'
-  | 'nav.resume'
-  | 'nav.colophon'
-  | 'nav.skipToMain'
-  | 'nav.social.linkedin'
-  | 'nav.social.github'
-  // Buttons
-  | 'buttons.loadMore'
-  | 'buttons.loadingProjects'
-  | 'buttons.allLoaded'
-  | 'buttons.close'
-  | 'buttons.previous'
-  | 'buttons.next'
-  | 'buttons.downloadPDF'
-  // Page titles
-  | 'pages.home.title'
-  | 'pages.home.subtitle'
-  | 'pages.resume.title'
-  | 'pages.resume.downloadPDF'
-  | 'pages.colophon.title'
-  | 'pages.colophon.subtitle'
-  | 'pages.project.relatedProjects'
-  | 'pages.project.viewAllProjects'
-  // Footer
-  | 'footer.copyright'
-  | 'footer.madeWith'
-  | 'footer.designedAndBuilt'
-  // Resume sections
-  | 'resume.workExperience'
-  | 'resume.coreCompetencies'
-  | 'resume.clients'
-  | 'resume.speakingEngagements'
-  | 'resume.contactLabel'
-  | 'resume.emailLabel'
-  | 'resume.phoneLabel'
-  // Settings
-  | 'settings.theme'
-  | 'settings.lightTheme'
-  | 'settings.darkTheme'
-  | 'settings.highContrastTheme';
-
-/**
- * Translations for all supported locales.
- * Structure: { locale: { key: value } }
- */
-const translations: Record<Locale, Record<string, string>> = {
-  en: {
-    // Common UI strings
-    'common.home': 'Home',
-    'common.portfolio': 'Portfolio',
-    'common.resume': 'Résumé',
-    'common.colophon': 'Colophon',
-    'common.about': 'About',
-    // Navigation
-    'nav.home': 'Home',
-    'nav.portfolio': 'Portfolio',
-    'nav.resume': 'Résumé',
-    'nav.colophon': 'Colophon',
-    'nav.skipToMain': 'Skip to main content',
-    'nav.social.linkedin': 'LinkedIn',
-    'nav.social.github': 'GitHub',
-    // Buttons
-    'buttons.loadMore': 'Load more projects',
-    'buttons.loadingProjects': 'Loading projects...',
-    'buttons.allLoaded': 'All projects loaded',
-    'buttons.close': 'Close',
-    'buttons.previous': 'Previous',
-    'buttons.next': 'Next',
-    'buttons.downloadPDF': 'Download as PDF',
-    // Page titles
-    'pages.home.title': 'Portfolio',
-    'pages.home.subtitle': 'A selection of my work',
-    'pages.resume.title': 'Résumé',
-    'pages.resume.downloadPDF': 'Download as PDF',
-    'pages.colophon.title': 'About',
-    'pages.colophon.subtitle': 'About this site and Sing',
-    'pages.project.relatedProjects': 'Related Projects',
-    'pages.project.viewAllProjects': 'View All Projects',
-    // Footer
-    'footer.copyright': '© 2013-2026 Sing Chan. All rights reserved.',
-    'footer.madeWith': 'Made with Next.js, React, and TypeScript',
-    'footer.designedAndBuilt': 'Designed and built by Sing Chan',
-    // Resume sections
-    'resume.workExperience': 'Work Experience',
-    'resume.coreCompetencies': 'Core Competencies',
-    'resume.clients': 'Notable Clients',
-    'resume.speakingEngagements': 'Speaking Engagements',
-    'resume.contactLabel': 'Contact',
-    'resume.emailLabel': 'Email',
-    'resume.phoneLabel': 'Phone',
-    // Settings
-    'settings.theme': 'Theme',
-    'settings.lightTheme': 'Light theme',
-    'settings.darkTheme': 'Dark theme',
-    'settings.highContrastTheme': 'High contrast theme',
-  },
-};
-
-/**
- * Get translated string for a given key and locale.
- *
- * Returns the translation for the specified key, or the key itself if not found.
- * This allows graceful degradation if a translation is missing.
- *
- * @param key - Translation key (e.g., 'common.home')
- * @param locale - Locale to translate into (default: en)
- * @returns Translated string or key if translation not found
- *
- * @example
- * const text = t('common.home'); // Returns "Home"
- * const text = t('common.home', 'en'); // Returns "Home"
- *
- * @throws Nothing - returns key if translation not found
- */
-export function t(key: TranslationKey, locale: Locale = DEFAULT_LOCALE): string {
-  return translations[locale]?.[key] ?? key;
-}
 
 /**
  * Format date according to locale.
