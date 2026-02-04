@@ -1,7 +1,9 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import ButaStory from '../../../components/colophon/ButaStory';
-import type { ButaStoryContent } from '../../../types/colophon';
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { ReactNode } from "react";
+import ButaStory from "../../../components/colophon/ButaStory";
+import { ThemeContextProvider } from "../../../contexts/ThemeContext";
+import type { ButaStoryContent } from "../../../types/colophon";
 
 /**
  * Mock Next.js Image component for testing.
@@ -11,7 +13,7 @@ import type { ButaStoryContent } from '../../../types/colophon';
  * @param props.alt - Image alt text
  * @returns An img element
  */
-vi.mock('next/image', () => ({
+vi.mock("next/image", () => ({
   // eslint-disable-next-line jsdoc/require-jsdoc
   default: ({
     src,
@@ -29,63 +31,74 @@ vi.mock('next/image', () => ({
 }));
 
 /**
+ * Creates a wrapper component that provides ThemeContext for testing.
+ *
+ * @param props - Wrapper props
+ * @param props.children - Child components
+ * @returns Wrapped component with ThemeContextProvider
+ */
+function ThemeWrapper({ children }: { children: ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
+
+/**
  * Tests for the ButaStory component.
  *
  * Note: The Buta mascot image and thought bubble are now in the Footer component.
  * These tests only cover the story section content.
  */
-describe('ButaStory', () => {
+describe("ButaStory", () => {
   const mockContent: ButaStoryContent = {
     paragraphs: [
       'Buta is a pig mascot created by <a href="https://example.com">Artist Name</a>.',
-      'The mascot was inspired by Yoshinoya.',
-      'Buta became the portfolio avatar in 2005.',
+      "The mascot was inspired by Yoshinoya.",
+      "Buta became the portfolio avatar in 2005.",
     ],
-    mainImage: '/images/buta/buta.png',
-    mainImageAlt: 'Buta mascot in a suit',
-    versusImage: '/images/buta/boo-vs-bu.png',
-    versusImageAlt: 'Comparison of Boo and Bu',
+    mainImage: "/images/buta/buta.png",
+    mainImageAlt: "Buta mascot in a suit",
+    versusImage: "/images/buta/boo-vs-bu.png",
+    versusImageAlt: "Comparison of Boo and Bu",
   };
 
-  it('should render the section heading', () => {
-    render(<ButaStory content={mockContent} />);
+  it("should render the section heading", () => {
+    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
 
     expect(
-      screen.getByRole('heading', { name: /story of buta/i, level: 2 })
+      screen.getByRole("heading", { name: /story of buta/i, level: 2 })
     ).toBeInTheDocument();
   });
 
-  it('should render story paragraphs', () => {
-    render(<ButaStory content={mockContent} />);
+  it("should render story paragraphs", () => {
+    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
 
     expect(screen.getByText(/pig mascot created by/i)).toBeInTheDocument();
     expect(screen.getByText(/inspired by Yoshinoya/i)).toBeInTheDocument();
     expect(screen.getByText(/portfolio avatar in 2005/i)).toBeInTheDocument();
   });
 
-  it('should render HTML links in paragraphs', () => {
-    render(<ButaStory content={mockContent} />);
+  it("should render HTML links in paragraphs", () => {
+    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
 
-    const artistLink = screen.getByRole('link', { name: 'Artist Name' });
-    expect(artistLink).toHaveAttribute('href', 'https://example.com');
+    const artistLink = screen.getByRole("link", { name: "Artist Name" });
+    expect(artistLink).toHaveAttribute("href", "https://example.com");
   });
 
-  it('should render the versus image', () => {
-    render(<ButaStory content={mockContent} />);
+  it("should render the versus image", () => {
+    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
 
-    const versusImg = screen.getByAltText('Comparison of Boo and Bu');
+    const versusImg = screen.getByAltText("Comparison of Boo and Bu");
     expect(versusImg).toBeInTheDocument();
-    expect(versusImg).toHaveAttribute('src', '/images/buta/boo-vs-bu.png');
+    expect(versusImg).toHaveAttribute("src", "/images/buta/boo-vs-bu.png");
   });
 
-  it('should have proper section accessibility', () => {
-    render(<ButaStory content={mockContent} />);
+  it("should have proper section accessibility", () => {
+    render(<ButaStory content={mockContent} />, { wrapper: ThemeWrapper });
 
-    const section = screen.getByRole('region', { name: /buta/i });
+    const section = screen.getByRole("region", { name: /buta/i });
     expect(section).toBeInTheDocument();
   });
 
-  it('should sanitize HTML content to prevent XSS', () => {
+  it("should sanitize HTML content to prevent XSS", () => {
     const maliciousContent: ButaStoryContent = {
       ...mockContent,
       paragraphs: [
@@ -94,13 +107,13 @@ describe('ButaStory', () => {
       ],
     };
 
-    render(<ButaStory content={maliciousContent} />);
+    render(<ButaStory content={maliciousContent} />, { wrapper: ThemeWrapper });
 
     // Script tags should be removed
     expect(screen.queryByText(/alert/)).not.toBeInTheDocument();
-    expect(screen.getByText('Safe content')).toBeInTheDocument();
+    expect(screen.getByText("Safe content")).toBeInTheDocument();
 
     // onerror attribute should be stripped
-    expect(screen.getByText('Image text')).toBeInTheDocument();
+    expect(screen.getByText("Image text")).toBeInTheDocument();
   });
 });

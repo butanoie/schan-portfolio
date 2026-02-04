@@ -4,7 +4,7 @@
 **Created:** 2026-02-02
 **Last Updated:** 2026-02-03
 **Author:** Sing Chan (with Claude Code)
-**Status:** 🔄 Task 4.1 IN PROGRESS (PR #8 Open for Review)
+**Status:** ✅ Task 4.1 COMPLETE | 🔄 Task 4.2 IN PROGRESS
 
 ---
 
@@ -140,9 +140,9 @@ v2/
 
 ## Task 4.1: Theme Switching
 
-### Status: 🔄 IN PROGRESS
+### Status: ✅ COMPLETE
 
-**PR #8** is open for review with complete implementation:
+**PR #8** merged successfully with complete implementation:
 - All theme infrastructure complete
 - Settings UI components implemented
 - 833 tests passing (41 new tests)
@@ -2193,13 +2193,14 @@ All Phase 4 features must maintain WCAG 2.2 Level AA compliance:
 
 ---
 
-**Document Status:** 🔄 Phase 4.1 In Progress (PR #8 Open)
+**Document Status:** ✅ Phase 4.1 Complete | 🔄 Phase 4.2 In Progress
 
-**Current Action:** Code review of PR #8
+**Current Action:** Implementing i18n infrastructure (Task 4.2)
 
 **PR Details:**
 - **URL:** https://github.com/butanoie/schan-portfolio/pull/8
-- **Branch:** `sc/themes` → `main`
+- **Status:** ✅ MERGED
+- **Branch:** `sc/themes` → `main` (merged)
 - **Title:** feat: implement theme system with settings UI
 - **Commits:** 3 commits
   1. Core theme architecture (de1e7a7)
@@ -2210,9 +2211,9 @@ All Phase 4 features must maintain WCAG 2.2 Level AA compliance:
 - **Lint:** 0 errors ✅
 - **Coverage:** 100% for new components ✅
 
-**Next Phase:** After PR merge, begin Task 4.2 (i18n Infrastructure)
+**Current Phase:** Task 4.2 - Internationalization (i18n) Infrastructure
 
-**Estimated Remaining Timeline for Phase 4:** 2-3 weeks
+**Estimated Remaining Timeline for Phase 4:** 1-2 weeks
 
 ---
 

@@ -1,0 +1,28 @@
+{
+  "app": {
+    "name": "Sing Chan's Portfolio",
+    "description": "A creative technologist with 25+ years experience in product management, design, and full-stack development."
+  },
+  "pages": {
+    "home": {
+      "title": "Sing Chan's Portfolio - Product Manager & Full-Stack Developer",
+      "description": "Explore portfolio projects from a creative technologist with 25+ years experience in product management, design, and full-stack development.",
+      "keywords": "portfolio, product management, development, design, technology"
+    },
+    "resume": {
+      "title": "Sing Chan - Résumé | Portfolio",
+      "description": "Professional résumé of Sing Chan. VP Product at Collabware Systems with 25+ years of experience in product management, design, and technology.",
+      "keywords": "résumé, CV, product manager, experience, skills"
+    },
+    "colophon": {
+      "title": "About This Site | Sing Chan Portfolio",
+      "description": "Learn about this portfolio site, the technologies used, design philosophy, and the story behind it.",
+      "keywords": "about, colophon, design philosophy, technology stack"
+    }
+  },
+  "openGraph": {
+    "siteName": "Sing Chan Portfolio",
+    "type": "website",
+    "imageAlt": "Sing Chan's Portfolio"
+  }
+}

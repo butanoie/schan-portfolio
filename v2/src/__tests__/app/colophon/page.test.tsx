@@ -102,8 +102,12 @@ describe("ColophonPage", () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Verify all four sections are present via their aria-labeled regions
-    expect(screen.getByRole("region", { name: /colophon/i })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /technologies/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /colophon/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /technologies/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /design/i })).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /buta/i })).toBeInTheDocument();
   });

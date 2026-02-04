@@ -1,8 +1,8 @@
-import { fetchProjects } from '../src/lib/projectDataServer';
-import { AsyncProjectsList } from '../src/components/project/AsyncProjectsList';
-import PageDeck from '../src/components/common/PageDeck';
-import { Container } from '@mui/material';
-import { portfolioData } from '../src/data/portfolio';
+import { fetchProjects } from "../src/lib/projectDataServer";
+import { AsyncProjectsList } from "../src/components/project/AsyncProjectsList";
+import PageDeck from "../src/components/common/PageDeck";
+import { Container } from "@mui/material";
+import { portfolioData } from "../src/data/portfolio";
 
 /**
  * Projects page displaying portfolio projects with asynchronous loading.
@@ -60,11 +60,7 @@ export default async function PortfolioPage() {
   const { items } = await fetchProjects({ page: 1, pageSize: 5 });
 
   return (
-    <Container
-      component="main"
-      role="article"
-      maxWidth="lg"
-    >
+    <Container component="main" role="article" maxWidth="lg">
       {/* Projects header with logo, name, and intro */}
       <PageDeck content={portfolioData.pageDeck} />
 

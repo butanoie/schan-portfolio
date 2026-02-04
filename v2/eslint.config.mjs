@@ -6,12 +6,7 @@ import jsdoc from "eslint-plugin-jsdoc";
 const eslintConfig = defineConfig([
   // Define global ignores first
   {
-    ignores: [
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
+    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
   },
   ...nextVitals,
   ...nextTs,

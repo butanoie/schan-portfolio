@@ -1,0 +1,39 @@
+{
+  "home": {
+    "title": "Portfolio",
+    "subtitle": "A selection of my work",
+    "description": "Explore a curated selection of projects from my 25+ years working in product, design, and technology."
+  },
+  "resume": {
+    "title": "Résumé",
+    "description": "Professional background and experience",
+    "downloadPDF": "Download as PDF",
+    "sections": {
+      "workExperience": "Work Experience",
+      "coreCompetencies": "Core Competencies",
+      "notableClients": "Notable Clients",
+      "speakingEngagements": "Speaking Engagements"
+    },
+    "contact": {
+      "label": "Contact",
+      "email": "Email",
+      "phone": "Phone"
+    }
+  },
+  "colophon": {
+    "title": "About",
+    "subtitle": "About this site and Sing Chan",
+    "description": "Learn about the story behind this portfolio, the design philosophy, and the technologies used to build it.",
+    "sections": {
+      "butaStory": "The Story of Buta",
+      "designPhilosophy": "Design Philosophy",
+      "technologies": "Technologies"
+    }
+  },
+  "project": {
+    "relatedProjects": "Related Projects",
+    "viewAllProjects": "View All Projects",
+    "tags": "Tags",
+    "year": "Year"
+  }
+}

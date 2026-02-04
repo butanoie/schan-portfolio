@@ -33,25 +33,21 @@ export default function ColophonPage() {
   const data = getColophonData();
 
   return (
-    <Container
-      component="main"
-      role="article"
-      maxWidth="lg"
-    >
+    <Container component="main" role="article" maxWidth="lg">
       {/* About Section */}
       <PageDeck content={data.pageDeck} />
 
-      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
+      <Divider sx={{ my: 6, mx: { xs: 0, md: 8 } }} />
 
       {/* Technologies Section */}
       <TechnologiesShowcase content={data.technologies} />
 
-      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
+      <Divider sx={{ my: 6, mx: { xs: 0, md: 8 } }} />
 
       {/* Design Philosophy Section */}
       <DesignPhilosophy content={data.designPhilosophy} />
-    
-      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
+
+      <Divider sx={{ my: 6, mx: { xs: 0, md: 8 } }} />
 
       {/* Buta Story Section */}
       <ButaStory content={data.butaStory} />

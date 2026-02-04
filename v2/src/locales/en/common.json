@@ -1,0 +1,37 @@
+{
+  "app": {
+    "name": "Sing Chan's Portfolio",
+    "description": "A creative technologist with 25+ years experience"
+  },
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "resume": "Résumé",
+    "colophon": "Colophon",
+    "skipToMain": "Skip to main content",
+    "social": {
+      "linkedin": "LinkedIn",
+      "github": "GitHub"
+    }
+  },
+  "footer": {
+    "copyright": "© 2013-2026 Sing Chan. All rights reserved.",
+    "madeWith": "Made with Next.js, React, and TypeScript",
+    "designedAndBuilt": "Designed and built by Sing Chan"
+  },
+  "buttons": {
+    "loadMore": "Load more projects",
+    "loadingProjects": "Loading projects...",
+    "allLoaded": "All projects loaded",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "downloadPDF": "Download as PDF"
+  },
+  "accessibility": {
+    "themeToggle": "Toggle theme",
+    "settingsButton": "Settings",
+    "closeButton": "Close",
+    "openLightbox": "Open image in lightbox"
+  }
+}

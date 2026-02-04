@@ -176,7 +176,7 @@
 
   h2 {
     font-size: 18pt !important;
-    color: #2C2C2C !important;
+    color: #2c2c2c !important;
     margin: 8pt 0 12pt 0 !important;
     padding: 0 !important;
   }
@@ -241,14 +241,17 @@
   /* Skill/competency category boxes - use duckEgg color */
   section > div[style*="backgroundColor"],
   div[style*="backgroundColor: rgb"] {
-    background-color: #DCEBE4 !important;
+    background-color: #dcebe4 !important;
     border-radius: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
   }
 
   /* Right column box elements - remove padding and margin */
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child .MuiBox-root {
+  [class*="MuiContainer-root"]
+    > div:last-of-type
+    > div:first-child
+    .MuiBox-root {
     padding: 0 !important;
     margin: 0 0 16pt 0 !important;
   }
@@ -256,7 +259,7 @@
   /* Keep skill/client chips styled for print - use sage color */
   .MuiChip-root {
     display: inline-block !important;
-    background-color: #85B09C !important;
+    background-color: #85b09c !important;
     color: white !important;
     border: none !important;
     font-size: 7pt !important;
@@ -276,7 +279,7 @@
   /* Optimize contact buttons for print */
   button.MuiButton-root {
     display: block !important;
-    background-color: #85B09C !important;
+    background-color: #85b09c !important;
     color: white !important;
     border: none !important;
     padding: 0 !important;
