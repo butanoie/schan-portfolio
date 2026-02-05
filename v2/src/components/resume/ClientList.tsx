@@ -32,8 +32,8 @@ export interface ClientListProps {
  * <ClientList clients={resumeData.clients} />
  */
 export default function ClientList({ clients }: ClientListProps) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  const palette = getPaletteByMode(isMounted ? mode : "light");
   const { t } = useI18n();
 
   return (

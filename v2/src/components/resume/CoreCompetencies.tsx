@@ -34,8 +34,8 @@ export interface CoreCompetenciesProps {
 export default function CoreCompetencies({
   categories,
 }: CoreCompetenciesProps) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  const palette = getPaletteByMode(isMounted ? mode : "light");
 
   return (
     <Box component="section" aria-labelledby="skills-heading">

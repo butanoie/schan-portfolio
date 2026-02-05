@@ -25,7 +25,7 @@ describe("PageDeck", () => {
     imageAlt: "Test header image",
     headingId: "test-heading",
     heading: "Test Section",
-    deck: [
+    paragraphs: [
       "First paragraph of the deck.",
       "Second paragraph with more details.",
       "Third paragraph to conclude.",
@@ -60,7 +60,7 @@ describe("PageDeck", () => {
   it("should render with empty deck", () => {
     const contentWithEmptyDeck: PageDeckData = {
       ...mockContent,
-      deck: [],
+      paragraphs: [],
     };
 
     render(<PageDeck content={contentWithEmptyDeck} />, { wrapper: Wrapper });

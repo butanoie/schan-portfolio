@@ -28,10 +28,10 @@ function Wrapper({ children }: { children: ReactNode }) {
 describe("TechnologiesShowcase", () => {
   const mockContent: TechnologiesContent = {
     intro: "This site uses the following technologies:",
-    v2Categories: [
+    categories: [
       {
         label: "Framework",
-        technologies: [
+        items: [
           {
             name: "Next.js",
             description: "React framework",
@@ -46,7 +46,7 @@ describe("TechnologiesShowcase", () => {
       },
       {
         label: "Styling",
-        technologies: [
+        items: [
           {
             name: "MUI",
             description: "Component library",
@@ -55,17 +55,21 @@ describe("TechnologiesShowcase", () => {
         ],
       },
     ],
-    v1Technologies: [
-      {
-        name: "jQuery",
-        description: "JavaScript library",
-        url: "https://jquery.com",
-      },
-      {
-        name: "PHP",
-        description: "Server-side language",
-      },
-    ],
+    v1: {
+      heading: "Original V1 Technologies",
+      description: "The original site used these technologies",
+      items: [
+        {
+          name: "jQuery",
+          description: "JavaScript library",
+          url: "https://jquery.com",
+        },
+        {
+          name: "PHP",
+          description: "Server-side language",
+        },
+      ],
+    },
   };
 
   it("should render the section heading", () => {

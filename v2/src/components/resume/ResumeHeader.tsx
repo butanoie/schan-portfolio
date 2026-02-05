@@ -50,8 +50,8 @@ const iconMap = {
  */
 export default function ResumeHeader({ content }: ResumeHeaderProps) {
   const { name, tagline, contactLinks } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  const palette = getPaletteByMode(isMounted ? mode : "light");
 
   return (
     <Box

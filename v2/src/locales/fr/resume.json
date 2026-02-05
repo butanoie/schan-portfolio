@@ -16,38 +16,25 @@
     },
     "header": {
       "tagline": "Je développe des applications utiles, intuitives et attrayantes qui améliorent la vie des gens.",
-      "downloadLabel": "Download Résumé"
+      "downloadLabel": "Télécharger le CV"
     },
     "workExperience": {
       "heading": "Expérience professionnelle",
       "keyContributions": "Contributions clés :",
-      "collabware": {
-        "description": "En tant que vice-président des produits, j'étais chargé de diriger la mise en œuvre des solutions de collaboration d'entreprise de Collabware. J'ai dirigé des équipes interfonctionnelles chargées de l'expérience utilisateur et de l'assurance qualité, et j'ai intégré les opérations et l'ingénierie cloud afin de fournir des fonctionnalités centrées sur le client tout en optimisant l'efficacité opérationnelle.",
-        "contributions": [
-          "Recueil des exigences auprès des clients et des parties prenantes, traduction des besoins commerciaux en fonctionnalités produit exploitables et en priorités pour la feuille de route",
-          "Collaborer avec les équipes d'ingénieurs à la définition du backlog produit et à la planification des sprints.",
-          "Gérer l'équipe d'assurance qualité afin de développer des cas de test complets et des cadres d'automatisation pour maintenir les normes de qualité des produits.",
-          "Collaborez avec les opérations cloud pour surveiller la santé du système et garantir la fiabilité de la plateforme.",
-          "A mené une initiative d'optimisation des coûts grâce à des audits systématiques de l'infrastructure cloud, identifiant ainsi d'importantes possibilités de réduction des dépenses.",
-          "Responsable de la conception interactive, de l'expérience utilisateur et des cadres de développement front-end pour les offres logicielles de Collabware.",
-          "Encadrer les développeurs UX, favoriser l'excellence en matière de conception et la collaboration interfonctionnelle",
-          "Concevoir et mettre en œuvre un programme d'intégration sur la connaissance des produits pour les nouveaux membres de l'équipe Collabware."
-        ]
-      },
-      "habanero": {
-        "description": "Embauché comme premier développeur d'expérience utilisateur au sein de l'organisation afin de combler les problèmes de communication et de processus entre les équipes de conception et de développement. J'ai fait connaître la valeur du rôle de développeur UX au sein de Habanero et j'ai introduit des processus et des modèles de développement front-end afin d'éliminer les points faibles dans le cycle de vie des projets. J'ai accueilli et encadré les nouveaux développeurs UX lorsqu'ils ont rejoint Habanero. J'ai contribué à porter à huit le nombre de développeurs front-end chez Habanero et j'ai également assumé des responsabilités en matière de gestion de groupe et de ressources."
-      },
-      "danielChoi": {
-        "description": "Contraté pour gérer et diriger le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation."
-      },
-      "localLola": {
-        "description": "Contrat pour développer des applications Flash, des scripts côté client et des balises XHTML/CSS pour les projets LLDT. Consultation sur la conception d'interfaces et assistance à la programmation pour le développement de CustomBlox, la solution CMS ASP.Net de LLDT."
-      },
-      "greyAdvertising": {
-        "description": "Développement de grASP, un CMS interne modulaire et extensible utilisé dans le cadre des projets Grey de 2001 à 2006. Développement et maintenance des sites Web et applications externes et internes de Grey. Prise en charge du rôle de producteur interactif, avec des tâches supplémentaires de gestion de projet telles que la gestion des ressources et des calendriers de projet, l'interaction et la coordination avec les développeurs externes, les fournisseurs et les clients."
-      },
-      "companies": {
-        "collabware": {
+      "jobs": [
+        {
+          "company": "Collabware Systems",
+          "description": "En tant que vice-président des produits, j'étais chargé de diriger la mise en œuvre des solutions de collaboration d'entreprise de Collabware. J'ai dirigé des équipes interfonctionnelles chargées de l'expérience utilisateur et de l'assurance qualité, et j'ai intégré les opérations et l'ingénierie cloud afin de fournir des fonctionnalités centrées sur le client tout en optimisant l'efficacité opérationnelle.",
+          "contributions": [
+            "Recueil des exigences auprès des clients et des parties prenantes, traduction des besoins commerciaux en fonctionnalités produit exploitables et en priorités pour la feuille de route",
+            "Collaborer avec les équipes d'ingénieurs à la définition du backlog produit et à la planification des sprints.",
+            "Gérer l'équipe d'assurance qualité afin de développer des cas de test complets et des cadres d'automatisation pour maintenir les normes de qualité des produits.",
+            "Collaborez avec les opérations cloud pour surveiller la santé du système et garantir la fiabilité de la plateforme.",
+            "A mené une initiative d'optimisation des coûts grâce à des audits systématiques de l'infrastructure cloud, identifiant ainsi d'importantes possibilités de réduction des dépenses.",
+            "Responsable de la conception interactive, de l'expérience utilisateur et des cadres de développement front-end pour les offres logicielles de Collabware.",
+            "Encadrer les développeurs UX, favoriser l'excellence en matière de conception et la collaboration interfonctionnelle",
+            "Concevoir et mettre en œuvre un programme d'intégration sur la connaissance des produits pour les nouveaux membres de l'équipe Collabware."
+          ],
           "roles": [
             {
               "title": "VP, Produit",
@@ -66,7 +53,9 @@
             }
           ]
         },
-        "habanero": {
+        {
+          "company": "Habanero Consulting Group",
+          "description": "Embauché comme premier développeur d'expérience utilisateur au sein de l'organisation afin de combler les problèmes de communication et de processus entre les équipes de conception et de développement. J'ai fait connaître la valeur du rôle de développeur UX au sein de Habanero et j'ai introduit des processus et des modèles de développement front-end afin d'éliminer les points faibles dans le cycle de vie des projets. J'ai accueilli et encadré les nouveaux développeurs UX lorsqu'ils ont rejoint Habanero. J'ai contribué à porter à huit le nombre de développeurs front-end chez Habanero et j'ai également assumé des responsabilités en matière de gestion de groupe et de ressources.",
           "roles": [
             {
               "title": "Développeur d'expérience utilisateur",
@@ -75,7 +64,9 @@
             }
           ]
         },
-        "danielChoi": {
+        {
+          "company": "Daniel Choi Design Associates",
+          "description": "Contraté pour gérer et diriger le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation.",
           "roles": [
             {
               "title": "Développeur principal (contrat)",
@@ -84,7 +75,9 @@
             }
           ]
         },
-        "localLola": {
+        {
+          "company": "Local Lola Design Team (LLDT)",
+          "description": "Contrat pour développer des applications Flash, des scripts côté client et des balises XHTML/CSS pour les projets LLDT. Consultation sur la conception d'interfaces et assistance à la programmation pour le développement de CustomBlox, la solution CMS ASP.Net de LLDT.",
           "roles": [
             {
               "title": "Développeur Flash et d'expérience utilisateur (contrat)",
@@ -93,7 +86,9 @@
             }
           ]
         },
-        "greyAdvertising": {
+        {
+          "company": "Grey Advertising Vancouver",
+          "description": "Développement de grASP, un CMS interne modulaire et extensible utilisé dans le cadre des projets Grey de 2001 à 2006. Développement et maintenance des sites Web et applications externes et internes de Grey. Prise en charge du rôle de producteur interactif, avec des tâches supplémentaires de gestion de projet telles que la gestion des ressources et des calendriers de projet, l'interaction et la coordination avec les développeurs externes, les fournisseurs et les clients.",
           "roles": [
             {
               "title": "Producteur/Développeur interactif",
@@ -102,7 +97,7 @@
             }
           ]
         }
-      }
+      ]
     },
     "skills": {
       "coreCompetencies": "Compétences clés",

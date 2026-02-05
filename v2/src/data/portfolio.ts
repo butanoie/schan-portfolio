@@ -6,7 +6,7 @@
  * - Logo/mascot image
  * - Introductory paragraphs about the projects and experience
  *
- * All user-facing strings are localized via i18n from pages.json.
+ * All user-facing strings are localized via i18n from en/home.json and fr/home.json.
  * Use getLocalizedPortfolioData(t) to retrieve translated content.
  */
 
@@ -27,7 +27,7 @@ export const portfolioData: ProjectsPageData = {
     imageAlt: "Sing Chan's Body of Work",
     headingId: "portfolio-heading",
     heading: "Sing Chan",
-    deck: [
+    paragraphs: [
       "On this page you will find select projects that represent my knowledge and experience in the realms of web application development, design, usability and accessibility. I have over 25 years experience in software development where I work with customers, stakeholders, information architects, interaction designers, developers, and quality assurance to create usable and visually engaging solutions.",
       "I was involved in these projects either as the lead User Experience Developer responsible for implementing custom UI functionality, controls and branding, or as the User Experience Architect, responsible for determining development approaches and assisting other team members with their tasks.",
     ],
@@ -59,7 +59,7 @@ export function getLocalizedPortfolioData(
       imageAlt: t('home.pageDeck.imageAlt', { ns: 'pages' }),
       headingId: 'portfolio-heading',
       heading: t('home.pageDeck.heading', { ns: 'pages' }),
-      deck: [
+      paragraphs: [
         t('home.pageDeck.paragraphs.0', { ns: 'pages' }),
         t('home.pageDeck.paragraphs.1', { ns: 'pages' }),
       ],

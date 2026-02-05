@@ -88,9 +88,10 @@
           ]
         }
       ],
-      "v1Section": "Original V1 Technologies (Historical)",
-      "v1Description": "The original portfolio site was built with these technologies:",
-      "v1Items": [
+      "v1": {
+        "heading": "Original V1 Technologies (Historical)",
+        "description": "The original portfolio site was built with these technologies:",
+        "items": [
         {
           "name": "Gumby Framework",
           "description": "Responsive grid layout, Entypo icon set, and base UI element styles."
@@ -115,7 +116,8 @@
           "name": "Sass & Compass",
           "description": "Custom CSS written in SCSS syntax and compiled with Compass."
         }
-      ]
+        ]
+      }
     },
     "designPhilosophy": {
       "heading": "Design & Typography",

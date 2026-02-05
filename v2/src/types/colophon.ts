@@ -27,7 +27,21 @@ export interface TechnologyCategory {
   label: string;
 
   /** Technologies in this category */
-  technologies: Technology[];
+  items: Technology[];
+}
+
+/**
+ * V1 historical technologies section.
+ */
+export interface V1TechnologiesSection {
+  /** Heading for the V1 section */
+  heading: string;
+
+  /** Description of V1 technologies */
+  description: string;
+
+  /** V1 (original) technology list for historical context */
+  items: Technology[];
 }
 
 /**
@@ -38,10 +52,10 @@ export interface TechnologiesContent {
   intro: string;
 
   /** V2 (current) technology categories */
-  v2Categories: TechnologyCategory[];
+  categories: TechnologyCategory[];
 
-  /** V1 (original) technology list for historical context */
-  v1Technologies: Technology[];
+  /** V1 (original) technology section */
+  v1: V1TechnologiesSection;
 }
 
 /**

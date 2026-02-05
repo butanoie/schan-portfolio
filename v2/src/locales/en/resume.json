@@ -21,33 +21,20 @@
     "workExperience": {
       "heading": "Work Experience",
       "keyContributions": "Key Contributions:",
-      "collabware": {
-        "description": "My responsibilities as VP of Product were to drive product execution for Collabware's enterprise collaboration solutions. I led cross-functional UX and QA teams and integrated with cloud operations and engineering to deliver customer-centric features while optimizing operational efficiency.",
-        "contributions": [
-          "Requirements gathering with customers and stakeholders, translate business needs into actionable product features and roadmap priorities",
-          "Collaborate with engineering teams on product backlog definition and sprint planning",
-          "Manage quality assurance team to develop comprehensive test cases and automation frameworks to maintain product quality standards",
-          "Partner with cloud operations to monitor system health and ensure platform reliability",
-          "Led cost optimization initiative through systematic cloud infrastructure audits, identifying significant opportunities for expense reduction",
-          "Responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings",
-          "Mentor UX developers, fostering design excellence and cross-functional collaboration",
-          "Design and deliver product knowledge onboarding program for new Collabware team members"
-        ]
-      },
-      "habanero": {
-        "description": "Hired as the first User Experience Developer in the organization to bridge the communication and process issues between design and development teams. Evangelized the value of the UX Developer role within Habanero and introduced front-end development process and patterns to remove pain points in the project lifecycle. On-boarded and mentored new UX Developers when they joined Habanero. Helped grow the number of front-end developers at Habanero to eight and also took on group management and resourcing responsibilities."
-      },
-      "danielChoi": {
-        "description": "Contracted to manage and lead development of interactive projects, from the database layer all the way up to the front-end, including security, testing, deployment and documentation."
-      },
-      "localLola": {
-        "description": "Contracted to develop Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects. Consulted on interface design and provided programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution."
-      },
-      "greyAdvertising": {
-        "description": "Developed grASP, a modular and extensible in-house CMS used on Grey projects from 2001 to 2006. Also developed and maintained Grey's external and internal web sites and applications. Took on role of Interactive Producer, with additional project management duties such as managing resources and project schedules, interacting and coordinating with outside developers, vendors and clients."
-      },
-      "companies": {
-        "collabware": {
+      "jobs": [
+        {
+          "company": "Collabware Systems",
+          "description": "My responsibilities as VP of Product were to drive product execution for Collabware's enterprise collaboration solutions. I led cross-functional UX and QA teams and integrated with cloud operations and engineering to deliver customer-centric features while optimizing operational efficiency.",
+          "contributions": [
+            "Requirements gathering with customers and stakeholders, translate business needs into actionable product features and roadmap priorities",
+            "Collaborate with engineering teams on product backlog definition and sprint planning",
+            "Manage quality assurance team to develop comprehensive test cases and automation frameworks to maintain product quality standards",
+            "Partner with cloud operations to monitor system health and ensure platform reliability",
+            "Led cost optimization initiative through systematic cloud infrastructure audits, identifying significant opportunities for expense reduction",
+            "Responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings",
+            "Mentor UX developers, fostering design excellence and cross-functional collaboration",
+            "Design and deliver product knowledge onboarding program for new Collabware team members"
+          ],
           "roles": [
             {
               "title": "VP, Product",
@@ -66,7 +53,9 @@
             }
           ]
         },
-        "habanero": {
+        {
+          "company": "Habanero Consulting Group",
+          "description": "Hired as the first User Experience Developer in the organization to bridge the communication and process issues between design and development teams. Evangelized the value of the UX Developer role within Habanero and introduced front-end development process and patterns to remove pain points in the project lifecycle. On-boarded and mentored new UX Developers when they joined Habanero. Helped grow the number of front-end developers at Habanero to eight and also took on group management and resourcing responsibilities.",
           "roles": [
             {
               "title": "User Experience Developer",
@@ -75,7 +64,9 @@
             }
           ]
         },
-        "danielChoi": {
+        {
+          "company": "Daniel Choi Design Associates",
+          "description": "Contracted to manage and lead development of interactive projects, from the database layer all the way up to the front-end, including security, testing, deployment and documentation.",
           "roles": [
             {
               "title": "Lead Developer (Contract)",
@@ -84,7 +75,9 @@
             }
           ]
         },
-        "localLola": {
+        {
+          "company": "Local Lola Design Team (LLDT)",
+          "description": "Contracted to develop Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects. Consulted on interface design and provided programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution.",
           "roles": [
             {
               "title": "Flash and User Experience Developer (Contract)",
@@ -93,7 +86,9 @@
             }
           ]
         },
-        "greyAdvertising": {
+        {
+          "company": "Grey Advertising Vancouver",
+          "description": "Developed grASP, a modular and extensible in-house CMS used on Grey projects from 2001 to 2006. Also developed and maintained Grey's external and internal web sites and applications. Took on role of Interactive Producer, with additional project management duties such as managing resources and project schedules, interacting and coordinating with outside developers, vendors and clients.",
           "roles": [
             {
               "title": "Interactive Producer/Developer",
@@ -102,7 +97,7 @@
             }
           ]
         }
-      }
+      ]
     },
     "skills": {
       "coreCompetencies": "Core Competencies",

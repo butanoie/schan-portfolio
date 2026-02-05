@@ -7,8 +7,8 @@
  * - Design philosophy including color palette and typography
  * - The story of Buta, the portfolio mascot
  *
- * All user-facing strings are localized via i18n in pages.json.
- * Use getLocalizedColophonData() to retrieve translated content.
+ * All user-facing strings are localized via i18n from en/colophon.json and fr/colophon.json.
+ * Use getLocalizedColophonData(t) to retrieve translated content.
  */
 
 import type { ColophonData } from '../types/colophon';
@@ -29,7 +29,7 @@ export const colophonData: ColophonData = {
     imageAlt: 'Choice Cuts - pork cuts diagram logo',
     headingId: 'colophon-heading',
     heading: 'Colophon',
-    deck: [
+    paragraphs: [
       'Sing Chan is currently the VP of Product at Collabware Systems.',
       "Sing is responsible for working with customers and stakeholders to determine the product and feature roadmaps for Collabware's Collabspace solution and manages the Product and Quality Assurance teams.",
       "He is also responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings.",
@@ -40,10 +40,10 @@ export const colophonData: ColophonData = {
     intro:
       'This portfolio site has been rebuilt from the ground up. Here\'s what powers the current version:',
 
-    v2Categories: [
+    categories: [
       {
         label: 'Framework & Runtime',
-        technologies: [
+        items: [
           {
             name: 'Next.js 16',
             description:
@@ -66,7 +66,7 @@ export const colophonData: ColophonData = {
       },
       {
         label: 'UI & Styling',
-        technologies: [
+        items: [
           {
             name: 'Material UI (MUI)',
             description:
@@ -83,7 +83,7 @@ export const colophonData: ColophonData = {
       },
       {
         label: 'Development Tools',
-        technologies: [
+        items: [
           {
             name: 'Claude Code',
             description:
@@ -105,7 +105,7 @@ export const colophonData: ColophonData = {
       },
       {
         label: 'Testing',
-        technologies: [
+        items: [
           {
             name: 'Vitest',
             description:
@@ -122,42 +122,46 @@ export const colophonData: ColophonData = {
       },
     ],
 
-    v1Technologies: [
-      {
-        name: 'Gumby Framework',
-        description:
-          'Responsive grid layout, Entypo icon set, and base UI element styles.',
-        url: 'http://gumbyframework.com',
-      },
-      {
-        name: 'jQuery',
-        description:
-          'Asynchronously loading portfolio projects, DOM manipulation, and UI effects.',
-        url: 'https://jquery.com/',
-      },
-      {
-        name: 'PHP',
-        description: 'Simple web service to serve up the portfolio projects.',
-        url: 'https://www.php.net/',
-      },
-      {
-        name: 'Swipebox',
-        description: 'jQuery plugin for the project image lightboxes.',
-        url: 'https://github.com/brutaldesign/swipebox',
-      },
-      {
-        name: 'SWFObject',
-        description:
-          'Determined whether to show links to Adobe Flash projects.',
-        url: 'https://github.com/swfobject/swfobject',
-      },
-      {
-        name: 'Sass & Compass',
-        description:
-          'Custom CSS written in SCSS syntax and compiled with Compass.',
-        url: 'https://sass-lang.com/',
-      },
-    ],
+    v1: {
+      heading: 'Original V1 Technologies (Historical)',
+      description: 'The original portfolio site was built with these technologies:',
+      items: [
+        {
+          name: 'Gumby Framework',
+          description:
+            'Responsive grid layout, Entypo icon set, and base UI element styles.',
+          url: 'http://gumbyframework.com',
+        },
+        {
+          name: 'jQuery',
+          description:
+            'Asynchronously loading portfolio projects, DOM manipulation, and UI effects.',
+          url: 'https://jquery.com/',
+        },
+        {
+          name: 'PHP',
+          description: 'Simple web service to serve up the portfolio projects.',
+          url: 'https://www.php.net/',
+        },
+        {
+          name: 'Swipebox',
+          description: 'jQuery plugin for the project image lightboxes.',
+          url: 'https://github.com/brutaldesign/swipebox',
+        },
+        {
+          name: 'SWFObject',
+          description:
+            'Determined whether to show links to Adobe Flash projects.',
+          url: 'https://github.com/swfobject/swfobject',
+        },
+        {
+          name: 'Sass & Compass',
+          description:
+            'Custom CSS written in SCSS syntax and compiled with Compass.',
+          url: 'https://sass-lang.com/',
+        },
+      ],
+    },
   },
 
   designPhilosophy: {
@@ -281,7 +285,7 @@ export function getLocalizedColophonData(
       imageAlt: t('colophon.pageDeck.imageAlt', { ns: 'pages' }),
       headingId: 'colophon-heading',
       heading: t('colophon.pageDeck.heading', { ns: 'pages' }),
-      deck: [
+      paragraphs: [
         t('colophon.pageDeck.paragraphs.0', { ns: 'pages' }),
         t('colophon.pageDeck.paragraphs.1', { ns: 'pages' }),
         t('colophon.pageDeck.paragraphs.2', { ns: 'pages' }),
@@ -291,10 +295,10 @@ export function getLocalizedColophonData(
     technologies: {
       intro: t('colophon.technologies.intro', { ns: 'pages' }),
 
-      v2Categories: [
+      categories: [
         {
           label: t('colophon.technologies.categories.0.label', { ns: 'pages' }),
-          technologies: [
+          items: [
             {
               name: 'Next.js 16',
               description: t('colophon.technologies.categories.0.items.0.description', { ns: 'pages' }),
@@ -314,7 +318,7 @@ export function getLocalizedColophonData(
         },
         {
           label: t('colophon.technologies.categories.1.label', { ns: 'pages' }),
-          technologies: [
+          items: [
             {
               name: 'Material UI (MUI)',
               description: t('colophon.technologies.categories.1.items.0.description', { ns: 'pages' }),
@@ -329,7 +333,7 @@ export function getLocalizedColophonData(
         },
         {
           label: t('colophon.technologies.categories.2.label', { ns: 'pages' }),
-          technologies: [
+          items: [
             {
               name: 'Claude Code',
               description: t('colophon.technologies.categories.2.items.0.description', { ns: 'pages' }),
@@ -349,7 +353,7 @@ export function getLocalizedColophonData(
         },
         {
           label: t('colophon.technologies.categories.3.label', { ns: 'pages' }),
-          technologies: [
+          items: [
             {
               name: 'Vitest',
               description: t('colophon.technologies.categories.3.items.0.description', { ns: 'pages' }),
@@ -364,38 +368,42 @@ export function getLocalizedColophonData(
         },
       ],
 
-      v1Technologies: [
-        {
-          name: 'Gumby Framework',
-          description: t('colophon.technologies.v1Items.0.description', { ns: 'pages' }),
-          url: 'http://gumbyframework.com',
-        },
-        {
-          name: 'jQuery',
-          description: t('colophon.technologies.v1Items.1.description', { ns: 'pages' }),
-          url: 'https://jquery.com/',
-        },
-        {
-          name: 'PHP',
-          description: t('colophon.technologies.v1Items.2.description', { ns: 'pages' }),
-          url: 'https://www.php.net/',
-        },
-        {
-          name: 'Swipebox',
-          description: t('colophon.technologies.v1Items.3.description', { ns: 'pages' }),
-          url: 'https://github.com/brutaldesign/swipebox',
-        },
-        {
-          name: 'SWFObject',
-          description: t('colophon.technologies.v1Items.4.description', { ns: 'pages' }),
-          url: 'https://github.com/swfobject/swfobject',
-        },
-        {
-          name: 'Sass & Compass',
-          description: t('colophon.technologies.v1Items.5.description', { ns: 'pages' }),
-          url: 'https://sass-lang.com/',
-        },
-      ],
+      v1: {
+        heading: t('colophon.technologies.v1.heading', { ns: 'pages' }),
+        description: t('colophon.technologies.v1.description', { ns: 'pages' }),
+        items: [
+          {
+            name: 'Gumby Framework',
+            description: t('colophon.technologies.v1.items.0.description', { ns: 'pages' }),
+            url: 'http://gumbyframework.com',
+          },
+          {
+            name: 'jQuery',
+            description: t('colophon.technologies.v1.items.1.description', { ns: 'pages' }),
+            url: 'https://jquery.com/',
+          },
+          {
+            name: 'PHP',
+            description: t('colophon.technologies.v1.items.2.description', { ns: 'pages' }),
+            url: 'https://www.php.net/',
+          },
+          {
+            name: 'Swipebox',
+            description: t('colophon.technologies.v1.items.3.description', { ns: 'pages' }),
+            url: 'https://github.com/brutaldesign/swipebox',
+          },
+          {
+            name: 'SWFObject',
+            description: t('colophon.technologies.v1.items.4.description', { ns: 'pages' }),
+            url: 'https://github.com/swfobject/swfobject',
+          },
+          {
+            name: 'Sass & Compass',
+            description: t('colophon.technologies.v1.items.5.description', { ns: 'pages' }),
+            url: 'https://sass-lang.com/',
+          },
+        ],
+      },
     },
 
     designPhilosophy: {

@@ -32,8 +32,9 @@ export interface WorkExperienceProps {
  * <WorkExperience jobs={resumeData.jobs} />
  */
 export default function WorkExperience({ jobs }: WorkExperienceProps) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  // Use light theme during SSR/hydration to match ThemeProvider
+  const palette = getPaletteByMode(isMounted ? mode : "light");
   const { t } = useI18n();
 
   return (

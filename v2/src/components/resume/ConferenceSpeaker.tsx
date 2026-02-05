@@ -36,8 +36,8 @@ export default function ConferenceSpeaker({
   content,
 }: ConferenceSpeakerProps) {
   const { intro, events } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  const palette = getPaletteByMode(isMounted ? mode : "light");
   const { t } = useI18n();
 
   return (

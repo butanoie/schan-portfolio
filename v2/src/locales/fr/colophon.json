@@ -88,9 +88,10 @@
           ]
         }
       ],
-      "v1Section": "Original V1 Technologies (Historique)",
-      "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
-      "v1Items": [
+      "v1": {
+        "heading": "Original V1 Technologies (Historique)",
+        "description": "Le site original du portefeuille a été construit avec ces technologies :",
+        "items": [
         {
           "name": "Gumby Framework",
           "description": "Grille réactive, jeu d'icônes Entypo et styles d'éléments d'interface utilisateur de base."
@@ -115,7 +116,8 @@
           "name": "Sass et Compass",
           "description": "CSS personnalisé écrit en syntaxe SCSS et compilé avec Compass."
         }
-      ]
+        ]
+      }
     },
     "designPhilosophy": {
       "heading": "Conception et typographie",

@@ -5,8 +5,8 @@
  * translations from JSON files. This allows the data structure to remain in
  * projects.ts while keeping translatable strings in locale JSON files.
  *
- * Portfolio page content is now localized via i18n from pages.json.
- * Use getLocalizedPortfolioData(t) from portfolio.ts instead.
+ * Project translations are loaded from locale JSON files (e.g., en/projects.json, fr/projects.json).
+ * Use getLocalizedProjects(locale) to get all projects with translations applied.
  *
  * @module data/localization
  */
@@ -18,6 +18,10 @@ import { PROJECTS } from './projects';
 /**
  * Imported locale data type for project translations.
  *
+ * Image captions are stored as an array indexed by image position.
+ * This array is merged with the base project's images at runtime,
+ * with each caption matching the image at the same index.
+ *
  * @internal
  */
 type LocaleData = Record<
@@ -26,7 +30,7 @@ type LocaleData = Record<
     title: string;
     desc: string;
     circa: string;
-    images: string[];
+    captions: string[];
   }
 >;
 
@@ -112,7 +116,7 @@ export async function getLocalizedProject(
     circa: translations.circa,
     images: baseProject.images.map((image, index) => ({
       ...image,
-      caption: translations.images[index] || image.caption,
+      caption: translations.captions[index] || image.caption,
     })),
   };
 }
@@ -174,9 +178,9 @@ export async function getLocalizedImageCaption(
   }
 
   const localeData = await getLocaleData(locale);
-  if (!localeData?.[projectId]?.images[imageIndex]) {
+  if (!localeData?.[projectId]?.captions[imageIndex]) {
     return project.images[imageIndex].caption;
   }
 
-  return localeData[projectId].images[imageIndex];
+  return localeData[projectId].captions[imageIndex];
 }

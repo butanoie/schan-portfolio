@@ -120,7 +120,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
 export default function TechnologiesShowcase({
   content,
 }: TechnologiesShowcaseProps) {
-  const { intro, v2Categories, v1Technologies } = content;
+  const { intro, categories, v1 } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
   const { t } = useI18n();
@@ -174,7 +174,7 @@ export default function TechnologiesShowcase({
       </Typography>
 
       {/* V2 Technologies by Category */}
-      {v2Categories.map((category, index) => (
+      {categories.map((category, index) => (
         <Box key={category.label} sx={{ mb: 4 }}>
           <Typography
             variant="h3"
@@ -199,7 +199,7 @@ export default function TechnologiesShowcase({
               gap: 2,
             }}
           >
-            {category.technologies.map((tech) => (
+            {category.items.map((tech) => (
               <TechnologyCard key={tech.name} tech={tech} />
             ))}
           </Box>
@@ -250,7 +250,7 @@ export default function TechnologiesShowcase({
               gap: 2,
             }}
           >
-            {v1Technologies.map((tech) => (
+            {v1.items.map((tech) => (
               <TechnologyCard key={tech.name} tech={tech} />
             ))}
           </Box>
