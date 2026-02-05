@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { getProjects, getTotalProjectCount } from '../lib/projectData';
+import { useLocale } from './useLocale';
 import { LOADING_DELAY } from '../constants/app';
 import type { Project } from '../types';
 
@@ -46,30 +47,31 @@ interface UseProjectLoaderReturn {
  * - Calculates `remainingCount` for UI feedback
  * - Handles errors gracefully without losing loaded projects
  *
- * **Design Note - Async Wrapper for Synchronous Function:**
- * The `loadMore` function is async, but the underlying `getProjects()` is synchronous.
+ * **Async Design:**
+ * Both the `loadMore` function and the underlying `getProjects()` are asynchronous.
+ * The `getProjects()` function is async because it dynamically loads localized project data
+ * from JSON files using the localization layer.
+ *
  * This design provides several benefits:
  *
- * 1. **Future API Migration Path:** When transitioning from static data to a real API,
- * no hook interface changes are needed. The async structure is already in place.
+ * 1. **Localization Integration:** The `getProjects()` function automatically merges base
+ * project structure with translated content from locale JSON files, ensuring all
+ * user-facing strings (title, description, image captions) are properly localized.
  *
  * 2. **Simulated Network Delay:** The SIMULATED_LOAD_DELAY allows testing loading states
- * and skeleton UI animations without making real network requests. Set the delay to 0
- * in production for instant loading.
+ * and skeleton UI animations. Set the delay to 0 in production for faster loading.
  *
- * 3. **Consistent Async Pattern:** Users of this hook expect async operations. Even though
- * the data is currently synchronous, wrapping it in async/await maintains consistency
- * with real async operations they may implement later.
- *
- * 4. **Loading State Management:** The async wrapper naturally allows `setLoading(true)`
- * at the start and `setLoading(false)` after the delay, enabling proper skeleton
+ * 3. **Loading State Management:** The async nature allows `setLoading(true)`
+ * at the start and `setLoading(false)` after completion, enabling proper skeleton
  * placeholder display.
  *
+ * 4. **Future API Migration Path:** When transitioning to a real API, the async
+ * structure is already in place for easy replacement.
+ *
  * **Implementation Detail:**
- * - `getProjects()` is called after `await Promise.resolve(SIMULATED_LOAD_DELAY)`
- * - No actual async work happens in the Promise (it's just a delay)
- * - Function returns synchronously retrieved data
- * - This pattern prepares the code for real async operations (real API calls)
+ * - `getProjects()` is awaited to ensure localization completes before rendering
+ * - The SIMULATED_LOAD_DELAY provides artificial delay for debugging skeleton visibility
+ * - Function properly manages loading state throughout the async operation
  *
  * **Usage Example:**
  * ```typescript
@@ -129,6 +131,9 @@ export function useProjectLoader(
   initialProjects: Project[] = [],
   pageSize: number = 5
 ): UseProjectLoaderReturn {
+  // Get current locale from context
+  const { locale } = useLocale();
+
   // State for all loaded projects (cumulative)
   const [projects, setProjects] = useState<Project[]>(initialProjects);
 
@@ -138,8 +143,12 @@ export function useProjectLoader(
   // State for any errors during loading
   const [error, setError] = useState<Error | null>(null);
 
-  // Track current page - start from page 2 since page 1 is already loaded (initial 5)
+  // Track current page - start from page 1 (we'll move to 2 after initial load)
   const currentPageRef = useRef<number>(1);
+
+  // Track the locale for which we currently have projects
+  // Used to detect when locale changes so we can reload
+  const currentLocaleRef = useRef<string>(locale);
 
   // Simulated loading delay (in milliseconds) for debugging skeleton visibility
   // Set to 0 for production performance, increase for testing skeleton animations
@@ -160,6 +169,57 @@ export function useProjectLoader(
 
   // Check if all projects have been loaded
   const allLoaded = projects.length >= totalProjects;
+
+  /**
+   * Re-fetch initial projects when locale changes.
+   * This ensures the project list is updated with translations in the new language.
+   * Resets the projects list and pagination state.
+   */
+  useEffect(() => {
+    // Skip if locale hasn't actually changed
+    if (locale === currentLocaleRef.current) {
+      return;
+    }
+
+    let cancelled = false;
+
+    /**
+     * Reloads projects for a new locale by fetching the first batch.
+     *
+     * When the user changes their language preference, this function fetches the
+     * initial batch of projects in the new locale and resets the pagination state.
+     * If the fetch fails, it preserves the previous projects.
+     */
+    const reloadForNewLocale = async () => {
+      try {
+        // Fetch the first batch with the new locale
+        const response = await getProjects({
+          page: 1,
+          pageSize,
+          locale,
+        });
+
+        if (!cancelled) {
+          // Reset projects list and pagination state
+          setProjects(response.items);
+          currentPageRef.current = 1;
+          setError(null);
+          currentLocaleRef.current = locale;
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.error('Failed to reload projects for new locale:', err);
+          // Keep the previous projects on error
+        }
+      }
+    };
+
+    reloadForNewLocale();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, pageSize]);
 
   /**
    * Load the next batch of projects.
@@ -185,6 +245,7 @@ export function useProjectLoader(
    * The function prevents loading beyond the total project count by checking
    * hasMore before actually fetching.
    */
+
   const loadMore = useCallback(async () => {
     // Don't attempt to load if all projects are already loaded
     if (allLoaded) {
@@ -201,9 +262,10 @@ export function useProjectLoader(
 
       // Increment to next page and fetch
       const nextPage = currentPageRef.current + 1;
-      const response = getProjects({
+      const response = await getProjects({
         page: nextPage,
         pageSize,
+        locale,
       });
 
       // Append new projects to existing list (maintain cumulative order)
@@ -217,7 +279,7 @@ export function useProjectLoader(
     } finally {
       setLoading(false);
     }
-  }, [allLoaded, pageSize, SIMULATED_LOAD_DELAY]);
+  }, [allLoaded, pageSize, SIMULATED_LOAD_DELAY, locale]);
 
   return {
     projects,

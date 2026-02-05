@@ -50,6 +50,12 @@
     },
     "technologiesShowcase": {
       "heading": "Technologies",
+      "categoryLabels": {
+        "0": "Cadre et environnement d'exécution",
+        "1": "Interface utilisateur et style",
+        "2": "Outils de développement",
+        "3": "Tests"
+      },
       "v1SectionHeading": "Original V1 Technologies (Historique)",
       "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
       "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)"
@@ -87,6 +93,63 @@
       },
       "greyAdvertising": {
         "description": "Développement de grASP, un CMS interne modulaire et extensible utilisé dans le cadre des projets Grey de 2001 à 2006. Développement et maintenance des sites Web et applications externes et internes de Grey. Prise en charge du rôle de producteur interactif, avec des tâches supplémentaires de gestion de projet telles que la gestion des ressources et des calendriers de projet, l'interaction et la coordination avec les développeurs externes, les fournisseurs et les clients."
+      },
+      "companies": {
+        "collabware": {
+          "roles": [
+            {
+              "title": "VP, Produit",
+              "startDate": "Mai 2020",
+              "endDate": "Actuel"
+            },
+            {
+              "title": "Gestionnaire de produit",
+              "startDate": "Mars 2018",
+              "endDate": "Mai 2020"
+            },
+            {
+              "title": "Architecte d'expérience utilisateur",
+              "startDate": "Août 2011",
+              "endDate": "Actuel"
+            }
+          ]
+        },
+        "habanero": {
+          "roles": [
+            {
+              "title": "Développeur d'expérience utilisateur",
+              "startDate": "Mai 2006",
+              "endDate": "Juillet 2011"
+            }
+          ]
+        },
+        "danielChoi": {
+          "roles": [
+            {
+              "title": "Développeur principal (contrat)",
+              "startDate": "2005",
+              "endDate": "2006"
+            }
+          ]
+        },
+        "localLola": {
+          "roles": [
+            {
+              "title": "Développeur Flash et d'expérience utilisateur (contrat)",
+              "startDate": "2003",
+              "endDate": "2006"
+            }
+          ]
+        },
+        "greyAdvertising": {
+          "roles": [
+            {
+              "title": "Producteur/Développeur interactif",
+              "startDate": "Juillet 1999",
+              "endDate": "Mai 2006"
+            }
+          ]
+        }
       }
     },
     "skills": {

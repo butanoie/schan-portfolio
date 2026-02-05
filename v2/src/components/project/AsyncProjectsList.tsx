@@ -131,6 +131,7 @@ export function AsyncProjectsList({
   const shouldShowLoadMore = isHomePage || isActuallyOnHomePage;
 
   // Hook for managing progressive loading
+  // This hook automatically re-fetches projects when locale changes
   const {
     projects,
     loading,

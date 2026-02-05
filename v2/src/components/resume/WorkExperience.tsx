@@ -159,7 +159,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                     mb: 0.75,
                     lineHeight: 1.6,
                     color: palette.text.primary,
-                    fontSize: { xs: "0.9rem", md: "0.95rem" },
+                    fontSize: { xs: "0.9rem", md: "1rem" },
                   },
                 }}
               >

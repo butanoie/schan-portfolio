@@ -403,32 +403,32 @@ export function getLocalizedColophonData(
 
       colors: [
         {
-          name: 'Sakura',
+          name: t('colophon.designPhilosophy.colors.0.name', { ns: 'pages' }),
           hex: BRAND_COLORS.sakura,
           description: t('colophon.designPhilosophy.colors.0.description', { ns: 'pages' }),
         },
         {
-          name: 'Duck Egg',
+          name: t('colophon.designPhilosophy.colors.1.name', { ns: 'pages' }),
           hex: BRAND_COLORS.duckEgg,
           description: t('colophon.designPhilosophy.colors.1.description', { ns: 'pages' }),
         },
         {
-          name: 'Sky Blue',
+          name: t('colophon.designPhilosophy.colors.2.name', { ns: 'pages' }),
           hex: BRAND_COLORS.skyBlue,
           description: t('colophon.designPhilosophy.colors.2.description', { ns: 'pages' }),
         },
         {
-          name: 'Graphite',
+          name: t('colophon.designPhilosophy.colors.3.name', { ns: 'pages' }),
           hex: BRAND_COLORS.graphite,
           description: t('colophon.designPhilosophy.colors.3.description', { ns: 'pages' }),
         },
         {
-          name: 'Sage',
+          name: t('colophon.designPhilosophy.colors.4.name', { ns: 'pages' }),
           hex: BRAND_COLORS.sage,
           description: t('colophon.designPhilosophy.colors.4.description', { ns: 'pages' }),
         },
         {
-          name: 'Maroon',
+          name: t('colophon.designPhilosophy.colors.5.name', { ns: 'pages' }),
           hex: BRAND_COLORS.maroon,
           description: t('colophon.designPhilosophy.colors.5.description', { ns: 'pages' }),
         },

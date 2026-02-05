@@ -103,11 +103,6 @@ export async function getLocalizedProject(
     return undefined;
   }
 
-  // If locale is English, return base project as-is
-  if (locale === 'en') {
-    return baseProject;
-  }
-
   const localeData = await getLocaleData(locale);
   if (!localeData?.projects[projectId]) {
     return baseProject;
@@ -141,10 +136,6 @@ export async function getLocalizedProject(
  * // Returns all 18 projects with French translations
  */
 export async function getLocalizedProjects(locale: Locale): Promise<Project[]> {
-  if (locale === 'en') {
-    return [...PROJECTS];
-  }
-
   const localeData = await getLocaleData(locale);
   if (!localeData) {
     return [...PROJECTS];
@@ -169,15 +160,6 @@ export async function getLocalizedProjects(locale: Locale): Promise<Project[]> {
  * // Returns portfolio with French page title and introduction text
  */
 export async function getLocalizedPortfolio(locale: Locale) {
-  // If locale is English, return base data as-is
-  if (locale === 'en') {
-    return {
-      pageTitle: basePortfolioData.pageTitle,
-      pageDescription: basePortfolioData.pageDescription,
-      pageDeck: basePortfolioData.pageDeck,
-    };
-  }
-
   const localeData = await getLocaleData(locale);
   if (!localeData?.portfolio) {
     return {

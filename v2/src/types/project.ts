@@ -277,7 +277,8 @@ export interface ProjectsResponse {
  * const options5: ProjectQueryOptions = {
  * search: 'e-commerce',
  * tags: ['React', 'Node.js'],
- * pageSize: 20
+ * pageSize: 20,
+ * locale: 'fr'
  * };
  */
 export interface ProjectQueryOptions {
@@ -292,4 +293,7 @@ export interface ProjectQueryOptions {
 
   /** Search query for title and description (case-insensitive) */
   search?: string;
+
+  /** Locale for localizing project content (e.g., 'en', 'fr', default: 'en') */
+  locale?: string;
 }

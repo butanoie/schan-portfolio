@@ -32,13 +32,17 @@ export async function fetchProjects(
  * Server action to fetch a single project by ID.
  *
  * @param id - Project identifier
- * @returns Promise resolving to project or null
+ * @param locale - Locale for localizing content (default: 'en')
+ * @returns Promise resolving to localized project or null
  *
  * @example
  * const project = await fetchProjectById('collabspace');
+ *
+ * @example
+ * const frenchProject = await fetchProjectById('collabspace', 'fr');
  */
-export async function fetchProjectById(id: string): Promise<Project | null> {
-  return getProjectById(id);
+export async function fetchProjectById(id: string, locale: string = 'en'): Promise<Project | null> {
+  return await getProjectById(id, locale);
 }
 
 /**

@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * i18next configuration for the application.
  *
@@ -7,6 +9,8 @@
  *
  * Namespaces: common, pages, components, meta
  * Languages: en, fr
+ *
+ * MUST BE CLIENT COMPONENT: Uses React Context via initReactI18next
  *
  * @module lib/i18next-config
  */

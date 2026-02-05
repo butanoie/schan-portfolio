@@ -1,7 +1,20 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ReactNode, createElement } from 'react';
 import { useProjectLoader } from '../../hooks/useProjectLoader';
 import { PROJECTS } from '../../data/projects';
+import { LocaleProvider } from '../../components/i18n/LocaleProvider';
+
+/**
+ * Wrapper component that provides LocaleProvider context for hook testing.
+ *
+ * @param props - Component props
+ * @param props.children - Components to wrap with LocaleProvider
+ * @returns Wrapped component with locale context
+ */
+function LocaleProviderWrapper({ children }: { children: ReactNode }) {
+  return createElement(LocaleProvider, { initialLocale: 'en' }, children);
+}
 
 /**
  * Tests for the useProjectLoader hook.
@@ -29,33 +42,43 @@ describe('useProjectLoader', () => {
 
   describe('Initial state', () => {
     it('should initialize with provided initial projects', () => {
-      const { result } = renderHook(() => useProjectLoader([...mockProjects], 5));
+      const { result } = renderHook(() => useProjectLoader([...mockProjects], 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.projects).toEqual(mockProjects);
       expect(result.current.projects).toHaveLength(5);
     });
 
     it('should initialize with empty array when no initial projects provided', () => {
-      const { result } = renderHook(() => useProjectLoader([], 5));
+      const { result } = renderHook(() => useProjectLoader([], 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.projects).toEqual([]);
       expect(result.current.projects).toHaveLength(0);
     });
 
     it('should not be loading initially', () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.loading).toBe(false);
     });
 
     it('should have no error initially', () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.error).toBeNull();
     });
 
     it('should default page size to 5', () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects));
+      const { result } = renderHook(() => useProjectLoader(mockProjects), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       // We can't directly check pageSize, but we can verify it loads 5 more
       expect(result.current.projects).toHaveLength(5);
@@ -64,14 +87,18 @@ describe('useProjectLoader', () => {
 
   describe('hasMore and remainingCount calculations', () => {
     it('should show hasMore as true when not all projects loaded', () => {
-      const { result } = renderHook(() => useProjectLoader([...mockProjects], 5));
+      const { result } = renderHook(() => useProjectLoader([...mockProjects], 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.hasMore).toBe(true);
       expect(result.current.allLoaded).toBe(false);
     });
 
     it('should calculate correct remainingCount', () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       // 18 total - 5 initial = 13 remaining
       expect(result.current.remainingCount).toBe(13);
@@ -80,7 +107,9 @@ describe('useProjectLoader', () => {
     it('should show hasMore as false when all projects loaded', () => {
       // Start with all 18 projects
       const allProjects = [...PROJECTS];
-      const { result } = renderHook(() => useProjectLoader(allProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(allProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.hasMore).toBe(false);
       expect(result.current.allLoaded).toBe(true);
@@ -88,13 +117,17 @@ describe('useProjectLoader', () => {
 
     it('should calculate remainingCount as 0 when all loaded', () => {
       const allProjects = [...PROJECTS];
-      const { result } = renderHook(() => useProjectLoader(allProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(allProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.remainingCount).toBe(0);
     });
 
     it('should update remainingCount after loading more', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.remainingCount).toBe(13);
 
@@ -109,7 +142,9 @@ describe('useProjectLoader', () => {
 
   describe('loadMore functionality', () => {
     it('should not change projects when loadMore called on empty initial state', async () => {
-      const { result } = renderHook(() => useProjectLoader([], 5));
+      const { result } = renderHook(() => useProjectLoader([], 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       await act(async () => {
         await result.current.loadMore();
@@ -120,7 +155,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should append new projects to existing list', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       const initialCount = result.current.projects.length;
       expect(initialCount).toBe(5);
@@ -136,7 +173,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should set loading to false after completing load', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       await act(async () => {
         await result.current.loadMore();
@@ -147,7 +186,9 @@ describe('useProjectLoader', () => {
 
     it('should not load when all projects already loaded', async () => {
       const allProjects = [...PROJECTS];
-      const { result } = renderHook(() => useProjectLoader(allProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(allProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       const countBefore = result.current.projects.length;
 
@@ -160,7 +201,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should be callable multiple times in sequence', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       await act(async () => {
         await result.current.loadMore();
@@ -172,7 +215,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should update allLoaded when reaching total count', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(result.current.allLoaded).toBe(false);
 
@@ -192,7 +237,9 @@ describe('useProjectLoader', () => {
 
   describe('Error handling', () => {
     it('should preserve loaded projects on error', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       const projectsBefore = result.current.projects;
 
@@ -208,7 +255,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should clear previous error when loading new batch', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       // Load successfully first
       await act(async () => {
@@ -219,7 +268,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should allow retry after error by calling loadMore again', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       const initialCount = result.current.projects.length;
 
@@ -242,7 +293,9 @@ describe('useProjectLoader', () => {
 
   describe('Hook behavior', () => {
     it('should maintain project order across multiple loads', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       const firstProjectId = result.current.projects[0].id;
 
@@ -256,7 +309,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should have unique projects in the list', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       await act(async () => {
         await result.current.loadMore();
@@ -271,7 +326,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should work with small batch sizes', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 3));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 3), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       await act(async () => {
         await result.current.loadMore();
@@ -282,7 +339,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should work with large batch sizes', async () => {
-      const { result } = renderHook(() => useProjectLoader([], 10));
+      const { result } = renderHook(() => useProjectLoader([], 10), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       await act(async () => {
         await result.current.loadMore();
@@ -296,7 +355,8 @@ describe('useProjectLoader', () => {
   describe('Return value stability', () => {
     it('should return consistent project references', () => {
       const { result, rerender } = renderHook(() =>
-        useProjectLoader(mockProjects, 5)
+        useProjectLoader(mockProjects, 5),
+        { wrapper: LocaleProviderWrapper }
       );
 
       const firstRender = result.current.projects;
@@ -307,7 +367,9 @@ describe('useProjectLoader', () => {
     });
 
     it('should have loadMore function that is callable', async () => {
-      const { result } = renderHook(() => useProjectLoader(mockProjects, 5));
+      const { result } = renderHook(() => useProjectLoader(mockProjects, 5), {
+        wrapper: LocaleProviderWrapper,
+      });
 
       expect(typeof result.current.loadMore).toBe('function');
 

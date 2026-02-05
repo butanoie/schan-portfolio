@@ -125,6 +125,20 @@ export default function TechnologiesShowcase({
   const palette = getPaletteByMode(mode);
   const { t } = useI18n();
 
+  /**
+   * Get localized category label for the given index.
+   * Maps category index to the corresponding translation key.
+   *
+   * @param index - The category index used to retrieve the translation key
+   * @returns The localized category label string
+   */
+  const getCategoryLabel = (index: number): string => {
+    return t(`colophon.technologiesShowcase.categoryLabels.${index}`, {
+      ns: "components",
+      defaultValue: "",
+    });
+  };
+
   return (
     <Box
       component="section"
@@ -160,7 +174,7 @@ export default function TechnologiesShowcase({
       </Typography>
 
       {/* V2 Technologies by Category */}
-      {v2Categories.map((category) => (
+      {v2Categories.map((category, index) => (
         <Box key={category.label} sx={{ mb: 4 }}>
           <Typography
             variant="h3"
@@ -172,7 +186,7 @@ export default function TechnologiesShowcase({
               mb: 2,
             }}
           >
-            { category.label }
+            {getCategoryLabel(index) || category.label}
           </Typography>
           <Box
             sx={{

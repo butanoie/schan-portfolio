@@ -93,8 +93,8 @@ describe("TechnologiesShowcase", () => {
       wrapper: Wrapper,
     });
 
-    expect(screen.getByText("Framework")).toBeInTheDocument();
-    expect(screen.getByText("Styling")).toBeInTheDocument();
+    expect(screen.getByText("Framework & Runtime")).toBeInTheDocument();
+    expect(screen.getByText("UI & Styling")).toBeInTheDocument();
   });
 
   it("should render V2 technologies with descriptions", () => {

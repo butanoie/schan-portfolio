@@ -50,6 +50,12 @@
     },
     "technologiesShowcase": {
       "heading": "Technologies",
+      "categoryLabels": {
+        "0": "Framework & Runtime",
+        "1": "UI & Styling",
+        "2": "Development Tools",
+        "3": "Testing"
+      },
       "v1SectionHeading": "Original V1 Technologies (Historical)",
       "v1Description": "The original portfolio site was built with these technologies:",
       "visitWebsiteAriaLabel": "Visit {{name}} website (opens in new tab)"
@@ -87,6 +93,63 @@
       },
       "greyAdvertising": {
         "description": "Developed grASP, a modular and extensible in-house CMS used on Grey projects from 2001 to 2006. Also developed and maintained Grey's external and internal web sites and applications. Took on role of Interactive Producer, with additional project management duties such as managing resources and project schedules, interacting and coordinating with outside developers, vendors and clients."
+      },
+      "companies": {
+        "collabware": {
+          "roles": [
+            {
+              "title": "VP, Product",
+              "startDate": "May 2020",
+              "endDate": "Present"
+            },
+            {
+              "title": "Product Manager",
+              "startDate": "March 2018",
+              "endDate": "May 2020"
+            },
+            {
+              "title": "User Experience Architect",
+              "startDate": "August 2011",
+              "endDate": "Present"
+            }
+          ]
+        },
+        "habanero": {
+          "roles": [
+            {
+              "title": "User Experience Developer",
+              "startDate": "May 2006",
+              "endDate": "July 2011"
+            }
+          ]
+        },
+        "danielChoi": {
+          "roles": [
+            {
+              "title": "Lead Developer (Contract)",
+              "startDate": "2005",
+              "endDate": "2006"
+            }
+          ]
+        },
+        "localLola": {
+          "roles": [
+            {
+              "title": "Flash and User Experience Developer (Contract)",
+              "startDate": "2003",
+              "endDate": "2006"
+            }
+          ]
+        },
+        "greyAdvertising": {
+          "roles": [
+            {
+              "title": "Interactive Producer/Developer",
+              "startDate": "July 1999",
+              "endDate": "May 2006"
+            }
+          ]
+        }
       }
     },
     "skills": {

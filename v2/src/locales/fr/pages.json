@@ -121,24 +121,26 @@
           "description": "Détermination de l'affichage des liens vers les projets Adobe Flash."
         },
         {
-          "name": "Sass & Compass",
+          "name": "Sass et Compass",
           "description": "CSS personnalisé écrit en syntaxe SCSS et compilé avec Compass."
         }
       ]
     },
     "designPhilosophy": {
       "intro": "Le design initial s'inspirait des diagrammes classiques de la viande de porc. Je voulais que le site ressemble à un menu de boucherie, mais j'ai finalement opté pour un style moderne grâce à l'utilisation de couleurs plates et de polices de caractères sans empattement.",
+      "colorPaletteHeading": "Palette de couleurs",
+      "typographyHeading": "Typographie",
       "colors": [
         {
           "name": "Sakura",
           "description": "Rose fleur de cerisier - plus une source d'inspiration qu'une mise en œuvre réelle."
         },
         {
-          "name": "Duck Egg",
+          "name": "Œuf de canard",
           "description": "Vert pastel - utilisé pour les éléments secondaires et les étiquettes."
         },
         {
-          "name": "Sky Blue",
+          "name": "Bleu ciel",
           "description": "Couleur d'accentuation principale pour les éléments interactifs."
         },
         {
@@ -146,11 +148,11 @@
           "description": "Fusain foncé pour le texte principal."
         },
         {
-          "name": "Sage",
+          "name": "Sauge",
           "description": "Vert atténué pour l'arrière-plan du pied de page."
         },
         {
-          "name": "Maroon",
+          "name": "Marron",
           "description": "Rouge foncé pour les titres et les éléments d'appel à l'action."
         }
       ],

@@ -17,21 +17,10 @@
 // Initialize i18next configuration
 import '@/src/lib/i18next-config';
 
-/**
- * Supported locales in the application.
- * Add new locales here when implementing additional languages.
- */
-export const LOCALES = ['en', 'fr'] as const;
+// Import and re-export constants from i18n-constants for convenience
+import { LOCALES, DEFAULT_LOCALE, type Locale } from './i18n-constants';
 
-/**
- * Default locale when no preference is specified.
- */
-export const DEFAULT_LOCALE = 'en' as const;
-
-/**
- * Type representing a supported locale.
- */
-export type Locale = (typeof LOCALES)[number];
+export { LOCALES, DEFAULT_LOCALE, type Locale };
 
 /**
  * Format date according to locale.

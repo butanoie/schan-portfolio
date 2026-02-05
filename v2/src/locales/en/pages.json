@@ -128,6 +128,8 @@
     },
     "designPhilosophy": {
       "intro": "The initial design was inspired by classic pork cuts diagrams. I wanted the site to feel like a menu at a butcher shop but eventually moved to a modern feel through the use of flat colours and sans-serif fonts.",
+      "colorPaletteHeading": "Colour Palette",
+      "typographyHeading": "Typography",
       "colors": [
         {
           "name": "Sakura",

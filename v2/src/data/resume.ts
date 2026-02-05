@@ -364,19 +364,19 @@ export function getLocalizedResumeData(
         company: "Collabware Systems",
         roles: [
           {
-            title: "VP, Product",
-            startDate: "May 2020",
-            endDate: "Present",
+            title: t('resume.workExperience.companies.collabware.roles.0.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.collabware.roles.0.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.collabware.roles.0.endDate', { ns: 'components' }),
           },
           {
-            title: "Product Manager",
-            startDate: "March 2018",
-            endDate: "May 2020",
+            title: t('resume.workExperience.companies.collabware.roles.1.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.collabware.roles.1.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.collabware.roles.1.endDate', { ns: 'components' }),
           },
           {
-            title: "User Experience Architect",
-            startDate: "August 2011",
-            endDate: "Present",
+            title: t('resume.workExperience.companies.collabware.roles.2.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.collabware.roles.2.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.collabware.roles.2.endDate', { ns: 'components' }),
           },
         ],
         description: t('resume.workExperience.collabware.description', { ns: 'components' }),
@@ -395,9 +395,9 @@ export function getLocalizedResumeData(
         company: "Habanero Consulting Group",
         roles: [
           {
-            title: "User Experience Developer",
-            startDate: "May 2006",
-            endDate: "July 2011",
+            title: t('resume.workExperience.companies.habanero.roles.0.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.habanero.roles.0.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.habanero.roles.0.endDate', { ns: 'components' }),
           },
         ],
         description: t('resume.workExperience.habanero.description', { ns: 'components' }),
@@ -406,9 +406,9 @@ export function getLocalizedResumeData(
         company: "Daniel Choi Design Associates",
         roles: [
           {
-            title: "Lead Developer (Contract)",
-            startDate: "2005",
-            endDate: "2006",
+            title: t('resume.workExperience.companies.danielChoi.roles.0.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.danielChoi.roles.0.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.danielChoi.roles.0.endDate', { ns: 'components' }),
           },
         ],
         description: t('resume.workExperience.danielChoi.description', { ns: 'components' }),
@@ -417,9 +417,9 @@ export function getLocalizedResumeData(
         company: "Local Lola Design Team (LLDT)",
         roles: [
           {
-            title: "Flash and User Experience Developer (Contract)",
-            startDate: "2003",
-            endDate: "2006",
+            title: t('resume.workExperience.companies.localLola.roles.0.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.localLola.roles.0.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.localLola.roles.0.endDate', { ns: 'components' }),
           },
         ],
         description: t('resume.workExperience.localLola.description', { ns: 'components' }),
@@ -428,9 +428,9 @@ export function getLocalizedResumeData(
         company: "Grey Advertising Vancouver",
         roles: [
           {
-            title: "Interactive Producer/Developer",
-            startDate: "July 1999",
-            endDate: "May 2006",
+            title: t('resume.workExperience.companies.greyAdvertising.roles.0.title', { ns: 'components' }),
+            startDate: t('resume.workExperience.companies.greyAdvertising.roles.0.startDate', { ns: 'components' }),
+            endDate: t('resume.workExperience.companies.greyAdvertising.roles.0.endDate', { ns: 'components' }),
           },
         ],
         description: t('resume.workExperience.greyAdvertising.description', { ns: 'components' }),
