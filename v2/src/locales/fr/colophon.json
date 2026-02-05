@@ -1,33 +1,4 @@
 {
-  "home": {
-    "title": "Portfolio",
-    "subtitle": "Une sélection de mes travaux",
-    "description": "Sur cette page, vous trouverez une sélection de projets qui illustrent mes connaissances et mon expérience dans les domaines du développement d'applications web, de la conception, de l'ergonomie et de l'accessibilité.",
-    "pageDeck": {
-      "imageAlt": "Œuvre de Sing Chan",
-      "heading": "Sing Chan",
-      "paragraphs": [
-        "Sur cette page, vous trouverez une sélection de projets qui illustrent mes connaissances et mon expérience dans les domaines du développement d'applications web, de la conception, de l'ergonomie et de l'accessibilité. Je possède plus de 25 ans d'expérience dans le développement de logiciels, où je travaille avec des clients, des parties prenantes, des architectes de l'information, des concepteurs d'interactions, des développeurs et des responsables de l'assurance qualité afin de créer des solutions utilisables et visuellement attrayantes.",
-        "J'ai participé à ces projets soit en tant que développeur principal de l'expérience utilisateur, chargé de la mise en œuvre des fonctionnalités personnalisées de l'interface utilisateur, des contrôles et de l'image de marque, soit en tant qu'architecte de l'expérience utilisateur, chargé de déterminer les approches de développement et d'aider les autres membres de l'équipe dans leurs tâches."
-      ]
-    }
-  },
-  "resume": {
-    "title": "Résumé",
-    "description": "Parcours professionnel et expérience",
-    "downloadPDF": "Télécharger au format PDF",
-    "sections": {
-      "workExperience": "Expérience professionnelle",
-      "coreCompetencies": "Compétences clés",
-      "notableClients": "Clients notables",
-      "speakingEngagements": "Conférences"
-    },
-    "contact": {
-      "label": "Contact",
-      "email": "E-mail",
-      "phone": "Téléphone"
-    }
-  },
   "colophon": {
     "title": "À propos",
     "subtitle": "À propos de ce site et de Sing Chan",
@@ -197,6 +168,11 @@
       "butaStory": "L'histoire de Buta",
       "designPhilosophy": "Philosophie de conception",
       "technologies": "Technologies"
+    },
+    "meta": {
+      "title": "À propos de ce site | Portfolio de Sing Chan",
+      "description": "Découvrez ce site portfolio, les technologies utilisées, la philosophie de conception et l'histoire qui se cache derrière.",
+      "keywords": "À propos, colophon, philosophie de conception, pile technologique"
     }
   }
 }

@@ -59,5 +59,10 @@
     "darkLabel": "Dark",
     "highContrastAria": "High contrast theme",
     "highContrastLabel": "Contrast"
+  },
+  "openGraph": {
+    "siteName": "Sing Chan's Portfolio",
+    "type": "website",
+    "imageAlt": "Sing Chan's Portfolio"
   }
 }

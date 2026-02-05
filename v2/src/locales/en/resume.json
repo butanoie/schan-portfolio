@@ -1,0 +1,23 @@
+{
+  "resume": {
+    "title": "Résumé",
+    "description": "Professional background and experience",
+    "downloadPDF": "Download as PDF",
+    "sections": {
+      "workExperience": "Work Experience",
+      "coreCompetencies": "Core Competencies",
+      "notableClients": "Notable Clients",
+      "speakingEngagements": "Speaking Engagements"
+    },
+    "contact": {
+      "label": "Contact",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "meta": {
+      "title": "Résumé | Sing Chan's Portfolio",
+      "description": "Professional résumé of Sing Chan. VP Product at Collabware Systems with 25+ years of experience in product management, design, and technology.",
+      "keywords": "résumé, CV, product manager, experience, skills"
+    }
+  }
+}

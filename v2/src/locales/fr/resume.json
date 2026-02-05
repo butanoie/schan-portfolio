@@ -1,0 +1,23 @@
+{
+  "resume": {
+    "title": "Résumé",
+    "description": "Parcours professionnel et expérience",
+    "downloadPDF": "Télécharger au format PDF",
+    "sections": {
+      "workExperience": "Expérience professionnelle",
+      "coreCompetencies": "Compétences clés",
+      "notableClients": "Clients notables",
+      "speakingEngagements": "Conférences"
+    },
+    "contact": {
+      "label": "Contact",
+      "email": "E-mail",
+      "phone": "Téléphone"
+    },
+    "meta": {
+      "title": "CV | Portfolio de Sing Chan",
+      "description": "CV professionnel de Sing Chan. Vice-président des produits chez Collabware Systems, avec plus de 25 ans d'expérience dans la gestion de produits, la conception et la technologie.",
+      "keywords": "CV, gestion de produits, expérience, compétences"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "home": {
+    "title": "Portfolio",
+    "subtitle": "Une sélection de mes travaux",
+    "description": "Sur cette page, vous trouverez une sélection de projets qui illustrent mes connaissances et mon expérience dans les domaines du développement d'applications web, de la conception, de l'ergonomie et de l'accessibilité.",
+    "pageDeck": {
+      "imageAlt": "Œuvre de Sing Chan",
+      "heading": "Sing Chan",
+      "paragraphs": [
+        "Sur cette page, vous trouverez une sélection de projets qui illustrent mes connaissances et mon expérience dans les domaines du développement d'applications web, de la conception, de l'ergonomie et de l'accessibilité. Je possède plus de 25 ans d'expérience dans le développement de logiciels, où je travaille avec des clients, des parties prenantes, des architectes de l'information, des concepteurs d'interactions, des développeurs et des responsables de l'assurance qualité afin de créer des solutions utilisables et visuellement attrayantes.",
+        "J'ai participé à ces projets soit en tant que développeur principal de l'expérience utilisateur, chargé de la mise en œuvre des fonctionnalités personnalisées de l'interface utilisateur, des contrôles et de l'image de marque, soit en tant qu'architecte de l'expérience utilisateur, chargé de déterminer les approches de développement et d'aider les autres membres de l'équipe dans leurs tâches."
+      ]
+    },
+    "meta": {
+      "title": "Chef de produit et développeur full-stack | Portfolio de Sing Chan",
+      "description": "Découvrez les projets du portfolio d'un technologue créatif avec plus de 25 ans d'expérience dans la gestion de produits, la conception et le développement full-stack.",
+      "keywords": "portfolio, gestion de produits, développement, conception, technologie"
+    }
+  }
+}
