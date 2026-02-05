@@ -11,7 +11,7 @@
  */
 
 import type { ProjectsPageData } from '../types/porfolio';
-import type { TranslationOptions } from '../hooks/useI18n';
+import type { TranslationFunction } from '../hooks/useI18n';
 
 /**
  * Base projects page content with fallback English values.
@@ -48,11 +48,11 @@ export const portfolioData: ProjectsPageData = {
  * const localizedData = getLocalizedPortfolioData(t);
  */
 export function getLocalizedPortfolioData(
-  t: (key: string, options?: TranslationOptions | Record<string, string | number>) => string
+  t: TranslationFunction
 ): ProjectsPageData {
   return {
-    pageTitle: t('home.title', { ns: 'pages' }),
-    pageDescription: t('home.description', { ns: 'pages' }),
+    pageTitle: t('home.pageTitle', { ns: 'pages' }),
+    pageDescription: t('home.pageDescription', { ns: 'pages' }),
 
     pageDeck: {
       imageUrl: '/images/pork_cuts@2x.png',

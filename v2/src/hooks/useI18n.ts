@@ -36,6 +36,28 @@ export interface TranslationOptions {
 }
 
 /**
+ * Unified type for the translation function used across data files.
+ *
+ * This type is used by getLocalized*Data() functions to ensure consistent
+ * signatures and improve type safety when passing translation functions.
+ *
+ * @param key - Translation key (supports nested keys with dot notation, e.g., 'colophon.title')
+ * @param options - Optional configuration:
+ * - TranslationOptions: { ns?: string, variables?: Record<string, string | number> }
+ * - Record<string, string | number>: Direct variable substitution (backwards compatible)
+ * @returns Translated string for the current locale
+ *
+ * @example
+ * const { t } = useI18n();
+ * const title = t('colophon.title', { ns: 'pages' });
+ * const greeting = t('greeting', { ns: 'common', name: 'John' });
+ */
+export type TranslationFunction = (
+  key: string,
+  options?: TranslationOptions | Record<string, string | number>
+) => string;
+
+/**
  * Interface for the i18n utilities returned by useI18n.
  */
 export interface I18nUtils {
@@ -46,7 +68,7 @@ export interface I18nUtils {
    * @param options - Optional configuration (variables to substitute, namespace)
    * @returns Translated string
    */
-  t: (key: string, options?: TranslationOptions | Record<string, string | number>) => string;
+  t: TranslationFunction;
 
   /**
    * Format date according to current locale.
@@ -108,7 +130,7 @@ export function useI18n(): I18nUtils {
    * Translate a key using i18next.
    * Wraps i18next's t() function with variable substitution support and namespace handling.
    */
-  const t = useCallback(
+  const t = useCallback<TranslationFunction>(
     (key: string, options?: TranslationOptions | Record<string, string | number>): string => {
       // Determine if options is TranslationOptions or a variables Record
       let variables: Record<string, string | number> | undefined;

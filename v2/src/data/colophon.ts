@@ -12,7 +12,7 @@
  */
 
 import type { ColophonData } from '../types/colophon';
-import type { TranslationOptions } from '../hooks/useI18n';
+import type { TranslationFunction } from '../hooks/useI18n';
 import { BRAND_COLORS } from '../constants';
 
 /**
@@ -274,11 +274,11 @@ export function getColophonData(): ColophonData {
  * const localizedData = getLocalizedColophonData(t);
  */
 export function getLocalizedColophonData(
-  t: (key: string, options?: TranslationOptions | Record<string, string | number>) => string
+  t: TranslationFunction
 ): ColophonData {
   return {
-    pageTitle: t('colophon.title', { ns: 'pages' }),
-    pageDescription: t('colophon.description', { ns: 'pages' }),
+    pageTitle: t('colophon.pageTitle', { ns: 'pages' }),
+    pageDescription: t('colophon.pageDescription', { ns: 'pages' }),
 
     pageDeck: {
       imageUrl: '/images/choice_cuts@2x.png',

@@ -5,10 +5,41 @@
  * translations from JSON files. This allows the data structure to remain in
  * projects.ts while keeping translatable strings in locale JSON files.
  *
+ * ## Architecture Pattern
+ *
+ * This module implements the **JSON Merge Pattern** for projects, which differs from
+ * the **Direct i18n Pattern** used by other pages (resume, colophon, portfolio):
+ *
+ * **JSON Merge Pattern (Projects):**
+ * - Base data in projects.ts with empty translatable fields
+ * - Translations in locale JSON files (locales/[lang]/projects.json)
+ * - Runtime merge via getLocalizedProject() or getLocalizedProjects()
+ * - Uses dynamic imports and caching for performance
+ * - Async operations (compatible with Server Components via suspense)
+ *
+ * **Direct i18n Pattern (Other Pages):**
+ * - Data in resume.ts, colophon.ts, portfolio.ts
+ * - getLocalized*Data(t) functions call t() from useI18n()
+ * - Synchronous, no caching needed
+ * - Works in Client Components only
+ *
+ * ## Usage
+ *
+ * ```typescript
+ * // Get single project with translations
+ * const project = await getLocalizedProject('projectId', 'fr');
+ *
+ * // Get all projects with translations
+ * const projects = await getLocalizedProjects('en');
+ * ```
+ *
  * Project translations are loaded from locale JSON files (e.g., en/projects.json, fr/projects.json).
  * Use getLocalizedProjects(locale) to get all projects with translations applied.
  *
  * @module data/localization
+ * @see {@link data/projects.ts} for the base project data structure
+ * @see {@link src/locales/en/projects.json} for English translations
+ * @see {@link src/locales/fr/projects.json} for French translations
  */
 
 import type { Project } from '../types';

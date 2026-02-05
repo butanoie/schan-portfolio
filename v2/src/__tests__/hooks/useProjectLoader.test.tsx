@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ReactNode, createElement } from 'react';
+import { ReactNode, FC } from 'react';
 import { useProjectLoader } from '../../hooks/useProjectLoader';
 import { PROJECTS } from '../../data/projects';
 import { LocaleProvider } from '../../components/i18n/LocaleProvider';
@@ -12,9 +12,9 @@ import { LocaleProvider } from '../../components/i18n/LocaleProvider';
  * @param props.children - Components to wrap with LocaleProvider
  * @returns Wrapped component with locale context
  */
-function LocaleProviderWrapper({ children }: { children: ReactNode }) {
-  return createElement(LocaleProvider, { initialLocale: 'en' }, children);
-}
+const LocaleProviderWrapper: FC<{ children: ReactNode }> = ({ children }) => (
+  <LocaleProvider initialLocale="en">{children}</LocaleProvider>
+);
 
 /**
  * Tests for the useProjectLoader hook.

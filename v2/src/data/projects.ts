@@ -7,11 +7,32 @@ import { Project } from '../types';
  * Translatable strings (title, description, circa, and captions) are loaded from locale JSON files
  * via the localization layer (data/localization.ts) and merged with this base data at runtime.
  *
- * This design allows:
+ * ## Localization Pattern
+ *
+ * Projects use a **different localization pattern** than other pages (resume, colophon, portfolio):
+ *
+ * **Why Projects Use JSON Merge Pattern:**
+ * 1. **Scale**: 18+ projects with multiple translatable fields per project
+ * 2. **Frequency**: Projects are added/updated independently of code releases
+ * 3. **Structure**: Image captions indexed by position (arrays in JSON are cleaner)
+ * 4. **Maintainability**: Non-developers can edit locale JSON files without touching code
+ * 5. **Decoupling**: Content updates don't require code changes or redeployment
+ *
+ * **Other Pages Use Direct i18n Pattern:**
+ * Other pages (resume, colophon, portfolio) use `getLocalized*Data(t)` functions
+ * that call `t()` directly at runtime. This pattern works well for:
+ * - Smaller, static content sets
+ * - Pages with consistent structure
+ * - Content that changes infrequently
+ *
+ * ## Design Details
+ *
+ * This file contains:
  * - Single source of truth for project structure and assets (images, videos)
+ * - Empty placeholder strings for translatable fields (title, desc, circa, caption)
+ * - All localization happens via localization.ts utility functions
  * - Translations managed in locale JSON files (en, fr)
  * - Automatic locale switching without code changes
- * - Easy maintenance of translations independent of code
  *
  * Projects are ordered from most recent to oldest.
  * This data was migrated from v1/get_projects/index.php on 2026-01-27.
@@ -19,9 +40,9 @@ import { Project } from '../types';
  * Total projects: 18
  * Date range: 2001 - Present
  *
- * @see {@link data/localization.ts} for functions that merge translations with this base data
- * @see {@link src/locales/en/projects.json} for English translations
- * @see {@link src/locales/fr/projects.json} for French translations
+ * @see {@link data/localization.ts} for getLocalizedProject() and getLocalizedProjects() functions
+ * @see {@link src/locales/en/projects.json} for English project translations
+ * @see {@link src/locales/fr/projects.json} for French project translations
  */
 export const PROJECTS: readonly Project[] = [
   // Project 1: Collabspace Downloader (most recent)

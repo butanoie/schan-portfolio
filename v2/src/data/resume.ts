@@ -12,6 +12,7 @@
  */
 
 import type { ContactLink, ResumeData } from "../types/resume";
+import type { TranslationFunction } from '../hooks/useI18n';
 
 /**
  * Typed contact link constants for the resume header.
@@ -320,12 +321,11 @@ export function getResumeData(): ResumeData {
  * console.log(data.jobs[0].description); // Translated job description
  */
 export function getLocalizedResumeData(
-  t: (key: string, options?: Record<string, string | number | Record<string, string>>) => string
+  t: TranslationFunction
 ): ResumeData {
   return {
-    pageTitle: "Resume | Sing Chan's Portfolio",
-    pageDescription:
-      "Sing Chan's resume - 25+ years experience in UX, product management, and software development.",
+    pageTitle: t('resume.pageTitle', { ns: 'pages' }),
+    pageDescription: t('resume.pageDescription', { ns: 'pages' }),
 
     header: {
       name: "Sing Chan",
