@@ -1,10 +1,12 @@
 /**
- * Data localization utilities for projects and portfolio content.
+ * Data localization utilities for projects content.
  *
- * Provides functions to merge base project/portfolio data with locale-specific
+ * Provides functions to merge base project data with locale-specific
  * translations from JSON files. This allows the data structure to remain in
- * projects.ts and portfolio.ts while keeping translatable strings in locale
- * JSON files.
+ * projects.ts while keeping translatable strings in locale JSON files.
+ *
+ * Portfolio page content is now localized via i18n from pages.json.
+ * Use getLocalizedPortfolioData(t) from portfolio.ts instead.
  *
  * @module data/localization
  */
@@ -12,30 +14,21 @@
 import type { Project } from '../types';
 import type { Locale } from '../lib/i18n';
 import { PROJECTS } from './projects';
-import { portfolioData as basePortfolioData } from './portfolio';
 
 /**
- * Imported locale data type for project and portfolio translations.
+ * Imported locale data type for project translations.
  *
  * @internal
  */
-interface LocaleData {
-  projects: Record<
-    string,
-    {
-      title: string;
-      desc: string;
-      circa: string;
-      images: string[];
-    }
-  >;
-  portfolio: {
-    pageTitle: string;
-    pageDescription: string;
-    heading: string;
-    paragraphs: string[];
-  };
-}
+type LocaleData = Record<
+  string,
+  {
+    title: string;
+    desc: string;
+    circa: string;
+    images: string[];
+  }
+>;
 
 /**
  * Cache for loaded locale data to avoid repeated imports.
@@ -53,7 +46,9 @@ const localeCache = new Map<Locale, LocaleData | null>();
  */
 async function loadLocaleData(locale: Locale): Promise<LocaleData | null> {
   try {
-    const localeDataModule = await import(`@/src/locales/${locale}/data.json`);
+    const localeDataModule = await import(
+      `@/src/locales/${locale}/projects.json`
+    );
     return localeDataModule.default || localeDataModule;
   } catch {
     return null;
@@ -104,11 +99,11 @@ export async function getLocalizedProject(
   }
 
   const localeData = await getLocaleData(locale);
-  if (!localeData?.projects[projectId]) {
+  if (!localeData?.[projectId]) {
     return baseProject;
   }
 
-  const translations = localeData.projects[projectId];
+  const translations = localeData[projectId];
 
   return {
     ...baseProject,
@@ -150,39 +145,6 @@ export async function getLocalizedProjects(locale: Locale): Promise<Project[]> {
 }
 
 /**
- * Localized portfolio page data including title, description, and introduction paragraphs.
- *
- * @param locale - The target locale
- * @returns Portfolio data with translations applied
- *
- * @example
- * const portfolio = await getLocalizedPortfolio('fr');
- * // Returns portfolio with French page title and introduction text
- */
-export async function getLocalizedPortfolio(locale: Locale) {
-  const localeData = await getLocaleData(locale);
-  if (!localeData?.portfolio) {
-    return {
-      pageTitle: basePortfolioData.pageTitle,
-      pageDescription: basePortfolioData.pageDescription,
-      pageDeck: basePortfolioData.pageDeck,
-    };
-  }
-
-  const translations = localeData.portfolio;
-
-  return {
-    pageTitle: translations.pageTitle,
-    pageDescription: translations.pageDescription,
-    pageDeck: {
-      ...basePortfolioData.pageDeck,
-      heading: translations.heading,
-      deck: translations.paragraphs,
-    },
-  };
-}
-
-/**
  * Get a single project's image caption in a specific locale.
  *
  * Useful for components that need to update image captions based on locale
@@ -212,9 +174,9 @@ export async function getLocalizedImageCaption(
   }
 
   const localeData = await getLocaleData(locale);
-  if (!localeData?.projects[projectId]?.images[imageIndex]) {
+  if (!localeData?.[projectId]?.images[imageIndex]) {
     return project.images[imageIndex].caption;
   }
 
-  return localeData.projects[projectId].images[imageIndex];
+  return localeData[projectId].images[imageIndex];
 }

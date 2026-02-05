@@ -5,12 +5,16 @@
  * - Portfolio creator name
  * - Logo/mascot image
  * - Introductory paragraphs about the projects and experience
+ *
+ * All user-facing strings are localized via i18n from pages.json.
+ * Use getLocalizedPortfolioData(t) to retrieve translated content.
  */
 
 import type { ProjectsPageData } from '../types/porfolio';
+import type { TranslationOptions } from '../hooks/useI18n';
 
 /**
- * Complete projects page content.
+ * Base projects page content with fallback English values.
  * Content based on V1 portfolio intro and updated for V2.
  */
 export const portfolioData: ProjectsPageData = {
@@ -29,3 +33,36 @@ export const portfolioData: ProjectsPageData = {
     ],
   },
 };
+
+/**
+ * Builds localized portfolio data by retrieving translated strings from i18n.
+ *
+ * This function should be called within a component using the useI18n hook
+ * to provide translated content for the portfolio page.
+ *
+ * @param t - i18n translation function from useI18n()
+ * @returns Localized portfolio data with translated strings
+ *
+ * @example
+ * const { t } = useI18n();
+ * const localizedData = getLocalizedPortfolioData(t);
+ */
+export function getLocalizedPortfolioData(
+  t: (key: string, options?: TranslationOptions | Record<string, string | number>) => string
+): ProjectsPageData {
+  return {
+    pageTitle: t('home.title', { ns: 'pages' }),
+    pageDescription: t('home.description', { ns: 'pages' }),
+
+    pageDeck: {
+      imageUrl: '/images/pork_cuts@2x.png',
+      imageAlt: t('home.pageDeck.imageAlt', { ns: 'pages' }),
+      headingId: 'portfolio-heading',
+      heading: t('home.pageDeck.heading', { ns: 'pages' }),
+      deck: [
+        t('home.pageDeck.paragraphs.0', { ns: 'pages' }),
+        t('home.pageDeck.paragraphs.1', { ns: 'pages' }),
+      ],
+    },
+  };
+}

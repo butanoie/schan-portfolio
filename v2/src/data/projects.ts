@@ -20,8 +20,8 @@ import { Project } from '../types';
  * Date range: 2001 - Present
  *
  * @see {@link data/localization.ts} for functions that merge translations with this base data
- * @see {@link src/locales/en/data.json} for English translations
- * @see {@link src/locales/fr/data.json} for French translations
+ * @see {@link src/locales/en/projects.json} for English translations
+ * @see {@link src/locales/fr/projects.json} for French translations
  */
 export const PROJECTS: readonly Project[] = [
   // Project 1: Collabspace Downloader (most recent)

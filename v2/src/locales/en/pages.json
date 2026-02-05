@@ -2,7 +2,15 @@
   "home": {
     "title": "Portfolio",
     "subtitle": "A selection of my work",
-    "description": "Explore a curated selection of projects from my 25+ years working in product, design, and technology."
+    "description": "On this page you will find select projects that represent my knowledge and experience in the realms of web application development, design, usability and accessibility.",
+    "pageDeck": {
+      "imageAlt": "Sing Chan's Body of Work",
+      "heading": "Sing Chan",
+      "paragraphs": [
+        "On this page you will find select projects that represent my knowledge and experience in the realms of web application development, design, usability and accessibility. I have over 25 years experience in software development where I work with customers, stakeholders, information architects, interaction designers, developers, and quality assurance to create usable and visually engaging solutions.",
+        "I was involved in these projects either as the lead User Experience Developer responsible for implementing custom UI functionality, controls and branding, or as the User Experience Architect, responsible for determining development approaches and assisting other team members with their tasks."
+      ]
+    }
   },
   "resume": {
     "title": "Résumé",
@@ -25,7 +33,7 @@
     "subtitle": "About this site and Sing Chan",
     "description": "Learn about the story behind this portfolio, the design philosophy, and the technologies used to build it.",
     "pageDeck": {
-      "imageAlt": "Choice Cuts - pork cuts diagram logo",
+      "imageAlt": "Choice Cuts - pork cuts diagram",
       "heading": "Colophon",
       "paragraphs": [
         "Sing Chan is currently the VP of Product at Collabware Systems.",
@@ -190,11 +198,5 @@
       "designPhilosophy": "Design Philosophy",
       "technologies": "Technologies"
     }
-  },
-  "project": {
-    "relatedProjects": "Related Projects",
-    "viewAllProjects": "View All Projects",
-    "tags": "Tags",
-    "year": "Year"
   }
 }
