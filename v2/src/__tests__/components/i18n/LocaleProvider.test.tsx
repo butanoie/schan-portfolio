@@ -232,6 +232,8 @@ describe('LocaleProvider', () => {
     });
 
     it('should continue functioning after i18next error', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
       vi.mocked(i18next.changeLanguage).mockRejectedValueOnce(
         new Error('i18next failed')
       );
@@ -248,6 +250,8 @@ describe('LocaleProvider', () => {
       });
 
       expect(result.current.locale).toBe('fr');
+
+      consoleErrorSpy.mockRestore();
     });
   });
 

@@ -57,7 +57,7 @@ export default function ClientList({ clients }: ClientListProps) {
             mb: 1.5,
           }}
         >
-          {t('resume.clients.heading', { ns: 'components' })}
+          {t('resume.clients.heading', { ns: 'pages' })}
         </Typography>
 
         {/* Client Chips */}

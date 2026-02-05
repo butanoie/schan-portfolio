@@ -172,7 +172,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               href={font.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={t("colophon.designPhilosophy.googleFontsAriaLabel", { variables: { name: font.name }, ns: "components" })}
+              aria-label={t("colophon.designPhilosophy.googleFontsAriaLabel", { variables: { name: font.name }, ns: "pages" })}
               sx={{
                 color: palette.card.text,
                 "&:hover": {
@@ -267,7 +267,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
           textAlign: "center",
         }}
       >
-        {t("colophon.designPhilosophy.heading", { ns: "components" })}
+        {t("colophon.designPhilosophy.heading", { ns: "pages" })}
       </Typography>
 
       <Typography
@@ -292,7 +292,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
             mb: 2,
           }}
         >
-          {t("colophon.designPhilosophy.colorPaletteHeading", { ns: "components" })}
+          {t("colophon.designPhilosophy.colorPaletteHeading", { ns: "pages" })}
         </Typography>
 
         <Box
@@ -330,7 +330,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
             mb: 2,
           }}
         >
-          {t("colophon.designPhilosophy.typographyHeading", { ns: "components" })}
+          {t("colophon.designPhilosophy.typographyHeading", { ns: "pages" })}
         </Typography>
 
         <Typography

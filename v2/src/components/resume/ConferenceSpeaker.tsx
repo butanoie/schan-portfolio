@@ -60,7 +60,7 @@ export default function ConferenceSpeaker({
             mb: 1.5,
           }}
         >
-          {t('resume.conferenceSpeaker.heading', { ns: 'components' })}
+          {t('resume.conferenceSpeaker.heading', { ns: 'pages' })}
         </Typography>
 
         {/* Intro Text */}

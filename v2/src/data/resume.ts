@@ -329,7 +329,7 @@ export function getLocalizedResumeData(
 
     header: {
       name: "Sing Chan",
-      tagline: t('resume.header.tagline', { ns: 'components' }),
+      tagline: t('resume.header.tagline', { ns: 'pages' }),
       contactLinks: [
         {
           label: "linkedin.com/in/sing-chan",
@@ -352,7 +352,7 @@ export function getLocalizedResumeData(
           icon: "phone",
         },
         {
-          label: t('resume.header.downloadLabel', { ns: 'components' }),
+          label: t('resume.header.downloadLabel', { ns: 'pages' }),
           url: "/Sing_Chan_Resume.pdf",
           icon: "download",
         },
@@ -364,82 +364,82 @@ export function getLocalizedResumeData(
         company: "Collabware Systems",
         roles: [
           {
-            title: t('resume.workExperience.companies.collabware.roles.0.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.collabware.roles.0.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.collabware.roles.0.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.collabware.roles.0.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.collabware.roles.0.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.collabware.roles.0.endDate', { ns: 'pages' }),
           },
           {
-            title: t('resume.workExperience.companies.collabware.roles.1.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.collabware.roles.1.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.collabware.roles.1.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.collabware.roles.1.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.collabware.roles.1.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.collabware.roles.1.endDate', { ns: 'pages' }),
           },
           {
-            title: t('resume.workExperience.companies.collabware.roles.2.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.collabware.roles.2.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.collabware.roles.2.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.collabware.roles.2.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.collabware.roles.2.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.collabware.roles.2.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.collabware.description', { ns: 'components' }),
+        description: t('resume.workExperience.collabware.description', { ns: 'pages' }),
         keyContributions: [
-          t('resume.workExperience.collabware.contributions.0', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.1', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.2', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.3', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.4', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.5', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.6', { ns: 'components' }),
-          t('resume.workExperience.collabware.contributions.7', { ns: 'components' }),
+          t('resume.workExperience.collabware.contributions.0', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.1', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.2', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.3', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.4', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.5', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.6', { ns: 'pages' }),
+          t('resume.workExperience.collabware.contributions.7', { ns: 'pages' }),
         ],
       },
       {
         company: "Habanero Consulting Group",
         roles: [
           {
-            title: t('resume.workExperience.companies.habanero.roles.0.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.habanero.roles.0.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.habanero.roles.0.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.habanero.roles.0.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.habanero.roles.0.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.habanero.roles.0.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.habanero.description', { ns: 'components' }),
+        description: t('resume.workExperience.habanero.description', { ns: 'pages' }),
       },
       {
         company: "Daniel Choi Design Associates",
         roles: [
           {
-            title: t('resume.workExperience.companies.danielChoi.roles.0.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.danielChoi.roles.0.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.danielChoi.roles.0.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.danielChoi.roles.0.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.danielChoi.roles.0.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.danielChoi.roles.0.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.danielChoi.description', { ns: 'components' }),
+        description: t('resume.workExperience.danielChoi.description', { ns: 'pages' }),
       },
       {
         company: "Local Lola Design Team (LLDT)",
         roles: [
           {
-            title: t('resume.workExperience.companies.localLola.roles.0.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.localLola.roles.0.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.localLola.roles.0.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.localLola.roles.0.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.localLola.roles.0.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.localLola.roles.0.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.localLola.description', { ns: 'components' }),
+        description: t('resume.workExperience.localLola.description', { ns: 'pages' }),
       },
       {
         company: "Grey Advertising Vancouver",
         roles: [
           {
-            title: t('resume.workExperience.companies.greyAdvertising.roles.0.title', { ns: 'components' }),
-            startDate: t('resume.workExperience.companies.greyAdvertising.roles.0.startDate', { ns: 'components' }),
-            endDate: t('resume.workExperience.companies.greyAdvertising.roles.0.endDate', { ns: 'components' }),
+            title: t('resume.workExperience.companies.greyAdvertising.roles.0.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.companies.greyAdvertising.roles.0.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.companies.greyAdvertising.roles.0.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.greyAdvertising.description', { ns: 'components' }),
+        description: t('resume.workExperience.greyAdvertising.description', { ns: 'pages' }),
       },
     ],
 
     skillCategories: [
       {
-        label: t('resume.skills.coreCompetencies', { ns: 'components' }),
+        label: t('resume.skills.coreCompetencies', { ns: 'pages' }),
         skills: [
           "JavaScript",
           "TypeScript",
@@ -455,7 +455,7 @@ export function getLocalizedResumeData(
         ],
       },
       {
-        label: t('resume.skills.everydayTools', { ns: 'components' }),
+        label: t('resume.skills.everydayTools', { ns: 'pages' }),
         skills: [
           "Claude Code",
           "Azure DevOps",
@@ -472,7 +472,7 @@ export function getLocalizedResumeData(
         ],
       },
       {
-        label: t('resume.skills.onceInAWhile', { ns: 'components' }),
+        label: t('resume.skills.onceInAWhile', { ns: 'pages' }),
         skills: ["Illustrator", "Premiere Pro", "Perl", "Req-n-roll"],
       },
     ],
@@ -480,7 +480,7 @@ export function getLocalizedResumeData(
     clients: resumeData.clients,
 
     speaking: {
-      intro: t('resume.conferenceSpeaker.intro', { ns: 'components' }),
+      intro: t('resume.conferenceSpeaker.intro', { ns: 'pages' }),
       events: resumeData.speaking.events,
     },
   };

@@ -52,7 +52,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           mb: 3,
         }}
       >
-        {t('resume.workExperience.heading', { ns: 'components' })}
+        {t('resume.workExperience.heading', { ns: 'pages' })}
       </Typography>
 
       {jobs.map((job, jobIndex) => (
@@ -147,7 +147,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                   fontSize: { xs: "0.95rem", md: "1rem" },
                 }}
               >
-                {t('resume.workExperience.keyContributions', { ns: 'components' })}
+                {t('resume.workExperience.keyContributions', { ns: 'pages' })}
               </Typography>
               <Box
                 component="ul"

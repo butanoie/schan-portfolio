@@ -57,7 +57,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
           border: 0,
         }}
       >
-        {t("colophon.butaStory.heading", { ns: "components" })}
+        {t("colophon.butaStory.heading", { ns: "pages" })}
       </Typography>
 
       {/* Boo vs Bu Image */}

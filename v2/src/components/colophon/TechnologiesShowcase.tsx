@@ -76,7 +76,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               href={tech.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={t("colophon.technologiesShowcase.visitWebsiteAriaLabel", { variables: { name: tech.name }, ns: "components" })}
+              aria-label={t("colophon.technologiesShowcase.visitWebsiteAriaLabel", { variables: { name: tech.name }, ns: "pages" })}
               sx={{
                 color: palette.card.text,
                 "&:hover": {
@@ -134,7 +134,7 @@ export default function TechnologiesShowcase({
    */
   const getCategoryLabel = (index: number): string => {
     return t(`colophon.technologiesShowcase.categoryLabels.${index}`, {
-      ns: "components",
+      ns: "pages",
       defaultValue: "",
     });
   };
@@ -160,7 +160,7 @@ export default function TechnologiesShowcase({
           textAlign: "center"
         }}
       >
-        {t("colophon.technologiesShowcase.heading", { ns: "components" })}
+        {t("colophon.technologiesShowcase.heading", { ns: "pages" })}
       </Typography>
 
       <Typography
@@ -228,7 +228,7 @@ export default function TechnologiesShowcase({
               fontSize: "1.25rem",
             }}
           >
-            {t("colophon.technologiesShowcase.v1SectionHeading", { ns: "components" })}
+            {t("colophon.technologiesShowcase.v1SectionHeading", { ns: "pages" })}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -237,7 +237,7 @@ export default function TechnologiesShowcase({
             color="text.secondary"
             sx={{ mb: 2 }}
           >
-            {t("colophon.technologiesShowcase.v1Description", { ns: "components" })}
+            {t("colophon.technologiesShowcase.v1Description", { ns: "pages" })}
           </Typography>
           <Box
             sx={{

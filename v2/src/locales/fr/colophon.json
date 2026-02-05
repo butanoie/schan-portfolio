@@ -12,6 +12,18 @@
         "Il est également responsable de la conception des interactions, de l'expérience utilisateur et des cadres de développement frontaux pour les offres logicielles de Collabware."
       ]
     },
+    "technologiesShowcase": {
+      "heading": "Technologies",
+      "categoryLabels": {
+        "0": "Cadre et environnement d'exécution",
+        "1": "Interface utilisateur et style",
+        "2": "Outils de développement",
+        "3": "Tests"
+      },
+      "v1SectionHeading": "Original V1 Technologies (Historique)",
+      "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
+      "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)"
+    },
     "technologies": {
       "intro": "Ce site de portfolio a été entièrement reconstruit. Voici ce qui alimente la version actuelle :",
       "categories": [
@@ -106,9 +118,11 @@
       ]
     },
     "designPhilosophy": {
+      "heading": "Conception et typographie",
       "intro": "Le design initial s'inspirait des diagrammes classiques de la viande de porc. Je voulais que le site ressemble à un menu de boucherie, mais j'ai finalement opté pour un style moderne grâce à l'utilisation de couleurs plates et de polices de caractères sans empattement.",
       "colorPaletteHeading": "Palette de couleurs",
       "typographyHeading": "Typographie",
+      "googleFontsAriaLabel": "Voir {{name}} sur Google Fonts (ouvre un nouvel onglet)",
       "colors": [
         {
           "name": "Sakura",
@@ -156,6 +170,7 @@
       ]
     },
     "butaStory": {
+      "heading": "L'histoire de Buta",
       "paragraphs": [
         "La caricature de Buta (cochon en japonais) bien habillé que l'on trouve en bas de page a été créée pour moi par <a href=\"http://christineibbitson.blogs.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Christine Ibbitson</a>. Buta est une imitation éhontée de Yoshi Boo, ou Boo-chan, une mascotte aujourd'hui à la retraite de <a href=\"https://www.yoshinoya.com\" target=\"_blank\" rel=\"noopener noreferrer\">Yoshinoya</a>, une célèbre chaîne de restauration rapide au Japon (et dans d'autres parties du monde).",
         "Au début de l'année 2004, Yoshinoya a introduit un menu centré sur le porc en raison de l'augmentation du coût du bœuf au Japon, les importations de bœuf américain ayant été interdites en décembre 2003 après qu'un cas d'encéphalopathie spongiforme bovine ait été signalé aux États-Unis. Les responsables marketing de Yoshinoya ont donc décidé que la meilleure façon de promouvoir leur nouveau menu à base de porc était de créer une nouvelle mascotte.",

@@ -3,6 +3,9 @@
     "name": "Portfolio de Sing Chan",
     "description": "Technologue créatif avec plus de 25 ans d'expérience"
   },
+  "header": {
+    "siteTitle": "Sing Chan"
+  },
   "nav": {
     "home": "Accueil",
     "portfolio": "Portfolio",

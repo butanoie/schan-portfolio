@@ -88,7 +88,7 @@ export default function Header() {
               gap: 1
             }}>
             <Typography variant="h6" component="div" sx={{ fontFamily: "Oswald" }}>
-              Sing Chan
+              {t("header.siteTitle")}
             </Typography>
             <Box sx={{ display: "flex", gap: 0.25, alignItems: "baseline" }}>
               <IconButton
