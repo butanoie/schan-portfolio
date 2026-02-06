@@ -21,9 +21,17 @@ export interface Technology {
 
 /**
  * Category grouping for technologies.
+ *
+ * Technologies are organized into semantic categories to showcase different aspects of the stack:
+ * - **Framework & Runtime**: Core frameworks and language foundations (e.g., Next.js, React, TypeScript, i18next)
+ * - **UI & Styling**: Component libraries and CSS solutions (e.g., Material UI, Emotion)
+ * - **Development Tools**: Code assistance and formatting (e.g., Claude Code, Prettier)
+ * - **Testing**: Test frameworks and code quality validation (e.g., Vitest, React Testing Library, ESLint)
+ * - **Infrastructure & Services**: Build tools and automation (e.g., npm, GitHub Actions, Husky)
+ * - **MCP Servers**: Model Context Protocol integrations (e.g., Context7, GitHub MCP, DeepL MCP)
  */
 export interface TechnologyCategory {
-  /** Category label (e.g., "Framework & Runtime", "UI & Styling") */
+  /** Category label (e.g., "Framework & Runtime", "UI & Styling", "Development Tools") */
   label: string;
 
   /** Technologies in this category */
@@ -48,6 +56,9 @@ export interface V1TechnologiesSection {
  * Technologies showcase content - V1 and V2 tech stacks.
  */
 export interface TechnologiesContent {
+  /** Heading */
+  heading: string;
+
   /** Introduction paragraph */
   intro: string;
 

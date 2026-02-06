@@ -14,23 +14,13 @@
         "Il est également responsable de la conception des interactions, de l'expérience utilisateur et des cadres de développement frontaux pour les offres logicielles de Collabware."
       ]
     },
-    "technologiesShowcase": {
-      "heading": "Technologies",
-      "categoryLabels": {
-        "0": "Cadre et environnement d'exécution",
-        "1": "Interface utilisateur et style",
-        "2": "Outils de développement",
-        "3": "Tests"
-      },
-      "v1SectionHeading": "Original V1 Technologies (Historique)",
-      "v1Description": "Le site original du portefeuille a été construit avec ces technologies :",
-      "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)"
-    },
     "technologies": {
+      "heading": "Technologies",
       "intro": "Ce site de portfolio a été entièrement reconstruit. Voici ce qui alimente la version actuelle :",
+      "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)",
       "categories": [
         {
-          "label": "Framework & Runtime",
+          "label": "Cadre et environnement d'exécution",
           "items": [
             {
               "name": "Next.js 16",
@@ -43,11 +33,52 @@
             {
               "name": "TypeScript",
               "description": "Vérification statique des types pour améliorer l'expérience du développeur et la fiabilité du code."
+            },
+            {
+              "name": "i18next",
+              "description": "Bibliothèque d'internationalisation pour gérer le support multilingue et la localisation."
+            },
+            {
+              "name": "JSDoc",
+              "description": "Outil de génération de documentation pour créer une documentation API à partir de commentaires de code."
+            },
+            {
+              "name": "Prettier",
+              "description": "Formateur de code pour un style cohérent."
             }
           ]
         },
         {
-          "label": "UI & Styling",
+          "label": "Assistance IA",
+          "items": [
+            {
+              "name": "Claude Code",
+              "description": "Assistant de codage piloté par l'IA pour la programmation en binôme, la révision du code et la documentation."
+            },
+            {
+              "name": "Context7",
+              "description": "Récupération de documentation et d'exemples de code pour les informations actualisées sur les bibliothèques et les frameworks."
+            },
+            {
+              "name": "GitHub MCP",
+              "description": "Intégration GitHub pour les opérations de dépôt, les demandes de fusion et la gestion des problèmes."
+            },
+            {
+              "name": "Filesystem MCP",
+              "description": "Accès sécurisé au système de fichiers pour la lecture et l'écriture de fichiers dans les répertoires autorisés."
+            },
+            {
+              "name": "Sequential Thinking MCP",
+              "description": "Raisonnement structuré et résolution de problèmes par des processus de réflexion étape par étape."
+            },
+            {
+              "name": "DeepL MCP",
+              "description": "Service de traduction piloté par l'IA pour la traduction automatique du contenu dans plusieurs langues."
+            }
+          ]
+        },
+        {
+          "label": "Interface utilisateur et style",
           "items": [
             {
               "name": "Material UI (MUI)",
@@ -60,24 +91,7 @@
           ]
         },
         {
-          "label": "Development Tools",
-          "items": [
-            {
-              "name": "Claude Code",
-              "description": "Assistant de codage piloté par l'IA pour la programmation en binôme, la révision du code et la documentation."
-            },
-            {
-              "name": "ESLint",
-              "description": "Linter JavaScript/TypeScript pour la qualité et la cohérence du code."
-            },
-            {
-              "name": "Prettier",
-              "description": "Formateur de code pour un style cohérent."
-            }
-          ]
-        },
-        {
-          "label": "Testing",
+          "label": "Tests",
           "items": [
             {
               "name": "Vitest",
@@ -86,6 +100,27 @@
             {
               "name": "React Testing Library",
               "description": "Utilitaires de test axés sur le comportement de l'utilisateur plutôt que sur les détails de l'implémentation."
+            },
+            {
+              "name": "ESLint",
+              "description": "Linter JavaScript/TypeScript pour la qualité et la cohérence du code."
+            }
+          ]
+        },
+        {
+          "label": "Infrastructure et services",
+          "items": [
+            {
+              "name": "npm",
+              "description": "Gestionnaire de paquets pour installer et gérer les dépendances JavaScript."
+            },
+            {
+              "name": "GitHub Actions",
+              "description": "Plateforme d'automatisation CI/CD pour les workflows d'intégration et de déploiement continus."
+            },
+            {
+              "name": "Husky",
+              "description": "Cadre de hooks Git pour automatiser les vérifications de qualité du code avant les commits."
             }
           ]
         }

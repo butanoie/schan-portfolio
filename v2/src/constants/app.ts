@@ -51,9 +51,9 @@ export const DEFAULT_PAGE_SIZE = 5;
  * Set to 0 in production for instant loading. Automatically reduced to 0 in tests.
  * Useful for testing the loading states and skeleton UI without network latency.
  *
- * @default 1500 (production) | 0 (test/SSR)
+ * @default 1000 (production) | 0 (test/SSR)
  */
-export const LOADING_DELAY = 1500;
+export const LOADING_DELAY = 1000;
 
 /** Initial page number for project pagination (1-based indexing) */
 export const INITIAL_PAGE = 1;
@@ -71,6 +71,44 @@ export const DIALOG_FADE_DURATION = 300;
 
 /** Button/control transition duration for hover and focus states */
 export const BUTTON_TRANSITION_DURATION = 200; // milliseconds (0.2s)
+
+/**
+ * Standard animation duration constants for consistent timing across the app.
+ * Organized by speed from fastest to slowest.
+ *
+ * Timing breakdown:
+ * - INSTANT (0ms): No animation, immediate change
+ * - FAST (150ms): Buttons, links, interactive elements
+ * - STANDARD (200ms): Cards, general transitions, skeletons
+ * - NORMAL (300ms): Dialogs, modals, theme transitions
+ * - SLOW (400ms): Scroll animations, larger transitions
+ * - VERY_SLOW (500ms): Page transitions, major layout changes
+ *
+ * @see {@link https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions}
+ */
+export const ANIMATION_DURATIONS = {
+  INSTANT: 0,
+  FAST: 150,
+  STANDARD: 200,
+  NORMAL: 300,
+  SLOW: 400,
+  VERY_SLOW: 500,
+} as const;
+
+/**
+ * Standard easing functions for animations.
+ * Each easing provides a different feel:
+ * - ease-in: Slow start, fast end (exits, dismissals)
+ * - ease-out: Fast start, slow end (entrances, reveals)
+ * - ease-in-out: Slow at both ends (sustained animations)
+ * - linear: Constant speed (repeating, rotating animations)
+ */
+export const ANIMATION_EASINGS = {
+  EASE_IN: 'ease-in',
+  EASE_OUT: 'ease-out',
+  EASE_IN_OUT: 'ease-in-out',
+  LINEAR: 'linear',
+} as const;
 
 /**
  * ============================================================================

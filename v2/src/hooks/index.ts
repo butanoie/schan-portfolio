@@ -8,4 +8,5 @@ export { useLightbox } from './useLightbox';
 export { useProjectLoader } from './useProjectLoader';
 export { useProjects } from './useProjects';
 export { useReducedMotion } from './useReducedMotion';
+export { useScrollAnimation } from './useScrollAnimation';
 export { useSwipe } from './useSwipe';

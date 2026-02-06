@@ -35,6 +35,16 @@ export interface TechnologiesShowcaseProps {
  * @param props - Component props
  * @param props.tech - Technology data to display
  * @returns A card displaying the technology information
+ *
+ * @example
+ * ```tsx
+ * const tech = {
+ *   name: 'React',
+ *   description: 'A JavaScript library for building user interfaces with components',
+ *   url: 'https://react.dev'
+ * };
+ * <TechnologyCard tech={tech} />
+ * ```
  */
 function TechnologyCard({ tech }: { tech: Technology }) {
   const { mode } = useThemeContext();
@@ -76,7 +86,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               href={tech.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={t("colophon.technologiesShowcase.visitWebsiteAriaLabel", { variables: { name: tech.name }, ns: "pages" })}
+              aria-label={t("colophon.technologies.visitWebsiteAriaLabel", { name: tech.name, ns: "pages" })}
               sx={{
                 color: palette.card.text,
                 "&:hover": {
@@ -123,21 +133,8 @@ export default function TechnologiesShowcase({
   const { intro, categories, v1 } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
-  const { t } = useI18n();
+  const { t } = useI18n(); // Used in TechnologyCard and V1 section headers
 
-  /**
-   * Get localized category label for the given index.
-   * Maps category index to the corresponding translation key.
-   *
-   * @param index - The category index used to retrieve the translation key
-   * @returns The localized category label string
-   */
-  const getCategoryLabel = (index: number): string => {
-    return t(`colophon.technologiesShowcase.categoryLabels.${index}`, {
-      ns: "pages",
-      defaultValue: "",
-    });
-  };
 
   return (
     <Box
@@ -160,7 +157,7 @@ export default function TechnologiesShowcase({
           textAlign: "center"
         }}
       >
-        {t("colophon.technologiesShowcase.heading", { ns: "pages" })}
+        {t("colophon.technologies.heading", { ns: "pages" })}
       </Typography>
 
       <Typography
@@ -174,7 +171,7 @@ export default function TechnologiesShowcase({
       </Typography>
 
       {/* V2 Technologies by Category */}
-      {categories.map((category, index) => (
+      {categories.map((category) => (
         <Box key={category.label} sx={{ mb: 4 }}>
           <Typography
             variant="h3"
@@ -186,7 +183,7 @@ export default function TechnologiesShowcase({
               mb: 2,
             }}
           >
-            {getCategoryLabel(index) || category.label}
+            {category.label}
           </Typography>
           <Box
             sx={{
@@ -228,7 +225,7 @@ export default function TechnologiesShowcase({
               fontSize: "1.25rem",
             }}
           >
-            {t("colophon.technologiesShowcase.v1SectionHeading", { ns: "pages" })}
+            {t("colophon.technologies.v1.heading", { ns: "pages" })}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -237,7 +234,7 @@ export default function TechnologiesShowcase({
             color="text.secondary"
             sx={{ mb: 2 }}
           >
-            {t("colophon.technologiesShowcase.v1Description", { ns: "pages" })}
+            {t("colophon.technologies.v1.description", { ns: "pages" })}
           </Typography>
           <Box
             sx={{

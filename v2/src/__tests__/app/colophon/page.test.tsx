@@ -144,8 +144,8 @@ describe("ColophonPage", () => {
 
     // Check for V2 technology category headings
     expect(screen.getByText("Framework & Runtime")).toBeInTheDocument();
+    expect(screen.getByText("AI Assistance")).toBeInTheDocument();
     expect(screen.getByText("UI & Styling")).toBeInTheDocument();
-    expect(screen.getByText("Development Tools")).toBeInTheDocument();
     expect(screen.getByText("Testing")).toBeInTheDocument();
   });
 

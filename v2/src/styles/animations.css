@@ -1,0 +1,431 @@
+/**
+ * Global Animation Definitions
+ *
+ * This file defines all keyframe animations and animation utility classes
+ * used throughout the application. All animations respect the prefers-reduced-motion
+ * media query for WCAG 2.2 accessibility compliance.
+ *
+ * Animation Timing Standards:
+ * - FAST: 150ms (buttons, interactive elements)
+ * - STANDARD: 200ms (cards, general transitions)
+ * - SLOW: 300ms (dialogs, modals, page transitions)
+ * - VERY_SLOW: 400-500ms (scroll animations, large transitions)
+ *
+ * Easing Functions:
+ * - ease-in: Slow start, fast end (for exits)
+ * - ease-out: Fast start, slow end (for entrances)
+ * - ease-in-out: Slow start and end (for sustained animations)
+ * - linear: Constant speed (for rotating/repeating animations)
+ *
+ * @see {@link https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion}
+ */
+
+/* ============================================================================
+   Fade Animations
+   ============================================================================ */
+
+/**
+ * Simple fade-in animation.
+ * Transitions element from transparent to opaque.
+ * Duration: 300ms | Easing: ease-in
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Simple fade-out animation.
+ * Transitions element from opaque to transparent.
+ * Duration: 300ms | Easing: ease-out
+ */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   Slide Animations
+   ============================================================================ */
+
+/**
+ * Slide-up animation with fade.
+ * Element moves upward while fading in.
+ * Used for: Entrance animations, scroll-triggered reveals
+ * Distance: 20px | Duration: 400ms | Easing: ease-out
+ */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Slide-down animation with fade.
+ * Element moves downward while fading in.
+ * Used for: Dropdown menus, modal entrances from top
+ * Distance: 20px | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Slide-left animation with fade.
+ * Element moves from right to left while fading in.
+ * Used for: Lightbox image transitions, sidebar entrances
+ * Distance: 20px | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Slide-right animation with fade.
+ * Element moves from left to right while fading in.
+ * Used for: Lightbox image transitions, sidebar entrances
+ * Distance: 20px | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Slide-out-left animation with fade.
+ * Element moves from center to left while fading out.
+ * Used for: Lightbox image exit animations (going to next)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-in
+ */
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+}
+
+/**
+ * Slide-out-right animation with fade.
+ * Element moves from center to right while fading out.
+ * Used for: Lightbox image exit animations (going to previous)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-in
+ */
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+}
+
+/**
+ * Slide-in-from-right animation with fade.
+ * Element moves from right to center while fading in.
+ * Used for: Lightbox image entrance animations (going to next)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Slide-in-from-left animation with fade.
+ * Element moves from left to center while fading in.
+ * Used for: Lightbox image entrance animations (going to previous)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================================
+   Lightbox Animation Utility Classes
+   ============================================================================ */
+
+/**
+ * Lightbox slide-in from right animation with proper fill mode.
+ * Used for next button navigation in the lightbox.
+ * Uses will-change to optimize for GPU acceleration and prevent layout shifts.
+ * The forwards fill mode preserves the final animation state.
+ */
+.animate-lightbox-slide-in-right {
+  will-change: transform, opacity;
+  animation: slideInFromRight 300ms ease-out forwards;
+}
+
+/**
+ * Lightbox slide-in from left animation with proper fill mode.
+ * Used for previous button navigation in the lightbox.
+ * Uses will-change to optimize for GPU acceleration and prevent layout shifts.
+ * The forwards fill mode preserves the final animation state.
+ */
+.animate-lightbox-slide-in-left {
+  will-change: transform, opacity;
+  animation: slideInFromLeft 300ms ease-out forwards;
+}
+
+/* ============================================================================
+   Scale Animations
+   ============================================================================ */
+
+/**
+ * Scale-in animation with fade.
+ * Element grows from 95% to 100% scale while fading in.
+ * Used for: Modal dialogs, dropdown menus, popovers
+ * Duration: 200ms | Easing: ease-out
+ */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/**
+ * Scale-out animation with fade.
+ * Element shrinks from 100% to 95% scale while fading out.
+ * Used for: Modal exits, dropdown closing
+ * Duration: 150ms | Easing: ease-in
+ */
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* ============================================================================
+   Loading Animations
+   ============================================================================ */
+
+/**
+ * Shimmer animation for skeleton loading states.
+ * Creates a wave effect that moves across the element.
+ * Used for: ProjectSkeleton, loading placeholders
+ * Duration: 2000ms | Easing: linear | Direction: left to right
+ */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/**
+ * Pulse animation for loading indicators.
+ * Opacity oscillates between full and half opacity.
+ * Used for: Loading spinners, pending states
+ * Duration: 2000ms | Easing: cubic-bezier(0.4, 0, 0.6, 1)
+ */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/**
+ * Spin animation for loading spinners.
+ * Continuously rotates element 360 degrees.
+ * Used for: Loading indicators, spinners
+ * Duration: 1000ms | Easing: linear | Infinite
+ */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================================
+   Bounce Animations
+   ============================================================================ */
+
+/**
+ * Bounce animation for hover effects.
+ * Element bounces up slightly on hover.
+ * Used for: Project card hover, image hover effects
+ * Duration: 300ms | Easing: ease-in-out
+ */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================
+   Accessibility: Respect prefers-reduced-motion
+   ============================================================================ */
+
+/**
+ * Disable all animations when user prefers reduced motion.
+ * Sets animation duration to near-instant (0.01ms) and
+ * prevents repeated iterations for most animations.
+ *
+ * This respects user accessibility preferences and WCAG 2.2 requirements:
+ * - Users with vestibular disorders
+ * - Users with motion sensitivity
+ * - Users who find animations distracting
+ *
+ * Affects all elements with any animation or transition.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   Utility Classes for Animation
+   ============================================================================ */
+
+/**
+ * Fade-in utility class.
+ * Quick fade from transparent to opaque.
+ * Usage: className="animate-fade-in"
+ */
+.animate-fade-in {
+  animation: fadeIn 300ms ease-in;
+}
+
+/**
+ * Fade-out utility class.
+ * Quick fade from opaque to transparent.
+ * Usage: className="animate-fade-out"
+ */
+.animate-fade-out {
+  animation: fadeOut 300ms ease-out;
+}
+
+/**
+ * Slide-up utility class with fade.
+ * Entrance animation moving element upward.
+ * Usage: className="animate-slide-up"
+ */
+.animate-slide-up {
+  animation: slideUp 400ms ease-out;
+}
+
+/**
+ * Slide-down utility class with fade.
+ * Entrance animation moving element downward.
+ * Usage: className="animate-slide-down"
+ */
+.animate-slide-down {
+  animation: slideDown 300ms ease-out;
+}
+
+/**
+ * Scale-in utility class with fade.
+ * Entrance animation with scale effect.
+ * Usage: className="animate-scale-in"
+ */
+.animate-scale-in {
+  animation: scaleIn 200ms ease-out;
+}
+
+/**
+ * Pulse utility class for loading states.
+ * Continuous pulsing opacity effect.
+ * Usage: className="animate-pulse"
+ */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/**
+ * Spin utility class for loading indicators.
+ * Continuous rotation animation.
+ * Usage: className="animate-spin"
+ */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/**
+ * Shimmer utility class for skeleton loading.
+ * Wave effect moving across the element.
+ * Usage: className="animate-shimmer" with background-size
+ */
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background-size: 200% 100%;
+}
