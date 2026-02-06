@@ -181,6 +181,7 @@ function createThemeFromPalette(palette: ThemePalette) {
           body: {
             backgroundColor: palette.background,
             color: palette.text.primary,
+            transition: "background-color 300ms ease-in-out, color 300ms ease-in-out",
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
           "@media (prefers-reduced-motion: reduce)": {
@@ -188,6 +189,9 @@ function createThemeFromPalette(palette: ThemePalette) {
               animationDuration: "0.01ms !important",
               animationIterationCount: "1 !important",
               transitionDuration: "0.01ms !important",
+            },
+            body: {
+              transition: "none",
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,

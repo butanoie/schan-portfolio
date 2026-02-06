@@ -364,6 +364,7 @@ export function ProjectLightbox({
         {/* Image Wrapper */}
         <Box sx={imageWrapperSx}>
           <Image
+            key={validIndex}
             src={currentImage.url}
             alt={currentImage.caption}
             fill

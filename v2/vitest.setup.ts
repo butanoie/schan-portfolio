@@ -50,6 +50,82 @@ beforeAll(() => {
 });
 
 /**
+ * Mock IntersectionObserver for testing scroll-triggered animations.
+ *
+ * The IntersectionObserver API is used by useScrollAnimation hook to detect
+ * when elements enter the viewport. This mock provides a basic implementation.
+ */
+beforeAll(() => {
+  /**
+   * Mock implementation of IntersectionObserver for testing.
+   * Allows tests to trigger intersection callbacks manually.
+   */
+  class MockIntersectionObserver {
+    /**
+     * Callback invoked when intersection state changes.
+     */
+    callback: IntersectionObserverCallback;
+
+    /**
+     * Elements currently being observed.
+     */
+    observedElements: Set<Element> = new Set();
+
+    /**
+     * Creates a new MockIntersectionObserver instance.
+     *
+     * @param callback - Function to invoke on intersection changes
+     */
+    constructor(callback: IntersectionObserverCallback) {
+      this.callback = callback;
+    }
+
+    /**
+     * Start observing an element.
+     *
+     * @param element - Element to observe
+     */
+    observe(element: Element) {
+      this.observedElements.add(element);
+      // Immediately trigger callback with isIntersecting: true
+      // This allows tests and animations to work in test environments
+      const entry = {
+        target: element,
+        isIntersecting: true,
+        intersectionRatio: 1,
+        boundingClientRect: element.getBoundingClientRect(),
+        intersectionRect: element.getBoundingClientRect(),
+        rootBounds: null,
+        time: Date.now(),
+      } as IntersectionObserverEntry;
+      this.callback([entry], this as unknown as IntersectionObserver);
+    }
+
+    /**
+     * Stop observing an element.
+     *
+     * @param element - Element to stop observing
+     */
+    unobserve(element: Element) {
+      this.observedElements.delete(element);
+    }
+
+    /**
+     * Stop observing all elements.
+     */
+    disconnect() {
+      this.observedElements.clear();
+    }
+  }
+
+  Object.defineProperty(window, 'IntersectionObserver', {
+    writable: true,
+    configurable: true,
+    value: MockIntersectionObserver,
+  });
+});
+
+/**
  * Mock localStorage for testing environments.
  *
  * jsdom provides basic localStorage, but we need to ensure it's properly configured.

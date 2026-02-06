@@ -3,6 +3,7 @@
 import type { Project } from '../../types';
 import { Box } from '@mui/material';
 import { ProjectDetail } from './ProjectDetail';
+import { useScrollAnimation } from '../../hooks';
 
 /**
  * Props for the ProjectsList component.
@@ -12,6 +13,43 @@ import { ProjectDetail } from './ProjectDetail';
  */
 interface ProjectsListProps {
   projects: Project[];
+}
+
+/**
+ * Individual project item with scroll fade-in animation.
+ *
+ * This wrapper component applies fade-in and slide-up animations to each project
+ * as it enters the viewport. Uses the useScrollAnimation hook to detect when the
+ * element becomes visible and triggers the animation.
+ *
+ * **Animation Behavior:**
+ * - Fades in from 0 to 1 opacity as it enters viewport
+ * - Slides up from 20px below to final position
+ * - Smooth 400ms ease-out transition
+ * - Respects prefers-reduced-motion for accessibility
+ *
+ * @param {Object} props - Component props
+ * @param {Project} props.project - Project data to display
+ * @returns Animated ProjectDetail component
+ *
+ * @example
+ * <ScrollAnimatedProject project={myProject} />
+ */
+function ScrollAnimatedProject({ project }: { project: Project }) {
+  const { ref, isInView } = useScrollAnimation();
+
+  return (
+    <Box
+      ref={ref}
+      sx={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'all 400ms ease-out',
+      }}
+    >
+      <ProjectDetail project={project} />
+    </Box>
+  );
 }
 
 /**
@@ -60,7 +98,7 @@ export function ProjectsList({ projects }: ProjectsListProps) {
   return (
     <Box>
       {projects.map((project) => (
-        <ProjectDetail key={project.id} project={project} />
+        <ScrollAnimatedProject key={project.id} project={project} />
       ))}
     </Box>
   );
