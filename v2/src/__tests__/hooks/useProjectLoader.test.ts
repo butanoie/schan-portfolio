@@ -14,7 +14,7 @@ import { LocaleProvider } from '../../components/i18n/LocaleProvider';
  * @returns Wrapped component with locale context
  */
 const LocaleProviderWrapper = ({ children }: { children: ReactNode }) =>
-  React.createElement(LocaleProvider, { initialLocale: 'en' }, children);
+  React.createElement(LocaleProvider, { initialLocale: 'en' } as React.ComponentProps<typeof LocaleProvider>, children);
 
 /**
  * Tests for the useProjectLoader hook.
