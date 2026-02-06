@@ -36,7 +36,7 @@ case "$1" in
         npx @modelcontextprotocol/server-github
         ;;
     deepl)
-        deepl-mcp-server
+        npx deepl-mcp-server
         ;;
     *)
         echo "Usage: $0 {github|deepl}" >&2

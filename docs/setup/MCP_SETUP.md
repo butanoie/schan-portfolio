@@ -116,5 +116,7 @@ project-root/
 ├── .mcp.json              (MCP configuration)
 ├── scripts/
 │   └── mcp-launcher.sh    (loads .env and starts servers)
-└── MCP_SETUP.md          (this file)
+└── docs/
+    └── setup/
+        └── MCP_SETUP.md   (this file)
 ```

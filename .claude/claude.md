@@ -239,7 +239,7 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 - Auto-translate new strings using DeepL MCP
 - User's language preference is persisted to localStorage
 
-**See [LOCALIZATION.md](../docs/LOCALIZATION.md) for detailed localization workflow and best practices.**
+**See [LOCALIZATION.md](../docs/guides/LOCALIZATION.md) for quick reference and best practices. For detailed architecture, see [LOCALIZATION_ARCHITECTURE.md](../docs/guides/LOCALIZATION_ARCHITECTURE.md). For translation workflows, see [TRANSLATION_WORKFLOW.md](../docs/guides/TRANSLATION_WORKFLOW.md).**
 
 ## File Organization
 
@@ -257,7 +257,7 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 Create comprehensive markdown files in `/docs` for all infrastructure, tools, and configuration:
 
 #### MCP (Model Context Protocol) Setup
-**File:** `docs/MCP_SETUP.md`
+**File:** `docs/setup/MCP_SETUP.md`
 
 Document:
 - **Purpose**: What MCP servers are available and what they do
@@ -285,13 +285,12 @@ Document:
 - Environment variables required
 
 #### Localization & i18n
-**File:** `docs/LOCALIZATION.md` (already exists)
+**Files:** `docs/guides/LOCALIZATION.md`, `docs/guides/LOCALIZATION_ARCHITECTURE.md`, `docs/guides/TRANSLATION_WORKFLOW.md`
 
-Maintains documentation for:
-- Translation workflow
-- Adding new translation keys
-- Language support details
-- Auto-translation process
+Three-part documentation structure:
+- **LOCALIZATION.md** - Quick reference and overview (entry point)
+- **LOCALIZATION_ARCHITECTURE.md** - Technical architecture and implementation patterns
+- **TRANSLATION_WORKFLOW.md** - Step-by-step translation workflow and procedures
 
 ### Security Guidelines for Documentation
 

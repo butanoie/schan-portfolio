@@ -1,7 +1,7 @@
 # Localization Architecture
 
-**Version:** 2.0
-**Last Updated:** 2026-02-05
+**Version:** 2.1
+**Last Updated:** 2026-02-06
 **Status:** Complete
 
 This document describes the localization (i18n) architecture for the portfolio application, covering both patterns used across different content types and the unified type system.
@@ -13,10 +13,11 @@ This document describes the localization (i18n) architecture for the portfolio a
 1. [Overview](#overview)
 2. [Localization Patterns](#localization-patterns)
 3. [Type System](#type-system)
-4. [Directory Structure](#directory-structure)
-5. [Implementation Guide](#implementation-guide)
-6. [Migration Path](#migration-path)
-7. [Best Practices](#best-practices)
+4. [Server-Side Architecture Pattern](#server-side-architecture-pattern)
+5. [Directory Structure](#directory-structure)
+6. [Implementation Guide](#implementation-guide)
+7. [Migration Path](#migration-path)
+8. [Best Practices](#best-practices)
 
 ---
 
@@ -248,6 +249,157 @@ export function getLocalizedPortfolioData(t: TranslationFunction): ProjectsPageD
 
 ---
 
+## Server-Side Architecture Pattern
+
+### Overview
+
+For Server Components and server-side operations, the application uses a separate server-side i18n pattern that avoids importing client-side dependencies like i18next and React hooks.
+
+### Key Modules
+
+#### 1. **i18n-constants.ts**
+
+Contains all locale-related constants used throughout the application:
+
+**Location:** `src/lib/i18n-constants.ts`
+
+**Definition:**
+
+```typescript
+// LOCALES and DEFAULT_LOCALE constants
+export const LOCALES = ['en', 'fr'] as const;
+export const DEFAULT_LOCALE = 'en';
+export type Locale = (typeof LOCALES)[number];
+```
+
+**Usage:**
+- Re-exported by `src/lib/i18n.ts` for client-side use
+- Directly imported by `src/lib/i18nServer.ts` for server-side use
+- Provides single source of truth for supported locales
+
+#### 2. **i18next-config.ts**
+
+Initializes and configures i18next for client-side usage.
+
+**Location:** `src/lib/i18next-config.ts`
+
+**Responsibilities:**
+- i18next initialization with all supported namespaces
+- Dynamic loading of translation files
+- Detection of user locale from browser/app context
+- Configuration of fallback languages and missing translation handling
+
+**Note:** This file is NOT imported by server-side code to avoid pulling client-side dependencies into the server bundle.
+
+#### 3. **i18nServer.ts**
+
+Server-side utilities for accessing locale information without client-side dependencies.
+
+**Location:** `src/lib/i18nServer.ts`
+
+**Key Function:**
+
+```typescript
+/**
+ * Get the user's preferred locale from cookies (server-side).
+ *
+ * @param cookieString - The cookie header string from the request
+ * @returns The user's preferred locale or default
+ */
+export function getLocaleFromCookie(cookieString: string): Locale
+```
+
+**Usage in Server Components:**
+
+```typescript
+import { cookies } from 'next/headers';
+import { getLocaleFromCookie } from '@/src/lib/i18nServer';
+
+export default async function ServerComponent() {
+  const cookieStore = await cookies();
+  const locale = getLocaleFromCookie(cookieStore.toString());
+
+  // Use locale for server-side data fetching
+  const projects = await getLocalizedProjects(locale);
+
+  return <div>{/* render with locale-aware data */}</div>;
+}
+```
+
+**Advantages:**
+- ✅ Works in Server Components without client-side overhead
+- ✅ No React hooks required
+- ✅ Minimal dependencies (only i18n-constants)
+- ✅ Reads locale from cookie set by LocaleProvider
+
+#### 4. **projectDataServer.ts**
+
+Server actions for fetching project data with locale support.
+
+**Location:** `src/lib/projectDataServer.ts`
+
+**Key Functions:**
+
+```typescript
+/**
+ * Server action to fetch projects.
+ */
+export async function fetchProjects(
+  options: ProjectQueryOptions = {}
+): Promise<ProjectsResponse>
+
+/**
+ * Server action to fetch a single project by ID with locale.
+ */
+export async function fetchProjectById(
+  id: string,
+  locale: string = 'en'
+): Promise<Project | null>
+
+/**
+ * Server action to fetch all unique tags.
+ */
+export async function fetchAllTags(): Promise<string[]>
+```
+
+**Usage in Server Components:**
+
+```typescript
+import { fetchProjects } from '@/src/lib/projectDataServer';
+
+export default async function ProjectsPage() {
+  const projects = await fetchProjects({ page: 1, pageSize: 6 });
+
+  return <div>{/* render projects */}</div>;
+}
+```
+
+### Client vs. Server Pattern Comparison
+
+| Aspect | Client-Side | Server-Side |
+|--------|------------|-----------|
+| **Module** | `useI18n()` hook | `i18nServer.ts` utilities |
+| **Data Access** | `getLocalized*Data(t)` functions | `getLocalizedProject()` functions |
+| **Locale Source** | Context (from cookies) | Cookies via `getLocaleFromCookie()` |
+| **Dependencies** | React hooks, i18next | None (i18n-constants only) |
+| **Bundle Impact** | Lightweight (hook) | Zero (server-only code) |
+| **Use Case** | Client Components | Server Components, API routes |
+
+### When to Use Each Pattern
+
+**Use Client-Side Pattern When:**
+- Building Client Components (pages, components with `'use client'`)
+- Directly accessing translation function with `useI18n()`
+- Rendering locale-aware UI in the browser
+
+**Use Server-Side Pattern When:**
+- Building Server Components (default in Next.js 13+)
+- Fetching projects or other localized data server-side
+- Accessing locale from request context (cookies)
+- Avoiding unnecessary client-side JavaScript
+
+---
+
 ## Directory Structure
 
 ```
@@ -267,23 +419,37 @@ v2/
 │   ├── locales/                    # Translation files
 │   │   ├── en/
 │   │   │   ├── colophon.json       # Colophon translations
+│   │   │   ├── common.json         # Common/shared translations
+│   │   │   ├── components.json     # Component translations
 │   │   │   ├── home.json           # Home page translations
 │   │   │   ├── resume.json         # Resume translations
 │   │   │   └── projects.json       # Project translations
 │   │   └── fr/
 │   │       ├── colophon.json
+│   │       ├── common.json
+│   │       ├── components.json
 │   │       ├── home.json
 │   │       ├── resume.json
 │   │       └── projects.json
 │   │
 │   ├── lib/
-│   │   └── i18n.ts                 # i18n configuration and utilities
+│   │   ├── i18n.ts                 # i18n utilities and re-exports
+│   │   ├── i18n-constants.ts       # Locale constants (LOCALES, DEFAULT_LOCALE)
+│   │   ├── i18next-config.ts       # i18next initialization and configuration
+│   │   ├── i18nServer.ts           # Server-side i18n utilities
+│   │   ├── projectData.ts          # Client-side project data utilities
+│   │   └── projectDataServer.ts    # Server-side project data actions
 │   │
 │   ├── components/i18n/
-│   │   └── LocaleProvider.tsx      # Locale context provider
+│   │   ├── LocaleProvider.tsx      # Client-side locale context provider
+│   │   ├── LocaleProviderErrorFallback.tsx  # Error boundary for locale provider
+│   │   └── LocalizedPortfolioDeck.tsx       # Localized portfolio deck component
 │   │
-│   └── contexts/
-│       └── LocaleContext.tsx       # Locale context definition
+│   ├── contexts/
+│   │   └── LocaleContext.tsx       # Locale context definition
+│   │
+│   └── types/
+│       └── [various type definitions used by i18n]
 │
 └── docs/
     └── LOCALIZATION_ARCHITECTURE.md (this file)
@@ -628,10 +794,13 @@ export function getLocalizedData(t: TranslationFunction): DataType {}
 
 ## Related Documentation
 
-- **[LOCALIZATION.md](./LOCALIZATION.md)** - Workflow and setup guide
-- **[data/projects.ts](../v2/src/data/projects.ts)** - Project data structure
-- **[data/localization.ts](../v2/src/data/localization.ts)** - Project merge functions
-- **[hooks/useI18n.ts](../v2/src/hooks/useI18n.ts)** - i18n hook and types
+- **[TRANSLATION_WORKFLOW.md](./TRANSLATION_WORKFLOW.md)** - Translation workflow and procedures
+- **[data/projects.ts](../v2/src/data/projects.ts)** - Project data structure and base data
+- **[data/localization.ts](../v2/src/data/localization.ts)** - Project merge and localization functions
+- **[hooks/useI18n.ts](../v2/src/hooks/useI18n.ts)** - i18n hook, types, and utilities
+- **[lib/i18nServer.ts](../v2/src/lib/i18nServer.ts)** - Server-side i18n utilities
+- **[lib/projectDataServer.ts](../v2/src/lib/projectDataServer.ts)** - Server-side project data actions
+- **[lib/i18n-constants.ts](../v2/src/lib/i18n-constants.ts)** - Locale constants and types
 
 ---
 
@@ -650,6 +819,10 @@ This architecture scales from simple page content to complex project collections
 
 ---
 
-**Document Version:** 2.0
-**Last Updated:** 2026-02-05
+**Document Version:** 2.1
+**Last Updated:** 2026-02-06
 **Status:** ✅ Complete and documented
+
+**Change Log:**
+- **v2.1** (2026-02-06): Added server-side architecture pattern, documented i18n-constants and i18next-config, updated directory structure with all i18n files, fixed LOCALIZATION.md reference
+- **v2.0** (2026-02-05): Initial complete architecture documentation
