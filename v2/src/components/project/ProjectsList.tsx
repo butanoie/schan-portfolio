@@ -4,6 +4,7 @@ import type { Project } from '../../types';
 import { Box } from '@mui/material';
 import { ProjectDetail } from './ProjectDetail';
 import { useScrollAnimation } from '../../hooks';
+import { useAnimations } from '../../hooks/useAnimations';
 
 /**
  * Props for the ProjectsList component.
@@ -37,6 +38,7 @@ interface ProjectsListProps {
  */
 function ScrollAnimatedProject({ project }: { project: Project }) {
   const { ref, isInView } = useScrollAnimation();
+  const { animationsEnabled } = useAnimations();
 
   return (
     <Box
@@ -44,7 +46,7 @@ function ScrollAnimatedProject({ project }: { project: Project }) {
       sx={{
         opacity: isInView ? 1 : 0,
         transform: isInView ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'all 400ms ease-out',
+        transition: animationsEnabled ? 'all 400ms ease-out' : 'none',
       }}
     >
       <ProjectDetail project={project} />
