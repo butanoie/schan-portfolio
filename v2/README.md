@@ -15,16 +15,15 @@ Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and 
   - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles, and more ([PR #6](https://github.com/butanoie/schan-portfolio/pull/6))
 
 **In Progress: Phase 4 - Enhanced Features**
-
-- 🔄 Task 4.1: Theme switching (light, dark, high contrast modes) ([PR #8](https://github.com/butanoie/schan-portfolio/pull/8) - Open for review)
-- ⬜ Task 4.2: Internationalization (i18n) - Infrastructure for multi-language support
-- ⬜ Task 4.3: Animations & Transitions - Polished UI with accessibility respect
+- ✅ Task 4.1: Theme switching (light, dark, high contrast modes) - Settings UI with theme switching
+- ✅ Task 4.2: Internationalization (i18n) - Infrastructure for multi-language support
+- 🔄 Task 4.3: Animations & Transitions - Polished UI with accessibility respect
 - ⬜ Task 4.4: WCAG 2.2 Level AA Compliance - Comprehensive accessibility audit
 - ⬜ Task 4.5: SEO Optimization - Meta tags, structured data, sitemap
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
-All Phase 1 tasks from the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) have been completed:
+All Phase 1 tasks from the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) have been completed:
 
 - ✅ Next.js 14+ with TypeScript and App Router
 - ✅ Material UI v5+ with custom theme
@@ -46,6 +45,8 @@ All Phase 1 tasks from the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) h
 - **Language:** TypeScript 5+
 - **UI Library:** Material UI v7.3.7
 - **Styling:** Emotion (MUI's styling solution)
+- **Theming:** MUI theme with Light, Dark, and High Contrast modes
+- **Internationalization:** i18next with React hooks integration
 
 ### Development Tools
 
@@ -237,7 +238,7 @@ npm run test:ui
 
 ### Test Coverage Requirements
 
-Per the [modernization plan](../docs/MODERNIZATION_PLAN.md):
+Per the [modernization plan](../docs/active/MODERNIZATION_PLAN.md):
 
 | Metric     | Threshold | Current Status        |
 | ---------- | --------- | --------------------- |
@@ -473,17 +474,17 @@ This project is committed to WCAG 2.2 Level AA compliance:
 - All environment variables must be in `.env.local` (gitignored)
 - See `.env.example` for required variables
 - Secrets like API keys should never be committed
-- See [Security Requirements](../docs/MODERNIZATION_PLAN.md#security-requirements) for details
+- See [Security Requirements](../docs/active/MODERNIZATION_PLAN.md#security-requirements) for details
 
 ## Project Roadmap
 
-See the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) for the complete roadmap:
+See the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) for the complete roadmap:
 
 ### Completed Phases
 
 - ✅ **Phase 1:** Foundation & Setup - Next.js, TypeScript, MUI, testing infrastructure
 - ✅ **Phase 2:** Data Migration - 18 projects, 239 images, full data layer
-- ✅ **Phase 3:** Core Pages Development ([detailed plan](../docs/PHASE3_DETAILED_PLAN.md))
+- ✅ **Phase 3:** Core Pages Development ([detailed plan](../docs/archive/PHASE3_DETAILED_PLAN.md))
   - ✅ Task 3.1: Homepage/Portfolio - Project grid with load more, responsive design
   - ✅ Task 3.2: Resume Page - 5 components, work experience, skills, clients
   - ✅ Task 3.3: Colophon/About Page - Design system, technologies, Buta story
@@ -507,14 +508,20 @@ See the [Modernization Plan](../docs/MODERNIZATION_PLAN.md) for the complete roa
 - **Full accessibility** with keyboard navigation and screen reader support
 - **Zero lint violations** and **zero TypeScript errors**
 
-**Phase 4.1 In Progress:**
-
-- **2 new theme modes** (Light, Dark, High Contrast - WCAG AAA compliant)
-- **Settings UI** with accessible popover and full keyboard navigation
-- **Complete theme infrastructure** (context, hooks, colors, types)
-- **41 new tests** with 100% coverage for new components
-- **833 tests passing** (Phase 2 + 3 + 4 infrastructure)
+**Phase 4.1 & 4.2 Complete:**
+- ✅ **Theme Switching:** Light, Dark, and High Contrast modes (WCAG AAA compliant)
+  - Settings UI with accessible popover and full keyboard navigation
+  - Complete theme infrastructure (context, hooks, colors, types)
+  - Persistent theme selection via localStorage
+- ✅ **Internationalization (i18n):** Multi-language infrastructure
+  - Language selection and persistence
+  - Dynamic content translation
+  - Locale context and hooks for easy integration
+- **Test Coverage:** 80%+ overall coverage with comprehensive new tests
 - **Comprehensive documentation** and JSDoc on all code
+
+**Phase 4.3 In Progress:**
+- Animations & Transitions - Polished UI interactions with accessibility respect
 
 ## Learn More
 

@@ -171,7 +171,7 @@ function calculateShipping(weight: number, distance: number): number {
 
 ### Documentation Resources
 
-**Detailed Examples:** See [JSDOC_EXAMPLES.md](../docs/JSDOC_EXAMPLES.md) for comprehensive real-world patterns and templates:
+**Detailed Examples:** See [JSDOC_EXAMPLES.md](../docs/guides/JSDOC_EXAMPLES.md) for comprehensive real-world patterns and templates:
 - Simple functions and async operations
 - React components with complex props
 - Custom hooks with state and effects

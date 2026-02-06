@@ -15,6 +15,8 @@ This document outlines the plan to modernize portfolio.singchan.com from a 2013-
 - Next.js 14+ (React framework)
 - TypeScript (type safety)
 - Material UI v5/v6 (component library)
+- Theme Switching (Light, Dark, High Contrast modes)
+- i18next (Internationalization framework)
 - Static Site Generation (SSG/ISR)
 - Modern deployment (Vercel/Netlify)
 - **WCAG 2.2 Level AA Accessibility Compliance**
