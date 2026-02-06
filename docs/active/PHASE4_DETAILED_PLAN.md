@@ -955,6 +955,22 @@ While not implementing RTL now, structure code to support it:
 
 Add polished animations throughout the site while respecting `prefers-reduced-motion` for accessibility.
 
+### Target Components
+
+The following existing components will be enhanced with animations:
+
+| Component | Location | Animation Type |
+|-----------|----------|-----------------|
+| `ProjectImage.tsx` | `v2/src/components/project/` | Hover lift effect |
+| `ProjectsList.tsx` | `v2/src/components/project/` | Scroll fade-in |
+| `ProjectLightbox.tsx` | `v2/src/components/project/` | Fade & scale transitions |
+| `ProjectGallery.tsx` | `v2/src/components/project/` | Image fade transitions |
+| `ProjectSkeleton.tsx` | `v2/src/components/project/` | Shimmer animation |
+| `ThemeSwitcher.tsx` | `v2/src/components/settings/` | Smooth color transitions |
+| `Header.tsx` | `v2/src/components/common/` | Navigation transitions |
+| `Footer.tsx` | `v2/src/components/common/` | Link hover effects |
+| `ThemeProvider.tsx` | `v2/src/components/` | Theme transition |
+
 ### Requirements
 
 #### 4.3.1 Global Animation Styles
@@ -1076,15 +1092,19 @@ Add polished animations throughout the site while respecting `prefers-reduced-mo
 
 #### 4.3.2 Component-Specific Animations
 
-**Hover Effects on Cards:**
+**Hover Effects on Project Items:**
 
 ```typescript
 /**
- * ProjectCard with smooth hover animation.
+ * ProjectImage with smooth hover animation.
+ * Add hover effects when users interact with project images/thumbnails.
  */
-export function ProjectCard({ project, onClick }: ProjectCardProps) {
+export function ProjectImage({ src, alt, onClick }: ProjectImageProps) {
   return (
-    <Card
+    <Box
+      component="img"
+      src={src}
+      alt={alt}
       onClick={onClick}
       sx={{
         cursor: 'pointer',
@@ -1100,9 +1120,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           },
         },
       }}
-    >
-      {/* Card content */}
-    </Card>
+    />
   );
 }
 ```
@@ -1198,20 +1216,27 @@ export function useScrollAnimation(options?: IntersectionObserverInit) {
 }
 ```
 
-**Usage in ProjectGrid:**
+**Usage in ProjectsList:**
 
 ```typescript
-export function ProjectGrid({ projects }: ProjectGridProps) {
+/**
+ * Enhanced ProjectsList with scroll animations for each project item.
+ * Projects fade in as they enter the viewport.
+ */
+export function ProjectsList({ projects }: ProjectsListProps) {
   return (
-    <Grid container spacing={2}>
+    <Stack spacing={4}>
       {projects.map((project) => (
-        <ScrollFadeInCard key={project.id} project={project} />
+        <ScrollFadeInProject key={project.id} project={project} />
       ))}
-    </Grid>
+    </Stack>
   );
 }
 
-function ScrollFadeInCard({ project }: { project: Project }) {
+/**
+ * Individual project item with scroll fade-in animation.
+ */
+function ScrollFadeInProject({ project }: { project: Project }) {
   const { ref, isInView } = useScrollAnimation();
 
   return (
@@ -1223,7 +1248,7 @@ function ScrollFadeInCard({ project }: { project: Project }) {
         transition: 'all 400ms ease-out',
       }}
     >
-      <ProjectCard project={project} />
+      <ProjectDetail project={project} />
     </Box>
   );
 }
@@ -1296,13 +1321,14 @@ sx={{
 - [ ] `v2/src/styles/animations.css` - Global animations
 - [ ] `v2/src/hooks/useReducedMotion.ts` - Accessibility hook
 - [ ] `v2/src/hooks/useScrollAnimation.ts` - Scroll fade-in hook
-- [ ] Update `ProjectCard.tsx` with hover animations
-- [ ] Update `ProjectGrid.tsx` with scroll animations
-- [ ] Update `Lightbox.tsx` with transitions
-- [ ] Update `ThemeToggle.tsx` with smooth transitions
-- [ ] Enhance `LoadingSkeleton.tsx` with shimmer
+- [ ] Update `ProjectImage.tsx` with hover animations
+- [ ] Update `ProjectsList.tsx` with scroll animations
+- [ ] Update `ProjectLightbox.tsx` with transitions
+- [ ] Update `ThemeSwitcher.tsx` with smooth transitions
+- [ ] Enhance `ProjectSkeleton.tsx` with shimmer animations
+- [ ] Update `ProjectGallery.tsx` with fade transitions
 - [ ] Add page transition component
-- [ ] Button and link animations
+- [ ] Button and link animations (Header, Footer, navigation)
 - [ ] Unit tests for animation hooks
 - [ ] Manual testing with `prefers-reduced-motion` enabled
 - [ ] Visual regression testing for animations
@@ -1943,10 +1969,17 @@ v2/
 │           └── page.tsx                # Enhanced with i18n, SEO
 ├── src/
 │   ├── components/
-│   │   ├── theme/
-│   │   │   ├── ThemeToggle.tsx        # Theme switcher
-│   │   │   ├── ThemeProvider.tsx      # Enhanced provider
-│   │   │   └── ColorModeScript.tsx    # Theme detection
+│   │   ├── settings/
+│   │   │   ├── ThemeSwitcher.tsx      # Theme switcher
+│   │   │   ├── LanguageSwitcher.tsx   # Language selection
+│   │   │   └── SettingsButton.tsx     # Settings UI
+│   │   ├── ThemeProvider.tsx          # Enhanced theme provider
+│   │   ├── project/
+│   │   │   ├── ProjectImage.tsx       # With hover animations
+│   │   │   ├── ProjectsList.tsx       # With scroll animations
+│   │   │   ├── ProjectLightbox.tsx    # With transitions
+│   │   │   ├── ProjectGallery.tsx     # With fade transitions
+│   │   │   └── ProjectSkeleton.tsx    # With shimmer
 │   │   └── [existing components]      # Enhanced with i18n
 │   ├── hooks/
 │   │   ├── useTheme.ts                # Theme state
