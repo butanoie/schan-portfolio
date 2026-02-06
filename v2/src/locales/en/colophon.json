@@ -14,20 +14,10 @@
         "He is also responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings."
       ]
     },
-    "technologiesShowcase": {
-      "heading": "Technologies",
-      "categoryLabels": {
-        "0": "Framework & Runtime",
-        "1": "UI & Styling",
-        "2": "Development Tools",
-        "3": "Testing"
-      },
-      "v1SectionHeading": "Original V1 Technologies (Historical)",
-      "v1Description": "The original portfolio site was built with these technologies:",
-      "visitWebsiteAriaLabel": "Visit {{name}} website (opens in new tab)"
-    },
     "technologies": {
+      "heading": "Technologies",
       "intro": "This portfolio site has been rebuilt from the ground up. Here's what powers the current version:",
+      "visitWebsiteAriaLabel": "Visit {{name}} website (opens in new tab)",
       "categories": [
         {
           "label": "Framework & Runtime",
@@ -43,6 +33,47 @@
             {
               "name": "TypeScript",
               "description": "Static type checking for improved developer experience and code reliability."
+            },
+            {
+              "name": "i18next",
+              "description": "Internationalization library for managing multi-language support and localization."
+            },
+            {
+              "name": "JSDoc",
+              "description": "Documentation generation tool for creating API documentation from code comments."
+            },
+            {
+              "name": "Prettier",
+              "description": "Opinionated code formatter for consistent style."
+            }
+          ]
+        },
+        {
+          "label": "AI Assistance",
+          "items": [
+            {
+              "name": "Claude Code",
+              "description": "AI-powered coding assistant for pair programming, code review, and documentation."
+            },
+            {
+              "name": "Context7",
+              "description": "Documentation and code examples retrieval for up-to-date library and framework information."
+            },
+            {
+              "name": "GitHub MCP",
+              "description": "GitHub integration for repository operations, pull requests, and issue management."
+            },
+            {
+              "name": "Filesystem MCP",
+              "description": "Safe filesystem access for reading and writing files within allowed directories."
+            },
+            {
+              "name": "Sequential Thinking MCP",
+              "description": "Structured reasoning and problem-solving through step-by-step thought processes."
+            },
+            {
+              "name": "DeepL MCP",
+              "description": "AI-powered translation service for auto-translating content to multiple languages."
             }
           ]
         },
@@ -60,23 +91,6 @@
           ]
         },
         {
-          "label": "Development Tools",
-          "items": [
-            {
-              "name": "Claude Code",
-              "description": "AI-powered coding assistant for pair programming, code review, and documentation."
-            },
-            {
-              "name": "ESLint",
-              "description": "JavaScript/TypeScript linter for code quality and consistency."
-            },
-            {
-              "name": "Prettier",
-              "description": "Opinionated code formatter for consistent style."
-            }
-          ]
-        },
-        {
           "label": "Testing",
           "items": [
             {
@@ -86,6 +100,27 @@
             {
               "name": "React Testing Library",
               "description": "Testing utilities focused on user behavior rather than implementation details."
+            },
+            {
+              "name": "ESLint",
+              "description": "JavaScript/TypeScript linter for code quality and consistency."
+            }
+          ]
+        },
+        {
+          "label": "Infrastructure & Services",
+          "items": [
+            {
+              "name": "npm",
+              "description": "Package manager for installing and managing JavaScript dependencies."
+            },
+            {
+              "name": "GitHub Actions",
+              "description": "CI/CD automation platform for continuous integration and deployment workflows."
+            },
+            {
+              "name": "Husky",
+              "description": "Git hooks framework for automating code quality checks before commits."
             }
           ]
         }

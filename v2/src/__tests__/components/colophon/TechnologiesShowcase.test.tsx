@@ -27,10 +27,11 @@ function Wrapper({ children }: { children: ReactNode }) {
  */
 describe("TechnologiesShowcase", () => {
   const mockContent: TechnologiesContent = {
+    heading: "Technologies",
     intro: "This site uses the following technologies:",
     categories: [
       {
-        label: "Framework",
+        label: "Framework & Runtime",
         items: [
           {
             name: "Next.js",
@@ -45,7 +46,7 @@ describe("TechnologiesShowcase", () => {
         ],
       },
       {
-        label: "Styling",
+        label: "UI & Styling",
         items: [
           {
             name: "MUI",
@@ -56,7 +57,7 @@ describe("TechnologiesShowcase", () => {
       },
     ],
     v1: {
-      heading: "Original V1 Technologies",
+      heading: "Original V1 Technologies (Historical)",
       description: "The original site used these technologies",
       items: [
         {
@@ -118,7 +119,7 @@ describe("TechnologiesShowcase", () => {
     });
 
     const nextjsLink = screen.getByRole("link", {
-      name: /visit next\.js website/i,
+      name: /visit next\.js website \(opens in new tab\)/i,
     });
     expect(nextjsLink).toHaveAttribute("href", "https://nextjs.org");
     expect(nextjsLink).toHaveAttribute("target", "_blank");

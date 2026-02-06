@@ -254,6 +254,9 @@ export function ProjectLightbox({
    * This effect compares the current validIndex with the previous index stored in the ref.
    * When they differ, it determines the navigation direction and marks the component as animating.
    * The animation state is reset after the CSS animation completes (300ms).
+   *
+   * Uses setTimeout with 0 delay to defer the state update, avoiding synchronous setState
+   * within the effect which can cause cascading renders.
    */
   useEffect(() => {
     if (validIndex === null || previousIndexRef.current === null) {
@@ -261,18 +264,23 @@ export function ProjectLightbox({
       return;
     }
 
-    // Image has changed, start animation immediately
-    setIsAnimating(true);
+    // Schedule animation start on next microtask to avoid synchronous setState in effect
+    const startTimer = setTimeout(() => {
+      setIsAnimating(true);
+    }, 0);
 
     // Reset animation state after animation completes (300ms)
-    const timer = setTimeout(() => {
+    const resetTimer = setTimeout(() => {
       setIsAnimating(false);
       setDirection(null);
     }, 300);
 
     previousIndexRef.current = validIndex;
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(startTimer);
+      clearTimeout(resetTimer);
+    };
   }, [validIndex]);
 
   // Don't render if no valid index
