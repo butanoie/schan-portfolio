@@ -18,12 +18,15 @@ vi.mock("next/image", () => ({
   default: ({
     src,
     alt,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    priority,
     ...props
   }: {
     src: string;
     alt: string;
     width?: number;
     height?: number;
+    priority?: boolean;
   }) => {
     // eslint-disable-next-line @next/next/no-img-element
     return <img src={src} alt={alt} {...props} />;

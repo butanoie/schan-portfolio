@@ -8,7 +8,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ReactNode } from 'react';
 import { LanguageSwitcher } from '@/src/components/settings/LanguageSwitcher';
 import { LocaleProvider } from '@/src/components/i18n/LocaleProvider';
@@ -104,7 +104,9 @@ describe('LanguageSwitcher', () => {
       const frenchButton = screen.getByRole('button', { name: /fran[çc]ais/i });
 
       // Click French button
-      fireEvent.click(frenchButton);
+      await act(async () => {
+        fireEvent.click(frenchButton);
+      });
 
       await waitFor(() => {
         expect(frenchButton).toHaveAttribute('aria-pressed', 'true');
@@ -117,9 +119,12 @@ describe('LanguageSwitcher', () => {
 
       const frenchButton = screen.getByRole('button', { name: /fran[çc]ais/i });
 
-      await waitFor(() => {
-        expect(frenchButton).toHaveAttribute('aria-pressed', 'true');
-      });
+      await waitFor(
+        () => {
+          expect(frenchButton).toHaveAttribute('aria-pressed', 'true');
+        },
+        { timeout: 1000 }
+      );
     });
 
     it('should only allow one language to be selected at a time', async () => {
@@ -134,7 +139,9 @@ describe('LanguageSwitcher', () => {
       expect(frenchButton).toHaveAttribute('aria-pressed', 'false');
 
       // Click French
-      fireEvent.click(frenchButton);
+      await act(async () => {
+        fireEvent.click(frenchButton);
+      });
 
       await waitFor(() => {
         expect(englishButton).toHaveAttribute('aria-pressed', 'false');
@@ -151,7 +158,9 @@ describe('LanguageSwitcher', () => {
       render(<LanguageSwitcher onChange={onChangeMock} />, { wrapper: Wrapper });
 
       const frenchButton = screen.getByRole('button', { name: /fran[çc]ais/i });
-      fireEvent.click(frenchButton);
+      await act(async () => {
+        fireEvent.click(frenchButton);
+      });
 
       await waitFor(() => {
         expect(onChangeMock).toHaveBeenCalled();
@@ -177,7 +186,9 @@ describe('LanguageSwitcher', () => {
       render(<LanguageSwitcher onChange={onChangeMock} />, { wrapper: Wrapper });
 
       const frenchButton = screen.getByRole('button', { name: /fran[çc]ais/i });
-      fireEvent.click(frenchButton);
+      await act(async () => {
+        fireEvent.click(frenchButton);
+      });
 
       await waitFor(() => {
         expect(onChangeMock).toHaveBeenCalledTimes(1);
@@ -233,10 +244,14 @@ describe('LanguageSwitcher', () => {
       const frenchButton = screen.getByRole('button', { name: /fran[çc]ais/i });
 
       // Buttons should be focusable
-      englishButton.focus();
+      act(() => {
+        englishButton.focus();
+      });
       expect(document.activeElement).toBe(englishButton);
 
-      frenchButton.focus();
+      act(() => {
+        frenchButton.focus();
+      });
       expect(document.activeElement).toBe(frenchButton);
     });
   });

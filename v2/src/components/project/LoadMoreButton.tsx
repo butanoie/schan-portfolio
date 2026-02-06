@@ -130,7 +130,7 @@ export function LoadMoreButton({
         backgroundColor: NAV_COLORS.active,
         color: NAV_COLORS.text,
         fontFamily: '"Open Sans", sans-serif',
-        fontsize: { xs: "8pt", '@media (min-width: 760px)': "1rem" },
+        fontSize: { xs: "8pt", md: "10pt" },
         fontWeight: 600,
         textTransform: 'none',
         borderRadius: 1,

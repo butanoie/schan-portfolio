@@ -83,7 +83,11 @@ export function LocaleProvider({
 
     // Persist locale to cookie for server-side access
     // Expires in 365 days to persist user preference across sessions
-    document.cookie = `locale=${nextLocale}; max-age=31536000; path=/`;
+    // SameSite=Lax prevents CSRF attacks while allowing navigation
+    // Secure ensures cookie only sent over HTTPS in production
+    const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    const secureFlag = isSecure ? '; Secure' : '';
+    document.cookie = `locale=${nextLocale}; max-age=31536000; path=/; SameSite=Lax${secureFlag}`;
 
     // Sync with i18next, but ignore result if effect was cancelled
     i18next.changeLanguage(nextLocale).catch((err) => {
@@ -110,7 +114,11 @@ export function LocaleProvider({
     localStorage.setItem('locale', newLocale);
     // Persist locale to cookie for server-side access
     // Expires in 365 days to persist user preference across sessions
-    document.cookie = `locale=${newLocale}; max-age=31536000; path=/`;
+    // SameSite=Lax prevents CSRF attacks while allowing navigation
+    // Secure ensures cookie only sent over HTTPS in production
+    const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    const secureFlag = isSecure ? '; Secure' : '';
+    document.cookie = `locale=${newLocale}; max-age=31536000; path=/; SameSite=Lax${secureFlag}`;
     // Sync locale change with i18next
     // Note: We don't add cancellation token here since setLocaleState is synchronous
     // and the user explicitly requested this change
