@@ -35,6 +35,16 @@ export interface TechnologiesShowcaseProps {
  * @param props - Component props
  * @param props.tech - Technology data to display
  * @returns A card displaying the technology information
+ *
+ * @example
+ * ```tsx
+ * const tech = {
+ *   name: 'React',
+ *   description: 'A JavaScript library for building user interfaces with components',
+ *   url: 'https://react.dev'
+ * };
+ * <TechnologyCard tech={tech} />
+ * ```
  */
 function TechnologyCard({ tech }: { tech: Technology }) {
   const { mode } = useThemeContext();

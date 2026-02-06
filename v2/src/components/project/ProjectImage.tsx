@@ -115,7 +115,7 @@ export function ProjectImage({
         src={imageSrc}
         alt={image.caption}
         fill
-        sizes={size === "thumbnail" ? "100vw" : "100vw"}
+        sizes="100vw"
         priority={priority}
         onClick={onClick}
         onError={handleError}
