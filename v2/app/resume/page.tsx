@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Container, Box, Divider } from "@mui/material";
 import {
   ResumeHeader,
@@ -7,18 +8,9 @@ import {
   ClientList,
   ConferenceSpeaker,
 } from "../../src/components/resume";
-import { getResumeData } from "../../src/data/resume";
+import { getLocalizedResumeData } from "../../src/data/resume";
+import { useI18n } from "../../src/hooks/useI18n";
 import "./print.css";
-
-/**
- * Generate metadata for the resume page.
- * Uses data from resume.ts for consistent title and description.
- */
-export const metadata: Metadata = {
-  title: "Resume | Sing Chan's Portfolio",
-  description:
-    "Sing Chan's resume - 25+ years experience in UX, product management, and software development.",
-};
 
 /**
  * Resume page component.
@@ -36,10 +28,13 @@ export const metadata: Metadata = {
  * - Left: Header + Work Experience
  * - Right: Skills + Clients + Speaking
  *
+ * All content is localized to the user's preferred language (English or French).
+ *
  * @returns The complete resume page with print-friendly styling
  */
 export default function ResumePage() {
-  const data = getResumeData();
+  const { t } = useI18n();
+  const data = getLocalizedResumeData(t);
 
   return (
     <Container

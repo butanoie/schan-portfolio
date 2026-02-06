@@ -16,6 +16,7 @@ import type { TechnologiesContent, Technology } from "../../types/colophon";
 import { BRAND_COLORS } from "../../constants";
 import { getPaletteByMode } from "../../lib/themes";
 import { useThemeContext } from "../../contexts/ThemeContext";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the TechnologiesShowcase component.
@@ -38,6 +39,7 @@ export interface TechnologiesShowcaseProps {
 function TechnologyCard({ tech }: { tech: Technology }) {
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Card
@@ -74,7 +76,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               href={tech.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Visit ${tech.name} website (opens in new tab)`}
+              aria-label={t("colophon.technologiesShowcase.visitWebsiteAriaLabel", { variables: { name: tech.name }, ns: "pages" })}
               sx={{
                 color: palette.card.text,
                 "&:hover": {
@@ -118,9 +120,24 @@ function TechnologyCard({ tech }: { tech: Technology }) {
 export default function TechnologiesShowcase({
   content,
 }: TechnologiesShowcaseProps) {
-  const { intro, v2Categories, v1Technologies } = content;
+  const { intro, categories, v1 } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
+
+  /**
+   * Get localized category label for the given index.
+   * Maps category index to the corresponding translation key.
+   *
+   * @param index - The category index used to retrieve the translation key
+   * @returns The localized category label string
+   */
+  const getCategoryLabel = (index: number): string => {
+    return t(`colophon.technologiesShowcase.categoryLabels.${index}`, {
+      ns: "pages",
+      defaultValue: "",
+    });
+  };
 
   return (
     <Box
@@ -143,7 +160,7 @@ export default function TechnologiesShowcase({
           textAlign: "center"
         }}
       >
-        Technologies
+        {t("colophon.technologiesShowcase.heading", { ns: "pages" })}
       </Typography>
 
       <Typography
@@ -157,7 +174,7 @@ export default function TechnologiesShowcase({
       </Typography>
 
       {/* V2 Technologies by Category */}
-      {v2Categories.map((category) => (
+      {categories.map((category, index) => (
         <Box key={category.label} sx={{ mb: 4 }}>
           <Typography
             variant="h3"
@@ -169,7 +186,7 @@ export default function TechnologiesShowcase({
               mb: 2,
             }}
           >
-            { category.label }
+            {getCategoryLabel(index) || category.label}
           </Typography>
           <Box
             sx={{
@@ -182,7 +199,7 @@ export default function TechnologiesShowcase({
               gap: 2,
             }}
           >
-            {category.technologies.map((tech) => (
+            {category.items.map((tech) => (
               <TechnologyCard key={tech.name} tech={tech} />
             ))}
           </Box>
@@ -211,7 +228,7 @@ export default function TechnologiesShowcase({
               fontSize: "1.25rem",
             }}
           >
-            Original V1 Technologies (Historical)
+            {t("colophon.technologiesShowcase.v1SectionHeading", { ns: "pages" })}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -220,7 +237,7 @@ export default function TechnologiesShowcase({
             color="text.secondary"
             sx={{ mb: 2 }}
           >
-            The original portfolio site was built with these technologies:
+            {t("colophon.technologiesShowcase.v1Description", { ns: "pages" })}
           </Typography>
           <Box
             sx={{
@@ -233,7 +250,7 @@ export default function TechnologiesShowcase({
               gap: 2,
             }}
           >
-            {v1Technologies.map((tech) => (
+            {v1.items.map((tech) => (
               <TechnologyCard key={tech.name} tech={tech} />
             ))}
           </Box>

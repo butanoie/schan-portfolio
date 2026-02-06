@@ -5,6 +5,7 @@ import type { SpeakingContent } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { getPaletteByMode } from "../../lib/themes";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the ConferenceSpeaker component.
@@ -35,8 +36,9 @@ export default function ConferenceSpeaker({
   content,
 }: ConferenceSpeakerProps) {
   const { intro, events } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { t } = useI18n();
 
   return (
     <Box component="section" aria-labelledby="speaking-heading">
@@ -58,7 +60,7 @@ export default function ConferenceSpeaker({
             mb: 1.5,
           }}
         >
-          Conference Speaker
+          {t('resume.conferenceSpeaker.heading', { ns: 'pages' })}
         </Typography>
 
         {/* Intro Text */}

@@ -230,12 +230,105 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 - Use environment variables for sensitive data
 - Never commit secrets or API keys
 
+### Localization (i18n)
+**CRITICAL: All user-facing strings MUST be localized via the i18n system. No hardcoded strings in components.**
+
+- Use `useI18n()` hook for all UI text
+- Add new translation keys to `v2/src/lib/i18n.ts`
+- Supported languages: English (en), French (fr)
+- Auto-translate new strings using DeepL MCP
+- User's language preference is persisted to localStorage
+
+**See [LOCALIZATION.md](../docs/LOCALIZATION.md) for detailed localization workflow and best practices.**
+
 ## File Organization
 
 - Keep files focused and single-purpose
 - Use clear, descriptive file names
 - Group related files in directories
 - Maintain consistent directory structure
+
+## Infrastructure & Setup Documentation
+
+**Location:** All infrastructure and setup documentation goes in the `/docs` folder
+
+### Required Infrastructure Documentation
+
+Create comprehensive markdown files in `/docs` for all infrastructure, tools, and configuration:
+
+#### MCP (Model Context Protocol) Setup
+**File:** `docs/MCP_SETUP.md`
+
+Document:
+- **Purpose**: What MCP servers are available and what they do
+- **Installation**: Step-by-step setup instructions
+- **Configuration**: How to configure `.mcp.json` and environment variables
+- **Token Management**: How to obtain and manage API tokens
+- **Troubleshooting**: Common issues and solutions
+- **Security**: Best practices for handling secrets
+
+**Example sections:**
+- Available MCP Servers (with capabilities)
+- Getting Your Tokens (links to services)
+- Setting Up `.env` File
+- Environment Variable Loading
+- File Structure and Organization
+
+#### Development Setup
+**File:** `docs/DEVELOPMENT_SETUP.md` (if needed)
+
+Document:
+- Development environment prerequisites
+- Installation instructions
+- Configuration files and what they do
+- How to run development server
+- Environment variables required
+
+#### Localization & i18n
+**File:** `docs/LOCALIZATION.md` (already exists)
+
+Maintains documentation for:
+- Translation workflow
+- Adding new translation keys
+- Language support details
+- Auto-translation process
+
+### Security Guidelines for Documentation
+
+When documenting configuration and setup:
+
+✅ **DO Document:**
+- How to obtain tokens (links to official sources)
+- `.env.example` file locations and structure
+- Configuration file format and options
+- Error messages and troubleshooting
+- Security best practices
+
+❌ **NEVER Document:**
+- Actual token values
+- API keys or secrets
+- Hardcoded credentials
+- Private authentication details
+
+### Documentation File Standards
+
+Infrastructure documentation files should include:
+
+1. **Clear Overview** - What the system is and why it exists
+2. **Quick Start** - Get users started in 5 minutes
+3. **Detailed Setup** - Step-by-step instructions
+4. **Configuration Reference** - All available options
+5. **Troubleshooting** - Common issues and solutions
+6. **Security Notes** - Important security considerations
+7. **Related Documentation** - Links to other relevant docs
+
+### Keeping Documentation Updated
+
+- Update documentation when changing configuration
+- Update when adding new environment variables
+- Update when changing MCP setup or tools
+- Keep examples current with actual file structures
+- Review documentation during code reviews
 
 ## Commit Standards
 

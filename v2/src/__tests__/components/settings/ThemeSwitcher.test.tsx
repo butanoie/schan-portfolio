@@ -14,11 +14,12 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
+import { LocaleProvider } from "@/src/components/i18n/LocaleProvider";
 import { ThemeSwitcher } from "@/src/components/settings/ThemeSwitcher";
 
 /**
- * Render ThemeSwitcher wrapped in ThemeContextProvider.
- * Required for component to access useTheme hook.
+ * Render ThemeSwitcher wrapped in required providers.
+ * Required for component to access useTheme and useI18n hooks.
  *
  * @param props - Optional component props
  * @returns The rendered component
@@ -26,7 +27,9 @@ import { ThemeSwitcher } from "@/src/components/settings/ThemeSwitcher";
 function renderThemeSwitcher(props = {}) {
   return render(
     <ThemeContextProvider>
-      <ThemeSwitcher {...props} />
+      <LocaleProvider initialLocale="en">
+        <ThemeSwitcher {...props} />
+      </LocaleProvider>
     </ThemeContextProvider>
   );
 }
@@ -257,7 +260,9 @@ describe("ThemeSwitcher", () => {
     it("should apply custom className to root Box", () => {
       const { container } = render(
         <ThemeContextProvider>
-          <ThemeSwitcher className="custom-class" />
+          <LocaleProvider initialLocale="en">
+            <ThemeSwitcher className="custom-class" />
+          </LocaleProvider>
         </ThemeContextProvider>
       );
 

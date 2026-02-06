@@ -6,6 +6,7 @@ import { sanitizeDescriptionHtml } from "../../utils/sanitization";
 import type { ButaStoryContent } from "../../types/colophon";
 import { getPaletteByMode } from "../../lib/themes";
 import { useThemeContext } from "../../contexts/ThemeContext";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the ButaStory component.
@@ -36,6 +37,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
   const { paragraphs, versusImage, versusImageAlt } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
+  const { t } = useI18n();
 
   return (
     <Box component="section" aria-labelledby="buta-heading">
@@ -55,7 +57,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
           border: 0,
         }}
       >
-        The Story of Buta
+        {t("colophon.butaStory.heading", { ns: "pages" })}
       </Typography>
 
       {/* Boo vs Bu Image */}

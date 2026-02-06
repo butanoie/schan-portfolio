@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { getProjects } from '../lib/projectData';
+import { useLocale } from './useLocale';
 import type { ProjectsResponse, ProjectQueryOptions } from '../types';
 
 /**
@@ -26,19 +27,20 @@ export function useProjects(initialOptions: ProjectQueryOptions = {}) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   const [options, setOptions] = useState<ProjectQueryOptions>(initialOptions);
+  const { locale } = useLocale();
 
-  const fetchData = useCallback(() => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = getProjects(options);
+      const response = await getProjects({ ...options, locale });
       setData(response);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Unknown error'));
     } finally {
       setLoading(false);
     }
-  }, [options]);
+  }, [options, locale]);
 
   useEffect(() => {
     fetchData();

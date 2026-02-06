@@ -15,6 +15,6 @@ export interface PageDeckData {
   /** The page section heading text */
   heading: string;
 
-  /** V1-style deck paragraphs for the intro section */
-  deck: string[];
+  /** Introductory paragraphs for the page section */
+  paragraphs: string[];
 }

@@ -33,7 +33,7 @@ export interface PageDeckProps {
  * <PageDeck content={colophonData.about.pageDeck} />
  */
 export default function PageDeck({ content }: PageDeckProps) {
-  const { imageUrl, imageAlt, headingId, heading, deck } = content;
+  const { imageUrl, imageAlt, headingId, heading, paragraphs } = content;
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
 
@@ -75,7 +75,7 @@ export default function PageDeck({ content }: PageDeckProps) {
         {heading}
       </Typography>
 
-      {deck.map((paragraph, index) => (
+      {paragraphs.map((paragraph, index) => (
         <Typography
           key={index}
           variant="body1"

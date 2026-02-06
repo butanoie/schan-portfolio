@@ -1,8 +1,9 @@
-import { fetchProjects } from '../src/lib/projectDataServer';
-import { AsyncProjectsList } from '../src/components/project/AsyncProjectsList';
-import PageDeck from '../src/components/common/PageDeck';
-import { Container } from '@mui/material';
-import { portfolioData } from '../src/data/portfolio';
+import { cookies } from "next/headers";
+import { fetchProjects } from "../src/lib/projectDataServer";
+import { AsyncProjectsList } from "../src/components/project/AsyncProjectsList";
+import { LocalizedPortfolioDeck } from "../src/components/i18n/LocalizedPortfolioDeck";
+import { Container } from "@mui/material";
+import { getLocaleFromCookie } from "../src/lib/i18nServer";
 
 /**
  * Projects page displaying portfolio projects with asynchronous loading.
@@ -56,17 +57,18 @@ export default async function PortfolioPage() {
    * Fetch initial batch of projects server-side.
    * Fetching only 5 projects ensures fast initial page load.
    * User can load more projects on demand via AsyncProjectsList component.
+   *
+   * Get locale from user's cookie preference to serve localized content.
+   * Defaults to English if no preference is set.
    */
-  const { items } = await fetchProjects({ page: 1, pageSize: 5 });
+  const cookieStore = await cookies();
+  const locale = getLocaleFromCookie(cookieStore.toString());
+  const { items } = await fetchProjects({ page: 1, pageSize: 5, locale });
 
   return (
-    <Container
-      component="main"
-      role="article"
-      maxWidth="lg"
-    >
-      {/* Projects header with logo, name, and intro */}
-      <PageDeck content={portfolioData.pageDeck} />
+    <Container component="main" role="article" maxWidth="lg">
+      {/* Projects header with logo, name, and intro - uses localized content */}
+      <LocalizedPortfolioDeck />
 
       {/* Async projects list with progressive loading */}
       <AsyncProjectsList

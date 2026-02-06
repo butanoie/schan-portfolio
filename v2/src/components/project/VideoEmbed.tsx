@@ -4,6 +4,7 @@ import { Box, SxProps, Theme } from '@mui/material';
 import { useMemo } from 'react';
 import { isValidVideoId } from '../../types/typeGuards';
 import { SecurityError } from '../../utils/errors';
+import { useI18n } from '../../hooks';
 import type { ProjectVideo } from '../../types';
 
 /**
@@ -78,6 +79,8 @@ interface VideoEmbedProps {
  * />
  */
 export function VideoEmbed({ video, sx }: VideoEmbedProps) {
+  const { t } = useI18n();
+
   /**
    * Memoize the embed URL construction to avoid rebuilding on every render.
    * Validates the video ID before constructing the URL to prevent security issues.
@@ -119,7 +122,9 @@ export function VideoEmbed({ video, sx }: VideoEmbedProps) {
    * Determine video title for accessibility.
    * Provides context for screen reader users.
    */
-  const videoTitle = `${video.type === 'vimeo' ? 'Vimeo' : 'YouTube'} video player`;
+  const videoTitle = video.type === 'vimeo'
+    ? t('videoEmbed.vimeoPlayer', { ns: 'components' })
+    : t('videoEmbed.youtubePlayer', { ns: 'components' });
 
   return (
     <Box

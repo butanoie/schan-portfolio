@@ -1,7 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { ReactNode } from "react";
 import ColophonPage from "../../../../app/colophon/page";
 import { ThemeContextProvider } from "../../../../src/contexts/ThemeContext";
+import { LocaleProvider } from "../../../../src/components/i18n/LocaleProvider";
 
 /**
  * Mock Next.js Image component for testing.
@@ -16,12 +18,15 @@ vi.mock("next/image", () => ({
   default: ({
     src,
     alt,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    priority,
     ...props
   }: {
     src: string;
     alt: string;
     width?: number;
     height?: number;
+    priority?: boolean;
   }) => {
     // eslint-disable-next-line @next/next/no-img-element
     return <img src={src} alt={alt} {...props} />;
@@ -29,14 +34,18 @@ vi.mock("next/image", () => ({
 }));
 
 /**
- * Wrapper component to provide ThemeContext for testing.
+ * Wrapper component to provide ThemeContext and LocaleProvider for testing.
  *
  * @param props - Component props
  * @param props.children - Child elements to render within the context
- * @returns The children wrapped with ThemeContextProvider
+ * @returns The children wrapped with LocaleProvider and ThemeContextProvider
  */
-function Wrapper({ children }: { children: React.ReactNode }) {
-  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+function Wrapper({ children }: { children: ReactNode }) {
+  return (
+    <LocaleProvider initialLocale="en">
+      <ThemeContextProvider>{children}</ThemeContextProvider>
+    </LocaleProvider>
+  );
 }
 
 /**
@@ -102,8 +111,12 @@ describe("ColophonPage", () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Verify all four sections are present via their aria-labeled regions
-    expect(screen.getByRole("region", { name: /colophon/i })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /technologies/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /colophon/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /technologies/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /design/i })).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /buta/i })).toBeInTheDocument();
   });

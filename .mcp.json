@@ -5,8 +5,8 @@
       "args": ["-y", "@upstash/context7-mcp@latest"]
     },
     "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"]
+      "command": "/Users/buta/Documents/portfolio.singchan.com/scripts/mcp-launcher.sh",
+      "args": ["github"]
     },
     "filesystem": {
       "command": "npx",
@@ -15,6 +15,10 @@
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "deepl": {
+      "command": "/Users/buta/Documents/portfolio.singchan.com/scripts/mcp-launcher.sh",
+      "args": ["deepl"]
     }
   }
 }

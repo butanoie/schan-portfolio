@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Container, Divider } from "@mui/material";
-import {
-  TechnologiesShowcase,
-  DesignPhilosophy,
-  ButaStory,
-} from "../../src/components/colophon";
-import PageDeck from "../../src/components/common/PageDeck";
-import { getColophonData } from "../../src/data/colophon";
+import { Container } from "@mui/material";
+import ColophonContent from "../../src/components/colophon/ColophonContent";
 
 /**
  * Generate metadata for the colophon page.
- * Uses data from colophon.ts for consistent title and description.
+ * Uses hardcoded values in English as metadata must be generated on the server
+ * and cannot access i18n translation functions.
  */
 export const metadata: Metadata = {
   title: "Colophon | Sing Chan's Portfolio",
@@ -27,34 +22,14 @@ export const metadata: Metadata = {
  * - Design philosophy with color palette and typography
  * - The story of Buta, the portfolio mascot
  *
+ * Content is localized via ColophonContent client component.
+ *
  * @returns The complete colophon page
  */
 export default function ColophonPage() {
-  const data = getColophonData();
-
   return (
-    <Container
-      component="main"
-      role="article"
-      maxWidth="lg"
-    >
-      {/* About Section */}
-      <PageDeck content={data.pageDeck} />
-
-      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
-
-      {/* Technologies Section */}
-      <TechnologiesShowcase content={data.technologies} />
-
-      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
-
-      {/* Design Philosophy Section */}
-      <DesignPhilosophy content={data.designPhilosophy} />
-    
-      <Divider sx={{ my: 6, mx: { xs: 0, md: 8} }} />
-
-      {/* Buta Story Section */}
-      <ButaStory content={data.butaStory} />
+    <Container component="main" role="article" maxWidth="lg">
+      <ColophonContent />
     </Container>
   );
 }

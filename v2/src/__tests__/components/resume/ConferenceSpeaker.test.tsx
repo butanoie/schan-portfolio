@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import ConferenceSpeaker from "../../../components/resume/ConferenceSpeaker";
 import type { SpeakingContent } from "../../../types/resume";
 import { ThemeContextProvider } from "../../../contexts/ThemeContext";
+import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
 
 /**
  * Tests for the ConferenceSpeaker component.
@@ -10,14 +11,18 @@ import { ThemeContextProvider } from "../../../contexts/ThemeContext";
  */
 
 /**
- * Wrapper component that provides ThemeContext to tested components.
+ * Wrapper component that provides ThemeContext and LocaleProvider to tested components.
  *
  * @param props - Component props
- * @param props.children - Child components to render within the theme context
- * @returns The children wrapped with ThemeContextProvider
+ * @param props.children - Child components to render within the contexts
+ * @returns The children wrapped with LocaleProvider and ThemeContextProvider
  */
 function Wrapper({ children }: { children: React.ReactNode }) {
-  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+  return (
+    <LocaleProvider initialLocale="en">
+      <ThemeContextProvider>{children}</ThemeContextProvider>
+    </LocaleProvider>
+  );
 }
 describe("ConferenceSpeaker", () => {
   const mockContent: SpeakingContent = {

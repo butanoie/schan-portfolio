@@ -1,0 +1,210 @@
+{
+  "collabspaceDownloader": {
+    "title": "Collabware - Collabspace Export Downloader",
+    "desc": "<p>The Collabspace Export Downloader is a desktop application that enables users to securely download and manage Collabspace exports across multiple regions.</p><p>Users can pause, resume, or cancel downloads with state persistence across restarts, while progress tracking displays real-time status. Deep linking through magnet link protocols allows users to initiate downloads directly from external sources like email or Teams.</p><p>Built on .NET 9 and MAUI 9, the downloader emphasizes accessibility with WCAG 2.2 Level AA compliance, including keyboard navigation and screen reader support. It offers four-language localization and integrated auto-update management.</p><p>The timeline for this project was extremely short and the application was planned, developed, and tested by myself leveraging Claude Code within the span of a month.</p>",
+    "circa": "Winter 2025",
+    "captions": [
+      "Export Downloader - Download Progress (Light Mode)",
+      "Export Downloader - Download Progress (Dark Mode)",
+      "Export Downloader - Auto-Update Dialog",
+      "Export Downloader - Settings"
+    ]
+  },
+  "collabspace": {
+    "title": "Collabware - Collabspace",
+    "desc": "<p>Collabspace is a FedRAMP certified cloud-based records management automation solution that automates compliance activities to meet legislative and regulatory requirements.</p><p>The platform uses a no-code visual workflow system for designing retention and lifecycle policies, supporting both time and event-based retention with metadata-driven calculations.</p><p>It handles both electronic content (email, structured and unstructured data) and physical records with inventory control, circulation tracking, container management, and barcode capabilities.</p><p>Collabspace supports multi-stage disposition review processes to authorize record destruction, with event-based triggers for retention and disposition.</p>",
+    "circa": "Fall 2017 - Present",
+    "captions": [
+      "Collabspace - Analytics",
+      "Collabspace - Email Previews with Thread Navigation",
+      "Collabspace - Visual Workflow Designer",
+      "Collabspace - Document Preview with OCR",
+      "Collabspace - Aggregate Schema Designer",
+      "Collabspace - Advanced Search Builder",
+      "Collabspace - File Plan and Compliance Policy",
+      "Collabspace - Physical Records Library"
+    ]
+  },
+  "collabmail": {
+    "title": "Collabware - Collabmail",
+    "desc": "<p>Collabmail is a Microsoft Outlook add-in that integrates SharePoint directly into Outlook, providing drag-and-drop functionality for filing emails and attachments to SharePoint without switching applications. It supports SharePoint Server and SharePoint Online, allowing users to access libraries, view content, folders and metadata from their inbox.</p><p>Users can drag and drop emails, attachments, or both to SharePoint in bulk, and can also add SharePoint content to emails as attachments or links. Collabmail ensures compliance by prompting users to provide required metadata when filing content, a feature unavailable in standard Outlook, with bulk editing capabilities to reduce repetitive data entry.</p><p>Additional features include SharePoint file search from Outlook, automatic email metadata capture, and a favorites list for quick library access.</p>",
+    "circa": "Summer 2016 - Present",
+    "captions": [
+      "Collabmail - Add Attachments or Shared Links from SharePoint",
+      "Collabmail - Drag-and-drop Documents from Windows into SharePoint",
+      "Collabmail - Update SharePoint content metadata right within Outlook",
+      "Collabmail - Navigate and Search for Sharepoint content within Outlook"
+    ]
+  },
+  "collabwareCLM": {
+    "title": "Collabware - Content Lifecycle Management (CLM)",
+    "desc": "<p>Collabware CLM is a DoD 5015.2 certified solution that integrates natively with SharePoint Server, providing automated classification, retention, and disposition of content with centrally configured rules enforced globally across SharePoint.</p><p>The solution includes an Aggregates system for case management, visual lifecycle workflows for complex content behaviors, and a global content query system for advanced metadata searches with grid view sorting and filtering. It features an automatically managed bulk disposition review system with pre-defined or dynamic reviewer rules.</p><p>CLM manages physical, email, and electronic records with integrated case management, workflows, and search capabilities to ensure regulatory and legal compliance. The solution uses a no-code drag-and-drop experience requiring no new infrastructure while remaining transparent to users.</p>",
+    "circa": "Summer 2011 - Present",
+    "captions": [
+      "CLM - Physical Records Library",
+      "CLM - Record Categories Management",
+      "CLM - Disposition Approval List",
+      "CLM - Multilingual Text Input",
+      "CLM - Lifecycle Details Dialog",
+      "CLM - Storyboarding",
+      "CLM - Sketches for Mobile UI",
+      "CLM - User Stories"
+    ]
+  },
+  "vcInsite": {
+    "title": "Vancity - Insite",
+    "desc": "<p>Insite is the employee portal for Vancity, Canada's largest credit union. The portal is designed to engage employees, improve their business acumen and provide easy access to information on products and services to help them better serve members.</p><p>Content is aggregated and surfaced by topic, giving employees that have direct contact with members quick access to the information they need most frequently. This information is provided in the same friendly, accessible and conversational tone that staff use during their member interactions.</p><p>Insite was a finalist for the 2011 Microsoft Partner Network IMPACT Awards Portals and Collaboration category. Insite also received an honourable mention from the Intranet Innovation Awards for its Search Find-o-meter.</p>",
+    "circa": "Fall 2010",
+    "captions": [
+      "Insite - Home Page",
+      "Insite - Serving Members Mock-up",
+      "Insite - Search Results",
+      "Insite - Employee Profile"
+    ]
+  },
+  "servusCafe": {
+    "title": "Servus Credit Union - cafe",
+    "desc": "<p><em>cafe</em> is a crowdsourcing solution designed to empower employees to engage in open dialogue aimed at improving the organization and establishing a sense of community across Servus. Employees are given the opportunity to anonymously pose questions of interest and others can rate and respond to these questions.</p><p><em>cafe</em> also allows the executive team to respond to the top ideas and move appropriate items into a separate notes area. The executive leadership team can communicate on the status of each noted idea and employees can continue to comment on these items, fostering increased collaboration between the executive leadership team and the organization's employees.</p><p>Habanero Consulting Group was awarded Portals and Collaboration Solution of the Year at the 2010 Microsoft Partner Network IMPACT Awards for the work on <em>cafe</em>.</p>",
+    "circa": "Spring 2010",
+    "captions": [
+      "cafe - Posts Page Mock-up",
+      "cafe - New Post Dialog Mock-up"
+    ]
+  },
+  "devon": {
+    "title": "Devon Energy - Strata",
+    "desc": "<p>In the summer of 2009, Devon Energy updated their employee portal from flat HTML files and a collection of different web applications to a unified SharePoint 2007 platform. One of the project goals was for Habanero to ramp up Devon's internal development team on SharePoint development so that they would be able to further develop the portal on their own after the initial launch.</p><p>Over the course of six months the blended team worked across three different time zones. Habanero developers in Vancouver were paired with Devon developers, who were located in Oklahoma City, Houston and Calgary. I personally worked with two Devon developers and trained them on topics such as SharePoint development best practices, branding SharePoint, jQuery and advanced HTML/CSS techniques.</p>",
+    "circa": "Summer/Fall 2009",
+    "captions": [
+      "Strata - Home Page Mock-up",
+      "Strata - Tools and Reports Mock-up",
+      "Strata - Collaboration Team Site Mock-up",
+      "Strata - User Profile Mock-up"
+    ]
+  },
+  "spMisc": {
+    "title": "Other SharePoint 2007 and 2010 Projects",
+    "desc": "<p>These are screen shots and/or mock-ups for additional SharePoint 2007 and 2010 projects that I was involved with.</p>",
+    "circa": "2006 - 2012",
+    "captions": [
+      "Collabware - External Website - Summer 2010",
+      "FortisBC - External Website - Winter 2010",
+      "BC Hydro - Energy Managers Extranet - Winter 2009",
+      "Canadian Association of Petroleum Producers - External Website - Summer 2008",
+      "City of Calgary - Employee Portal - Spring 2008",
+      "GoldCorp - Company Intranet - Fall 2007",
+      "Certified General Accountants of Canada - PDNet - Fall 2007"
+    ]
+  },
+  "habExternal": {
+    "title": "Habanero Consulting Group - External Website",
+    "desc": "<p>The Habanero external website was a showcase for Habanero's experience and knowledge on SiteFinity customization.</p><p>An interesting user interface concept was the use of modals to spotlight and navigate related information based on author-defined scope without the user losing their original context.</p>",
+    "circa": "Winter 2008",
+    "captions": [
+      "HabaneroConsulting.com - Home Page",
+      "HabaneroConsulting.com - Projects Gallery",
+      "HabaneroConsulting.com - Project Modal",
+      "HabaneroConsulting.com - Employee Profile Modal"
+    ]
+  },
+  "cornerstone": {
+    "title": "SE Cornerstone Public School Division - Financial Reporting System",
+    "desc": "<p>Habanero developed a streamlined and easy-to-use financial reporting solution for the SE Cornerstone Public School District. A custom web interface with multi-step wizards replaced the complex Dynamics single page input forms for the most often used actions.</p><p>The solution was a finalist for the <a target=\"_blank\" href=\"https://mspartner.microsoft.com/en/ca/Pages/impact-award-finalists-2009.aspx\">2009 Microsoft Partner Network IMPACT Awards</a>' Finance (ERP) category.</p>",
+    "circa": "Fall 2008",
+    "captions": [
+      "Budget System - Home Page",
+      "Budget System - New Purchase Order, Step 1",
+      "Budget System - New Purchase Order, Step 2",
+      "Budget System - Deposit"
+    ]
+  },
+  "contosoriders": {
+    "title": "Microsoft - Contoso Riders Quick App",
+    "desc": "<p>Microsoft approached Habanero to create a membership application that provided a fresh user experience and demonstrated the use of Windows Live services for the development community as part of the <a target=\"_blank\" href=\"http://wlquickapps.codeplex.com/wikipage?title=Contoso%20Riders&referringTitle=Home&ProjectName=wlquickapps\">Windows Live Quick Applications</a> project on CodePlex.</p><p>The result was Contoso Riders, which leveraged the following Windows Live services:</p><ul class=\"disc\"><li>Windows Live ID Web Authentication</li><li>Windows Live Presence</li><li>Windows Live Messenger IM Control</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul><p>I was also asked to present Contoso Riders at Microsoft's EnergizeIT conference.</p>",
+    "circa": "Spring 2008",
+    "captions": [
+      "Contoso Riders - Home Page Mock-up",
+      "Contoso Riders - Events Page Mock-up",
+      "Contoso Riders - Speaking at EnergizeIT"
+    ]
+  },
+  "bpDashboard": {
+    "title": "Boston Pizza - Franchisee Dashboard",
+    "desc": "<p>The Franchisee Dashboard was an interactive display situated in the lobby of Boston Pizza's Richmond headquarters. Visitors could interact with the display and could view information for any of the Boston Pizza or Boston's Gourmet Pizza locations throughout North America.</p><p>The Dashboard is an example a projected that was not targeted at desktop browsers and used 10 foot and game user interface design principles. The original Franchisee Dashboard was controlled using a Nintendo Wii-mote, with subsequent versions using a gyroscopic mouse. Eventually a browser-based port was also developed that was accessible through Boston Pizza's intranet.</p>",
+    "circa": "Winter 2006",
+    "captions": [
+      "Franchisee Dashboard - Home Screen",
+      "Franchisee Dashboard - Map View",
+      "Franchisee Dashboard - List View",
+      "Franchisee Dashboard - Store Information"
+    ]
+  },
+  "holidayPuppet": {
+    "title": "Grey Holiday Puppet",
+    "desc": "<p>The Grey Holiday Puppet was a holiday greeting to Grey clients and friends. What began as a last minute project with extremely limited resources, time and budget turned into a viral hit which was featured on del.icio.us and MetaFilter and garnering visitors from as far off as France, Sweden and Russia.</p><p>The Holiday Puppet won numerous creative and design accolades including the 2005 Lotus Award for Best Self Promotion.</p><p class=\"needs-flash\">You can <a target=\"_blank\" href=\"http://holidaypuppet.singchan.com\" title=\"View the Grey Holiday Puppet site.\">view the project here</a>. Just a note, the link to the PDF is broken, but you can <a target=\"_blank\" href=\"http://holidaypuppet.singchan.com/greyholidaypuppet.pdf\">download the puppet here</a>. Enjoy!</p>",
+    "circa": "Winter 2005",
+    "captions": [
+      "Grey Holiday Puppet - Keep the Biscuits Out!",
+      "Grey Holiday Puppet - Hello, Mrs. Robinson.",
+      "Grey Holiday Puppet - Fat Fingers",
+      "Grey Holiday Puppet - The Nutcracker Cut-out"
+    ]
+  },
+  "quadrant": {
+    "title": "Quadrant Homes - External Website",
+    "desc": "<p>Quadrant Homes, the largest home builder in Washington state, had a simple assignment: make QuadrantHomes.com the best homebuilder web site in the United States. The redesign included interactive Flash-based tools allowing new prospects and purchasers to plan their new home.</p><p>The site has been met with praise from Quadrant employees, customers and realtor partners alike, resulting in increased interest list sign-ups, intent to purchase and sales numbers.</p>",
+    "circa": "Fall 2005",
+    "captions": [
+      "Quadrant Homes - Home Page Mock-up",
+      "Quadrant Homes - Build Your Home App",
+      "Quadrant Homes - Build Your Home App",
+      "Quadrant Homes - Community Page"
+    ]
+  },
+  "thatchcay": {
+    "title": "Thatch Cay",
+    "desc": "<p>Only half a mile off the northeastern coastline of St. Thomas, Thatch Cay is one of the last undeveloped, privately-held U.S. Virgin Islands.</p><p>I was originally contracted by <em>dsire</em> and Loca Lola Design Team to consult and assist in the development of this Flash-based website. When the original Flash developer left the project on short notice, I was able to take over development and successfully complete the site on schedule and meet all of the project goals.</p><p class=\"needs-flash\">You can <a target=\"_blank\" href=\"http://thatchcay.singchan.com\" title=\"View the Thatch Cay flash site.\">view the project here.</a></p>",
+    "circa": "Spring 2004",
+    "captions": [
+      "Thatch Cay - History",
+      "Thatch Cay - Vision",
+      "Thatch Cay - Possibilities",
+      "Thatch Cay - Location"
+    ]
+  },
+  "gi": {
+    "title": "Granville Island - External Website",
+    "desc": "<p>Granville Island is one of Vancouver's world renowned destination experiences.</p><p>GranvilleIsland.com was developed on top of Grey Vancouver's grASP CMS and included both HTML and, for-the-time, high-bandwidth Flash interfaces. The Flash web site included many discoverable interactive elements, videos and 360° panoramas.</p><p class=\"needs-flash\">You can <a target=\"_blank\" href=\"http://gi.singchan.com\" title=\"View the Granville Island Flash asssets.\">view some of the Flash elements here</a>. Please note the CMS is not implemented in this environment and the navigation and descriptive content will not be populated.</p>",
+    "circa": "Summer 2002",
+    "captions": [
+      "Granville Island - HTML Home Page",
+      "Granville Island - Flash Home Page",
+      "Granville Island - Eat and Drink",
+      "Granville Island - A Place for Kids"
+    ]
+  },
+  "ricksmith": {
+    "title": "Rick Smith - Portfolio Site",
+    "desc": "<p>Rick Smith's portfolio site is an example of a website for artists and photographers using a lightweight CMS which I developed. At the time, there were no inexpensive ASP and ASP.Net hosting solutions, so I developed the solution with PHP.</p><p>Due to the smaller-scale of these portfolio sites, I was able to experiment with effects and transitions using HTML and JavaScript instead of Flash.</p><p>Surpised that the DOM effects still work over a decade later, I've decided to put it back up <a target=\"_blank\" href=\"http://ricksmith.singchan.com\" title=\"View Rick Smith's portfolio site.\">for your viewing pleasure here</a>.</p>",
+    "circa": "Spring 2002",
+    "captions": [
+      "Rick Smith - Home Page",
+      "Rick Smith - About",
+      "Rick Smith - Working My Way Back",
+      "Rick Smith - Shaftebury Beer Web Site"
+    ]
+  },
+  "grasp": {
+    "title": "Grey Advertising - grASP Content Management System",
+    "desc": "<p>I co-developed grASP, a modular and extensible content management system allowing Grey Advertising Vancouver to quickly produce and deploy engaging and dynamic web solutions.</p>",
+    "circa": "2001 - 2006",
+    "captions": [
+      "BC Liquor Distribution Branch - 2000 to 2006",
+      "SISU Vitamins and Supplements - Spring 2004",
+      "Inhaus Flooring - Summer 2003",
+      "Ledcor Group of Companies - Spring 2003",
+      "ADT Security Canada - Winter 2002",
+      "Granville Island - Summer 2002"
+    ]
+  }
+}

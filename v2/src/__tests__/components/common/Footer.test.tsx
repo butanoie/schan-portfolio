@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../test-utils';
 import Footer from '../../../components/common/Footer';
 
 /**
@@ -39,6 +39,17 @@ vi.mock('next/navigation', () => ({
 }));
 
 /**
+ * Wrapper function for tests that need i18n context.
+ * Uses the test-utils render function which automatically provides LocaleProvider.
+ *
+ * @param component - React element to render with locale context
+ * @returns Render result from test-utils
+ */
+const renderWithLocale = (component: React.ReactElement) => {
+  return render(component);
+};
+
+/**
  * Tests for the Footer component.
  *
  * The Footer includes:
@@ -48,7 +59,7 @@ vi.mock('next/navigation', () => ({
  */
 describe('Footer', () => {
   it('should render navigation links', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
     expect(screen.getByRole('link', { name: /portfolio/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /résumé/i })).toBeInTheDocument();
@@ -56,16 +67,17 @@ describe('Footer', () => {
   });
 
   it('should render copyright information', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
-    expect(screen.getByText(/2013-\d{4} Sing Chan/)).toBeInTheDocument();
+    const currentYear = new Date().getFullYear();
+    expect(screen.getByText(new RegExp(`© ${currentYear} Sing Chan`))).toBeInTheDocument();
     expect(
       screen.getByText(/all trademarks are the property/i)
     ).toBeInTheDocument();
   });
 
   it('should render the Buta mascot image', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
     const butaImg = screen.getByAltText(/buta.*pig mascot/i);
     expect(butaImg).toBeInTheDocument();
@@ -73,7 +85,7 @@ describe('Footer', () => {
   });
 
   it('should render the thought bubble', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
     const thoughtBubble = screen.getByRole('img', {
       name: /buta's thought bubble/i,
@@ -83,7 +95,7 @@ describe('Footer', () => {
   });
 
   it('should have proper footer navigation accessibility', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
     const footerNav = screen.getByRole('navigation', {
       name: /footer navigation/i,
@@ -92,7 +104,7 @@ describe('Footer', () => {
   });
 
   it('should highlight the active page link', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
     // The mock returns '/colophon' as the pathname
     const colophonLink = screen.getByRole('link', { name: /colophon/i });
@@ -104,7 +116,7 @@ describe('Footer', () => {
   });
 
   it('should render navigation links with correct href attributes', () => {
-    render(<Footer />);
+    renderWithLocale(<Footer />);
 
     expect(screen.getByRole('link', { name: /portfolio/i })).toHaveAttribute(
       'href',

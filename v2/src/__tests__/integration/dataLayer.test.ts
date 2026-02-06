@@ -7,10 +7,10 @@ import { PROJECTS } from '../../data/projects';
  * Tests end-to-end workflows combining multiple functions.
  */
 describe('Data Layer Integration', () => {
-  it('should fetch and paginate projects correctly', () => {
-    const page1 = getProjects({ page: 1, pageSize: 6 });
-    const page2 = getProjects({ page: 2, pageSize: 6 });
-    const page3 = getProjects({ page: 3, pageSize: 6 });
+  it('should fetch and paginate projects correctly', async () => {
+    const page1 = await getProjects({ page: 1, pageSize: 6 });
+    const page2 = await getProjects({ page: 2, pageSize: 6 });
+    const page3 = await getProjects({ page: 3, pageSize: 6 });
 
     // Total should match across all pages
     expect(page1.total).toBe(page2.total);
@@ -21,19 +21,18 @@ describe('Data Layer Integration', () => {
     expect(allPagedItems.length).toBe(PROJECTS.length);
   });
 
-  it('should maintain data integrity through queries', () => {
-    const allProjects = getProjects({ pageSize: 100 });
+  it('should maintain data integrity through queries', async () => {
+    const allProjects = await getProjects({ pageSize: 100 });
 
     // Each project from query should match data file
-    allProjects.items.forEach((queriedProject) => {
-      const dataFileProject = getProjectById(queriedProject.id);
-
+    for (const queriedProject of allProjects.items) {
+      const dataFileProject = await getProjectById(queriedProject.id);
       expect(dataFileProject).toEqual(queriedProject);
-    });
+    }
   });
 
-  it('should filter and paginate together', () => {
-    const filtered = getProjects({ tags: ['C#'], pageSize: 3 });
+  it('should filter and paginate together', async () => {
+    const filtered = await getProjects({ tags: ['C#'], pageSize: 3 });
 
     expect(filtered.items.length).toBeLessThanOrEqual(3);
     filtered.items.forEach((project) => {
@@ -41,8 +40,8 @@ describe('Data Layer Integration', () => {
     });
   });
 
-  it('should search and filter together', () => {
-    const results = getProjects({
+  it('should search and filter together', async () => {
+    const results = await getProjects({
       search: 'SharePoint',
       tags: ['ASP.Net'],
       pageSize: 10,
@@ -58,9 +57,9 @@ describe('Data Layer Integration', () => {
     });
   });
 
-  it('should handle complex filtering scenarios', () => {
+  it('should handle complex filtering scenarios', async () => {
     // Get projects with multiple shared tags
-    const results = getProjects({
+    const results = await getProjects({
       tags: ['C#', 'ASP.Net'],
       page: 1,
       pageSize: 5,
@@ -72,16 +71,16 @@ describe('Data Layer Integration', () => {
     });
   });
 
-  it('should return consistent results for same query', () => {
-    const result1 = getProjects({ tags: ['C#'], pageSize: 10 });
-    const result2 = getProjects({ tags: ['C#'], pageSize: 10 });
+  it('should return consistent results for same query', async () => {
+    const result1 = await getProjects({ tags: ['C#'], pageSize: 10 });
+    const result2 = await getProjects({ tags: ['C#'], pageSize: 10 });
 
     expect(result1.total).toBe(result2.total);
     expect(result1.items).toEqual(result2.items);
   });
 
-  it('should handle edge case of no matching results', () => {
-    const results = getProjects({
+  it('should handle edge case of no matching results', async () => {
+    const results = await getProjects({
       tags: ['NonExistentTag123'],
       search: 'NonExistentSearch456',
     });

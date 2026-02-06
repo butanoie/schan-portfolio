@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
 import ThemeProvider from "@/src/components/ThemeProvider";
 import MainLayout from "@/src/components/common/MainLayout";
+import { LocaleProvider } from "@/src/components/i18n/LocaleProvider";
+import LocaleProviderErrorFallback from "@/src/components/i18n/LocaleProviderErrorFallback";
 
 export const metadata: Metadata = {
   title: "Sing Chan - Portfolio",
@@ -13,16 +15,17 @@ export const metadata: Metadata = {
 /**
  * Root layout component that wraps the entire application.
  *
- * Provides theme context, MUI theme provider, and main layout structure for all pages.
+ * Provides theme context, locale/i18n context, MUI theme provider, and main layout structure for all pages.
  *
  * Features:
+ * - LocaleProvider: Manages application locale and language
  * - ThemeContextProvider: Manages theme state and persistence
  * - EnhancedThemeProvider: Applies MUI theme based on current mode
  * - MainLayout: Global navigation and structure
  *
  * @param props - The component props
  * @param props.children - The page content to be rendered within the layout
- * @returns The complete HTML structure with theme and layout providers
+ * @returns The complete HTML structure with locale, theme, and layout providers
  */
 export default function RootLayout({
   children,
@@ -32,11 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeContextProvider>
-          <ThemeProvider>
-            <MainLayout>{children}</MainLayout>
-          </ThemeProvider>
-        </ThemeContextProvider>
+        <LocaleProviderErrorFallback>
+          <LocaleProvider initialLocale="en">
+            <ThemeContextProvider>
+              <ThemeProvider>
+                <MainLayout>{children}</MainLayout>
+              </ThemeProvider>
+            </ThemeContextProvider>
+          </LocaleProvider>
+        </LocaleProviderErrorFallback>
       </body>
     </html>
   );

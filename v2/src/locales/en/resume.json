@@ -1,0 +1,122 @@
+{
+  "resume": {
+    "pageTitle": "Resume | Sing Chan's Portfolio",
+    "pageDescription": "Sing Chan's resume - 25+ years experience in UX, product management, and software development.",
+    "title": "Résumé",
+    "description": "Professional background and experience",
+    "downloadPDF": "Download as PDF",
+    "sections": {
+      "workExperience": "Work Experience",
+      "coreCompetencies": "Core Competencies",
+      "notableClients": "Notable Clients",
+      "speakingEngagements": "Speaking Engagements"
+    },
+    "contact": {
+      "label": "Contact",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "header": {
+      "tagline": "I develop useful, intuitive, and engaging applications that better people's lives.",
+      "downloadLabel": "Download Résumé"
+    },
+    "workExperience": {
+      "heading": "Work Experience",
+      "keyContributions": "Key Contributions:",
+      "jobs": [
+        {
+          "company": "Collabware Systems",
+          "description": "My responsibilities as VP of Product were to drive product execution for Collabware's enterprise collaboration solutions. I led cross-functional UX and QA teams and integrated with cloud operations and engineering to deliver customer-centric features while optimizing operational efficiency.",
+          "contributions": [
+            "Requirements gathering with customers and stakeholders, translate business needs into actionable product features and roadmap priorities",
+            "Collaborate with engineering teams on product backlog definition and sprint planning",
+            "Manage quality assurance team to develop comprehensive test cases and automation frameworks to maintain product quality standards",
+            "Partner with cloud operations to monitor system health and ensure platform reliability",
+            "Led cost optimization initiative through systematic cloud infrastructure audits, identifying significant opportunities for expense reduction",
+            "Responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings",
+            "Mentor UX developers, fostering design excellence and cross-functional collaboration",
+            "Design and deliver product knowledge onboarding program for new Collabware team members"
+          ],
+          "roles": [
+            {
+              "title": "VP, Product",
+              "startDate": "May 2020",
+              "endDate": "Present"
+            },
+            {
+              "title": "Product Manager",
+              "startDate": "March 2018",
+              "endDate": "May 2020"
+            },
+            {
+              "title": "User Experience Architect",
+              "startDate": "August 2011",
+              "endDate": "Present"
+            }
+          ]
+        },
+        {
+          "company": "Habanero Consulting Group",
+          "description": "Hired as the first User Experience Developer in the organization to bridge the communication and process issues between design and development teams. Evangelized the value of the UX Developer role within Habanero and introduced front-end development process and patterns to remove pain points in the project lifecycle. On-boarded and mentored new UX Developers when they joined Habanero. Helped grow the number of front-end developers at Habanero to eight and also took on group management and resourcing responsibilities.",
+          "roles": [
+            {
+              "title": "User Experience Developer",
+              "startDate": "May 2006",
+              "endDate": "July 2011"
+            }
+          ]
+        },
+        {
+          "company": "Daniel Choi Design Associates",
+          "description": "Contracted to manage and lead development of interactive projects, from the database layer all the way up to the front-end, including security, testing, deployment and documentation.",
+          "roles": [
+            {
+              "title": "Lead Developer (Contract)",
+              "startDate": "2005",
+              "endDate": "2006"
+            }
+          ]
+        },
+        {
+          "company": "Local Lola Design Team (LLDT)",
+          "description": "Contracted to develop Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects. Consulted on interface design and provided programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution.",
+          "roles": [
+            {
+              "title": "Flash and User Experience Developer (Contract)",
+              "startDate": "2003",
+              "endDate": "2006"
+            }
+          ]
+        },
+        {
+          "company": "Grey Advertising Vancouver",
+          "description": "Developed grASP, a modular and extensible in-house CMS used on Grey projects from 2001 to 2006. Also developed and maintained Grey's external and internal web sites and applications. Took on role of Interactive Producer, with additional project management duties such as managing resources and project schedules, interacting and coordinating with outside developers, vendors and clients.",
+          "roles": [
+            {
+              "title": "Interactive Producer/Developer",
+              "startDate": "July 1999",
+              "endDate": "May 2006"
+            }
+          ]
+        }
+      ]
+    },
+    "skills": {
+      "coreCompetencies": "Core Competencies",
+      "everydayTools": "Everyday Tools",
+      "onceInAWhile": "Once in a While"
+    },
+    "clients": {
+      "heading": "Clients"
+    },
+    "conferenceSpeaker": {
+      "heading": "Conference Speaker",
+      "intro": "I have presented sessions at the following conferences:"
+    },
+    "meta": {
+      "title": "Résumé | Sing Chan's Portfolio",
+      "description": "Professional résumé of Sing Chan. VP Product at Collabware Systems with 25+ years of experience in product management, design, and technology.",
+      "keywords": "résumé, CV, product manager, experience, skills"
+    }
+  }
+}

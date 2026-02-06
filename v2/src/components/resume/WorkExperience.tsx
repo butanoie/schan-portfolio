@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import type { Job } from "../../types/resume";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { getPaletteByMode } from "../../lib/themes";
+import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the WorkExperience component.
@@ -31,8 +32,10 @@ export interface WorkExperienceProps {
  * <WorkExperience jobs={resumeData.jobs} />
  */
 export default function WorkExperience({ jobs }: WorkExperienceProps) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { mode, isMounted } = useThemeContext();
+  // Use light theme during SSR/hydration to match ThemeProvider
+  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { t } = useI18n();
 
   return (
     <Box
@@ -50,7 +53,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           mb: 3,
         }}
       >
-        Work Experience
+        {t('resume.workExperience.heading', { ns: 'pages' })}
       </Typography>
 
       {jobs.map((job, jobIndex) => (
@@ -145,7 +148,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                   fontSize: { xs: "0.95rem", md: "1rem" },
                 }}
               >
-                Key Contributions:
+                {t('resume.workExperience.keyContributions', { ns: 'pages' })}
               </Typography>
               <Box
                 component="ul"
@@ -157,7 +160,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                     mb: 0.75,
                     lineHeight: 1.6,
                     color: palette.text.primary,
-                    fontSize: { xs: "0.9rem", md: "0.95rem" },
+                    fontSize: { xs: "0.9rem", md: "1rem" },
                   },
                 }}
               >

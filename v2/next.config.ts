@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     // No external image domains needed for v2 (all images are local)
 
     // Image formats to support (Next.js will automatically convert to WebP/AVIF)
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
 
     // Device sizes for responsive images (aligned with Material-UI breakpoints)
     // xs: 640, sm: 768, md: 900, lg: 1024, xl: 1200, 2xl: 1536, 3xl: 1920, 4xl: 2560

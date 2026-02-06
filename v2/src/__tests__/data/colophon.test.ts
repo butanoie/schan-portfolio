@@ -33,10 +33,10 @@ describe('Colophon Data', () => {
     });
 
     it('should have deck paragraphs', () => {
-      expect(Array.isArray(pageDeck.deck)).toBe(true);
-      expect(pageDeck.deck.length).toBeGreaterThan(0);
+      expect(Array.isArray(pageDeck.paragraphs)).toBe(true);
+      expect(pageDeck.paragraphs.length).toBeGreaterThan(0);
 
-      pageDeck.deck.forEach((paragraph) => {
+      pageDeck.paragraphs.forEach((paragraph) => {
         expect(paragraph).toBeTruthy();
       });
     });
@@ -54,15 +54,15 @@ describe('Colophon Data', () => {
     });
 
     it('should have V2 technology categories', () => {
-      expect(Array.isArray(technologies.v2Categories)).toBe(true);
-      expect(technologies.v2Categories.length).toBeGreaterThan(0);
+      expect(Array.isArray(technologies.categories)).toBe(true);
+      expect(technologies.categories.length).toBeGreaterThan(0);
 
-      technologies.v2Categories.forEach((category) => {
+      technologies.categories.forEach((category) => {
         expect(category.label).toBeTruthy();
-        expect(Array.isArray(category.technologies)).toBe(true);
-        expect(category.technologies.length).toBeGreaterThan(0);
+        expect(Array.isArray(category.items)).toBe(true);
+        expect(category.items.length).toBeGreaterThan(0);
 
-        category.technologies.forEach((tech) => {
+        category.items.forEach((tech) => {
           expect(tech.name).toBeTruthy();
           expect(tech.description).toBeTruthy();
         });
@@ -70,18 +70,19 @@ describe('Colophon Data', () => {
     });
 
     it('should have V1 technologies for historical context', () => {
-      expect(Array.isArray(technologies.v1Technologies)).toBe(true);
-      expect(technologies.v1Technologies.length).toBeGreaterThan(0);
+      expect(technologies.v1).toBeDefined();
+      expect(Array.isArray(technologies.v1.items)).toBe(true);
+      expect(technologies.v1.items.length).toBeGreaterThan(0);
 
-      technologies.v1Technologies.forEach((tech) => {
+      technologies.v1.items.forEach((tech) => {
         expect(tech.name).toBeTruthy();
         expect(tech.description).toBeTruthy();
       });
     });
 
     it('should include expected V2 technologies', () => {
-      const allV2Techs = technologies.v2Categories.flatMap((c) =>
-        c.technologies.map((t) => t.name)
+      const allV2Techs = technologies.categories.flatMap((c) =>
+        c.items.map((t) => t.name)
       );
 
       expect(allV2Techs).toContain('Next.js 16');
@@ -90,7 +91,7 @@ describe('Colophon Data', () => {
     });
 
     it('should include expected V1 technologies', () => {
-      const v1TechNames = technologies.v1Technologies.map((t) => t.name);
+      const v1TechNames = technologies.v1.items.map((t) => t.name);
 
       expect(v1TechNames).toContain('Gumby Framework');
       expect(v1TechNames).toContain('jQuery');

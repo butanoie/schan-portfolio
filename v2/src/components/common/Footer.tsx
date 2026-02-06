@@ -10,13 +10,14 @@ import { usePathname } from "next/navigation";
 import { BRAND_COLORS, UI_COLORS, NAV_COLORS } from "../../constants";
 import { useProjectLoading } from "../../contexts/ProjectLoadingContext";
 import { LoadMoreButton } from "../project/LoadMoreButton";
+import { useI18n } from "@/src/hooks/useI18n";
 
 /**
  * Navigation link configuration for the footer.
  */
 interface NavLink {
-  /** Display label for the link */
-  label: string;
+  /** Translation key for the link label */
+  labelKey: string;
   /** URL path for the link */
   href: string;
   /** Icon component to display */
@@ -141,14 +142,15 @@ function ThoughtBubble({ children, ariaLabel}: ThoughtBubbleProps) {
 export default function Footer() {
   const pathname = usePathname();
   const loadingContext = useProjectLoading();
+  const { t } = useI18n();
 
   /**
    * Navigation links for the footer.
    */
   const navLinks: NavLink[] = [
-    { label: "Portfolio", href: "/", icon: <HomeIcon /> },
-    { label: "Résumé", href: "/resume", icon: <DescriptionIcon /> },
-    { label: "Colophon", href: "/colophon", icon: <InfoIcon /> },
+    { labelKey: "nav.portfolio", href: "/", icon: <HomeIcon /> },
+    { labelKey: "nav.resume", href: "/resume", icon: <DescriptionIcon /> },
+    { labelKey: "nav.colophon", href: "/colophon", icon: <InfoIcon /> },
   ];
 
 
@@ -225,7 +227,7 @@ export default function Footer() {
         {/* Thought Bubble or Load More Button - positioned above Buta */}
         {/* Only show thought bubbles on non-home pages, or Load More/All Loaded states on home page */}
         {pathname !== '/' && (
-          <ThoughtBubble ariaLabel="Buta's thought bubble saying: Pork products FTW!">
+          <ThoughtBubble ariaLabel={`Buta's thought bubble saying: ${t('footer.butaThought')}`}>
             <Typography
               sx={{
                 fontFamily: '"Gochi Hand", cursive',
@@ -236,7 +238,7 @@ export default function Footer() {
                 },
               }}
             >
-              Pork products FTW!
+              {t('footer.butaThought')}
             </Typography>
           </ThoughtBubble>
         )}
@@ -255,7 +257,7 @@ export default function Footer() {
 
         {/* Home page Completion Thought Bubble */}
         {pathname === '/' && loadingContext && loadingContext.isHomePage && loadingContext.allLoaded && (
-          <ThoughtBubble ariaLabel="All projects loaded!">
+          <ThoughtBubble ariaLabel={t('footer.allProjectsLoaded')}>
             <Typography sx={{
                 fontFamily: '"Gochi Hand", cursive',
                 margin: 0,
@@ -263,7 +265,7 @@ export default function Footer() {
                 "@media (min-width: 760px)": {
                   fontSize: "1.125rem",
                 },
-              }}>All projects loaded!</Typography>
+              }}>{t('footer.allProjectsLoaded')}</Typography>
             <Typography
               sx={{
                 fontFamily: '"Gochi Hand", cursive',
@@ -273,7 +275,7 @@ export default function Footer() {
                   fontSize: "1.125rem",
                 },
               }}
-            >Thanks for coming by!</Typography>
+            >{t('footer.thankYou')}</Typography>
           </ThoughtBubble>
         )}
       </Container>
@@ -343,7 +345,7 @@ export default function Footer() {
                     },
                   }}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Button>
               ))}
             </Box>
@@ -358,9 +360,9 @@ export default function Footer() {
                 py: 1.25,
               }}
             >
-              2013-{CURRENT_YEAR} Sing Chan
+              {t('footer.copyright', { year: CURRENT_YEAR })}
               <br />
-              All trademarks are the property of their respective owners.
+              {t('footer.trademarks')}
             </Typography>
           </Box>
         </Container>
