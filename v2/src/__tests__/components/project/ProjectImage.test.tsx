@@ -32,6 +32,8 @@ vi.mock('next/image', () => ({
     onLoad,
     onError,
     placeholder,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    blurDataURL,
     ...rest
   }: {
     src: string;
