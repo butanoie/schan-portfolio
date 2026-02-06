@@ -111,6 +111,9 @@ export function ProjectLightbox({
   onNext,
 }: ProjectLightboxProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const previousIndexRef = useRef<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { t } = useI18n();
 
@@ -132,23 +135,27 @@ export function ProjectLightbox({
 
   /**
    * Navigates to the previous image in the gallery.
+   * Sets direction state to 'prev' for animation triggering.
    * Delegates navigation to parent via onPrevious callback.
    * The parent is responsible for implementing circular navigation logic.
    */
   const handlePrevious = useCallback(() => {
     if (validIndex === null || images.length <= 1) return;
     setIsLoading(true);
+    setDirection('prev');
     onPrevious();
   }, [validIndex, images.length, onPrevious]);
 
   /**
    * Navigates to the next image in the gallery.
+   * Sets direction state to 'next' for animation triggering.
    * Delegates navigation to parent via onNext callback.
    * The parent is responsible for implementing circular navigation logic.
    */
   const handleNext = useCallback(() => {
     if (validIndex === null || images.length <= 1) return;
     setIsLoading(true);
+    setDirection('next');
     onNext();
   }, [validIndex, images.length, onNext]);
 
@@ -242,6 +249,32 @@ export function ProjectLightbox({
     };
   }, [validIndex]);
 
+  /**
+   * Detects when the selected image index changes and triggers directional animations.
+   * This effect compares the current validIndex with the previous index stored in the ref.
+   * When they differ, it determines the navigation direction and marks the component as animating.
+   * The animation state is reset after the CSS animation completes (300ms).
+   */
+  useEffect(() => {
+    if (validIndex === null || previousIndexRef.current === null) {
+      previousIndexRef.current = validIndex;
+      return;
+    }
+
+    // Image has changed, start animation immediately
+    setIsAnimating(true);
+
+    // Reset animation state after animation completes (300ms)
+    const timer = setTimeout(() => {
+      setIsAnimating(false);
+      setDirection(null);
+    }, 300);
+
+    previousIndexRef.current = validIndex;
+
+    return () => clearTimeout(timer);
+  }, [validIndex]);
+
   // Don't render if no valid index
   if (validIndex === null || images.length === 0) {
     return null;
@@ -266,6 +299,25 @@ export function ProjectLightbox({
   const showNavigation = images.length > 1;
 
   /**
+   * Image wrapper styling with responsive constraints and directional animations.
+   * Limits maximum dimensions to prevent overflow on different screen sizes.
+   * Uses overflow: hidden to contain animations and prevent layout shifts from scrollbar changes.
+   * Applies slide animations based on navigation direction (next/prev).
+   */
+  const imageWrapperSx: SxProps<Theme> = {
+    position: "relative",
+    overflow: "hidden",
+    willChange: isAnimating ? "transform" : "auto",
+    width: { xs: "90vw", sm: "85vw", md: "80vw" },
+    maxWidth: "1200px",
+    height: { xs: "60vh", sm: "70vh", md: "75vh" },
+    maxHeight: "800px",
+    ...(isAnimating && direction && validIndex !== null && {
+      animation: `${direction === 'next' ? 'slideInFromRight' : 'slideInFromLeft'} 300ms ease-out`,
+    }),
+  };
+
+  /**
    * Container styling for the lightbox image display.
    * Uses flexbox to center the image within the viewport.
    */
@@ -276,18 +328,6 @@ export function ProjectLightbox({
     justifyContent: "center",
     gap: 2,
     padding: { xs: 2, md: 3 },
-  };
-
-  /**
-   * Image wrapper styling with responsive constraints.
-   * Limits maximum dimensions to prevent overflow on different screen sizes.
-   */
-  const imageWrapperSx: SxProps<Theme> = {
-    position: "relative",
-    width: { xs: "90vw", sm: "85vw", md: "80vw" },
-    maxWidth: "1200px",
-    height: { xs: "60vh", sm: "70vh", md: "75vh" },
-    maxHeight: "800px",
   };
 
   /**
@@ -320,6 +360,7 @@ export function ProjectLightbox({
       slotProps={{
         paper: {
           sx: {
+            overflow: "hidden",
             backgroundColor: "rgba(0, 0, 0, 0.9)",
             boxShadow: "none",
             margin: 0,
@@ -364,7 +405,6 @@ export function ProjectLightbox({
         {/* Image Wrapper */}
         <Box sx={imageWrapperSx}>
           <Image
-            key={validIndex}
             src={currentImage.url}
             alt={currentImage.caption}
             fill

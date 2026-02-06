@@ -125,6 +125,100 @@
   }
 }
 
+/**
+ * Slide-out-left animation with fade.
+ * Element moves from center to left while fading out.
+ * Used for: Lightbox image exit animations (going to next)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-in
+ */
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+}
+
+/**
+ * Slide-out-right animation with fade.
+ * Element moves from center to right while fading out.
+ * Used for: Lightbox image exit animations (going to previous)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-in
+ */
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+}
+
+/**
+ * Slide-in-from-right animation with fade.
+ * Element moves from right to center while fading in.
+ * Used for: Lightbox image entrance animations (going to next)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Slide-in-from-left animation with fade.
+ * Element moves from left to center while fading in.
+ * Used for: Lightbox image entrance animations (going to previous)
+ * Distance: 100vw | Duration: 300ms | Easing: ease-out
+ */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================================
+   Lightbox Animation Utility Classes
+   ============================================================================ */
+
+/**
+ * Lightbox slide-in from right animation with proper fill mode.
+ * Used for next button navigation in the lightbox.
+ * Uses will-change to optimize for GPU acceleration and prevent layout shifts.
+ * The forwards fill mode preserves the final animation state.
+ */
+.animate-lightbox-slide-in-right {
+  will-change: transform, opacity;
+  animation: slideInFromRight 300ms ease-out forwards;
+}
+
+/**
+ * Lightbox slide-in from left animation with proper fill mode.
+ * Used for previous button navigation in the lightbox.
+ * Uses will-change to optimize for GPU acceleration and prevent layout shifts.
+ * The forwards fill mode preserves the final animation state.
+ */
+.animate-lightbox-slide-in-left {
+  will-change: transform, opacity;
+  animation: slideInFromLeft 300ms ease-out forwards;
+}
+
 /* ============================================================================
    Scale Animations
    ============================================================================ */
