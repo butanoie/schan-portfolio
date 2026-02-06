@@ -31,6 +31,12 @@ vi.mock('../../../hooks', async () => {
   const actual = await vi.importActual('../../../hooks');
   return {
     ...actual,
+    /**
+     * Mock useScrollAnimation hook for testing.
+     * Returns a simple mock ref and isInView state for animation testing.
+     *
+     * @returns Mock scroll animation hook with ref and isInView state
+     */
     useScrollAnimation: () => ({
       ref: { current: null },
       isInView: true,
@@ -50,9 +56,8 @@ describe('ProjectsList', () => {
     {
       id: 'project-1',
       title: 'Project One',
-      slug: 'project-one',
-      description: 'First test project',
-      content: '<p>Content</p>',
+      desc: '<p>First test project</p>',
+      circa: 'Spring 2024',
       tags: ['React', 'TypeScript'],
       images: [
         {
@@ -61,16 +66,14 @@ describe('ProjectsList', () => {
           caption: 'Image 1',
         },
       ],
-      links: [],
-      featured: true,
-      publishedDate: new Date('2024-01-01'),
+      videos: [],
+      altGrid: false,
     },
     {
       id: 'project-2',
       title: 'Project Two',
-      slug: 'project-two',
-      description: 'Second test project',
-      content: '<p>Content</p>',
+      desc: '<p>Second test project</p>',
+      circa: 'Summer 2024',
       tags: ['Next.js', 'Node.js'],
       images: [
         {
@@ -79,16 +82,14 @@ describe('ProjectsList', () => {
           caption: 'Image 1',
         },
       ],
-      links: [],
-      featured: false,
-      publishedDate: new Date('2024-02-01'),
+      videos: [],
+      altGrid: false,
     },
     {
       id: 'project-3',
       title: 'Project Three',
-      slug: 'project-three',
-      description: 'Third test project',
-      content: '<p>Content</p>',
+      desc: '<p>Third test project</p>',
+      circa: 'Fall 2024',
       tags: ['Python'],
       images: [
         {
@@ -97,9 +98,8 @@ describe('ProjectsList', () => {
           caption: 'Image 1',
         },
       ],
-      links: [],
-      featured: true,
-      publishedDate: new Date('2024-03-01'),
+      videos: [],
+      altGrid: false,
     },
   ];
 

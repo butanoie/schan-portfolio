@@ -20,6 +20,8 @@ vi.mock('next/image', () => ({
    * @param props.priority - Whether image is high priority
    * @param props.onLoad - Callback when image loads
    * @param props.onError - Callback when image fails to load
+   * @param props.placeholder - Placeholder strategy for image loading
+   * @param props.blurDataURL - Blurred image data URL for lazy loading
    * @returns Mock img element with test attributes
    */
   default: ({
@@ -30,7 +32,6 @@ vi.mock('next/image', () => ({
     onLoad,
     onError,
     placeholder,
-    blurDataURL,
     ...rest
   }: {
     src: string;
@@ -200,7 +201,7 @@ describe('ProjectImage', () => {
      */
     it('error fallback persists and continues to show error state', () => {
       const { rerender } = render(<ProjectImage image={mockImage} />);
-      let image = screen.getByTestId('mock-image');
+      const image = screen.getByTestId('mock-image');
 
       fireEvent.error(image);
       rerender(<ProjectImage image={mockImage} />);
@@ -409,7 +410,7 @@ describe('ProjectImage', () => {
      */
     it('works with all props combined', () => {
       const onClick = vi.fn();
-      const { container } = render(
+      render(
         <ProjectImage
           image={mockImage}
           size="full"
