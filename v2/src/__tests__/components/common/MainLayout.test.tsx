@@ -7,7 +7,7 @@
  * @module MainLayout.test
  */
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import MainLayout from "../../../components/common/MainLayout";
 import { usePathname } from "next/navigation";
@@ -286,7 +286,9 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
       </MainLayout>
     );
 
-    await testAccessibility({ container } as unknown as Parameters<typeof testAccessibility>[0]);
+    await act(async () => {
+      await testAccessibility({ container } as unknown as Parameters<typeof testAccessibility>[0]);
+    });
   });
 
   /**

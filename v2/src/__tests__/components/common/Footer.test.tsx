@@ -7,7 +7,7 @@
  * @module Footer.test
  */
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import Footer from "../../../components/common/Footer";
 import { usePathname } from "next/navigation";
@@ -208,7 +208,9 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
   it("should pass axe accessibility audit", async () => {
     const { container } = render(<Footer />);
 
-    await testAccessibility({ container } as unknown as Parameters<typeof testAccessibility>[0]);
+    await act(async () => {
+      await testAccessibility({ container } as unknown as Parameters<typeof testAccessibility>[0]);
+    });
   });
 
   /**

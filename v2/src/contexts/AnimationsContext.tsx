@@ -45,6 +45,12 @@ const AnimationsContext = createContext<AnimationsContextType | undefined>(
 const ANIMATIONS_STORAGE_KEY = "portfolio-animations-enabled";
 
 /**
+ * Valid animation preference values stored as strings in localStorage.
+ * Used for validating localStorage values to prevent invalid states.
+ */
+const VALID_ANIMATION_VALUES = new Set<string>(["true", "false"]);
+
+/**
  * Provider component that manages animations state.
  *
  * Features:
@@ -69,10 +75,21 @@ export function AnimationsContextProvider({ children }: { children: ReactNode })
     if (typeof window === "undefined") {
       return true;
     }
-    const saved = localStorage.getItem(ANIMATIONS_STORAGE_KEY);
+    const savedRaw = localStorage.getItem(ANIMATIONS_STORAGE_KEY);
     // If nothing saved, default to true (animations enabled)
-    // If saved, parse as boolean ("true" -> true, "false" -> false)
-    return saved === null ? true : saved === "true";
+    // If saved, validate it's a valid value before parsing
+    if (savedRaw === null) {
+      return true;
+    }
+    if (VALID_ANIMATION_VALUES.has(savedRaw)) {
+      return savedRaw === "true";
+    }
+    // If invalid value found in localStorage, reset to default and log warning
+    console.warn(
+      `Invalid animations preference "${savedRaw}" found in localStorage. Resetting to default.`
+    );
+    localStorage.removeItem(ANIMATIONS_STORAGE_KEY);
+    return true;
   });
 
   const [isMounted, setIsMounted] = useState(false);

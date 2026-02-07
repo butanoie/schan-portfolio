@@ -48,6 +48,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const THEME_STORAGE_KEY = "portfolio-theme-mode";
 
 /**
+ * Valid theme modes.
+ * Used for validating localStorage values to prevent invalid states.
+ */
+const VALID_THEMES: ThemeMode[] = ["light", "dark", "highContrast"];
+
+/**
  * Apply theme to document element and update meta tags.
  *
  * @param themeMode - Theme mode to apply
@@ -104,7 +110,12 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
       return "light";
     }
     const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null;
+    const savedRaw = localStorage.getItem(THEME_STORAGE_KEY);
+    // Validate that saved theme is a valid theme mode before using it
+    const saved =
+      savedRaw && VALID_THEMES.includes(savedRaw as ThemeMode)
+        ? (savedRaw as ThemeMode)
+        : null;
     return saved || (darkModeQuery.matches ? "dark" : "light");
   });
 
@@ -126,7 +137,12 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return;
 
     // Apply theme to document immediately
-    const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null;
+    const savedRaw = localStorage.getItem(THEME_STORAGE_KEY);
+    // Validate that saved theme is a valid theme mode before using it
+    const saved =
+      savedRaw && VALID_THEMES.includes(savedRaw as ThemeMode)
+        ? (savedRaw as ThemeMode)
+        : null;
     const currentMode = saved || mode;
     applyTheme(currentMode);
 
