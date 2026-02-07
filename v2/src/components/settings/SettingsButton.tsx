@@ -138,27 +138,57 @@ export function SettingsButton({
     <>
       {/* Settings Icon Button */}
       <Tooltip title={t("settings.openSettings")}>
-        <IconButton
-          onClick={handleOpen}
-          aria-label={t("settings.openSettings")}
-          aria-expanded={open}
-          aria-controls={popoverId}
-          disabled={disabled}
-          size={size}
-          className={className}
-          sx={{
-            color: palette.text.primary,
-            transition: animationsEnabled ? "color 150ms ease-in-out" : "none",
-            "&:hover": {
-              color: BRAND_COLORS.maroon,
-            },
-            "@media (prefers-reduced-motion: reduce)": {
-              transition: "none",
-            },
-          }}
-        >
-          <SettingsIcon />
-        </IconButton>
+        {disabled ? (
+          <span>
+            <IconButton
+              onClick={handleOpen}
+              aria-label={t("settings.openSettings")}
+              aria-expanded={open}
+              aria-controls={popoverId}
+              disabled={disabled}
+              size={size}
+              className={className}
+              sx={{
+                color: palette.text.primary,
+                transition: animationsEnabled
+                  ? "color 150ms ease-in-out"
+                  : "none",
+                "&:hover": {
+                  color: BRAND_COLORS.maroon,
+                },
+                "@media (prefers-reduced-motion: reduce)": {
+                  transition: "none",
+                },
+              }}
+            >
+              <SettingsIcon />
+            </IconButton>
+          </span>
+        ) : (
+          <IconButton
+            onClick={handleOpen}
+            aria-label={t("settings.openSettings")}
+            aria-expanded={open}
+            aria-controls={popoverId}
+            disabled={disabled}
+            size={size}
+            className={className}
+            sx={{
+              color: palette.text.primary,
+              transition: animationsEnabled
+                ? "color 150ms ease-in-out"
+                : "none",
+              "&:hover": {
+                color: BRAND_COLORS.maroon,
+              },
+              "@media (prefers-reduced-motion: reduce)": {
+                transition: "none",
+              },
+            }}
+          >
+            <SettingsIcon />
+          </IconButton>
+        )}
       </Tooltip>
 
       {/* Settings Popover */}

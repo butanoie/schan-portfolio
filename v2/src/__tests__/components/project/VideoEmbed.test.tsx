@@ -1,7 +1,12 @@
+import { render as rtlRender } from '@testing-library/react';
 import { render } from '../../test-utils';
 import { VideoEmbed } from '../../../components/project/VideoEmbed';
 import type { ProjectVideo } from '../../../types';
 import { describe, it, expect } from 'vitest';
+import { LocaleProvider } from '../../../components/i18n/LocaleProvider';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
+import { AnimationsContextProvider } from '../../../contexts/AnimationsContext';
+import ThemeProvider from '../../../components/ThemeProvider';
 
 /**
  * Test suite for VideoEmbed component.
@@ -112,6 +117,12 @@ describe('VideoEmbed', () => {
   /**
    * Test: Throws error for unsupported video type
    */
+  /**
+   * Test: Throws error for unsupported video type.
+   *
+   * Verifies that the component throws an error when an unsupported video type is provided.
+   * Uses a minimal wrapper without the error boundary to allow errors to propagate.
+   */
   it('throws error for unsupported video type', () => {
     const invalidVideo = {
       type: 'dailymotion' as never,
@@ -120,8 +131,27 @@ describe('VideoEmbed', () => {
       height: 720,
     };
 
+    /**
+     * Minimal wrapper without error boundary to allow errors to propagate.
+     *
+     * @param root0 - The wrapper props object
+     * @param root0.children - The React nodes to wrap with providers
+     * @returns The wrapped component with necessary providers applied
+     */
+    function MinimalWrapper({ children }: { children: React.ReactNode }) {
+      return (
+        <LocaleProvider initialLocale="en">
+          <ThemeContextProvider>
+            <AnimationsContextProvider>
+              <ThemeProvider>{children}</ThemeProvider>
+            </AnimationsContextProvider>
+          </ThemeContextProvider>
+        </LocaleProvider>
+      );
+    }
+
     expect(() => {
-      render(<VideoEmbed video={invalidVideo} />);
+      rtlRender(<VideoEmbed video={invalidVideo} />, { wrapper: MinimalWrapper });
     }).toThrow();
   });
 

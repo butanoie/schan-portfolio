@@ -1,19 +1,46 @@
 import '@testing-library/jest-dom';
+import 'vitest-axe/extend-expect';
 import { cleanup } from '@testing-library/react';
-import { afterEach, beforeAll } from 'vitest';
+import { afterEach, beforeAll, expect } from 'vitest';
+import { configureAxe } from 'vitest-axe';
+import * as matchers from 'vitest-axe/matchers';
 
 /**
  * Vitest setup file that runs before each test file.
  *
  * This file:
  * - Imports jest-dom matchers for enhanced DOM assertions
+ * - Configures vitest-axe matchers for accessibility testing
  * - Configures automatic cleanup after each test
  * - Sets up global test environment
  * - Mocks window.matchMedia for useReducedMotion hook
+ * - Configures axe-core for accessibility testing
  *
  * Note: i18next is initialized in the test environment detection within
  * i18next-config.ts which uses inline resources for testing.
  */
+
+/**
+ * Extend Vitest's expect with vitest-axe matchers for accessibility testing.
+ */
+expect.extend(matchers);
+
+/**
+ * Configure axe-core for accessibility testing.
+ *
+ * This enables comprehensive WCAG 2.2 Level AA compliance testing across all tests.
+ * Key rules enabled:
+ * - region: Ensures proper landmark structure
+ * - color-contrast: WCAG 1.4.3 color contrast requirements
+ * - landmark-one-main: Ensures single main landmark
+ */
+configureAxe({
+  rules: {
+    region: { enabled: true },
+    'color-contrast': { enabled: true },
+    'landmark-one-main': { enabled: true },
+  },
+});
 
 /**
  * Mock window.matchMedia for media query testing.

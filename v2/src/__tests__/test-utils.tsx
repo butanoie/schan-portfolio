@@ -2,8 +2,8 @@
  * Custom test utilities for rendering React components with required providers.
  *
  * Provides a custom render function that automatically wraps components with
- * LocaleProvider and other necessary context providers to ensure tests run
- * in an environment matching the actual application.
+ * all necessary context providers to ensure tests run in an environment matching
+ * the actual application.
  *
  * Also ensures i18next is initialized with all translation resources for testing.
  *
@@ -13,6 +13,10 @@
 import { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { LocaleProvider } from '@/src/components/i18n/LocaleProvider';
+import LocaleProviderErrorFallback from '@/src/components/i18n/LocaleProviderErrorFallback';
+import { ThemeContextProvider } from '@/src/contexts/ThemeContext';
+import { AnimationsContextProvider } from '@/src/contexts/AnimationsContext';
+import ThemeProvider from '@/src/components/ThemeProvider';
 import { type Locale } from '@/src/lib/i18n';
 
 // Import i18next configuration to ensure it's initialized with resources
@@ -21,8 +25,12 @@ import '@/src/lib/i18next-config';
 /**
  * Custom render function that wraps components with required providers.
  *
- * This function automatically wraps the component with:
+ * This function automatically wraps the component with all necessary providers:
+ * - LocaleProviderErrorFallback: Error boundary for locale provider
  * - LocaleProvider: Provides i18n context to components using useI18n
+ * - ThemeContextProvider: Provides theme context to components using useTheme
+ * - AnimationsContextProvider: Provides animations context to components using useAnimations
+ * - ThemeProvider: Applies MUI theme based on current mode
  *
  * @param ui - The React element to render
  * @param options - Additional render options from @testing-library/react
@@ -50,14 +58,30 @@ export function renderWithProviders(
 ) {
   /**
    * Wrapper component that provides all necessary contexts.
-   * Wraps the component with LocaleProvider to enable i18n functionality.
+   *
+   * Wraps components with:
+   * - LocaleProviderErrorFallback: Error boundary for locale provider
+   * - LocaleProvider: Enables i18n functionality
+   * - ThemeContextProvider: Enables theme switching
+   * - AnimationsContextProvider: Enables animations toggle
+   * - ThemeProvider: Applies MUI theme
    *
    * @param params - The wrapper parameters
    * @param params.children - The React node(s) to wrap with providers
    * @returns The wrapped component with all necessary providers applied
    */
   function Wrapper({ children }: { children: React.ReactNode }) {
-    return <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>;
+    return (
+      <LocaleProviderErrorFallback>
+        <LocaleProvider initialLocale={initialLocale}>
+          <ThemeContextProvider>
+            <AnimationsContextProvider>
+              <ThemeProvider>{children}</ThemeProvider>
+            </AnimationsContextProvider>
+          </ThemeContextProvider>
+        </LocaleProvider>
+      </LocaleProviderErrorFallback>
+    );
   }
 
   return render(ui, { wrapper: Wrapper, ...renderOptions });
