@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import 'vitest-axe/extend-expect';
 import { cleanup } from '@testing-library/react';
-import { afterEach, beforeAll, expect } from 'vitest';
+import { afterEach, beforeAll, expect, vi } from 'vitest';
 import { configureAxe } from 'vitest-axe';
 import * as matchers from 'vitest-axe/matchers';
 
@@ -74,6 +74,55 @@ beforeAll(() => {
     writable: true,
     value: mockMatchMedia,
   });
+});
+
+/**
+ * Mock HTMLCanvasElement.getContext for icon rendering in tests.
+ *
+ * Some icon libraries and MUI components may attempt to use canvas for
+ * rendering. This mock prevents errors in jsdom environments where canvas
+ * is either not implemented or throws errors.
+ */
+beforeAll(() => {
+  /**
+   * Mock implementation of canvas getContext method.
+   *
+   * @param contextId - The context type (e.g., "2d")
+   * @returns A mock canvas context object with common drawing methods
+   */
+  HTMLCanvasElement.prototype.getContext = vi.fn(
+    (contextId: string) => {
+      if (contextId === '2d') {
+        return {
+          fillRect: vi.fn(),
+          clearRect: vi.fn(),
+          getImageData: vi.fn(() => ({ data: [] })),
+          putImageData: vi.fn(),
+          createImageData: vi.fn(() => ({ data: [] })),
+          setTransform: vi.fn(),
+          drawImage: vi.fn(),
+          save: vi.fn(),
+          fillText: vi.fn(),
+          restore: vi.fn(),
+          beginPath: vi.fn(),
+          moveTo: vi.fn(),
+          lineTo: vi.fn(),
+          closePath: vi.fn(),
+          stroke: vi.fn(),
+          translate: vi.fn(),
+          scale: vi.fn(),
+          rotate: vi.fn(),
+          arc: vi.fn(),
+          fill: vi.fn(),
+          measureText: vi.fn(() => ({ width: 0 })),
+          transform: vi.fn(),
+          rect: vi.fn(),
+          clip: vi.fn(),
+        } as unknown as CanvasRenderingContext2D;
+      }
+      return null;
+    }
+  ) as unknown as HTMLCanvasElement['getContext'];
 });
 
 /**
@@ -224,6 +273,41 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
   writable: true,
 });
+
+/**
+ * Suppress MUI sx kebab-case warnings in tests.
+ *
+ * MUI's sx validator warns about kebab-case in media query strings, but this is
+ * a known limitation of using custom breakpoints. The warning doesn't affect
+ * functionality, so we suppress it to keep test output clean.
+ */
+(() => {
+  /**
+   * Checks if a warning message should be suppressed.
+   *
+   * @param message - The warning message to check
+   * @returns True if the message matches suppression criteria
+   */
+  const shouldSuppressWarning = (message: unknown) => {
+    const text = String(message);
+    return text.includes('Using kebab-case for css properties in objects is not supported');
+  };
+
+  const originalWarn = console.warn;
+  const originalError = console.error;
+
+  console.warn = vi.fn((...args: unknown[]) => {
+    if (!shouldSuppressWarning(args[0])) {
+      originalWarn.apply(console, args as []);
+    }
+  });
+
+  console.error = vi.fn((...args: unknown[]) => {
+    if (!shouldSuppressWarning(args[0])) {
+      originalError.apply(console, args as []);
+    }
+  });
+})();
 
 /**
  * Cleanup after each test to prevent memory leaks and test pollution.

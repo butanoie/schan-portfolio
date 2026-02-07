@@ -137,8 +137,10 @@ export function LoadMoreButton({
         textTransform: 'none',
         borderRadius: 1,
         boxShadow: 0,
-        px: { xs: 0.5, '@media (min-width: 760px)': 2 },
-        py: { xs: 0.5, '@media (min-width: 760px)': 1 },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        px: { xs: 0.5, '@media (min-width: 760px)': 2 } as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        py: { xs: 0.5, '@media (min-width: 760px)': 1 } as any,
         minWidth: "95%",
         minHeight: 'unset',
 
