@@ -43,7 +43,7 @@ export const colophonData: ColophonData = {
 
     categories: [
       {
-        label: 'Framework & Runtime',
+        label: 'Core Stack',
         items: [
           {
             name: 'Next.js 16',
@@ -63,6 +63,11 @@ export const colophonData: ColophonData = {
               'Static type checking for improved developer experience and code reliability.',
             url: 'https://www.typescriptlang.org/',
           },
+        ],
+      },
+      {
+        label: 'Development Experience',
+        items: [
           {
             name: 'i18next',
             description:
@@ -77,13 +82,25 @@ export const colophonData: ColophonData = {
           },
           {
             name: 'Prettier',
-            description: 'Opinionated code formatter for consistent style.',
+            description: 'Opinionated code formatter for consistent code style.',
             url: 'https://prettier.io/',
+          },
+          {
+            name: 'ESLint',
+            description:
+              'JavaScript/TypeScript linter for code quality and consistency.',
+            url: 'https://eslint.org/',
+          },
+          {
+            name: 'Husky',
+            description:
+              'Git hooks framework for automating code quality checks before commits.',
+            url: 'https://typicode.github.io/husky/',
           },
         ],
       },
       {
-        label: 'AI Assistance',
+        label: 'AI-Powered Development',
         items: [
           {
             name: 'Claude Code',
@@ -141,7 +158,7 @@ export const colophonData: ColophonData = {
         ],
       },
       {
-        label: 'Testing',
+        label: 'Testing & Quality Assurance',
         items: [
           {
             name: 'Vitest',
@@ -156,15 +173,21 @@ export const colophonData: ColophonData = {
             url: 'https://testing-library.com/react',
           },
           {
-            name: 'ESLint',
+            name: 'axe-core',
             description:
-              'JavaScript/TypeScript linter for code quality and consistency.',
-            url: 'https://eslint.org/',
+              'Accessibility testing engine for automated WCAG 2.2 compliance validation.',
+            url: 'https://www.deque.com/axe/core/',
+          },
+          {
+            name: 'vitest-axe',
+            description:
+              'Vitest integration for accessibility testing within unit test suite.',
+            url: 'https://github.com/nickcolley/vitest-axe',
           },
         ],
       },
       {
-        label: 'Infrastructure & Services',
+        label: 'Deployment & CI/CD',
         items: [
           {
             name: 'npm',
@@ -177,12 +200,6 @@ export const colophonData: ColophonData = {
             description:
               'CI/CD automation platform for continuous integration and deployment workflows.',
             url: 'https://github.com/features/actions',
-          },
-          {
-            name: 'Husky',
-            description:
-              'Git hooks framework for automating code quality checks before commits.',
-            url: 'https://typicode.github.io/husky/',
           },
         ],
       },
@@ -381,55 +398,35 @@ export function getLocalizedColophonData(
               description: t('colophon.technologies.categories.0.items.2.description', { ns: 'pages' }),
               url: 'https://www.typescriptlang.org/',
             },
-            {
-              name: 'i18next',
-              description: t('colophon.technologies.categories.0.items.3.description', { ns: 'pages' }),
-              url: 'https://www.i18next.com/',
-            },
-            {
-              name: 'JSDoc',
-              description: t('colophon.technologies.categories.0.items.4.description', { ns: 'pages' }),
-              url: 'https://jsdoc.app/',
-            },
-            {
-              name: 'Prettier',
-              description: t('colophon.technologies.categories.0.items.5.description', { ns: 'pages' }),
-              url: 'https://prettier.io/',
-            },
           ],
         },
         {
           label: t('colophon.technologies.categories.1.label', { ns: 'pages' }),
           items: [
             {
-              name: 'Claude Code',
+              name: 'i18next',
               description: t('colophon.technologies.categories.1.items.0.description', { ns: 'pages' }),
-              url: 'https://claude.ai/',
+              url: 'https://www.i18next.com/',
             },
             {
-              name: 'Context7',
+              name: 'JSDoc',
               description: t('colophon.technologies.categories.1.items.1.description', { ns: 'pages' }),
-              url: 'https://context7.io/',
+              url: 'https://jsdoc.app/',
             },
             {
-              name: 'GitHub MCP',
+              name: 'Prettier',
               description: t('colophon.technologies.categories.1.items.2.description', { ns: 'pages' }),
-              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/github',
+              url: 'https://prettier.io/',
             },
             {
-              name: 'Filesystem MCP',
+              name: 'ESLint',
               description: t('colophon.technologies.categories.1.items.3.description', { ns: 'pages' }),
-              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem',
+              url: 'https://eslint.org/',
             },
             {
-              name: 'Sequential Thinking MCP',
+              name: 'Husky',
               description: t('colophon.technologies.categories.1.items.4.description', { ns: 'pages' }),
-              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/sequential-thinking',
-            },
-            {
-              name: 'DeepL MCP',
-              description: t('colophon.technologies.categories.1.items.5.description', { ns: 'pages' }),
-              url: 'https://www.deepl.com/',
+              url: 'https://typicode.github.io/husky/',
             },
           ],
         },
@@ -437,14 +434,34 @@ export function getLocalizedColophonData(
           label: t('colophon.technologies.categories.2.label', { ns: 'pages' }),
           items: [
             {
-              name: 'Material UI (MUI)',
+              name: 'Claude Code',
               description: t('colophon.technologies.categories.2.items.0.description', { ns: 'pages' }),
-              url: 'https://mui.com/',
+              url: 'https://claude.ai/',
             },
             {
-              name: 'Emotion',
+              name: 'Context7',
               description: t('colophon.technologies.categories.2.items.1.description', { ns: 'pages' }),
-              url: 'https://emotion.sh/',
+              url: 'https://context7.io/',
+            },
+            {
+              name: 'GitHub MCP',
+              description: t('colophon.technologies.categories.2.items.2.description', { ns: 'pages' }),
+              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/github',
+            },
+            {
+              name: 'Filesystem MCP',
+              description: t('colophon.technologies.categories.2.items.3.description', { ns: 'pages' }),
+              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem',
+            },
+            {
+              name: 'Sequential Thinking MCP',
+              description: t('colophon.technologies.categories.2.items.4.description', { ns: 'pages' }),
+              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/sequential-thinking',
+            },
+            {
+              name: 'DeepL MCP',
+              description: t('colophon.technologies.categories.2.items.5.description', { ns: 'pages' }),
+              url: 'https://www.deepl.com/',
             },
           ],
         },
@@ -452,19 +469,14 @@ export function getLocalizedColophonData(
           label: t('colophon.technologies.categories.3.label', { ns: 'pages' }),
           items: [
             {
-              name: 'Vitest',
+              name: 'Material UI (MUI)',
               description: t('colophon.technologies.categories.3.items.0.description', { ns: 'pages' }),
-              url: 'https://vitest.dev/',
+              url: 'https://mui.com/',
             },
             {
-              name: 'React Testing Library',
+              name: 'Emotion',
               description: t('colophon.technologies.categories.3.items.1.description', { ns: 'pages' }),
-              url: 'https://testing-library.com/react',
-            },
-            {
-              name: 'ESLint',
-              description: t('colophon.technologies.categories.3.items.2.description', { ns: 'pages' }),
-              url: 'https://eslint.org/',
+              url: 'https://emotion.sh/',
             },
           ],
         },
@@ -472,19 +484,39 @@ export function getLocalizedColophonData(
           label: t('colophon.technologies.categories.4.label', { ns: 'pages' }),
           items: [
             {
-              name: 'npm',
+              name: 'Vitest',
               description: t('colophon.technologies.categories.4.items.0.description', { ns: 'pages' }),
+              url: 'https://vitest.dev/',
+            },
+            {
+              name: 'React Testing Library',
+              description: t('colophon.technologies.categories.4.items.1.description', { ns: 'pages' }),
+              url: 'https://testing-library.com/react',
+            },
+            {
+              name: 'axe-core',
+              description: t('colophon.technologies.categories.4.items.2.description', { ns: 'pages' }),
+              url: 'https://www.deque.com/axe/core/',
+            },
+            {
+              name: 'vitest-axe',
+              description: t('colophon.technologies.categories.4.items.3.description', { ns: 'pages' }),
+              url: 'https://github.com/nickcolley/vitest-axe',
+            },
+          ],
+        },
+        {
+          label: t('colophon.technologies.categories.5.label', { ns: 'pages' }),
+          items: [
+            {
+              name: 'npm',
+              description: t('colophon.technologies.categories.5.items.0.description', { ns: 'pages' }),
               url: 'https://www.npmjs.com/',
             },
             {
               name: 'GitHub Actions',
-              description: t('colophon.technologies.categories.4.items.1.description', { ns: 'pages' }),
+              description: t('colophon.technologies.categories.5.items.1.description', { ns: 'pages' }),
               url: 'https://github.com/features/actions',
-            },
-            {
-              name: 'Husky',
-              description: t('colophon.technologies.categories.4.items.2.description', { ns: 'pages' }),
-              url: 'https://typicode.github.io/husky/',
             },
           ],
         },

@@ -149,10 +149,12 @@ describe("ColophonPage", () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for V2 technology category headings
-    expect(screen.getByText("Framework & Runtime")).toBeInTheDocument();
-    expect(screen.getByText("AI Assistance")).toBeInTheDocument();
+    expect(screen.getByText("Core Stack")).toBeInTheDocument();
+    expect(screen.getByText("Development Experience")).toBeInTheDocument();
+    expect(screen.getByText("AI-Powered Development")).toBeInTheDocument();
     expect(screen.getByText("UI & Styling")).toBeInTheDocument();
-    expect(screen.getByText("Testing")).toBeInTheDocument();
+    expect(screen.getByText("Testing & Quality Assurance")).toBeInTheDocument();
+    expect(screen.getByText("Deployment & CI/CD")).toBeInTheDocument();
   });
 
   it("should render the V1 technologies accordion", () => {

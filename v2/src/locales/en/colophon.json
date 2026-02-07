@@ -20,7 +20,7 @@
       "visitWebsiteAriaLabel": "Visit {{name}} website (opens in new tab)",
       "categories": [
         {
-          "label": "Framework & Runtime",
+          "label": "Core Stack",
           "items": [
             {
               "name": "Next.js 16",
@@ -33,7 +33,12 @@
             {
               "name": "TypeScript",
               "description": "Static type checking for improved developer experience and code reliability."
-            },
+            }
+          ]
+        },
+        {
+          "label": "Development Experience",
+          "items": [
             {
               "name": "i18next",
               "description": "Internationalization library for managing multi-language support and localization."
@@ -44,12 +49,20 @@
             },
             {
               "name": "Prettier",
-              "description": "Opinionated code formatter for consistent style."
+              "description": "Opinionated code formatter for consistent code style."
+            },
+            {
+              "name": "ESLint",
+              "description": "JavaScript/TypeScript linter for code quality and consistency."
+            },
+            {
+              "name": "Husky",
+              "description": "Git hooks framework for automating code quality checks before commits."
             }
           ]
         },
         {
-          "label": "AI Assistance",
+          "label": "AI-Powered Development",
           "items": [
             {
               "name": "Claude Code",
@@ -91,7 +104,7 @@
           ]
         },
         {
-          "label": "Testing",
+          "label": "Testing & Quality Assurance",
           "items": [
             {
               "name": "Vitest",
@@ -102,13 +115,17 @@
               "description": "Testing utilities focused on user behavior rather than implementation details."
             },
             {
-              "name": "ESLint",
-              "description": "JavaScript/TypeScript linter for code quality and consistency."
+              "name": "axe-core",
+              "description": "Accessibility testing engine for automated WCAG 2.2 compliance validation."
+            },
+            {
+              "name": "vitest-axe",
+              "description": "Vitest integration for accessibility testing within unit test suite."
             }
           ]
         },
         {
-          "label": "Infrastructure & Services",
+          "label": "Deployment & CI/CD",
           "items": [
             {
               "name": "npm",
@@ -117,10 +134,6 @@
             {
               "name": "GitHub Actions",
               "description": "CI/CD automation platform for continuous integration and deployment workflows."
-            },
-            {
-              "name": "Husky",
-              "description": "Git hooks framework for automating code quality checks before commits."
             }
           ]
         }

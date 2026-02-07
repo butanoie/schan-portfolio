@@ -20,7 +20,7 @@
       "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)",
       "categories": [
         {
-          "label": "Cadre et environnement d'exécution",
+          "label": "Pile technologique fondamentale",
           "items": [
             {
               "name": "Next.js 16",
@@ -33,7 +33,12 @@
             {
               "name": "TypeScript",
               "description": "Vérification statique des types pour améliorer l'expérience du développeur et la fiabilité du code."
-            },
+            }
+          ]
+        },
+        {
+          "label": "Expérience de développement",
+          "items": [
             {
               "name": "i18next",
               "description": "Bibliothèque d'internationalisation pour gérer le support multilingue et la localisation."
@@ -45,11 +50,19 @@
             {
               "name": "Prettier",
               "description": "Formateur de code pour un style cohérent."
+            },
+            {
+              "name": "ESLint",
+              "description": "Linter JavaScript/TypeScript pour la qualité et la cohérence du code."
+            },
+            {
+              "name": "Husky",
+              "description": "Cadre de hooks Git pour automatiser les vérifications de qualité du code avant les commits."
             }
           ]
         },
         {
-          "label": "Assistance IA",
+          "label": "Développement alimenté par l'IA",
           "items": [
             {
               "name": "Claude Code",
@@ -91,7 +104,7 @@
           ]
         },
         {
-          "label": "Tests",
+          "label": "Tests et assurance qualité",
           "items": [
             {
               "name": "Vitest",
@@ -102,13 +115,17 @@
               "description": "Utilitaires de test axés sur le comportement de l'utilisateur plutôt que sur les détails de l'implémentation."
             },
             {
-              "name": "ESLint",
-              "description": "Linter JavaScript/TypeScript pour la qualité et la cohérence du code."
+              "name": "axe-core",
+              "description": "Moteur de test d'accessibilité pour la validation automatique de la conformité WCAG 2.2."
+            },
+            {
+              "name": "vitest-axe",
+              "description": "Intégration Vitest pour les tests d'accessibilité au sein de la suite de tests unitaires."
             }
           ]
         },
         {
-          "label": "Infrastructure et services",
+          "label": "Déploiement et CI/CD",
           "items": [
             {
               "name": "npm",
@@ -117,10 +134,6 @@
             {
               "name": "GitHub Actions",
               "description": "Plateforme d'automatisation CI/CD pour les workflows d'intégration et de déploiement continus."
-            },
-            {
-              "name": "Husky",
-              "description": "Cadre de hooks Git pour automatiser les vérifications de qualité du code avant les commits."
             }
           ]
         }
