@@ -60,6 +60,9 @@ export default function Header() {
    * @returns True if the link matches the current pathname
    */
   const isActive = (href: string): boolean => {
+    if (!pathname) {
+      return false;
+    }
     if (href === "/") {
       return pathname === "/";
     }
@@ -87,7 +90,17 @@ export default function Header() {
               alignItems: "bottom",
               gap: 1
             }}>
-            <Typography variant="h6" component="div" sx={{ fontFamily: "Oswald" }}>
+            <Typography
+              component="div"
+              sx={{
+                fontFamily: "Oswald",
+                fontSize: "1.25rem",
+                fontWeight: 600,
+                lineHeight: 1.5,
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
               {t("header.siteTitle")}
             </Typography>
             <Box sx={{ display: "flex", gap: 0.25, alignItems: "baseline" }}>
@@ -96,9 +109,11 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("nav.social.linkedin")}
-                size="small"
+                size="medium"
                 sx={{
                   color: palette.text.primary,
+                  minWidth: 44,
+                  minHeight: 44,
                   "&:hover": {
                     color: BRAND_COLORS.maroon,
                   },
@@ -111,9 +126,11 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("nav.social.github")}
-                size="small"
+                size="medium"
                 sx={{
                   color: palette.text.primary,
+                  minWidth: 44,
+                  minHeight: 44,
                   "&:hover": {
                     color: BRAND_COLORS.maroon,
                   },
@@ -164,7 +181,7 @@ export default function Header() {
                 {t(item.labelKey)}
               </Button>
             ))}
-            <SettingsButton size="small" />
+            <SettingsButton size="medium" />
           </Box>
         </Container>
       </Toolbar>

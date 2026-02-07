@@ -1,9 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../../__tests__/test-utils";
 import { ReactNode } from "react";
 import ColophonPage from "../../../../app/colophon/page";
 import { ThemeContextProvider } from "../../../../src/contexts/ThemeContext";
+import { AnimationsContextProvider } from "../../../../src/contexts/AnimationsContext";
 import { LocaleProvider } from "../../../../src/components/i18n/LocaleProvider";
+import ThemeProvider from "../../../../src/components/ThemeProvider";
 
 /**
  * Mock Next.js Image component for testing.
@@ -34,16 +36,20 @@ vi.mock("next/image", () => ({
 }));
 
 /**
- * Wrapper component to provide ThemeContext and LocaleProvider for testing.
+ * Wrapper component to provide all necessary contexts for testing.
  *
  * @param props - Component props
- * @param props.children - Child elements to render within the context
- * @returns The children wrapped with LocaleProvider and ThemeContextProvider
+ * @param props.children - Child elements to render within the contexts
+ * @returns The children wrapped with LocaleProvider, ThemeContextProvider, AnimationsContextProvider, and ThemeProvider
  */
 function Wrapper({ children }: { children: ReactNode }) {
   return (
     <LocaleProvider initialLocale="en">
-      <ThemeContextProvider>{children}</ThemeContextProvider>
+      <ThemeContextProvider>
+        <AnimationsContextProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </AnimationsContextProvider>
+      </ThemeContextProvider>
     </LocaleProvider>
   );
 }

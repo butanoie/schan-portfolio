@@ -3,7 +3,9 @@ import { ProjectsList } from '../../../components/project/ProjectsList';
 import type { Project } from '../../../types';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ThemeContextProvider } from '../../../contexts/ThemeContext';
+import { AnimationsContextProvider } from '../../../contexts/AnimationsContext';
 import { LocaleProvider } from '../../../components/i18n/LocaleProvider';
+import ThemeProvider from '../../../components/ThemeProvider';
 
 /**
  * Mock useMediaQuery for consistent testing
@@ -31,16 +33,20 @@ vi.mock('../../../components/project/ProjectGallery', () => ({
 }));
 
 /**
- * Wrapper component that provides ThemeContext and LocaleProvider to tested components.
+ * Wrapper component that provides all necessary contexts to tested components.
  *
  * @param props - Component props
- * @param props.children - Child components to render within the theme context
- * @returns The children wrapped with LocaleProvider and ThemeContextProvider
+ * @param props.children - Child components to render within the providers
+ * @returns The children wrapped with LocaleProvider, ThemeContextProvider, AnimationsContextProvider, and ThemeProvider
  */
 function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <LocaleProvider initialLocale="en">
-      <ThemeContextProvider>{children}</ThemeContextProvider>
+      <ThemeContextProvider>
+        <AnimationsContextProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </AnimationsContextProvider>
+      </ThemeContextProvider>
     </LocaleProvider>
   );
 }

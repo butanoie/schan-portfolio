@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
+import { AnimationsContextProvider } from "@/src/contexts/AnimationsContext";
 import ThemeProvider from "@/src/components/ThemeProvider";
 import MainLayout from "@/src/components/common/MainLayout";
 import { LocaleProvider } from "@/src/components/i18n/LocaleProvider";
@@ -15,17 +16,19 @@ export const metadata: Metadata = {
 /**
  * Root layout component that wraps the entire application.
  *
- * Provides theme context, locale/i18n context, MUI theme provider, and main layout structure for all pages.
+ * Provides theme context, animations context, locale/i18n context, MUI theme provider,
+ * and main layout structure for all pages.
  *
  * Features:
  * - LocaleProvider: Manages application locale and language
  * - ThemeContextProvider: Manages theme state and persistence
+ * - AnimationsContextProvider: Manages animations enabled/disabled state
  * - EnhancedThemeProvider: Applies MUI theme based on current mode
  * - MainLayout: Global navigation and structure
  *
  * @param props - The component props
  * @param props.children - The page content to be rendered within the layout
- * @returns The complete HTML structure with locale, theme, and layout providers
+ * @returns The complete HTML structure with locale, theme, animations, and layout providers
  */
 export default function RootLayout({
   children,
@@ -38,9 +41,11 @@ export default function RootLayout({
         <LocaleProviderErrorFallback>
           <LocaleProvider initialLocale="en">
             <ThemeContextProvider>
-              <ThemeProvider>
-                <MainLayout>{children}</MainLayout>
-              </ThemeProvider>
+              <AnimationsContextProvider>
+                <ThemeProvider>
+                  <MainLayout>{children}</MainLayout>
+                </ThemeProvider>
+              </AnimationsContextProvider>
             </ThemeContextProvider>
           </LocaleProvider>
         </LocaleProviderErrorFallback>

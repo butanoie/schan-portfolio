@@ -1,19 +1,46 @@
 import '@testing-library/jest-dom';
+import 'vitest-axe/extend-expect';
 import { cleanup } from '@testing-library/react';
-import { afterEach, beforeAll } from 'vitest';
+import { afterEach, beforeAll, expect, vi } from 'vitest';
+import { configureAxe } from 'vitest-axe';
+import * as matchers from 'vitest-axe/matchers';
 
 /**
  * Vitest setup file that runs before each test file.
  *
  * This file:
  * - Imports jest-dom matchers for enhanced DOM assertions
+ * - Configures vitest-axe matchers for accessibility testing
  * - Configures automatic cleanup after each test
  * - Sets up global test environment
  * - Mocks window.matchMedia for useReducedMotion hook
+ * - Configures axe-core for accessibility testing
  *
  * Note: i18next is initialized in the test environment detection within
  * i18next-config.ts which uses inline resources for testing.
  */
+
+/**
+ * Extend Vitest's expect with vitest-axe matchers for accessibility testing.
+ */
+expect.extend(matchers);
+
+/**
+ * Configure axe-core for accessibility testing.
+ *
+ * This enables comprehensive WCAG 2.2 Level AA compliance testing across all tests.
+ * Key rules enabled:
+ * - region: Ensures proper landmark structure
+ * - color-contrast: WCAG 1.4.3 color contrast requirements
+ * - landmark-one-main: Ensures single main landmark
+ */
+configureAxe({
+  rules: {
+    region: { enabled: true },
+    'color-contrast': { enabled: true },
+    'landmark-one-main': { enabled: true },
+  },
+});
 
 /**
  * Mock window.matchMedia for media query testing.
@@ -47,6 +74,55 @@ beforeAll(() => {
     writable: true,
     value: mockMatchMedia,
   });
+});
+
+/**
+ * Mock HTMLCanvasElement.getContext for icon rendering in tests.
+ *
+ * Some icon libraries and MUI components may attempt to use canvas for
+ * rendering. This mock prevents errors in jsdom environments where canvas
+ * is either not implemented or throws errors.
+ */
+beforeAll(() => {
+  /**
+   * Mock implementation of canvas getContext method.
+   *
+   * @param contextId - The context type (e.g., "2d")
+   * @returns A mock canvas context object with common drawing methods
+   */
+  HTMLCanvasElement.prototype.getContext = vi.fn(
+    (contextId: string) => {
+      if (contextId === '2d') {
+        return {
+          fillRect: vi.fn(),
+          clearRect: vi.fn(),
+          getImageData: vi.fn(() => ({ data: [] })),
+          putImageData: vi.fn(),
+          createImageData: vi.fn(() => ({ data: [] })),
+          setTransform: vi.fn(),
+          drawImage: vi.fn(),
+          save: vi.fn(),
+          fillText: vi.fn(),
+          restore: vi.fn(),
+          beginPath: vi.fn(),
+          moveTo: vi.fn(),
+          lineTo: vi.fn(),
+          closePath: vi.fn(),
+          stroke: vi.fn(),
+          translate: vi.fn(),
+          scale: vi.fn(),
+          rotate: vi.fn(),
+          arc: vi.fn(),
+          fill: vi.fn(),
+          measureText: vi.fn(() => ({ width: 0 })),
+          transform: vi.fn(),
+          rect: vi.fn(),
+          clip: vi.fn(),
+        } as unknown as CanvasRenderingContext2D;
+      }
+      return null;
+    }
+  ) as unknown as HTMLCanvasElement['getContext'];
 });
 
 /**
@@ -197,6 +273,41 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
   writable: true,
 });
+
+/**
+ * Suppress MUI sx kebab-case warnings in tests.
+ *
+ * MUI's sx validator warns about kebab-case in media query strings, but this is
+ * a known limitation of using custom breakpoints. The warning doesn't affect
+ * functionality, so we suppress it to keep test output clean.
+ */
+(() => {
+  /**
+   * Checks if a warning message should be suppressed.
+   *
+   * @param message - The warning message to check
+   * @returns True if the message matches suppression criteria
+   */
+  const shouldSuppressWarning = (message: unknown) => {
+    const text = String(message);
+    return text.includes('Using kebab-case for css properties in objects is not supported');
+  };
+
+  const originalWarn = console.warn;
+  const originalError = console.error;
+
+  console.warn = vi.fn((...args: unknown[]) => {
+    if (!shouldSuppressWarning(args[0])) {
+      originalWarn.apply(console, args as []);
+    }
+  });
+
+  console.error = vi.fn((...args: unknown[]) => {
+    if (!shouldSuppressWarning(args[0])) {
+      originalError.apply(console, args as []);
+    }
+  });
+})();
 
 /**
  * Cleanup after each test to prevent memory leaks and test pollution.

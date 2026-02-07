@@ -52,7 +52,11 @@
     "theme": "Theme",
     "language": "Language",
     "english": "English",
-    "french": "Français"
+    "french": "Français",
+    "animations": "Animations",
+    "animationsToggle": "Toggle animations",
+    "animationsEnabled": "Animations enabled",
+    "animationsDisabled": "Animations disabled"
   },
   "theme": {
     "selectTheme": "Select theme",

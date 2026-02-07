@@ -231,7 +231,7 @@ describe('LocaleProvider', () => {
       consoleErrorSpy.mockRestore();
     });
 
-    it('should continue functioning after i18next error', () => {
+    it('should continue functioning after i18next error', async () => {
       const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       vi.mocked(i18next.changeLanguage).mockRejectedValueOnce(
@@ -242,6 +242,11 @@ describe('LocaleProvider', () => {
         wrapper: ({ children }: { children: ReactNode }) => (
           <LocaleProvider initialLocale="en">{children}</LocaleProvider>
         ),
+      });
+
+      // Wait for async error handling
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalled();
       });
 
       // Should still be able to change locale

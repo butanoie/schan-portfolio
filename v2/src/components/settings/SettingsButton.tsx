@@ -1,9 +1,9 @@
 /**
- * Settings button component that opens a popover with theme and language switchers.
+ * Settings button component that opens a popover with theme, language, and animations controls.
  *
  * Displays a gear icon button. Clicking opens a popover below the button
- * containing theme and language selection controls. The popover remains open while
- * adjusting theme or language settings and only closes when the gear button is toggled,
+ * containing theme, language, and animations controls. The popover remains open while
+ * adjusting settings and only closes when the gear button is toggled,
  * Escape is pressed, or clicking outside the popover.
  *
  * Accessibility features:
@@ -40,8 +40,10 @@ import {
 import { Settings as SettingsIcon } from "@mui/icons-material";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { AnimationsSwitcher } from "./AnimationsSwitcher";
 import { useTheme } from "@/src/hooks/useTheme";
 import { useI18n } from "@/src/hooks/useI18n";
+import { useAnimations } from "@/src/hooks/useAnimations";
 import { getPaletteByMode } from "@/src/lib/themes";
 import { BRAND_COLORS } from "@/src/constants";
 
@@ -78,7 +80,7 @@ interface SettingsButtonProps {
 /**
  * Settings button with popover component.
  *
- * Renders a gear icon button that opens a popover containing theme and language switchers.
+ * Renders a gear icon button that opens a popover containing theme, language, and animations controls.
  * The button uses the same styling as other utility buttons in the header.
  * The popover is anchored to the button and positions below and to the right.
  *
@@ -89,13 +91,13 @@ interface SettingsButtonProps {
  * Event handling:
  * - Click button: toggles popover open/closed
  * - Click outside or Escape: closes popover
- * - Theme or language selection: keeps popover open (allows multiple adjustments)
+ * - Theme, language, or animations selection: keeps popover open (allows multiple adjustments)
  *
  * @param props - Component props
  * @param props.size - Icon button size (default: 'medium')
  * @param props.className - Optional CSS class name
  * @param props.disabled - Whether the button is disabled (default: false)
- * @returns Settings button with popover containing theme and language switchers
+ * @returns Settings button with popover containing theme, language, and animations controls
  */
 export function SettingsButton({
   size = "medium",
@@ -106,6 +108,7 @@ export function SettingsButton({
   const open = Boolean(anchorEl);
   const { theme } = useTheme();
   const { t } = useI18n();
+  const { animationsEnabled } = useAnimations();
   const palette = getPaletteByMode(theme);
 
   /**
@@ -135,27 +138,57 @@ export function SettingsButton({
     <>
       {/* Settings Icon Button */}
       <Tooltip title={t("settings.openSettings")}>
-        <IconButton
-          onClick={handleOpen}
-          aria-label={t("settings.openSettings")}
-          aria-expanded={open}
-          aria-controls={popoverId}
-          disabled={disabled}
-          size={size}
-          className={className}
-          sx={{
-            color: palette.text.primary,
-            transition: "color 150ms ease-in-out",
-            "&:hover": {
-              color: BRAND_COLORS.maroon,
-            },
-            "@media (prefers-reduced-motion: reduce)": {
-              transition: "none",
-            },
-          }}
-        >
-          <SettingsIcon />
-        </IconButton>
+        {disabled ? (
+          <span>
+            <IconButton
+              onClick={handleOpen}
+              aria-label={t("settings.openSettings")}
+              aria-expanded={open}
+              aria-controls={popoverId}
+              disabled={disabled}
+              size={size}
+              className={className}
+              sx={{
+                color: palette.text.primary,
+                transition: animationsEnabled
+                  ? "color 150ms ease-in-out"
+                  : "none",
+                "&:hover": {
+                  color: BRAND_COLORS.maroon,
+                },
+                "@media (prefers-reduced-motion: reduce)": {
+                  transition: "none",
+                },
+              }}
+            >
+              <SettingsIcon />
+            </IconButton>
+          </span>
+        ) : (
+          <IconButton
+            onClick={handleOpen}
+            aria-label={t("settings.openSettings")}
+            aria-expanded={open}
+            aria-controls={popoverId}
+            disabled={disabled}
+            size={size}
+            className={className}
+            sx={{
+              color: palette.text.primary,
+              transition: animationsEnabled
+                ? "color 150ms ease-in-out"
+                : "none",
+              "&:hover": {
+                color: BRAND_COLORS.maroon,
+              },
+              "@media (prefers-reduced-motion: reduce)": {
+                transition: "none",
+              },
+            }}
+          >
+            <SettingsIcon />
+          </IconButton>
+        )}
       </Tooltip>
 
       {/* Settings Popover */}
@@ -226,6 +259,24 @@ export function SettingsButton({
             {t("settings.language")}
           </Typography>
           <LanguageSwitcher />
+        </Box>
+
+        {/* Divider */}
+        <Divider sx={{ my: 2 }} />
+
+        {/* Animations Switcher Component */}
+        <Box>
+          <Typography
+            variant="body2"
+            sx={{
+              mb: 1,
+              fontSize: "0.875rem",
+              opacity: 0.7,
+            }}
+          >
+            {t("settings.animations")}
+          </Typography>
+          <AnimationsSwitcher />
         </Box>
       </Popover>
     </>

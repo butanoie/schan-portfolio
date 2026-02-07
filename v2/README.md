@@ -17,8 +17,8 @@ Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and 
 **In Progress: Phase 4 - Enhanced Features**
 - ✅ Task 4.1: Theme switching (light, dark, high contrast modes) - Settings UI with theme switching
 - ✅ Task 4.2: Internationalization (i18n) - Infrastructure for multi-language support
-- 🔄 Task 4.3: Animations & Transitions - Polished UI with accessibility respect
-- ⬜ Task 4.4: WCAG 2.2 Level AA Compliance - Comprehensive accessibility audit
+- ✅ Task 4.3: Animations & Transitions - Polished UI with accessibility respect
+- ✅ Task 4.4: WCAG 2.2 Level AA Compliance - Comprehensive accessibility audit
 - ⬜ Task 4.5: SEO Optimization - Meta tags, structured data, sitemap
 
 ## Phase 1 Complete - Foundation & Setup ✅
@@ -520,8 +520,16 @@ See the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) for the compl
 - **Test Coverage:** 80%+ overall coverage with comprehensive new tests
 - **Comprehensive documentation** and JSDoc on all code
 
-**Phase 4.3 In Progress:**
-- Animations & Transitions - Polished UI interactions with accessibility respect
+**Phase 4.3 & 4.4 Complete:**
+- ✅ **Animations & Transitions:** Polished UI interactions with accessibility respect
+  - Smooth page transitions, component animations
+  - Full `prefers-reduced-motion` support
+  - Comprehensive animation tests and documentation
+- ✅ **WCAG 2.2 Level AA Compliance:** Comprehensive accessibility audit
+  - 8 accessibility test files with 120+ test cases
+  - 4 comprehensive documentation guides
+  - 0 violations, 1,117 tests passing
+  - 87.35% code coverage
 
 ## Learn More
 

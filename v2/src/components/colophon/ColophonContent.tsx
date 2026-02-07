@@ -4,6 +4,7 @@ import { Box, Divider } from "@mui/material";
 import { getLocalizedColophonData } from "../../data/colophon";
 import { useI18n } from "../../hooks/useI18n";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation";
+import { useAnimations } from "../../hooks/useAnimations";
 import PageDeck from "../common/PageDeck";
 import TechnologiesShowcase from "./TechnologiesShowcase";
 import DesignPhilosophy from "./DesignPhilosophy";
@@ -33,6 +34,7 @@ import ButaStory from "./ButaStory";
  */
 function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
   const { ref, isInView } = useScrollAnimation();
+  const { animationsEnabled } = useAnimations();
 
   return (
     <Box
@@ -40,7 +42,7 @@ function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
       sx={{
         opacity: isInView ? 1 : 0,
         transform: isInView ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'all 400ms ease-out',
+        transition: animationsEnabled ? 'all 400ms ease-out' : 'none',
       }}
     >
       {children}

@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import type { ProjectImage as ProjectImageType } from "../../types";
 import { useReducedMotion } from "../../hooks";
+import { useAnimations } from "../../hooks/useAnimations";
 
 /**
  * Props for the ProjectImage component.
@@ -65,6 +66,7 @@ export function ProjectImage({
 }: ProjectImageProps) {
   const [imageError, setImageError] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const { animationsEnabled } = useAnimations();
 
   const imageSrc = size === "thumbnail" ? image.tnUrl : image.url;
 
@@ -103,10 +105,10 @@ export function ProjectImage({
         width: "100%",
         aspectRatio: "4 / 3",
         overflow: "hidden",
-        transition: prefersReducedMotion ? "none" : "all 200ms ease-out",
+        transition: prefersReducedMotion || !animationsEnabled ? "none" : "all 200ms ease-out",
         "&:hover": {
           boxShadow: onClick ? 8 : "none",
-          transform: onClick && !prefersReducedMotion ? "translateY(-4px)" : "none",
+          transform: onClick && !prefersReducedMotion && animationsEnabled ? "translateY(-4px)" : "none",
         },
         ...sx,
       }}

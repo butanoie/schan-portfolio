@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import { useReducedMotion } from '../../hooks';
+import { useAnimations } from '../../hooks/useAnimations';
 
 /**
  * Props for the ProjectSkeleton component.
@@ -100,10 +101,11 @@ export function ProjectSkeleton({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const prefersReducedMotion = useReducedMotion();
+  const { animationsEnabled } = useAnimations();
 
-  // Determine animation based on reduced motion preference
-  // When reduced motion is preferred, disable the wave animation
-  const animationMode = prefersReducedMotion ? false : ('wave' as const);
+  // Determine animation based on reduced motion preference and animations setting
+  // When reduced motion is preferred or animations are disabled, disable the wave animation
+  const animationMode = prefersReducedMotion || !animationsEnabled ? false : ('wave' as const);
 
   // Build responsive variant based on viewport if not explicitly set
   const responsiveVariant =
@@ -120,7 +122,7 @@ export function ProjectSkeleton({
       aria-busy="true"
       aria-label="Loading project details"
       sx={{
-        transition: prefersReducedMotion
+        transition: prefersReducedMotion || !animationsEnabled
           ? 'none'
           : 'opacity 0.2s ease-in-out',
         ...sx,
@@ -143,6 +145,7 @@ export function ProjectSkeleton({
         <NarrowLayoutSkeleton
           animationMode={animationMode}
           prefersReducedMotion={prefersReducedMotion}
+          animationsEnabled={animationsEnabled}
         />
       )}
 
@@ -150,6 +153,7 @@ export function ProjectSkeleton({
         <WideRegularLayoutSkeleton
           animationMode={animationMode}
           prefersReducedMotion={prefersReducedMotion}
+          animationsEnabled={animationsEnabled}
         />
       )}
 
@@ -157,6 +161,7 @@ export function ProjectSkeleton({
         <WideVideoLayoutSkeleton
           animationMode={animationMode}
           prefersReducedMotion={prefersReducedMotion}
+          animationsEnabled={animationsEnabled}
         />
       )}
     </Box>
@@ -177,19 +182,22 @@ export function ProjectSkeleton({
  * @param props - Component props
  * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
  * @param props.prefersReducedMotion - Whether user prefers reduced motion
+ * @param props.animationsEnabled - Whether animations are enabled in the user's settings
  * @returns A skeleton container with narrow layout structure
  */
 function NarrowLayoutSkeleton({
   animationMode,
   prefersReducedMotion,
+  animationsEnabled,
 }: {
   animationMode: 'wave' | false;
   prefersReducedMotion: boolean;
+  animationsEnabled: boolean;
 }) {
   return (
     <Box
       sx={{
-        transition: prefersReducedMotion
+        transition: prefersReducedMotion || !animationsEnabled
           ? 'none'
           : 'opacity 0.2s ease-in-out',
       }}
@@ -258,14 +266,17 @@ function NarrowLayoutSkeleton({
  * @param props - Component props
  * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
  * @param props.prefersReducedMotion - Whether user prefers reduced motion
+ * @param props.animationsEnabled - Whether animations are enabled in the user's settings
  * @returns A skeleton container with wide-regular layout structure
  */
 function WideRegularLayoutSkeleton({
   animationMode,
   prefersReducedMotion,
+  animationsEnabled,
 }: {
   animationMode: 'wave' | false;
   prefersReducedMotion: boolean;
+  animationsEnabled: boolean;
 }) {
   return (
     <Box
@@ -273,7 +284,7 @@ function WideRegularLayoutSkeleton({
         display: 'grid',
         gridTemplateColumns: { md: '2fr 1fr' },
         gap: { xs: 2, sm: 3, md: 4 },
-        transition: prefersReducedMotion
+        transition: prefersReducedMotion || !animationsEnabled
           ? 'none'
           : 'opacity 0.2s ease-in-out',
       }}
@@ -305,7 +316,7 @@ function WideRegularLayoutSkeleton({
         </Box>
 
         {/* Description paragraphs */}
-        <Box>
+        <Box sx={{ overflow: 'hidden' }}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton
               key={`desc-${i}`}
@@ -359,14 +370,17 @@ function WideRegularLayoutSkeleton({
  * @param props - Component props
  * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
  * @param props.prefersReducedMotion - Whether user prefers reduced motion
+ * @param props.animationsEnabled - Whether animations are enabled in the user's settings
  * @returns A skeleton container with wide-video layout structure
  */
 function WideVideoLayoutSkeleton({
   animationMode,
   prefersReducedMotion,
+  animationsEnabled,
 }: {
   animationMode: 'wave' | false;
   prefersReducedMotion: boolean;
+  animationsEnabled: boolean;
 }) {
   return (
     <Box
@@ -374,7 +388,7 @@ function WideVideoLayoutSkeleton({
         display: 'grid',
         gridTemplateColumns: { md: '1fr 2fr' },
         gap: { xs: 2, sm: 3, md: 4 },
-        transition: prefersReducedMotion
+        transition: prefersReducedMotion || !animationsEnabled
           ? 'none'
           : 'opacity 0.2s ease-in-out',
       }}

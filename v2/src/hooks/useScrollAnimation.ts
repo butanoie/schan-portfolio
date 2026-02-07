@@ -50,22 +50,26 @@ interface ScrollAnimationReturn {
  * @param {string} [options.rootMargin='0px'] - Margin around root for intersection detection
  * @returns {ScrollAnimationReturn} Object with ref and isInView boolean
  *
- * **⚠️ Important: Options Dependency Gotcha**
- * The `options` parameter is included in the effect dependency array. If you pass a new object
- * literal on each render (e.g., `useScrollAnimation({ threshold: 0.1 })`), it will cause the
- * IntersectionObserver to be recreated on every render, defeating the optimization benefits.
+ * **✅ Defensive Options Handling**
+ * The `options` parameter is compared by serializing it to a JSON string in the dependency array.
+ * This means the IntersectionObserver will only be recreated if the actual option values change,
+ * not when a new options object is created with the same properties.
  *
- * **Solution:** Memoize the options object using `useMemo`:
+ * **This means all of these work equally well:**
  * ```tsx
+ * // ✅ Object literal (works fine now - no unnecessary recreations)
+ * const { ref, isInView } = useScrollAnimation({ threshold: 0.25 });
+ *
+ * // ✅ Memoized options
  * const observerOptions = useMemo(() => ({ threshold: 0.25 }), []);
  * const { ref, isInView } = useScrollAnimation(observerOptions);
- * ```
  *
- * Or pass a stable constant:
- * ```tsx
+ * // ✅ Stable constant
  * const OPTIONS = { threshold: 0.25 };
  * const { ref, isInView } = useScrollAnimation(OPTIONS);
  * ```
+ *
+ * The hook handles option stability defensively so you don't have to worry about it.
  *
  * @example
  * ```tsx

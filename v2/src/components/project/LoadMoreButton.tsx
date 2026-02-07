@@ -6,6 +6,7 @@ import type { SxProps } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { NAV_COLORS, BRAND_COLORS } from '../../constants';
 import { useReducedMotion, useI18n } from '../../hooks';
+import { useAnimations } from '../../hooks/useAnimations';
 
 /**
  * Props for the LoadMoreButton component.
@@ -101,6 +102,7 @@ export function LoadMoreButton({
   sx,
 }: LoadMoreButtonProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { animationsEnabled } = useAnimations();
   const { t } = useI18n();
 
   // Button text based on state
@@ -135,13 +137,15 @@ export function LoadMoreButton({
         textTransform: 'none',
         borderRadius: 1,
         boxShadow: 0,
-        px: { xs: 0.5, '@media (min-width: 760px)': 2 },
-        py: { xs: 0.5, '@media (min-width: 760px)': 1 },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        px: { xs: 0.5, '@media (min-width: 760px)': 2 } as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        py: { xs: 0.5, '@media (min-width: 760px)': 1 } as any,
         minWidth: "95%",
         minHeight: 'unset',
 
         // Transition effects
-        transition: prefersReducedMotion
+        transition: prefersReducedMotion || !animationsEnabled
           ? 'none'
           : 'background-color 0.2s ease-in-out',
 
