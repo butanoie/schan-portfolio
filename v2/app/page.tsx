@@ -1,9 +1,40 @@
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { fetchProjects } from "../src/lib/projectDataServer";
 import { AsyncProjectsList } from "../src/components/project/AsyncProjectsList";
 import { LocalizedPortfolioDeck } from "../src/components/i18n/LocalizedPortfolioDeck";
 import { Container } from "@mui/material";
 import { getLocaleFromCookie } from "../src/lib/i18nServer";
+import { PAGE_METADATA, SITE_URL, OG_IMAGE } from "@/src/constants/seo";
+
+/**
+ * Metadata for the home page.
+ *
+ * Includes page-specific title, description, keywords, OpenGraph tags,
+ * and canonical URL for the home route.
+ */
+export const metadata: Metadata = {
+  title: PAGE_METADATA.home.title,
+  description: PAGE_METADATA.home.description,
+  keywords: PAGE_METADATA.home.keywords,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: PAGE_METADATA.home.title,
+    description: PAGE_METADATA.home.description,
+    url: SITE_URL,
+    type: "website",
+    images: [
+      {
+        url: OG_IMAGE.url,
+        width: OG_IMAGE.width,
+        height: OG_IMAGE.height,
+        alt: OG_IMAGE.alt,
+      },
+    ],
+  },
+};
 
 /**
  * Projects page displaying portfolio projects with asynchronous loading.

@@ -47,6 +47,7 @@
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "schema-dts": "^1.1.5",
     "typescript": "^5",
     "vitest": "^4.0.18",
     "vitest-axe": "^0.1.0"

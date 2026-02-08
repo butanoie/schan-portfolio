@@ -1,16 +1,37 @@
 import type { Metadata } from "next";
 import { Container } from "@mui/material";
 import ColophonContent from "../../src/components/colophon/ColophonContent";
+import { PAGE_METADATA, SITE_URL, OG_IMAGE } from "@/src/constants/seo";
 
 /**
- * Generate metadata for the colophon page.
- * Uses hardcoded values in English as metadata must be generated on the server
- * and cannot access i18n translation functions.
+ * Metadata for the colophon page.
+ *
+ * Includes page-specific title, description, keywords, OpenGraph tags,
+ * and canonical URL for the colophon route.
+ *
+ * Uses SEO constants for consistency with site-wide SEO configuration.
  */
 export const metadata: Metadata = {
-  title: "Colophon | Sing Chan's Portfolio",
-  description:
-    "About Sing Chan, the technologies behind this portfolio site, design philosophy, and the story of Buta the mascot.",
+  title: PAGE_METADATA.colophon.title,
+  description: PAGE_METADATA.colophon.description,
+  keywords: PAGE_METADATA.colophon.keywords,
+  alternates: {
+    canonical: `${SITE_URL}/colophon`,
+  },
+  openGraph: {
+    title: PAGE_METADATA.colophon.title,
+    description: PAGE_METADATA.colophon.description,
+    url: `${SITE_URL}/colophon`,
+    type: "website",
+    images: [
+      {
+        url: OG_IMAGE.url,
+        width: OG_IMAGE.width,
+        height: OG_IMAGE.height,
+        alt: OG_IMAGE.alt,
+      },
+    ],
+  },
 };
 
 /**
