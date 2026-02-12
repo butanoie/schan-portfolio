@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./print.css";
 import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
 import { AnimationsContextProvider } from "@/src/contexts/AnimationsContext";
 import ThemeProvider from "@/src/components/ThemeProvider";

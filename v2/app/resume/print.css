@@ -1,107 +1,26 @@
 /**
- * Print styles for the resume page.
- * Optimized for A4/Letter paper size with two-column layout matching v1 design.
+ * Resume page print customizations.
  *
- * Features:
- * - Hide navigation, footer, and non-essential UI elements
- * - Preserve two-column layout for print (60/40 split)
- * - Left column: Work experience
- * - Right column: Skills, clients, contact info
- * - Optimize typography for print (pt instead of rem)
- * - Remove shadows, backgrounds, and decorative styling
- * - Control page breaks to avoid splitting job entries
+ * This stylesheet provides resume-specific print optimizations built on top of
+ * the global print.css. It defines:
+ * - Two-column layout (60/40 split for print)
+ * - Resume header styling and positioning
+ * - Work experience formatting
+ * - Skills and competencies layout
+ * - Contact button styling specific to resume header
+ * - Right column adjustments for print
+ * - Conference speaking section formatting
+ *
+ * Global print styles (background, text color, typography, element hiding)
+ * are handled by v2/app/print.css and do not need to be repeated here.
+ *
+ * Light theme colors are enforced globally:
+ * - Sage green: #85b09c
+ * - Duck egg: #dcebe4
+ * - Dark text: #2c2c2c
  */
 
-/* ============================================================================
-   PAGE SETUP
-   ========================================================================== */
-
-@page {
-  margin: 0.5in 0.75in;
-}
-
-/* ============================================================================
-   HIDE NON-ESSENTIAL ELEMENTS
-   ========================================================================== */
-
 @media print {
-  /* Hide navigation, footer, and non-essential UI */
-  header,
-  footer,
-  nav,
-  .no-print,
-  [class*="MuiAppBar-root"],
-  body > div > footer {
-    display: none !important;
-  }
-
-  /* Ensure footer and all its contents are completely hidden */
-  footer,
-  footer * {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Hide footer in MainLayout flex container */
-  body > div > div > footer {
-    display: none !important;
-  }
-
-  /* Hide the entire footer element regardless of structure */
-  [role="contentinfo"],
-  [data-testid*="footer"],
-  [class*="footer"],
-  [class*="Footer"] {
-    display: none !important;
-  }
-
-  /* ========================================================================
-     CONTAINER AND LAYOUT OPTIMIZATION
-     ======================================================================== */
-
-  /* Optimize body and container for print */
-  body {
-    font-size: 10pt;
-    line-height: 1.5;
-    background: white;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Remove all margins and padding from HTML root */
-  html {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Full width containers with no padding */
-  [class*="MuiContainer-root"] {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    width: 100% !important;
-  }
-
-  /* Main content area - full width */
-  main {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Preserve flex layout - don't convert to block (but not for footer) */
-  .MuiBox-root:not(footer) {
-    display: revert !important;
-  }
-
-  /* Ensure footer remains hidden */
-  footer.MuiBox-root {
-    display: none !important;
-  }
-
   /* ========================================================================
      COLUMN LAYOUT AND SIZING
      ======================================================================== */
@@ -113,7 +32,7 @@
     gap: 24pt !important;
   }
 
-  /* Right column: Skills, Clients, Speaking (40% on print) */
+  /* Right column: Skills, Clients, Speaking (35% on print) */
   [class*="MuiContainer-root"] > div:last-of-type > div:first-child {
     order: 2 !important;
     flex: 0 0 35% !important;
@@ -127,11 +46,6 @@
     flex: 0 0 60% !important;
     width: 60% !important;
     min-width: 60% !important;
-  }
-
-  /* Preserve flex for header buttons and stacks */
-  .MuiStack-root {
-    display: flex !important;
   }
 
   /* ========================================================================
@@ -156,56 +70,12 @@
     width: 60% !important;
   }
 
-  /* Resume header - contact buttons (40%) */
+  /* Resume header - contact buttons (35%) */
   section[aria-labelledby="resume-name"] .MuiStack-root {
     flex: 0 0 35% !important;
     width: 35% !important;
     gap: 0 !important;
     margin: 0 !important;
-  }
-
-  /* ========================================================================
-     TYPOGRAPHY OPTIMIZATION
-     ======================================================================== */
-
-  h1 {
-    font-size: 22pt !important;
-    margin: 0 0 4pt 0 !important;
-    padding: 0 !important;
-  }
-
-  h2 {
-    font-size: 18pt !important;
-    color: #2c2c2c !important;
-    margin: 8pt 0 12pt 0 !important;
-    padding: 0 !important;
-  }
-
-  h3 {
-    font-size: 15pt !important;
-    margin: 8pt 0 8pt 0 !important;
-    padding: 0 !important;
-    font-weight: 600 !important;
-  }
-
-  h4 {
-    font-size: 10pt !important;
-    margin: 4pt 0 2pt 0 !important;
-    font-weight: 600 !important;
-  }
-
-  p,
-  li {
-    font-size: 10pt !important;
-    line-height: 1.6 !important;
-  }
-
-  p {
-    margin: 10pt 0 0 0 !important;
-  }
-
-  li {
-    margin: 0 0 4pt 0 !important;
   }
 
   /* ========================================================================
@@ -224,6 +94,7 @@
   .job-entry > div > div:first-child {
     flex: 1 !important;
     font-size: 10pt !important;
+    color: #2c2c2c !important;
   }
 
   /* Work experience dates */
@@ -232,20 +103,22 @@
     min-width: 150px !important;
     text-align: right !important;
     font-size: 10pt !important;
+    color: #2c2c2c !important;
+  }
+
+  /* Ensure all text in work entries uses Light theme color */
+  .job-entry .MuiTypography-root {
+    color: #2c2c2c !important;
+  }
+
+  /* Avoid breaking inside job entries */
+  [class*="job-entry"] {
+    page-break-inside: avoid;
   }
 
   /* ========================================================================
      SKILLS AND COMPETENCIES STYLING
      ======================================================================== */
-
-  /* Skill/competency category boxes - use duckEgg color */
-  section > div[style*="backgroundColor"],
-  div[style*="backgroundColor: rgb"] {
-    background-color: #dcebe4 !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
 
   /* Right column box elements - remove padding and margin */
   [class*="MuiContainer-root"]
@@ -256,60 +129,52 @@
     margin: 0 0 16pt 0 !important;
   }
 
-  /* Keep skill/client chips styled for print - use sage color */
-  .MuiChip-root {
-    display: inline-block !important;
-    background-color: #85b09c !important;
-    color: white !important;
-    border: none !important;
-    font-size: 7pt !important;
-    height: auto !important;
-    padding: 2pt 4pt !important;
-    margin: 0 4pt 0 0 !important;
-  }
-
-  .MuiChip-label {
-    padding: 0 !important;
-  }
-
   /* ========================================================================
      CONTACT BUTTONS
      ======================================================================== */
 
   /* Optimize contact buttons for print */
-  button.MuiButton-root {
-    display: block !important;
-    background-color: #85b09c !important;
-    color: white !important;
-    border: none !important;
-    padding: 0 !important;
-    font-size: 9pt !important;
-    margin: 0 !important;
+  button.MuiButton-root,
+  a.MuiButton-root {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
     width: 100% !important;
     max-width: 240px !important;
-    box-sizing: border-box !important;
-    text-align: left !important;
+    margin-bottom: 4pt !important;
   }
 
-  /* Download button should be hidden */
-  button.no-print {
+  /* Remove margin from last button */
+  button.MuiButton-root:last-of-type,
+  a.MuiButton-root:last-of-type {
+    margin-bottom: 0 !important;
+  }
+
+  /* Hide download resume button in print mode */
+  button.no-print,
+  a.no-print {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* Contact button links rendered as anchor tags */
   a.MuiButton-root {
-    color: white !important;
-    font-size: 9pt;
     padding: 2pt 12pt !important;
     max-width: 240px !important;
   }
 
-  /* Keep contact button icons visible */
-  button.MuiButton-root svg {
+  /* Keep contact button icons visible and positioned left */
+  button.MuiButton-root svg,
+  a.MuiButton-root svg {
     display: inline !important;
     margin-right: 2pt !important;
     width: 14pt !important;
     height: 14pt !important;
+    flex-shrink: 0 !important;
   }
 
   /* Reduce gap between icon and text in resume header buttons */
@@ -350,81 +215,5 @@
   section[aria-labelledby="speaking-heading"] li {
     margin-left: 18pt !important;
     padding-left: 0 !important;
-  }
-
-  /* ========================================================================
-     LINKS
-     ========================================================================= */
-
-  /* Ensure links are visible */
-  a {
-    color: #00008b !important;
-    text-decoration: none !important;
-  }
-
-  /* Remove URL printing for links */
-  a[href^="http"]:after {
-    content: "" !important;
-  }
-
-  /* ========================================================================
-     REMOVE DECORATIVE ELEMENTS
-     ======================================================================== */
-
-  /* Remove all shadows and unnecessary styling */
-  * {
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  /* Remove background colors */
-  [class*="MuiBox-root"],
-  [class*="MuiPaper-root"] {
-    background-color: transparent !important;
-    border: none !important;
-  }
-
-  /* Hide all dividers in print */
-  [class*="MuiDivider-root"],
-  hr {
-    display: none !important;
-  }
-
-  /* ========================================================================
-     PAGE BREAKS AND SPACING
-     ======================================================================== */
-
-  /* Ensure proper page breaks */
-  h2,
-  h3 {
-    page-break-after: avoid;
-    page-break-inside: avoid;
-  }
-
-  /* Avoid breaking inside job entries */
-  [class*="job-entry"],
-  div[class*="Box"] > div {
-    page-break-inside: avoid;
-  }
-
-  /* Avoid breaking inside lists */
-  ul,
-  ol {
-    page-break-inside: avoid;
-    margin: 2pt 0 !important;
-    padding-left: 18pt !important;
-  }
-
-  /* ========================================================================
-     FINAL CLEANUP
-     ======================================================================== */
-
-  /* Compact margins */
-  *:first-child {
-    margin-top: 0 !important;
-  }
-
-  *:last-child {
-    margin-bottom: 0 !important;
   }
 }

@@ -1,0 +1,343 @@
+/**
+ * Universal print stylesheet for all portfolio pages.
+ *
+ * This stylesheet ensures consistent, professional print output across the entire site.
+ * Key features:
+ * - Enforces Light theme colors (black text on white background) regardless of current theme
+ * - Hides navigation, footer, and non-essential UI elements
+ * - Optimizes typography and spacing for paper
+ * - Provides a foundation for page-specific print customizations
+ *
+ * Color Palette (Light Theme):
+ * - Primary Text: #2c2c2c (dark gray)
+ * - Background: #ffffff (white)
+ * - Accent/Buttons: #85b09c (sage green)
+ * - Secondary Background: #dcebe4 (duck egg)
+ * - Links: #00008b (dark blue)
+ *
+ * Theme Override Strategy:
+ * - Uses @media print to apply Light theme colors
+ * - Overrides Dark and High Contrast theme colors
+ * - Uses !important to ensure cascade precedence
+ * - Applies to all elements via data-theme attribute selectors
+ */
+
+/* ============================================================================
+   PAGE SETUP
+   ========================================================================== */
+
+@page {
+  margin: 0.5in 0.75in;
+}
+
+/* ============================================================================
+   MEDIA PRINT - GLOBAL STYLES
+   ========================================================================== */
+
+@media print {
+  /* ========================================================================
+     FORCE LIGHT THEME FOR PRINT
+     ======================================================================== */
+
+  /* Set light color scheme for all browsers */
+  html {
+    color-scheme: light;
+  }
+
+  /* Override theme-specific CSS variables for Dark theme */
+  html[data-theme="dark"] {
+    --foreground: #2c2c2c !important;
+    --background: #ffffff !important;
+  }
+
+  /* Override theme-specific CSS variables for High Contrast theme */
+  html[data-theme="highContrast"] {
+    --foreground: #2c2c2c !important;
+    --background: #ffffff !important;
+  }
+
+  /* ========================================================================
+     CONTAINER AND LAYOUT OPTIMIZATION
+     ======================================================================== */
+
+  /* Optimize body for print */
+  body {
+    font-size: 10pt;
+    line-height: 1.5;
+    background: white !important;
+    color: #2c2c2c !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Reset HTML element */
+  html {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Full width containers */
+  [class*="MuiContainer-root"] {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Main content area */
+  main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Preserve flex layout for content structure */
+  .MuiBox-root:not(footer) {
+    display: revert !important;
+  }
+
+  /* Ensure footer remains hidden */
+  footer.MuiBox-root {
+    display: none !important;
+  }
+
+  /* Preserve flex for stacks and button groups */
+  .MuiStack-root {
+    display: flex !important;
+  }
+
+  /* ========================================================================
+     HIDE NON-ESSENTIAL ELEMENTS
+     ======================================================================== */
+
+  /* Hide navigation and footer */
+  header,
+  footer,
+  nav,
+  [role="contentinfo"],
+  [data-testid*="footer"],
+  [class*="footer"],
+  [class*="Footer"] {
+    display: none !important;
+  }
+
+  /* Hide footer in MainLayout flex container */
+  body > div > div > footer {
+    display: none !important;
+  }
+
+  /* Hide entire footer element regardless of structure */
+  footer,
+  footer * {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide Material-UI AppBar */
+  [class*="MuiAppBar-root"] {
+    display: none !important;
+  }
+
+  /* Hide theme and settings controls */
+  [class*="ThemeSwitcher"],
+  [class*="LanguageSwitcher"],
+  [class*="AnimationsSwitcher"],
+  [class*="SettingsButton"],
+  [class*="MuiPopover-root"],
+  #settings-popover,
+  .no-print {
+    display: none !important;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY OPTIMIZATION
+     ========================================================================= */
+
+  h1 {
+    font-size: 22pt !important;
+    color: #2c2c2c !important;
+    margin: 0 0 4pt 0 !important;
+    padding: 0 !important;
+  }
+
+  h2 {
+    font-size: 18pt !important;
+    color: #2c2c2c !important;
+    margin: 8pt 0 12pt 0 !important;
+    padding: 0 !important;
+  }
+
+  h3 {
+    font-size: 15pt !important;
+    color: #2c2c2c !important;
+    margin: 8pt 0 8pt 0 !important;
+    padding: 0 !important;
+    font-weight: 600 !important;
+  }
+
+  h4 {
+    font-size: 10pt !important;
+    color: #2c2c2c !important;
+    margin: 4pt 0 2pt 0 !important;
+    font-weight: 600 !important;
+  }
+
+  h5,
+  h6 {
+    font-size: 10pt !important;
+    color: #2c2c2c !important;
+  }
+
+  p,
+  li {
+    font-size: 10pt !important;
+    line-height: 1.6 !important;
+    color: #2c2c2c !important;
+  }
+
+  p {
+    margin: 10pt 0 0 0 !important;
+  }
+
+  li {
+    margin: 0 0 4pt 0 !important;
+  }
+
+  /* ========================================================================
+     LINKS
+     ======================================================================== */
+
+  a {
+    color: #00008b !important;
+    text-decoration: none !important;
+  }
+
+  /* Remove URL printing for links */
+  a[href^="http"]:after {
+    content: "" !important;
+  }
+
+  /* ========================================================================
+     ACCENT ELEMENTS - BUTTONS AND CHIPS
+     ======================================================================== */
+
+  /* Style buttons with sage green accent color */
+  button.MuiButton-root,
+  a.MuiButton-root {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    background-color: #85b09c !important;
+    color: white !important;
+    border: none !important;
+    font-size: 9pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+  }
+
+  /* Hide download buttons */
+  button.no-print {
+    display: none !important;
+  }
+
+  /* Style chips with sage green */
+  .MuiChip-root {
+    display: inline-block !important;
+    background-color: #85b09c !important;
+    color: white !important;
+    border: none !important;
+    font-size: 7pt !important;
+    height: auto !important;
+    padding: 2pt 4pt !important;
+    margin: 0 4pt 0 0 !important;
+  }
+
+  .MuiChip-label {
+    padding: 0 !important;
+  }
+
+  /* Style section backgrounds with duck egg color */
+  section > div[style*="backgroundColor"],
+  div[style*="backgroundColor: rgb"] {
+    background-color: #dcebe4 !important;
+  }
+
+  /* ========================================================================
+     REMOVE DECORATIVE ELEMENTS
+     ======================================================================== */
+
+  /* Remove all shadows and unnecessary styling */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Remove background colors from containers except where specified */
+  [class*="MuiBox-root"],
+  [class*="MuiPaper-root"] {
+    background-color: transparent !important;
+    border: none !important;
+  }
+
+  /* Hide all dividers */
+  [class*="MuiDivider-root"],
+  hr {
+    display: none !important;
+  }
+
+  /* ========================================================================
+     PAGE BREAKS AND SPACING
+     ======================================================================== */
+
+  /* Ensure headings don't break away from content */
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid breaking inside lists and boxes */
+  ul,
+  ol {
+    page-break-inside: avoid;
+    margin: 2pt 0 !important;
+    padding-left: 18pt !important;
+  }
+
+  /* Avoid breaking inside common content blocks */
+  [class*="job-entry"],
+  section,
+  article {
+    page-break-inside: avoid;
+  }
+
+  /* ========================================================================
+     FINAL CLEANUP
+     ======================================================================== */
+
+  /* Remove top margin from first child */
+  *:first-child {
+    margin-top: 0 !important;
+  }
+
+  /* Remove bottom margin from last child */
+  *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Ensure images and media are visible */
+  img,
+  video {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
