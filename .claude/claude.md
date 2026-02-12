@@ -338,21 +338,48 @@ Infrastructure documentation files should include:
 
 ### Automatic Git Commits
 
-**IMPORTANT: Never automatically create git commits unless explicitly requested.**
+**CRITICAL: Never automatically create git commits under any circumstances unless explicitly requested by the user.**
 
-Git commits should ONLY be created when:
-- The user explicitly calls the `/git-commit` skill or `git-commit` command
-- The user directly requests a commit in their message
-- You receive explicit permission to commit
+#### What "Explicitly Requested" Means
 
-**What this means:**
+Git commits should ONLY be created when the user:
+- Calls `/git-commit` skill directly
+- Says "create a commit" or "commit these changes"
+- Says "commit with message: ..." (with specific message)
+- Directly requests a PR or commit action
+- Explicitly approves after being asked
+
+#### What Does NOT Count as a Request
+
+**These do NOT grant permission to commit:**
+- "proceed" or "start implementing" (means: begin work, NOT commit when done)
+- "implement this feature" (means: write code, NOT commit automatically)
+- Completing tasks or fixing issues successfully
+- Running tests or linters successfully
+- Any task completion without explicit commit request
+- General workflow instructions without commit language
+
+#### Implementation Workflow (REQUIRED)
+
+1. User requests a feature/fix/task
+2. You implement and complete the work
+3. You describe what was completed and changes made
+4. **YOU MUST ASK:** "Would you like me to commit these changes?" or "Should I create a commit for this?"
+5. **WAIT for explicit approval** before committing
+6. Only then proceed with commit
+
+#### When in Doubt: Always Ask First
+
+**Never assume permission to commit.** This includes:
 - Do NOT commit after completing a task unless asked
 - Do NOT commit after running tests successfully unless asked
 - Do NOT commit after fixing all errors unless asked
-- Always ask the user if you think a commit is needed
-- Wait for the user to say "create a commit" or call `/git-commit`
+- Do NOT commit during implementation cleanup
+- Do NOT commit when making follow-up fixes
 
-This ensures full control over what gets committed and maintains the user's preferred workflow.
+This ensures full control over git history, commit timing, and workflow consistency.
+
+**Remember:** The user maintains authority over all commits to their repository.
 
 ## Changelog Requirements
 
