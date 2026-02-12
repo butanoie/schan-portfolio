@@ -26,14 +26,14 @@
      ======================================================================== */
 
   /* Two column layout container (the Box after the divider) */
-  [class*="MuiContainer-root"] > div:last-of-type {
+  .resume-page > div:last-of-type {
     display: flex !important;
     flex-direction: row !important;
     gap: 24pt !important;
   }
 
   /* Right column: Skills, Clients, Speaking (35% on print) */
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child {
+  .resume-page > div:last-of-type > div:first-child {
     order: 2 !important;
     flex: 0 0 35% !important;
     width: 35% !important;
@@ -41,7 +41,7 @@
   }
 
   /* Left column: Work Experience (60% on print) */
-  [class*="MuiContainer-root"] > div:last-of-type > div:last-child {
+  .resume-page > div:last-of-type > div:last-child {
     order: 1 !important;
     flex: 0 0 60% !important;
     width: 60% !important;
@@ -53,7 +53,7 @@
      ======================================================================== */
 
   /* Remove top spacing from resume header */
-  section[aria-labelledby="resume-name"] {
+  .resume-page section[aria-labelledby="resume-name"] {
     padding-top: 0 !important;
     margin-top: 0 !important;
     margin-bottom: 16pt !important;
@@ -65,13 +65,13 @@
   }
 
   /* Resume header - name/tagline (60%) */
-  section[aria-labelledby="resume-name"] > div:first-of-type {
+  .resume-page section[aria-labelledby="resume-name"] > div:first-of-type {
     flex: 0 0 60% !important;
     width: 60% !important;
   }
 
   /* Resume header - contact buttons (35%) */
-  section[aria-labelledby="resume-name"] .MuiStack-root {
+  .resume-page section[aria-labelledby="resume-name"] .MuiStack-root {
     flex: 0 0 35% !important;
     width: 35% !important;
     gap: 0 !important;
@@ -83,7 +83,7 @@
      ======================================================================== */
 
   /* Work experience - keep role and dates side by side */
-  .job-entry > div {
+  .resume-page .job-entry > div {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
@@ -91,14 +91,14 @@
   }
 
   /* Work experience role titles */
-  .job-entry > div > div:first-child {
+  .resume-page .job-entry > div > div:first-child {
     flex: 1 !important;
     font-size: 10pt !important;
     color: #2c2c2c !important;
   }
 
   /* Work experience dates */
-  .job-entry > div > div:last-child {
+  .resume-page .job-entry > div > div:last-child {
     flex: 0 0 auto !important;
     min-width: 150px !important;
     text-align: right !important;
@@ -107,12 +107,12 @@
   }
 
   /* Ensure all text in work entries uses Light theme color */
-  .job-entry .MuiTypography-root {
+  .resume-page .job-entry .MuiTypography-root {
     color: #2c2c2c !important;
   }
 
   /* Avoid breaking inside job entries */
-  [class*="job-entry"] {
+  .resume-page [class*="job-entry"] {
     page-break-inside: avoid;
   }
 
@@ -121,10 +121,7 @@
      ======================================================================== */
 
   /* Right column box elements - remove padding and margin */
-  [class*="MuiContainer-root"]
-    > div:last-of-type
-    > div:first-child
-    .MuiBox-root {
+  .resume-page > div:last-of-type > div:first-child .MuiBox-root {
     padding: 0 !important;
     margin: 0 0 16pt 0 !important;
   }
@@ -134,8 +131,8 @@
      ======================================================================== */
 
   /* Optimize contact buttons for print */
-  button.MuiButton-root,
-  a.MuiButton-root {
+  .resume-page button.MuiButton-root,
+  .resume-page a.MuiButton-root {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -146,14 +143,14 @@
   }
 
   /* Remove margin from last button */
-  button.MuiButton-root:last-of-type,
-  a.MuiButton-root:last-of-type {
+  .resume-page button.MuiButton-root:last-of-type,
+  .resume-page a.MuiButton-root:last-of-type {
     margin-bottom: 0 !important;
   }
 
   /* Hide download resume button in print mode */
-  button.no-print,
-  a.no-print {
+  .resume-page button.no-print,
+  .resume-page a.no-print {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;
@@ -162,14 +159,14 @@
   }
 
   /* Contact button links rendered as anchor tags */
-  a.MuiButton-root {
+  .resume-page a.MuiButton-root {
     padding: 2pt 12pt !important;
     max-width: 240px !important;
   }
 
   /* Keep contact button icons visible and positioned left */
-  button.MuiButton-root svg,
-  a.MuiButton-root svg {
+  .resume-page button.MuiButton-root svg,
+  .resume-page a.MuiButton-root svg {
     display: inline !important;
     margin-right: 2pt !important;
     width: 14pt !important;
@@ -178,8 +175,8 @@
   }
 
   /* Reduce gap between icon and text in resume header buttons */
-  section[aria-labelledby="resume-name"] button.MuiButton-root,
-  section[aria-labelledby="resume-name"] a.MuiButton-root {
+  .resume-page section[aria-labelledby="resume-name"] button.MuiButton-root,
+  .resume-page section[aria-labelledby="resume-name"] a.MuiButton-root {
     gap: 2pt !important;
   }
 
@@ -188,17 +185,17 @@
      ======================================================================== */
 
   /* Right column heading adjustments */
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child h2 {
+  .resume-page > div:last-of-type > div:first-child h2 {
     margin: 4pt 0 2pt 0 !important;
   }
 
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child h3 {
+  .resume-page > div:last-of-type > div:first-child h3 {
     font-size: 11pt !important;
     font-weight: 600 !important;
     margin: 8pt 0 2pt 0 !important;
   }
 
-  [class*="MuiContainer-root"] > div:last-of-type > div:first-child p {
+  .resume-page > div:last-of-type > div:first-child p {
     margin: 4pt 0 4pt 0 !important;
   }
 
@@ -206,13 +203,18 @@
      CONFERENCE/SPEAKING SECTION
      ======================================================================== */
 
+  /* Ensure ConferenceSpeaker h3 matches CoreCompetencies h3 size (11pt) */
+  .resume-page section[aria-labelledby="speaking-heading"] h3 {
+    font-size: 11pt !important;
+  }
+
   /* Prevent conference speaker section from breaking across pages */
-  section[aria-labelledby="speaking-heading"] {
+  .resume-page section[aria-labelledby="speaking-heading"] {
     page-break-inside: avoid;
   }
 
   /* Indent conference list in print */
-  section[aria-labelledby="speaking-heading"] li {
+  .resume-page section[aria-labelledby="speaking-heading"] li {
     margin-left: 18pt !important;
     padding-left: 0 !important;
   }

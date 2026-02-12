@@ -61,6 +61,7 @@ export function ProjectTagsContainer({
     >
       {circa && (
         <Chip
+          className='project-circa'
           label={circa}
           size="small"
           sx={{

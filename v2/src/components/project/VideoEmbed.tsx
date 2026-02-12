@@ -128,6 +128,7 @@ export function VideoEmbed({ video, sx }: VideoEmbedProps) {
 
   return (
     <Box
+      className="video-embed"
       sx={{
         position: 'relative',
         width: '100%',

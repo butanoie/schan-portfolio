@@ -36,6 +36,30 @@
 
 @media print {
   /* ========================================================================
+     DISABLE ANIMATIONS AND ENSURE VISIBILITY
+     ======================================================================== */
+
+  /* Disable all animations in print mode */
+  * {
+    animation: none !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+  }
+
+  /* Force all elements to their visible/final state */
+  body,
+  body * {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Reset all transforms to prevent hidden content */
+  * {
+    transform: none !important;
+  }
+
+  /* ========================================================================
      FORCE LIGHT THEME FOR PRINT
      ======================================================================== */
 
@@ -91,12 +115,7 @@
     padding: 0 !important;
   }
 
-  /* Preserve flex layout for content structure */
-  .MuiBox-root:not(footer) {
-    display: revert !important;
-  }
-
-  /* Ensure footer remains hidden */
+ /* Ensure footer remains hidden */
   footer.MuiBox-root {
     display: none !important;
   }
@@ -105,6 +124,89 @@
   .MuiStack-root {
     display: flex !important;
   }
+
+  /* ========================================================================
+     PROJECT LAYOUT - FORCE NARROW LAYOUT IN PRINT
+     ======================================================================== */
+
+  /* Ensure all project layout variants render identically in print mode -
+     stacked vertically like the narrow layout.
+
+     Layout classes:
+     - .project-layout-grid: Wide layouts (WideVideoLayout, WideRegularLayout, WideAlternateLayout)
+     - .project-layout: Narrow layouts (NarrowLayout, NarrowVideoLayout)
+
+     For wide layouts with grid: Convert grid to block layout so children stack vertically.
+     The gallery's internal grid structure is preserved via ProjectGallery's own styles.
+  */
+
+  /* Convert wide grid layouts to block (single-column stacked layout) */
+  .project-layout-grid {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* Ensure gallery and video components have proper spacing when stacked */
+  .project-layout-grid > div {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .project-layout-grid > div:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Narrow layouts are already stacked - just ensure proper spacing */
+  .project-layout > div:not(:last-child) {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Reduce bottom margin of project headings in print mode */
+  section.project-detail > h2 {
+    margin-top: 1rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Remove floating tags in print mode - force text not to wrap around floats */
+  .project-layout-grid > div:first-child {
+    clear: both !important;
+    display: block !important;
+  }
+
+  /* Force description text to not wrap around floated elements */
+  .project-layout-grid > div:first-child > div:not(:first-child) {
+    clear: both !important;
+    float: none !important;
+  }
+
+  /* Remove float from all child elements in project layout */
+  .project-layout-grid > div:first-child > * {
+    float: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Preserve grid display for project gallery thumbnails.
+     ProjectGallery renders with a grid inside a root Box.
+     The grid Box is a direct child and must preserve display: grid for the
+     4-column thumbnail layout to render correctly. */
+  [data-testid="project-gallery"] > div {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  /* Force 4:3 aspect ratio for thumbnail images in print mode */
+  [data-testid="project-gallery"] img {
+    aspect-ratio: 4 / 3 !important;
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
 
   /* ========================================================================
      HIDE NON-ESSENTIAL ELEMENTS
@@ -159,7 +261,7 @@
   h1 {
     font-size: 22pt !important;
     color: #2c2c2c !important;
-    margin: 0 0 4pt 0 !important;
+    margin: 1rem 0 4pt 0 !important;
     padding: 0 !important;
   }
 
@@ -255,7 +357,12 @@
     font-size: 7pt !important;
     height: auto !important;
     padding: 2pt 4pt !important;
-    margin: 0 4pt 0 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Preserve maroon background for date chips */
+  .MuiChip-root.project-circa {
+    background-color: #8B1538 !important;
   }
 
   .MuiChip-label {
@@ -334,10 +441,26 @@
     margin-bottom: 0 !important;
   }
 
-  /* Ensure images and media are visible */
-  img,
-  video {
+  /* Hide video embed containers in print mode */
+  .video-embed {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure images are visible */
+  img {
     max-width: 100% !important;
     height: auto !important;
+    background-image: none !important;
+    background-color: transparent !important;
+  }
+
+  /* Hide blur placeholder containers for unloaded images */
+  picture {
+    background-image: none !important;
+    background-color: transparent !important;
   }
 }
