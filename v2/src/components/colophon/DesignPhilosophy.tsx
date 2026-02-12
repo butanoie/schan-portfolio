@@ -59,6 +59,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
 
   return (
     <Card
+      className="color-card"
       variant="outlined"
       sx={{
         height: "100%",
@@ -69,6 +70,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
       }}
     >
       <Box
+        className="color-swatch-display"
         sx={{
           backgroundColor: color.hex,
           height: 80,
@@ -76,7 +78,8 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
           alignItems: "center",
           justifyContent: "center",
           color: textColor,
-        }}
+          "--swatch-color": color.hex,
+        } as React.CSSProperties}
         aria-hidden="true"
       >
         <Typography
@@ -132,6 +135,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
 
   return (
     <Card
+      className="typography-card"
       variant="outlined"
       sx={{
         height: "100%",
@@ -197,6 +201,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
         </Typography>
 
         <Box
+          className="typography-sample"
           sx={{
             p: 2,
             backgroundColor: "background.default",
@@ -249,6 +254,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
 
   return (
     <Box
+      id="design-philosophy"
       component="section"
       aria-labelledby="design-heading"
       sx={{ 
@@ -257,7 +263,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       }}
     >
       <Typography
-        id="design-heading"
+        className="section-heading"
         variant="h2"
         sx={{
           color: palette.secondary,
@@ -281,10 +287,12 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       </Typography>
 
       {/* Color Palette */}
-      <Box sx={{ mb: 5 }}>
+      <Box
+        className="design-category"
+        sx={{ mb: 5 }}
+      >
         <Typography
           variant="h3"
-          component="h3"
           sx={{
             fontFamily: '"Oswald", sans-serif',
             fontWeight: 600,
@@ -296,6 +304,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         </Typography>
 
         <Box
+          className="color-palette-grid"
           sx={{
             display: "grid",
             gridTemplateColumns: {
@@ -320,7 +329,9 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       </Box>
 
       {/* Typography */}
-      <Box>
+      <Box
+        className="design-category"
+      >
         <Typography
           variant="h3"
           sx={{

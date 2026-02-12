@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -53,6 +54,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
 
   return (
     <Card
+      className="technology-card"
       variant="outlined"
       sx={{
         height: "100%",
@@ -134,6 +136,26 @@ export default function TechnologiesShowcase({
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
   const { t } = useI18n(); // Used in TechnologyCard and V1 section headers
+  const [v1AccordionExpanded, setV1AccordionExpanded] = useState(false);
+
+  // Detect print mode and always expand V1 accordion when printing
+  useEffect(() => {
+    const printMediaQuery = window.matchMedia("print");
+
+    const handlePrintChange = (e: MediaQueryListEvent) => {
+      setV1AccordionExpanded(e.matches);
+    };
+
+    // Set initial state
+    setV1AccordionExpanded(printMediaQuery.matches);
+
+    // Listen for print mode changes
+    printMediaQuery.addEventListener("change", handlePrintChange);
+
+    return () => {
+      printMediaQuery.removeEventListener("change", handlePrintChange);
+    };
+  }, []);
 
 
   return (
@@ -146,7 +168,7 @@ export default function TechnologiesShowcase({
       }}
     >
       <Typography
-        id="technologies-heading"
+        className="section-heading"
         variant="h2"
         component="h2"
         sx={{
@@ -172,7 +194,11 @@ export default function TechnologiesShowcase({
 
       {/* V2 Technologies by Category */}
       {categories.map((category) => (
-        <Box key={category.label} sx={{ mb: 4 }}>
+        <Box 
+          className="technologies-category"
+          key={category.label}
+          sx={{ mb: 4 }}
+        >
           <Typography
             variant="h3"
             component="h3"
@@ -205,6 +231,9 @@ export default function TechnologiesShowcase({
 
       {/* V1 Technologies (Historical) */}
       <Accordion
+        id="v1-accordion"
+        expanded={v1AccordionExpanded}
+        onChange={(_, isExpanded) => setV1AccordionExpanded(isExpanded)}
         sx={{
           mt: 4,
           backgroundColor: "background.paper",

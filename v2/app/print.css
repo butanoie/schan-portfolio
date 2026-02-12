@@ -207,6 +207,116 @@
     height: 100% !important;
   }
 
+  /* ========================================================================
+     COLOPHON - PRINT STYLING FOR COLOPHON PAGE COMPONENTS
+
+     The colophon page contains multiple complex components that need special
+     handling in print mode:
+     - TechnologiesShowcase: Displays technologies in an accordion with cards
+     - DesignPhilosophy: Shows design principles with category groupings
+     - ButaStory: Displays founder/creator information
+     - Color palettes and typography samples
+
+     These styles ensure these components render properly when printed.
+     ======================================================================== */
+
+  /* Main section headings - add extra top margin for separation and readability */
+  h2.section-heading {
+    margin-top: 18pt !important;
+  }
+
+  /* Technology category headings - prevent orphaning with content */
+  .technologies-category {
+    margin-top: 18pt !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* V1 Accordion container - normalize spacing and prevent page breaks in middle of accordion */
+  #v1-accordion {
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Accordion summary button - reduce padding and height for compact print layout */
+  #v1-accordion .MuiAccordion-heading > button {
+    padding: 0 0 1rem !important;
+    min-height: 0 !important;
+  }
+
+  /* Accordion details content - remove default Material-UI padding */
+  #v1-accordion .MuiAccordionDetails-root {
+    padding: 0 !important;
+  }
+
+  /* Expanded accordion summary content - remove margin for cleaner layout */
+  #v1-accordion .MuiAccordionSummary-content.Mui-expanded {
+    margin: 0 !important;
+  }
+
+  /* Card content padding - remove excess padding for technology, typography, and color cards */
+  .technology-card .MuiCardContent-root,
+  .typography-card .MuiCardContent-root,
+  .color-card .MuiCardContent-root {
+    padding: 0 !important;
+  }
+
+  /* Card paragraph text - remove top margin and set smaller font for print */
+  .technology-card p,
+  .typography-card p,
+  .color-card p {
+    margin-top: 0 !important;
+    font-size: 9pt !important;
+  }
+
+  /* Card inner box elements - reduce bottom margin for tighter spacing */
+  .technology-card .MuiCardContent-root .MuiBox-root,
+  .typography-card .MuiCardContent-root .MuiBox-root,
+  .color-card .MuiCardContent-root .MuiBox-root {
+    margin-bottom: 4px !important;
+  }
+
+  /* Design philosophy section - allow page breaks to optimize page usage */
+  #design-philosophy {
+    page-break-inside: auto;
+  }
+
+  /* Design category blocks - prevent breaking mid-category but allow between categories */
+  .design-category {
+    margin-top: 18pt !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Color palette grid - render as 3-column layout for optimal print space usage */
+  .color-palette-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Color swatch - display background color using CSS variable for visual representation */
+  .color-swatch-display .MuiTypography-caption {
+    background-color: var(--swatch-color) !important;
+  }
+
+  /* Color card headings - add slight top margin for visual separation */
+  .color-card h4 {
+    margin-top: 4pt !important;
+  }
+
+  /* Typography samples - remove default margins for clean layout */
+  .typography-sample {
+    margin: 0 !important;
+  }
+
+  /* Typography body text sample - increase size for better readability in print */
+  .typography-sample .MuiTypography-body1 {
+    font-size: 13pt !important;
+  }
+
+  /* Buta story heading - remove background color and ensure transparent rendering in print */
+  .buta-story-heading {
+    background: none !important;
+    padding-bottom: 10pt !important;
+  }
 
   /* ========================================================================
      HIDE NON-ESSENTIAL ELEMENTS
@@ -300,8 +410,10 @@
     color: #2c2c2c !important;
   }
 
+  /* Paragraph spacing - use symmetric top/bottom margins for better spacing consistency.
+     Removed bottom margin from right to use shorthand notation for cleaner output. */
   p {
-    margin: 10pt 0 0 0 !important;
+    margin: 10pt 0 !important;
   }
 
   li {
@@ -385,8 +497,10 @@
     text-shadow: none !important;
   }
 
-  /* Remove background colors from containers except where specified */
-  [class*="MuiBox-root"],
+  /* Remove background colors from containers except where specified.
+     Exclude color-swatch-display because color swatches need their background color
+     to display the actual color for visual reference in the printed colophon. */
+  [class*="MuiBox-root"]:not(.color-swatch-display),
   [class*="MuiPaper-root"] {
     background-color: transparent !important;
     border: none !important;
