@@ -200,7 +200,7 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
         isMounted,
       }}
     >
-      {children}
+      {isMounted ? children : null}
     </ThemeContext.Provider>
   );
 }
