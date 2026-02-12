@@ -62,6 +62,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
 
       {/* Boo vs Bu Image */}
         <Paper
+          className="buta-story-heading"
           elevation={0}
           sx={{
             p: 2,
