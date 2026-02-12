@@ -263,6 +263,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       }}
     >
       <Typography
+        id="design-heading"
         className="section-heading"
         variant="h2"
         sx={{

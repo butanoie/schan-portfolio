@@ -136,18 +136,25 @@ export default function TechnologiesShowcase({
   const { mode } = useThemeContext();
   const palette = getPaletteByMode(mode);
   const { t } = useI18n(); // Used in TechnologyCard and V1 section headers
-  const [v1AccordionExpanded, setV1AccordionExpanded] = useState(false);
+  const [v1AccordionExpanded, setV1AccordionExpanded] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("print").matches;
+    }
+    return false;
+  });
 
   // Detect print mode and always expand V1 accordion when printing
   useEffect(() => {
     const printMediaQuery = window.matchMedia("print");
 
+    /**
+     * Handles print mode changes and updates accordion state.
+     *
+     * @param e - The media query list event triggered when print mode changes
+     */
     const handlePrintChange = (e: MediaQueryListEvent) => {
       setV1AccordionExpanded(e.matches);
     };
-
-    // Set initial state
-    setV1AccordionExpanded(printMediaQuery.matches);
 
     // Listen for print mode changes
     printMediaQuery.addEventListener("change", handlePrintChange);
@@ -168,6 +175,7 @@ export default function TechnologiesShowcase({
       }}
     >
       <Typography
+        id="technologies-heading"
         className="section-heading"
         variant="h2"
         component="h2"
