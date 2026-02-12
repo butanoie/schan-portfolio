@@ -41,6 +41,7 @@ export default function ResumePage() {
       component="main"
       role="article"
       maxWidth="lg"
+      className="resume-page"
       sx={{
         py: { xs: 2, md: 0 },
         px: { xs: 2, sm: 3, md: 3 },

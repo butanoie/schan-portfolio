@@ -129,7 +129,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   const palette = getPaletteByMode(mode);
 
   return (
-    <Box component="section">
+    <Box component="section" className="project-detail">
       {/* Divider between projects */}
       <Divider sx={{ mt: 6, mb: 4, mx: {xs:0, sm: 4, md: 8} }} />
 
@@ -181,6 +181,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 function WideVideoLayout({ project }: ProjectDetailProps) {
   return (
     <Box
+      className="project-layout-grid"
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '1fr 2fr' },
@@ -218,6 +219,7 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
 function WideRegularLayout({ project }: ProjectDetailProps) {
   return (
     <Box
+      className="project-layout-grid"
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '2fr 1fr' },
@@ -252,6 +254,7 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
 function WideAlternateLayout({ project }: ProjectDetailProps) {
   return (
     <Box
+      className="project-layout-grid"
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '1fr 2fr' },
@@ -284,7 +287,7 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
  */
 function NarrowLayout({ project }: ProjectDetailProps) {
   return (
-    <Box>
+    <Box className="project-layout">
       <ProjectDescription
         html={project.desc}
         tags={project.tags}
@@ -310,7 +313,7 @@ function NarrowLayout({ project }: ProjectDetailProps) {
  */
 function NarrowVideoLayout({ project }: ProjectDetailProps) {
   return (
-    <Box>
+    <Box className="project-layout">
       <ProjectDescription
         html={project.desc}
         tags={project.tags}
