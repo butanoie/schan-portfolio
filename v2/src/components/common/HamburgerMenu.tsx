@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Drawer, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useMediaQuery, useTheme, Divider } from "@mui/material";
+import { Drawer, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useMediaQuery, useTheme, Divider, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
@@ -12,7 +12,9 @@ import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
-import { SettingsButton } from "../settings/SettingsButton";
+import { ThemeSwitcher } from "../settings/ThemeSwitcher";
+import { LanguageSwitcher } from "../settings/LanguageSwitcher";
+import { AnimationsSwitcher } from "../settings/AnimationsSwitcher";
 
 /**
  * Navigation link configuration for the hamburger menu.
@@ -30,7 +32,7 @@ interface NavLink {
  * Hamburger menu component for mobile navigation.
  *
  * Displays a menu icon button on mobile devices (< 600px) that opens
- * a drawer containing the main navigation links and settings button.
+ * a drawer containing the main navigation links and settings controls.
  * The drawer slides in from the right side and closes after navigation
  * or when clicking outside.
  *
@@ -38,9 +40,9 @@ interface NavLink {
  * - Only visible on mobile devices (< 600px)
  * - MUI Drawer component sliding from right
  * - Contains Portfolio, Résumé, and Colophon navigation links
- * - Contains Settings button at the bottom of the menu (after a divider)
+ * - Contains settings controls: Theme, Language, and Animations switchers
  * - Active page indication with maroon background
- * - Drawer closes after navigation but stays open when settings modal opens
+ * - Drawer closes after navigation
  * - Respects animations setting from AnimationsContext
  * - Full keyboard navigation and ARIA support
  *
@@ -223,16 +225,64 @@ export default function HamburgerMenu() {
         {/* Divider */}
         <Divider sx={{ mx: 2, my: 2 }} />
 
-        {/* Settings Button */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            px: 2,
-            pb: 2,
-          }}
-        >
-          <SettingsButton size="medium" />
+        {/* Settings Section */}
+        <Box sx={{ px: 2, pb: 2 }}>
+          {/* Settings Header */}
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 2,
+              fontSize: "1rem",
+              fontWeight: 600,
+            }}
+          >
+            {t("settings.title")}
+          </Typography>
+
+          {/* Theme Switcher */}
+          <Box sx={{ mb: 2 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                mb: 1,
+                fontSize: "0.875rem",
+                opacity: 0.7,
+              }}
+            >
+              {t("settings.theme")}
+            </Typography>
+            <ThemeSwitcher />
+          </Box>
+
+          {/* Language Switcher */}
+          <Box sx={{ mb: 2 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                mb: 1,
+                fontSize: "0.875rem",
+                opacity: 0.7,
+              }}
+            >
+              {t("settings.language")}
+            </Typography>
+            <LanguageSwitcher />
+          </Box>
+
+          {/* Animations Switcher */}
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{
+                mb: 1,
+                fontSize: "0.875rem",
+                opacity: 0.7,
+              }}
+            >
+              {t("settings.animations")}
+            </Typography>
+            <AnimationsSwitcher />
+          </Box>
         </Box>
       </Drawer>
     </>
