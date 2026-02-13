@@ -54,8 +54,6 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway Staging
-        run: |
-          cd v2
-          railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
+        run: railway up ./v2 --path-as-root --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
