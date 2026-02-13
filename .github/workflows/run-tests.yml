@@ -7,8 +7,39 @@ on:
       - staging
 
 jobs:
-  lint:
+  check-changes:
     runs-on: ubuntu-latest
+    outputs:
+      has-v2-changes: ${{ steps.detect.outputs.has-v2-changes }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect v2 folder changes
+        id: detect
+        run: |
+          # Get list of changed files compared to base branch
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > /tmp/changed_files.txt
+
+          # Check if any changes are in v2/ folder
+          has_v2_changes=$(grep '^v2/' /tmp/changed_files.txt | wc -l)
+
+          if [ $has_v2_changes -gt 0 ]; then
+            echo "has-v2-changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-v2-changes=false" >> $GITHUB_OUTPUT
+          fi
+
+          echo "Changed files:"
+          cat /tmp/changed_files.txt
+
+  tests:
+    needs: check-changes
+    runs-on: ubuntu-latest
+    if: needs.check-changes.outputs.has-v2-changes == 'true'
 
     strategy:
       matrix:
@@ -39,3 +70,25 @@ jobs:
       - name: Run Unit Test
         working-directory: v2
         run: npm run test
+
+  deploy:
+    needs: [check-changes, tests]
+    runs-on: ubuntu-latest
+    if: github.base_ref == 'staging' && needs.check-changes.outputs.has-v2-changes == 'true'
+    # ⚠️ REQUIRES MANUAL APPROVAL
+    # This deployment is protected by environment rules.
+    # A reviewer must approve before deployment proceeds.
+    # Configure in: Settings → Environments → Sing Portfolio / staging → Required reviewers
+    environment: "Sing Portfolio / staging"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway Staging
+        run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
