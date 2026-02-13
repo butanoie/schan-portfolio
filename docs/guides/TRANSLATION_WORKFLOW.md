@@ -6,38 +6,20 @@ Quick reference for translating new strings in the portfolio's localization syst
 
 ## Architecture Overview
 
-The portfolio uses **two localization patterns**:
+The portfolio uses **JSON-First localization** following industry best practices:
 
-1. **Direct i18n (Pages)** - For resume, colophon, portfolio pages
-   - Uses `v2/src/locales/[lang]/[file].json` files
-   - Translations pulled via `getLocalized*Data(t)` functions
-   - Uses `{ ns: 'pages' }` namespace
-   - Example: `v2/src/locales/en/resume.json`
-
-2. **JSON Merge (Projects)** - For project collection
-   - Uses `v2/src/locales/[lang]/projects.json`
-   - Async loading with runtime merge
-   - Example: `v2/src/locales/en/projects.json`
+- **All translatable content in JSON files** (including English)
+- **TypeScript contains only structure** (IDs, URLs, arrays)
+- **Single source of truth per language** in locale files
+- **Pattern applies to all content:** Pages (resume, colophon, home) and projects
 
 ## Quick Start
 
-### Step 1: Identify Which Pattern to Use
-
-**Use Direct i18n if:**
-- Adding text to resume, colophon, or home pages
-- Content is page-level (not dynamic projects)
-- Strings are in `v2/src/data/resume.ts`, `colophon.ts`, or `portfolio.ts`
-
-**Use JSON Merge if:**
-- Adding/updating a project
-- Content is in the projects collection
-- String is indexed or dynamic
-
-### Step 2: Add English Text to JSON
-
-#### For Pages (Direct i18n Pattern)
+### Step 1: Add English Text to JSON
 
 Edit the appropriate locale file in `v2/src/locales/en/`:
+
+**For Pages (resume, colophon, home, portfolio):**
 
 ```json
 // v2/src/locales/en/resume.json
@@ -52,11 +34,10 @@ Edit the appropriate locale file in `v2/src/locales/en/`:
 }
 ```
 
-#### For Projects (JSON Merge Pattern)
-
-Edit `v2/src/locales/en/projects.json`:
+**For Projects:**
 
 ```json
+// v2/src/locales/en/projects.json
 {
   "projectId": {
     "title": "Project Name",
@@ -67,9 +48,9 @@ Edit `v2/src/locales/en/projects.json`:
 }
 ```
 
-### Step 3: Request DeepL Translation via Claude
+### Step 2: Request DeepL Translation via Claude
 
-**Ask Claude to translate your strings using DeepL MCP:**
+**Ask Claude to translate your strings using DeepL MCP (example request):**
 
 ```
 I need to translate these strings to French for the portfolio site.
@@ -87,7 +68,7 @@ Please translate using DeepL and provide the formatted JSON for v2/src/locales/f
 
 Claude will use DeepL to produce French translations and format them as JSON ready to paste.
 
-### Step 4: Add French Translations to Locale File
+### Step 3: Add French Translations to Locale File
 
 Claude will provide formatted JSON like:
 
@@ -106,7 +87,7 @@ Claude will provide formatted JSON like:
 
 Paste this into the corresponding French locale file.
 
-### Step 5: Update Data File to Use Translation (If New)
+### Step 4: Update Data File to Use Translation (If New)
 
 If you added a new translatable field, update the corresponding data file to use the translation function:
 
@@ -124,7 +105,9 @@ export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
 }
 ```
 
-### Step 6: Verify & Test
+**Important:** Never put translatable strings in TypeScript. All content lives in JSON files only.
+
+### Step 5: Verify & Test
 
 ```bash
 # Type check
@@ -250,7 +233,7 @@ export default function NewPageComponent() {
 }
 ```
 
-## Adding a New Project (JSON Merge Pattern)
+## Adding a New Project (JSON-First Pattern)
 
 When adding a project to the portfolio:
 
@@ -417,3 +400,8 @@ npm run lint
 npm test
 # Then manually test in browser with both languages
 ```
+
+---
+
+**Last Updated:** 2026-02-12
+**Status:** ✅ Updated to JSON-First pattern standardization
