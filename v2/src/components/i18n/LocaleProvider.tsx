@@ -51,6 +51,7 @@ export function LocaleProvider({
   initialLocale,
 }: LocaleProviderProps) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   /**
    * Initialize locale on client side.
@@ -59,6 +60,9 @@ export function LocaleProvider({
    *
    * Uses a cancellation token to prevent race conditions when multiple
    * locale changes occur in rapid succession.
+   *
+   * Defers rendering children until initialization is complete to prevent
+   * flash of unstyled content (FOUC) with wrong language.
    */
   useEffect(() => {
     // This effect initializes locale state on mount
@@ -96,6 +100,10 @@ export function LocaleProvider({
       }
     });
 
+    // Mark initialization as complete
+    // This defers rendering children until locale is fully loaded
+    setIsInitialized(true);
+
     // Cleanup function to prevent state updates from stale effects
     return () => {
       cancelled = true;
@@ -132,10 +140,12 @@ export function LocaleProvider({
     setLocale: handleSetLocale,
   };
 
-  // Always provide context, even before mount, with the current locale value
-  // This prevents tests and components from breaking, while still allowing
-  // the hydration safety of useEffect
+  // Defer rendering children until locale is initialized from localStorage/browser.
+  // This prevents flash of unstyled content (FOUC) with incorrect language.
+  // Always provide context so hooks don't break, but children only render when ready.
   return (
-    <LocaleContext.Provider value={contextValue}>{children}</LocaleContext.Provider>
+    <LocaleContext.Provider value={contextValue}>
+      {isInitialized ? children : null}
+    </LocaleContext.Provider>
   );
 }
