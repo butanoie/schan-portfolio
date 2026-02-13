@@ -79,7 +79,7 @@ Add **one secret** and **two variables** to GitHub Actions:
 
 ### Step 5: Verify Deployment Configuration
 
-The workflow is already configured in [`.github/workflows/run-tests.yml`](.github/workflows/run-tests.yml).
+The workflow is already configured in [`.github/workflows/test-deploy-dev.yml`](.github/workflows/test-deploy-dev.yml).
 
 **Workflow Structure:**
 ```yaml
@@ -265,7 +265,7 @@ If you need to add or modify environment variables:
 - **Framework:** Next.js 16+
 
 ### GitHub Workflow Configuration
-- **Workflow File:** `.github/workflows/run-tests.yml`
+- **Workflow File:** `.github/workflows/test-deploy-dev.yml`
 - **Workflow Name:** "Lint, Type Check, Unit Test, and Deploy"
 - **Trigger:** Pull requests to `main` branch
 - **Smart Execution:** Only runs tests/deploy if `v2/` or `.github/workflows/` folders changed
@@ -440,6 +440,189 @@ Replace:
 - Regenerate token if it's accidentally exposed
 - Review GitHub Actions logs for any sensitive information leaks
 - Regularly audit deployed code and environment variables
+
+## Production Deployment
+
+### Manual Production Deployment Workflow
+
+Once your changes are verified in the development environment, you can manually deploy to production using the **"Manual Deploy to Production"** workflow.
+
+**Workflow File:** `.github/workflows/deploy-production.yml`
+
+### How It Works
+
+1. **Manual Trigger**: The workflow is triggered manually from GitHub (not automatically on PR merge)
+2. **Choose Deployment Target**: Select which commit/branch to deploy (defaults to `main`)
+3. **Approval Gate**: Requires manual approval from configured reviewers before deploying
+4. **Deploy to Production**: Once approved, deploys to your production environment in Railway
+
+### Deploying to Production
+
+#### Step 1: Trigger the Workflow
+
+1. Go to your GitHub repository
+2. Navigate to **Actions** tab
+3. Select **"Manual Deploy to Production"** workflow
+4. Click **"Run workflow"** button
+5. Enter the **Git reference** to deploy (optional):
+   - Leave blank or enter `main` to deploy the latest from main branch
+   - Enter a commit SHA to deploy a specific commit
+   - Enter a tag name to deploy a specific release
+6. Click **"Run workflow"**
+
+#### Step 2: Approve the Deployment
+
+After the workflow starts:
+
+1. The job will pause and show **"Waiting for approval"**
+2. Go to the **Actions** tab and select the running workflow
+3. Click the **"Review deployment"** button
+4. Review the details:
+   - **Environment**: Sing Portfolio / production
+   - **Deployed by**: Your GitHub username
+   - **Commit**: The commit being deployed
+5. Click **"Approve and deploy"**
+
+The workflow will then proceed to deploy to production.
+
+#### Step 3: Verify Production Deployment
+
+1. Go to Railway Dashboard
+2. Select the **Sing Portfolio** project
+3. Select the **production** environment
+4. Check the **Deployments** tab for the new deployment
+5. Monitor the deployment logs for any issues
+
+### Production Deployment Configuration
+
+**Workflow Structure:**
+```yaml
+workflow_dispatch:
+  inputs:
+    ref:
+      description: 'Git reference to deploy (branch, tag, or commit SHA)'
+      required: false
+      default: 'main'
+      type: string
+```
+
+**Deploy job configuration:**
+```yaml
+deploy-production:
+  runs-on: ubuntu-latest
+  environment: "Sing Portfolio / production"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.ref || 'main' }}
+
+    - name: Install Railway CLI
+      run: npm install -g @railway/cli
+
+    - name: Deploy to Railway Production
+      run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=production
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+```
+
+**Key Features:**
+- **Manual Trigger**: `workflow_dispatch` allows triggering directly from GitHub UI
+- **Flexible Deployments**: Can deploy from any branch, tag, or specific commit SHA
+- **Approval Protection**: `environment: "Sing Portfolio / production"` requires manual approval
+- **Same Configuration**: Uses the same `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_NAME`, and `RAILWAY_TOKEN`
+- **Production Environment**: Targets the `production` environment in Railway (not development)
+
+### Recommended Deployment Workflow
+
+**Best Practice:**
+1. Create PR to `main` with your changes
+2. Tests run automatically and deploy to development (with approval)
+3. Verify changes work correctly in development environment
+4. Test thoroughly in development
+5. When ready for production, manually trigger "Manual Deploy to Production" workflow
+6. Select `main` branch (or specific commit/tag)
+7. Approve the production deployment
+8. Monitor production deployment and verify application works
+
+This gives you:
+- ✅ **Safety**: Development environment for testing before production
+- ✅ **Control**: Manual approval required for all production deployments
+- ✅ **Flexibility**: Deploy any commit, not just the latest
+- ✅ **Audit Trail**: GitHub records all deployments and approvers
+- ✅ **Rollback Option**: Can deploy previous commits if needed
+
+### Setting Up Production Approval
+
+To require approval before production deployments:
+
+1. Go to your GitHub repository
+2. Navigate to **Settings** > **Environments**
+3. Click **New environment**
+4. Name it **"Sing Portfolio / production"** (must match workflow)
+5. Click **Configure environment**
+6. Check **Required reviewers** checkbox
+7. Add GitHub users who can approve production deployments
+8. Click **Add secret** and add your `RAILWAY_TOKEN` if not already present
+9. Click **Save protection rules**
+
+**Result:** All production deployments will wait for approval from designated reviewers.
+
+### Comparing Development vs Production
+
+| Aspect | Development | Production |
+|--------|-------------|-----------|
+| **Trigger** | Automatic on PR merge | Manual (workflow_dispatch) |
+| **Frequency** | Every PR with v2 changes | On demand when ready |
+| **Approval** | Required | Required |
+| **Environment** | development | production |
+| **Use Case** | Testing and validation | Live users |
+| **Deployment Source** | Latest from main | Any commit/branch/tag |
+
+### Troubleshooting Production Deployment
+
+#### "Sing Portfolio / production" Environment Not Found
+**Problem:** Workflow fails because the production environment doesn't exist in GitHub.
+
+**Solution:**
+1. Go to your GitHub repository
+2. Navigate to **Settings** > **Environments**
+3. Click **New environment**
+4. Name it exactly: **"Sing Portfolio / production"**
+5. Click **Configure environment**
+6. Add required reviewers (optional but recommended)
+7. Click **Save protection rules**
+
+#### Production Deployment Fails with Environment Error
+**Problem:** Railway reports "environment not found" or similar error.
+
+**Solution:**
+1. Verify the production environment exists in Railway:
+   - Go to Railway Dashboard
+   - Select "Sing Portfolio" project
+   - Check that a "production" environment exists
+2. If missing, create it:
+   - Click the environment dropdown
+   - Select "New environment"
+   - Name it: `production`
+3. Configure environment variables (if needed):
+   - Go to the production environment in Railway
+   - Add all necessary environment variables
+   - Ensure they match your production requirements
+
+#### Permission Denied Error
+**Problem:** Deployment fails with permission or authentication error.
+
+**Solution:**
+1. Verify the Railway token has production deployment permissions:
+   - Go to Railway Account Settings > Tokens
+   - Check the token permissions
+2. Regenerate the token if needed:
+   - Create a new token in Railway
+   - Update the `RAILWAY_TOKEN` secret in GitHub
+3. Verify the token secret exists:
+   - Go to Settings > Secrets and variables > Actions
+   - Confirm `RAILWAY_TOKEN` is present
 
 ## Related Documentation
 

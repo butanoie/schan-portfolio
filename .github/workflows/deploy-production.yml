@@ -1,0 +1,40 @@
+name: Manual Deploy to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git reference to deploy (branch, tag, or commit SHA)'
+        required: false
+        default: 'main'
+        type: string
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    # ⚠️ REQUIRES MANUAL APPROVAL
+    # This deployment is protected by environment rules.
+    # A reviewer must approve before deployment proceeds.
+    # Configure in: Settings → Environments → Sing Portfolio / production → Required reviewers
+    environment: "Sing Portfolio / production"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || 'main' }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway Production
+        run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=production
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deployment Summary
+        run: |
+          echo "✅ Deployment to production complete"
+          echo "📋 Deployed ref: ${{ github.event.inputs.ref || 'main' }}"
+          echo "👤 Deployed by: ${{ github.actor }}"
+          echo "⏰ Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
