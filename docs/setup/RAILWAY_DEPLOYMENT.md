@@ -69,10 +69,15 @@ deploy:
   steps:
     - name: Deploy to Railway Staging
       working-directory: v2
-      run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --environment=staging
+      run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service="Sing Portfolio" --environment=staging
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 ```
+
+**Explanation:**
+- `--project`: Specifies which Railway project to deploy to (using the unique project ID)
+- `--service`: Specifies which service within the project to deploy (required when a project has multiple services)
+- `--environment`: Specifies the deployment environment (staging)
 
 ✅ Confirm both secrets are added:
 - `RAILWAY_TOKEN` - Your Railway API token
@@ -143,7 +148,8 @@ If you need to add or modify environment variables:
 - **Build Directory:** `v2/`
 - **Token Secret Name:** `RAILWAY_TOKEN`
 - **Project ID Secret Name:** `RAILWAY_PROJECT_ID`
-- **Deployment Command:** `railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --environment=staging`
+- **Deployment Command:** `railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service="Sing Portfolio" --environment=staging`
+- **Why Both?** Your Railway project has multiple services, so we specify both the project ID and the service name
 
 ## Troubleshooting
 
@@ -232,14 +238,16 @@ To deploy manually without using GitHub Actions:
 
 ### Option 2: Using Project ID
 
-If you prefer not to link, you can deploy directly using the project ID:
+If you prefer not to link, you can deploy directly using the project ID and service name:
 
 ```bash
 cd v2
-railway up --project=YOUR_PROJECT_ID --environment=staging
+railway up --project=YOUR_PROJECT_ID --service="Sing Portfolio" --environment=staging
 ```
 
 Replace `YOUR_PROJECT_ID` with your Railway project ID.
+
+**Note:** The `--service` flag is required when your Railway project has multiple services.
 
 ## Monitoring Deployments
 
