@@ -85,15 +85,23 @@ deploy:
   needs: tests
   runs-on: ubuntu-latest
   if: github.base_ref == 'staging'
+  environment: "Sing Portfolio / staging"
   steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Railway CLI
+      run: npm install -g @railway/cli
+
     - name: Deploy to Railway Staging
-      working-directory: v2
       run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 ```
 
 **Explanation:**
+- `railway up`: Deploys the entire repository root to Railway (automatically builds and deploys)
+- Railway detects the `v2/` directory as the application root via configuration
 - `--project`: Specifies which Railway project to deploy to (using the unique project ID from variables)
 - `--service`: Specifies which service within the project to deploy (loaded from variables)
 - `--environment`: Specifies the deployment environment (staging)
@@ -160,13 +168,14 @@ If you need to add or modify environment variables:
 ### Railway Project Details
 - **Project Name:** Sing Portfolio
 - **Environment:** staging
-- **Deploy Source:** GitHub repository (v2/ directory)
+- **Deploy Source:** GitHub repository root (Railway detects `v2/` as the application directory)
 - **Framework:** Next.js 16+
 
 ### GitHub Workflow Configuration
 - **Workflow File:** `.github/workflows/run-tests.yml`
-- **Trigger:** Pull requests to `staging` branch
-- **Build Directory:** `v2/`
+- **Trigger:** Pull requests to `staging` branch (after tests pass)
+- **Environment:** `Sing Portfolio / staging` (requires manual approval for deployment)
+- **Deploy Source:** Repository root (Railway automatically detects `v2/` as the app directory)
 - **Authentication Secret:** `RAILWAY_TOKEN` (encrypted)
 - **Project ID Variable:** `RAILWAY_PROJECT_ID` (non-sensitive config)
 - **Service Name Variable:** `RAILWAY_SERVICE_NAME` (non-sensitive config)
