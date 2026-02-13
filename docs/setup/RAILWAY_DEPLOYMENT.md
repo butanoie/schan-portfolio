@@ -20,7 +20,14 @@ Before setting up automatic deployments, ensure you have:
 
 ## Setup Steps
 
-### Step 1: Create Railway API Token
+### Step 1: Get Railway Project ID
+
+1. Go to [Railway Dashboard](https://railway.app/dashboard)
+2. Select the **Sing Portfolio** project
+3. Click **Project Settings** (gear icon)
+4. Copy the **Project ID** (UUID format: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`)
+
+### Step 2: Create Railway API Token
 
 1. Go to [Railway Dashboard](https://railway.app/dashboard)
 2. Click your profile icon in the top right corner
@@ -30,8 +37,11 @@ Before setting up automatic deployments, ensure you have:
 6. Give it a descriptive name (e.g., "GitHub CI/CD Deploy")
 7. Copy the token (you won't be able to see it again)
 
-### Step 2: Add Token to GitHub Secrets
+### Step 3: Add Secrets to GitHub
 
+Add **two** repository secrets:
+
+**Secret 1 - Railway Token:**
 1. Go to your GitHub repository
 2. Navigate to **Settings** > **Secrets and variables** > **Actions**
 3. Click **New repository secret**
@@ -39,20 +49,36 @@ Before setting up automatic deployments, ensure you have:
 5. **Value:** Paste the token you copied from Railway
 6. Click **Add secret**
 
-### Step 3: Verify Deployment Configuration
+**Secret 2 - Railway Project ID:**
+1. Still in **Secrets and variables** > **Actions**
+2. Click **New repository secret**
+3. **Name:** `RAILWAY_PROJECT_ID`
+4. **Value:** Paste the project ID you copied from Railway
+5. Click **Add secret**
+
+### Step 4: Verify Deployment Configuration
 
 The workflow is already configured in [`.github/workflows/run-tests.yml`](.github/workflows/run-tests.yml).
 
 **Deploy job configuration:**
 ```yaml
 deploy:
-  needs: lint
+  needs: tests
   runs-on: ubuntu-latest
   if: github.base_ref == 'staging'
-  # ... deploys v2/ to Railway staging environment
+  steps:
+    - name: Deploy to Railway Staging
+      working-directory: v2
+      run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --environment=staging
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 ```
 
-### Step 4: Test the Deployment
+✅ Confirm both secrets are added:
+- `RAILWAY_TOKEN` - Your Railway API token
+- `RAILWAY_PROJECT_ID` - Your Railway project ID
+
+### Step 5: Test the Deployment
 
 1. Create a test branch from `staging`:
    ```bash
@@ -116,6 +142,8 @@ If you need to add or modify environment variables:
 - **Trigger:** Pull requests to `staging` branch
 - **Build Directory:** `v2/`
 - **Token Secret Name:** `RAILWAY_TOKEN`
+- **Project ID Secret Name:** `RAILWAY_PROJECT_ID`
+- **Deployment Command:** `railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --environment=staging`
 
 ## Troubleshooting
 
@@ -139,13 +167,18 @@ If you need to add or modify environment variables:
    - Create a new token
    - Update the `RAILWAY_TOKEN` secret in GitHub with the new value
 
-### Deployment Fails with Service Not Found
-**Problem:** Railway reports "Service 'Sing Portfolio' not found".
+### Deployment Fails with Project Not Found
+**Problem:** Railway reports "Project not found" or similar error.
 
 **Solutions:**
-1. Verify the project name matches exactly (case-sensitive)
-2. Check that the staging environment exists in your Railway project
+1. Verify the `RAILWAY_PROJECT_ID` secret is set correctly:
+   - Go to Settings > Secrets and variables > Actions
+   - Confirm `RAILWAY_PROJECT_ID` is present and not empty
+2. Verify the project ID is correct:
+   - Go to Railway Dashboard > Sing Portfolio > Project Settings
+   - Copy the Project ID again and update the secret
 3. Confirm the Railway API token has permissions to deploy to this project
+4. Verify the staging environment exists in your Railway project
 
 ### Railway Deployment Timeout
 **Problem:** Deployment takes too long and times out.
@@ -173,6 +206,8 @@ If you need to add or modify environment variables:
 
 To deploy manually without using GitHub Actions:
 
+### Option 1: Using Project Linking (Recommended)
+
 1. Install Railway CLI:
    ```bash
    npm install -g @railway/cli
@@ -187,12 +222,24 @@ To deploy manually without using GitHub Actions:
    ```bash
    railway link
    ```
+   Select "Sing Portfolio" when prompted.
 
 4. Deploy:
    ```bash
    cd v2
-   railway up --service="Sing Portfolio" --environment=staging
+   railway up --environment=staging
    ```
+
+### Option 2: Using Project ID
+
+If you prefer not to link, you can deploy directly using the project ID:
+
+```bash
+cd v2
+railway up --project=YOUR_PROJECT_ID --environment=staging
+```
+
+Replace `YOUR_PROJECT_ID` with your Railway project ID.
 
 ## Monitoring Deployments
 
