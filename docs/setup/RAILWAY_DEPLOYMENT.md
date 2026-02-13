@@ -44,11 +44,11 @@ Before setting up automatic deployments, ensure you have:
 3. Find the service name for your Next.js application (e.g., `web`, `app`, `api`, etc.)
 4. Copy the exact service name (it's case-sensitive)
 
-### Step 4: Add Secrets to GitHub
+### Step 4: Add Configuration to GitHub
 
-Add **three** repository secrets:
+Add **one secret** and **two variables** to GitHub Actions:
 
-**Secret 1 - Railway Token:**
+**Secret - Railway Token (Authentication):**
 1. Go to your GitHub repository
 2. Navigate to **Settings** > **Secrets and variables** > **Actions**
 3. Click **New repository secret**
@@ -56,19 +56,24 @@ Add **three** repository secrets:
 5. **Value:** Paste the token you copied from Railway
 6. Click **Add secret**
 
-**Secret 2 - Railway Project ID:**
-1. Still in **Secrets and variables** > **Actions**
-2. Click **New repository secret**
-3. **Name:** `RAILWAY_PROJECT_ID`
-4. **Value:** Paste the project ID you copied from Railway
-5. Click **Add secret**
+**Variable 1 - Railway Project ID:**
+1. Still in **Settings** > **Secrets and variables** > **Actions**
+2. Click the **Variables** tab
+3. Click **New repository variable**
+4. **Name:** `RAILWAY_PROJECT_ID`
+5. **Value:** Paste the project ID you copied from Railway
+6. Click **Add variable**
 
-**Secret 3 - Railway Service Name:**
-1. Still in **Secrets and variables** > **Actions**
-2. Click **New repository secret**
+**Variable 2 - Railway Service Name:**
+1. Still in the **Variables** tab
+2. Click **New repository variable**
 3. **Name:** `RAILWAY_SERVICE_NAME`
 4. **Value:** Paste the service name you found in step 3
-5. Click **Add secret**
+5. Click **Add variable**
+
+**Why the difference?**
+- **Token** is a secret because it's an authentication credential (sensitive)
+- **Project ID & Service Name** are variables because they're just configuration identifiers (non-sensitive)
 
 ### Step 5: Verify Deployment Configuration
 
@@ -83,20 +88,21 @@ deploy:
   steps:
     - name: Deploy to Railway Staging
       working-directory: v2
-      run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service=${{ secrets.RAILWAY_SERVICE_NAME }} --environment=staging
+      run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 ```
 
 **Explanation:**
-- `--project`: Specifies which Railway project to deploy to (using the unique project ID)
-- `--service`: Specifies which service within the project to deploy (loaded from the secret)
+- `--project`: Specifies which Railway project to deploy to (using the unique project ID from variables)
+- `--service`: Specifies which service within the project to deploy (loaded from variables)
 - `--environment`: Specifies the deployment environment (staging)
+- `RAILWAY_TOKEN`: Authentication token from secrets (encrypted, sensitive)
 
-✅ Confirm all three secrets are added:
-- `RAILWAY_TOKEN` - Your Railway API token
-- `RAILWAY_PROJECT_ID` - Your Railway project ID
-- `RAILWAY_SERVICE_NAME` - Your Railway service name
+✅ Confirm all configuration is added:
+- **Secret:** `RAILWAY_TOKEN` - Your Railway API token
+- **Variable:** `RAILWAY_PROJECT_ID` - Your Railway project ID
+- **Variable:** `RAILWAY_SERVICE_NAME` - Your Railway service name
 
 ### Step 6: Test the Deployment
 
@@ -161,11 +167,11 @@ If you need to add or modify environment variables:
 - **Workflow File:** `.github/workflows/run-tests.yml`
 - **Trigger:** Pull requests to `staging` branch
 - **Build Directory:** `v2/`
-- **Token Secret Name:** `RAILWAY_TOKEN`
-- **Project ID Secret Name:** `RAILWAY_PROJECT_ID`
-- **Service Name Secret Name:** `RAILWAY_SERVICE_NAME`
-- **Deployment Command:** `railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service=${{ secrets.RAILWAY_SERVICE_NAME }} --environment=staging`
-- **Benefits of Using Secrets:** All configuration is external to code, making it easy to change without modifying the workflow
+- **Authentication Secret:** `RAILWAY_TOKEN` (encrypted)
+- **Project ID Variable:** `RAILWAY_PROJECT_ID` (non-sensitive config)
+- **Service Name Variable:** `RAILWAY_SERVICE_NAME` (non-sensitive config)
+- **Deployment Command:** `railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging`
+- **Best Practice:** Token stored as secret (sensitive), configuration stored as variables (non-sensitive)
 
 ## Troubleshooting
 
@@ -193,14 +199,17 @@ If you need to add or modify environment variables:
 **Problem:** Railway reports "Project not found" or similar error.
 
 **Solutions:**
-1. Verify the `RAILWAY_PROJECT_ID` secret is set correctly:
-   - Go to Settings > Secrets and variables > Actions
+1. Verify the `RAILWAY_PROJECT_ID` variable is set correctly:
+   - Go to Settings > Secrets and variables > Actions > Variables tab
    - Confirm `RAILWAY_PROJECT_ID` is present and not empty
 2. Verify the project ID is correct:
    - Go to Railway Dashboard > Sing Portfolio > Project Settings
-   - Copy the Project ID again and update the secret
-3. Confirm the Railway API token has permissions to deploy to this project
-4. Verify the staging environment exists in your Railway project
+   - Copy the Project ID again and update the variable
+3. Verify the `RAILWAY_SERVICE_NAME` variable is set:
+   - Go to Settings > Secrets and variables > Actions > Variables tab
+   - Confirm `RAILWAY_SERVICE_NAME` is present and matches your service name exactly
+4. Confirm the Railway API token has permissions to deploy to this project
+5. Verify the staging environment exists in your Railway project
 
 ### Railway Deployment Timeout
 **Problem:** Deployment takes too long and times out.
@@ -258,12 +267,22 @@ If you prefer not to link, you can deploy directly using the project ID and serv
 
 ```bash
 cd v2
-railway up --project=YOUR_PROJECT_ID --service=YOUR_SERVICE_NAME --environment=staging
+RAILWAY_PROJECT_ID="your-project-id-here" \
+RAILWAY_SERVICE_NAME="your-service-name-here" \
+RAILWAY_TOKEN="your-api-token-here" \
+railway up --project=$RAILWAY_PROJECT_ID --service=$RAILWAY_SERVICE_NAME --environment=staging
+```
+
+Or pass them directly:
+
+```bash
+cd v2
+railway up --project=your-project-id --service=your-service-name --environment=staging
 ```
 
 Replace:
-- `YOUR_PROJECT_ID` with your Railway project ID
-- `YOUR_SERVICE_NAME` with your Railway service name
+- `your-project-id` with your Railway project ID
+- `your-service-name` with your Railway service name
 
 **Note:** The `--service` flag is required when your Railway project has multiple services.
 
