@@ -1,199 +1,134 @@
 # Localization Architecture
 
-**Version:** 2.1
-**Last Updated:** 2026-02-06
-**Status:** Complete
+**Version:** 3.0
+**Last Updated:** 2026-02-12
+**Status:** JSON-First Pattern (Standardized)
 
-This document describes the localization (i18n) architecture for the portfolio application, covering both patterns used across different content types and the unified type system.
+This document describes the localization (i18n) architecture for the portfolio application following industry best practices.
 
 ---
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Localization Patterns](#localization-patterns)
+1. [Architecture Philosophy](#architecture-philosophy)
+2. [JSON-First Pattern](#json-first-pattern)
 3. [Type System](#type-system)
 4. [Server-Side Architecture Pattern](#server-side-architecture-pattern)
 5. [Directory Structure](#directory-structure)
 6. [Implementation Guide](#implementation-guide)
-7. [Migration Path](#migration-path)
-8. [Best Practices](#best-practices)
+7. [Best Practices](#best-practices)
 
 ---
 
-## Overview
+## Architecture Philosophy
 
-The portfolio uses **two distinct localization patterns** optimized for different use cases:
+### JSON-First Content Strategy
 
-1. **Direct i18n Pattern** - For page-level content (resume, colophon, portfolio)
-2. **JSON Merge Pattern** - For project collections (projects)
+All translatable content is stored in external JSON files, not in TypeScript code.
 
-Both patterns are fully integrated with:
-- **i18next** for translation management
-- **React i18next** for component integration
-- **TypeScript** for type safety
-- **DeepL** for automated translation (setup ready)
+**Rationale:**
+- TypeScript files define structure and logic
+- JSON files contain content for each language
+- Clear separation enables better tooling, translation workflows, and maintenance
+
+### Single Source of Truth
+
+Each language has exactly one source of truth:
+- **English:** `locales/en/*.json`
+- **French:** `locales/fr/*.json`
+
+TypeScript code never contains translatable strings (except as translation keys).
+
+### Why This Approach?
+
+✅ **Separation of concerns** - Code = logic/structure, JSON = content
+✅ **Translation-ready** - Professional translators work with JSON files
+✅ **No language bias** - English isn't "special" compared to French
+✅ **CMS-friendly** - Content can be managed by non-developers
+✅ **Tool-friendly** - Translation management tools parse JSON
+✅ **Maintainable** - Single source of truth per language
+✅ **Industry standard** - Recommended by i18next and i18n communities
+
+The portfolio uses **JSON-First localization** following industry best practices:
+
+- **All translatable content in JSON files** (including English)
+- **TypeScript contains only structure** (IDs, URLs, arrays)
+- **All languages treated equally** (no "default" language in code)
+- **Fully integrated with:**
+  - **i18next** for translation management
+  - **React i18next** for component integration
+  - **TypeScript** for type safety
+  - **DeepL** for automated translation (setup ready)
 
 ---
 
-## Localization Patterns
+## JSON-First Pattern
 
-### Pattern 1: Direct i18n (Pages)
+### Core Principles
 
-**Used For:**
-- Resume page
-- Colophon page
-- Portfolio/Home page
+All translatable content follows the **JSON-First pattern**:
 
-**Key Characteristics:**
-- Synchronous translation at component render time
-- `getLocalized*Data(t)` functions receive translation function
-- Minimal caching requirements
-- Direct integration with React components via `useI18n()` hook
-- Consistent `{ ns: 'pages' }` namespace
+1. **Structure in TypeScript**
+   - Data files define structure and IDs only
+   - Functions use `t()` to fetch content from JSON
+   - No translatable strings in code
 
-**Implementation Location:**
-```
-v2/src/data/
-├── colophon.ts          (getLocalizedColophonData)
-├── portfolio.ts         (getLocalizedPortfolioData)
-└── resume.ts            (getLocalizedResumeData)
-```
+2. **Content in JSON Files**
+   - All language variants in `locales/[lang]/*.json`
+   - Single source of truth per language
+   - Professional translators work with JSON
 
-**Translation Files:**
-```
-v2/src/locales/
-├── en/
-│   ├── colophon.json
-│   ├── home.json
-│   └── resume.json
-└── fr/
-    ├── colophon.json
-    ├── home.json
-    └── resume.json
-```
+3. **Consistent Implementation**
+   - All pages use `getLocalized*Data(t)` functions
+   - All projects use async `getLocalizedProject()` functions
+   - Unified TranslationFunction type across codebase
 
-**Example Usage:**
+### Two Implementation Approaches (Same Pattern)
 
+While all content follows JSON-First, implementation varies by use case:
+
+#### Pages (Synchronous)
+
+**Used For:** Resume, Colophon, Home, Portfolio
+
+**Implementation:**
 ```typescript
-// In a component
-const { t } = useI18n();
-const colophonData = getLocalizedColophonData(t);
-
-// colophon.ts function signature
-export function getLocalizedColophonData(t: TranslationFunction): ColophonData {
+// v2/src/data/resume.ts
+export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
   return {
-    pageTitle: t('colophon.pageTitle', { ns: 'pages' }),
-    pageDescription: t('colophon.pageDescription', { ns: 'pages' }),
-    // ... more fields
+    pageTitle: t('resume.pageTitle', { ns: 'pages' }),
+    header: {
+      name: t('resume.header.name', { ns: 'pages' }),
+      // ... more fields using t()
+    },
   };
 }
 ```
 
-**Advantages:**
-- ✅ Synchronous, no async overhead
-- ✅ Works seamlessly in Client Components
-- ✅ Direct access to translation function from hook
-- ✅ Type-safe with unified TranslationFunction type
-- ✅ Minimal setup required
+**Characteristics:**
+- ✅ Synchronous - called at render time
+- ✅ Works in Client Components
+- ✅ Minimal overhead
+- ✅ Direct access to `t()` from `useI18n()` hook
 
-**Disadvantages:**
-- ❌ Requires Client Component for useI18n() hook
-- ❌ Translation function must be passed to function
-- ❌ Not suitable for large dynamic data sets
+#### Projects (Asynchronous)
 
----
+**Used For:** Project collection with rich metadata
 
-### Pattern 2: JSON Merge (Projects)
-
-**Used For:**
-- Portfolio projects collection
-
-**Key Characteristics:**
-- Asynchronous loading of locale data
-- Base data in TypeScript, translations in JSON
-- Dynamic imports with caching
-- Image captions indexed by position
-- Runtime merge of data and translations
-
-**Implementation Location:**
-```
-v2/src/data/
-├── projects.ts          (base project data)
-└── localization.ts      (merge functions)
-```
-
-**Translation Files:**
-```
-v2/src/locales/
-├── en/projects.json     (project translations)
-└── fr/projects.json     (project translations)
-```
-
-**JSON Structure:**
-
-```json
-{
-  "projectId": {
-    "title": "Project Title",
-    "desc": "Project description",
-    "circa": "2023–Present",
-    "captions": ["Caption 1", "Caption 2", ...]
-  }
+**Implementation:**
+```typescript
+// v2/src/data/localization.ts
+export async function getLocalizedProjects(locale: Locale): Promise<Project[]> {
+  const projectsJson = await import(`../locales/${locale}/projects.json`);
+  // ... merge and return with translations
 }
 ```
 
-**TypeScript Structure:**
-
-```typescript
-// projects.ts
-export const PROJECTS: readonly Project[] = [
-  {
-    id: 'projectId',
-    title: '',              // Empty, filled from JSON
-    desc: '',               // Empty, filled from JSON
-    circa: '',              // Empty, filled from JSON
-    tags: ['.NET', 'React'],// Non-translatable
-    images: [
-      { url: '...', caption: '' },  // Caption filled from JSON
-    ]
-  }
-];
-```
-
-**Example Usage:**
-
-```typescript
-// Get single project with translations
-const project = await getLocalizedProject('projectId', 'fr');
-
-// Get all projects with translations
-const projects = await getLocalizedProjects('en');
-
-// localization.ts function signatures
-export async function getLocalizedProject(
-  projectId: string,
-  locale: Locale
-): Promise<Project | undefined>
-
-export async function getLocalizedProjects(
-  locale: Locale
-): Promise<Project[]>
-```
-
-**Advantages:**
-- ✅ Supports large dynamic data sets
-- ✅ Non-developers can edit translations without code
-- ✅ Clean separation of concerns (data vs. translations)
-- ✅ Easy to add new projects
-- ✅ Efficient caching of locale data
-- ✅ Works in Server Components (async)
-
-**Disadvantages:**
-- ❌ Asynchronous, requires async/await or suspense
-- ❌ Slightly more complex implementation
-- ❌ Image captions must be indexed by position
-- ❌ Requires careful type management
+**Characteristics:**
+- ✅ Asynchronous - loaded server-side
+- ✅ Works in Server Components
+- ✅ Supports large data sets
+- ✅ Efficient caching
 
 ---
 
@@ -459,26 +394,30 @@ v2/
 
 ## Implementation Guide
 
-### Adding a New Page (Using Direct i18n Pattern)
+### Adding a New Page (JSON-First Pattern)
 
-**Step 1:** Create the data file
+**Step 1:** Create the data file with ONLY the getter function
 
 ```typescript
 // src/data/newpage.ts
 import type { NewPageData } from '../types/newpage';
 import type { TranslationFunction } from '../hooks/useI18n';
 
-export const newPageData: NewPageData = {
-  pageTitle: "New Page | Portfolio",  // Can leave hardcoded for fallback
-  pageDescription: "Page description",
-  // ... other static data
-};
-
+/**
+ * Get new page data localized for the current language.
+ * All content comes from locales/[lang]/newpage.json
+ *
+ * @param t - Translation function from useI18n() hook
+ * @returns Localized page data
+ */
 export function getLocalizedNewPageData(t: TranslationFunction): NewPageData {
   return {
     pageTitle: t('newpage.pageTitle', { ns: 'pages' }),
     pageDescription: t('newpage.pageDescription', { ns: 'pages' }),
-    // ... translate all user-facing strings
+    section1: {
+      heading: t('newpage.section1.heading', { ns: 'pages' }),
+      content: t('newpage.section1.content', { ns: 'pages' }),
+    }
   };
 }
 ```
@@ -491,6 +430,20 @@ export function getLocalizedNewPageData(t: TranslationFunction): NewPageData {
   "newpage": {
     "pageTitle": "New Page | Sing Chan's Portfolio",
     "pageDescription": "Description of the new page...",
+    "section1": {
+      "heading": "Section 1",
+      "content": "..."
+    }
+  }
+}
+```
+
+```json
+// src/locales/fr/newpage.json
+{
+  "newpage": {
+    "pageTitle": "Nouvelle Page | Portefeuille de Sing Chan",
+    "pageDescription": "Description de la nouvelle page...",
     "section1": {
       "heading": "Section 1",
       "content": "..."
@@ -521,9 +474,9 @@ export default function NewPageComponent() {
 }
 ```
 
-### Adding a New Project (Using JSON Merge Pattern)
+### Adding a New Project (JSON-First Pattern)
 
-**Step 1:** Add to projects.ts
+**Step 1:** Add to projects.ts with empty strings
 
 ```typescript
 // src/data/projects.ts
@@ -531,15 +484,15 @@ export const PROJECTS: readonly Project[] = [
   // ... existing projects
   {
     id: 'newProjectId',
-    title: '',              // Leave empty
-    desc: '',               // Leave empty
-    circa: '',              // Leave empty
-    tags: ['React', 'TypeScript'],
+    title: '',              // Will be filled from JSON
+    desc: '',               // Will be filled from JSON
+    circa: '',              // Will be filled from JSON
+    tags: ['React', 'TypeScript'],  // Non-translatable, keep in code
     images: [
       {
         url: '/images/new-project/screenshot1.png',
         tnUrl: '/images/new-project/screenshot1_tn.png',
-        caption: '',        // Leave empty
+        caption: '',        // Will be filled from JSON
       }
     ],
     videos: [],
@@ -548,7 +501,7 @@ export const PROJECTS: readonly Project[] = [
 ];
 ```
 
-**Step 2:** Add translations
+**Step 2:** Add translations to both languages
 
 ```json
 // src/locales/en/projects.json
@@ -562,46 +515,30 @@ export const PROJECTS: readonly Project[] = [
 }
 ```
 
+```json
+// src/locales/fr/projects.json
+{
+  "newProjectId": {
+    "title": "Titre du Nouveau Projet",
+    "desc": "Description du projet...",
+    "circa": "2024–Présent",
+    "captions": ["Description de la capture d'écran"]
+  }
+}
+```
+
 **Step 3:** Use in components
 
 ```typescript
 // In a server or client component
 import { getLocalizedProject, getLocalizedProjects } from '@/src/data/localization';
 
-// Get specific project
+// Get specific project (async)
 const project = await getLocalizedProject('newProjectId', locale);
 
-// Get all projects
+// Get all projects (async)
 const projects = await getLocalizedProjects(locale);
 ```
-
----
-
-## Migration Path
-
-### From Old System to New Architecture
-
-If migrating from a different localization pattern:
-
-**Phase 1: Type Unification**
-1. Update all data files to import `TranslationFunction`
-2. Replace custom type signatures with `TranslationFunction`
-3. Run type-check to verify changes
-
-**Phase 2: Translation File Updates**
-1. Add `pageTitle` and `pageDescription` to locale files
-2. Verify all translatable strings are in locale files
-3. Run validation to check completeness
-
-**Phase 3: Component Updates**
-1. Update components to use `getLocalized*Data(t)`
-2. Verify behavior in both English and French
-3. Run full test suite
-
-**Phase 4: Documentation**
-1. Update code comments in data files
-2. Update this architecture document
-3. Add developer notes for future changes
 
 ---
 
@@ -808,21 +745,23 @@ export function getLocalizedData(t: TranslationFunction): DataType {}
 
 The portfolio's localization architecture provides:
 
+✅ **JSON-First Strategy** - All translatable content in JSON files (industry best practice)
+✅ **Single Source of Truth** - One language version per locale
 ✅ **Type Safety** - Unified TranslationFunction type across all data files
-✅ **Flexibility** - Two patterns optimized for different use cases
 ✅ **Performance** - Async loading with caching, minimal overhead
-✅ **Maintainability** - Clear separation of data and translations
+✅ **Maintainability** - Clear separation of structure (TS) and content (JSON)
 ✅ **Scalability** - Easy to add new pages or projects
 ✅ **Quality** - Comprehensive type checking and validation
 
-This architecture scales from simple page content to complex project collections while maintaining consistency, type safety, and developer experience.
+This architecture follows industry best practices for i18n, treating all languages equally, separating code concerns, and enabling professional translation workflows.
 
 ---
 
-**Document Version:** 2.1
-**Last Updated:** 2026-02-06
-**Status:** ✅ Complete and documented
+**Document Version:** 3.0
+**Last Updated:** 2026-02-12
+**Status:** ✅ JSON-First Pattern Standardized
 
 **Change Log:**
-- **v2.1** (2026-02-06): Added server-side architecture pattern, documented i18n-constants and i18next-config, updated directory structure with all i18n files, fixed LOCALIZATION.md reference
+- **v3.0** (2026-02-12): Standardized to JSON-First pattern per [I18N_STANDARDIZATION_PLAN.md](../archive/I18N_STANDARDIZATION_PLAN.md), removed dual-pattern description, clarified single pattern approach
+- **v2.1** (2026-02-06): Added server-side architecture pattern, documented i18n-constants and i18next-config, updated directory structure
 - **v2.0** (2026-02-05): Initial complete architecture documentation
