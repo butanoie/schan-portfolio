@@ -77,8 +77,8 @@ jobs:
     # ⚠️ REQUIRES MANUAL APPROVAL
     # This deployment is protected by environment rules.
     # A reviewer must approve before deployment proceeds.
-    # Configure in: Settings → Environments → Sing Portfolio / staging → Required reviewers
-    environment: "Sing Portfolio / staging"
+    # Configure in: Settings → Environments → Sing Portfolio / development → Required reviewers
+    environment: "Sing Portfolio / development"
 
     steps:
       - name: Checkout code
@@ -87,7 +87,7 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Deploy to Railway Staging
-        run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
+      - name: Deploy to Railway Development
+        run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=development
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
