@@ -54,6 +54,6 @@ jobs:
 
       - name: Deploy to Railway Staging
         working-directory: v2
-        run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service="Sing Portfolio" --environment=staging
+        run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service=${{ secrets.RAILWAY_SERVICE_NAME }} --environment=staging
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

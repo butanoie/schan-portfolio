@@ -37,9 +37,16 @@ Before setting up automatic deployments, ensure you have:
 6. Give it a descriptive name (e.g., "GitHub CI/CD Deploy")
 7. Copy the token (you won't be able to see it again)
 
-### Step 3: Add Secrets to GitHub
+### Step 3: Find Your Railway Service Name
 
-Add **two** repository secrets:
+1. In your Railway Dashboard, go to the **Sing Portfolio** project
+2. Look at the services list in the left sidebar
+3. Find the service name for your Next.js application (e.g., `web`, `app`, `api`, etc.)
+4. Copy the exact service name (it's case-sensitive)
+
+### Step 4: Add Secrets to GitHub
+
+Add **three** repository secrets:
 
 **Secret 1 - Railway Token:**
 1. Go to your GitHub repository
@@ -56,7 +63,14 @@ Add **two** repository secrets:
 4. **Value:** Paste the project ID you copied from Railway
 5. Click **Add secret**
 
-### Step 4: Verify Deployment Configuration
+**Secret 3 - Railway Service Name:**
+1. Still in **Secrets and variables** > **Actions**
+2. Click **New repository secret**
+3. **Name:** `RAILWAY_SERVICE_NAME`
+4. **Value:** Paste the service name you found in step 3
+5. Click **Add secret**
+
+### Step 5: Verify Deployment Configuration
 
 The workflow is already configured in [`.github/workflows/run-tests.yml`](.github/workflows/run-tests.yml).
 
@@ -69,21 +83,22 @@ deploy:
   steps:
     - name: Deploy to Railway Staging
       working-directory: v2
-      run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service="Sing Portfolio" --environment=staging
+      run: railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service=${{ secrets.RAILWAY_SERVICE_NAME }} --environment=staging
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 ```
 
 **Explanation:**
 - `--project`: Specifies which Railway project to deploy to (using the unique project ID)
-- `--service`: Specifies which service within the project to deploy (required when a project has multiple services)
+- `--service`: Specifies which service within the project to deploy (loaded from the secret)
 - `--environment`: Specifies the deployment environment (staging)
 
-✅ Confirm both secrets are added:
+✅ Confirm all three secrets are added:
 - `RAILWAY_TOKEN` - Your Railway API token
 - `RAILWAY_PROJECT_ID` - Your Railway project ID
+- `RAILWAY_SERVICE_NAME` - Your Railway service name
 
-### Step 5: Test the Deployment
+### Step 6: Test the Deployment
 
 1. Create a test branch from `staging`:
    ```bash
@@ -148,8 +163,9 @@ If you need to add or modify environment variables:
 - **Build Directory:** `v2/`
 - **Token Secret Name:** `RAILWAY_TOKEN`
 - **Project ID Secret Name:** `RAILWAY_PROJECT_ID`
-- **Deployment Command:** `railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service="Sing Portfolio" --environment=staging`
-- **Why Both?** Your Railway project has multiple services, so we specify both the project ID and the service name
+- **Service Name Secret Name:** `RAILWAY_SERVICE_NAME`
+- **Deployment Command:** `railway up --project=${{ secrets.RAILWAY_PROJECT_ID }} --service=${{ secrets.RAILWAY_SERVICE_NAME }} --environment=staging`
+- **Benefits of Using Secrets:** All configuration is external to code, making it easy to change without modifying the workflow
 
 ## Troubleshooting
 
@@ -236,16 +252,18 @@ To deploy manually without using GitHub Actions:
    railway up --environment=staging
    ```
 
-### Option 2: Using Project ID
+### Option 2: Using Project ID and Service Name
 
 If you prefer not to link, you can deploy directly using the project ID and service name:
 
 ```bash
 cd v2
-railway up --project=YOUR_PROJECT_ID --service="Sing Portfolio" --environment=staging
+railway up --project=YOUR_PROJECT_ID --service=YOUR_SERVICE_NAME --environment=staging
 ```
 
-Replace `YOUR_PROJECT_ID` with your Railway project ID.
+Replace:
+- `YOUR_PROJECT_ID` with your Railway project ID
+- `YOUR_SERVICE_NAME` with your Railway service name
 
 **Note:** The `--service` flag is required when your Railway project has multiple services.
 
