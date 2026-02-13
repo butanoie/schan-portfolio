@@ -1,10 +1,9 @@
-name: Lint, Type Check, and Unit Test
+name: Lint, Type Check, Unit Test, and Deploy
 
 on:
   pull_request:
     branches:
       - main
-      - staging
 
 jobs:
   check-changes:
@@ -24,8 +23,8 @@ jobs:
           # Get list of changed files compared to base branch
           git diff --name-only origin/${{ github.base_ref }}...HEAD > /tmp/changed_files.txt
 
-          # Check if any changes are in v2/ folder
-          has_v2_changes=$(grep '^v2/' /tmp/changed_files.txt | wc -l)
+          # Check if any changes are in v2/ folder or .github/workflows/
+          has_v2_changes=$(grep -E '^(v2/|\.github/workflows/)' /tmp/changed_files.txt | wc -l)
 
           if [ $has_v2_changes -gt 0 ]; then
             echo "has-v2-changes=true" >> $GITHUB_OUTPUT
@@ -74,7 +73,7 @@ jobs:
   deploy:
     needs: [check-changes, tests]
     runs-on: ubuntu-latest
-    if: github.base_ref == 'staging' && needs.check-changes.outputs.has-v2-changes == 'true'
+    if: needs.check-changes.outputs.has-v2-changes == 'true'
     # ⚠️ REQUIRES MANUAL APPROVAL
     # This deployment is protected by environment rules.
     # A reviewer must approve before deployment proceeds.
