@@ -1,6 +1,6 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Container } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Box, IconButton, Container, useMediaQuery } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import DescriptionIcon from "@mui/icons-material/Description";
 import InfoIcon from "@mui/icons-material/Info";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { SettingsButton } from "../settings/SettingsButton";
+import HamburgerMenu from "./HamburgerMenu";
 import { useTheme } from "@/src/hooks/useTheme";
 import { getPaletteByMode } from "@/src/lib/themes";
 import { useI18n } from "@/src/hooks/useI18n";
@@ -43,6 +44,7 @@ export default function Header() {
   const { theme } = useTheme();
   const { t } = useI18n();
   const palette = getPaletteByMode(theme);
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   /**
    * Navigation links for the header.
@@ -149,39 +151,46 @@ export default function Header() {
               alignSelf: { xs: "auto", md: "flex-end" },
             }}
           >
-            {navItems.map((item) => (
-              <Button
-                key={item.href}
-                component={Link}
-                href={item.href}
-                variant="contained"
-                startIcon={item.icon}
-                size="medium"
-                aria-current={isActive(item.href) ? "page" : undefined}
-                sx={{
-                  backgroundColor: isActive(item.href)
-                    ? NAV_COLORS.active
-                    : BRAND_COLORS.sage,
-                  color: NAV_COLORS.text,
-                  fontFamily: '"Open Sans", sans-serif',
-                  fontWeight: 600,
-                  textTransform: "none",
-                  borderRadius: 1,
-                  boxShadow: 0,
-                  px: 3,
-                  py: 0.75,
-                  "&:hover": {
-                    backgroundColor: isActive(item.href)
-                      ? NAV_COLORS.activeHover
-                      : NAV_COLORS.inactiveHover,
-                    boxShadow: 0,
-                  },
-                }}
-              >
-                {t(item.labelKey)}
-              </Button>
-            ))}
-            <SettingsButton size="medium" />
+            {/* Show hamburger on mobile, full nav + settings on desktop */}
+            {isMobile ? (
+              <HamburgerMenu />
+            ) : (
+              <>
+                {navItems.map((item) => (
+                  <Button
+                    key={item.href}
+                    component={Link}
+                    href={item.href}
+                    variant="contained"
+                    startIcon={item.icon}
+                    size="medium"
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    sx={{
+                      backgroundColor: isActive(item.href)
+                        ? NAV_COLORS.active
+                        : BRAND_COLORS.sage,
+                      color: NAV_COLORS.text,
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontWeight: 600,
+                      textTransform: "none",
+                      borderRadius: 1,
+                      boxShadow: 0,
+                      px: 3,
+                      py: 0.75,
+                      "&:hover": {
+                        backgroundColor: isActive(item.href)
+                          ? NAV_COLORS.activeHover
+                          : NAV_COLORS.inactiveHover,
+                        boxShadow: 0,
+                      },
+                    }}
+                  >
+                    {t(item.labelKey)}
+                  </Button>
+                ))}
+                <SettingsButton size="medium" />
+              </>
+            )}
           </Box>
         </Container>
       </Toolbar>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Box, Container, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import DescriptionIcon from "@mui/icons-material/Description";
 import InfoIcon from "@mui/icons-material/Info";
@@ -69,6 +69,9 @@ function ThoughtBubble({ children, ariaLabel}: ThoughtBubbleProps) {
         justifyContent: "center",
         zIndex: 10,
         pointerEvents: "auto",
+        "@media (max-width: 599px)": {
+          bottom: 185,
+        },
         "@media (min-width: 760px)": {
           bottom: 165,
           right: 225,
@@ -143,6 +146,8 @@ export default function Footer() {
   const pathname = usePathname();
   const loadingContext = useProjectLoading();
   const { t } = useI18n();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   /**
    * Navigation links for the footer.
@@ -202,6 +207,9 @@ export default function Footer() {
             margin: 0,
             zIndex: 0,
             pointerEvents: "auto",
+            "@media (max-width: 599px)": {
+              bottom: 45,
+            },
             "@media (min-width: 760px)": {
               bottom: -56,
               right: 16,
@@ -306,49 +314,51 @@ export default function Footer() {
               flexDirection: "column",
             }}
           >
-            {/* Navigation Links */}
-            <Box
-              component="nav"
-              aria-label="Footer navigation"
-              sx={{
-                display: "flex",
-                gap: 1,
-                mb: 1,
-                flexWrap: "wrap",
-              }}
-            >
-              {navLinks.map((link) => (
-                <Button
-                  key={link.href}
-                  component={Link}
-                  href={link.href}
-                  variant="contained"
-                  startIcon={link.icon}
-                  size="medium"
-                  sx={{
-                    backgroundColor: isActive(link.href)
-                      ? NAV_COLORS.active
-                      : BRAND_COLORS.sage,
-                    color: NAV_COLORS.text,
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontWeight: 600,
-                    textTransform: "none",
-                    borderRadius: 1,
-                    boxShadow: 0,
-                    px: 3,
-                    py: 0.75,
-                    "&:hover": {
+            {/* Navigation Links - Hidden on mobile */}
+            {!isMobile && (
+              <Box
+                component="nav"
+                aria-label="Footer navigation"
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  mb: 1,
+                  flexWrap: "wrap",
+                }}
+              >
+                {navLinks.map((link) => (
+                  <Button
+                    key={link.href}
+                    component={Link}
+                    href={link.href}
+                    variant="contained"
+                    startIcon={link.icon}
+                    size="medium"
+                    sx={{
                       backgroundColor: isActive(link.href)
-                        ? NAV_COLORS.activeHover
-                        : NAV_COLORS.inactiveHover,
+                        ? NAV_COLORS.active
+                        : BRAND_COLORS.sage,
+                      color: NAV_COLORS.text,
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontWeight: 600,
+                      textTransform: "none",
+                      borderRadius: 1,
                       boxShadow: 0,
-                    },
-                  }}
-                >
-                  {t(link.labelKey)}
-                </Button>
-              ))}
-            </Box>
+                      px: 3,
+                      py: 0.75,
+                      "&:hover": {
+                        backgroundColor: isActive(link.href)
+                          ? NAV_COLORS.activeHover
+                          : NAV_COLORS.inactiveHover,
+                        boxShadow: 0,
+                      },
+                    }}
+                  >
+                    {t(link.labelKey)}
+                  </Button>
+                ))}
+              </Box>
+            )}
 
             {/* Copyright */}
             <Typography
