@@ -59,9 +59,9 @@ describe("ButaStory", () => {
       "The mascot was inspired by Yoshinoya.",
       "Buta became the portfolio avatar in 2005.",
     ],
-    mainImage: "/images/buta/buta.png",
+    mainImage: "/images/buta/buta@2x.png",
     mainImageAlt: "Buta mascot in a suit",
-    versusImage: "/images/buta/boo-vs-bu.png",
+    versusImage: "/images/buta/boo-vs-bu@2x.png",
     versusImageAlt: "Comparison of Boo and Bu",
   };
 
@@ -93,7 +93,7 @@ describe("ButaStory", () => {
 
     const versusImg = screen.getByAltText("Comparison of Boo and Bu");
     expect(versusImg).toBeInTheDocument();
-    expect(versusImg).toHaveAttribute("src", "/images/buta/boo-vs-bu.png");
+    expect(versusImg).toHaveAttribute("src", "/images/buta/boo-vs-bu@2x.png");
   });
 
   it("should have proper section accessibility", () => {

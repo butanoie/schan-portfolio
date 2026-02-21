@@ -70,7 +70,7 @@ describe("ColophonPage", () => {
 
     const headerImage = screen.getByAltText(/choice cuts.*pork cuts diagram/i);
     expect(headerImage).toBeInTheDocument();
-    expect(headerImage).toHaveAttribute("src", "/images/choice_cuts@2x.png");
+    expect(headerImage).toHaveAttribute("src", "/images/choice_cuts@2x-en.png");
   });
 
   it("should render the About section with Colophon heading", () => {

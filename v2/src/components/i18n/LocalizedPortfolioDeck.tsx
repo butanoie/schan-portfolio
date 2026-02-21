@@ -45,8 +45,8 @@ import { useI18n } from '@/src/hooks/useI18n';
  * @returns PageDeck component with localized content
  */
 export function LocalizedPortfolioDeck() {
-  const { t } = useI18n();
-  const data = getLocalizedPortfolioData(t);
+  const { t, locale } = useI18n();
+  const data = getLocalizedPortfolioData(t, locale);
 
   return <PageDeck content={data.pageDeck} />;
 }
