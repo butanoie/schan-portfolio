@@ -13,30 +13,35 @@
 
 import type { ColophonData } from '../types/colophon';
 import type { TranslationFunction } from '../hooks/useI18n';
+import type { Locale } from '../lib/i18n-constants';
 import { BRAND_COLORS } from '../constants';
+import { getLocalizedImageUrl } from '../utils/imageLocalization';
 
 /**
  * Builds localized colophon data by retrieving translated strings from i18n.
  *
  * This function should be called within a component using the useI18n hook
- * to provide translated content for all colophon sections.
+ * to provide translated content for all colophon sections. It also loads the
+ * correct localized image based on the current language.
  *
  * @param t - i18n translation function from useI18n()
- * @returns Localized colophon data with translated strings
+ * @param locale - Current locale to select correct language-specific images
+ * @returns Localized colophon data with translated strings and localized images
  *
  * @example
- * const { t } = useI18n();
- * const localizedData = getLocalizedColophonData(t);
+ * const { t, locale } = useI18n();
+ * const localizedData = getLocalizedColophonData(t, locale);
  */
 export function getLocalizedColophonData(
-  t: TranslationFunction
+  t: TranslationFunction,
+  locale: Locale
 ): ColophonData {
   return {
     pageTitle: t('colophon.pageTitle', { ns: 'pages' }),
     pageDescription: t('colophon.pageDescription', { ns: 'pages' }),
 
     pageDeck: {
-      imageUrl: '/images/choice_cuts@2x.png',
+      imageUrl: getLocalizedImageUrl('choice_cuts@2x', locale),
       imageAlt: t('colophon.pageDeck.imageAlt', { ns: 'pages' }),
       headingId: 'colophon-heading',
       heading: t('colophon.pageDeck.heading', { ns: 'pages' }),

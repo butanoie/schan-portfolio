@@ -60,8 +60,8 @@ function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
  * @returns The colophon page content with localized text and scroll animations
  */
 export default function ColophonContent() {
-  const { t } = useI18n();
-  const data = getLocalizedColophonData(t);
+  const { t, locale } = useI18n();
+  const data = getLocalizedColophonData(t, locale);
 
   return (
     <>
