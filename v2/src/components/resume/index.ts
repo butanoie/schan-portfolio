@@ -8,6 +8,7 @@
 export { default as ResumeHeader } from "./ResumeHeader";
 export { default as WorkExperience } from "./WorkExperience";
 export { default as CoreCompetencies } from "./CoreCompetencies";
+export { default as Education } from "./Education";
 export { default as ClientList } from "./ClientList";
 export { default as ConferenceSpeaker } from "./ConferenceSpeaker";
 
@@ -15,5 +16,6 @@ export { default as ConferenceSpeaker } from "./ConferenceSpeaker";
 export type { ResumeHeaderProps } from "./ResumeHeader";
 export type { WorkExperienceProps } from "./WorkExperience";
 export type { CoreCompetenciesProps } from "./CoreCompetencies";
+export type { EducationProps } from "./Education";
 export type { ClientListProps } from "./ClientList";
 export type { ConferenceSpeakerProps } from "./ConferenceSpeaker";

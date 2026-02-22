@@ -17,7 +17,7 @@
       "phone": "Téléphone"
     },
     "header": {
-      "tagline": "Je développe des applications utiles, intuitives et attrayantes qui améliorent la vie des gens.",
+      "tagline": "Leader en produits techniques et architecte d'expérience utilisateur – Combler l'accessibilité, l'ingénierie et la stratégie commerciale",
       "downloadLabel": "Télécharger le CV"
     },
     "workExperience": {
@@ -26,22 +26,22 @@
       "jobs": [
         {
           "company": "Collabware Systems",
-          "description": "En tant que vice-président des produits, j'étais chargé de diriger la mise en œuvre des solutions de collaboration d'entreprise de Collabware. J'ai dirigé des équipes interfonctionnelles chargées de l'expérience utilisateur et de l'assurance qualité, et j'ai intégré les opérations et l'ingénierie cloud afin de fournir des fonctionnalités centrées sur le client tout en optimisant l'efficacité opérationnelle.",
+          "description": "J'ai récemment dirigé un audit d'optimisation des coûts de l'infrastructure cloud Azure, identifiant et mettant en œuvre des réductions de 40% qui ont éliminé plus de 360 000 CAD en coûts d'hébergement annualisés.",
           "contributions": [
-            "Recueil des exigences auprès des clients et des parties prenantes, traduction des besoins commerciaux en fonctionnalités produit exploitables et en priorités pour la feuille de route",
-            "Collaborer avec les équipes d'ingénieurs à la définition du backlog produit et à la planification des sprints.",
-            "Gérer l'équipe d'assurance qualité afin de développer des cas de test complets et des cadres d'automatisation pour maintenir les normes de qualité des produits.",
-            "Collaborez avec les opérations cloud pour surveiller la santé du système et garantir la fiabilité de la plateforme.",
-            "A mené une initiative d'optimisation des coûts grâce à des audits systématiques de l'infrastructure cloud, identifiant ainsi d'importantes possibilités de réduction des dépenses.",
-            "Responsable de la conception interactive, de l'expérience utilisateur et des cadres de développement front-end pour les offres logicielles de Collabware.",
-            "Encadrer les développeurs UX, favoriser l'excellence en matière de conception et la collaboration interfonctionnelle",
-            "Concevoir et mettre en œuvre un programme d'intégration sur la connaissance des produits pour les nouveaux membres de l'équipe Collabware."
+            "Piloté l'exécution du produit pour les solutions de collaboration d'entreprise, en dirigeant les équipes interfonctionnelles UX, AQ, ingénierie et opérations cloud",
+            "Géré l'équipe d'assurance qualité pour développer un cadre complet d'automatisation AQ, améliorant la couverture des tests et réduisant les défauts de régression dans les cycles de sortie",
+            "Partenariat avec les opérations cloud pour surveiller la santé du système, maintenir la conformité SLA et assurer la fiabilité de la plateforme",
+            "Conçu et livré un programme d'intégration des connaissances produit pour les nouveaux membres de l'équipe, réduisant le délai de productivité de plus de 50% - d'un mois à deux semaines",
+            "Menées entretiens de découverte client et sessions de parties prenantes pour définir les priorités des fonctionnalités et valider l'adéquation produit-marché",
+            "Traduit les exigences des clients et des parties prenantes en priorités de feuille de route exploitables, en alignant les besoins commerciaux sur la capacité d'ingénierie",
+            "Géré le backlog produit et la planification des sprints en collaboration avec les équipes d'ingénierie, améliorant la prévisibilité des livraisons",
+            "Propriétaire de la conception d'interaction, de la stratégie d'expérience utilisateur et des cadres de développement front-end pour tous les produits Collabware"
           ],
           "roles": [
             {
               "title": "VP, Produit",
               "startDate": "Mai 2020",
-              "endDate": "Actuel"
+              "endDate": "Mars 2026"
             },
             {
               "title": "Gestionnaire de produit",
@@ -51,13 +51,18 @@
             {
               "title": "Architecte d'expérience utilisateur",
               "startDate": "Août 2011",
-              "endDate": "Actuel"
+              "endDate": "Mars 2018"
             }
           ]
         },
         {
           "company": "Habanero Consulting Group",
-          "description": "Embauché comme premier développeur d'expérience utilisateur au sein de l'organisation afin de combler les problèmes de communication et de processus entre les équipes de conception et de développement. J'ai fait connaître la valeur du rôle de développeur UX au sein de Habanero et j'ai introduit des processus et des modèles de développement front-end afin d'éliminer les points faibles dans le cycle de vie des projets. J'ai accueilli et encadré les nouveaux développeurs UX lorsqu'ils ont rejoint Habanero. J'ai contribué à porter à huit le nombre de développeurs front-end chez Habanero et j'ai également assumé des responsabilités en matière de gestion de groupe et de ressources.",
+          "description": "Embauché comme premier développeur d'expérience utilisateur au sein de l'organisation afin de combler les problèmes de communication entre les équipes de conception et d'ingénierie.",
+          "contributions": [
+            "Construit la pratique UX à partir de zéro, introduit des modèles et des normes de processus front-end, et promeut les pratiques de développement UX",
+            "Mentoré les nouveaux développeurs UX et grandi l'équipe front-end jusqu'à 8 développeurs",
+            "Pris en charge les responsabilités de gestion de groupe et d'allocation des ressources"
+          ],
           "roles": [
             {
               "title": "Développeur d'expérience utilisateur",
@@ -67,8 +72,10 @@
           ]
         },
         {
-          "company": "Daniel Choi Design Associates",
-          "description": "Contraté pour gérer et diriger le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation.",
+          "company": "Daniel Choi Design Associates (DCDA)",
+          "contributions": [
+            "Géré et dirigé le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation"
+          ],
           "roles": [
             {
               "title": "Développeur principal (contrat)",
@@ -79,7 +86,10 @@
         },
         {
           "company": "Local Lola Design Team (LLDT)",
-          "description": "Contrat pour développer des applications Flash, des scripts côté client et des balises XHTML/CSS pour les projets LLDT. Consultation sur la conception d'interfaces et assistance à la programmation pour le développement de CustomBlox, la solution CMS ASP.Net de LLDT.",
+          "contributions": [
+            "Développé des applications Flash, des scripts côté client et du balisage XHTML/CSS pour les projets LLDT",
+            "Consulté sur la conception d'interfaces et fourni une assistance à la programmation pour le développement de CustomBlox, la solution CMS ASP.Net de LLDT"
+          ],
           "roles": [
             {
               "title": "Développeur Flash et d'expérience utilisateur (contrat)",
@@ -90,12 +100,21 @@
         },
         {
           "company": "Grey Advertising Vancouver",
-          "description": "Développement de grASP, un CMS interne modulaire et extensible utilisé dans le cadre des projets Grey de 2001 à 2006. Développement et maintenance des sites Web et applications externes et internes de Grey. Prise en charge du rôle de producteur interactif, avec des tâches supplémentaires de gestion de projet telles que la gestion des ressources et des calendriers de projet, l'interaction et la coordination avec les développeurs externes, les fournisseurs et les clients.",
+          "contributions": [
+            "Développé grASP, un CMS interne modulaire et extensible utilisé dans les projets interactifs de Grey",
+            "Développé et maintenu les sites Web et applications externes et internes de Grey",
+            "Géré les ressources, les calendriers de projet et les relations avec les fournisseurs et les clients"
+          ],
           "roles": [
             {
-              "title": "Producteur/Développeur interactif",
-              "startDate": "Juillet 1999",
+              "title": "Producteur interactif",
+              "startDate": "Juillet 2004",
               "endDate": "Mai 2006"
+            },
+            {
+              "title": "Développeur interactif",
+              "startDate": "Juillet 1999",
+              "endDate": "Juin 2004"
             }
           ]
         }
@@ -106,12 +125,36 @@
       "everydayTools": "Outils quotidiens",
       "onceInAWhile": "De temps en temps"
     },
+    "education": {
+      "heading": "Éducation et certifications",
+      "entries": [
+        {
+          "institution": "Justice Institute of British Columbia",
+          "program": "Collaborative Conflict Resolution",
+          "year": "2019"
+        },
+        {
+          "institution": "Scrum Alliance",
+          "program": "Certified ScrumMaster",
+          "year": "2015"
+        },
+        {
+          "institution": "Capilano College",
+          "program": "Project Management",
+          "year": "2004"
+        },
+        {
+          "institution": "Simon Fraser University",
+          "program": "Undergraduate studies in Computer Science and Economics",
+          "year": "1992 – 1993"
+        }
+      ]
+    },
     "clients": {
       "heading": "Clients"
     },
     "conferenceSpeaker": {
-      "heading": "Conférencier",
-      "intro": "J'ai présenté des sessions lors des conférences suivantes :"
+      "heading": "Conférencier"
     },
     "meta": {
       "title": "CV | Portfolio de Sing Chan",

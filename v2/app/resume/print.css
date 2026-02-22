@@ -78,6 +78,10 @@
     margin: 0 !important;
   }
 
+  .resume-page section[aria-labelledby="resume-name"] p {
+    margin: 0 !important;
+  }
+
   /* ========================================================================
      WORK EXPERIENCE STYLING
      ======================================================================== */
@@ -200,22 +204,42 @@
   }
 
   /* ========================================================================
-     CONFERENCE/SPEAKING SECTION
+     EDUCATION AND SPEAKING ENTRIES
      ======================================================================== */
 
-  /* Ensure ConferenceSpeaker h3 matches CoreCompetencies h3 size (11pt) */
-  .resume-page section[aria-labelledby="speaking-heading"] h3 {
-    font-size: 11pt !important;
+  /* Reduce gap between education and conference speaker entries */
+  .resume-page section[aria-labelledby="education-heading"] > div > div,
+  .resume-page section[aria-labelledby="speaking-heading"] > div > div {
+    gap: 0 !important;
   }
 
-  /* Prevent conference speaker section from breaking across pages */
-  .resume-page section[aria-labelledby="speaking-heading"] {
-    page-break-inside: avoid;
+  /* Ensure left borders are visible and properly colored */
+  .resume-page > div:last-of-type > div:first-child section[aria-labelledby="education-heading"] > div > div > div,
+  .resume-page > div:last-of-type > div:first-child section[aria-labelledby="speaking-heading"] > div > div > div {
+    border-left: 3px solid #85b09c !important;
+    padding-left: 4pt !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    margin: 4pt 0 !important;
   }
 
-  /* Indent conference list in print */
-  .resume-page section[aria-labelledby="speaking-heading"] li {
-    margin-left: 18pt !important;
-    padding-left: 0 !important;
+  /* Reduce line spacing within each entry's typography elements */
+  .resume-page section[aria-labelledby="education-heading"] .MuiTypography-root,
+  .resume-page section[aria-labelledby="speaking-heading"] .MuiTypography-root {
+    line-height: 1.2 !important;
+    margin-top: 0 !important;
+    margin-bottom: 1pt !important;
+  }
+
+  /* Remove top margin from first typography in each entry */
+  .resume-page section[aria-labelledby="education-heading"] > div > div > div .MuiTypography-root:first-child,
+  .resume-page section[aria-labelledby="speaking-heading"] > div > div > div .MuiTypography-root:first-child {
+    margin-top: 0 !important;
+  }
+
+  /* Remove bottom margin from last typography in each entry */
+  .resume-page section[aria-labelledby="education-heading"] > div > div > div .MuiTypography-root:last-child,
+  .resume-page section[aria-labelledby="speaking-heading"] > div > div > div .MuiTypography-root:last-child {
+    margin-bottom: 0 !important;
   }
 }

@@ -44,8 +44,8 @@ export interface Job {
   /** Array of roles held at this company, ordered chronologically */
   roles: Role[];
 
-  /** Main description paragraph about responsibilities and achievements */
-  description: string;
+  /** Optional main description paragraph about responsibilities and achievements */
+  description?: string;
 
   /** Optional bullet points for key contributions (used for detailed job entries) */
   keyContributions?: string[];
@@ -79,6 +79,20 @@ export interface SkillCategory {
 }
 
 /**
+ * Education entry representing a degree, certification, or professional development.
+ */
+export interface EducationEntry {
+  /** Institution name (e.g., "Simon Fraser University", "Scrum Alliance") */
+  institution: string;
+
+  /** Program, certification, or area of study */
+  program: string;
+
+  /** Year or date range (e.g., "2019", "1992 – 1993") */
+  year: string;
+}
+
+/**
  * Conference or speaking event entry.
  */
 export interface SpeakingEvent {
@@ -99,8 +113,8 @@ export interface SpeakingEvent {
  * Speaking history content with intro text and events list.
  */
 export interface SpeakingContent {
-  /** Introduction text for the speaking section */
-  intro: string;
+  /** Optional introduction text for the speaking section */
+  intro?: string;
 
   /** Array of speaking events */
   events: SpeakingEvent[];
@@ -140,6 +154,9 @@ export interface ResumeData {
 
   /** Skill categories for sidebar (Core Competencies, Everyday Tools, etc.) */
   skillCategories: SkillCategory[];
+
+  /** Array of education entries */
+  education: EducationEntry[];
 
   /** Array of client names */
   clients: string[];
