@@ -48,7 +48,6 @@ export function getLocalizedColophonData(
       paragraphs: [
         t('colophon.pageDeck.paragraphs.0', { ns: 'pages' }),
         t('colophon.pageDeck.paragraphs.1', { ns: 'pages' }),
-        t('colophon.pageDeck.paragraphs.2', { ns: 'pages' }),
       ],
     },
 
