@@ -18,7 +18,7 @@
     "title": "Collabware - Espace collaboratif",
     "desc": [
       "En tant qu'architecte UX et chef de produit, j'ai défini les cadres front-end et les modèles de développement pour Collabspace et j'étais responsable du backlog produit et de la feuille de route des fonctionnalités.",
-      "Collabspace est une solution cloud certifiée FedRAMP qui automatise les activités de conformité afin de répondre aux exigences législatives et réglementaires. La plateforme utilise un système de workflow visuel sans code pour concevoir des politiques de conservation et de cycle de vie, prenant en charge à la fois la conservation basée sur le temps et sur les événements grâce à des calculs basés sur les métadonnées.",
+      "Collabspace est une solution cloud certifiée <strong>FedRAMP</strong> qui automatise les activités de conformité afin de répondre aux exigences législatives et réglementaires. La plateforme utilise un système de workflow visuel sans code pour concevoir des politiques de conservation et de cycle de vie, prenant en charge à la fois la conservation basée sur le temps et sur les événements grâce à des calculs basés sur les métadonnées.",
       "Il gère à la fois les contenus électroniques (documents SharePoint, e-mails, données structurées et non structurées) et les documents physiques grâce à des fonctionnalités de contrôle des stocks, de suivi de la circulation, de gestion des conteneurs et de codes-barres.",
       "Collabspace prend en charge les processus de révision de la destruction en plusieurs étapes afin d'autoriser la destruction des documents, avec des déclencheurs basés sur les événements pour la conservation et la destruction."
     ],
@@ -53,7 +53,7 @@
   "collabwareCLM": {
     "title": "Collabware - Gestion du cycle de vie du contenu (CLM)",
     "desc": [
-      "Collabware CLM est une solution certifiée DoD 5015.2 qui s'intègre nativement à SharePoint Server, fournissant une classification, une conservation et une élimination automatisées du contenu grâce à des règles configurées de manière centralisée et appliquées à l'échelle mondiale dans SharePoint.",
+      "Collabware CLM est une solution certifiée <strong>DoD 5015.2</strong> qui s'intègre nativement à SharePoint Server, fournissant une classification, une conservation et une élimination automatisées du contenu grâce à des règles configurées de manière centralisée et appliquées à l'échelle mondiale dans SharePoint.",
       "La solution comprend un système d'agrégats pour la gestion des dossiers, des workflows visuels du cycle de vie pour les comportements de contenu complexes et un système de requête de contenu global pour les recherches avancées de métadonnées avec tri et filtrage en mode grille. Elle dispose d'un système de révision des dispositions en masse géré automatiquement avec des règles de révision prédéfinies ou dynamiques.",
       "CLM gère les enregistrements physiques, électroniques et par e-mail grâce à des fonctionnalités intégrées de gestion des dossiers, de workflows et de recherche afin de garantir la conformité réglementaire et légale. La solution utilise une expérience de glisser-déposer sans code qui ne nécessite aucune nouvelle infrastructure tout en restant transparente pour les utilisateurs."
     ],
@@ -74,7 +74,7 @@
     "desc": [
       "Insite est le portail destiné aux employés de Vancity, la plus grande coopérative de crédit du Canada. Le portail est conçu pour impliquer les employés, améliorer leur sens des affaires et leur fournir un accès facile aux informations sur les produits et services afin de les aider à mieux servir les membres.",
       "Le contenu est regroupé et présenté par thème, ce qui permet aux employés en contact direct avec les membres d'accéder rapidement aux informations dont ils ont le plus souvent besoin. Ces informations sont fournies dans le même ton convivial, accessible et conversationnel que celui utilisé par le personnel lors de ses interactions avec les membres.",
-      "Insite a été finaliste des IMPACT Awards 2011 du Microsoft Partner Network dans la catégorie Portails et collaboration. Insite a également reçu une mention honorable des Intranet Innovation Awards pour son outil de recherche Search Find-o-meter."
+      "Insite a été finaliste des <strong>Microsoft Partner Network IMPACT Awards</strong> 2011 dans la catégorie Portails et collaboration. Insite a également reçu une mention honorable des Intranet Innovation Awards pour son outil de recherche Search Find-o-meter."
     ],
     "circa": "Automne 2010",
     "captions": [
@@ -89,7 +89,7 @@
     "desc": [
       "<em>café</em> est une solution de crowdsourcing conçue pour permettre aux employés de participer à un dialogue ouvert visant à améliorer l'organisation et à créer un sentiment de communauté au sein de Servus. Les employés ont la possibilité de poser anonymement des questions qui les intéressent, et les autres peuvent évaluer et répondre à ces questions.",
       "<em>café</em> permet également à l'équipe de direction de répondre aux meilleures idées et de déplacer les éléments appropriés dans une zone de notes séparée. L'équipe de direction peut communiquer sur l'état d'avancement de chaque idée notée et les employés peuvent continuer à commenter ces éléments, ce qui favorise une collaboration accrue entre l'équipe de direction et les employés de l'organisation.",
-      "Habanero Consulting Group a reçu le prix « Portals and Collaboration Solution of the Year » (Solution de portail et de collaboration de l'année) lors des Microsoft Partner Network IMPACT Awards 2010 pour son travail sur <em>café</em>."
+      "Habanero Consulting Group a reçu le prix « Portals and Collaboration Solution of the Year » (Solution de portail et de collaboration de l'année) lors des <strong>Microsoft Partner Network IMPACT Awards</strong> 2010 pour son travail sur <em>café</em>."
     ],
     "circa": "Printemps 2010",
     "captions": [
@@ -147,7 +147,7 @@
     "title": "Division scolaire publique SE Cornerstone - Système d'information financière",
     "desc": [
       "Habanero a développé une solution de reporting financier simplifiée et facile à utiliser pour le district scolaire public SE Cornerstone. Une interface Web personnalisée avec des assistants en plusieurs étapes a remplacé les formulaires d'entrée complexes à page unique de Dynamics pour les actions les plus fréquemment utilisées.",
-      "La solution a été finaliste dans la catégorie Finance (ERP) des IMPACT Awards 2009 du Microsoft Partner Network."
+      "La solution a été finaliste dans la catégorie Finance (ERP) des <strong>Microsoft Partner Network IMPACT Awards</strong> 2009."
     ],
     "circa": "Automne 2008",
     "captions": [
@@ -161,7 +161,7 @@
     "title": "Microsoft - Application rapide Contoso Riders",
     "desc": [
       "Microsoft a contacté Habanero afin de créer une application d'adhésion offrant une nouvelle expérience utilisateur et démontrant l'utilisation des services Windows Live pour la communauté des développeurs dans le cadre du projet Windows Live Quick Applications sur CodePlex.",
-      "Le résultat a été Contoso Riders, qui exploitait les services Windows Live suivants : <ul class=\"disc\"><li>authentification Web Windows Live ID</li><li>Windows Live Presence</li><li>contrôle de messagerie instantanée Windows Live Messenger</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul>",
+      "Le résultat a été Contoso Riders, qui exploitait les services Windows Live suivants : <ul><li>authentification Web Windows Live ID</li><li>Windows Live Presence</li><li>contrôle de messagerie instantanée Windows Live Messenger</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul>",
       "On m'a également demandé de présenter Contoso Riders lors de la conférence EnergizeIT de Microsoft."
     ],
     "circa": "Printemps 2008",
@@ -189,7 +189,7 @@
     "title": "Marionnette grise de Noël",
     "desc": [
       "La marionnette Grey Holiday était un message de vœux adressé aux clients et amis de Grey. Ce qui avait commencé comme un projet de dernière minute avec des ressources, un temps et un budget extrêmement limités s'est transformé en un succès viral qui a été présenté sur del.icio.us et MetaFilter et a attiré des visiteurs venus d'aussi loin que la France, la Suède et la Russie.",
-      "La marionnette Holiday a remporté de nombreuses distinctions en matière de créativité et de design, notamment le Lotus Award 2005 de la meilleure autopromotion."
+      "La marionnette Holiday a remporté de nombreuses distinctions en matière de créativité et de design, notamment le prix 2005 <strong>Lotus Award pour la meilleure autopromotion</strong>."
     ],
     "circa": "Hiver 2005",
     "captions": [
@@ -244,9 +244,8 @@
   "ricksmith": {
     "title": "Rick Smith - Site portfolio",
     "desc": [
-      "Le site portfolio de Rick Smith est un exemple de site web destiné aux artistes et photographes utilisant un CMS léger que j'ai développé. À l'époque, il n'existait pas de solutions d'hébergement ASP et ASP.Net bon marché, j'ai donc développé cette solution avec PHP.",
-      "En raison de la petite taille de ces sites portfolio, j'ai pu expérimenter des effets et des transitions à l'aide de HTML et JavaScript plutôt que Flash.",
-      "Surpris que les effets DOM fonctionnent encore plus de dix ans plus tard, j'ai décidé de le remettre en ligne <a target=\"_blank\" href=\"http://ricksmith.singchan.com\" title=\"Consultez le site portfolio de Rick Smith.\">pour votre plus grand plaisir</a>."
+      "Le site portfolio de Rick Smith est un exemple de site web destiné aux artistes et photographes utilisant un CMS léger que j'ai développé. À l'époque, il n'existait pas de solutions d'hébergement ASP et ASP.Net peu coûteuses, j'ai donc développé cette solution avec PHP.",
+      "En raison de la taille réduite de ces sites de portfolio, j'ai pu tester différents effets et transitions à l'aide de HTML et JavaScript plutôt que Flash."
     ],
     "circa": "Printemps 2002",
     "captions": [

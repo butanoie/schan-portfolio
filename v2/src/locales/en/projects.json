@@ -18,7 +18,7 @@
     "title": "Collabware - Collabspace",
     "desc": [
       "As UX Architect and Product Manager, I defined the front-end frameworks and development patterns for Collabspace and owned the product backlog and feature roadmap.",
-      "Collabspace is a FedRAMP-certified cloud-based records management automation solution that automates compliance activities to meet legislative and regulatory requirements. The platform uses a no-code visual workflow system for designing retention and lifecycle policies, supporting both time and event-based retention with metadata-driven calculations.",
+      "Collabspace is a <strong>FedRAMP</strong>-certified cloud-based records management automation solution that automates compliance activities to meet legislative and regulatory requirements. The platform uses a no-code visual workflow system for designing retention and lifecycle policies, supporting both time and event-based retention with metadata-driven calculations.",
       "It handles both electronic content (SharePoint documents, emails, structured and unstructured data) and physical records with inventory control, circulation tracking, container management, and barcode capabilities.",
       "Collabspace supports multi-stage disposition review processes to authorize record destruction, with event-based triggers for retention and disposition."
     ],
@@ -53,7 +53,7 @@
   "collabwareCLM": {
     "title": "Collabware - Content Lifecycle Management (CLM)",
     "desc": [
-      "Collabware CLM is a DoD 5015.2 certified solution that integrates natively with SharePoint Server, providing automated classification, retention, and disposition of content with centrally configured rules enforced globally across SharePoint.",
+      "Collabware CLM is a <strong>DoD 5015.2</strong> certified solution that integrates natively with SharePoint Server, providing automated classification, retention, and disposition of content with centrally configured rules enforced globally across SharePoint.",
       "The solution includes an Aggregates system for case management, visual lifecycle workflows for complex content behaviors, and a global content query system for advanced metadata searches with grid view sorting and filtering. It features an automatically managed bulk disposition review system with pre-defined or dynamic reviewer rules.",
       "CLM manages physical, email, and electronic records with integrated case management, workflows, and search capabilities to ensure regulatory and legal compliance. The solution uses a no-code drag-and-drop experience requiring no new infrastructure while remaining transparent to users."
     ],
@@ -74,7 +74,7 @@
     "desc": [
       "Insite is the employee portal for Vancity, Canada's largest credit union. The portal is designed to engage employees, improve their business acumen and provide easy access to information on products and services to help them better serve members.",
       "Content is aggregated and surfaced by topic, giving employees that have direct contact with members quick access to the information they need most frequently. This information is provided in the same friendly, accessible and conversational tone that staff use during their member interactions.",
-      "Insite was a finalist for the 2011 Microsoft Partner Network IMPACT Awards Portals and Collaboration category. Insite also received an honourable mention from the Intranet Innovation Awards for its Search Find-o-meter."
+      "Insite was a finalist for the 2011 <strong>Microsoft Partner Network IMPACT Awards</strong> Portals and Collaboration category. Insite also received an honourable mention from the Intranet Innovation Awards for its Search Find-o-meter."
     ],
     "circa": "Fall 2010",
     "captions": [
@@ -89,7 +89,7 @@
     "desc": [
       "<em>cafe</em> is a crowdsourcing solution designed to empower employees to engage in open dialogue aimed at improving the organization and establishing a sense of community across Servus. Employees are given the opportunity to anonymously pose questions of interest and others can rate and respond to these questions.",
       "<em>cafe</em> also allows the executive team to respond to the top ideas and move appropriate items into a separate notes area. The executive leadership team can communicate on the status of each noted idea and employees can continue to comment on these items, fostering increased collaboration between the executive leadership team and the organization's employees.",
-      "Habanero Consulting Group was awarded Portals and Collaboration Solution of the Year at the 2010 Microsoft Partner Network IMPACT Awards for the work on <em>cafe</em>."
+      "Habanero Consulting Group was awarded Portals and Collaboration Solution of the Year at the 2010 <strong>Microsoft Partner Network IMPACT Awards</strong> for the work on <em>cafe</em>."
     ],
     "circa": "Spring 2010",
     "captions": [
@@ -147,7 +147,7 @@
     "title": "SE Cornerstone Public School Division - Financial Reporting System",
     "desc": [
       "Habanero developed a streamlined and easy-to-use financial reporting solution for the SE Cornerstone Public School District. A custom web interface with multi-step wizards replaced the complex Dynamics single page input forms for the most often used actions.",
-      "The solution was a finalist for the 2009 Microsoft Partner Network IMPACT Awards Finance (ERP) category."
+      "The solution was a finalist for the 2009 <strong>Microsoft Partner Network IMPACT Awards</strong> Finance (ERP) category."
     ],
     "circa": "Fall 2008",
     "captions": [
@@ -160,8 +160,8 @@
   "contosoriders": {
     "title": "Microsoft - Contoso Riders Quick App",
     "desc": [
-      "Microsoft approached Habanero to create a membership application that provided a fresh user experience and demonstrated the use of Windows Live services for the development community as part of the <a target=\"_blank\" href=\"http://wlquickapps.codeplex.com/wikipage?title=Contoso%20Riders&referringTitle=Home&ProjectName=wlquickapps\">Windows Live Quick Applications</a> project on CodePlex.",
-      "The result was Contoso Riders, which leveraged the following Windows Live services: <ul class=\"disc\"><li>Windows Live ID Web Authentication</li><li>Windows Live Presence</li><li>Windows Live Messenger IM Control</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul>",
+      "Microsoft approached Habanero to create a membership application that provided a fresh user experience and demonstrated the use of Windows Live services for the development community as part of the Windows Live Quick Applications project on CodePlex.",
+      "The result was Contoso Riders, which leveraged the following Windows Live services: <ul><li>Windows Live ID Web Authentication</li><li>Windows Live Presence</li><li>Windows Live Messenger IM Control</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul>",
       "Microsoft asked me to present the Contoso Riders at their EnergizeIT conference."
     ],
     "circa": "Spring 2008",
@@ -189,7 +189,7 @@
     "title": "Grey Holiday Puppet",
     "desc": [
       "The Grey Holiday Puppet was a holiday greeting to Grey clients and friends. What began as a last minute project with extremely limited resources, time and budget turned into a viral hit which was featured on del.icio.us and MetaFilter and garnering visitors from as far off as France, Sweden and Russia.",
-      "The Holiday Puppet won numerous creative and design accolades including the 2005 Lotus Award for Best Self Promotion."
+      "The Holiday Puppet won numerous creative and design accolades including the 2005 <strong>Lotus Award for Best Self Promotion</strong>."
     ],
     "circa": "Winter 2005",
     "captions": [

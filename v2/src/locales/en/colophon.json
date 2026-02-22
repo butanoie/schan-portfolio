@@ -9,14 +9,14 @@
       "imageAlt": "Choice Cuts - pork cuts diagram",
       "heading": "Colophon",
       "paragraphs": [
-        "Sing Chan is currently the VP of Product at Collabware Systems.",
+        "Sing Chan is a Technical Product Leader and UX Architect with over 25 years of experience, most recently serving as VP of Product at Collabware Systems.",
         "Sing is responsible for working with customers and stakeholders to determine the product and feature roadmaps for Collabware's Collabspace solution and manages the Product and Quality Assurance teams.",
         "He is also responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings."
       ]
     },
     "technologies": {
       "heading": "Technologies",
-      "intro": "This portfolio site has been rebuilt from the ground up. Here's what powers the current version:",
+      "intro": "This portfolio site has been rebuilt from the ground up as an example of creating a production web application using Claude Code. Here's what powers the current version:",
       "visitWebsiteAriaLabel": "Visit {{name}} website (opens in new tab)",
       "categories": [
         {
