@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box, SxProps, Theme, useTheme } from '@mui/material';
 import { useMemo } from 'react';
 import { sanitizeDescriptionHtml } from '../../utils/sanitization';
 import { BRAND_COLORS } from '../../constants';
@@ -26,41 +26,50 @@ interface ProjectDescriptionProps {
   sx?: SxProps<Theme>;
 }
 
-const DESCRIPTION_SX = {
-  '& p': {
-    margin: '0 0 1rem 0',
-    '&:last-child': {
-      marginBottom: 0,
+/**
+ * Creates theme-aware styles for project description content.
+ * Adapts link and strong tag colors based on the current theme mode.
+ *
+ * @param theme - MUI theme object containing palette information
+ * @returns SxProps object with theme-aware styling
+ */
+function getDescriptionSx(theme: Theme): SxProps<Theme> {
+  return {
+    '& p': {
+      margin: '0 0 1rem 0',
+      '&:last-child': {
+        marginBottom: 0,
+      },
     },
-  },
-  '& a': {
-    color: BRAND_COLORS.maroon,
-    textDecoration: 'underline',
-    '&:hover': {
-      color: BRAND_COLORS.maroonDark,
+    '& a': {
+      color: BRAND_COLORS.maroon,
+      textDecoration: 'underline',
+      '&:hover': {
+        color: BRAND_COLORS.maroonDark,
+      },
     },
-  },
-  '& strong': {
-    fontWeight: 600,
-    color: BRAND_COLORS.graphite,
-  },
-  '& em': {
-    fontStyle: 'italic',
-  },
-  '& ul, & ol': {
-    marginLeft: 0,
-    marginBottom: '1rem',
-    '&:last-child': {
-      marginBottom: 0,
+    '& strong': {
+      fontWeight: 600,
+      color: theme.palette.text.primary,
     },
-  },
-  '& li': {
-    marginBottom: '0.2rem',
-    '&:last-child': {
-      marginBottom: 0,
+    '& em': {
+      fontStyle: 'italic',
     },
-  },
-};
+    '& ul, & ol': {
+      marginLeft: 0,
+      marginBottom: '1rem',
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
+    '& li': {
+      marginBottom: '0.2rem',
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
+  };
+}
 
 
 /**
@@ -127,6 +136,8 @@ export function ProjectDescription({
   floatedTagsMaxWidth,
   sx,
 }: ProjectDescriptionProps) {
+  const theme = useTheme();
+
   /**
    * Convert single string to array for consistent handling
    */
@@ -145,6 +156,14 @@ export function ProjectDescription({
     [paragraphArray]
   );
 
+  /**
+   * Memoize the description styles to avoid recalculating on every render.
+   * Uses the current theme to provide colors with proper contrast in all modes.
+   */
+  const descriptionSx = useMemo(
+    () => getDescriptionSx(theme),
+    [theme]
+  );
 
   /**
    * Helper function to render a single sanitized paragraph.
@@ -169,7 +188,7 @@ export function ProjectDescription({
    * @returns A Box component with all sanitized paragraphs
    */
   const renderDescription = () => (
-    <Box sx={DESCRIPTION_SX}>
+    <Box sx={descriptionSx}>
       {sanitizedParagraphs.map(renderParagraph)}
     </Box>
   );
