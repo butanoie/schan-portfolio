@@ -121,31 +121,32 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
             </Box>
           ))}
 
-          {/* Description */}
-          <Typography
-            variant="body1"
-            sx={{
-              mt: 2,
-              mb: job.keyContributions ? 1.5 : 0,
-              lineHeight: 1.7,
-              color: palette.text.primary,
-              fontSize: { xs: "0.95rem", md: "1rem" },
-            }}
-          >
-            {job.description}
-          </Typography>
+          {/* Description (if present) */}
+          {job.description && (
+            <Typography
+              variant="body1"
+              sx={{
+                mt: 2,
+                mb: job.keyContributions ? 1.5 : 0,
+                lineHeight: 1.7,
+                color: palette.text.primary,
+                fontSize: { xs: "0.95rem", md: "1rem" },
+              }}
+            >
+              {job.description}
+            </Typography>
+          )}
 
           {/* Key Contributions (if present) */}
           {job.keyContributions && job.keyContributions.length > 0 && (
-            <>
+            <Box sx={{ mt: 2 }}>
               <Typography
                 variant="body1"
                 sx={{
-                  mt: 1.5,
-                  mb: 1,
-                  fontWeight: 500,
+                  fontWeight: 600,
                   color: palette.text.primary,
                   fontSize: { xs: "0.95rem", md: "1rem" },
+                  mb: 1,
                 }}
               >
                 {t('resume.workExperience.keyContributions', { ns: 'pages' })}
@@ -168,7 +169,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                   <li key={index}>{contribution}</li>
                 ))}
               </Box>
-            </>
+            </Box>
           )}
         </Box>
       ))}

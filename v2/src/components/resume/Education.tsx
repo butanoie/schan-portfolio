@@ -1,47 +1,43 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import type { SpeakingContent } from "../../types/resume";
+import type { EducationEntry } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { getPaletteByMode } from "../../lib/themes";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
- * Props for the ConferenceSpeaker component.
+ * Props for the Education component.
  */
-export interface ConferenceSpeakerProps {
-  /** Speaking history content with intro and events */
-  content: SpeakingContent;
+export interface EducationProps {
+  /** Array of education entries to display */
+  education: EducationEntry[];
 }
 
 /**
- * ConferenceSpeaker displays the conference speaking history.
+ * Education displays professional education and certifications.
  *
  * Features:
- * - Displays each conference as a card with left border
- * - Conference name, year, and location for each event
- * - Optional topic display for each event
+ * - Displays institution, program, and year for each entry
  * - Clean, organized layout with alternating styling
  * - Print-friendly layout
+ * - Supports multiple certifications and degrees
  *
- * @param props - Component props containing speaking content
- * @param props.content - Speaking history data (intro text and events array)
- * @returns A section displaying conference speaking history
+ * @param props - Component props containing education array
+ * @param props.education - Array of education entries (degrees, certifications)
+ * @returns A section displaying the education entries
  *
  * @example
- * <ConferenceSpeaker content={resumeData.speaking} />
+ * <Education education={resumeData.education} />
  */
-export default function ConferenceSpeaker({
-  content,
-}: ConferenceSpeakerProps) {
-  const { intro, events } = content;
+export default function Education({ education }: EducationProps) {
   const { mode, isMounted } = useThemeContext();
   const palette = getPaletteByMode(isMounted ? mode : "light");
   const { t } = useI18n();
 
   return (
-    <Box component="section" aria-labelledby="speaking-heading">
+    <Box component="section" aria-labelledby="education-heading">
       <Box
         sx={{
           backgroundColor: BRAND_COLORS.duckEgg,
@@ -51,8 +47,9 @@ export default function ConferenceSpeaker({
       >
         {/* Section Heading */}
         <Typography
-          id="speaking-heading"
+          id="education-heading"
           variant="h3"
+          component="h3"
           sx={{
             fontWeight: 600,
             color: palette.card.text,
@@ -60,24 +57,10 @@ export default function ConferenceSpeaker({
             mb: 1.5,
           }}
         >
-          {t('resume.conferenceSpeaker.heading', { ns: 'pages' })}
+          {t('resume.education.heading', { ns: 'pages' })}
         </Typography>
 
-        {/* Intro Text */}
-        {intro && (
-          <Typography
-            variant="body2"
-            sx={{
-              color: palette.card.text,
-              fontSize: "0.9rem",
-              mb: 1.5,
-            }}
-          >
-            {intro}
-          </Typography>
-        )}
-
-        {/* Events List */}
+        {/* Education Entries */}
         <Box
           sx={{
             display: "flex",
@@ -85,7 +68,7 @@ export default function ConferenceSpeaker({
             gap: 1.5,
           }}
         >
-          {events.map((event, index) => (
+          {education.map((entry, index) => (
             <Box
               key={index}
               sx={{
@@ -101,7 +84,7 @@ export default function ConferenceSpeaker({
                   fontSize: "0.9rem",
                 }}
               >
-                {event.conference}
+                {entry.institution}
               </Typography>
               <Typography
                 variant="body2"
@@ -111,21 +94,18 @@ export default function ConferenceSpeaker({
                   mt: 0.25,
                 }}
               >
-                {event.year}
-                {event.location && ` – ${event.location}`}
+                {entry.program}
               </Typography>
-              {event.topic && (
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: palette.card.text,
-                    fontSize: "0.8rem",
-                    mt: 0.25,
-                  }}
-                >
-                  {event.topic}
-                </Typography>
-              )}
+              <Typography
+                variant="body2"
+                sx={{
+                  color: palette.card.text,
+                  fontSize: "0.8rem",
+                  mt: 0.25,
+                }}
+              >
+                {entry.year}
+              </Typography>
             </Box>
           ))}
         </Box>

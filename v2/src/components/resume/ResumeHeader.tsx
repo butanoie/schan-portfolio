@@ -90,17 +90,43 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
           {name}
         </Typography>
 
-        {/* Tagline */}
-        <Typography
-          variant="body1"
-          sx={{
-            fontSize: { xs: "1rem", md: "1.1rem" },
-            lineHeight: 1.6,
-            color: palette.text.primary,
-          }}
-        >
-          {tagline}
-        </Typography>
+        {/* Tagline - Split on em dash */}
+        {tagline.includes('–') ? (
+          <>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: "1rem", md: "1.1rem" },
+                fontWeight: 600,
+                color: palette.text.primary,
+              }}
+            >
+              {tagline.split('–')[0].trim()}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: "0.95rem", md: "1rem" },
+                lineHeight: 1.6,
+                color: palette.text.secondary,
+                mt: 0.5,
+              }}
+            >
+              {tagline.split('–')[1].trim()}
+            </Typography>
+          </>
+        ) : (
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: { xs: "1rem", md: "1.1rem" },
+              lineHeight: 1.6,
+              color: palette.text.primary,
+            }}
+          >
+            {tagline}
+          </Typography>
+        )}
       </Box>
 
       {/* Right Section: Contact Buttons */}
@@ -115,7 +141,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
         {contactLinks.map((link, index) => {
           const IconComponent = iconMap[link.icon];
           const isDownload = link.icon === "download";
-          const isSageColor = ["download", "email", "phone"].includes(link.icon);
+          const isSageColor = ["email", "phone", "linkedin", "github"].includes(link.icon);
           // Decode obfuscated email and phone labels and URLs
           const shouldDecode = ["email", "phone"].includes(link.icon);
           const displayLabel = shouldDecode ? rot13(link.label) : link.label;

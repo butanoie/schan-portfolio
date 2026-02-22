@@ -5,6 +5,7 @@ import {
   ResumeHeader,
   WorkExperience,
   CoreCompetencies,
+  Education,
   ClientList,
   ConferenceSpeaker,
 } from "../../src/components/resume";
@@ -19,6 +20,7 @@ import "./print.css";
  * - Header with name, tagline, and contact buttons (LinkedIn, GitHub, Download)
  * - Work experience with detailed job history (5 companies, 25+ years)
  * - Core competencies organized by category (skills, tools)
+ * - Education and certifications
  * - Client list (50+ enterprise clients)
  * - Conference speaking history
  *
@@ -26,7 +28,7 @@ import "./print.css";
  * - Mobile: Single column, stacked sections
  * - Desktop: Two columns (8/4 split - 70/30 approximately)
  * - Left: Header + Work Experience
- * - Right: Skills + Clients + Speaking
+ * - Right: Skills + Education + Clients + Speaking
  *
  * All content is localized to the user's preferred language (English or French).
  *
@@ -70,6 +72,10 @@ export default function ResumePage() {
           }}
         >
           <CoreCompetencies categories={data.skillCategories} />
+
+          <Divider sx={{ my: 3 }} />
+
+          <Education education={data.education} />
 
           <Divider sx={{ my: 3 }} />
 

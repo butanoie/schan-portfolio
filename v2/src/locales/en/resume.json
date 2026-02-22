@@ -17,7 +17,7 @@
       "phone": "Phone"
     },
     "header": {
-      "tagline": "I develop useful, intuitive, and engaging applications that better people's lives.",
+      "tagline": "Technical Product Leader & User Experience Architect – Bridging Usability, Engineering & Business Strategy",
       "downloadLabel": "Download Résumé"
     },
     "workExperience": {
@@ -26,22 +26,22 @@
       "jobs": [
         {
           "company": "Collabware Systems",
-          "description": "My responsibilities as VP of Product were to drive product execution for Collabware's enterprise collaboration solutions. I led cross-functional UX and QA teams and integrated with cloud operations and engineering to deliver customer-centric features while optimizing operational efficiency.",
+          "description": "Recently led an Azure Cloud infrastructure cost optimization audit, identifying and implementing reductions of 40% that eliminated over $360,000 CAD in annualized hosting costs.",
           "contributions": [
-            "Requirements gathering with customers and stakeholders, translate business needs into actionable product features and roadmap priorities",
-            "Collaborate with engineering teams on product backlog definition and sprint planning",
-            "Manage quality assurance team to develop comprehensive test cases and automation frameworks to maintain product quality standards",
-            "Partner with cloud operations to monitor system health and ensure platform reliability",
-            "Led cost optimization initiative through systematic cloud infrastructure audits, identifying significant opportunities for expense reduction",
-            "Responsible for the interaction design, user experience, and front-end development frameworks for Collabware's software offerings",
-            "Mentor UX developers, fostering design excellence and cross-functional collaboration",
-            "Design and deliver product knowledge onboarding program for new Collabware team members"
+            "Drove product execution for enterprise collaboration solutions, leading cross-functional UX, QA, engineering and cloud operations teams",
+            "Managed quality assurance team to develop comprehensive QA automation framework, improving test coverage and reducing regression defects across release cycles",
+            "Partnered with cloud operations to monitor system health, maintain SLA compliance, and ensure platform reliability",
+            "Designed and delivered product knowledge onboarding program for new team members, reducing time-to-productivity by over 50% — from one month to two weeks",
+            "Conducted customer discovery interviews and stakeholder sessions to define feature priorities and validate product-market fit",
+            "Translated customer and stakeholder requirements into actionable product roadmap priorities, aligning business needs with engineering capacity",
+            "Managed product backlog and sprint planning in collaboration with engineering teams, improving delivery predictability",
+            "Owned interaction design, user experience strategy, and front-end development frameworks for all Collabware products"
           ],
           "roles": [
             {
               "title": "VP, Product",
               "startDate": "May 2020",
-              "endDate": "Present"
+              "endDate": "March 2026"
             },
             {
               "title": "Product Manager",
@@ -51,13 +51,18 @@
             {
               "title": "User Experience Architect",
               "startDate": "August 2011",
-              "endDate": "Present"
+              "endDate": "March 2018"
             }
           ]
         },
         {
           "company": "Habanero Consulting Group",
-          "description": "Hired as the first User Experience Developer in the organization to bridge the communication and process issues between design and development teams. Evangelized the value of the UX Developer role within Habanero and introduced front-end development process and patterns to remove pain points in the project lifecycle. On-boarded and mentored new UX Developers when they joined Habanero. Helped grow the number of front-end developers at Habanero to eight and also took on group management and resourcing responsibilities.",
+          "description": "Hired as the first UX developer in the organization to bridge communication gaps between design and engineering teams.",
+          "contributions": [
+            "Built the UX practice from the ground up, introduced front-end process patterns and standards, and evangelized UX development practices",
+            "Mentored new UX developers and grew the front-end team to 8 developers",
+            "Took on group management and resource allocation responsibilities"
+          ],
           "roles": [
             {
               "title": "User Experience Developer",
@@ -67,8 +72,10 @@
           ]
         },
         {
-          "company": "Daniel Choi Design Associates",
-          "description": "Contracted to manage and lead development of interactive projects, from the database layer all the way up to the front-end, including security, testing, deployment and documentation.",
+          "company": "Daniel Choi Design Associates (DCDA)",
+          "contributions": [
+            "Managed and led development of interactive projects, from the database layer all the way up to the front-end, including security, testing, deployment and documentation"
+          ],
           "roles": [
             {
               "title": "Lead Developer (Contract)",
@@ -79,7 +86,11 @@
         },
         {
           "company": "Local Lola Design Team (LLDT)",
-          "description": "Contracted to develop Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects. Consulted on interface design and provided programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution.",
+          "description": "Developed Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects.",
+          "contributions": [
+            "Developed Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects",
+            "Consulted on interface design and provided programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution"
+          ],
           "roles": [
             {
               "title": "Flash and User Experience Developer (Contract)",
@@ -90,12 +101,21 @@
         },
         {
           "company": "Grey Advertising Vancouver",
-          "description": "Developed grASP, a modular and extensible in-house CMS used on Grey projects from 2001 to 2006. Also developed and maintained Grey's external and internal web sites and applications. Took on role of Interactive Producer, with additional project management duties such as managing resources and project schedules, interacting and coordinating with outside developers, vendors and clients.",
+          "contributions": [
+            "Developed grASP, a modular and extensible in-house CMS used on Grey interactive projects",
+            "Developed and maintained Grey's external and internal web sites and applications",
+            "Managed resources, project schedules, and vendor and customer relationships"
+          ],
           "roles": [
             {
-              "title": "Interactive Producer/Developer",
-              "startDate": "July 1999",
+              "title": "Interactive Producer",
+              "startDate": "July 2004",
               "endDate": "May 2006"
+            },
+            {
+              "title": "Interactive Developer",
+              "startDate": "July 1999",
+              "endDate": "June 2004"
             }
           ]
         }
@@ -106,12 +126,36 @@
       "everydayTools": "Everyday Tools",
       "onceInAWhile": "Once in a While"
     },
+    "education": {
+      "heading": "Education & Certifications",
+      "entries": [
+        {
+          "institution": "Justice Institute of British Columbia",
+          "program": "Collaborative Conflict Resolution",
+          "year": "2019"
+        },
+        {
+          "institution": "Scrum Alliance",
+          "program": "Certified ScrumMaster",
+          "year": "2015"
+        },
+        {
+          "institution": "Capilano College",
+          "program": "Project Management",
+          "year": "2004"
+        },
+        {
+          "institution": "Simon Fraser University",
+          "program": "Undergraduate studies in Computer Science and Economics",
+          "year": "1992 – 1993"
+        }
+      ]
+    },
     "clients": {
       "heading": "Clients"
     },
     "conferenceSpeaker": {
-      "heading": "Conference Speaker",
-      "intro": "I have presented sessions at the following conferences:"
+      "heading": "Conference Speaker"
     },
     "meta": {
       "title": "Résumé | Sing Chan's Portfolio",

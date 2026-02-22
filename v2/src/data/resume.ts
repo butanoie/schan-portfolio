@@ -43,6 +43,11 @@ export function getLocalizedResumeData(
       tagline: t('resume.header.tagline', { ns: 'pages' }),
       contactLinks: [
         {
+          label: t('resume.header.downloadLabel', { ns: 'pages' }),
+          url: "/Sing_Chan_Resume.pdf",
+          icon: "download",
+        },
+        {
           label: "linkedin.com/in/sing-chan",
           url: "https://www.linkedin.com/in/sing-chan/",
           icon: "linkedin",
@@ -61,11 +66,6 @@ export function getLocalizedResumeData(
           label: "+6-159-228-7398",
           url: "gry:+6-159-228-7398",
           icon: "phone",
-        },
-        {
-          label: t('resume.header.downloadLabel', { ns: 'pages' }),
-          url: "/Sing_Chan_Resume.pdf",
-          icon: "download",
         },
       ],
     },
@@ -112,9 +112,14 @@ export function getLocalizedResumeData(
           },
         ],
         description: t('resume.workExperience.jobs.1.description', { ns: 'pages' }),
+        keyContributions: [
+          t('resume.workExperience.jobs.1.contributions.0', { ns: 'pages' }),
+          t('resume.workExperience.jobs.1.contributions.1', { ns: 'pages' }),
+          t('resume.workExperience.jobs.1.contributions.2', { ns: 'pages' }),
+        ],
       },
       {
-        company: "Daniel Choi Design Associates",
+        company: "Daniel Choi Design Associates (DCDA)",
         roles: [
           {
             title: t('resume.workExperience.jobs.2.roles.0.title', { ns: 'pages' }),
@@ -122,7 +127,9 @@ export function getLocalizedResumeData(
             endDate: t('resume.workExperience.jobs.2.roles.0.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.jobs.2.description', { ns: 'pages' }),
+        keyContributions: [
+          t('resume.workExperience.jobs.2.contributions.0', { ns: 'pages' }),
+        ],
       },
       {
         company: "Local Lola Design Team (LLDT)",
@@ -133,7 +140,10 @@ export function getLocalizedResumeData(
             endDate: t('resume.workExperience.jobs.3.roles.0.endDate', { ns: 'pages' }),
           },
         ],
-        description: t('resume.workExperience.jobs.3.description', { ns: 'pages' }),
+        keyContributions: [
+          t('resume.workExperience.jobs.3.contributions.0', { ns: 'pages' }),
+          t('resume.workExperience.jobs.3.contributions.1', { ns: 'pages' }),
+        ],
       },
       {
         company: "Grey Advertising Vancouver",
@@ -143,8 +153,16 @@ export function getLocalizedResumeData(
             startDate: t('resume.workExperience.jobs.4.roles.0.startDate', { ns: 'pages' }),
             endDate: t('resume.workExperience.jobs.4.roles.0.endDate', { ns: 'pages' }),
           },
+          {
+            title: t('resume.workExperience.jobs.4.roles.1.title', { ns: 'pages' }),
+            startDate: t('resume.workExperience.jobs.4.roles.1.startDate', { ns: 'pages' }),
+            endDate: t('resume.workExperience.jobs.4.roles.1.endDate', { ns: 'pages' }),
+          },
         ],
-        description: t('resume.workExperience.jobs.4.description', { ns: 'pages' }),
+        keyContributions: [
+          t('resume.workExperience.jobs.4.contributions.0', { ns: 'pages' }),
+          t('resume.workExperience.jobs.4.contributions.1', { ns: 'pages' }),
+        ],
       },
     ],
 
@@ -152,12 +170,15 @@ export function getLocalizedResumeData(
       {
         label: t('resume.skills.coreCompetencies', { ns: 'pages' }),
         skills: [
-          "JavaScript",
+          "Claude Code",
           "TypeScript",
           "React.js",
           "Fluent UI",
+          "Next.js",
+          "JointJS+",
           ".NET",
           "C#",
+          "JavaScript",
           "HTML",
           "CSS",
           "MS SQL Server",
@@ -168,7 +189,6 @@ export function getLocalizedResumeData(
       {
         label: t('resume.skills.everydayTools', { ns: 'pages' }),
         skills: [
-          "Claude Code",
           "Azure DevOps",
           "Application Insights",
           "Rancher",
@@ -177,6 +197,7 @@ export function getLocalizedResumeData(
           "Visual Studio Code",
           "Kubernetes",
           "Photoshop",
+          "Basalmiq",
           "Paper",
           "Pencils",
           "Dry-Erase Markers",
@@ -185,6 +206,29 @@ export function getLocalizedResumeData(
       {
         label: t('resume.skills.onceInAWhile', { ns: 'pages' }),
         skills: ["Illustrator", "Premiere Pro", "Perl", "Req-n-roll"],
+      },
+    ],
+
+    education: [
+      {
+        institution: t('resume.education.entries.0.institution', { ns: 'pages' }),
+        program: t('resume.education.entries.0.program', { ns: 'pages' }),
+        year: t('resume.education.entries.0.year', { ns: 'pages' }),
+      },
+      {
+        institution: t('resume.education.entries.1.institution', { ns: 'pages' }),
+        program: t('resume.education.entries.1.program', { ns: 'pages' }),
+        year: t('resume.education.entries.1.year', { ns: 'pages' }),
+      },
+      {
+        institution: t('resume.education.entries.2.institution', { ns: 'pages' }),
+        program: t('resume.education.entries.2.program', { ns: 'pages' }),
+        year: t('resume.education.entries.2.year', { ns: 'pages' }),
+      },
+      {
+        institution: t('resume.education.entries.3.institution', { ns: 'pages' }),
+        program: t('resume.education.entries.3.program', { ns: 'pages' }),
+        year: t('resume.education.entries.3.year', { ns: 'pages' }),
       },
     ],
 
@@ -234,7 +278,6 @@ export function getLocalizedResumeData(
     ],
 
     speaking: {
-      intro: t('resume.conferenceSpeaker.intro', { ns: 'pages' }),
       events: [
         {
           conference: "ARMA Canada Information Conference",
