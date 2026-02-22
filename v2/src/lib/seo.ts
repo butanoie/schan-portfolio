@@ -200,7 +200,7 @@ export function getBreadcrumbSchema(
  */
 export function getProjectSchema(project: Project): CreativeWork {
   // Extract plain text from HTML description
-  const plainDesc = stripHtml(project.desc);
+  const plainDesc = stripHtml(project.desc.join(' '));
   const truncatedDesc = truncate(plainDesc, 200);
 
   // Get the first image for the schema (used in rich results)

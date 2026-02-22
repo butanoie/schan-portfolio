@@ -52,7 +52,7 @@ describe('Data Layer Integration', () => {
 
       const matchesSearch =
         project.title.toLowerCase().includes('sharepoint') ||
-        project.desc.toLowerCase().includes('sharepoint');
+        project.desc.join(' ').toLowerCase().includes('sharepoint');
       expect(matchesSearch).toBe(true);
     });
   });

@@ -326,11 +326,16 @@ export function isProject(obj: any): obj is Project {
   const hasValidPrimitives =
     typeof obj.id === 'string' &&
     typeof obj.title === 'string' &&
-    typeof obj.desc === 'string' &&
     typeof obj.circa === 'string' &&
     typeof obj.altGrid === 'boolean';
 
   if (!hasValidPrimitives) {
+    return false;
+  }
+
+  // Validate desc array
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (!Array.isArray(obj.desc) || !obj.desc.every((item: any) => typeof item === 'string')) {
     return false;
   }
 

@@ -1,7 +1,11 @@
 {
   "collabspaceDownloader": {
     "title": "Collabware - Téléchargeur d'exportation Collabspace",
-    "desc": "<p>Collabspace Export Downloader est une application de bureau qui permet aux utilisateurs de télécharger et de gérer en toute sécurité les exportations Collabspace dans plusieurs régions.</p><p>Les utilisateurs peuvent suspendre, reprendre ou annuler les téléchargements avec persistance d'état après les redémarrages, tandis que le suivi de la progression affiche le statut en temps réel. Les liens profonds via les protocoles de liens magnétiques permettent aux utilisateurs de lancer des téléchargements directement à partir de sources externes telles que les e-mails ou Teams.</p><p>Conçu sur .NET 9 et MAUI 9, le téléchargeur met l'accent sur l'accessibilité avec la conformité WCAG 2.2 niveau AA, y compris la navigation au clavier et la prise en charge des lecteurs d'écran. Il offre une localisation en quatre langues et une gestion intégrée des mises à jour automatiques.</p><p>Le calendrier de ce projet était extrêmement court et l'application a été planifiée, développée et testée par moi-même à l'aide de Claude Code en l'espace d'un mois.</p>",
+    "desc": [
+      "Conçu en moins d'un mois avec l'aide de Claude Code, Collabspace Export Downloader est une application de bureau .NET 9 / MAUI 9 qui permet aux utilisateurs de télécharger et de gérer en toute sécurité les exportations Collabspace dans plusieurs régions.",
+      "L'application prend en charge la pause, la reprise et l'annulation avec la persistance de l'état lors des redémarrages, le suivi de la progression en temps réel et la création de liens profonds par le biais de protocoles de liens magnétiques afin que les utilisateurs puissent lancer des téléchargements directement à partir d'un courrier électronique ou de Collabspace.",
+      "Malgré les délais serrés, le téléchargeur est conforme aux normes d'accessibilité WCAG 2.2 niveau AA, il prend en charge la navigation au clavier, les lecteurs d'écran, la localisation en quatre langues et la gestion intégrée des mises à jour automatiques, le tout planifié, développé et testé par mes soins."
+    ],
     "circa": "Hiver 2025",
     "captions": [
       "Export Downloader - Progression du téléchargement (mode clair)",
@@ -12,7 +16,12 @@
   },
   "collabspace": {
     "title": "Collabware - Espace collaboratif",
-    "desc": "<p>Collabspace est une solution d'automatisation de la gestion des archives basée sur le cloud et certifiée FedRAMP qui automatise les activités de conformité afin de répondre aux exigences législatives et réglementaires.</p><p>La plateforme utilise un système de workflow visuel sans code pour concevoir des politiques de conservation et de cycle de vie, prenant en charge à la fois la conservation basée sur le temps et sur les événements grâce à des calculs basés sur les métadonnées.</p><p>Elle gère à la fois le contenu électronique (e-mails, données structurées et non structurées) et les archives physiques grâce à des fonctionnalités de contrôle des stocks, de suivi de la circulation, de gestion des conteneurs et de codes-barres.</p><p>Collabspace prend en charge les processus de révision de la destruction en plusieurs étapes afin d'autoriser la destruction des documents, avec des déclencheurs basés sur les événements pour la conservation et la destruction.</p>",
+    "desc": [
+      "En tant qu'architecte UX et chef de produit, j'ai défini les cadres front-end et les modèles de développement pour Collabspace et j'étais responsable du backlog produit et de la feuille de route des fonctionnalités.",
+      "Collabspace est une solution cloud certifiée FedRAMP qui automatise les activités de conformité afin de répondre aux exigences législatives et réglementaires. La plateforme utilise un système de workflow visuel sans code pour concevoir des politiques de conservation et de cycle de vie, prenant en charge à la fois la conservation basée sur le temps et sur les événements grâce à des calculs basés sur les métadonnées.",
+      "Il gère à la fois les contenus électroniques (documents SharePoint, e-mails, données structurées et non structurées) et les documents physiques grâce à des fonctionnalités de contrôle des stocks, de suivi de la circulation, de gestion des conteneurs et de codes-barres.",
+      "Collabspace prend en charge les processus de révision de la destruction en plusieurs étapes afin d'autoriser la destruction des documents, avec des déclencheurs basés sur les événements pour la conservation et la destruction."
+    ],
     "circa": "Automne 2017 - présent",
     "captions": [
       "Collabspace - Analyses",
@@ -27,7 +36,12 @@
   },
   "collabmail": {
     "title": "Collabware - Collabmail",
-    "desc": "<p>Collabmail est un complément Microsoft Outlook qui intègre SharePoint directement dans Outlook, offrant une fonctionnalité glisser-déposer pour classer les e-mails et les pièces jointes dans SharePoint sans changer d'application.</p><p>Il prend en charge SharePoint Server et SharePoint Online, permettant aux utilisateurs d'accéder aux bibliothèques, de consulter le contenu, les dossiers et les métadonnées depuis leur boîte de réception.</p><p>Les utilisateurs peuvent glisser-déposer des e-mails, des pièces jointes ou les deux vers SharePoint en masse, et peuvent également ajouter du contenu SharePoint à des e-mails sous forme de pièces jointes ou de liens.</p><p>Collabmail garantit la conformité en invitant les utilisateurs à fournir les métadonnées requises lors du classement du contenu, une fonctionnalité indisponible dans Outlook standard, avec des capacités d'édition en masse pour réduire la saisie répétitive de données.</p><p>Parmi les fonctionnalités supplémentaires, citons la recherche de fichiers SharePoint à partir d'Outlook, la capture automatique des métadonnées des e-mails et une liste de favoris pour un accès rapide à la bibliothèque.</p>",
+    "desc": [
+      "Collabmail est un complément Microsoft Outlook qui intègre SharePoint directement dans Outlook, offrant une fonctionnalité glisser-déposer pour classer les e-mails et les pièces jointes dans SharePoint sans changer d'application. Il prend en charge SharePoint Server et SharePoint Online, permettant aux utilisateurs d'accéder aux bibliothèques, de consulter le contenu, les dossiers et les métadonnées depuis leur boîte de réception.",
+      "En tant qu'architecte UX, j'ai dirigé la conception interactive de Collabmail, notre premier projet basé sur le framework Windows Presentation Foundation (WPF). La conception d'une expérience riche en fonctionnalités dans les contraintes visuelles strictes d'un panneau complémentaire Exchange a nécessité une hiérarchisation minutieuse de la densité des informations et des modèles de navigation afin de préserver la facilité d'utilisation de l'interface sans surcharger l'espace limité de l'écran.",
+      "Les utilisateurs peuvent glisser-déposer des e-mails, des pièces jointes ou les deux vers SharePoint en masse, et peuvent également ajouter du contenu SharePoint à des e-mails sous forme de pièces jointes ou de liens. Collabmail garantit la conformité en invitant les utilisateurs à fournir les métadonnées requises lors du classement du contenu, une fonctionnalité indisponible dans Outlook standard, avec des capacités d'édition en masse pour réduire la saisie répétitive de données.",
+      "Parmi les fonctionnalités supplémentaires, citons la recherche de fichiers SharePoint à partir d'Outlook, la capture automatique des métadonnées des e-mails et une liste de favoris pour un accès rapide à la bibliothèque."
+    ],
     "circa": "Été 2016 - présent",
     "captions": [
       "Collabmail - Ajouter des pièces jointes ou des liens partagés à partir de SharePoint",
@@ -38,7 +52,11 @@
   },
   "collabwareCLM": {
     "title": "Collabware - Gestion du cycle de vie du contenu (CLM)",
-    "desc": "<p>Collabware CLM est une solution certifiée DoD 5015.2 qui s'intègre nativement à SharePoint Server, fournissant une classification, une conservation et une élimination automatisées du contenu grâce à des règles configurées de manière centralisée et appliquées à l'échelle mondiale dans SharePoint.</p><p>La solution comprend un système d'agrégats pour la gestion des dossiers, des workflows visuels du cycle de vie pour les comportements de contenu complexes et un système de requête de contenu global pour les recherches avancées de métadonnées avec tri et filtrage en mode grille.</p><p>Elle dispose d'un système de révision des dispositions en masse géré automatiquement avec des règles de révision prédéfinies ou dynamiques.</p><p>CLM gère les enregistrements physiques, électroniques et par e-mail grâce à des fonctionnalités intégrées de gestion des dossiers, de workflows et de recherche afin de garantir la conformité réglementaire et légale.</p><p>La solution utilise une expérience de glisser-déposer sans code qui ne nécessite aucune nouvelle infrastructure tout en restant transparente pour les utilisateurs.</p>",
+    "desc": [
+      "Collabware CLM est une solution certifiée DoD 5015.2 qui s'intègre nativement à SharePoint Server, fournissant une classification, une conservation et une élimination automatisées du contenu grâce à des règles configurées de manière centralisée et appliquées à l'échelle mondiale dans SharePoint.",
+      "La solution comprend un système d'agrégats pour la gestion des dossiers, des workflows visuels du cycle de vie pour les comportements de contenu complexes et un système de requête de contenu global pour les recherches avancées de métadonnées avec tri et filtrage en mode grille. Elle dispose d'un système de révision des dispositions en masse géré automatiquement avec des règles de révision prédéfinies ou dynamiques.",
+      "CLM gère les enregistrements physiques, électroniques et par e-mail grâce à des fonctionnalités intégrées de gestion des dossiers, de workflows et de recherche afin de garantir la conformité réglementaire et légale. La solution utilise une expérience de glisser-déposer sans code qui ne nécessite aucune nouvelle infrastructure tout en restant transparente pour les utilisateurs."
+    ],
     "circa": "Été 2011 - présent",
     "captions": [
       "CLM - Bibliothèque de documents physiques",
@@ -53,7 +71,11 @@
   },
   "vcInsite": {
     "title": "Vancity - Insite",
-    "desc": "<p>Insite est le portail destiné aux employés de Vancity, la plus grande coopérative de crédit du Canada.</p><p>Ce portail est conçu pour impliquer les employés, améliorer leur sens des affaires et leur fournir un accès facile aux informations sur les produits et services afin de les aider à mieux servir les membres.</p><p>Le contenu est regroupé et présenté par thème, ce qui permet aux employés en contact direct avec les membres d'accéder rapidement aux informations dont ils ont le plus souvent besoin.</p><p>Ces informations sont fournies dans le même ton convivial, accessible et conversationnel que celui utilisé par le personnel lors de ses interactions avec les membres.</p><p>Insite a été finaliste des IMPACT Awards 2011 du Microsoft Partner Network dans la catégorie Portails et collaboration.</p><p>Insite a également reçu une mention honorable des Intranet Innovation Awards pour son outil de recherche Search Find-o-meter.</p>",
+    "desc": [
+      "Insite est le portail destiné aux employés de Vancity, la plus grande coopérative de crédit du Canada. Le portail est conçu pour impliquer les employés, améliorer leur sens des affaires et leur fournir un accès facile aux informations sur les produits et services afin de les aider à mieux servir les membres.",
+      "Le contenu est regroupé et présenté par thème, ce qui permet aux employés en contact direct avec les membres d'accéder rapidement aux informations dont ils ont le plus souvent besoin. Ces informations sont fournies dans le même ton convivial, accessible et conversationnel que celui utilisé par le personnel lors de ses interactions avec les membres.",
+      "Insite a été finaliste des IMPACT Awards 2011 du Microsoft Partner Network dans la catégorie Portails et collaboration. Insite a également reçu une mention honorable des Intranet Innovation Awards pour son outil de recherche Search Find-o-meter."
+    ],
     "circa": "Automne 2010",
     "captions": [
       "Insite - Page d'accueil",
@@ -64,7 +86,11 @@
   },
   "servusCafe": {
     "title": "Servus Credit Union - café",
-    "desc": "<p><em>café</em> est une solution de crowdsourcing conçue pour permettre aux employés de participer à un dialogue ouvert visant à améliorer l'organisation et à créer un sentiment de communauté au sein de Servus.</p><p>Les employés ont la possibilité de poser anonymement des questions qui les intéressent, et les autres peuvent évaluer et répondre à ces questions.</p><p><em>café</em> permet également à l'équipe de direction de répondre aux meilleures idées et de déplacer les éléments appropriés dans une zone de notes séparée.</p><p>L'équipe de direction peut communiquer sur l'état d'avancement de chaque idée notée et les employés peuvent continuer à commenter ces éléments, ce qui favorise une collaboration accrue entre l'équipe de direction et les employés de l'organisation.</p><p>Habanero Consulting Group a reçu le prix « Portals and Collaboration Solution of the Year » (Solution de portail et de collaboration de l'année) lors des Microsoft Partner Network IMPACT Awards 2010 pour son travail sur <em>café</em>.</p>",
+    "desc": [
+      "<em>café</em> est une solution de crowdsourcing conçue pour permettre aux employés de participer à un dialogue ouvert visant à améliorer l'organisation et à créer un sentiment de communauté au sein de Servus. Les employés ont la possibilité de poser anonymement des questions qui les intéressent, et les autres peuvent évaluer et répondre à ces questions.",
+      "<em>café</em> permet également à l'équipe de direction de répondre aux meilleures idées et de déplacer les éléments appropriés dans une zone de notes séparée. L'équipe de direction peut communiquer sur l'état d'avancement de chaque idée notée et les employés peuvent continuer à commenter ces éléments, ce qui favorise une collaboration accrue entre l'équipe de direction et les employés de l'organisation.",
+      "Habanero Consulting Group a reçu le prix « Portals and Collaboration Solution of the Year » (Solution de portail et de collaboration de l'année) lors des Microsoft Partner Network IMPACT Awards 2010 pour son travail sur <em>café</em>."
+    ],
     "circa": "Printemps 2010",
     "captions": [
       "café - Maquette de la page des publications",
@@ -73,7 +99,10 @@
   },
   "devon": {
     "title": "Devon Energy - Strata",
-    "desc": "<p>Au cours de l'été 2009, Devon Energy a mis à jour son portail destiné aux employés, passant de fichiers HTML plats et d'un ensemble d'applications Web différentes à une plateforme SharePoint 2007 unifiée.</p><p>L'un des objectifs du projet était que Habanero forme l'équipe de développement interne de Devon au développement SharePoint afin qu'elle puisse continuer à développer le portail de manière autonome après son lancement initial.</p><p>Pendant six mois, l'équipe mixte a travaillé sur trois fuseaux horaires différents.</p><p>Les développeurs de Habanero à Vancouver ont été associés à des développeurs de Devon, basés à Oklahoma City, Houston et Calgary.</p><p>J'ai personnellement travaillé avec deux développeurs de Devon et les ai formés sur des sujets tels que les meilleures pratiques de développement SharePoint, la personnalisation de SharePoint, jQuery et les techniques avancées HTML/CSS.</p>",
+    "desc": [
+      "Au cours de l'été 2009, Devon Energy a mis à jour son portail destiné aux employés, passant de fichiers HTML plats et d'un ensemble d'applications Web différentes à une plateforme SharePoint 2007 unifiée. L'un des objectifs du projet était que Habanero forme l'équipe de développement interne de Devon au développement SharePoint afin qu'elle puisse continuer à développer le portail de manière autonome après son lancement initial.",
+      "Pendant six mois, l'équipe mixte a travaillé sur trois fuseaux horaires différents. Les développeurs de Habanero à Vancouver ont été associés à des développeurs de Devon, basés à Oklahoma City, Houston et Calgary. J'ai personnellement travaillé avec deux développeurs de Devon et les ai formés sur des sujets tels que les meilleures pratiques de développement SharePoint, la personnalisation de SharePoint, jQuery et les techniques avancées HTML/CSS."
+    ],
     "circa": "Été/automne 2009",
     "captions": [
       "Strata - Maquette de la page d'accueil",
@@ -84,7 +113,11 @@
   },
   "spMisc": {
     "title": "Autres projets SharePoint 2007 et 2010",
-    "desc": "<p>Ce sont des captures d'écran et/ou des maquettes pour d'autres projets SharePoint 2007 et 2010 auxquels j'ai participé.</p>",
+    "desc": [
+      "En tant que développeur ou architecte UX principal, j'ai été impliqué dans des dizaines de projets SharePoint couvrant des intranets, des sites web publics, des portails et des applications d'entreprise.",
+      "Chacune d'entre elles a nécessité la traduction d'exigences commerciales uniques en expériences polies et marquées au sein de la plateforme SharePoint.",
+      "Ces captures d'écran représentent un échantillon de ce travail."
+    ],
     "circa": "2006 - 2012",
     "captions": [
       "Collabware - Site Web externe - Été 2010",
@@ -98,7 +131,10 @@
   },
   "habExternal": {
     "title": "Habanero Consulting Group - Site Web externe",
-    "desc": "<p>Le site Web externe de Habanero présentait l'expérience et les connaissances de Habanero en matière de personnalisation de SiteFinity.</p><p>L'utilisation de fenêtres modales pour mettre en évidence et naviguer parmi les informations connexes en fonction du champ défini par l'auteur, sans que l'utilisateur ne perde le contexte d'origine, constituait un concept d'interface utilisateur intéressant.</p>",
+    "desc": [
+      "Le site Web externe de Habanero présentait l'expérience et les connaissances de Habanero en matière de personnalisation de SiteFinity.",
+      "L'utilisation de fenêtres modales pour mettre en évidence et naviguer parmi les informations connexes en fonction du champ défini par l'auteur, sans que l'utilisateur ne perde le contexte d'origine, constituait un concept d'interface utilisateur intéressant."
+    ],
     "circa": "Hiver 2008",
     "captions": [
       "HabaneroConsulting.com - Page d'accueil",
@@ -109,7 +145,10 @@
   },
   "cornerstone": {
     "title": "Division scolaire publique SE Cornerstone - Système d'information financière",
-    "desc": "<p>Habanero a développé une solution de reporting financier simplifiée et facile à utiliser pour le district scolaire public SE Cornerstone.</p><p>Une interface Web personnalisée avec des assistants en plusieurs étapes a remplacé les formulaires d'entrée complexes à page unique de Dynamics pour les actions les plus fréquemment utilisées.</p><p>La solution a été finaliste dans la catégorie Finance (ERP) des IMPACT Awards 2009 du Microsoft Partner Network.</p>",
+    "desc": [
+      "Habanero a développé une solution de reporting financier simplifiée et facile à utiliser pour le district scolaire public SE Cornerstone. Une interface Web personnalisée avec des assistants en plusieurs étapes a remplacé les formulaires d'entrée complexes à page unique de Dynamics pour les actions les plus fréquemment utilisées.",
+      "La solution a été finaliste dans la catégorie Finance (ERP) des IMPACT Awards 2009 du Microsoft Partner Network."
+    ],
     "circa": "Automne 2008",
     "captions": [
       "Système budgétaire - Page d'accueil",
@@ -120,7 +159,11 @@
   },
   "contosoriders": {
     "title": "Microsoft - Application rapide Contoso Riders",
-    "desc": "<p>Microsoft a contacté Habanero afin de créer une application d'adhésion offrant une nouvelle expérience utilisateur et démontrant l'utilisation des services Windows Live pour la communauté des développeurs dans le cadre du projet Windows Live Quick Applications sur CodePlex.</p><p>Le résultat a été Contoso Riders, qui exploitait les services Windows Live suivants : authentification Web Windows Live ID, Windows Live Presence, contrôle de messagerie instantanée Windows Live Messenger, Windows Live Spaces, Silverlight Streaming, Bing Maps et Virtual Earth.</p><p>On m'a également demandé de présenter Contoso Riders lors de la conférence EnergizeIT de Microsoft.</p>",
+    "desc": [
+      "Microsoft a contacté Habanero afin de créer une application d'adhésion offrant une nouvelle expérience utilisateur et démontrant l'utilisation des services Windows Live pour la communauté des développeurs dans le cadre du projet Windows Live Quick Applications sur CodePlex.",
+      "Le résultat a été Contoso Riders, qui exploitait les services Windows Live suivants : <ul class=\"disc\"><li>authentification Web Windows Live ID</li><li>Windows Live Presence</li><li>contrôle de messagerie instantanée Windows Live Messenger</li><li>Windows Live Spaces</li><li>Silverlight Streaming</li><li>Bing Maps</li><li>Virtual Earth</li></ul>",
+      "On m'a également demandé de présenter Contoso Riders lors de la conférence EnergizeIT de Microsoft."
+    ],
     "circa": "Printemps 2008",
     "captions": [
       "Contoso Riders - Maquette de la page d'accueil",
@@ -130,7 +173,10 @@
   },
   "bpDashboard": {
     "title": "Boston Pizza - Tableau de bord des franchisés",
-    "desc": "<p>Le tableau de bord des franchisés était un écran interactif situé dans le hall du siège social de Boston Pizza à Richmond.</p><p>Les visiteurs pouvaient interagir avec l'écran et consulter des informations sur tous les restaurants Boston Pizza ou Boston's Gourmet Pizza en Amérique du Nord.</p><p>Le tableau de bord est un exemple de projet qui ne ciblait pas les navigateurs de bureau et qui utilisait les principes de conception d'interface utilisateur à 3 mètres et de jeu.</p><p>Le tableau de bord des franchisés original était contrôlé à l'aide d'une télécommande Nintendo Wii, les versions suivantes utilisant une souris gyroscopique.</p><p>Finalement, un port basé sur un navigateur a également été développé, accessible via l'intranet de Boston Pizza.</p>",
+    "desc": [
+      "Le tableau de bord des franchisés était un écran interactif situé dans le hall du siège social de Boston Pizza à Richmond. Les visiteurs pouvaient interagir avec l'écran et consulter des informations sur tous les restaurants Boston Pizza ou Boston's Gourmet Pizza en Amérique du Nord.",
+      "Le tableau de bord est un exemple de projet qui ne ciblait pas les navigateurs de bureau et qui utilisait les principes de conception d'interface utilisateur à 3 mètres et de jeu. Le tableau de bord des franchisés original était contrôlé à l'aide d'une télécommande Nintendo Wii, les versions suivantes utilisant une souris gyroscopique. Finalement, un port basé sur un navigateur a également été développé, accessible via l'intranet de Boston Pizza."
+    ],
     "circa": "Hiver 2006",
     "captions": [
       "Tableau de bord du franchisé - Écran d'accueil",
@@ -141,7 +187,10 @@
   },
   "holidayPuppet": {
     "title": "Marionnette grise de Noël",
-    "desc": "<p>La marionnette Grey Holiday était un message de vœux adressé aux clients et amis de Grey.</p><p>Ce qui avait commencé comme un projet de dernière minute avec des ressources, un temps et un budget extrêmement limités s'est transformé en un succès viral qui a été présenté sur del.icio.us et MetaFilter et a attiré des visiteurs venus d'aussi loin que la France, la Suède et la Russie.</p><p>La marionnette Holiday a remporté de nombreuses distinctions en matière de créativité et de design, notamment le Lotus Award 2005 de la meilleure autopromotion.</p>",
+    "desc": [
+      "La marionnette Grey Holiday était un message de vœux adressé aux clients et amis de Grey. Ce qui avait commencé comme un projet de dernière minute avec des ressources, un temps et un budget extrêmement limités s'est transformé en un succès viral qui a été présenté sur del.icio.us et MetaFilter et a attiré des visiteurs venus d'aussi loin que la France, la Suède et la Russie.",
+      "La marionnette Holiday a remporté de nombreuses distinctions en matière de créativité et de design, notamment le Lotus Award 2005 de la meilleure autopromotion."
+    ],
     "circa": "Hiver 2005",
     "captions": [
       "Marionnette grise de Noël - Ne mangez pas les biscuits !",
@@ -152,7 +201,10 @@
   },
   "quadrant": {
     "title": "Quadrant Homes - Site Web externe",
-    "desc": "<p>Quadrant Homes, le plus grand constructeur immobilier de l'État de Washington, avait une mission simple : faire de QuadrantHomes.com le meilleur site web de constructeur immobilier aux États-Unis.</p><p>La refonte comprenait des outils interactifs basés sur Flash permettant aux nouveaux prospects et acheteurs de planifier leur nouvelle maison.</p><p>Le site a été salué par les employés de Quadrant, les clients et les agents immobiliers partenaires, ce qui a entraîné une augmentation des inscriptions sur la liste d'intérêt, des intentions d'achat et des chiffres de vente.</p>",
+    "desc": [
+      "Quadrant Homes, le plus grand constructeur immobilier de l'État de Washington, avait une mission simple : faire de QuadrantHomes.com le meilleur site web de constructeur immobilier aux États-Unis. La refonte comprenait des outils interactifs basés sur Flash permettant aux nouveaux prospects et acheteurs de planifier leur nouvelle maison.",
+      "Le site a été salué par les employés de Quadrant, les clients et les agents immobiliers partenaires, ce qui a entraîné une augmentation des inscriptions sur la liste d'intérêt, des intentions d'achat et des chiffres de vente."
+    ],
     "circa": "Automne 2005",
     "captions": [
       "Quadrant Homes - Maquette de la page d'accueil",
@@ -163,7 +215,10 @@
   },
   "thatchcay": {
     "title": "Thatch Cay",
-    "desc": "<p>Située à seulement 800 mètres au large de la côte nord-est de Saint-Thomas, Thatch Cay est l'une des dernières îles vierges des Îles Vierges américaines à ne pas avoir été développée et à appartenir à des intérêts privés.</p><p>J'ai initialement été engagé par <em>dsire</em> et Loca Lola Design Team pour conseiller et aider au développement de ce site web basé sur Flash.</p><p>Lorsque le développeur Flash initial a quitté le projet à la dernière minute, j'ai pu prendre le relais et terminer le site dans les délais impartis, en atteignant tous les objectifs du projet.</p>",
+    "desc": [
+      "Située à seulement 800 mètres au large de la côte nord-est de Saint-Thomas, Thatch Cay est l'une des dernières îles vierges des Îles Vierges américaines à ne pas avoir été développée et à appartenir à des intérêts privés.",
+      "J'ai initialement été engagé par <em>dsire</em> et <em>Loca Lola Design Team</em> pour conseiller et aider au développement de ce site web basé sur Flash. Lorsque le développeur Flash initial a quitté le projet à la dernière minute, j'ai pu prendre le relais et terminer le site dans les délais impartis, en atteignant tous les objectifs du projet."
+    ],
     "circa": "Printemps 2004",
     "captions": [
       "Thatch Cay - Histoire",
@@ -174,7 +229,10 @@
   },
   "gi": {
     "title": "Granville Island - Site Web externe",
-    "desc": "<p>Granville Island est l'une des destinations touristiques les plus réputées de Vancouver.</p><p>GranvilleIsland.com a été développé à partir du CMS grASP de Grey Vancouver et comprenait à la fois des interfaces HTML et Flash à haut débit, très avancées pour l'époque.</p><p>Le site Web Flash comprenait de nombreux éléments interactifs, des vidéos et des panoramas à 360°.</p>",
+    "desc": [
+      "Granville Island est l'une des destinations touristiques les plus réputées de Vancouver.",
+      "GranvilleIsland.com a été développé à partir du CMS grASP de Grey Vancouver et comprenait à la fois des interfaces HTML et Flash à haut débit, très avancées pour l'époque. Le site Web Flash comprenait de nombreux éléments interactifs, des vidéos et des panoramas à 360°."
+    ],
     "circa": "Été 2002",
     "captions": [
       "Granville Island - Page d'accueil HTML",
@@ -185,7 +243,11 @@
   },
   "ricksmith": {
     "title": "Rick Smith - Site portfolio",
-    "desc": "<p>Le site portfolio de Rick Smith est un exemple de site web destiné aux artistes et photographes utilisant un CMS léger que j'ai développé.</p><p>À l'époque, il n'existait pas de solutions d'hébergement ASP et ASP.Net bon marché, j'ai donc développé cette solution avec PHP.</p><p>En raison de la petite taille de ces sites portfolio, j'ai pu expérimenter des effets et des transitions à l'aide de HTML et JavaScript plutôt que Flash.</p><p>Surpris que les effets DOM fonctionnent encore plus de dix ans plus tard, j'ai décidé de le remettre en ligne pour votre plus grand plaisir.</p>",
+    "desc": [
+      "Le site portfolio de Rick Smith est un exemple de site web destiné aux artistes et photographes utilisant un CMS léger que j'ai développé. À l'époque, il n'existait pas de solutions d'hébergement ASP et ASP.Net bon marché, j'ai donc développé cette solution avec PHP.",
+      "En raison de la petite taille de ces sites portfolio, j'ai pu expérimenter des effets et des transitions à l'aide de HTML et JavaScript plutôt que Flash.",
+      "Surpris que les effets DOM fonctionnent encore plus de dix ans plus tard, j'ai décidé de le remettre en ligne <a target=\"_blank\" href=\"http://ricksmith.singchan.com\" title=\"Consultez le site portfolio de Rick Smith.\">pour votre plus grand plaisir</a>."
+    ],
     "circa": "Printemps 2002",
     "captions": [
       "Rick Smith - Page d'accueil",
@@ -196,7 +258,9 @@
   },
   "grasp": {
     "title": "Grey Advertising - Système de gestion de contenu grASP",
-    "desc": "<p>J'ai co-développé grASP, un système de gestion de contenu modulaire et extensible permettant à Grey Advertising Vancouver de produire et de déployer rapidement des solutions web attrayantes et dynamiques.</p>",
+    "desc": [
+      "J'ai co-développé grASP, un système de gestion de contenu modulaire et extensible permettant à Grey Advertising Vancouver de produire et de déployer rapidement des solutions web attrayantes et dynamiques."
+    ],
     "circa": "2001 - 2006",
     "captions": [
       "Direction de la distribution des alcools de la Colombie-Britannique - 2000 à 2006",
