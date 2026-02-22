@@ -190,7 +190,7 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
     >
       {/* Left column: Tags + Date + Description */}
       <ProjectDescription
-        html={project.desc}
+        paragraphs={project.desc}
         tags={project.tags}
         circa={project.circa}
       />
@@ -228,7 +228,7 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
     >
       {/* Left column: Description with floating tags and date */}
       <ProjectDescription
-        html={project.desc}
+        paragraphs={project.desc}
         tags={project.tags}
         circa={project.circa}
         floatTags
@@ -263,7 +263,7 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
     >
       {/* Left column: Tags + Date + Description */}
       <ProjectDescription
-        html={project.desc}
+        paragraphs={project.desc}
         tags={project.tags}
         circa={project.circa}
       />
@@ -289,7 +289,7 @@ function NarrowLayout({ project }: ProjectDetailProps) {
   return (
     <Box className="project-layout">
       <ProjectDescription
-        html={project.desc}
+        paragraphs={project.desc}
         tags={project.tags}
         circa={project.circa}
         sx={{ mb: 3 }}
@@ -315,7 +315,7 @@ function NarrowVideoLayout({ project }: ProjectDetailProps) {
   return (
     <Box className="project-layout">
       <ProjectDescription
-        html={project.desc}
+        paragraphs={project.desc}
         tags={project.tags}
         circa={project.circa}
         sx={{ mb: 3 }}

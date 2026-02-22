@@ -140,17 +140,6 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           {/* Key Contributions (if present) */}
           {job.keyContributions && job.keyContributions.length > 0 && (
             <Box sx={{ mt: 2 }}>
-              <Typography
-                variant="body1"
-                sx={{
-                  fontWeight: 600,
-                  color: palette.text.primary,
-                  fontSize: { xs: "0.95rem", md: "1rem" },
-                  mb: 1,
-                }}
-              >
-                {t('resume.workExperience.keyContributions', { ns: 'pages' })}
-              </Typography>
               <Box
                 component="ul"
                 sx={{

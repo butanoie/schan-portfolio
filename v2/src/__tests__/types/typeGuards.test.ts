@@ -112,7 +112,7 @@ describe('Type Guards', () => {
     const validProject: Project = {
       id: 'test-project',
       title: 'Test Project',
-      desc: '<p>Description</p>',
+      desc: ['<p>Description</p>'],
       circa: '2025',
       tags: ['React', 'TypeScript'],
       images: [
@@ -180,7 +180,7 @@ describe('Type Guards', () => {
       {
         id: 'project1',
         title: 'Project 1',
-        desc: '<p>Description 1</p>',
+        desc: ['<p>Description 1</p>'],
         circa: '2025',
         tags: ['React'],
         images: [
@@ -196,7 +196,7 @@ describe('Type Guards', () => {
       {
         id: 'project2',
         title: 'Project 2',
-        desc: '<p>Description 2</p>',
+        desc: ['<p>Description 2</p>'],
         circa: '2024',
         tags: ['TypeScript'],
         images: [

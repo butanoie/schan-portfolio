@@ -59,7 +59,7 @@ type LocaleData = Record<
   string,
   {
     title: string;
-    desc: string;
+    desc: string[];
     circa: string;
     captions: string[];
   }

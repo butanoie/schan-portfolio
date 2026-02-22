@@ -21,7 +21,7 @@ export const SITE_URL = "https://portfolio.singchan.com";
  */
 export const AUTHOR = {
   name: "Sing Chan",
-  jobTitle: "Product Designer, Developer, and Accessibility Advocate",
+  jobTitle: "Technical Product Leader & User Experience Architect",
   tagline: "Creating accessible, inclusive digital experiences",
 } as const;
 
@@ -37,9 +37,9 @@ export const SOCIAL_LINKS = {
  * Default site metadata used as fallback for all pages
  */
 export const SITE_METADATA = {
-  title: "Sing Chan - Portfolio",
+  title: "Sing Chan's Portfolio",
   description:
-    "Portfolio of Sing Chan - Product Designer, Developer, and Accessibility Advocate",
+    "Portfolio of Sing Chan - Technical Product Leader & User Experience Architect",
   keywords: [
     "product designer",
     "developer",
@@ -58,7 +58,7 @@ export const SITE_METADATA = {
  */
 export const PAGE_METADATA = {
   home: {
-    title: "Sing Chan - Product Designer & Developer",
+    title: "Sing Chan's Portfolio - Technical Product Leader & User Experience Architect",
     description:
       "Portfolio of Sing Chan - creating accessible, inclusive digital experiences with design and development",
     keywords: [
@@ -69,9 +69,9 @@ export const PAGE_METADATA = {
     ],
   },
   resume: {
-    title: "Resume - Sing Chan",
+    title: "Resume - Sing Chan's Portfolio",
     description:
-      "Professional resume and experience of Sing Chan, Product Designer and Developer",
+      "Professional resume and experience of Sing Chan, Technical Product Leader & User Experience Architect",
     keywords: [
       ...SITE_METADATA.keywords,
       "resume",
@@ -105,5 +105,5 @@ export const OG_IMAGE = {
   width: 1200,
   height: 630,
   type: "image/png",
-  alt: "Sing Chan - Portfolio",
+  alt: "Sing Chan's Portfolio",
 } as const;

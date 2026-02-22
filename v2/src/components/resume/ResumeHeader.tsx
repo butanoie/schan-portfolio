@@ -6,6 +6,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import DownloadIcon from "@mui/icons-material/Download";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
+import LinkIcon from "@mui/icons-material/Link";
 import type { ResumeHeaderContent } from "../../types/resume";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { rot13 } from "../../utils/obfuscation";
@@ -24,6 +25,7 @@ export interface ResumeHeaderProps {
  * Map of icon identifiers to MUI icon components.
  */
 const iconMap = {
+  link: LinkIcon,
   linkedin: LinkedInIcon,
   github: GitHubIcon,
   download: DownloadIcon,
@@ -141,6 +143,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
         {contactLinks.map((link, index) => {
           const IconComponent = iconMap[link.icon];
           const isDownload = link.icon === "download";
+          const isPrintOnly = link.icon === "link";
           const isSageColor = ["email", "phone", "linkedin", "github"].includes(link.icon);
           // Decode obfuscated email and phone labels and URLs
           const shouldDecode = ["email", "phone"].includes(link.icon);
@@ -156,7 +159,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
               rel={isDownload ? "noopener noreferrer" : undefined}
               startIcon={<IconComponent />}
               aria-label={`${displayLabel}${isDownload ? " (opens in new tab)" : ""}`}
-              className={isDownload ? "no-print" : undefined}
+              className={isDownload ? "no-print" : isPrintOnly ? "print-only" : undefined}
               sx={{
                 backgroundColor: isSageColor ? BRAND_COLORS.sage : BRAND_COLORS.maroon,
                 color: "#ffffff",

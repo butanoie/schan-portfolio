@@ -67,7 +67,7 @@ describe('ProjectsList', () => {
     id,
     title,
     circa: '2023-2024',
-    desc: `<p>Description for ${title}</p>`,
+    desc: [`Description for ${title}`],
     tags: ['Tag1', 'Tag2'],
     images: [
       {
@@ -255,18 +255,11 @@ describe('ProjectsList', () => {
    */
   it('handles very long project descriptions', () => {
     const longProject = createMockProject('long', 'Long Project');
-    longProject.desc = `
-      <p>
-        This is a very long description with multiple paragraphs.
-        It contains extensive information about the project and its features.
-        ${Array.from({ length: 10 })
-          .map(
-            (_, i) =>
-              `<p>Paragraph ${i + 1}: Lorem ipsum dolor sit amet.</p>`
-          )
-          .join('')}
-      </p>
-    `;
+    longProject.desc = [
+      'This is a very long description with multiple paragraphs.',
+      'It contains extensive information about the project and its features.',
+      ...Array.from({ length: 10 }, (_, i) => `Paragraph ${i + 1}: Lorem ipsum dolor sit amet.`),
+    ];
     render(<ProjectsList projects={[longProject]} />, { wrapper: Wrapper });
     expect(screen.getByText('Long Project')).toBeInTheDocument();
   });

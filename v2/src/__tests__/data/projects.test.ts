@@ -97,9 +97,9 @@ describe('Projects Data', () => {
   });
 
   it('should have HTML in descriptions', () => {
-    // Raw PROJECTS data has empty desc values; they are populated by localization layer
+    // Raw PROJECTS data has empty desc arrays; they are populated by localization layer
     PROJECTS.forEach((project) => {
-      expect(typeof project.desc).toBe('string');
+      expect(Array.isArray(project.desc)).toBe(true);
       // Description values are localized and populated at runtime, tested in projectData.test.ts
     });
   });

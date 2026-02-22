@@ -68,7 +68,7 @@ describe('ProjectDetail', () => {
     id: 'test-project',
     title: 'Test Project',
     circa: '2023-2024',
-    desc: '<p>Test description</p>',
+    desc: ['Test description'],
     tags: ['React', 'TypeScript'],
     images: [
       {
@@ -366,7 +366,7 @@ describe('ProjectDetail', () => {
     mockUseMediaQuery.mockReturnValue(false);
     const htmlProject: Project = {
       ...baseProject,
-      desc: '<p>Built with <strong>Vue.js</strong> and <em>JavaScript</em></p>',
+      desc: ['Built with <strong>Vue.js</strong> and <em>JavaScript</em>'],
     };
     render(<ProjectDetail project={htmlProject} />, { wrapper: Wrapper });
     expect(screen.getByText('Vue.js')).toBeInTheDocument();

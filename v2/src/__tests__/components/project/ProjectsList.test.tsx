@@ -56,7 +56,7 @@ describe('ProjectsList', () => {
     {
       id: 'project-1',
       title: 'Project One',
-      desc: '<p>First test project</p>',
+      desc: ['First test project'],
       circa: 'Spring 2024',
       tags: ['React', 'TypeScript'],
       images: [
@@ -72,7 +72,7 @@ describe('ProjectsList', () => {
     {
       id: 'project-2',
       title: 'Project Two',
-      desc: '<p>Second test project</p>',
+      desc: ['Second test project'],
       circa: 'Summer 2024',
       tags: ['Next.js', 'Node.js'],
       images: [
@@ -88,7 +88,7 @@ describe('ProjectsList', () => {
     {
       id: 'project-3',
       title: 'Project Three',
-      desc: '<p>Third test project</p>',
+      desc: ['Third test project'],
       circa: 'Fall 2024',
       tags: ['Python'],
       images: [

@@ -3,6 +3,7 @@
 import { Container, Box, Divider } from "@mui/material";
 import {
   ResumeHeader,
+  ProfessionalSummary,
   WorkExperience,
   CoreCompetencies,
   Education,
@@ -18,6 +19,7 @@ import "./print.css";
  *
  * Displays a comprehensive professional resume including:
  * - Header with name, tagline, and contact buttons (LinkedIn, GitHub, Download)
+ * - Professional summary highlighting key expertise and background
  * - Work experience with detailed job history (5 companies, 25+ years)
  * - Core competencies organized by category (skills, tools)
  * - Education and certifications
@@ -27,7 +29,7 @@ import "./print.css";
  * Layout:
  * - Mobile: Single column, stacked sections
  * - Desktop: Two columns (8/4 split - 70/30 approximately)
- * - Left: Header + Work Experience
+ * - Left: Header + Professional Summary + Work Experience
  * - Right: Skills + Education + Clients + Speaking
  *
  * All content is localized to the user's preferred language (English or French).
@@ -86,7 +88,7 @@ export default function ResumePage() {
           <ConferenceSpeaker content={data.speaking} />
         </Box>
 
-        {/* Left Column: Work Experience (70% on desktop) */}
+        {/* Left Column: Professional Summary + Work Experience (70% on desktop) */}
         {/* Shown second on mobile, first on desktop */}
         <Box
           sx={{
@@ -94,6 +96,8 @@ export default function ResumePage() {
             flex: { xs: "1", md: "1" },
           }}
         >
+          <ProfessionalSummary />
+
           <WorkExperience jobs={data.jobs} />
         </Box>
       </Box>

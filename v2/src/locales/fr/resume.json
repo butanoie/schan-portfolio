@@ -20,6 +20,10 @@
       "tagline": "Leader en produits techniques et architecte d'expérience utilisateur – Combler l'accessibilité, l'ingénierie et la stratégie commerciale",
       "downloadLabel": "Télécharger le CV"
     },
+    "professionalSummary": {
+      "heading": "Résumé professionnel",
+      "content": "Responsable produit et UX avec plus de 25 ans d'expérience dans les domaines du SaaS d'entreprise, des plateformes collaboratives et de l'architecture front-end. Capacité unique à opérer sur l'ensemble de la pile, de la collecte des exigences à la conception des interactions et aux frameworks front-end, en passant par l'optimisation de l'infrastructure cloud et l'automatisation de l'assurance qualité. Expérience avérée dans la mise en place de pratiques UX à partir de zéro, le mentorat d'équipes de développement et la conduite de l'exécution de produits interfonctionnels. Vaste portefeuille de clients comprenant des agences fédérales, des entreprises du Fortune 500, des institutions financières et des entreprises du secteur de l'énergie et des ressources naturelles."
+    },
     "workExperience": {
       "heading": "Expérience professionnelle",
       "keyContributions": "Contributions clés :",

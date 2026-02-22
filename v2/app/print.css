@@ -86,8 +86,8 @@
 
   /* Optimize body for print */
   body {
-    font-size: 10pt;
-    line-height: 1.5;
+    font-size: 7pt;
+    line-height: 1.4;
     background: white !important;
     color: #2c2c2c !important;
     margin: 0 !important;
@@ -362,6 +362,12 @@
   #settings-popover,
   .no-print {
     display: none !important;
+  }
+
+  /* Show print-only elements in print mode */
+  .print-only {
+    display: flex !important;
+    visibility: visible !important;
   }
 
   /* ========================================================================

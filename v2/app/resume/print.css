@@ -35,17 +35,17 @@
   /* Right column: Skills, Clients, Speaking (35% on print) */
   .resume-page > div:last-of-type > div:first-child {
     order: 2 !important;
-    flex: 0 0 35% !important;
-    width: 35% !important;
-    min-width: 35% !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
+    min-width: 30% !important;
   }
 
   /* Left column: Work Experience (60% on print) */
   .resume-page > div:last-of-type > div:last-child {
     order: 1 !important;
-    flex: 0 0 60% !important;
-    width: 60% !important;
-    min-width: 60% !important;
+    flex: 0 0 65% !important;
+    width: 65% !important;
+    min-width: 65% !important;
   }
 
   /* ========================================================================
@@ -66,14 +66,14 @@
 
   /* Resume header - name/tagline (60%) */
   .resume-page section[aria-labelledby="resume-name"] > div:first-of-type {
-    flex: 0 0 60% !important;
-    width: 60% !important;
+    flex: 0 0 65% !important;
+    width: 65% !important;
   }
 
   /* Resume header - contact buttons (35%) */
   .resume-page section[aria-labelledby="resume-name"] .MuiStack-root {
-    flex: 0 0 35% !important;
-    width: 35% !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
     gap: 0 !important;
     margin: 0 !important;
   }
@@ -142,7 +142,7 @@
     align-items: center !important;
     justify-content: flex-start !important;
     width: 100% !important;
-    max-width: 240px !important;
+    max-width: 220px !important;
     margin-bottom: 4pt !important;
   }
 
@@ -162,10 +162,18 @@
     padding: 0 !important;
   }
 
+  /* Show print-only buttons in print mode */
+  .resume-page button.print-only,
+  .resume-page a.print-only {
+    display: flex !important;
+    visibility: visible !important;
+    height: auto !important;
+  }
+
   /* Contact button links rendered as anchor tags */
   .resume-page a.MuiButton-root {
     padding: 2pt 12pt !important;
-    max-width: 240px !important;
+    max-width: 220px !important;
   }
 
   /* Keep contact button icons visible and positioned left */
@@ -182,6 +190,11 @@
   .resume-page section[aria-labelledby="resume-name"] button.MuiButton-root,
   .resume-page section[aria-labelledby="resume-name"] a.MuiButton-root {
     gap: 2pt !important;
+  }
+
+  .resume-page section[aria-labelledby="resume-name"] button[aria-label="portfolio.singchan.com"],
+  .resume-page section[aria-labelledby="resume-name"] a[aria-label="portfolio.singchan.com"] {
+    background-color: #8B1538 !important;
   }
 
   /* ========================================================================

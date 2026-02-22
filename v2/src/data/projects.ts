@@ -49,7 +49,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'collabspaceDownloader',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['.NET 9', '.NET MAUI', 'C#', 'Reqnroll', 'xUnit', 'Selenium', 'Gherkin', 'Claude Code'],
     images: [
@@ -82,7 +82,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'collabspace',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['.NET 8', 'C#', 'React.js', 'Fluent UI', 'JointJS+', 'Kubernetes', 'SQL Server', 'CosmosDB', 'Azure Cloud Services'],
     images: [
@@ -135,7 +135,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'collabmail',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['Outlook', 'SharePoint Server', 'SharePoint Online', 'ASP.Net', 'C#', 'WPF', 'XSLT'],
     images: [
@@ -168,7 +168,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'collabwareCLM',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['SharePoint Server', 'SQL Server', 'ASP.Net', 'C#', 'Dojo Toolkit', 'JointJS+', 'ASP.Net AJAX', 'XSLT'],
     images: [
@@ -228,7 +228,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'vcInsite',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['SharePoint 2010', 'ASP.Net', 'C#', 'jQuery', 'XSLT'],
     images: [
@@ -261,7 +261,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'servusCafe',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['SharePoint 2010', 'ASP.Net', 'C#', 'jQuery', 'XSLT'],
     images: [
@@ -284,7 +284,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'devon',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['SharePoint 2007', 'ASP.Net', 'C#', 'jQuery', 'XSLT'],
     images: [
@@ -317,7 +317,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'spMisc',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['SharePoint 2010', 'SharePoint 2007', 'ASP.Net', 'C#', 'jQuery', 'ASP.Net AJAX', 'Telerik RadControls', 'XSLT'],
     images: [
@@ -365,7 +365,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'habExternal',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['SiteFinity', 'ASP.Net', 'C#', 'jQuery'],
     images: [
@@ -398,7 +398,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'cornerstone',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['Dynamics ERP', 'ASP.Net', 'C#', 'ASP.Net AJAX', 'Telerik RadControls'],
     images: [
@@ -431,7 +431,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'contosoriders',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['Windows Live Services', 'Silverlight', 'Bing Maps', 'ASP.Net', 'C#', 'ASP.Net AJAX'],
     images: [
@@ -459,7 +459,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'bpDashboard',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['Adobe Flex', 'ActionScript 3.0', 'Nintendo Wii-mote', '10 Foot UI Design'],
     images: [
@@ -492,7 +492,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'holidayPuppet',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['Adobe Flash', 'ActionScript 2.0'],
     images: [
@@ -525,7 +525,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'quadrant',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['PHP', 'PostgreSQL', 'Adobe Flash', 'ActionScript 2.0'],
     images: [
@@ -565,7 +565,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'thatchcay',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['Adobe Flash', 'ActionScript 2.0'],
     images: [
@@ -598,7 +598,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'gi',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['grASP CMS', 'ASP Classic', 'SQL Server', 'XSLT', 'Adobe Flash', 'ActionScript 2.0'],
     images: [
@@ -631,7 +631,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'ricksmith',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['PHP', 'DynObjects'],
     images: [
@@ -664,7 +664,7 @@ export const PROJECTS: readonly Project[] = [
   {
     id: 'grasp',
     title: '',
-    desc: '',
+    desc: [],
     circa: '',
     tags: ['ASP Classic', 'SQL Server', 'Server JScript', 'XSLT', 'Adobe Flash', 'ActionScript 2.0'],
     images: [

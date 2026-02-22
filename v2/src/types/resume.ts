@@ -15,7 +15,7 @@ export interface ContactLink {
   url: string;
 
   /** Icon identifier for the button */
-  icon: "linkedin" | "github" | "email" | "download" | "phone";
+  icon: "link" | "linkedin" | "github" | "email" | "download" | "phone";
 }
 
 /**

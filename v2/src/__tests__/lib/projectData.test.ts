@@ -60,7 +60,7 @@ describe('Project Data Utilities', () => {
       // All results should have "Collabware" in title or description
       response.items.forEach((project) => {
         const matchesTitle = project.title.toLowerCase().includes('collabware');
-        const matchesDesc = project.desc.toLowerCase().includes('collabware');
+        const matchesDesc = project.desc.join(' ').toLowerCase().includes('collabware');
         expect(matchesTitle || matchesDesc).toBe(true);
       });
     });
@@ -91,7 +91,7 @@ describe('Project Data Utilities', () => {
         expect(project.tags).toContain('SharePoint 2010');
         const matchesSearch =
           project.title.toLowerCase().includes('portal') ||
-          project.desc.toLowerCase().includes('portal');
+          project.desc.join(' ').toLowerCase().includes('portal');
         expect(matchesSearch).toBe(true);
       });
     });

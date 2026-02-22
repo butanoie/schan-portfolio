@@ -43,6 +43,11 @@ export function getLocalizedResumeData(
       tagline: t('resume.header.tagline', { ns: 'pages' }),
       contactLinks: [
         {
+          label: "portfolio.singchan.com",
+          url: "https://portfolio.singchan.com",
+          icon: "link",
+        },
+        {
           label: t('resume.header.downloadLabel', { ns: 'pages' }),
           url: "/Sing_Chan_Resume.pdf",
           icon: "download",

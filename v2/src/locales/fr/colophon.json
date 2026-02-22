@@ -9,14 +9,13 @@
       "imageAlt": "Choice Cuts - logo de diagramme de coupes de porc",
       "heading": "Colophon",
       "paragraphs": [
-        "Sing Chan est actuellement vice-président des produits chez Collabware Systems.",
-        "Sing est chargé de travailler avec les clients et les parties prenantes pour déterminer les feuilles de route des produits et des fonctionnalités pour la solution Collabspace de Collabware et gère les équipes de produits et d'assurance qualité.",
-        "Il est également responsable de la conception des interactions, de l'expérience utilisateur et des cadres de développement frontaux pour les offres logicielles de Collabware."
+        "Sing Chan est responsable technique produit et architecte UX avec plus de 25 ans d'expérience. Il occupait récemment le poste de vice-président produit chez Collabware Systems.",
+        "Chez Collabware, Sing a travaillé avec les clients et les parties prenantes pour définir les feuilles de route des produits et des fonctionnalités pour la plateforme Collabspace, et a géré les équipes de produits et d'assurance qualité. Il était également responsable de la conception des interactions, de la stratégie d'expérience utilisateur et des cadres de développement frontaux pour les offres logicielles de Collabware."
       ]
     },
     "technologies": {
       "heading": "Technologies",
-      "intro": "Ce site de portfolio a été entièrement reconstruit. Voici ce qui alimente la version actuelle :",
+      "intro": "Ce site portfolio a été entièrement reconstruit afin d'illustrer la création d'une application web de production à l'aide de Claude Code. Voici ce qui alimente la version actuelle :",
       "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)",
       "categories": [
         {
@@ -49,7 +48,7 @@
             },
             {
               "name": "Prettier",
-              "description": "Formateur de code pour un style cohérent."
+              "description": "Formateur de code avec opinions pour un style de code cohérent."
             },
             {
               "name": "ESLint",
@@ -201,7 +200,7 @@
           "description": "Rouge foncé pour les titres et les éléments d'appel à l'action."
         }
       ],
-      "colorDescription": "La palette de couleurs est composée de certains de mes pastels préférés -akura (fleur de cerisier), œuf de canard et bleu ciel - le graphite et le marron sont utilisés comme couleurs de fond pour les textes blancs.",
+      "colorDescription": "La palette de couleurs comprend certaines de mes teintes pastel préférées : sakura (fleur de cerisier), bleu canard et bleu ciel. Le graphite et le marron sont utilisés comme couleurs d'arrière-plan pour le texte blanc.",
       "typographyIntro": "Polices web open source disponibles sur Google Fonts :",
       "typography": [
         {

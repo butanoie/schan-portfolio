@@ -87,69 +87,30 @@ export interface ProjectVideo {
  * const project: Project = {
  * id: 'amazing-website',
  * title: '<strong>Amazing</strong> Website Redesign',
- * desc: '<p>A complete redesign of the client website...</p><ul><li>Modern design</li><li>Responsive</li></ul>',
+ * desc: ['A complete redesign...', 'Features: ...'],
  * circa: 'Fall 2023 - Winter 2024',
  * tags: ['React', 'TypeScript', 'Node.js', 'PostgreSQL'],
- * images: [
- * {
- * url: '/projects/amazing-website/hero.jpg',
- * tnUrl: '/projects/amazing-website/hero-thumb.jpg',
- * caption: 'Homepage hero section'
- * },
- * {
- * url: '/projects/amazing-website/dashboard.jpg',
- * tnUrl: '/projects/amazing-website/dashboard-thumb.jpg',
- * tnUrl2x: '/projects/amazing-website/dashboard-thumb@2x.jpg',
- * caption: 'User dashboard interface'
- * }
- * ],
- * videos: [
- * {
- * type: 'youtube',
- * id: 'dQw4w9WgXcQ',
- * width: 560,
- * height: 315
- * }
- * ],
+ * images: [{url: '/projects/amazing-website/hero.jpg', tnUrl: '/projects/amazing-website/hero-thumb.jpg', caption: 'Homepage hero section'}],
+ * videos: [{type: 'youtube', id: 'dQw4w9WgXcQ', width: 560, height: 315}],
  * altGrid: false
  * };
  *
  * @example
- * // Project without video (common case)
+ * // Project without video
  * const simpleProject: Project = {
  * id: 'logo-design',
  * title: 'Company Logo Design',
- * desc: '<p>Logo design for XYZ company...</p>',
+ * desc: ['Logo design for XYZ company...'],
  * circa: 'Spring 2024',
  * tags: ['Design', 'Branding'],
- * images: [
- * {
- * url: '/projects/logo/final.png',
- * tnUrl: '/projects/logo/final-thumb.png',
- * caption: 'Final logo design'
- * }
- * ],
+ * images: [{url: '/projects/logo/final.png', tnUrl: '/projects/logo/final-thumb.png', caption: 'Final logo design'}],
  * videos: [],
  * altGrid: false
  * };
- *
- * @example
- * // Project with alternate grid layout for complex image arrangements
- * const altGridProject: Project = {
- * id: 'gallery-project',
- * title: 'Photo Gallery',
- * desc: '<p>A gallery showcasing various works...</p>',
- * circa: '2024',
- * tags: ['Photography', 'Curation'],
- * images: [
- * { url: '/projects/gallery/1.jpg', tnUrl: '/projects/gallery/1-thumb.jpg', caption: 'Image 1' },
- * { url: '/projects/gallery/2.jpg', tnUrl: '/projects/gallery/2-thumb.jpg', caption: 'Image 2' },
- * { url: '/projects/gallery/3.jpg', tnUrl: '/projects/gallery/3-thumb.jpg', caption: 'Image 3' },
- * { url: '/projects/gallery/4.jpg', tnUrl: '/projects/gallery/4-thumb.jpg', caption: 'Image 4' }
- * ],
- * videos: [],
- * altGrid: true
- * };
+ */
+
+/**
+ * Project interface.
  */
 export interface Project {
   /** Unique identifier (used as URL slug and image folder name) */
@@ -159,11 +120,13 @@ export interface Project {
   title: string;
 
   /**
-   * Project description in HTML format.
-   * May include paragraphs, lists, links, and emphasis markup.
+   * Project description as an array of paragraphs.
+   * Each paragraph may contain HTML markup for links, emphasis, and lists.
    * All HTML is sanitized before rendering for security.
+   *
+   * @example ["First paragraph", "Second paragraph with <em>emphasis</em>"]
    */
-  desc: string;
+  desc: string[];
 
   /**
    * Timeline/date range for the project.

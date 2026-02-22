@@ -65,7 +65,7 @@ export async function getProjects(
     filtered = filtered.filter(
       (project) =>
         project.title.toLowerCase().includes(query) ||
-        project.desc.toLowerCase().includes(query)
+        project.desc.join(' ').toLowerCase().includes(query)
     );
   }
 
