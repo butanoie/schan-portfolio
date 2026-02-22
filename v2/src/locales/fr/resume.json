@@ -73,9 +73,8 @@
         },
         {
           "company": "Daniel Choi Design Associates (DCDA)",
-          "description": "Géré et dirigé le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation.",
           "contributions": [
-            "Propriété du développement full-stack sur tous les niveaux des projets interactifs"
+            "Géré et dirigé le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation"
           ],
           "roles": [
             {
@@ -87,7 +86,6 @@
         },
         {
           "company": "Local Lola Design Team (LLDT)",
-          "description": "Développé des applications Flash, des scripts côté client et du balisage XHTML/CSS pour les projets LLDT.",
           "contributions": [
             "Développé des applications Flash, des scripts côté client et du balisage XHTML/CSS pour les projets LLDT",
             "Consulté sur la conception d'interfaces et fourni une assistance à la programmation pour le développement de CustomBlox, la solution CMS ASP.Net de LLDT"
@@ -102,7 +100,6 @@
         },
         {
           "company": "Grey Advertising Vancouver",
-          "description": "Développé grASP, un CMS interne modulaire et extensible utilisé dans les projets interactifs de Grey.",
           "contributions": [
             "Développé grASP, un CMS interne modulaire et extensible utilisé dans les projets interactifs de Grey",
             "Développé et maintenu les sites Web et applications externes et internes de Grey",
