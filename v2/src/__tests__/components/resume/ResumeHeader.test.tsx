@@ -25,6 +25,11 @@ describe("ResumeHeader", () => {
     tagline: "I develop useful and engaging applications.",
     contactLinks: [
       {
+        label: "portfolio.example.com",
+        url: "https://portfolio.example.com",
+        icon: "link",
+      },
+      {
         label: "linkedin.com/in/test",
         url: "https://linkedin.com/in/test",
         icon: "linkedin",
@@ -61,6 +66,9 @@ describe("ResumeHeader", () => {
   it("should render all contact links as buttons", () => {
     render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
+    const portfolioLink = screen.getByRole("link", {
+      name: /portfolio\.example\.com/i,
+    });
     const linkedInLink = screen.getByRole("link", {
       name: /linkedin\.com\/in\/test/i,
     });
@@ -69,6 +77,7 @@ describe("ResumeHeader", () => {
       name: /download résumé/i,
     });
 
+    expect(portfolioLink).toBeInTheDocument();
     expect(linkedInLink).toBeInTheDocument();
     expect(githubLink).toBeInTheDocument();
     expect(downloadLink).toBeInTheDocument();
@@ -77,6 +86,9 @@ describe("ResumeHeader", () => {
   it("should have correct href attributes for links", () => {
     render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
 
+    const portfolioLink = screen.getByRole("link", {
+      name: /portfolio\.example\.com/i,
+    });
     const linkedInLink = screen.getByRole("link", {
       name: /linkedin\.com\/in\/test/i,
     });
@@ -85,6 +97,10 @@ describe("ResumeHeader", () => {
       name: /download résumé/i,
     });
 
+    expect(portfolioLink).toHaveAttribute(
+      "href",
+      "https://portfolio.example.com"
+    );
     expect(linkedInLink).toHaveAttribute(
       "href",
       "https://linkedin.com/in/test"
@@ -102,6 +118,40 @@ describe("ResumeHeader", () => {
 
     expect(downloadLink).toHaveAttribute("target", "_blank");
     expect(downloadLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("should apply print-only class to portfolio link", () => {
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+
+    const portfolioLink = screen.getByRole("link", {
+      name: /portfolio\.example\.com/i,
+    });
+
+    expect(portfolioLink).toHaveClass("print-only");
+  });
+
+  it("should apply no-print class to download link", () => {
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+
+    const downloadLink = screen.getByRole("link", {
+      name: /download résumé/i,
+    });
+
+    expect(downloadLink).toHaveClass("no-print");
+  });
+
+  it("should not apply print-only or no-print classes to social links", () => {
+    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+
+    const linkedInLink = screen.getByRole("link", {
+      name: /linkedin\.com\/in\/test/i,
+    });
+    const githubLink = screen.getByRole("link", { name: /github\.com\/test/i });
+
+    expect(linkedInLink).not.toHaveClass("print-only");
+    expect(linkedInLink).not.toHaveClass("no-print");
+    expect(githubLink).not.toHaveClass("print-only");
+    expect(githubLink).not.toHaveClass("no-print");
   });
 
   it("should have proper accessibility attributes", () => {

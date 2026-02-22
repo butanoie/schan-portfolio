@@ -106,13 +106,12 @@ describe("WorkExperience", () => {
   it("should render key contributions when present", () => {
     render(<WorkExperience jobs={mockJobs} />, { wrapper: Wrapper });
 
-    expect(screen.getByText("Key Contributions:")).toBeInTheDocument();
     expect(screen.getByText("Implemented new features")).toBeInTheDocument();
     expect(screen.getByText("Mentored junior developers")).toBeInTheDocument();
     expect(screen.getByText("Improved code quality")).toBeInTheDocument();
   });
 
-  it("should not render key contributions heading when absent", () => {
+  it("should not render key contributions when absent", () => {
     const jobsWithoutContributions: Job[] = [
       {
         company: "Simple Company",
@@ -129,7 +128,7 @@ describe("WorkExperience", () => {
 
     render(<WorkExperience jobs={jobsWithoutContributions} />, { wrapper: Wrapper });
 
-    expect(screen.queryByText("Key Contributions:")).not.toBeInTheDocument();
+    expect(screen.queryByText("Implemented new features")).not.toBeInTheDocument();
   });
 
   it("should have proper accessibility attributes", () => {

@@ -20,6 +20,10 @@
       "tagline": "Technical Product Leader & User Experience Architect – Bridging Usability, Engineering & Business Strategy",
       "downloadLabel": "Download Résumé"
     },
+    "professionalSummary": {
+      "heading": "Professional Summary",
+      "content": "Product and UX leader with 25+ years of experience spanning enterprise SaaS, collaboration platforms, and front-end architecture. Unique ability to operate across the full stack—from requirements gathering, interaction design and front-end frameworks to cloud infrastructure optimization and QA automation. Proven track record of building UX practices from the ground up, mentoring development teams, and driving cross-functional product execution. Extensive client portfolio including federal agencies, Fortune 500 companies, financial institutions, and energy and natural resources companies."
+    },
     "workExperience": {
       "heading": "Work Experience",
       "keyContributions": "Key Contributions:",
