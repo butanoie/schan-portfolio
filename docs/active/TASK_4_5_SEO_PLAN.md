@@ -122,12 +122,12 @@ npm install --save-dev schema-dts
 
 ### Step 2: Create Constants (10 min)
 - Create `/v2/src/constants/seo.ts` with all SEO values
-- Run type-check to verify no errors
+- run typecheck to verify no errors
 
 ### Step 3: Create SEO Library (20 min)
 - Create `/v2/src/lib/seo.ts` with schema generators
 - Ensure full JSDoc documentation
-- Run type-check
+- run typecheck
 
 ### Step 4: Update Root Layout (15 min)
 - Modify `/v2/app/layout.tsx` with enhanced metadata

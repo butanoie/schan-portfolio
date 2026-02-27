@@ -313,7 +313,7 @@ Home:          JSON-first ✅ (following same pattern)
 
 ### Code Quality Checks
 
-Since `npm run type-check` and `npm run lint` scripts are not configured in this project, validation was performed through:
+Since `npm run typecheck` and `npm run lint` scripts are not configured in this project, validation was performed through:
 
 1. **Manual TypeScript Review**
    - All type imports verified (`TranslationFunction`, data types)

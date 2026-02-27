@@ -336,7 +336,7 @@ All changes have been validated through TypeScript compilation, ESLint, and comp
 ### TypeScript Type Checking
 
 ```bash
-$ cd v2 && npm run type-check
+$ cd v2 && npm run typecheck
 
 > v2@0.1.0 type-check
 > tsc --noEmit
@@ -545,7 +545,7 @@ No new files created during this refactoring.
 
 ### Testing Resources
 - **Test Suite:** Run with `npm test` (all 54 test files pass)
-- **Type Checking:** Run with `npm run type-check`
+- **Type Checking:** Run with `npm run typecheck`
 - **Code Quality:** Run with `npm run lint`
 
 ---

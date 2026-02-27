@@ -137,7 +137,7 @@ Add a documentation check script to `v2/package.json`:
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate": "npm run type-check && npm run lint && npm run format:check",
+    "validate": "npm run typecheck && npm run lint && npm run format:check",
     "prepare": "husky"
   }
 }
@@ -250,7 +250,7 @@ jobs:
       - name: Install dependencies
         run: cd v2 && npm ci
       - name: Type check
-        run: cd v2 && npm run type-check
+        run: cd v2 && npm run typecheck
       - name: Lint (including JSDoc)
         run: cd v2 && npm run lint
       - name: Format check

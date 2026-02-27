@@ -64,7 +64,7 @@ jobs:
 
       - name: Run Type Check
         working-directory: v2
-        run: npm run type-check
+        run: npm run typecheck
 
       - name: Run Unit Test
         working-directory: v2

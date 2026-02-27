@@ -433,7 +433,7 @@ Test Files: 36 passed (36)
 ### Type Checking
 
 ```bash
-$ npm run type-check
+$ npm run typecheck
 
 ✅ TypeScript compilation successful
 ✅ All types validated

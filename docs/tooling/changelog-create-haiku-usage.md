@@ -162,7 +162,7 @@ Why was it important? What is the key outcome?]
 
 **TypeScript Compilation:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 > tsc --noEmit
 ✅ No errors found
 ```
@@ -272,7 +272,7 @@ find . -name "*.ts" -o -name "*.tsx"
 wc -l path/to/file.ts
 
 # Validation
-npm run type-check
+npm run typecheck
 npm run lint
 npm test
 ```

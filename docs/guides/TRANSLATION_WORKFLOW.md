@@ -111,7 +111,7 @@ export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
 
 ```bash
 # Type check
-npm run type-check
+npm run typecheck
 
 # Lint
 npm run lint
@@ -286,7 +286,7 @@ After adding translations:
 - [ ] JSON syntax is valid (no trailing commas, proper nesting)
 - [ ] If new page: Data file uses translation function for new keys
 - [ ] If new project: Entry exists in both en/projects.json and fr/projects.json
-- [ ] TypeScript compilation passes: `npm run type-check`
+- [ ] TypeScript compilation passes: `npm run typecheck`
 - [ ] Lint passes: `npm run lint`
 - [ ] Tests pass: `npm test`
 - [ ] Visually tested in both English and French
@@ -316,7 +316,7 @@ After adding translations:
 
 ```bash
 # Type check (catches missing translations)
-npm run type-check
+npm run typecheck
 
 # Run tests (verifies i18n works)
 npm test
@@ -395,7 +395,7 @@ testimonials: {
 
 5. **Test and verify**:
 ```bash
-npm run type-check
+npm run typecheck
 npm run lint
 npm test
 # Then manually test in browser with both languages

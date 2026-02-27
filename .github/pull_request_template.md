@@ -21,7 +21,7 @@ Related to #
 
 ### Code Quality
 - [ ] I have run `npm run lint` and resolved all linting errors
-- [ ] I have run `npm run type-check` and resolved all type errors
+- [ ] I have run `npm run typecheck` and resolved all type errors
 - [ ] I have run `npm test` and all tests pass
 - [ ] No `any` types in my code (used proper type definitions instead)
 - [ ] No unused variables or imports

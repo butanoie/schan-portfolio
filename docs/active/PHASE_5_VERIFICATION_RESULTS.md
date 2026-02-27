@@ -80,7 +80,7 @@ Overall Coverage:
 
 **TypeScript Strict Mode**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ 0 TypeScript errors
 ✅ All types properly validated
 ✅ Strict mode enabled

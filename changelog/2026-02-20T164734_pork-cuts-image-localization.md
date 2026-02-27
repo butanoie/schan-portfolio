@@ -201,7 +201,7 @@ Lines of Code:
 
 **TypeScript Compilation:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 > v2@0.1.0 type-check
 > tsc --noEmit
 

@@ -39,7 +39,7 @@ npm run build         # Production build
 npm test              # Run tests
 npm run test:coverage # Coverage report
 npm run lint          # ESLint check
-npm run type-check    # TypeScript check
+npm run typecheck     # TypeScript check
 ```
 
 ## Documentation

@@ -826,7 +826,7 @@ import { BRAND_COLORS, BRAND_FONTS } from "../../constants/brand";
 
 **TypeScript Compilation:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 > tsc --noEmit
 ✅ No errors - 0 issues found
 ```

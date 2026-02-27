@@ -248,7 +248,7 @@ This replaces Tailwind's breakpoint system and provides consistency with MUI the
 
 **TypeScript Compilation:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ No type errors - All TypeScript compilation successful
 ✅ MUI sx props properly typed with SxProps<Theme>
 ```

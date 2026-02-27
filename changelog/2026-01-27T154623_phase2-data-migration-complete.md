@@ -259,7 +259,7 @@ All files        |   88.13 |      100 |      85 |   88.67
 
 **TypeScript Type Checking:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ No errors
 ```
 
