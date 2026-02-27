@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Box, Container } from "@mui/material";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { FrenchTranslationAlert } from "./FrenchTranslationAlert";
@@ -170,7 +170,7 @@ function LoadingStateBridge({
   );
 }
 
-import { createContext, useContext, ReactNode, useEffect } from "react";
+import { createContext, ReactNode, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 /**
@@ -212,27 +212,3 @@ function ProjectLoadingStateBridgeProvider({
   );
 }
 
-/**
- * Hook for AsyncProjectsList to report its loading state to MainLayout.
- *
- * When AsyncProjectsList mounts on the home page, it calls this hook to provide
- * its loading context to the parent MainLayout, which makes it available to Footer.
- *
- * This hook memoizes the state to prevent unnecessary updates and notifies the bridge
- * context of any changes to the loading state.
- *
- * @param state - The loading state from AsyncProjectsList
- * @returns void
- *
- * @internal Used internally by AsyncProjectsList
- */
-export function useReportProjectLoadingState(state: ProjectLoadingState | null): void {
-  const bridge = useContext(ProjectLoadingStateBridgeContext);
-  const memoizedState = useMemo(() => state, [
-    state,
-  ]);
-
-  if (bridge) {
-    bridge.onStateChange(memoizedState);
-  }
-}
