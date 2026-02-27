@@ -79,11 +79,36 @@ export const SANITIZATION_CONFIG = {
   // KEEP_CONTENT: true preserves text content when unsafe tags are removed
   // This is safe because we use strict tag and attribute whitelists
   KEEP_CONTENT: true,
-  // Add custom hooks for enhanced URL validation
   RETURN_DOM: false,
   RETURN_DOM_FRAGMENT: false,
   RETURN_DOM_IMPORT: false,
 };
+
+/**
+ * Module-level DOMPurify hook for validating href attributes and enforcing
+ * security attributes on external links.
+ *
+ * Registered once at module load to avoid race conditions in concurrent
+ * rendering (React 18+). DOMPurify hooks are global singletons, so
+ * adding/removing them per-call can interleave under concurrent rendering,
+ * causing intermittent sanitization failures.
+ *
+ * @see https://github.com/cure53/DOMPurify#hooks
+ */
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'A') {
+    const href = node.getAttribute('href');
+    if (href && !isValidUrlProtocol(href)) {
+      node.removeAttribute('href');
+    }
+
+    // For external links, ensure security attributes
+    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+      node.setAttribute('rel', 'noopener noreferrer');
+      node.setAttribute('target', '_blank');
+    }
+  }
+});
 
 /**
  * Sanitizes HTML content for safe rendering in React components using `dangerouslySetInnerHTML`.
@@ -124,40 +149,14 @@ export function sanitizeHtml(htmlContent: string): string {
     throw new TypeError('HTML content must be a string');
   }
 
-  // Configure custom hooks for security validation
   const config = {
     ...SANITIZATION_CONFIG,
     ALLOW_UNKNOWN_PROTOCOLS: false,
   };
 
-  // Add hook to validate href attributes
-  DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-    if (node.tagName === 'A') {
-      const href = node.getAttribute('href');
-      if (href && !isValidUrlProtocol(href)) {
-        node.removeAttribute('href');
-      }
-
-      // For external links, ensure security attributes
-      if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-        node.setAttribute('rel', 'noopener noreferrer');
-        node.setAttribute('target', '_blank');
-      }
-    }
-  });
-
   try {
-    const sanitized = DOMPurify.sanitize(htmlContent, config);
-
-    // Remove the hook to prevent interference with other sanitization calls
-    DOMPurify.removeHook('afterSanitizeAttributes');
-
-    return String(sanitized);
+    return String(DOMPurify.sanitize(htmlContent, config));
   } catch (error) {
-    // Remove hook on error as well
-    DOMPurify.removeHook('afterSanitizeAttributes');
-
-    // Log error for debugging but return empty string for safety
     console.error('Error during HTML sanitization:', error);
     return '';
   }

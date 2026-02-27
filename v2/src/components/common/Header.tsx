@@ -144,7 +144,7 @@ export default function Header() {
           </Box>
           <Box
             component="nav"
-            aria-label="Main navigation"
+            aria-label={t('nav.mainNavigation')}
             sx={{
               display: "flex",
               gap: 1,

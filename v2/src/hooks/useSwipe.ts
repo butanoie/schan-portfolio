@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 
 /**
  * Configuration options for the useSwipe hook.
@@ -84,8 +84,9 @@ export function useSwipe(
   const threshold = config?.threshold ?? 50;
   const maxImages = config?.maxImages ?? Infinity;
 
-  // Store initial touch position to calculate swipe direction and distance
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  // Store initial touch position as a ref to avoid re-renders on every touch.
+  // This value is only read in handleTouchEnd and never drives rendering.
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   /**
    * Handles touch start event by capturing initial touch position.
@@ -94,10 +95,10 @@ export function useSwipe(
    * @param e - React touch event from the touched element
    */
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    setTouchStart({
+    touchStartRef.current = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
-    });
+    };
   }, []);
 
   /**
@@ -122,9 +123,10 @@ export function useSwipe(
    */
   const handleTouchEnd = useCallback(
     (e: React.TouchEvent) => {
+      const touchStart = touchStartRef.current;
+
       // If touch start wasn't captured, skip processing
       if (touchStart === null) {
-        setTouchStart(null);
         return;
       }
 
@@ -137,17 +139,18 @@ export function useSwipe(
       const horizontalDistance = touchStart.x - touchEnd.x; // Positive = left swipe
       const verticalDistance = touchEnd.y - touchStart.y; // Positive = downward swipe
 
+      // Reset touch start position
+      touchStartRef.current = null;
+
       // Check for downward swipe to close (works regardless of image count)
       // Requires: significant downward movement + minimal horizontal movement
       if (verticalDistance >= threshold && Math.abs(horizontalDistance) < threshold) {
         onSwipeDown();
-        setTouchStart(null);
         return;
       }
 
       // Skip horizontal navigation if there's only one image
       if (maxImages <= 1) {
-        setTouchStart(null);
         return;
       }
 
@@ -162,10 +165,8 @@ export function useSwipe(
           onSwipeRight();
         }
       }
-
-      setTouchStart(null);
     },
-    [touchStart, threshold, maxImages, onSwipeLeft, onSwipeRight, onSwipeDown]
+    [threshold, maxImages, onSwipeLeft, onSwipeRight, onSwipeDown]
   );
 
   return {

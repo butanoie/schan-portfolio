@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import type { ProjectImage as ProjectImageType } from "../../types";
-import { useReducedMotion } from "../../hooks";
+import { useReducedMotion, useI18n } from "../../hooks";
 import { useAnimations } from "../../hooks/useAnimations";
 
 /**
@@ -67,6 +67,7 @@ export function ProjectImage({
   const [imageError, setImageError] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const { animationsEnabled } = useAnimations();
+  const { t } = useI18n();
 
   const imageSrc = size === "thumbnail" ? image.tnUrl : image.url;
 
@@ -93,7 +94,7 @@ export function ProjectImage({
         role="img"
         aria-label={image.caption}
       >
-        <Typography sx={{ color: "grey.500" }}>Image unavailable</Typography>
+        <Typography sx={{ color: "grey.500" }}>{t('projectImage.unavailable', { ns: 'components' })}</Typography>
       </Box>
     );
   }

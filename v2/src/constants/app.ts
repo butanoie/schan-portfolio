@@ -130,6 +130,9 @@ export const CONTROL_POSITIONING = {
   offset: LIGHTBOX_CONTROL_OFFSET, // 16px from edge
 } as const;
 
+/** Estimated height of the lightbox navigation control bar (prev/counter/next buttons) in pixels */
+export const LIGHTBOX_NAV_BAR_HEIGHT = 48;
+
 /** Swipe gesture detection threshold in pixels */
 export const SWIPE_THRESHOLD = 50; // pixels
 
