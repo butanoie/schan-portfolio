@@ -271,10 +271,15 @@ export function ProjectLightbox({
 
     // Skip slide animation when animations are disabled
     if (!shouldAnimate) {
-      setDirection(null);
-      setIsAnimating(false);
+      // Defer setState to next microtask to avoid synchronous setState in effect
+      const skipTimer = setTimeout(() => {
+        setDirection(null);
+        setIsAnimating(false);
+      }, 0);
       previousIndexRef.current = validIndex;
-      return;
+      return () => {
+        clearTimeout(skipTimer);
+      };
     }
 
     // Schedule animation start on next microtask to avoid synchronous setState in effect
