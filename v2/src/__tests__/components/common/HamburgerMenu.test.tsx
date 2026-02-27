@@ -85,6 +85,7 @@ describe('HamburgerMenu', () => {
       'nav.colophon': 'Colophon',
       'nav.menu.hamburger': 'Open navigation menu',
       'nav.menu.close': 'Close navigation menu',
+      'nav.mobileNavigation': 'Mobile navigation menu',
       'settings.title': 'Settings',
       'settings.theme': 'Theme',
       'settings.language': 'Language',
@@ -463,6 +464,7 @@ describe('HamburgerMenu', () => {
     expect(mockTranslate).toHaveBeenCalledWith('settings.theme');
     expect(mockTranslate).toHaveBeenCalledWith('settings.language');
     expect(mockTranslate).toHaveBeenCalledWith('settings.animations');
+    expect(mockTranslate).toHaveBeenCalledWith('nav.mobileNavigation');
   });
 
   /**

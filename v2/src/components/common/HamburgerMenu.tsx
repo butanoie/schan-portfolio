@@ -176,7 +176,7 @@ export default function HamburgerMenu() {
         <Box
           component="nav"
           role="navigation"
-          aria-label="Mobile navigation menu"
+          aria-label={t('nav.mobileNavigation')}
           sx={{ px: 2 }}
         >
           <List>

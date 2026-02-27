@@ -19,7 +19,9 @@
     "menu": {
       "hamburger": "Ouvrir le menu de navigation",
       "close": "Fermer le menu de navigation"
-    }
+    },
+    "mainNavigation": "Navigation principale",
+    "mobileNavigation": "Menu de navigation mobile"
   },
   "footer": {
     "copyright": "© {{year}} Sing Chan",
