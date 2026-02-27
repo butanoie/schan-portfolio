@@ -54,7 +54,7 @@ METRICS="$METRICS\"eslint\":{\"errors\":$ESLINT_ERRORS,\"warnings\":$ESLINT_WARN
 
 # 2. Capture TypeScript Type Check Results
 echo -e "${YELLOW}Running TypeScript Type Check...${NC}"
-TYPECHECK_OUTPUT=$(npm run type-check 2>&1 || true)
+TYPECHECK_OUTPUT=$(npm run typecheck 2>&1 || true)
 TYPECHECK_ERRORS=$(echo "$TYPECHECK_OUTPUT" | grep -oE "error TS[0-9]+" | wc -l || echo "0")
 
 echo "  Type Errors: $TYPECHECK_ERRORS"

@@ -219,7 +219,7 @@ After adding translations, run:
 
 ```bash
 # Type check
-npm run type-check
+npm run typecheck
 
 # Lint
 npm run lint

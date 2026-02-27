@@ -664,7 +664,7 @@ This plan addresses **14 code review findings** across 4 priority levels (Critic
 - [ ] All 1200+ existing tests pass
 - [ ] npm run build succeeds
 - [ ] npm run lint passes
-- [ ] npm run type-check passes
+- [ ] npm run typecheck passes
 - [ ] npm run test:coverage shows ≥80%
 - [ ] Manual testing of critical paths
 - [ ] Accessibility testing with screen readers

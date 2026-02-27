@@ -163,7 +163,7 @@ Implemented asynchronous project loading with progressive batching (5 projects a
 
 ### TypeScript Compilation
 ```
-✅ npm run type-check
+✅ npm run typecheck
    No errors in new code:
    - useProjectLoader.ts: ✓
    - ProjectLoadingContext.tsx: ✓

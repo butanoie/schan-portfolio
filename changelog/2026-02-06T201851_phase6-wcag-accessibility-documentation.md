@@ -875,7 +875,7 @@ $ cd v2 && npm run test
 
 **TypeScript Type Checking:**
 ```bash
-$ cd v2 && npm run type-check
+$ cd v2 && npm run typecheck
 > v2@0.1.0 type-check
 > tsc --noEmit
 ```

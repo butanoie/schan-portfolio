@@ -154,7 +154,7 @@ The following Gumby features are being **completely removed** in V2:
   - `npm run start` - Start production server
   - `npm run lint` - Run ESLint
   - `npm run lint:fix` - Auto-fix ESLint errors
-  - `npm run type-check` - Run TypeScript type checking
+  - `npm run typecheck` - Run TypeScript type checking
   - `npm run format` - Format code with Prettier
   - `npm run format:check` - Check code formatting
 - [x] Security configuration

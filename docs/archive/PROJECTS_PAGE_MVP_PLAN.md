@@ -399,7 +399,7 @@ export function ProjectsList({ projects }: { projects: Project[] }) {
 5. `/v2/src/__tests__/components/project/ProjectDetail.test.tsx`
 
 **Quality Checks:**
-- TypeScript: `npm run type-check` - 0 errors
+- TypeScript: `npm run typecheck` - 0 errors
 - ESLint: `npm run lint` - 0 errors
 - Tests: `npm test` - all passing
 - Coverage: Target 80%+ for new components
@@ -575,7 +575,7 @@ All required dependencies are already installed from Phase 1 and Phase 2:
 
 | Metric | Target | Verification |
 |--------|--------|--------------|
-| TypeScript errors | 0 | `npm run type-check` |
+| TypeScript errors | 0 | `npm run typecheck` |
 | ESLint errors | 0 | `npm run lint` |
 | ESLint warnings | 0 | `npm run lint` |
 | Test coverage | ≥80% | `npm run test:coverage` |

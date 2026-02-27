@@ -293,7 +293,7 @@ const obfuscated = rot13(originalText);
 
 **TypeScript:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ 0 errors
 ```
 
@@ -524,7 +524,7 @@ $ npm test
 
 ✅ **Build & Type Check**
 ```bash
-npm run type-check  # 0 errors
+npm run typecheck  # 0 errors
 npm run lint        # 0 errors
 npm test            # 226 passing
 ```

@@ -170,7 +170,7 @@ import DOMPurify from "isomorphic-dompurify";
 
 **TypeScript:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ No errors
 ```
 

@@ -104,7 +104,7 @@ All Phase 1 tasks from the [Modernization Plan](../docs/active/MODERNIZATION_PLA
 
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint errors
-- `npm run type-check` - Run TypeScript type checking
+- `npm run typecheck` - Run TypeScript type checking
 - `npm run format` - Format code with Prettier
 - `npm run format:check` - Check code formatting
 

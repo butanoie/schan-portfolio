@@ -122,7 +122,7 @@ Added Vitest and Testing Library types:
 ### ✅ All Quality Checks Passing
 
 ```bash
-npm run type-check  # ✅ No TypeScript errors
+npm run typecheck  # ✅ No TypeScript errors
 npm run lint        # ✅ No ESLint errors
 npm test            # ✅ 11/11 tests passing
 npm run test:coverage  # ✅ 100% coverage on sample code

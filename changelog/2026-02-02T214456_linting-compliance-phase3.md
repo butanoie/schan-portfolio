@@ -170,7 +170,7 @@ Pass Rate: 100% ✅
 
 **Type Check:**
 ```
-$ npm run type-check
+$ npm run typecheck
 ✅ All types valid
 ```
 

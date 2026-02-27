@@ -327,7 +327,7 @@ export default function HamburgerMenu() {
 
 ```bash
 # TypeScript type checking
-npm run type-check
+npm run typecheck
 
 # ESLint
 npm run lint

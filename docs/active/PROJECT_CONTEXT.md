@@ -400,7 +400,7 @@ Material UI defaults (used consistently):
 
 ```bash
 # TypeScript type checking
-npm run type-check
+npm run typecheck
 
 # Linting
 npm run lint
@@ -412,7 +412,7 @@ npm test
 npm run test:coverage
 
 # All checks (pre-commit hook runs these)
-npm run lint && npm run type-check && npm test
+npm run lint && npm run typecheck && npm test
 ```
 
 ### Git Workflow
@@ -615,7 +615,7 @@ npm run dev           # Start dev server
 npm run build         # Build for production
 npm run lint          # Run ESLint
 npm run lint:fix      # Auto-fix ESLint errors
-npm run type-check    # TypeScript validation
+npm run typecheck    # TypeScript validation
 npm run format        # Format with Prettier
 npm test              # Run tests
 npm run test:coverage # Coverage report

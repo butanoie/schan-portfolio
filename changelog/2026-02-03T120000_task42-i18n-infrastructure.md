@@ -226,7 +226,7 @@ Tests for React hooks:
 
 **TypeScript:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ No errors
 ```
 
@@ -266,7 +266,7 @@ $ npm run lint
 
 **TypeScript:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ Pass - 0 errors
 ```
 

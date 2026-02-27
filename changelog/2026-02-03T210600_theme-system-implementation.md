@@ -280,7 +280,7 @@ const THEME_PALETTES = {
 
 **TypeScript:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ 0 errors
 ✅ Strict mode enabled
 ✅ All types validated

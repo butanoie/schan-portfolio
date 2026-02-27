@@ -199,7 +199,7 @@ interface TypographyEntry {
 
 **TypeScript Compilation:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 ✅ No type errors - All TypeScript compilation successful
 ```
 

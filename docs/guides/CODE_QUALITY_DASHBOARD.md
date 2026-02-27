@@ -184,7 +184,7 @@ Multiple metrics failing:
 ## Prevention Strategy
 
 ### Pre-Commit
-✅ **Configured:** Husky hook runs `npm run lint && npm run type-check && npm test`
+✅ **Configured:** Husky hook runs `npm run lint && npm run typecheck && npm test`
 
 ### Pull Request
 ✅ **Configured:** GitHub Actions CI runs all checks on every PR
@@ -232,12 +232,12 @@ Multiple metrics failing:
 ```bash
 # Run individual quality checks
 npm run lint              # ESLint only
-npm run type-check       # TypeScript only
+npm run typecheck       # TypeScript only
 npm test                 # Tests only
 npm run test:coverage    # Tests with coverage
 
 # Run all checks (same as pre-commit)
-npm run lint && npm run type-check && npm test
+npm run lint && npm run typecheck && npm test
 
 # Fix linting issues automatically
 npm run lint:fix

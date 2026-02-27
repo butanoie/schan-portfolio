@@ -325,7 +325,7 @@ Duration    504ms (transform 18ms, setup 80ms, import 9ms, tests 13ms, environme
 
 **TypeScript Compilation:**
 ```bash
-$ npm run type-check
+$ npm run typecheck
 > tsc --noEmit
 ✅ No errors
 ```

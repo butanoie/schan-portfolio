@@ -2040,7 +2040,7 @@ Before starting implementation, ensure:
 For each task:
 
 - [ ] All code has JSDoc documentation (CLAUDE.md requirement)
-- [ ] Type checking passes (npm run type-check)
+- [ ] Type checking passes (npm run typecheck)
 - [ ] Linting passes (npm run lint)
 - [ ] Tests written and passing (npm test)
 - [ ] Code reviewed for security issues
@@ -2053,7 +2053,7 @@ After completing all tasks:
 1. **Type Safety**
    ```bash
    cd v2
-   npm run type-check
+   npm run typecheck
    # Expected: No TypeScript errors
    ```
 
@@ -2193,7 +2193,7 @@ Phase 2 is considered complete when **all** of the following are met:
 
 ### Quality Requirements
 
-- [x] TypeScript compilation passes with no errors (`npm run type-check`)
+- [x] TypeScript compilation passes with no errors (`npm run typecheck`)
 - [x] ESLint passes with no errors or warnings (`npm run lint`)
 - [x] All unit tests pass (`npm test`)
 - [x] Test coverage ≥80% for data layer (`npm run test:coverage`)

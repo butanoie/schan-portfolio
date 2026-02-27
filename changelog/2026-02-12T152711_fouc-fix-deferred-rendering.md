@@ -128,7 +128,7 @@ Children now render with correct theme/locale
 ### TypeScript Type-Checking
 
 ```bash
-$ npm run type-check
+$ npm run typecheck
 > v2@0.1.0 type-check
 > tsc --noEmit
 ```

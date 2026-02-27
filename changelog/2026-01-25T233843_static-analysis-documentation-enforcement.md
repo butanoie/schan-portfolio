@@ -192,7 +192,7 @@ Implemented comprehensive static code analysis and documentation enforcement acr
 ### 1. Real-time Enforcement
 - **IDE Integration:** ESLint extension shows errors immediately
 - **Development:** `npm run lint` catches issues during development
-- **Type Checking:** `npm run type-check` validates TypeScript
+- **Type Checking:** `npm run typecheck` validates TypeScript
 
 ### 2. Pre-commit Enforcement
 - **Husky + lint-staged:** Automatically runs ESLint on staged files

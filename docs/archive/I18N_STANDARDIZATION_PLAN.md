@@ -941,7 +941,7 @@ No unit tests needed - these are data transformations, tested via integration.
 
 ```bash
 # TypeScript type checking
-npm run type-check
+npm run typecheck
 
 # Linting
 npm run lint

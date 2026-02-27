@@ -166,7 +166,7 @@ ${YELLOW}Use the Task tool to create a changelog:
   Follow the complete changelog creation workflow:
   1. Gather information about changes (git diff, git log, file counts)
   2. Create comprehensive changelog with all required sections
-  3. Include actual validation output (npm run type-check, lint, test)
+  3. Include actual validation output (npm run typecheck, lint, test)
   4. List all created/modified files with line counts
   5. Provide impact assessment and summary statistics
   6. Mark status as ✅ COMPLETE

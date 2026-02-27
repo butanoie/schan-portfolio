@@ -582,7 +582,7 @@ npm run test:coverage
 
 - ✅ Fix Header touch targets (3 changes: LinkedIn, GitHub, SettingsButton)
 - ✅ Fix ProjectGallery opacity (2 changes: increase from 0.4 to 0.85)
-- ✅ Run type-check and lint
+- ✅ run typecheck and lint
 - ✅ Visual smoke test
 
 **Files Modified:**
