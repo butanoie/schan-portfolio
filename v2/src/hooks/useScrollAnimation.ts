@@ -124,14 +124,16 @@ export function useScrollAnimation(
   const prefersReducedMotion = useReducedMotion();
 
   // Serialize options for stable dependency comparison so callers
-  // can pass inline object literals without triggering re-renders
-  const serializedOptions = JSON.stringify(options);
+  // can pass inline object literals without triggering re-renders.
+  // Falls back to 'null' when options is undefined since JSON.stringify(undefined)
+  // returns undefined (not valid JSON), which would crash JSON.parse.
+  const serializedOptions = JSON.stringify(options ?? null);
 
   useEffect(() => {
     // Don't set up observer if element ref isn't available yet
     if (!ref.current) return;
 
-    const parsedOptions = JSON.parse(serializedOptions) as IntersectionObserverInit | undefined;
+    const parsedOptions = JSON.parse(serializedOptions) as IntersectionObserverInit | null;
 
     /**
      * Callback invoked when element's intersection state changes.
