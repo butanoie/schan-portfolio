@@ -123,9 +123,15 @@ export function useScrollAnimation(
   // Check if user prefers reduced motion for accessibility
   const prefersReducedMotion = useReducedMotion();
 
+  // Serialize options for stable dependency comparison so callers
+  // can pass inline object literals without triggering re-renders
+  const serializedOptions = JSON.stringify(options);
+
   useEffect(() => {
     // Don't set up observer if element ref isn't available yet
     if (!ref.current) return;
+
+    const parsedOptions = JSON.parse(serializedOptions) as IntersectionObserverInit | undefined;
 
     /**
      * Callback invoked when element's intersection state changes.
@@ -150,7 +156,7 @@ export function useScrollAnimation(
     // Create observer with default threshold of 0.1 (10% visible)
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.1,
-      ...options,
+      ...parsedOptions,
     });
 
     // Start observing the element
@@ -163,7 +169,7 @@ export function useScrollAnimation(
     return () => {
       observer.disconnect();
     };
-  }, [options]); // Re-create observer if options change
+  }, [serializedOptions]); // Re-create observer only when option values change
 
   /**
    * Return isInView as true immediately if user prefers reduced motion.
