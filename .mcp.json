@@ -9,7 +9,7 @@
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     },
     "deepl": {
-      "command": "/Users/buta/Documents/portfolio.singchan.com/scripts/mcp-launcher.sh",
+      "command": "./scripts/mcp-launcher.sh",
       "args": ["deepl"]
     }
   }
