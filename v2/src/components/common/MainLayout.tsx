@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useCallback } from "react";
 import { Box, Container } from "@mui/material";
 import { usePathname } from "next/navigation";
 import Header from "./Header";
@@ -62,19 +62,25 @@ export default function MainLayout({
   const { t } = useI18n();
   const pathname = usePathname();
 
-  // Project loading context state - shared between AsyncProjectsList and Footer
+  // Project loading context state - shared between AsyncProjectsList and Footer.
+  // Uses pathname as the useState key so state resets automatically on navigation,
+  // ensuring Footer shows normal thought bubble on non-home pages instead of
+  // stale LoadMoreButton state from previous home page visits.
+  const isHome = pathname === '/';
   const [projectLoadingState, setProjectLoadingState] = useState<ProjectLoadingState | null>(null);
 
   /**
-   * Clear loading state when navigating away from home page.
-   * This ensures Footer displays the normal thought bubble on non-home pages
-   * instead of showing stale LoadMoreButton state from previous home page visits.
+   * Wraps setProjectLoadingState to only allow updates on the home page.
+   * On non-home pages, loading state stays null (no-op).
    */
-  useEffect(() => {
-    if (pathname !== '/') {
-      setProjectLoadingState(null);
-    }
-  }, [pathname]);
+  const handleStateChange = useCallback(
+    (state: ProjectLoadingState | null) => {
+      if (isHome) {
+        setProjectLoadingState(state);
+      }
+    },
+    [isHome]
+  );
 
   // Wrap main content and footer together in the provider if needed
   // This allows Footer to access the loading context while staying outside the max-width container
@@ -89,7 +95,7 @@ export default function MainLayout({
           py: 4,
         }}
       >
-        <ProjectLoadingStateBridgeContext.Provider value={{ onStateChange: setProjectLoadingState }}>
+        <ProjectLoadingStateBridgeContext.Provider value={{ onStateChange: handleStateChange }}>
           {children}
         </ProjectLoadingStateBridgeContext.Provider>
       </Container>
@@ -131,7 +137,7 @@ export default function MainLayout({
 
       <FrenchTranslationAlert />
 
-      {projectLoadingState !== null ? (
+      {isHome && projectLoadingState !== null ? (
         <ProjectLoadingProvider value={projectLoadingState}>
           {mainContent}
         </ProjectLoadingProvider>

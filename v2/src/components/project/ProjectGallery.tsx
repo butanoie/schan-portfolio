@@ -87,6 +87,17 @@ function getGridColumns(
   return { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" };
 }
 
+/**
+ * Renders a responsive grid of project images with lightbox functionality.
+ *
+ * @param props - Component props
+ * @param props.images - Array of project images to display
+ * @param props.altGrid - Whether to use the alternate grid layout (default: false)
+ * @param props.narrow - Whether to use narrow column layout (default: false)
+ * @param props.fourColumns - Whether to force 4-column layout (default: false)
+ * @param props.sx - Additional MUI sx styles to apply to the grid container
+ * @returns A responsive image grid with click-to-open lightbox
+ */
 export function ProjectGallery({
   images,
   altGrid = false,

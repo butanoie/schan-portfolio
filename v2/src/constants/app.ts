@@ -15,11 +15,7 @@
  *
  * @example
  * // Import and use constants
- * import {
- *   LOADING_DELAY,
- *   DIALOG_FADE_DURATION,
- *   LIGHTBOX_CONTROL_OFFSET,
- * } from '@/constants/app';
+ * import { LOADING_DELAY, DIALOG_FADE_DURATION } from '@/constants/app';
  */
 
 /**

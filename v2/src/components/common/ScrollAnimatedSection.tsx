@@ -24,7 +24,7 @@ import { useAnimations } from "../../hooks/useAnimations";
  *
  * @example
  * <ScrollAnimatedSection>
- *   <ProjectDetail project={project} />
+ * <ProjectDetail project={project} />
  * </ScrollAnimatedSection>
  */
 export function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
