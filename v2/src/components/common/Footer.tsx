@@ -41,7 +41,7 @@ const THOUGHT_BUBBLE_TEXT_SX = {
  * @param props.ariaLabel - Accessibility label for the bubble
  * @returns A styled thought bubble container
  */
-function ThoughtBubble({ children, ariaLabel}: ThoughtBubbleProps) {
+function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
   return (
     <Box
       sx={{

@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Settings button component that opens a popover with theme, language, and animations controls.
  *
@@ -25,8 +27,6 @@
  * <SettingsButton size="large" />
  * ```
  */
-
-"use client";
 
 import { useState } from "react";
 import {
