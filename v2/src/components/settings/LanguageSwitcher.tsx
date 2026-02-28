@@ -50,11 +50,20 @@ interface LanguageSwitcherProps {
   className?: string;
 }
 
-/**
- * Border color for the language toggle button group.
- * A light gray that provides subtle visual separation.
- */
-const LANGUAGE_SWITCHER_BORDER_COLOR = '#CCCCCC';
+/** Border color for toggle button groups. A light gray for subtle visual separation. */
+const TOGGLE_BORDER_COLOR = '#CCCCCC';
+
+/** Shared styling for individual toggle buttons within the group */
+const TOGGLE_BUTTON_SX = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: 0.5,
+  py: 1.5,
+  px: 1,
+  textTransform: 'none',
+} as const;
 
 /**
  * Language switcher component.
@@ -105,7 +114,7 @@ export function LanguageSwitcher({
         sx={{
           display: 'flex',
           width: '100%',
-          border: `1px solid ${LANGUAGE_SWITCHER_BORDER_COLOR}`,
+          border: `1px solid ${TOGGLE_BORDER_COLOR}`,
         }}
       >
         {/* English Button */}
@@ -113,14 +122,7 @@ export function LanguageSwitcher({
           value="en"
           aria-label={t('settings.english')}
           sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: 'none',
+            ...TOGGLE_BUTTON_SX,
           }}
         >
           <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
@@ -133,14 +135,7 @@ export function LanguageSwitcher({
           value="fr"
           aria-label={t('settings.french')}
           sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: 'none',
+            ...TOGGLE_BUTTON_SX,
           }}
         >
           <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
@@ -151,5 +146,3 @@ export function LanguageSwitcher({
     </Box>
   );
 }
-
-export default LanguageSwitcher;

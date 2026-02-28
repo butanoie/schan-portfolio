@@ -114,6 +114,7 @@ describe('HamburgerMenu', () => {
       animationsEnabled: true,
       setAnimationsEnabled: vi.fn(),
       toggleAnimations: vi.fn(),
+      shouldAnimate: true,
       isMounted: true,
     });
   });
@@ -400,6 +401,7 @@ describe('HamburgerMenu', () => {
       animationsEnabled: false,
       setAnimationsEnabled: vi.fn(),
       toggleAnimations: vi.fn(),
+      shouldAnimate: false,
       isMounted: true,
     });
 
@@ -422,6 +424,7 @@ describe('HamburgerMenu', () => {
       animationsEnabled: true,
       setAnimationsEnabled: vi.fn(),
       toggleAnimations: vi.fn(),
+      shouldAnimate: true,
       isMounted: true,
     });
 

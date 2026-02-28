@@ -112,5 +112,3 @@ export function AnimationsSwitcher({
     </Box>
   );
 }
-
-export default AnimationsSwitcher;

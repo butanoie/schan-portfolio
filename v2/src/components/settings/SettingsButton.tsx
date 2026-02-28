@@ -207,56 +207,27 @@ export function SettingsButton({
           {t("settings.title")}
         </Typography>
 
-        {/* Theme Switcher Component */}
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 1,
-              fontSize: "0.875rem",
-              opacity: 0.7,
-            }}
-          >
-            {t("settings.theme")}
-          </Typography>
-          <ThemeSwitcher />
-        </Box>
-
-        {/* Divider */}
-        <Divider sx={{ my: 2 }} />
-
-        {/* Language Switcher Component */}
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 1,
-              fontSize: "0.875rem",
-              opacity: 0.7,
-            }}
-          >
-            {t("settings.language")}
-          </Typography>
-          <LanguageSwitcher />
-        </Box>
-
-        {/* Divider */}
-        <Divider sx={{ my: 2 }} />
-
-        {/* Animations Switcher Component */}
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 1,
-              fontSize: "0.875rem",
-              opacity: 0.7,
-            }}
-          >
-            {t("settings.animations")}
-          </Typography>
-          <AnimationsSwitcher />
-        </Box>
+        {/* Settings sections: Theme, Language, Animations */}
+        {[
+          { labelKey: "settings.theme", component: <ThemeSwitcher /> },
+          { labelKey: "settings.language", component: <LanguageSwitcher /> },
+          { labelKey: "settings.animations", component: <AnimationsSwitcher /> },
+        ].map((item, index, arr) => (
+          <Box key={item.labelKey}>
+            <Typography
+              variant="body2"
+              sx={{
+                mb: 1,
+                fontSize: "0.875rem",
+                opacity: 0.7,
+              }}
+            >
+              {t(item.labelKey)}
+            </Typography>
+            {item.component}
+            {index < arr.length - 1 && <Divider sx={{ my: 2 }} />}
+          </Box>
+        ))}
       </Popover>
     </>
   );

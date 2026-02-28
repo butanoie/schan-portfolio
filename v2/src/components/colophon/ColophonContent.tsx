@@ -1,54 +1,13 @@
 "use client";
 
-import { Box, Divider } from "@mui/material";
+import { Divider } from "@mui/material";
 import { getLocalizedColophonData } from "../../data/colophon";
 import { useI18n } from "../../hooks/useI18n";
-import { useScrollAnimation } from "../../hooks/useScrollAnimation";
-import { useAnimations } from "../../hooks/useAnimations";
 import PageDeck from "../common/PageDeck";
+import { ScrollAnimatedSection } from "../common/ScrollAnimatedSection";
 import TechnologiesShowcase from "./TechnologiesShowcase";
 import DesignPhilosophy from "./DesignPhilosophy";
 import ButaStory from "./ButaStory";
-
-/**
- * Wrapper component that applies fade-in and slide-up animations to colophon sections.
- *
- * This component uses the useScrollAnimation hook to detect when a section enters
- * the viewport and triggers an animation. Each section fades in and slides up
- * from below as the user scrolls down the page.
- *
- * **Animation Behavior:**
- * - Fades in from 0 to 1 opacity as it enters viewport
- * - Slides up from 20px below to final position
- * - Smooth 400ms ease-out transition
- * - Respects prefers-reduced-motion for accessibility
- *
- * @param props - Component props
- * @param props.children - Section content to animate
- * @returns Animated section wrapper
- *
- * @example
- * <ScrollAnimatedSection>
- * <TechnologiesShowcase {...props} />
- * </ScrollAnimatedSection>
- */
-function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
-  const { ref, isInView } = useScrollAnimation();
-  const { animationsEnabled } = useAnimations();
-
-  return (
-    <Box
-      ref={ref}
-      sx={{
-        opacity: isInView ? 1 : 0,
-        transform: isInView ? 'translateY(0)' : 'translateY(20px)',
-        transition: animationsEnabled ? 'all 400ms ease-out' : 'none',
-      }}
-    >
-      {children}
-    </Box>
-  );
-}
 
 /**
  * ColophonContent renders the localized colophon page content.

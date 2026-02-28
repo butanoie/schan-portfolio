@@ -16,7 +16,7 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
-import { useSwipe, useI18n, useAnimations, useReducedMotion } from "../../hooks";
+import { useSwipe, useI18n, useAnimations } from "../../hooks";
 import { VisuallyHidden } from "../common/VisuallyHidden";
 import {
   SWIPE_THRESHOLD,
@@ -116,11 +116,7 @@ export function ProjectLightbox({
   const previousIndexRef = useRef<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { t } = useI18n();
-  const { animationsEnabled } = useAnimations();
-  const prefersReducedMotion = useReducedMotion();
-
-  /** Whether animations should play — respects both user setting and OS preference */
-  const shouldAnimate = animationsEnabled && !prefersReducedMotion;
+  const { shouldAnimate } = useAnimations();
 
   /**
    * Ref to store the keyboard handler function.

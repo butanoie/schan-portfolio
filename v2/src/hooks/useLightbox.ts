@@ -219,5 +219,3 @@ export function useLightbox(imagesCount: number): UseLightboxResult {
     handleNextImage,
   };
 }
-
-export default useLightbox;

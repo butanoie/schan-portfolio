@@ -67,11 +67,20 @@ const THEME_ICONS: Record<ThemeMode, React.ReactNode> = {
   highContrast: <ContrastIcon />,
 };
 
-/**
- * Border color for the theme toggle button group.
- * A light gray that provides subtle visual separation.
- */
-const THEME_SWITCHER_BORDER_COLOR = "#CCCCCC";
+/** Border color for toggle button groups. A light gray for subtle visual separation. */
+const TOGGLE_BORDER_COLOR = "#CCCCCC";
+
+/** Shared styling for individual toggle buttons within the group */
+const TOGGLE_BUTTON_SX = {
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 0.5,
+  py: 1.5,
+  px: 1,
+  textTransform: "none",
+} as const;
 
 /**
  * Theme switcher component.
@@ -122,7 +131,7 @@ export function ThemeSwitcher({
         sx={{
           display: "flex",
           width: "100%",
-          border: `1px solid ${THEME_SWITCHER_BORDER_COLOR}`,
+          border: `1px solid ${TOGGLE_BORDER_COLOR}`,
         }}
       >
         {/* Light Theme Button */}
@@ -130,14 +139,7 @@ export function ThemeSwitcher({
           value="light"
           aria-label={t("theme.lightAria")}
           sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: "none",
+            ...TOGGLE_BUTTON_SX,
           }}
         >
           {THEME_ICONS.light}
@@ -151,14 +153,7 @@ export function ThemeSwitcher({
           value="dark"
           aria-label={t("theme.darkAria")}
           sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: "none",
+            ...TOGGLE_BUTTON_SX,
           }}
         >
           {THEME_ICONS.dark}
@@ -172,14 +167,7 @@ export function ThemeSwitcher({
           value="highContrast"
           aria-label={t("theme.highContrastAria")}
           sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: "none",
+            ...TOGGLE_BUTTON_SX,
           }}
         >
           {THEME_ICONS.highContrast}
@@ -191,5 +179,3 @@ export function ThemeSwitcher({
     </Box>
   );
 }
-
-export default ThemeSwitcher;

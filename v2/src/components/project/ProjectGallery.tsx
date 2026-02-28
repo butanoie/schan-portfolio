@@ -61,6 +61,32 @@ interface ProjectGalleryProps {
  * // In a narrow container (1/3 width)
  * <ProjectGallery images={project.images} narrow />
  */
+
+/**
+ * Determines the responsive grid column layout based on gallery display mode.
+ *
+ * @param narrow - Constrained container mode (2 columns at md)
+ * @param fourColumns - Force 4 columns from xs breakpoint
+ * @param altGrid - Alternate progression (1-4 columns)
+ * @returns Responsive gridTemplateColumns value
+ */
+function getGridColumns(
+  narrow: boolean,
+  fourColumns: boolean,
+  altGrid: boolean
+): Record<string, string> {
+  if (narrow) {
+    return { xs: "repeat(4, 1fr)", md: "repeat(2, 1fr)" };
+  }
+  if (fourColumns) {
+    return { xs: "repeat(4, 1fr)" };
+  }
+  if (altGrid) {
+    return { xs: "1fr", md: "repeat(4, 1fr)" };
+  }
+  return { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" };
+}
+
 export function ProjectGallery({
   images,
   altGrid = false,
@@ -95,13 +121,7 @@ export function ProjectGallery({
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: narrow
-            ? { xs: "repeat(4, 1fr)", md: "repeat(2, 1fr)" }
-            : fourColumns
-              ? { xs: "repeat(4, 1fr)" }
-              : altGrid
-                ? { xs: "1fr", md: "repeat(4, 1fr)" }
-                : { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" },
+          gridTemplateColumns: getGridColumns(narrow, fourColumns, altGrid),
           gap: 2,
         }}
       >

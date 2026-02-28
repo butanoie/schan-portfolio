@@ -3,8 +3,7 @@
 import type { Project } from '../../types';
 import { Box } from '@mui/material';
 import { ProjectDetail } from './ProjectDetail';
-import { useScrollAnimation } from '../../hooks';
-import { useAnimations } from '../../hooks/useAnimations';
+import { ScrollAnimatedSection } from '../common/ScrollAnimatedSection';
 
 /**
  * Props for the ProjectsList component.
@@ -14,44 +13,6 @@ import { useAnimations } from '../../hooks/useAnimations';
  */
 interface ProjectsListProps {
   projects: Project[];
-}
-
-/**
- * Individual project item with scroll fade-in animation.
- *
- * This wrapper component applies fade-in and slide-up animations to each project
- * as it enters the viewport. Uses the useScrollAnimation hook to detect when the
- * element becomes visible and triggers the animation.
- *
- * **Animation Behavior:**
- * - Fades in from 0 to 1 opacity as it enters viewport
- * - Slides up from 20px below to final position
- * - Smooth 400ms ease-out transition
- * - Respects prefers-reduced-motion for accessibility
- *
- * @param {Object} props - Component props
- * @param {Project} props.project - Project data to display
- * @returns Animated ProjectDetail component
- *
- * @example
- * <ScrollAnimatedProject project={myProject} />
- */
-function ScrollAnimatedProject({ project }: { project: Project }) {
-  const { ref, isInView } = useScrollAnimation();
-  const { animationsEnabled } = useAnimations();
-
-  return (
-    <Box
-      ref={ref}
-      sx={{
-        opacity: isInView ? 1 : 0,
-        transform: isInView ? 'translateY(0)' : 'translateY(20px)',
-        transition: animationsEnabled ? 'all 400ms ease-out' : 'none',
-      }}
-    >
-      <ProjectDetail project={project} />
-    </Box>
-  );
 }
 
 /**
@@ -100,7 +61,9 @@ export function ProjectsList({ projects }: ProjectsListProps) {
   return (
     <Box>
       {projects.map((project) => (
-        <ScrollAnimatedProject key={project.id} project={project} />
+        <ScrollAnimatedSection key={project.id}>
+          <ProjectDetail project={project} />
+        </ScrollAnimatedSection>
       ))}
     </Box>
   );
