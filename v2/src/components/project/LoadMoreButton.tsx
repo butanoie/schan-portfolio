@@ -108,15 +108,21 @@ export function LoadMoreButton({
     ? t('loadMoreButton.loading', { ns: 'components' })
     : t('loadMoreButton.loadMore', { ns: 'components' });
 
-  // ARIA label with additional context
-  const ariaLabel = disabled
-    ? t('loadMoreButton.allLoaded', { ns: 'components' })
-    : loading
-      ? t('loadMoreButton.loadingAria', { ns: 'components' })
-      : t('loadMoreButton.loadMoreCountAria', {
-          ns: 'components',
-          remainingCount,
-        });
+  /**
+   * Determines the appropriate ARIA label based on the current button state.
+   * Uses if/else instead of nested ternary for clarity.
+   */
+  let ariaLabel: string;
+  if (disabled) {
+    ariaLabel = t('loadMoreButton.allLoaded', { ns: 'components' });
+  } else if (loading) {
+    ariaLabel = t('loadMoreButton.loadingAria', { ns: 'components' });
+  } else {
+    ariaLabel = t('loadMoreButton.loadMoreCountAria', {
+      ns: 'components',
+      remainingCount,
+    });
+  }
 
   return (
     <Button

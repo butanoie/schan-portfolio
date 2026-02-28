@@ -52,6 +52,18 @@ interface LanguageSwitcherProps {
 }
 
 /**
+ * Configuration for each language toggle option.
+ * Each entry maps a Locale value to its display label translation key.
+ */
+const LANGUAGE_OPTIONS: Array<{
+  value: Locale;
+  labelKey: string;
+}> = [
+  { value: 'en', labelKey: 'settings.english' },
+  { value: 'fr', labelKey: 'settings.french' },
+];
+
+/**
  * Language switcher component.
  *
  * Renders a toggle button group with language options.
@@ -103,27 +115,18 @@ export function LanguageSwitcher({
           border: `1px solid ${TOGGLE_BORDER_COLOR}`,
         }}
       >
-        {/* English Button */}
-        <ToggleButton
-          value="en"
-          aria-label={t('settings.english')}
-          sx={TOGGLE_BUTTON_SX}
-        >
-          <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
-            {t('settings.english')}
-          </Typography>
-        </ToggleButton>
-
-        {/* French Button */}
-        <ToggleButton
-          value="fr"
-          aria-label={t('settings.french')}
-          sx={TOGGLE_BUTTON_SX}
-        >
-          <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
-            {t('settings.french')}
-          </Typography>
-        </ToggleButton>
+        {LANGUAGE_OPTIONS.map((option) => (
+          <ToggleButton
+            key={option.value}
+            value={option.value}
+            aria-label={t(option.labelKey)}
+            sx={TOGGLE_BUTTON_SX}
+          >
+            <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
+              {t(option.labelKey)}
+            </Typography>
+          </ToggleButton>
+        ))}
       </ToggleButtonGroup>
     </Box>
   );

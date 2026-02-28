@@ -155,27 +155,15 @@ export function useLightbox(imagesCount: number): UseLightboxResult {
    * - If lightbox is closed (selectedIndex is null): selects last image
    * - If no images exist: does nothing
    *
-   * This enables continuous carousel navigation where reaching the start
-   * automatically cycles to the end.
+   * Uses modular arithmetic for circular navigation:
+   * (current - 1 + total) % total handles both wrap-around and normal cases.
    */
   const handlePreviousImage = useCallback(() => {
-    if (imagesCount <= 0) {
-      return; // No images to navigate
-    }
+    if (imagesCount <= 0) return;
 
     setSelectedIndex((prev) => {
-      // If closed, open to last image
-      if (prev === null) {
-        return imagesCount - 1;
-      }
-
-      // If at first image, wrap to last
-      if (prev === 0) {
-        return imagesCount - 1;
-      }
-
-      // Otherwise, go to previous
-      return prev - 1;
+      const current = prev ?? 0;
+      return (current - 1 + imagesCount) % imagesCount;
     });
   }, [imagesCount]);
 
@@ -187,27 +175,15 @@ export function useLightbox(imagesCount: number): UseLightboxResult {
    * - If lightbox is closed (selectedIndex is null): selects first image
    * - If no images exist: does nothing
    *
-   * This enables continuous carousel navigation where reaching the end
-   * automatically cycles back to the start.
+   * Uses modular arithmetic for circular navigation:
+   * (current + 1) % total handles both wrap-around and normal cases.
    */
   const handleNextImage = useCallback(() => {
-    if (imagesCount <= 0) {
-      return; // No images to navigate
-    }
+    if (imagesCount <= 0) return;
 
     setSelectedIndex((prev) => {
-      // If closed, open to first image
-      if (prev === null) {
-        return 0;
-      }
-
-      // If at last image, wrap to first
-      if (prev === imagesCount - 1) {
-        return 0;
-      }
-
-      // Otherwise, go to next
-      return prev + 1;
+      const current = prev ?? -1;
+      return (current + 1) % imagesCount;
     });
   }, [imagesCount]);
 
