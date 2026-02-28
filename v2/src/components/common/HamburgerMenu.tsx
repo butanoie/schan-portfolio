@@ -7,6 +7,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
+
+/** Shared styling for icon buttons (hamburger open and close) in the drawer */
+const DRAWER_ICON_BUTTON_SX = {
+  color: BRAND_COLORS.maroon,
+  minWidth: 44,
+  minHeight: 44,
+  "&:hover": {
+    backgroundColor: BRAND_COLORS.maroonHover,
+  },
+} as const;
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
 import { SettingsList } from "../settings/SettingsList";
@@ -68,14 +78,7 @@ export default function HamburgerMenu() {
         aria-label={t("nav.menu.hamburger")}
         aria-expanded={open}
         size="medium"
-        sx={{
-          color: BRAND_COLORS.maroon,
-          minWidth: 44,
-          minHeight: 44,
-          "&:hover": {
-            backgroundColor: "rgba(139, 21, 56, 0.08)",
-          },
-        }}
+        sx={DRAWER_ICON_BUTTON_SX}
       >
         <MenuIcon fontSize="medium" />
       </IconButton>
@@ -108,12 +111,7 @@ export default function HamburgerMenu() {
             onClick={handleClose}
             aria-label={t("nav.menu.close")}
             size="medium"
-            sx={{
-              color: BRAND_COLORS.maroon,
-              "&:hover": {
-                backgroundColor: "rgba(139, 21, 56, 0.08)",
-              },
-            }}
+            sx={DRAWER_ICON_BUTTON_SX}
           >
             <CloseIcon fontSize="medium" />
           </IconButton>

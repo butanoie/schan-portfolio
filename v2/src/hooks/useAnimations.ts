@@ -1,11 +1,11 @@
+"use client";
+
 /**
  * Hook for accessing and managing animations state.
  *
  * Provides the current animations enabled state and a function to toggle it.
  * Automatically persists user preference and respects system settings.
  */
-
-"use client";
 
 import { useAnimationsContext } from "@/src/contexts/AnimationsContext";
 import { useReducedMotion } from "./useReducedMotion";

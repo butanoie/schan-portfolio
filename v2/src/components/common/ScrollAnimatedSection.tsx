@@ -1,8 +1,7 @@
 "use client";
 
 import { Box } from "@mui/material";
-import { useScrollAnimation } from "../../hooks";
-import { useAnimations } from "../../hooks/useAnimations";
+import { useScrollAnimation, useAnimations } from "../../hooks";
 
 /**
  * Wrapper component that applies fade-in and slide-up animations as content enters the viewport.

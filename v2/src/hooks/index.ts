@@ -11,3 +11,4 @@ export { useReducedMotion } from './useReducedMotion';
 export { useScrollAnimation } from './useScrollAnimation';
 export { usePalette } from './usePalette';
 export { useSwipe } from './useSwipe';
+export { useTheme } from './useTheme';

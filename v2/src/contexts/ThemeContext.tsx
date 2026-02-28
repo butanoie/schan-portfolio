@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Theme context for managing application theme state.
  *
@@ -8,9 +10,7 @@
  * while allowing user override.
  */
 
-"use client";
-
-import React, {
+import {
   createContext,
   useContext,
   useState,

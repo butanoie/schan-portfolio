@@ -32,9 +32,7 @@ vi.mock("../../../hooks", () => ({
    * @returns Mock scroll animation with ref and isInView
    */
   useScrollAnimation: () => mockScrollAnimation,
-}));
 
-vi.mock("../../../hooks/useAnimations", () => ({
   /**
    * Returns mock animations state for controlling animation enabled flag.
    *

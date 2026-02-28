@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Hook for accessing the current theme palette.
  *
@@ -6,8 +8,6 @@
  *
  * @module hooks/usePalette
  */
-
-"use client";
 
 import { useThemeContext } from "@/src/contexts/ThemeContext";
 import { getPaletteByMode } from "@/src/lib/themes";

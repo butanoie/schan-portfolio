@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Language switcher component with toggle buttons for each supported language.
  *
@@ -24,8 +26,6 @@
  * }} />
  * ```
  */
-
-'use client';
 
 import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { useLocale } from '@/src/hooks/useLocale';

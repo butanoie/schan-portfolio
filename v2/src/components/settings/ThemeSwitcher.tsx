@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Theme switcher component with toggle buttons for each theme mode.
  *
@@ -24,8 +26,6 @@
  * }} />
  * ```
  */
-
-"use client";
 
 import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import {

@@ -1,11 +1,11 @@
+"use client";
+
 /**
  * Hook for accessing and managing theme state.
  *
  * Provides the current theme mode and a function to change it.
  * Automatically persists user preference and respects system settings.
  */
-
-"use client";
 
 import { useThemeContext } from "@/src/contexts/ThemeContext";
 import { ThemeMode } from "@/src/types/theme";

@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Animations switcher component with toggle for enabling/disabling animations.
  *
@@ -20,8 +22,6 @@
  * }} />
  * ```
  */
-
-"use client";
 
 import { Box, Switch, FormControlLabel, Typography } from "@mui/material";
 import { useAnimations } from "@/src/hooks/useAnimations";

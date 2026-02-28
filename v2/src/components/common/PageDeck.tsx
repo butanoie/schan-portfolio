@@ -79,7 +79,7 @@ export default function PageDeck({ content }: PageDeckProps) {
           variant="body1"
           sx={{
             mt: 2,
-            mx: { xs: "2", md: "10" },
+            mx: { xs: 2, md: 10 },
             lineHeight: 1.7,
             fontSize: { xs: "1rem", md: "1.1rem" },
           }}
