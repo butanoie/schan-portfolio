@@ -34,8 +34,10 @@ interface UsePaletteReturn {
  * ```
  *
  * For components that need hydration safety (e.g., resume components),
- * pass `{ hydrationSafe: true }` to fall back to the light palette
- * until the client is mounted.
+ * pass `{ hydrationSafe: true }` to fall back to light mode until the
+ * client is mounted. Both the returned `palette` and `mode` will reflect
+ * `"light"` during SSR/pre-mount, even if the user's actual preference
+ * is dark or high-contrast.
  *
  * @param options - Optional configuration
  * @param options.hydrationSafe - When true, uses light palette until mounted (default: false)

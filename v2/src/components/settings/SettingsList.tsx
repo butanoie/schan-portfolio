@@ -12,7 +12,7 @@ import { useI18n } from "@/src/hooks/useI18n";
 interface SettingsSection {
   /** Translation key for the section label */
   labelKey: string;
-  /** Factory that returns the switcher component to render */
+  /** Switcher component to render for this section */
   Component: React.ComponentType;
 }
 

@@ -72,8 +72,9 @@ export default function MainLayout({
   const effectiveLoadingState = isHome ? projectLoadingState : null;
 
   /**
-   * Wraps setProjectLoadingState to only allow updates on the home page.
-   * On non-home pages, state updates are ignored (no-op).
+   * Wraps setProjectLoadingState with a home-page guard.
+   * Acts as a secondary safeguard — the primary stale-state protection is
+   * effectiveLoadingState above, which derives null on non-home pages.
    */
   const handleStateChange = useCallback(
     (state: ProjectLoadingState | null) => {

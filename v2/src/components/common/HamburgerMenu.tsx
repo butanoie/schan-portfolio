@@ -7,6 +7,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
+import { useI18n } from "@/src/hooks/useI18n";
+import { useAnimations } from "@/src/hooks/useAnimations";
+import { SettingsList } from "../settings/SettingsList";
+import { getNavLinks, isActivePath } from "../../utils/navigation";
 
 /** Shared styling for icon buttons (hamburger open and close) in the drawer */
 const DRAWER_ICON_BUTTON_SX = {
@@ -17,10 +21,6 @@ const DRAWER_ICON_BUTTON_SX = {
     backgroundColor: BRAND_COLORS.maroonHover,
   },
 } as const;
-import { useI18n } from "@/src/hooks/useI18n";
-import { useAnimations } from "@/src/hooks/useAnimations";
-import { SettingsList } from "../settings/SettingsList";
-import { getNavLinks, isActivePath } from "../../utils/navigation";
 
 /**
  * Hamburger menu component for mobile navigation.
