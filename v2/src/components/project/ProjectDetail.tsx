@@ -147,6 +147,9 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   );
 }
 
+/** Shared responsive gap used by all wide layout grids */
+const GRID_GAP = { xs: 2, sm: 3, md: 4 };
+
 /**
  * Maps a layout variant to the corresponding layout component.
  *
@@ -161,34 +164,40 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 function LayoutContent({ variant, project }: { variant: LayoutVariant; project: Project }): React.ReactNode {
   switch (variant) {
     case 'wide-video':
-      return <WideVideoLayout project={project} />;
+      return <WideLeftDescriptionLayout project={project} hasVideo />;
     case 'wide-regular':
       return <WideRegularLayout project={project} />;
     case 'wide-alternate':
-      return <WideAlternateLayout project={project} />;
+      return <WideLeftDescriptionLayout project={project} />;
     case 'narrow':
       return <NarrowLayout project={project} />;
   }
 }
 
 /**
- * Desktop layout with video.
+ * Desktop layout with left 1/3 description and right 2/3 content.
+ *
+ * Used for both "wide-video" and "wide-alternate" variants which share
+ * the same grid structure (1fr 2fr). The only difference is whether
+ * the right column includes a video embed above the gallery.
  *
  * Structure:
  * - Left 1/3: Tags + Description
- * - Right 2/3: Video player + 4-column thumbnail grid
+ * - Right 2/3: Optional video player + 4-column thumbnail grid
  *
- * @param {ProjectDetailProps} props - Component props
- * @returns The rendered wide-video layout
+ * @param props - Component props
+ * @param props.project - Complete project object with all details
+ * @param props.hasVideo - Whether to render a video embed above the gallery (default: false)
+ * @returns The rendered wide layout with left description column
  */
-function WideVideoLayout({ project }: ProjectDetailProps) {
+function WideLeftDescriptionLayout({ project, hasVideo = false }: ProjectDetailProps & { hasVideo?: boolean }) {
   return (
     <Box
       className="project-layout-grid"
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '1fr 2fr' },
-        gap: { xs: 2, sm: 3, md: 4 },
+        gap: GRID_GAP,
       }}
     >
       {/* Left column: Tags + Date + Description */}
@@ -198,9 +207,9 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
         circa={project.circa}
       />
 
-      {/* Right column: Video + Gallery */}
+      {/* Right column: Optional video + Gallery */}
       <Box>
-        <VideoEmbed video={project.videos[0]} />
+        {hasVideo && <VideoEmbed video={project.videos[0]} />}
         <ProjectGallery images={project.images} fourColumns />
       </Box>
     </Box>
@@ -224,7 +233,7 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '2fr 1fr' },
-        gap: { xs: 2, sm: 3, md: 4 },
+        gap: GRID_GAP,
       }}
     >
       {/* Left column: Description with floating tags and date */}
@@ -238,39 +247,6 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
 
       {/* Right column: Gallery */}
       <ProjectGallery images={project.images} narrow />
-    </Box>
-  );
-}
-
-/**
- * Desktop layout without video (alternate grid layout).
- *
- * Structure:
- * - Left 1/3: Tags + Description
- * - Right 2/3: 4-column thumbnail grid
- *
- * @param {ProjectDetailProps} props - Component props
- * @returns The rendered wide-alternate layout
- */
-function WideAlternateLayout({ project }: ProjectDetailProps) {
-  return (
-    <Box
-      className="project-layout-grid"
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: { md: '1fr 2fr' },
-        gap: { xs: 2, sm: 3, md: 4 },
-      }}
-    >
-      {/* Left column: Tags + Date + Description */}
-      <ProjectDescription
-        paragraphs={project.desc}
-        tags={project.tags}
-        circa={project.circa}
-      />
-
-      {/* Right column: Gallery (4-column grid) */}
-      <ProjectGallery images={project.images} fourColumns />
     </Box>
   );
 }
