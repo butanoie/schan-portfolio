@@ -63,9 +63,8 @@ export default function MainLayout({
   const pathname = usePathname();
 
   // Project loading context state - shared between AsyncProjectsList and Footer.
-  // Uses pathname as the useState key so state resets automatically on navigation,
-  // ensuring Footer shows normal thought bubble on non-home pages instead of
-  // stale LoadMoreButton state from previous home page visits.
+  // The handleStateChange callback is a no-op on non-home pages, preventing
+  // stale LoadMoreButton state from being set when navigating away from home.
   const isHome = pathname === '/';
   const [projectLoadingState, setProjectLoadingState] = useState<ProjectLoadingState | null>(null);
 

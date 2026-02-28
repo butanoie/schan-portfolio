@@ -27,8 +27,7 @@ interface UseThemeReturn {
 /**
  * Hook to access and manage the application theme.
  *
- * Provides easy access to theme mode, setter, and utilities for
- * common theme operations like cycling through themes.
+ * Provides easy access to theme mode, setter, and hydration state.
  *
  * @returns Object with theme state and utilities
  * @throws Error if used outside of ThemeContextProvider

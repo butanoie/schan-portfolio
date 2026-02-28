@@ -257,7 +257,7 @@ function WideRegularLayout({ project }: ProjectDetailProps) {
  * Structure: Stacked vertically
  * 1. Tags + Description
  * 2. Video player (if project has video)
- * 3. 4-column thumbnail grid
+ * 3. Image gallery (2 cols mobile, 4 cols tablet+)
  *
  * @param {ProjectDetailProps} props - Component props
  * @returns The rendered narrow layout
