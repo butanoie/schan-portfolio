@@ -63,14 +63,17 @@ export default function MainLayout({
   const pathname = usePathname();
 
   // Project loading context state - shared between AsyncProjectsList and Footer.
-  // The handleStateChange callback is a no-op on non-home pages, preventing
-  // stale LoadMoreButton state from being set when navigating away from home.
+  // The raw state is stored regardless of page, but effectiveLoadingState
+  // derives the value consumers see: null on non-home pages, actual state on
+  // home. This avoids stale state issues without needing effects or refs,
+  // since MainLayout never unmounts in the Next.js App Router.
   const isHome = pathname === '/';
   const [projectLoadingState, setProjectLoadingState] = useState<ProjectLoadingState | null>(null);
+  const effectiveLoadingState = isHome ? projectLoadingState : null;
 
   /**
    * Wraps setProjectLoadingState to only allow updates on the home page.
-   * On non-home pages, loading state stays null (no-op).
+   * On non-home pages, state updates are ignored (no-op).
    */
   const handleStateChange = useCallback(
     (state: ProjectLoadingState | null) => {
@@ -136,8 +139,8 @@ export default function MainLayout({
 
       <FrenchTranslationAlert />
 
-      {isHome && projectLoadingState !== null ? (
-        <ProjectLoadingProvider value={projectLoadingState}>
+      {effectiveLoadingState !== null ? (
+        <ProjectLoadingProvider value={effectiveLoadingState}>
           {mainContent}
         </ProjectLoadingProvider>
       ) : (
