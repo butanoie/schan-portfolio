@@ -18,8 +18,6 @@ interface ThoughtBubbleProps {
   children: React.ReactNode;
   /** Accessibility label for the bubble */
   ariaLabel: string;
-  /** Optional flexDirection for layout (default: "row") */
-  flexDirection?: "row" | "column";
 }
 
 /** Current year, computed once at module load to avoid hydration mismatch */

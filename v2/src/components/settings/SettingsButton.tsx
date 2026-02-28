@@ -136,7 +136,8 @@ export function SettingsButton({
 
   return (
     <>
-      {/* Settings Icon Button - wrapped in span when disabled for Tooltip compatibility */}
+      {/* Settings Icon Button - wrapped in span when disabled for Tooltip compatibility.
+           MUI Tooltip requires a non-disabled element to anchor to. */}
       <Tooltip title={t("settings.openSettings")}>
         {(() => {
           const iconButton = (
@@ -164,8 +165,6 @@ export function SettingsButton({
               <SettingsIcon />
             </IconButton>
           );
-          // MUI Tooltip requires a non-disabled element to anchor to;
-          // wrapping in span allows tooltip on disabled buttons
           return disabled ? <span>{iconButton}</span> : iconButton;
         })()}
       </Tooltip>

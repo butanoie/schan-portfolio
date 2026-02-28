@@ -31,6 +31,7 @@ import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { useLocale } from '@/src/hooks/useLocale';
 import { useI18n } from '@/src/hooks/useI18n';
 import { type Locale } from '@/src/lib/i18n';
+import { TOGGLE_BORDER_COLOR, TOGGLE_BUTTON_SX } from './toggleStyles';
 
 /**
  * Props for the LanguageSwitcher component.
@@ -49,21 +50,6 @@ interface LanguageSwitcherProps {
    */
   className?: string;
 }
-
-/** Border color for toggle button groups. A light gray for subtle visual separation. */
-const TOGGLE_BORDER_COLOR = '#CCCCCC';
-
-/** Shared styling for individual toggle buttons within the group */
-const TOGGLE_BUTTON_SX = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: 0.5,
-  py: 1.5,
-  px: 1,
-  textTransform: 'none',
-} as const;
 
 /**
  * Language switcher component.
@@ -121,9 +107,7 @@ export function LanguageSwitcher({
         <ToggleButton
           value="en"
           aria-label={t('settings.english')}
-          sx={{
-            ...TOGGLE_BUTTON_SX,
-          }}
+          sx={TOGGLE_BUTTON_SX}
         >
           <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
             {t('settings.english')}
@@ -134,9 +118,7 @@ export function LanguageSwitcher({
         <ToggleButton
           value="fr"
           aria-label={t('settings.french')}
-          sx={{
-            ...TOGGLE_BUTTON_SX,
-          }}
+          sx={TOGGLE_BUTTON_SX}
         >
           <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
             {t('settings.french')}

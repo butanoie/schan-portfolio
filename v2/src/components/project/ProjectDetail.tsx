@@ -25,8 +25,7 @@ type LayoutVariant =
   | 'wide-video'
   | 'wide-regular'
   | 'wide-alternate'
-  | 'narrow'
-  | 'narrow-video';
+  | 'narrow';
 
 /**
  * Determines which layout variant to use for a project.
@@ -39,8 +38,7 @@ type LayoutVariant =
  *
  * **Layout Decision Tree:**
  * Mobile (xs/sm breakpoint):
- * - Has video → `narrow-video`
- * - No video → `narrow`
+ * - Always → `narrow` (video rendered conditionally within narrow layout)
  * Desktop (md+ breakpoint):
  * - Has video → `wide-video`
  * - No video + altGrid=true → `wide-alternate`
@@ -67,7 +65,7 @@ function getLayoutVariant(
   const hasVideo = project.videos && project.videos.length > 0;
 
   if (isMobile) {
-    return hasVideo ? 'narrow-video' : 'narrow';
+    return 'narrow';
   }
 
   // Desktop/tablet
@@ -100,11 +98,8 @@ function getLayoutVariant(
  * - Left 1/3: Tags + Description
  * - Right 2/3: 4-column thumbnail grid
  *
- * narrow (Mobile, No video):
- * - Stacked vertically: Title, Tags, Description, 4-column grid
- *
- * narrow-video (Mobile + Video):
- * - Stacked vertically: Title, Tags, Description, Video, 4-column grid
+ * narrow (Mobile):
+ * - Stacked vertically: Title, Tags, Description, Video (if present), 4-column grid
  *
  * **Features:**
  * - Responsive layout selection based on viewport
@@ -175,8 +170,6 @@ function LayoutContent({ variant, project }: { variant: LayoutVariant; project: 
       return <WideAlternateLayout project={project} />;
     case 'narrow':
       return <NarrowLayout project={project} />;
-    case 'narrow-video':
-      return <NarrowVideoLayout project={project} />;
   }
 }
 
@@ -209,9 +202,7 @@ function WideVideoLayout({ project }: ProjectDetailProps) {
 
       {/* Right column: Video + Gallery */}
       <Box>
-        {project.videos && project.videos.length > 0 && (
-          <VideoEmbed video={project.videos[0]} />
-        )}
+        <VideoEmbed video={project.videos[0]} />
         <ProjectGallery images={project.images} fourColumns />
       </Box>
     </Box>
@@ -287,43 +278,19 @@ function WideAlternateLayout({ project }: ProjectDetailProps) {
 }
 
 /**
- * Mobile layout without video.
+ * Mobile layout for all projects (with or without video).
  *
  * Structure: Stacked vertically
- * 1. Tags
- * 2. Description
+ * 1. Tags + Description
+ * 2. Video player (if project has video)
  * 3. 4-column thumbnail grid
  *
  * @param {ProjectDetailProps} props - Component props
  * @returns The rendered narrow layout
  */
 function NarrowLayout({ project }: ProjectDetailProps) {
-  return (
-    <Box className="project-layout">
-      <ProjectDescription
-        paragraphs={project.desc}
-        tags={project.tags}
-        circa={project.circa}
-        sx={{ mb: 3 }}
-      />
-      <ProjectGallery images={project.images} />
-    </Box>
-  );
-}
+  const hasVideo = project.videos && project.videos.length > 0;
 
-/**
- * Mobile layout with video.
- *
- * Structure: Stacked vertically
- * 1. Tags
- * 2. Description
- * 3. Video player
- * 4. 4-column thumbnail grid
- *
- * @param {ProjectDetailProps} props - Component props
- * @returns The rendered narrow-video layout
- */
-function NarrowVideoLayout({ project }: ProjectDetailProps) {
   return (
     <Box className="project-layout">
       <ProjectDescription
@@ -332,7 +299,7 @@ function NarrowVideoLayout({ project }: ProjectDetailProps) {
         circa={project.circa}
         sx={{ mb: 3 }}
       />
-      {project.videos && project.videos.length > 0 && (
+      {hasVideo && (
         <VideoEmbed video={project.videos[0]} sx={{ mb: 3 }} />
       )}
       <ProjectGallery images={project.images} />
