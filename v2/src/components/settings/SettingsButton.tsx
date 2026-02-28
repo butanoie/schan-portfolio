@@ -41,10 +41,9 @@ import { Settings as SettingsIcon } from "@mui/icons-material";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AnimationsSwitcher } from "./AnimationsSwitcher";
-import { useTheme } from "@/src/hooks/useTheme";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
-import { getPaletteByMode } from "@/src/lib/themes";
+import { usePalette } from "@/src/hooks/usePalette";
 import { BRAND_COLORS } from "@/src/constants";
 
 /**
@@ -106,10 +105,9 @@ export function SettingsButton({
 }: SettingsButtonProps): React.ReactNode {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
-  const { theme } = useTheme();
+  const { palette } = usePalette();
   const { t } = useI18n();
   const { animationsEnabled } = useAnimations();
-  const palette = getPaletteByMode(theme);
 
   /**
    * Open the settings popover.

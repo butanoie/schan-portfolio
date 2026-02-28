@@ -3,8 +3,7 @@
 import { Box, Typography, Chip } from "@mui/material";
 import type { SkillCategory } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 
 /**
  * Props for the CoreCompetencies component.
@@ -34,8 +33,7 @@ export interface CoreCompetenciesProps {
 export default function CoreCompetencies({
   categories,
 }: CoreCompetenciesProps) {
-  const { mode, isMounted } = useThemeContext();
-  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { palette } = usePalette({ hydrationSafe: true });
 
   return (
     <Box component="section" aria-labelledby="skills-heading">

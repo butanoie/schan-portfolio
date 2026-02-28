@@ -1,7 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import {
   sanitizeHtml,
-  sanitizeDescriptionHtml,
   isValidUrlProtocol,
   SANITIZATION_CONFIG,
 } from '../../utils/sanitization';
@@ -369,26 +368,6 @@ describe('sanitization utilities', () => {
         expect(sanitized.match(/target="_blank"/g)?.length).toBe(3);
         expect(sanitized.match(/rel="noopener noreferrer"/g)?.length).toBe(3);
       });
-    });
-  });
-
-  describe('sanitizeDescriptionHtml', () => {
-    it('should sanitize description content', () => {
-      const html = '<p>Safe <script>alert("XSS")</script> content</p>';
-      const sanitized = sanitizeDescriptionHtml(html);
-      expect(sanitized).toContain('Safe');
-      expect(sanitized).not.toContain('<script>');
-    });
-
-    it('should preserve description formatting', () => {
-      const html = '<p>Built with <strong>React</strong></p>';
-      const sanitized = sanitizeDescriptionHtml(html);
-      expect(sanitized).toContain('<strong>');
-      expect(sanitized).toContain('React');
-    });
-
-    it('should throw TypeError for non-string input', () => {
-      expect(() => sanitizeDescriptionHtml(null as unknown as string)).toThrow(TypeError);
     });
   });
 

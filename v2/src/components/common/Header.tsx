@@ -8,8 +8,7 @@ import { usePathname } from "next/navigation";
 import { BRAND_COLORS } from "../../constants";
 import { SettingsButton } from "../settings/SettingsButton";
 import HamburgerMenu from "./HamburgerMenu";
-import { useTheme } from "@/src/hooks/useTheme";
-import { getPaletteByMode } from "@/src/lib/themes";
+import { usePalette } from "@/src/hooks/usePalette";
 import { useI18n } from "@/src/hooks/useI18n";
 import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigation";
 
@@ -27,9 +26,8 @@ import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigatio
  */
 export default function Header() {
   const pathname = usePathname();
-  const { theme } = useTheme();
+  const { palette } = usePalette();
   const { t } = useI18n();
-  const palette = getPaletteByMode(theme);
   const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   const navItems = getNavLinks();

@@ -2,8 +2,7 @@
 
 import { Box, Typography, Chip } from "@mui/material";
 import { BRAND_COLORS } from "../../constants";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -32,8 +31,7 @@ export interface ClientListProps {
  * <ClientList clients={resumeData.clients} />
  */
 export default function ClientList({ clients }: ClientListProps) {
-  const { mode, isMounted } = useThemeContext();
-  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { palette } = usePalette({ hydrationSafe: true });
   const { t } = useI18n();
 
   return (

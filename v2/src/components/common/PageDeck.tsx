@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 import type { PageDeckData } from "../../types";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 
 /**
  * Props for the PageDeck component.
@@ -34,8 +33,7 @@ export interface PageDeckProps {
  */
 export default function PageDeck({ content }: PageDeckProps) {
   const { imageUrl, imageAlt, headingId, heading, paragraphs } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
 
   return (
     <Box

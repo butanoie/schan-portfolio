@@ -162,25 +162,3 @@ export function sanitizeHtml(htmlContent: string): string {
   }
 }
 
-/**
- * Sanitizes HTML with strict configuration optimized for project descriptions.
- *
- * This function is optimized for rendering project descriptions which typically contain:
- * - Formatted text (p, strong, em)
- * - Lists (ul, ol, li)
- * - Links to external resources
- *
- * It applies the same security measures as `sanitizeHtml()` but is named specifically
- * for semantic clarity when used in description contexts.
- *
- * @param htmlContent - Raw HTML description content
- * @returns Sanitized HTML safe for rendering with `dangerouslySetInnerHTML`
- * @throws {TypeError} If htmlContent is not a string
- *
- * @example
- * const description = '<p>Built with <strong>React</strong> and <em>TypeScript</em></p>';
- * const sanitized = sanitizeDescriptionHtml(description);
- */
-export function sanitizeDescriptionHtml(htmlContent: string): string {
-  return sanitizeHtml(htmlContent);
-}

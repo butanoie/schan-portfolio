@@ -1,8 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -20,9 +19,7 @@ import { useI18n } from "../../hooks/useI18n";
  * <ProfessionalSummary />
  */
 export default function ProfessionalSummary() {
-  const { mode, isMounted } = useThemeContext();
-  // Use light theme during SSR/hydration to match ThemeProvider
-  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { palette } = usePalette({ hydrationSafe: true });
   const { t } = useI18n();
 
   return (

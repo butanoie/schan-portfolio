@@ -5,8 +5,7 @@ import { useMediaQuery, useTheme, Box, Divider, Typography } from '@mui/material
 import { ProjectDescription } from './ProjectDescription';
 import { VideoEmbed } from './VideoEmbed';
 import { ProjectGallery } from './ProjectGallery';
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 
 /**
  * Props for the ProjectDetail component.
@@ -120,8 +119,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const layoutVariant = getLayoutVariant(project, isMobile);
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
 
   return (
     <Box component="section" className="project-detail">

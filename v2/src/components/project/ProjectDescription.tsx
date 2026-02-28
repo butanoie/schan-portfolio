@@ -2,7 +2,7 @@
 
 import { Box, SxProps, Theme, useTheme } from '@mui/material';
 import { useMemo } from 'react';
-import { sanitizeDescriptionHtml } from '../../utils/sanitization';
+import { sanitizeHtml } from '../../utils/sanitization';
 import { BRAND_COLORS } from '../../constants';
 import { ProjectTagsContainer } from './ProjectTags';
 
@@ -152,7 +152,7 @@ export function ProjectDescription({
    * security measures across all components that handle user-provided HTML.
    */
   const sanitizedParagraphs = useMemo(
-    () => paragraphArray.map(p => sanitizeDescriptionHtml(p)),
+    () => paragraphArray.map(p => sanitizeHtml(p)),
     [paragraphArray]
   );
 

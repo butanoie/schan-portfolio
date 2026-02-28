@@ -3,8 +3,7 @@
 import { Box, Typography } from "@mui/material";
 import type { SpeakingContent } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -36,8 +35,7 @@ export default function ConferenceSpeaker({
   content,
 }: ConferenceSpeakerProps) {
   const { intro, events } = content;
-  const { mode, isMounted } = useThemeContext();
-  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { palette } = usePalette({ hydrationSafe: true });
   const { t } = useI18n();
 
   return (
