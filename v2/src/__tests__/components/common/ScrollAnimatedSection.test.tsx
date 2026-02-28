@@ -44,7 +44,7 @@ vi.mock("../../../hooks", () => ({
 describe("ScrollAnimatedSection", () => {
   beforeEach(() => {
     mockScrollAnimation.isInView = false;
-    mockAnimations.animationsEnabled = true;
+    mockAnimations.shouldAnimate = true;
   });
 
   it("should render children", () => {
@@ -79,7 +79,7 @@ describe("ScrollAnimatedSection", () => {
   });
 
   it("should disable transitions when animations are disabled", () => {
-    mockAnimations.animationsEnabled = false;
+    mockAnimations.shouldAnimate = false;
     render(
       <ScrollAnimatedSection>
         <div>Content</div>

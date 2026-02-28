@@ -28,7 +28,7 @@ import { useScrollAnimation, useAnimations } from "../../hooks";
  */
 export function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
   const { ref, isInView } = useScrollAnimation();
-  const { animationsEnabled } = useAnimations();
+  const { shouldAnimate } = useAnimations();
 
   return (
     <Box
@@ -36,7 +36,7 @@ export function ScrollAnimatedSection({ children }: { children: React.ReactNode 
       sx={{
         opacity: isInView ? 1 : 0,
         transform: isInView ? 'translateY(0)' : 'translateY(20px)',
-        transition: animationsEnabled ? 'all 400ms ease-out' : 'none',
+        transition: shouldAnimate ? 'all 400ms ease-out' : 'none',
       }}
     >
       {children}
