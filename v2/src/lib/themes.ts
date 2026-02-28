@@ -196,6 +196,13 @@ export const darkTheme = createThemeFromPalette(THEME_PALETTES.dark);
  */
 export const highContrastTheme = createThemeFromPalette(THEME_PALETTES.highContrast);
 
+/** Map of theme mode to MUI theme object for direct lookup. */
+const THEMES_BY_MODE = {
+  light: lightTheme,
+  dark: darkTheme,
+  highContrast: highContrastTheme,
+} as const;
+
 /**
  * Get a theme by mode.
  *
@@ -203,15 +210,7 @@ export const highContrastTheme = createThemeFromPalette(THEME_PALETTES.highContr
  * @returns The corresponding MUI theme object
  */
 export function getThemeByMode(mode: ThemeMode) {
-  switch (mode) {
-    case "dark":
-      return darkTheme;
-    case "highContrast":
-      return highContrastTheme;
-    case "light":
-    default:
-      return lightTheme;
-  }
+  return THEMES_BY_MODE[mode] ?? lightTheme;
 }
 
 /**

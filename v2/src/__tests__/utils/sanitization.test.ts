@@ -2,7 +2,6 @@ import { describe, it, expect, afterEach } from 'vitest';
 import {
   sanitizeHtml,
   isValidUrlProtocol,
-  SANITIZATION_CONFIG,
 } from '../../utils/sanitization';
 
 describe('sanitization utilities', () => {
@@ -371,32 +370,4 @@ describe('sanitization utilities', () => {
     });
   });
 
-  describe('SANITIZATION_CONFIG', () => {
-    it('should have correct allowed tags', () => {
-      expect(SANITIZATION_CONFIG.ALLOWED_TAGS).toEqual([
-        'p',
-        'a',
-        'strong',
-        'em',
-        'ul',
-        'ol',
-        'li',
-        'br',
-      ]);
-    });
-
-    it('should have correct allowed attributes', () => {
-      expect(SANITIZATION_CONFIG.ALLOWED_ATTR).toEqual(['href', 'title']);
-    });
-
-    it('should have KEEP_CONTENT set to true', () => {
-      expect(SANITIZATION_CONFIG.KEEP_CONTENT).toBe(true);
-    });
-
-    it('should not allow return of DOM', () => {
-      expect(SANITIZATION_CONFIG.RETURN_DOM).toBe(false);
-      expect(SANITIZATION_CONFIG.RETURN_DOM_FRAGMENT).toBe(false);
-      expect(SANITIZATION_CONFIG.RETURN_DOM_IMPORT).toBe(false);
-    });
-  });
 });

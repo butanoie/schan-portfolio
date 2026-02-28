@@ -73,7 +73,7 @@ export function isValidUrlProtocol(url: string): boolean {
  *
  * @see https://owasp.org/www-community/attacks/xss/
  */
-export const SANITIZATION_CONFIG = {
+const SANITIZATION_CONFIG = {
   ALLOWED_TAGS: ['p', 'a', 'strong', 'em', 'ul', 'ol', 'li', 'br'],
   ALLOWED_ATTR: ['href', 'title'],
   // KEEP_CONTENT: true preserves text content when unsafe tags are removed
