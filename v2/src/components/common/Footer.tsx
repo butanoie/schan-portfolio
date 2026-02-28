@@ -1,28 +1,14 @@
 "use client";
 
 import { Box, Container, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import DescriptionIcon from "@mui/icons-material/Description";
-import InfoIcon from "@mui/icons-material/Info";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BRAND_COLORS, UI_COLORS, NAV_COLORS } from "../../constants";
-import { useProjectLoading } from "../../contexts/ProjectLoadingContext";
+import { BRAND_COLORS, UI_COLORS } from "../../constants";
+import { useProjectLoading, type ProjectLoadingContextValue } from "../../contexts/ProjectLoadingContext";
 import { LoadMoreButton } from "../project/LoadMoreButton";
 import { useI18n } from "@/src/hooks/useI18n";
-
-/**
- * Navigation link configuration for the footer.
- */
-interface NavLink {
-  /** Translation key for the link label */
-  labelKey: string;
-  /** URL path for the link */
-  href: string;
-  /** Icon component to display */
-  icon: React.ReactNode;
-}
+import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigation";
 
 /**
  * Props for the ThoughtBubble component.
@@ -38,6 +24,16 @@ interface ThoughtBubbleProps {
 
 /** Current year, computed once at module load to avoid hydration mismatch */
 const CURRENT_YEAR = new Date().getFullYear();
+
+/** Shared typography styling for thought bubble text in Gochi Hand cursive font */
+const THOUGHT_BUBBLE_TEXT_SX = {
+  fontFamily: '"Gochi Hand", cursive',
+  fontSize: "1rem",
+  color: UI_COLORS.secondaryText,
+  "@media (min-width: 760px)": {
+    fontSize: "1.125rem",
+  },
+} as const;
 
 /**
  * A reusable thought bubble component positioned above the Buta mascot.
@@ -149,28 +145,7 @@ export default function Footer() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  /**
-   * Navigation links for the footer.
-   */
-  const navLinks: NavLink[] = [
-    { labelKey: "nav.portfolio", href: "/", icon: <HomeIcon /> },
-    { labelKey: "nav.resume", href: "/resume", icon: <DescriptionIcon /> },
-    { labelKey: "nav.colophon", href: "/colophon", icon: <InfoIcon /> },
-  ];
-
-
-  /**
-   * Check if a link is the current active page.
-   *
-   * @param href - The link path to check
-   * @returns True if the link matches the current pathname
-   */
-  const isActive = (href: string): boolean => {
-    if (href === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(href);
-  };
+  const navLinks = getNavLinks();
 
   return (
     <Box
@@ -233,59 +208,11 @@ export default function Footer() {
         </Box>
 
         {/* Thought Bubble or Load More Button - positioned above Buta */}
-        {/* Only show thought bubbles on non-home pages, or Load More/All Loaded states on home page */}
-        {pathname !== '/' && (
-          <ThoughtBubble ariaLabel={`Buta's thought bubble saying: ${t('footer.butaThought')}`}>
-            <Typography
-              sx={{
-                fontFamily: '"Gochi Hand", cursive',
-                fontSize: "1rem",
-                color: UI_COLORS.secondaryText,
-                "@media (min-width: 760px)": {
-                  fontSize: "1.125rem",
-                },
-              }}
-            >
-              {t('footer.butaThought')}
-            </Typography>
-          </ThoughtBubble>
-        )}
-
-        {/* Home page Load More Button */}
-        {pathname === '/' && loadingContext && loadingContext.isHomePage && loadingContext.hasMore && (
-          <ThoughtBubble ariaLabel="Load more projects button">
-            <LoadMoreButton
-              onClick={loadingContext.onLoadMore}
-              loading={loadingContext.loading}
-              disabled={false}
-              remainingCount={loadingContext.remainingCount}
-            />
-          </ThoughtBubble>
-        )}
-
-        {/* Home page Completion Thought Bubble */}
-        {pathname === '/' && loadingContext && loadingContext.isHomePage && loadingContext.allLoaded && (
-          <ThoughtBubble ariaLabel={t('footer.allProjectsLoaded')}>
-            <Typography sx={{
-                fontFamily: '"Gochi Hand", cursive',
-                margin: 0,
-                color: BRAND_COLORS.maroon,
-                "@media (min-width: 760px)": {
-                  fontSize: "1.125rem",
-                },
-              }}>{t('footer.allProjectsLoaded')}</Typography>
-            <Typography
-              sx={{
-                fontFamily: '"Gochi Hand", cursive',
-                fontSize: "1rem",
-                color: UI_COLORS.secondaryText,
-                "@media (min-width: 760px)": {
-                  fontSize: "1.125rem",
-                },
-              }}
-            >{t('footer.thankYou')}</Typography>
-          </ThoughtBubble>
-        )}
+        <FooterThoughtBubble
+          pathname={pathname}
+          loadingContext={loadingContext}
+          t={t}
+        />
       </Container>
 
       {/* Footer Container with Sage Green Background */}
@@ -334,25 +261,7 @@ export default function Footer() {
                     variant="contained"
                     startIcon={link.icon}
                     size="medium"
-                    sx={{
-                      backgroundColor: isActive(link.href)
-                        ? NAV_COLORS.active
-                        : BRAND_COLORS.sage,
-                      color: NAV_COLORS.text,
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontWeight: 600,
-                      textTransform: "none",
-                      borderRadius: 1,
-                      boxShadow: 0,
-                      px: 3,
-                      py: 0.75,
-                      "&:hover": {
-                        backgroundColor: isActive(link.href)
-                          ? NAV_COLORS.activeHover
-                          : NAV_COLORS.inactiveHover,
-                        boxShadow: 0,
-                      },
-                    }}
+                    sx={getNavButtonSx(isActivePath(pathname, link.href))}
                   >
                     {t(link.labelKey)}
                   </Button>
@@ -379,4 +288,79 @@ export default function Footer() {
       </Container>
     </Box>
   );
+}
+
+/**
+ * Props for the FooterThoughtBubble component.
+ */
+interface FooterThoughtBubbleProps {
+  /** Current URL pathname */
+  pathname: string;
+  /** Project loading context value (undefined when not on home page or not in provider) */
+  loadingContext: ProjectLoadingContextValue | undefined;
+  /** Translation function from useI18n */
+  t: (key: string, options?: Record<string, unknown>) => string;
+}
+
+/**
+ * Renders the appropriate thought bubble content based on the current page and loading state.
+ *
+ * On non-home pages, displays the default thought bubble.
+ * On the home page with loading context:
+ * - Shows Load More button when more projects are available
+ * - Shows completion message when all projects are loaded
+ * - Shows nothing during initial loading (no thought bubble)
+ *
+ * @param props - Component props
+ * @param props.pathname - Current URL pathname
+ * @param props.loadingContext - Project loading context value
+ * @param props.t - Translation function
+ * @returns The appropriate thought bubble, or null if none should be shown
+ */
+function FooterThoughtBubble({ pathname, loadingContext, t }: FooterThoughtBubbleProps): React.ReactNode {
+  // Non-home pages: default thought bubble
+  if (pathname !== '/') {
+    return (
+      <ThoughtBubble ariaLabel={`Buta's thought bubble saying: ${t('footer.butaThought')}`}>
+        <Typography sx={THOUGHT_BUBBLE_TEXT_SX}>
+          {t('footer.butaThought')}
+        </Typography>
+      </ThoughtBubble>
+    );
+  }
+
+  // Home page without loading context: no bubble
+  if (!loadingContext?.isHomePage) {
+    return null;
+  }
+
+  // Home page: Load More button
+  if (loadingContext.hasMore) {
+    return (
+      <ThoughtBubble ariaLabel="Load more projects button">
+        <LoadMoreButton
+          onClick={loadingContext.onLoadMore}
+          loading={loadingContext.loading}
+          disabled={false}
+          remainingCount={loadingContext.remainingCount}
+        />
+      </ThoughtBubble>
+    );
+  }
+
+  // Home page: All projects loaded
+  if (loadingContext.allLoaded) {
+    return (
+      <ThoughtBubble ariaLabel={t('footer.allProjectsLoaded')}>
+        <Typography sx={{ ...THOUGHT_BUBBLE_TEXT_SX, margin: 0, color: BRAND_COLORS.maroon }}>
+          {t('footer.allProjectsLoaded')}
+        </Typography>
+        <Typography sx={THOUGHT_BUBBLE_TEXT_SX}>
+          {t('footer.thankYou')}
+        </Typography>
+      </ThoughtBubble>
+    );
+  }
+
+  return null;
 }

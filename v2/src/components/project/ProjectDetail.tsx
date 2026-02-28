@@ -149,23 +149,35 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
     </Typography>
 
       {/* Layout-specific content */}
-      {layoutVariant === 'wide-video' && (
-        <WideVideoLayout project={project} />
-      )}
-      {layoutVariant === 'wide-regular' && (
-        <WideRegularLayout project={project} />
-      )}
-      {layoutVariant === 'wide-alternate' && (
-        <WideAlternateLayout project={project} />
-      )}
-      {layoutVariant === 'narrow' && (
-        <NarrowLayout project={project} />
-      )}
-      {layoutVariant === 'narrow-video' && (
-        <NarrowVideoLayout project={project} />
-      )}
+      <LayoutContent variant={layoutVariant} project={project} />
     </Box>
   );
+}
+
+/**
+ * Maps a layout variant to the corresponding layout component.
+ *
+ * This component replaces a chain of conditional renders with a single
+ * switch statement for cleaner, more maintainable layout selection.
+ *
+ * @param props - Component props
+ * @param props.variant - The layout variant to render
+ * @param props.project - The project data to pass to the layout
+ * @returns The rendered layout component for the given variant
+ */
+function LayoutContent({ variant, project }: { variant: LayoutVariant; project: Project }): React.ReactNode {
+  switch (variant) {
+    case 'wide-video':
+      return <WideVideoLayout project={project} />;
+    case 'wide-regular':
+      return <WideRegularLayout project={project} />;
+    case 'wide-alternate':
+      return <WideAlternateLayout project={project} />;
+    case 'narrow':
+      return <NarrowLayout project={project} />;
+    case 'narrow-video':
+      return <NarrowVideoLayout project={project} />;
+  }
 }
 
 /**

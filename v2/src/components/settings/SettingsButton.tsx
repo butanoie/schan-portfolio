@@ -136,10 +136,10 @@ export function SettingsButton({
 
   return (
     <>
-      {/* Settings Icon Button */}
+      {/* Settings Icon Button - wrapped in span when disabled for Tooltip compatibility */}
       <Tooltip title={t("settings.openSettings")}>
-        {disabled ? (
-          <span>
+        {(() => {
+          const iconButton = (
             <IconButton
               onClick={handleOpen}
               aria-label={t("settings.openSettings")}
@@ -163,32 +163,11 @@ export function SettingsButton({
             >
               <SettingsIcon />
             </IconButton>
-          </span>
-        ) : (
-          <IconButton
-            onClick={handleOpen}
-            aria-label={t("settings.openSettings")}
-            aria-expanded={open}
-            aria-controls={popoverId}
-            disabled={disabled}
-            size={size}
-            className={className}
-            sx={{
-              color: palette.text.primary,
-              transition: animationsEnabled
-                ? "color 150ms ease-in-out"
-                : "none",
-              "&:hover": {
-                color: BRAND_COLORS.maroon,
-              },
-              "@media (prefers-reduced-motion: reduce)": {
-                transition: "none",
-              },
-            }}
-          >
-            <SettingsIcon />
-          </IconButton>
-        )}
+          );
+          // MUI Tooltip requires a non-disabled element to anchor to;
+          // wrapping in span allows tooltip on disabled buttons
+          return disabled ? <span>{iconButton}</span> : iconButton;
+        })()}
       </Tooltip>
 
       {/* Settings Popover */}
@@ -282,5 +261,3 @@ export function SettingsButton({
     </>
   );
 }
-
-export default SettingsButton;

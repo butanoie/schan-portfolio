@@ -4,9 +4,6 @@ import { useState } from "react";
 import { Drawer, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useMediaQuery, useTheme, Divider, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import HomeIcon from "@mui/icons-material/Home";
-import DescriptionIcon from "@mui/icons-material/Description";
-import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
@@ -15,18 +12,7 @@ import { useAnimations } from "@/src/hooks/useAnimations";
 import { ThemeSwitcher } from "../settings/ThemeSwitcher";
 import { LanguageSwitcher } from "../settings/LanguageSwitcher";
 import { AnimationsSwitcher } from "../settings/AnimationsSwitcher";
-
-/**
- * Navigation link configuration for the hamburger menu.
- */
-interface NavLink {
-  /** Translation key for the link label */
-  labelKey: string;
-  /** URL path for the link */
-  href: string;
-  /** Icon component to display */
-  icon: React.ReactNode;
-}
+import { getNavLinks, isActivePath } from "../../utils/navigation";
 
 /**
  * Hamburger menu component for mobile navigation.
@@ -61,50 +47,13 @@ export default function HamburgerMenu() {
   const { animationsEnabled } = useAnimations();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  /**
-   * Navigation links for the hamburger menu.
-   */
-  const navItems: NavLink[] = [
-    { labelKey: "nav.portfolio", href: "/", icon: <HomeIcon /> },
-    { labelKey: "nav.resume", href: "/resume", icon: <DescriptionIcon /> },
-    { labelKey: "nav.colophon", href: "/colophon", icon: <InfoIcon /> },
-  ];
-
-  /**
-   * Check if a link is the current active page.
-   *
-   * @param href - The link path to check
-   * @returns True if the link matches the current pathname
-   */
-  const isActive = (href: string): boolean => {
-    if (!pathname) {
-      return false;
-    }
-    if (href === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(href);
-  };
-
-  /**
-   * Opens the navigation drawer.
-   */
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const navItems = getNavLinks();
 
   /**
    * Closes the navigation drawer.
+   * Also used as the click handler for navigation links (closes drawer after navigation).
    */
   const handleClose = () => {
-    setOpen(false);
-  };
-
-  /**
-   * Handles navigation link click.
-   * Closes the drawer after navigation.
-   */
-  const handleNavigate = () => {
     setOpen(false);
   };
 
@@ -117,7 +66,7 @@ export default function HamburgerMenu() {
     <>
       {/* Hamburger Menu Icon Button */}
       <IconButton
-        onClick={handleOpen}
+        onClick={() => setOpen(true)}
         aria-label={t("nav.menu.hamburger")}
         aria-expanded={open}
         size="medium"
@@ -185,17 +134,17 @@ export default function HamburgerMenu() {
                 <ListItemButton
                   component={Link}
                   href={item.href}
-                  onClick={handleNavigate}
-                  aria-current={isActive(item.href) ? "page" : undefined}
+                  onClick={handleClose}
+                  aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
                   sx={{
-                    backgroundColor: isActive(item.href)
+                    backgroundColor: isActivePath(pathname, item.href)
                       ? NAV_COLORS.active
                       : BRAND_COLORS.sage,
                     color: NAV_COLORS.text,
                     borderRadius: 1,
                     py: 1.5,
                     "&:hover": {
-                      backgroundColor: isActive(item.href)
+                      backgroundColor: isActivePath(pathname, item.href)
                         ? NAV_COLORS.activeHover
                         : NAV_COLORS.inactiveHover,
                     },
@@ -211,9 +160,13 @@ export default function HamburgerMenu() {
                   </ListItemIcon>
                   <ListItemText
                     primary={t(item.labelKey)}
-                    primaryTypographyProps={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontWeight: 600,
+                    slotProps={{
+                      primary: {
+                        sx: {
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontWeight: 600,
+                        },
+                      },
                     }}
                   />
                 </ListItemButton>
@@ -239,50 +192,25 @@ export default function HamburgerMenu() {
             {t("settings.title")}
           </Typography>
 
-          {/* Theme Switcher */}
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                fontSize: "0.875rem",
-                opacity: 0.7,
-              }}
-            >
-              {t("settings.theme")}
-            </Typography>
-            <ThemeSwitcher />
-          </Box>
-
-          {/* Language Switcher */}
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                fontSize: "0.875rem",
-                opacity: 0.7,
-              }}
-            >
-              {t("settings.language")}
-            </Typography>
-            <LanguageSwitcher />
-          </Box>
-
-          {/* Animations Switcher */}
-          <Box>
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                fontSize: "0.875rem",
-                opacity: 0.7,
-              }}
-            >
-              {t("settings.animations")}
-            </Typography>
-            <AnimationsSwitcher />
-          </Box>
+          {[
+            { labelKey: "settings.theme", component: <ThemeSwitcher /> },
+            { labelKey: "settings.language", component: <LanguageSwitcher /> },
+            { labelKey: "settings.animations", component: <AnimationsSwitcher /> },
+          ].map((item, index, arr) => (
+            <Box key={item.labelKey} sx={index < arr.length - 1 ? { mb: 2 } : undefined}>
+              <Typography
+                variant="body2"
+                sx={{
+                  mb: 1,
+                  fontSize: "0.875rem",
+                  opacity: 0.7,
+                }}
+              >
+                {t(item.labelKey)}
+              </Typography>
+              {item.component}
+            </Box>
+          ))}
         </Box>
       </Drawer>
     </>

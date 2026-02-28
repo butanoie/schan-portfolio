@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { createContext, ReactNode, useState, useEffect } from "react";
 import { Box, Container } from "@mui/material";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 import { FrenchTranslationAlert } from "./FrenchTranslationAlert";
@@ -169,9 +169,6 @@ function LoadingStateBridge({
     </ProjectLoadingStateBridgeProvider>
   );
 }
-
-import { createContext, ReactNode, useEffect } from "react";
-import { usePathname } from "next/navigation";
 
 /**
  * Context for communicating loading state from AsyncProjectsList to MainLayout.

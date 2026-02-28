@@ -174,5 +174,3 @@ export function useSwipe(
     onTouchEnd: handleTouchEnd,
   };
 }
-
-export default useSwipe;

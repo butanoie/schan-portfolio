@@ -136,9 +136,6 @@ export const LIGHTBOX_NAV_BAR_HEIGHT = 48;
 /** Swipe gesture detection threshold in pixels */
 export const SWIPE_THRESHOLD = 50; // pixels
 
-/** Minimum swipe distance required to trigger image navigation */
-export const SWIPE_MIN_DISTANCE = SWIPE_THRESHOLD;
-
 /**
  * Spinner/loading indicator dimensions.
  */
