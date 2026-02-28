@@ -79,6 +79,7 @@ const SANITIZATION_CONFIG = {
   // KEEP_CONTENT: true preserves text content when unsafe tags are removed
   // This is safe because we use strict tag and attribute whitelists
   KEEP_CONTENT: true,
+  ALLOW_UNKNOWN_PROTOCOLS: false,
   RETURN_DOM: false,
   RETURN_DOM_FRAGMENT: false,
   RETURN_DOM_IMPORT: false,
@@ -149,13 +150,8 @@ export function sanitizeHtml(htmlContent: string): string {
     throw new TypeError('HTML content must be a string');
   }
 
-  const config = {
-    ...SANITIZATION_CONFIG,
-    ALLOW_UNKNOWN_PROTOCOLS: false,
-  };
-
   try {
-    return String(DOMPurify.sanitize(htmlContent, config));
+    return String(DOMPurify.sanitize(htmlContent, SANITIZATION_CONFIG));
   } catch (error) {
     console.error('Error during HTML sanitization:', error);
     return '';

@@ -1,16 +1,14 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Container, useMediaQuery } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box, IconButton, Container, useMediaQuery } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { BRAND_COLORS } from "../../constants";
 import { SettingsButton } from "../settings/SettingsButton";
 import HamburgerMenu from "./HamburgerMenu";
+import { NavButtons } from "./NavButtons";
 import { usePalette } from "@/src/hooks/usePalette";
 import { useI18n } from "@/src/hooks/useI18n";
-import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigation";
 
 /**
  * Header component with site branding, social links, and main navigation.
@@ -25,12 +23,9 @@ import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigatio
  * @returns An app bar with site branding, social icons, and accessible navigation menu
  */
 export default function Header() {
-  const pathname = usePathname();
   const { palette } = usePalette();
   const { t } = useI18n();
   const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
-
-  const navItems = getNavLinks();
 
   /** Shared styling for social icon buttons (LinkedIn, GitHub) */
   const socialIconSx = {
@@ -113,20 +108,7 @@ export default function Header() {
               <HamburgerMenu />
             ) : (
               <>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.href}
-                    component={Link}
-                    href={item.href}
-                    variant="contained"
-                    startIcon={item.icon}
-                    size="medium"
-                    aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
-                    sx={getNavButtonSx(isActivePath(pathname, item.href))}
-                  >
-                    {t(item.labelKey)}
-                  </Button>
-                ))}
+                <NavButtons />
                 <SettingsButton size="medium" />
               </>
             )}

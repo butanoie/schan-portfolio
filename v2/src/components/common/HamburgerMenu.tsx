@@ -9,9 +9,7 @@ import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
-import { ThemeSwitcher } from "../settings/ThemeSwitcher";
-import { LanguageSwitcher } from "../settings/LanguageSwitcher";
-import { AnimationsSwitcher } from "../settings/AnimationsSwitcher";
+import { SettingsList } from "../settings/SettingsList";
 import { getNavLinks, isActivePath } from "../../utils/navigation";
 
 /**
@@ -124,27 +122,28 @@ export default function HamburgerMenu() {
         {/* Navigation List */}
         <Box
           component="nav"
-          role="navigation"
           aria-label={t('nav.mobileNavigation')}
           sx={{ px: 2 }}
         >
           <List>
-            {navItems.map((item) => (
+            {navItems.map((item) => {
+              const active = isActivePath(pathname, item.href);
+              return (
               <ListItem key={item.href} disablePadding sx={{ mb: 1 }}>
                 <ListItemButton
                   component={Link}
                   href={item.href}
                   onClick={handleClose}
-                  aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
+                  aria-current={active ? "page" : undefined}
                   sx={{
-                    backgroundColor: isActivePath(pathname, item.href)
+                    backgroundColor: active
                       ? NAV_COLORS.active
                       : BRAND_COLORS.sage,
                     color: NAV_COLORS.text,
                     borderRadius: 1,
                     py: 1.5,
                     "&:hover": {
-                      backgroundColor: isActivePath(pathname, item.href)
+                      backgroundColor: active
                         ? NAV_COLORS.activeHover
                         : NAV_COLORS.inactiveHover,
                     },
@@ -171,7 +170,8 @@ export default function HamburgerMenu() {
                   />
                 </ListItemButton>
               </ListItem>
-            ))}
+              );
+            })}
           </List>
         </Box>
 
@@ -192,25 +192,7 @@ export default function HamburgerMenu() {
             {t("settings.title")}
           </Typography>
 
-          {[
-            { labelKey: "settings.theme", component: <ThemeSwitcher /> },
-            { labelKey: "settings.language", component: <LanguageSwitcher /> },
-            { labelKey: "settings.animations", component: <AnimationsSwitcher /> },
-          ].map((item, index, arr) => (
-            <Box key={item.labelKey} sx={index < arr.length - 1 ? { mb: 2 } : undefined}>
-              <Typography
-                variant="body2"
-                sx={{
-                  mb: 1,
-                  fontSize: "0.875rem",
-                  opacity: 0.7,
-                }}
-              >
-                {t(item.labelKey)}
-              </Typography>
-              {item.component}
-            </Box>
-          ))}
+          <SettingsList />
         </Box>
       </Drawer>
     </>

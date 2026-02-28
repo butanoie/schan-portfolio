@@ -1,14 +1,13 @@
 "use client";
 
-import { Box, Container, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, UI_COLORS } from "../../constants";
 import { useProjectLoading, type ProjectLoadingContextValue } from "../../contexts/ProjectLoadingContext";
 import { LoadMoreButton } from "../project/LoadMoreButton";
+import { NavButtons } from "./NavButtons";
 import { useI18n } from "@/src/hooks/useI18n";
-import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigation";
 
 /**
  * Props for the ThoughtBubble component.
@@ -143,8 +142,6 @@ export default function Footer() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const navLinks = getNavLinks();
-
   return (
     <Box
       component="footer"
@@ -251,19 +248,7 @@ export default function Footer() {
                   flexWrap: "wrap",
                 }}
               >
-                {navLinks.map((link) => (
-                  <Button
-                    key={link.href}
-                    component={Link}
-                    href={link.href}
-                    variant="contained"
-                    startIcon={link.icon}
-                    size="medium"
-                    sx={getNavButtonSx(isActivePath(pathname, link.href))}
-                  >
-                    {t(link.labelKey)}
-                  </Button>
-                ))}
+                <NavButtons />
               </Box>
             )}
 
