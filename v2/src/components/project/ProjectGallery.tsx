@@ -2,9 +2,37 @@
 
 import { Box } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
+import dynamic from "next/dynamic";
 import { ProjectImage } from "./ProjectImage";
-import { ProjectLightbox } from "./ProjectLightbox";
 import { useLightbox } from "../../hooks";
+
+/**
+ * Lazily-loaded lightbox modal component.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the lightbox is a client-only
+ * overlay triggered by user click — it is never part of the initial render.
+ * This defers the lightbox chunk (including keyboard/swipe handlers) until needed.
+ *
+ * @returns The dynamically-loaded ProjectLightbox component
+ */
+const ProjectLightbox = dynamic(
+  /**
+   * Loads the ProjectLightbox module, mapping the named export to default.
+   *
+   * @returns The module with ProjectLightbox as the default export
+   */
+  () =>
+    import("./ProjectLightbox").then((m) => ({ default: m.ProjectLightbox })),
+  {
+    ssr: false,
+    /**
+     * No visible fallback needed — lightbox is invisible until opened.
+     *
+     * @returns Null placeholder
+     */
+    loading: () => null,
+  }
+);
 import type { ProjectImage as ProjectImageType } from "../../types";
 
 /**
@@ -156,14 +184,17 @@ export function ProjectGallery({
         ))}
       </Box>
 
-      {/* Lightbox Modal */}
-      <ProjectLightbox
-        images={images}
-        selectedIndex={selectedIndex}
-        onClose={closeLightbox}
-        onPrevious={handlePreviousImage}
-        onNext={handleNextImage}
-      />
+      {/* Lightbox Modal — only mount when a thumbnail is clicked to avoid
+           loading the dynamic chunk until the user actually needs it */}
+      {selectedIndex !== null && (
+        <ProjectLightbox
+          images={images}
+          selectedIndex={selectedIndex}
+          onClose={closeLightbox}
+          onPrevious={handlePreviousImage}
+          onNext={handleNextImage}
+        />
+      )}
     </Box>
   );
 }

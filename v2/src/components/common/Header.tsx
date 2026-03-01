@@ -4,9 +4,37 @@ import { AppBar, Toolbar, Typography, Box, IconButton, Container, useMediaQuery 
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { BRAND_COLORS } from "../../constants";
+import dynamic from "next/dynamic";
 import { SettingsButton } from "../settings/SettingsButton";
-import HamburgerMenu from "./HamburgerMenu";
 import { NavButtons } from "./NavButtons";
+
+/**
+ * Lazily-loaded mobile hamburger menu component.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the hamburger menu is only
+ * rendered on mobile viewports and is interaction-triggered. This defers
+ * the MUI Drawer, icons, and the entire SettingsList sub-tree from the
+ * initial bundle.
+ *
+ * @returns The dynamically-loaded HamburgerMenu component
+ */
+const HamburgerMenu = dynamic(
+  /**
+   * Loads the HamburgerMenu module.
+   *
+   * @returns The HamburgerMenu module
+   */
+  () => import("./HamburgerMenu"),
+  {
+    ssr: false,
+    /**
+     * No visible fallback needed for the hamburger icon area.
+     *
+     * @returns Null placeholder
+     */
+    loading: () => null,
+  }
+);
 import { usePalette } from "@/src/hooks/usePalette";
 import { useI18n } from "@/src/hooks/useI18n";
 
