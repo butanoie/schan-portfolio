@@ -2,7 +2,7 @@
 
 Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
 
-## Current Status: Phase 4 - Enhanced Features 🔄 **In Progress**
+## Current Status: Phase 4 Complete ✅ — Phase 5 Next
 
 **Completed:**
 
@@ -13,13 +13,14 @@ Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and 
   - ✅ Task 3.2: Resume Page with work experience, skills, and clients ([PR #5](https://github.com/butanoie/schan-portfolio/pull/5))
   - ✅ Task 3.3: Colophon/About Page with design system and mascot story ([PR #3](https://github.com/butanoie/schan-portfolio/pull/3))
   - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles, and more ([PR #6](https://github.com/butanoie/schan-portfolio/pull/6))
+- ✅ Phase 4: Enhanced Features
+  - ✅ Task 4.1: Theme switching (light, dark, high contrast modes)
+  - ✅ Task 4.2: Internationalization (i18n) - English and French support
+  - ✅ Task 4.3: Animations & Transitions - Polished UI with `prefers-reduced-motion` respect
+  - ✅ Task 4.4: WCAG 2.2 Level AA Compliance - 120+ accessibility tests, 0 violations
+  - ✅ Task 4.5: SEO Optimization - Meta tags, structured data, sitemap, OG images
 
-**In Progress: Phase 4 - Enhanced Features**
-- ✅ Task 4.1: Theme switching (light, dark, high contrast modes) - Settings UI with theme switching
-- ✅ Task 4.2: Internationalization (i18n) - Infrastructure for multi-language support
-- ✅ Task 4.3: Animations & Transitions - Polished UI with accessibility respect
-- ✅ Task 4.4: WCAG 2.2 Level AA Compliance - Comprehensive accessibility audit and testing
-- 🔄 Task 4.5: SEO Optimization - Meta tags, structured data, sitemap (In Progress)
+**Next: Phase 5 — Performance & Optimization**
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
@@ -453,16 +454,14 @@ Tests run automatically:
 - **Pre-push:** All tests must pass before pushing
 - **CI Pipeline:** (Coming in Phase 6) Tests run on every PR
 
-### Test Metrics (Phase 3 Complete)
+### Test Metrics (Phase 4 Complete)
 
-- **Total Tests:** 125+ (Phase 2 data layer + Phase 3 all components)
-- **Test Files:** 25+
-- **Coverage:** 85%+ overall
-- **Components:** 13+ new components with comprehensive tests
-- **Average Test Time:** <50ms per test
+- **Total Tests:** 1,123
+- **Test Files:** 57
+- **Coverage:** 87%+ overall (exceeds 80% target)
 - **Linting:** 0 ESLint violations
 - **Type Safety:** 0 TypeScript errors
-- **Accessibility:** WCAG 2.2 Level AA compliance
+- **Accessibility:** WCAG 2.2 Level AA — 0 violations
 - **Status:** ✅ All passing
 
 ## SEO Optimization
@@ -526,55 +525,24 @@ See the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) for the compl
   - ✅ Task 3.2: Resume Page - 5 components, work experience, skills, clients
   - ✅ Task 3.3: Colophon/About Page - Design system, technologies, Buta story
   - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles
+- ✅ **Phase 4:** Enhanced Features - Theme switching, i18n, animations, WCAG AA, SEO
 
 ### Upcoming Phases
 
-- 🔄 **Phase 4:** Enhanced Features - Theme switching ✅, animations, SEO optimization, i18n
-- ⬜ **Phase 5:** Performance & Optimization - Image optimization, SSG, CDN
-- ⬜ **Phase 6:** Deployment & Migration - Vercel/Netlify, CI/CD, production launch
+- ⬜ **Phase 5:** Performance & Optimization - SSG, bundle analysis, CDN, lazy loading
+- ⬜ **Phase 6:** Deployment & Migration - Hosting, CI/CD, production launch
 - ⬜ **Phase 7:** Post-Launch - Monitoring, analytics, ongoing enhancements
 
-### Key Achievements
+### Key Achievements (Phase 4 Complete)
 
-**Phase 3 Complete:**
-
-- **13+ new components** built with full TypeScript types
-- **125+ unit tests** with 85%+ coverage
-- **WCAG 2.2 Level AA** compliance on all pages
-- **Responsive design** across mobile, tablet, and desktop
-- **Full accessibility** with keyboard navigation and screen reader support
-- **Zero lint violations** and **zero TypeScript errors**
-
-**Phase 4.1 & 4.2 Complete:**
-- ✅ **Theme Switching:** Light, Dark, and High Contrast modes (WCAG AAA compliant)
-  - Settings UI with accessible popover and full keyboard navigation
-  - Complete theme infrastructure (context, hooks, colors, types)
-  - Persistent theme selection via localStorage
-- ✅ **Internationalization (i18n):** Multi-language infrastructure
-  - Language selection and persistence
-  - Dynamic content translation
-  - Locale context and hooks for easy integration
-- **Test Coverage:** 80%+ overall coverage with comprehensive new tests
-- **Comprehensive documentation** and JSDoc on all code
-
-**Phase 4.3, 4.4, & 4.5 Progress:**
-- ✅ **Animations & Transitions:** Polished UI interactions with accessibility respect
-  - Smooth page transitions, component animations
-  - Full `prefers-reduced-motion` support
-  - Comprehensive animation tests and documentation
-  - 60 new component tests with 100% passing
-- ✅ **WCAG 2.2 Level AA Compliance:** Comprehensive accessibility audit
-  - 8 accessibility test files with 120+ test cases
-  - 4 comprehensive documentation guides
-  - 0 violations, 1,117 tests passing
-  - 87.35% code coverage
-- 🔄 **SEO Optimization (In Progress):** Complete SEO infrastructure
-  - Meta tags and Open Graph for social sharing
-  - JSON-LD structured data (Person, BreadcrumbList, CreativeWork schemas)
-  - Dynamic sitemap generation
-  - Robots.txt with search engine crawling instructions
-  - Canonical URLs and page-specific metadata
-  - OG preview images for social sharing
+- **1,123 tests** passing across 57 test files
+- **87%+ code coverage** (exceeds 80% target)
+- **WCAG 2.2 Level AA** compliance with 0 violations
+- **3 theme modes** — Light, Dark, High Contrast (WCAG AAA on high contrast)
+- **i18n infrastructure** — English + French with DeepL auto-translation
+- **Full SEO** — Meta tags, JSON-LD, sitemap, robots.txt, OG images
+- **Polished animations** — Page transitions, scroll effects, `prefers-reduced-motion` support
+- **Zero TypeScript errors**, **zero ESLint errors**
 
 ## Learn More
 
