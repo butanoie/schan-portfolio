@@ -61,7 +61,7 @@ export default function Header() {
             <Typography
               component="div"
               sx={{
-                fontFamily: "Oswald",
+                fontFamily: 'var(--font-oswald), sans-serif',
                 fontSize: "1.25rem",
                 fontWeight: 600,
                 lineHeight: 1.5,

@@ -52,34 +52,34 @@ function createThemeFromPalette(palette: ThemePalette) {
       divider: palette.borders,
     },
     typography: {
-      fontFamily: '"Open Sans", "Helvetica", "Arial", sans-serif',
+      fontFamily: 'var(--font-open-sans), "Helvetica", "Arial", sans-serif',
       h1: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: 'var(--font-oswald), "Helvetica", "Arial", sans-serif',
         fontWeight: 700,
         color: palette.text.primary,
       },
       h2: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: 'var(--font-oswald), "Helvetica", "Arial", sans-serif',
         fontWeight: 700,
         color: palette.text.primary,
       },
       h3: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: 'var(--font-oswald), "Helvetica", "Arial", sans-serif',
         fontWeight: 400,
         color: palette.text.primary,
       },
       h4: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: 'var(--font-oswald), "Helvetica", "Arial", sans-serif',
         fontWeight: 400,
         color: palette.text.primary,
       },
       h5: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: 'var(--font-oswald), "Helvetica", "Arial", sans-serif',
         fontWeight: 400,
         color: palette.text.primary,
       },
       h6: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: 'var(--font-oswald), "Helvetica", "Arial", sans-serif',
         fontWeight: 400,
         color: palette.text.primary,
       },

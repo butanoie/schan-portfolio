@@ -76,7 +76,7 @@ export function getNavButtonSx(isActive: boolean): SxProps<Theme> {
   return {
     backgroundColor: isActive ? NAV_COLORS.active : BRAND_COLORS.sage,
     color: NAV_COLORS.text,
-    fontFamily: '"Open Sans", sans-serif',
+    fontFamily: 'var(--font-open-sans), sans-serif',
     fontWeight: 600,
     textTransform: "none",
     borderRadius: 1,

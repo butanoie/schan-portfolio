@@ -160,7 +160,7 @@ export default function HamburgerMenu() {
                     slotProps={{
                       primary: {
                         sx: {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: 'var(--font-open-sans), sans-serif',
                           fontWeight: 600,
                         },
                       },

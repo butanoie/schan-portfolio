@@ -73,7 +73,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
           <Typography
             component="h4"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: 'var(--font-oswald), sans-serif',
               fontWeight: 600,
               fontSize: "1rem",
               color: palette.card.heading,
@@ -208,7 +208,7 @@ export default function TechnologiesShowcase({
             variant="h3"
             component="h3"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: 'var(--font-oswald), sans-serif',
               fontWeight: 600,
               fontSize: "1.25rem",
               mb: 2,
@@ -254,7 +254,7 @@ export default function TechnologiesShowcase({
             variant="h3"
             component="h3"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: 'var(--font-oswald), sans-serif',
               fontWeight: 600,
               fontSize: "1.25rem",
             }}

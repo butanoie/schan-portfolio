@@ -97,7 +97,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
           variant="subtitle2"
           component="h4"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: 'var(--font-oswald), sans-serif',
             fontWeight: 600,
             mb: 0.5,
             fontSize: "1rem",
@@ -160,7 +160,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             variant="subtitle2"
             component="h4"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: 'var(--font-oswald), sans-serif',
               fontWeight: 600,
               fontSize: "1rem",
               color: palette.card.heading,
@@ -291,7 +291,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         <Typography
           variant="h3"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: 'var(--font-oswald), sans-serif',
             fontWeight: 600,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 2,
@@ -332,7 +332,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         <Typography
           variant="h3"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: 'var(--font-oswald), sans-serif',
             fontWeight: 600,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 2,

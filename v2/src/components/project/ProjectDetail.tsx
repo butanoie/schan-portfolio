@@ -130,7 +130,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
     <Typography
       component="h2"
       sx={{
-        fontFamily: 'Oswald, sans-serif',
+        fontFamily: 'var(--font-oswald), sans-serif',
         textAlign: 'center',
         color: palette.text.primary,
         fontSize: "2rem",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./print.css";
+import { openSans, oswald, gochiHand } from "@/src/lib/fonts";
 import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
 import { AnimationsContextProvider } from "@/src/contexts/AnimationsContext";
 import ThemeProvider from "@/src/components/ThemeProvider";
@@ -83,7 +84,10 @@ export default function RootLayout({
   const personSchema = getPersonSchema();
 
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${openSans.variable} ${oswald.variable} ${gochiHand.variable}`}
+    >
       <body>
         {/* JSON-LD structured data for Person schema - helps search engines understand site author */}
         <script

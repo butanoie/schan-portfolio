@@ -135,7 +135,7 @@ export function LoadMoreButton({
         // Nav button styling
         backgroundColor: NAV_COLORS.active,
         color: NAV_COLORS.text,
-        fontFamily: '"Open Sans", sans-serif',
+        fontFamily: 'var(--font-open-sans), sans-serif',
         fontSize: { xs: "8pt", md: "10pt" },
         fontWeight: 600,
         textTransform: 'none',

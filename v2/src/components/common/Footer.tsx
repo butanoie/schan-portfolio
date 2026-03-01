@@ -24,7 +24,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 /** Shared typography styling for thought bubble text in Gochi Hand cursive font */
 const THOUGHT_BUBBLE_TEXT_SX = {
-  fontFamily: '"Gochi Hand", cursive',
+  fontFamily: 'var(--font-gochi-hand), cursive',
   fontSize: "1rem",
   color: UI_COLORS.secondaryText,
   "@media (min-width: 760px)": {

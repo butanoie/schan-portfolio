@@ -80,7 +80,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
           id="resume-name"
           variant="h1"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: 'var(--font-oswald), sans-serif',
             fontWeight: 700,
             color: palette.text.primary,
             fontSize: { xs: "2rem", md: "2.5rem" },
