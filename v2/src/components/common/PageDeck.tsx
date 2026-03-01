@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 import type { PageDeckData } from "../../types";
 import { usePalette } from "../../hooks/usePalette";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 
 /**
  * Props for the PageDeck component.
@@ -62,7 +63,7 @@ export default function PageDeck({ content }: PageDeckProps) {
         variant="h1"
         component="h1"
         sx={{
-          fontFamily: 'var(--font-oswald), sans-serif',
+          fontFamily: FONT_FAMILY_HEADING,
           fontWeight: 700,
           color: palette.text.primary,
           fontSize: { xs: "2rem", md: "2.5rem" },

@@ -5,6 +5,7 @@ import type { Theme } from '@mui/material/styles';
 import type { SxProps } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { NAV_COLORS, BRAND_COLORS } from '../../constants';
+import { FONT_FAMILY_BODY } from '@/src/lib/fontConstants';
 import { useI18n, useAnimations } from '../../hooks';
 
 /**
@@ -135,7 +136,7 @@ export function LoadMoreButton({
         // Nav button styling
         backgroundColor: NAV_COLORS.active,
         color: NAV_COLORS.text,
-        fontFamily: 'var(--font-open-sans), sans-serif',
+        fontFamily: FONT_FAMILY_BODY,
         fontSize: { xs: "8pt", md: "10pt" },
         fontWeight: 600,
         textTransform: 'none',

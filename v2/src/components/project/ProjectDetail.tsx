@@ -6,6 +6,7 @@ import { ProjectDescription } from './ProjectDescription';
 import { VideoEmbed } from './VideoEmbed';
 import { ProjectGallery } from './ProjectGallery';
 import { usePalette } from "../../hooks/usePalette";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 
 /**
  * Props for the ProjectDetail component.
@@ -130,7 +131,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
     <Typography
       component="h2"
       sx={{
-        fontFamily: 'var(--font-oswald), sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         textAlign: 'center',
         color: palette.text.primary,
         fontSize: "2rem",

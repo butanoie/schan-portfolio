@@ -4,6 +4,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { createElement } from "react";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { NAV_COLORS, BRAND_COLORS } from "../constants";
+import { FONT_FAMILY_BODY } from "@/src/lib/fontConstants";
 
 /**
  * Navigation link configuration used across Header, HamburgerMenu, and Footer.
@@ -76,7 +77,7 @@ export function getNavButtonSx(isActive: boolean): SxProps<Theme> {
   return {
     backgroundColor: isActive ? NAV_COLORS.active : BRAND_COLORS.sage,
     color: NAV_COLORS.text,
-    fontFamily: 'var(--font-open-sans), sans-serif',
+    fontFamily: FONT_FAMILY_BODY,
     fontWeight: 600,
     textTransform: "none",
     borderRadius: 1,

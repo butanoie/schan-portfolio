@@ -5,6 +5,7 @@ import DesignPhilosophy from "../../../components/colophon/DesignPhilosophy";
 import { ThemeContextProvider } from "../../../contexts/ThemeContext";
 import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
 import type { DesignPhilosophyContent } from "../../../types/colophon";
+import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING } from "../../../lib/fontConstants";
 
 /**
  * Wrapper component to provide ThemeContext and LocaleProvider for testing.
@@ -51,7 +52,7 @@ describe("DesignPhilosophy", () => {
         name: "Open Sans",
         usage: "Body text",
         sample: "The quick brown fox",
-        fontFamily: 'var(--font-open-sans), sans-serif',
+        fontFamily: FONT_FAMILY_BODY,
         fontWeight: 400,
         url: "https://fonts.google.com/specimen/Open+Sans",
       },
@@ -59,7 +60,7 @@ describe("DesignPhilosophy", () => {
         name: "Oswald",
         usage: "Headings",
         sample: "HEADLINES",
-        fontFamily: 'var(--font-oswald), sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 700,
       },
     ],

@@ -3,6 +3,7 @@
 import { Box } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
+import type { ProjectImage as ProjectImageType } from "../../types";
 import { ProjectImage } from "./ProjectImage";
 import { useLightbox } from "../../hooks";
 
@@ -33,7 +34,6 @@ const ProjectLightbox = dynamic(
     loading: () => null,
   }
 );
-import type { ProjectImage as ProjectImageType } from "../../types";
 
 /**
  * Props for the ProjectGallery component.

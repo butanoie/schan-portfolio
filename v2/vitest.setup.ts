@@ -7,6 +7,35 @@ import { configureAxe } from 'vitest-axe';
 import * as matchers from 'vitest-axe/matchers';
 
 /**
+ * Mock `next/font/google` for the Vitest/JSDOM test environment.
+ *
+ * `next/font/google` functions (Open_Sans, Oswald, etc.) are build-time
+ * primitives that download fonts during `next build`. They don't exist at
+ * runtime in Vitest. This mock returns objects matching the NextFont shape
+ * so that `fonts.ts` (and any component importing font constants) resolves.
+ */
+vi.mock('next/font/google', () => {
+  /**
+   * Creates a mock NextFont object matching the shape returned by next/font.
+   *
+   * @param opts - Font configuration options passed by the caller
+   * @param opts.variable - CSS custom property name for the font (e.g., "--font-open-sans")
+   * @returns A mock font object with className, style, and variable properties
+   */
+  const mockFont = (opts?: { variable?: string }) => ({
+    className: 'mock-font',
+    style: { fontFamily: 'mock-font-family' },
+    variable: opts?.variable ?? '--mock-font',
+  });
+
+  return {
+    Open_Sans: mockFont,
+    Oswald: mockFont,
+    Gochi_Hand: mockFont,
+  };
+});
+
+/**
  * Mock `next/dynamic` for the Vitest/JSDOM test environment.
  *
  * `next/dynamic` relies on Next.js webpack internals that don't exist in Vitest.

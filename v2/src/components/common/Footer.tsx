@@ -8,6 +8,7 @@ import { useProjectLoading, type ProjectLoadingContextValue } from "../../contex
 import { LoadMoreButton } from "../project/LoadMoreButton";
 import { NavButtons } from "./NavButtons";
 import { useI18n } from "@/src/hooks/useI18n";
+import { FONT_FAMILY_CURSIVE } from "@/src/lib/fontConstants";
 
 /**
  * Props for the ThoughtBubble component.
@@ -24,7 +25,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 /** Shared typography styling for thought bubble text in Gochi Hand cursive font */
 const THOUGHT_BUBBLE_TEXT_SX = {
-  fontFamily: 'var(--font-gochi-hand), cursive',
+  fontFamily: FONT_FAMILY_CURSIVE,
   fontSize: "1rem",
   color: UI_COLORS.secondaryText,
   "@media (min-width: 760px)": {

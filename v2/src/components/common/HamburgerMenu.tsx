@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
+import { FONT_FAMILY_BODY } from "@/src/lib/fontConstants";
 import { SettingsList } from "../settings/SettingsList";
 import { getNavLinks, isActivePath } from "../../utils/navigation";
 
@@ -160,7 +161,7 @@ export default function HamburgerMenu() {
                     slotProps={{
                       primary: {
                         sx: {
-                          fontFamily: 'var(--font-open-sans), sans-serif',
+                          fontFamily: FONT_FAMILY_BODY,
                           fontWeight: 600,
                         },
                       },

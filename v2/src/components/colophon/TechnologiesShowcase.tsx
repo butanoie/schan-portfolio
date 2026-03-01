@@ -15,6 +15,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { TechnologiesContent, Technology } from "../../types/colophon";
 import { BRAND_COLORS } from "../../constants";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
@@ -73,7 +74,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
           <Typography
             component="h4"
             sx={{
-              fontFamily: 'var(--font-oswald), sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1rem",
               color: palette.card.heading,
@@ -208,7 +209,7 @@ export default function TechnologiesShowcase({
             variant="h3"
             component="h3"
             sx={{
-              fontFamily: 'var(--font-oswald), sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1.25rem",
               mb: 2,
@@ -254,7 +255,7 @@ export default function TechnologiesShowcase({
             variant="h3"
             component="h3"
             sx={{
-              fontFamily: 'var(--font-oswald), sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1.25rem",
             }}

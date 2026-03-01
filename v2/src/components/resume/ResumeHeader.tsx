@@ -9,6 +9,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LinkIcon from "@mui/icons-material/Link";
 import type { ResumeHeaderContent } from "../../types/resume";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 import { rot13 } from "../../utils/obfuscation";
 import { usePalette } from "../../hooks/usePalette";
 
@@ -80,7 +81,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
           id="resume-name"
           variant="h1"
           sx={{
-            fontFamily: 'var(--font-oswald), sans-serif',
+            fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 700,
             color: palette.text.primary,
             fontSize: { xs: "2rem", md: "2.5rem" },

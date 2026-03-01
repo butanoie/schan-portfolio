@@ -1,3 +1,15 @@
+/**
+ * Next.js font instances for the portfolio application.
+ *
+ * These call `next/font/google` constructors which are build-time primitives —
+ * they MUST only be imported from `layout.tsx` to avoid duplicate instantiation.
+ * For font-family CSS strings, import from `./fontConstants.ts` instead.
+ *
+ * Uses `display: "optional"` to achieve CLS = 0: the browser uses the font
+ * only if it is already cached, otherwise falls back to the system font with
+ * no layout shift. On repeat visits the font will be cached and used immediately.
+ */
+
 import { Open_Sans, Oswald, Gochi_Hand } from "next/font/google";
 
 /**
@@ -11,7 +23,7 @@ import { Open_Sans, Oswald, Gochi_Hand } from "next/font/google";
 export const openSans = Open_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "600", "700"],
-  display: "swap",
+  display: "optional",
   variable: "--font-open-sans",
 });
 
@@ -26,7 +38,7 @@ export const openSans = Open_Sans({
 export const oswald = Oswald({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
+  display: "optional",
   variable: "--font-oswald",
 });
 
@@ -40,6 +52,6 @@ export const oswald = Oswald({
 export const gochiHand = Gochi_Hand({
   subsets: ["latin"],
   weight: "400",
-  display: "swap",
+  display: "optional",
   variable: "--font-gochi-hand",
 });

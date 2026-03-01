@@ -39,6 +39,9 @@ import {
 import { Settings as SettingsIcon } from "@mui/icons-material";
 import dynamic from "next/dynamic";
 import { useI18n } from "@/src/hooks/useI18n";
+import { useAnimations } from "@/src/hooks/useAnimations";
+import { usePalette } from "@/src/hooks/usePalette";
+import { BRAND_COLORS } from "@/src/constants";
 
 /**
  * Lazily-loaded settings list containing ThemeSwitcher, LanguageSwitcher,
@@ -68,9 +71,6 @@ const SettingsList = dynamic(
     loading: () => null,
   }
 );
-import { useAnimations } from "@/src/hooks/useAnimations";
-import { usePalette } from "@/src/hooks/usePalette";
-import { BRAND_COLORS } from "@/src/constants";
 
 /**
  * Props for the SettingsButton component.
