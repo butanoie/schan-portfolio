@@ -496,14 +496,13 @@ describe('useLightbox', () => {
       // The hook's navigation will use the new count
       expect(result.current.selectedIndex).toBe(4);
 
-      // When we navigate with new count (3), next from 4 increments normally
+      // When we navigate with new count (3), next from 4 wraps using modular arithmetic
+      // (4 + 1) % 3 = 2, keeping the index within valid bounds
       act(() => {
         result.current.handleNextImage();
       });
 
-      // Index 4 + 1 = 5 (doesn't clamp, just increments)
-      // This is an edge case where count decreased but index stayed
-      expect(result.current.selectedIndex).toBe(5);
+      expect(result.current.selectedIndex).toBe(2);
     });
 
     it('should handle rapid image count changes', () => {
@@ -523,12 +522,12 @@ describe('useLightbox', () => {
       // State still shows 2 (React state doesn't auto-update)
       expect(result.current.selectedIndex).toBe(2);
 
-      // With new count of 1 and index 2, next navigation increments normally
-      // Index 2 is not at the boundary (imagesCount - 1 = 0), so it just increments
+      // With new count of 1 and index 2, next navigation wraps using modular arithmetic
+      // (2 + 1) % 1 = 0, keeping the index within valid bounds
       act(() => {
         result.current.handleNextImage();
       });
-      expect(result.current.selectedIndex).toBe(3);
+      expect(result.current.selectedIndex).toBe(0);
     });
   });
 

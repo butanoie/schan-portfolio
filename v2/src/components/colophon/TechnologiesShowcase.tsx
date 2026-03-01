@@ -15,8 +15,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { TechnologiesContent, Technology } from "../../types/colophon";
 import { BRAND_COLORS } from "../../constants";
-import { getPaletteByMode } from "../../lib/themes";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -48,8 +47,7 @@ export interface TechnologiesShowcaseProps {
  * ```
  */
 function TechnologyCard({ tech }: { tech: Technology }) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette, mode } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -133,8 +131,7 @@ export default function TechnologiesShowcase({
   content,
 }: TechnologiesShowcaseProps) {
   const { intro, categories, v1 } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
   const { t } = useI18n(); // Used in TechnologyCard and V1 section headers
   const [v1AccordionExpanded, setV1AccordionExpanded] = useState(() => {
     if (typeof window !== "undefined") {

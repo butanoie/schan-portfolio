@@ -27,6 +27,9 @@ export const BRAND_COLORS = {
   /** Darker maroon for hover states */
   maroonDark: "#6B1028",
 
+  /** Maroon at 8% opacity, used for icon button hover backgrounds */
+  maroonHover: "rgba(139, 21, 56, 0.08)",
+
   /** Dark charcoal for primary text */
   graphite: "#2C2C2C",
 

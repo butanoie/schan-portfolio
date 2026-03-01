@@ -15,30 +15,6 @@ import { ThemeMode, ThemePalette } from "@/src/types/theme";
 import { THEME_PALETTES } from "@/src/constants/colors";
 
 /**
- * Light theme palette.
- * Uses sage green and maroon with light backgrounds.
- * Complies with WCAG AA contrast ratios.
- * Sourced from centralized color constants in colors.ts.
- */
-const lightPalette: ThemePalette = THEME_PALETTES.light;
-
-/**
- * Dark theme palette.
- * Inverted colors for comfortable viewing in low-light environments.
- * Complies with WCAG AA contrast ratios.
- * Sourced from centralized color constants in colors.ts.
- */
-const darkPalette: ThemePalette = THEME_PALETTES.dark;
-
-/**
- * High-contrast black and white theme palette.
- * Meets WCAG AAA contrast requirements (7:1+).
- * Maximum accessibility for users with low vision.
- * Sourced from centralized color constants in colors.ts.
- */
-const highContrastPalette: ThemePalette = THEME_PALETTES.highContrast;
-
-/**
  * Create a Material UI theme from a palette configuration.
  *
  * Applies common theme settings (typography, component overrides)
@@ -206,19 +182,26 @@ function createThemeFromPalette(palette: ThemePalette) {
  * Light theme configuration.
  * Default theme using sage green and maroon palette.
  */
-export const lightTheme = createThemeFromPalette(lightPalette);
+export const lightTheme = createThemeFromPalette(THEME_PALETTES.light);
 
 /**
  * Dark theme configuration.
  * Inverted colors for reduced eye strain in low-light environments.
  */
-export const darkTheme = createThemeFromPalette(darkPalette);
+export const darkTheme = createThemeFromPalette(THEME_PALETTES.dark);
 
 /**
  * High-contrast theme configuration.
  * Black and white theme for maximum accessibility (WCAG AAA).
  */
-export const highContrastTheme = createThemeFromPalette(highContrastPalette);
+export const highContrastTheme = createThemeFromPalette(THEME_PALETTES.highContrast);
+
+/** Map of theme mode to MUI theme object for direct lookup. */
+const THEMES_BY_MODE = {
+  light: lightTheme,
+  dark: darkTheme,
+  highContrast: highContrastTheme,
+} as const;
 
 /**
  * Get a theme by mode.
@@ -227,15 +210,7 @@ export const highContrastTheme = createThemeFromPalette(highContrastPalette);
  * @returns The corresponding MUI theme object
  */
 export function getThemeByMode(mode: ThemeMode) {
-  switch (mode) {
-    case "dark":
-      return darkTheme;
-    case "highContrast":
-      return highContrastTheme;
-    case "light":
-    default:
-      return lightTheme;
-  }
+  return THEMES_BY_MODE[mode] ?? lightTheme;
 }
 
 /**
@@ -245,15 +220,5 @@ export function getThemeByMode(mode: ThemeMode) {
  * @returns The theme palette configuration
  */
 export function getPaletteByMode(mode: ThemeMode): ThemePalette {
-  switch (mode) {
-    case "dark":
-      return darkPalette;
-    case "highContrast":
-      return highContrastPalette;
-    case "light":
-    default:
-      return lightPalette;
-  }
+  return THEME_PALETTES[mode] ?? THEME_PALETTES.light;
 }
-
-export { lightPalette, darkPalette, highContrastPalette };

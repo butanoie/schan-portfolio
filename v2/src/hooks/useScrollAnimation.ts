@@ -182,5 +182,3 @@ export function useScrollAnimation(
     isInView: prefersReducedMotion ? true : isInView,
   };
 }
-
-export default useScrollAnimation;

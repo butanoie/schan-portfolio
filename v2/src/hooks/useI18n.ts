@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Hook for accessing localized strings and formatting utilities.
  *
@@ -12,8 +14,6 @@
  *
  * @module hooks/useI18n
  */
-
-'use client';
 
 import { useContext, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

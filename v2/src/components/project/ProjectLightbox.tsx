@@ -16,7 +16,7 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
-import { useSwipe, useI18n, useAnimations, useReducedMotion } from "../../hooks";
+import { useSwipe, useI18n, useAnimations } from "../../hooks";
 import { VisuallyHidden } from "../common/VisuallyHidden";
 import {
   SWIPE_THRESHOLD,
@@ -116,11 +116,7 @@ export function ProjectLightbox({
   const previousIndexRef = useRef<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { t } = useI18n();
-  const { animationsEnabled } = useAnimations();
-  const prefersReducedMotion = useReducedMotion();
-
-  /** Whether animations should play — respects both user setting and OS preference */
-  const shouldAnimate = animationsEnabled && !prefersReducedMotion;
+  const { shouldAnimate } = useAnimations();
 
   /**
    * Ref to store the keyboard handler function.
@@ -346,11 +342,10 @@ export function ProjectLightbox({
   };
 
   /**
-   * Navigation button styling.
+   * Shared button styling for lightbox controls.
    * Semi-transparent white for visibility on dark background.
-   * Buttons are always rendered inline beside the image counter.
    */
-  const navButtonSx: SxProps<Theme> = {
+  const lightboxButtonSx: SxProps<Theme> = {
     color: "#FFFFFF",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
     "&:hover": {
@@ -390,15 +385,11 @@ export function ProjectLightbox({
         onClick={onClose}
         aria-label={t('projectLightbox.closeButton', { ns: 'components' })}
         sx={{
+          ...lightboxButtonSx,
           position: "fixed",
           top: LIGHTBOX_CONTROL_OFFSET,
           right: LIGHTBOX_CONTROL_OFFSET,
           zIndex: 52,
-          color: "#FFFFFF",
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
-          "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.35)",
-          },
         }}
       >
         <CloseIcon fontSize="large" />
@@ -482,7 +473,7 @@ export function ProjectLightbox({
             <IconButton
               onClick={handlePrevious}
               aria-label={t('projectLightbox.previousButton', { ns: 'components' })}
-              sx={navButtonSx}
+              sx={lightboxButtonSx}
             >
               <ArrowBackIcon fontSize="large" sx={{ pl: 1 }} />
             </IconButton>
@@ -511,7 +502,7 @@ export function ProjectLightbox({
             <IconButton
               onClick={handleNext}
               aria-label={t('projectLightbox.nextButton', { ns: 'components' })}
-              sx={navButtonSx}
+              sx={lightboxButtonSx}
             >
               <ArrowForwardIcon fontSize="large" sx={{ pl: 0.5 }} />
             </IconButton>

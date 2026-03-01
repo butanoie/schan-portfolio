@@ -3,8 +3,7 @@
 import { Box, Typography } from "@mui/material";
 import type { EducationEntry } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -32,8 +31,7 @@ export interface EducationProps {
  * <Education education={resumeData.education} />
  */
 export default function Education({ education }: EducationProps) {
-  const { mode, isMounted } = useThemeContext();
-  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { palette } = usePalette({ hydrationSafe: true });
   const { t } = useI18n();
 
   return (

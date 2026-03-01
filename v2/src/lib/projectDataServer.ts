@@ -7,8 +7,8 @@
  * @module projectDataServer
  */
 
-import { getProjects, getProjectById, getAllTags } from './projectData';
-import type { Project, ProjectsResponse, ProjectQueryOptions } from '../types';
+import { getProjects } from './projectData';
+import type { ProjectsResponse, ProjectQueryOptions } from '../types';
 
 /**
  * Server action to fetch projects.
@@ -28,31 +28,3 @@ export async function fetchProjects(
   return getProjects(options);
 }
 
-/**
- * Server action to fetch a single project by ID.
- *
- * @param id - Project identifier
- * @param locale - Locale for localizing content (default: 'en')
- * @returns Promise resolving to localized project or null
- *
- * @example
- * const project = await fetchProjectById('collabspace');
- *
- * @example
- * const frenchProject = await fetchProjectById('collabspace', 'fr');
- */
-export async function fetchProjectById(id: string, locale: string = 'en'): Promise<Project | null> {
-  return await getProjectById(id, locale);
-}
-
-/**
- * Server action to fetch all tags.
- *
- * @returns Promise resolving to array of unique tags
- *
- * @example
- * const tags = await fetchAllTags();
- */
-export async function fetchAllTags(): Promise<string[]> {
-  return getAllTags();
-}

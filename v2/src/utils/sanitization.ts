@@ -73,12 +73,13 @@ export function isValidUrlProtocol(url: string): boolean {
  *
  * @see https://owasp.org/www-community/attacks/xss/
  */
-export const SANITIZATION_CONFIG = {
+const SANITIZATION_CONFIG = {
   ALLOWED_TAGS: ['p', 'a', 'strong', 'em', 'ul', 'ol', 'li', 'br'],
   ALLOWED_ATTR: ['href', 'title'],
   // KEEP_CONTENT: true preserves text content when unsafe tags are removed
   // This is safe because we use strict tag and attribute whitelists
   KEEP_CONTENT: true,
+  ALLOW_UNKNOWN_PROTOCOLS: false,
   RETURN_DOM: false,
   RETURN_DOM_FRAGMENT: false,
   RETURN_DOM_IMPORT: false,
@@ -149,38 +150,10 @@ export function sanitizeHtml(htmlContent: string): string {
     throw new TypeError('HTML content must be a string');
   }
 
-  const config = {
-    ...SANITIZATION_CONFIG,
-    ALLOW_UNKNOWN_PROTOCOLS: false,
-  };
-
   try {
-    return String(DOMPurify.sanitize(htmlContent, config));
+    return String(DOMPurify.sanitize(htmlContent, SANITIZATION_CONFIG));
   } catch (error) {
     console.error('Error during HTML sanitization:', error);
     return '';
   }
-}
-
-/**
- * Sanitizes HTML with strict configuration optimized for project descriptions.
- *
- * This function is optimized for rendering project descriptions which typically contain:
- * - Formatted text (p, strong, em)
- * - Lists (ul, ol, li)
- * - Links to external resources
- *
- * It applies the same security measures as `sanitizeHtml()` but is named specifically
- * for semantic clarity when used in description contexts.
- *
- * @param htmlContent - Raw HTML description content
- * @returns Sanitized HTML safe for rendering with `dangerouslySetInnerHTML`
- * @throws {TypeError} If htmlContent is not a string
- *
- * @example
- * const description = '<p>Built with <strong>React</strong> and <em>TypeScript</em></p>';
- * const sanitized = sanitizeDescriptionHtml(description);
- */
-export function sanitizeDescriptionHtml(htmlContent: string): string {
-  return sanitizeHtml(htmlContent);
 }

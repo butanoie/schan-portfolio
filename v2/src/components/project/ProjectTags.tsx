@@ -3,6 +3,18 @@
 import { Box, Chip, SxProps, Theme } from '@mui/material';
 import { BRAND_COLORS } from '../../constants';
 
+/** Shared styling for tag and circa chips (everything except backgroundColor) */
+const BASE_CHIP_SX = {
+  color: '#ffffff',
+  fontWeight: 600,
+  fontSize: '0.75rem',
+  height: '26px',
+  borderRadius: '3px',
+  '& .MuiChip-label': {
+    px: 1.25,
+  },
+} as const;
+
 /**
  * Props for the ProjectTagsContainer component.
  *
@@ -64,38 +76,17 @@ export function ProjectTagsContainer({
           className='project-circa'
           label={circa}
           size="small"
-          sx={{
-            backgroundColor: BRAND_COLORS.maroon,
-            color: '#ffffff',
-            fontWeight: 600,
-            fontSize: '0.75rem',
-            height: '26px',
-            borderRadius: '3px',
-            '& .MuiChip-label': {
-              px: 1.25,
-            },
-          }}
+          sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.maroon }}
         />
       )}
-      {tags &&
-        tags.map((tag) => (
-          <Chip
-            key={tag}
-            label={tag}
-            size="small"
-            sx={{
-              backgroundColor: BRAND_COLORS.sage,
-              color: '#ffffff',
-              fontWeight: 600,
-              fontSize: '0.75rem',
-              height: '26px',
-              borderRadius: '3px',
-              '& .MuiChip-label': {
-                px: 1.25,
-              },
-            }}
-          />
-        ))}
+      {tags?.map((tag) => (
+        <Chip
+          key={tag}
+          label={tag}
+          size="small"
+          sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.sage }}
+        />
+      ))}
     </Box>
   );
 }

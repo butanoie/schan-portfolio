@@ -1,9 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import {
   sanitizeHtml,
-  sanitizeDescriptionHtml,
   isValidUrlProtocol,
-  SANITIZATION_CONFIG,
 } from '../../utils/sanitization';
 
 describe('sanitization utilities', () => {
@@ -372,52 +370,4 @@ describe('sanitization utilities', () => {
     });
   });
 
-  describe('sanitizeDescriptionHtml', () => {
-    it('should sanitize description content', () => {
-      const html = '<p>Safe <script>alert("XSS")</script> content</p>';
-      const sanitized = sanitizeDescriptionHtml(html);
-      expect(sanitized).toContain('Safe');
-      expect(sanitized).not.toContain('<script>');
-    });
-
-    it('should preserve description formatting', () => {
-      const html = '<p>Built with <strong>React</strong></p>';
-      const sanitized = sanitizeDescriptionHtml(html);
-      expect(sanitized).toContain('<strong>');
-      expect(sanitized).toContain('React');
-    });
-
-    it('should throw TypeError for non-string input', () => {
-      expect(() => sanitizeDescriptionHtml(null as unknown as string)).toThrow(TypeError);
-    });
-  });
-
-  describe('SANITIZATION_CONFIG', () => {
-    it('should have correct allowed tags', () => {
-      expect(SANITIZATION_CONFIG.ALLOWED_TAGS).toEqual([
-        'p',
-        'a',
-        'strong',
-        'em',
-        'ul',
-        'ol',
-        'li',
-        'br',
-      ]);
-    });
-
-    it('should have correct allowed attributes', () => {
-      expect(SANITIZATION_CONFIG.ALLOWED_ATTR).toEqual(['href', 'title']);
-    });
-
-    it('should have KEEP_CONTENT set to true', () => {
-      expect(SANITIZATION_CONFIG.KEEP_CONTENT).toBe(true);
-    });
-
-    it('should not allow return of DOM', () => {
-      expect(SANITIZATION_CONFIG.RETURN_DOM).toBe(false);
-      expect(SANITIZATION_CONFIG.RETURN_DOM_FRAGMENT).toBe(false);
-      expect(SANITIZATION_CONFIG.RETURN_DOM_IMPORT).toBe(false);
-    });
-  });
 });

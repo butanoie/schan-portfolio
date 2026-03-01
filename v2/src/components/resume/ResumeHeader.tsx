@@ -10,8 +10,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import type { ResumeHeaderContent } from "../../types/resume";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { rot13 } from "../../utils/obfuscation";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
+import { usePalette } from "../../hooks/usePalette";
 
 /**
  * Props for the ResumeHeader component.
@@ -52,8 +51,7 @@ const iconMap = {
  */
 export default function ResumeHeader({ content }: ResumeHeaderProps) {
   const { name, tagline, contactLinks } = content;
-  const { mode, isMounted } = useThemeContext();
-  const palette = getPaletteByMode(isMounted ? mode : "light");
+  const { palette } = usePalette({ hydrationSafe: true });
 
   return (
     <Box
