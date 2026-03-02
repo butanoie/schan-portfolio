@@ -3,7 +3,7 @@
 Modern portfolio website built with Next.js, TypeScript, and Material UI.
 
 ## About This Project
-This portfolio modernization is more than just a website rebuild — it's a showcase of how I approach software development. By migrating my portfolio from a 2013-era stack (Gumby Framework, jQuery, PHP) to a modern React-based application, I'm demonstrating the full lifecycle of a real-world enterprise project using the tools, processes, and discipline I'd bring to any professional engagement.
+This portfolio modernization is more than just a website rebuild — it's a showcase of how I approach software development. By migrating my portfolio from a 2013-era stack to a modern React-based application, I'm demonstrating the full lifecycle of a real-world enterprise project using the tools, processes, and discipline I'd bring to any professional engagement.
 
 Claude Code, Anthropic's AI-powered command line tool, serves as a development partner throughout the project — assisting with planning, architecture decisions, code generation, testing, and documentation. Rather than treating AI as a black box that produces code, I use it collaboratively: reviewing its output, iterating on solutions, and maintaining full ownership of technical decisions. This mirrors how I believe AI-assisted development works best in professional settings.
 
