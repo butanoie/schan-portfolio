@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Drawer, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useMediaQuery, useTheme, Divider, Typography } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
@@ -13,15 +14,23 @@ import { FONT_FAMILY_BODY } from "@/src/lib/fontConstants";
 import { SettingsList } from "../settings/SettingsList";
 import { getNavLinks, isActivePath } from "../../utils/navigation";
 
-/** Shared styling for icon buttons (hamburger open and close) in the drawer */
-const DRAWER_ICON_BUTTON_SX = {
-  color: BRAND_COLORS.maroon,
-  minWidth: 44,
-  minHeight: 44,
-  "&:hover": {
-    backgroundColor: BRAND_COLORS.maroonHover,
-  },
-} as const;
+/**
+ * Generates theme-aware styling for icon buttons (hamburger open and close).
+ * Uses the theme's secondary color so icons adapt to dark and high-contrast modes.
+ *
+ * @param theme - The current MUI theme object
+ * @returns An `sx` style object with color and hover styling
+ */
+function getDrawerIconButtonSx(theme: Theme) {
+  return {
+    color: theme.palette.secondary.main,
+    minWidth: 44,
+    minHeight: 44,
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.secondary.main, 0.08),
+    },
+  };
+}
 
 /**
  * Hamburger menu component for mobile navigation.
@@ -57,6 +66,7 @@ export default function HamburgerMenu() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const navItems = getNavLinks();
+  const drawerIconButtonSx = getDrawerIconButtonSx(theme);
 
   /**
    * Closes the navigation drawer.
@@ -79,7 +89,7 @@ export default function HamburgerMenu() {
         aria-label={t("nav.menu.hamburger")}
         aria-expanded={open}
         size="medium"
-        sx={DRAWER_ICON_BUTTON_SX}
+        sx={drawerIconButtonSx}
       >
         <MenuIcon fontSize="medium" />
       </IconButton>
@@ -112,7 +122,7 @@ export default function HamburgerMenu() {
             onClick={handleClose}
             aria-label={t("nav.menu.close")}
             size="medium"
-            sx={DRAWER_ICON_BUTTON_SX}
+            sx={drawerIconButtonSx}
           >
             <CloseIcon fontSize="medium" />
           </IconButton>
@@ -163,6 +173,7 @@ export default function HamburgerMenu() {
                         sx: {
                           fontFamily: FONT_FAMILY_BODY,
                           fontWeight: 600,
+                          color: NAV_COLORS.text,
                         },
                       },
                     }}
