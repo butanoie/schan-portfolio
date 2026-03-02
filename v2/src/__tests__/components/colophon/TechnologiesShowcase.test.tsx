@@ -28,7 +28,10 @@ function Wrapper({ children }: { children: ReactNode }) {
 describe("TechnologiesShowcase", () => {
   const mockContent: TechnologiesContent = {
     heading: "Technologies",
-    intro: "This site uses the following technologies:",
+    intro: [
+      "This site uses the following technologies:",
+      "Here is the second paragraph.",
+    ],
     categories: [
       {
         label: "Framework & Runtime",
@@ -83,13 +86,16 @@ describe("TechnologiesShowcase", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render intro text", () => {
+  it("should render intro paragraphs", () => {
     render(<TechnologiesShowcase content={mockContent} />, {
       wrapper: Wrapper,
     });
 
     expect(
       screen.getByText("This site uses the following technologies:")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Here is the second paragraph.")
     ).toBeInTheDocument();
   });
 
