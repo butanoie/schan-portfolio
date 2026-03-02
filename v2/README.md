@@ -2,7 +2,7 @@
 
 Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
 
-## Current Status: Phase 4 Complete ✅ — Phase 5 Next
+## Current Status: Phase 5 Complete ✅ — Phase 6 Next
 
 **Completed:**
 
@@ -19,8 +19,15 @@ Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and 
   - ✅ Task 4.3: Animations & Transitions - Polished UI with `prefers-reduced-motion` respect
   - ✅ Task 4.4: WCAG 2.2 Level AA Compliance - 120+ accessibility tests, 0 violations
   - ✅ Task 4.5: SEO Optimization - Meta tags, structured data, sitemap, OG images
+- ✅ Phase 5: Performance & Optimization
+  - ✅ Task 5.1: Bundle analysis baseline (`@next/bundle-analyzer`)
+  - ✅ Task 5.2: Font loading migration (CSS `@import` → `next/font/google`, CLS = 0)
+  - ✅ Task 5.3: Lazy loading (3 heavy components with `next/dynamic`)
+  - ✅ Task 5.4: Client/server boundary audit (6 components converted to server)
+  - ✅ Task 5.5: Static Site Generation (home page SSG)
+  - ✅ Task 5.6: Performance audits (Lighthouse desktop 97–100, mobile 90–92, SEO 100)
 
-**Next: Phase 5 — Performance & Optimization**
+**Next: Phase 6 — Deployment & Migration**
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
@@ -454,7 +461,7 @@ Tests run automatically:
 - **Pre-push:** All tests must pass before pushing
 - **CI Pipeline:** (Coming in Phase 6) Tests run on every PR
 
-### Test Metrics (Phase 4 Complete)
+### Test Metrics (Phase 5 Complete)
 
 - **Total Tests:** 1,123
 - **Test Files:** 57
@@ -462,6 +469,9 @@ Tests run automatically:
 - **Linting:** 0 ESLint violations
 - **Type Safety:** 0 TypeScript errors
 - **Accessibility:** WCAG 2.2 Level AA — 0 violations
+- **Lighthouse Desktop:** 97–100
+- **Lighthouse Mobile:** 90–92
+- **SEO Score:** 100
 - **Status:** ✅ All passing
 
 ## SEO Optimization
@@ -529,11 +539,10 @@ See the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) for the compl
 
 ### Upcoming Phases
 
-- ⬜ **Phase 5:** Performance & Optimization - SSG, bundle analysis, CDN, lazy loading
 - ⬜ **Phase 6:** Deployment & Migration - Hosting, CI/CD, production launch
 - ⬜ **Phase 7:** Post-Launch - Monitoring, analytics, ongoing enhancements
 
-### Key Achievements (Phase 4 Complete)
+### Key Achievements (Phase 5 Complete)
 
 - **1,123 tests** passing across 57 test files
 - **87%+ code coverage** (exceeds 80% target)
@@ -542,6 +551,11 @@ See the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) for the compl
 - **i18n infrastructure** — English + French with DeepL auto-translation
 - **Full SEO** — Meta tags, JSON-LD, sitemap, robots.txt, OG images
 - **Polished animations** — Page transitions, scroll effects, `prefers-reduced-motion` support
+- **Lighthouse Desktop 97–100**, **Mobile 90–92**, **SEO 100**
+- **Self-hosted fonts** via `next/font/google` with CLS = 0
+- **3 components lazy-loaded** with `next/dynamic` for smaller initial bundle
+- **6 server components** converted from unnecessary client components
+- **Home page SSG** with `dynamic = 'error'` regression guard
 - **Zero TypeScript errors**, **zero ESLint errors**
 
 ## Learn More

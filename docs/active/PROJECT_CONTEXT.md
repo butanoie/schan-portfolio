@@ -1,9 +1,9 @@
 # Portfolio Modernization - Project Context
 
-**Version:** 1.6
+**Version:** 1.7
 **Last Updated:** 2026-03-01
-**Current Phase:** Between Phase 4 (Complete) and Phase 5 (Not Started)
-**Current Branch:** `sc/simplify` (post-Phase 4 cleanup and refactoring)
+**Current Phase:** Between Phase 5 (Complete) and Phase 6 (Not Started)
+**Current Branch:** `sc/client-server-boundary` (Phase 5 performance optimization)
 
 ---
 
@@ -11,7 +11,7 @@
 
 This is a portfolio modernization project migrating **portfolio.singchan.com** from a 2013-era technology stack (Gumby Framework, jQuery, PHP) to a modern React-based application using Next.js 15, TypeScript, and Material UI v7.
 
-**Project Status:** Phase 4 Complete, Phase 5 Not Started
+**Project Status:** Phase 5 Complete, Phase 6 Not Started
 - ✅ Phase 1: Foundation & Setup (Complete - Jan 25)
 - ✅ Phase 2: Data Migration (Complete - Jan 27)
 - ✅ Phase 3: Core Pages Development (Complete - Feb 3)
@@ -25,7 +25,13 @@ This is a portfolio modernization project migrating **portfolio.singchan.com** f
   - ✅ Task 4.3: Animations & Transitions (Complete - Feb 6)
   - ✅ Task 4.4: WCAG 2.2 Level AA Compliance (Complete - Feb 6)
   - ✅ Task 4.5: SEO Optimization (Complete - Feb 8)
-- ⬜ Phase 5: Performance & Optimization (Not Started)
+- ✅ Phase 5: Performance & Optimization (Complete - Mar 1)
+  - ✅ Task 5.1: Bundle Analysis & Optimization
+  - ✅ Task 5.2: Font Loading Optimization
+  - ✅ Task 5.3: Component Lazy Loading & Code Splitting
+  - ✅ Task 5.4: Client/Server Component Boundary Audit
+  - ✅ Task 5.5: Static Site Generation (SSG)
+  - ✅ Task 5.6: Performance Audits & Core Web Vitals
 - ⬜ Phase 6: Deployment & Migration (Not Started)
 - ⬜ Phase 7: Post-Launch (Not Started)
 
@@ -152,17 +158,21 @@ Filename format: `YYYY-MM-DDTHHMMSS_descriptive-name.md`
 
 ---
 
-## Current Status: Post-Phase 4, Pre-Phase 5
+## Current Status: Post-Phase 5, Pre-Phase 6
 
-### Phase 4 ✅ COMPLETE (2026-02-08)
+### Phase 5 ✅ COMPLETE (2026-03-01)
 
-All 5 tasks completed. Summary:
+All 6 tasks completed across 9 commits. Summary:
 
-- **Task 4.1: Theme Switching** — Light, Dark, High Contrast modes with WCAG AAA on high contrast
-- **Task 4.2: Internationalization** — i18next integration, English + French, DeepL auto-translation
-- **Task 4.3: Animations & Transitions** — Page transitions, scroll animations, `prefers-reduced-motion` support
-- **Task 4.4: WCAG 2.2 Level AA** — 8 test files, 120+ accessibility tests, 4 documentation guides, 0 violations
-- **Task 4.5: SEO Optimization** — Meta tags, JSON-LD schemas, sitemap, robots.txt, OG images, canonical URLs
+- **Task 5.1: Bundle Analysis** — Installed `@next/bundle-analyzer`, baseline: 1,119 KB raw / 344 KB gzipped
+- **Task 5.2: Font Loading** — Migrated from CSS `@import` to `next/font/google`, CLS = 0 with `font-display: optional`, centralized font constants
+- **Task 5.3: Lazy Loading** — 3 components lazy-loaded with `next/dynamic` (ProjectLightbox, HamburgerMenu, SettingsList)
+- **Task 5.4: Client/Server Audit** — Audited all 48 components, converted 6 to server components (40/48 → 34/48 client ratio)
+- **Task 5.5: SSG** — Home page statically generated, removed `cookies()` dependency, added `dynamic = 'error'` guard
+- **Task 5.6: Performance Audits** — Lighthouse desktop 97–100, mobile 90–92, SEO 100 across all pages
+
+See `docs/active/PHASE5_DETAILED_PLAN.md` for detailed plan.
+See `changelog/2026-03-01T210626_phase5-performance-optimization.md` for full changelog.
 
 ### Post-Phase 4 Refinements (Feb 12 – Mar 1)
 
@@ -183,16 +193,18 @@ Significant cleanup and hardening work after Phase 4 closure:
 - ✅ ESLint: 0 errors
 - ✅ WCAG 2.2 Level AA: Compliant
 - ✅ Accessibility Violations: 0
+- ✅ Lighthouse Desktop: 97–100
+- ✅ Lighthouse Mobile: 90–92
+- ✅ SEO: 100
 
-### Next Phase: Phase 5 — Performance & Optimization
+### Next Phase: Phase 6 — Deployment & Migration
 
-See `docs/active/MODERNIZATION_PLAN.md` Phase 5 for full task list. Key items:
-- Static Site Generation (SSG) with `generateStaticParams`
-- Bundle size optimization (`@next/bundle-analyzer`)
-- CDN configuration for images
-- Lazy loading below-the-fold components
-- Performance audits (Lighthouse, Core Web Vitals)
-- Compression and cache strategy
+See `docs/active/MODERNIZATION_PLAN.md` Phase 6 for full task list. Key items:
+- Choose hosting platform (Vercel recommended)
+- Set up hosting environment and connect GitHub
+- Configure domain (portfolio.singchan.com) and SSL
+- Set up CI/CD pipeline
+- CDN for images (deferred from Phase 5)
 
 ---
 
@@ -248,11 +260,18 @@ See `docs/active/MODERNIZATION_PLAN.md` Phase 5 for full task list. Key items:
 - ✅ Task 4.4: WCAG 2.2 Level AA Compliance (2026-02-06)
 - ✅ Task 4.5: SEO Optimization (2026-02-08)
 
-See Phase 4 detailed plan: `docs/active/PHASE4_DETAILED_PLAN.md`
+See Phase 4 detailed plan: `docs/archive/PHASE4_DETAILED_PLAN.md`
 
-### ⬜ Phase 5: Performance & Optimization (Not Started)
+### ✅ Phase 5: Performance & Optimization (Complete: 2026-03-01)
 
-See `docs/active/MODERNIZATION_PLAN.md` Phase 5 for task list.
+- ✅ Task 5.1: Bundle Analysis & Optimization — `@next/bundle-analyzer` installed, baseline documented
+- ✅ Task 5.2: Font Loading Optimization — `next/font/google`, centralized constants, CLS = 0
+- ✅ Task 5.3: Lazy Loading & Code Splitting — 3 components lazy-loaded with `next/dynamic`
+- ✅ Task 5.4: Client/Server Boundary Audit — 6 components converted, ratio 40/48 → 34/48
+- ✅ Task 5.5: Static Site Generation — Home page SSG with `dynamic = 'error'` guard
+- ✅ Task 5.6: Performance Audits — Desktop 97–100, Mobile 90–92, SEO 100
+
+See detailed plan: `docs/active/PHASE5_DETAILED_PLAN.md`
 
 ---
 
@@ -575,5 +594,5 @@ npm run test:coverage # Coverage report
 ---
 
 **Last Updated:** 2026-03-01
-**Current Focus:** Post-Phase 4 stabilization complete, ready for Phase 5
-**Next Milestone:** Phase 5 — Performance & Optimization
+**Current Focus:** Phase 5 complete, ready for Phase 6
+**Next Milestone:** Phase 6 — Deployment & Migration

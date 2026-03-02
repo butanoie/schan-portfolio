@@ -19,9 +19,9 @@ The goal is to show that a personal project, when treated with the same rigour a
 
 ## Status
 
-**Phase 4 Complete** — All enhanced features shipped. Ready for Phase 5.
+**Phase 5 Complete** — Performance optimized. Ready for Phase 6.
 
-**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ⬜ | Phase 6 ⬜ | Phase 7 ⬜
+**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ⬜ | Phase 7 ⬜
 
 ## Stack
 
@@ -29,7 +29,8 @@ The goal is to show that a personal project, when treated with the same rigour a
 - Next.js 16+ | TypeScript 5+ | Material UI v7
 - i18next (English + French) | Theme Switching (Light/Dark/High Contrast)
 - Vitest + React Testing Library (87%+ coverage, 1,123 tests)
-- WCAG 2.2 Level AA Compliant | SEO Optimized
+- WCAG 2.2 Level AA Compliant | SEO Optimized (Lighthouse SEO 100)
+- Performance Optimized (Lighthouse Desktop 97–100, Mobile 90–92)
 
 **v1 (Legacy)**
 - Gumby Framework | jQuery | PHP
@@ -66,7 +67,7 @@ npm run typecheck     # TypeScript check
 | 2. Data Migration | ✅ Complete | Testing setup, TypeScript interfaces, data layer, 18 projects |
 | 3. Core Pages | ✅ Complete | Homepage, Resume, Colophon, Shared Components, Lightbox |
 | 4. Enhanced Features | ✅ Complete | Theme switching, i18n, animations, WCAG 2.2 AA, SEO |
-| 5. Performance | ⬜ Planned | SSG, optimization, CDN, lazy loading |
+| 5. Performance | ✅ Complete | Font optimization, lazy loading, SSG, server components, Lighthouse 97–100 |
 | 6. Deployment | ⬜ Planned | Hosting, CI/CD, production launch |
 | 7. Post-Launch | ⬜ Planned | Monitoring, analytics, enhancements |
 
