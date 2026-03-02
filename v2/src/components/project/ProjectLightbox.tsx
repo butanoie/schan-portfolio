@@ -409,14 +409,19 @@ export function ProjectLightbox({
           padding: "24px",
         }}
       >
-        {/* Caption - Above Image, pushed down to hug the image */}
+        {/* Caption - Above Image, pushed down to hug the image.
+            Uses a dark semi-transparent background matching the item counter
+            so caption text remains readable over any image content. */}
         <Typography
           variant="body1"
           sx={{
             color: "#FFFFFF",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            borderRadius: 1,
             textAlign: "center",
             maxWidth: { xs: "90vw", md: "80vw" },
-            px: 1,
+            px: 2,
+            py: 0.5,
             flexShrink: 0,
             marginTop: "auto",
             marginBottom: "24px",
