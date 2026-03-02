@@ -188,15 +188,18 @@ export default function TechnologiesShowcase({
         {t("colophon.technologies.heading", { ns: "pages" })}
       </Typography>
 
-      <Typography
-        variant="body1"
-        sx={{
-          mb: 4,
-          lineHeight: 1.7
-        }}
-      >
-        {intro}
-      </Typography>
+      {intro.map((paragraph, index) => (
+        <Typography
+          key={index}
+          variant="body1"
+          sx={{
+            mb: index < intro.length - 1 ? 2 : 4,
+            lineHeight: 1.7
+          }}
+        >
+          {paragraph}
+        </Typography>
+      ))}
 
       {/* V2 Technologies by Category */}
       {categories.map((category) => (

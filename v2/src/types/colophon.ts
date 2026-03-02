@@ -59,8 +59,8 @@ export interface TechnologiesContent {
   /** Heading */
   heading: string;
 
-  /** Introduction paragraph */
-  intro: string;
+  /** Introduction paragraphs displayed above the technology categories */
+  intro: string[];
 
   /** V2 (current) technology categories */
   categories: TechnologyCategory[];

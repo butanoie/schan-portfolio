@@ -54,7 +54,11 @@ export function getLocalizedColophonData(
 
     technologies: {
       heading: t('colophon.technologies.heading', { ns: 'pages' }),
-      intro: t('colophon.technologies.intro', { ns: 'pages' }),
+      intro: [
+        t('colophon.technologies.intro.0', { ns: 'pages' }),
+        t('colophon.technologies.intro.1', { ns: 'pages' }),
+        t('colophon.technologies.intro.2', { ns: 'pages' }),
+      ],
 
       categories: [
         {

@@ -15,7 +15,11 @@
     },
     "technologies": {
       "heading": "Technologies",
-      "intro": "Ce site portfolio a été entièrement reconstruit afin d'illustrer la création d'une application web de production à l'aide de Claude Code. Voici ce qui alimente la version actuelle :",
+      "intro": [
+        "Cette modernisation du portefeuille est plus qu'une simple reconstruction de site web - c'est une vitrine de la façon dont j'aborde le développement de logiciels. En faisant migrer mon portfolio d'une pile datant de 2013 vers une application moderne basée sur React, je démontre le cycle de vie complet d'un projet d'entreprise du monde réel en utilisant les outils, les processus et la discipline que j'apporterais à n'importe quel engagement professionnel.",
+        "Claude Code, l'outil de ligne de commande d'Anthropic alimenté par l'IA, sert de partenaire de développement tout au long du projet - en aidant à la planification, aux décisions d'architecture, à la génération de code, aux tests et à la documentation. Plutôt que de traiter l'IA comme une boîte noire qui produit du code, je l'utilise de manière collaborative : je revois ses résultats, j'élabore des solutions et je conserve la pleine propriété des décisions techniques. Cela reflète la manière dont je pense que le développement assisté par l'IA fonctionne le mieux dans un cadre professionnel.",
+        "Voici ce qui alimente l'itération actuelle :"
+      ],
       "visitWebsiteAriaLabel": "Visitez le site web de {{name}} (s'ouvre dans un nouvel onglet)",
       "categories": [
         {
