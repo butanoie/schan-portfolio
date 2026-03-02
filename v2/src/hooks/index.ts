@@ -4,6 +4,7 @@
 
 export { useAnimations } from './useAnimations';
 export { useI18n } from './useI18n';
+export { useImagePreloader } from './useImagePreloader';
 export { useLocale } from './useLocale';
 export { useLightbox } from './useLightbox';
 export { useProjectLoader } from './useProjectLoader';

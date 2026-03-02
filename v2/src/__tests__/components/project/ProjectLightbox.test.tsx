@@ -1,7 +1,25 @@
-import { render, screen, fireEvent } from '../../test-utils';
+import { render, screen, fireEvent, waitFor } from '../../test-utils';
 import { ProjectLightbox } from '../../../components/project/ProjectLightbox';
 import type { ProjectImage } from '../../../types';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+/**
+ * Mock useImagePreloader hook to resolve instantly in tests.
+ * This prevents tests from needing to wait for real image loading.
+ * preloadImage resolves immediately with true (success).
+ * preloadAdjacent is a no-op.
+ */
+vi.mock('../../../hooks/useImagePreloader', () => ({
+  /**
+   * Mock useImagePreloader that returns instantly-resolving functions.
+   *
+   * @returns Mock hook result with preloadImage and preloadAdjacent
+   */
+  useImagePreloader: () => ({
+    preloadImage: vi.fn().mockResolvedValue(true),
+    preloadAdjacent: vi.fn(),
+  }),
+}));
 
 /**
  * Mock Next.js Image component.
@@ -191,8 +209,9 @@ describe('ProjectLightbox', () => {
 
   /**
    * Test: Previous button triggers onPrevious callback
+   * Navigation is async (preload-then-navigate), so we use waitFor.
    */
-  it('previous button triggers onPrevious callback', () => {
+  it('previous button triggers onPrevious callback', async () => {
     const onPrevious = vi.fn();
     render(
       <ProjectLightbox
@@ -203,13 +222,16 @@ describe('ProjectLightbox', () => {
     );
     const prevButton = screen.getByLabelText('Previous image');
     fireEvent.click(prevButton);
-    expect(onPrevious).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onPrevious).toHaveBeenCalledTimes(1);
+    });
   });
 
   /**
    * Test: Next button triggers onNext callback
+   * Navigation is async (preload-then-navigate), so we use waitFor.
    */
-  it('next button triggers onNext callback', () => {
+  it('next button triggers onNext callback', async () => {
     const onNext = vi.fn();
     render(
       <ProjectLightbox
@@ -220,13 +242,16 @@ describe('ProjectLightbox', () => {
     );
     const nextButton = screen.getByLabelText('Next image');
     fireEvent.click(nextButton);
-    expect(onNext).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onNext).toHaveBeenCalledTimes(1);
+    });
   });
 
   /**
    * Test: Arrow Right key navigates to next image
+   * Navigation is async (preload-then-navigate), so we use waitFor.
    */
-  it('arrow right key navigates to next image', () => {
+  it('arrow right key navigates to next image', async () => {
     const onNext = vi.fn();
     render(
       <ProjectLightbox
@@ -236,13 +261,16 @@ describe('ProjectLightbox', () => {
       />
     );
     fireEvent.keyDown(window, { key: 'ArrowRight' });
-    expect(onNext).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onNext).toHaveBeenCalledTimes(1);
+    });
   });
 
   /**
    * Test: Arrow Left key navigates to previous image
+   * Navigation is async (preload-then-navigate), so we use waitFor.
    */
-  it('arrow left key navigates to previous image', () => {
+  it('arrow left key navigates to previous image', async () => {
     const onPrevious = vi.fn();
     render(
       <ProjectLightbox
@@ -252,7 +280,9 @@ describe('ProjectLightbox', () => {
       />
     );
     fireEvent.keyDown(window, { key: 'ArrowLeft' });
-    expect(onPrevious).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onPrevious).toHaveBeenCalledTimes(1);
+    });
   });
 
   /**
@@ -312,8 +342,9 @@ describe('ProjectLightbox', () => {
 
   /**
    * Test: Touch swipe left navigates to next image
+   * Navigation is async (preload-then-navigate), so we use waitFor.
    */
-  it('touch swipe left navigates to next image', () => {
+  it('touch swipe left navigates to next image', async () => {
     const onNext = vi.fn();
     const { container } = render(
       <ProjectLightbox
@@ -336,13 +367,16 @@ describe('ProjectLightbox', () => {
       changedTouches: [{ clientX: 40 }],
     });
 
-    expect(onNext).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onNext).toHaveBeenCalledTimes(1);
+    });
   });
 
   /**
    * Test: Touch swipe right navigates to previous image
+   * Navigation is async (preload-then-navigate), so we use waitFor.
    */
-  it('touch swipe right navigates to previous image', () => {
+  it('touch swipe right navigates to previous image', async () => {
     const onPrevious = vi.fn();
     const { container } = render(
       <ProjectLightbox
@@ -365,7 +399,9 @@ describe('ProjectLightbox', () => {
       changedTouches: [{ clientX: 100 }],
     });
 
-    expect(onPrevious).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onPrevious).toHaveBeenCalledTimes(1);
+    });
   });
 
   /**
@@ -758,8 +794,9 @@ describe('ProjectLightbox', () => {
     /**
      * Test: Updated callbacks are called even without listener re-attachment
      * Verifies that the ref-based handler mechanism properly updates behavior.
+     * Navigation is async (preload-then-navigate), so we use waitFor.
      */
-    it('calls updated callbacks after props change without re-attaching listener', () => {
+    it('calls updated callbacks after props change without re-attaching listener', async () => {
       const initialOnNext = vi.fn();
       const updatedOnNext = vi.fn();
 
@@ -773,7 +810,9 @@ describe('ProjectLightbox', () => {
 
       // Trigger keyboard navigation with initial callback
       fireEvent.keyDown(window, { key: 'ArrowRight' });
-      expect(initialOnNext).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(initialOnNext).toHaveBeenCalledTimes(1);
+      });
       expect(updatedOnNext).not.toHaveBeenCalled();
 
       // Rerender with updated callback
@@ -789,8 +828,10 @@ describe('ProjectLightbox', () => {
       fireEvent.keyDown(window, { key: 'ArrowRight' });
 
       // Updated callback should be called (not initial)
+      await waitFor(() => {
+        expect(updatedOnNext).toHaveBeenCalledTimes(1); // New callback called
+      });
       expect(initialOnNext).toHaveBeenCalledTimes(1); // Still 1, not incremented
-      expect(updatedOnNext).toHaveBeenCalledTimes(1); // New callback called
     });
 
     /**
@@ -830,8 +871,9 @@ describe('ProjectLightbox', () => {
     /**
      * Test: Event listener is properly cleaned up between instances
      * Verifies that closing one lightbox doesn't affect another's listeners.
+     * Navigation is async (preload-then-navigate), so we use waitFor.
      */
-    it('properly manages listeners when switching between instances', () => {
+    it('properly manages listeners when switching between instances', async () => {
       const onNext1 = vi.fn();
       const onNext2 = vi.fn();
 
@@ -845,7 +887,9 @@ describe('ProjectLightbox', () => {
 
       // Trigger event on first instance
       fireEvent.keyDown(window, { key: 'ArrowRight' });
-      expect(onNext1).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onNext1).toHaveBeenCalledTimes(1);
+      });
 
       // Switch to second instance
       rerender(
@@ -858,8 +902,10 @@ describe('ProjectLightbox', () => {
 
       // Trigger event on second instance
       fireEvent.keyDown(window, { key: 'ArrowRight' });
+      await waitFor(() => {
+        expect(onNext2).toHaveBeenCalledTimes(1); // Second callback called
+      });
       expect(onNext1).toHaveBeenCalledTimes(1); // Should not increase
-      expect(onNext2).toHaveBeenCalledTimes(1); // Second callback called
 
       // Close second instance
       rerender(
@@ -872,6 +918,8 @@ describe('ProjectLightbox', () => {
 
       // Event listener should be removed, neither callback should be called
       fireEvent.keyDown(window, { key: 'ArrowRight' });
+      // Wait a tick to ensure no async navigation was triggered
+      await new Promise((r) => setTimeout(r, 50));
       expect(onNext1).toHaveBeenCalledTimes(1);
       expect(onNext2).toHaveBeenCalledTimes(1);
     });

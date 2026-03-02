@@ -16,7 +16,8 @@
     "closeButton": "Fermer la galerie",
     "previousButton": "Image précédente",
     "nextButton": "Image suivante",
-    "viewingImage": "Voir l'image {{current}} de {{total}} : {{caption}}"
+    "viewingImage": "Voir l'image {{current}} de {{total}} : {{caption}}",
+    "loadingImage": "Chargement de l'image"
   },
   "projectImage": {
     "unavailable": "Image non disponible"
