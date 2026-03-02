@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { getProjects, getTotalProjectCount } from '../lib/projectData';
 import { useLocale } from './useLocale';
 import { LOADING_DELAY } from '../constants/app';
+import { DEFAULT_LOCALE } from '../lib/i18n-constants';
 import type { Project } from '../types';
 
 /**
@@ -105,8 +106,8 @@ interface UseProjectLoaderReturn {
  *
  * **Hydration Safety:**
  * This hook is safe to use in server components that hydrate to client
- * components. The initial projects from the server are passed directly
- * without refetching.
+ * components. The initial projects from SSG are in DEFAULT_LOCALE; if the
+ * user's preferred locale differs, a re-fetch is triggered on mount.
  *
  * **Future Migration to Real API:**
  * To migrate to a real API, simply replace the `getProjects()` call with
@@ -146,9 +147,11 @@ export function useProjectLoader(
   // Track current page - start from page 1 (we'll move to 2 after initial load)
   const currentPageRef = useRef<number>(1);
 
-  // Track the locale for which we currently have projects
-  // Used to detect when locale changes so we can reload
-  const currentLocaleRef = useRef<string>(locale);
+  // Track the locale for which we currently have projects loaded.
+  // Initialized to DEFAULT_LOCALE because initialProjects are always fetched
+  // at build time in the default locale (SSG). This ensures that if the user's
+  // preferred locale differs, the effect detects the mismatch and re-fetches.
+  const currentLocaleRef = useRef<string>(DEFAULT_LOCALE);
 
   // Simulated loading delay (in milliseconds) for debugging skeleton visibility
   // Set to 0 for production performance, increase for testing skeleton animations
