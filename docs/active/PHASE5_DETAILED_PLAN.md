@@ -3,8 +3,8 @@
 **Document Version:** 1.0
 **Created:** 2026-03-01
 **Author:** Sing Chan (with Claude Code)
-**Status:** Not Started
-**Target Branch:** `sc/phase5`
+**Status:** ✅ Complete
+**Target Branch:** `sc/client-server-boundary`
 
 ---
 
@@ -133,7 +133,7 @@ v2/
 
 ## Task 5.1: Bundle Analysis & Optimization
 
-### Status: Not Started
+### Status: ✅ Complete
 
 ### Overview
 
@@ -212,7 +212,7 @@ From the baseline analysis, flag:
 
 ## Task 5.2: Font Loading Optimization
 
-### Status: Not Started
+### Status: ✅ Complete
 
 ### Overview
 
@@ -326,7 +326,7 @@ Search for any direct references to `"Gochi Hand"` in component styles (e.g., Bu
 
 ## Task 5.3: Component Lazy Loading & Code Splitting
 
-### Status: Not Started
+### Status: ✅ Complete
 
 ### Overview
 
@@ -430,7 +430,7 @@ Dynamic imports require special handling in tests:
 
 ## Task 5.4: Client/Server Component Boundary Audit
 
-### Status: Not Started
+### Status: ✅ Complete
 
 ### Overview
 
@@ -540,7 +540,7 @@ Changing `"use client"` boundaries can cause runtime errors if a server componen
 
 ## Task 5.5: Static Site Generation (SSG)
 
-### Status: Not Started
+### Status: ✅ Complete
 
 ### Overview
 
@@ -670,7 +670,7 @@ Vercel automatically configures optimal cache headers for static pages. Verify i
 
 ## Task 5.6: Performance Audits & Core Web Vitals
 
-### Status: Not Started
+### Status: ✅ Complete
 
 ### Overview
 
@@ -928,4 +928,4 @@ Task 5.6: Performance Audits       ─── Day 6-7 (final measurement and tuni
 ---
 
 **Last Updated:** 2026-03-01
-**Next Step:** Begin Task 5.1 (Bundle Analysis & Optimization)
+**Status:** ✅ All tasks complete. See `docs/active/PERFORMANCE_REPORT.md` for final results.

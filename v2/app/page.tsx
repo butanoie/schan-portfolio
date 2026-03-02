@@ -60,9 +60,9 @@ export const metadata: Metadata = {
  * **Rendering:**
  * - Statically generated at build time (SSG) with `dynamic = 'error'`
  * - Pre-renders initial 5 projects in the default locale (English)
- * - After hydration, `LocaleProvider` detects the user's preferred
- *   language from localStorage and `useProjectLoader` automatically
- *   re-fetches projects in the correct locale
+ * - After hydration, `LocaleProvider` detects the user's preferred language
+ * from localStorage and `useProjectLoader` automatically re-fetches
+ * projects in the correct locale
  * - Passes projects to AsyncProjectsList Client Component
  * - Client component manages additional loads on demand
  *
