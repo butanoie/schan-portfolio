@@ -30,7 +30,8 @@ import "./print.css";
  * Layout:
  * - Mobile: Single column, stacked sections
  * - Desktop: Two columns (8/4 split - 70/30 approximately)
- * - Left: Header + Professional Summary + Work Experience
+ * - Header spans full width above columns
+ * - Left: Professional Summary + Work Experience
  * - Right: Skills + Education + Clients + Speaking
  *
  * All content is localized to the user's preferred language (English or French).
