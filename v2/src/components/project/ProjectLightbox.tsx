@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import {
   Dialog,
   IconButton,
@@ -58,8 +57,7 @@ interface ProjectLightboxProps {
  * - Enhanced accessibility (ARIA announcements, screen reader support)
  * - Prevents body scroll when open
  * - Memory-efficient event listener management
- * - Image preloading: navigations are deferred until the target image
- *   is fully loaded, preventing blank flashes between slides
+ * - Image preloading: navigations are deferred until the target image is fully loaded, preventing blank flashes between slides
  * - Proactive adjacent-image preloading for instant future navigations
  * - Loading spinner overlay displayed on current image during preload
  * - Graceful timeout (5s) so navigation is never blocked indefinitely
@@ -477,15 +475,20 @@ export function ProjectLightbox({
           {currentImage.caption}
         </Typography>
 
-        {/* Image Wrapper */}
+        {/* Image Wrapper — uses native <img> instead of Next.js <Image> so that
+            the browser HTTP cache populated by useImagePreloader (which uses
+            new Image().src = url) is shared with the displayed element. Next.js
+            <Image> rewrites URLs through /_next/image, creating a cache mismatch. */}
         <Box sx={imageWrapperSx}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={currentImage.url}
             alt={currentImage.caption}
-            fill
-            sizes="80vw"
-            priority={true}
             style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
               objectFit: "contain",
             }}
           />

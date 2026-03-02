@@ -21,55 +21,8 @@ vi.mock('../../../hooks/useImagePreloader', () => ({
   }),
 }));
 
-/**
- * Mock Next.js Image component.
- * Prevents errors during testing and allows for focused component testing.
- * Renders a standard HTML img element with test attributes.
- */
-vi.mock('next/image', () => ({
-  /**
-   * Mock Image component that renders an img element for testing.
-   * Accepts all Image props and passes them to the img element.
-   *
-   * @param props - Image component props
-   * @param props.src - Image source URL
-   * @param props.alt - Image alt text
-   * @param props.fill - Whether image fills its container
-   * @param props.priority - Whether image is high priority
-   * @param props.onLoad - Callback when image loads
-   * @param props.onError - Callback when image fails to load
-   * @returns Mock img element with test attributes
-   */
-  default: ({
-    src,
-    alt,
-    fill,
-    priority,
-    onLoad,
-    onError,
-    ...rest
-  }: {
-    src: string;
-    alt: string;
-    fill?: boolean;
-    priority?: boolean;
-    onLoad?: () => void;
-    onError?: () => void;
-    [key: string]: unknown;
-  }) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={alt}
-      data-testid="mock-image"
-      data-fill={fill}
-      data-priority={priority}
-      {...rest}
-      onLoad={onLoad}
-      onError={onError}
-    />
-  ),
-}));
+/* No next/image mock needed — ProjectLightbox uses native <img> for cache
+   compatibility with useImagePreloader. */
 
 /**
  * Test suite for ProjectLightbox component.
@@ -132,7 +85,7 @@ describe('ProjectLightbox', () => {
       <ProjectLightbox {...defaultProps} selectedIndex={0} />
     );
     // Use getByTestId for more reliable element lookup
-    const image = screen.getByTestId('mock-image');
+    const image = screen.getByRole('img');
     expect(image).toBeInTheDocument();
     expect(image.getAttribute('src')).toBe('/images/gallery/project1/image1.jpg');
   });
@@ -512,7 +465,7 @@ describe('ProjectLightbox', () => {
     render(
       <ProjectLightbox {...defaultProps} selectedIndex={0} />
     );
-    const image = screen.getByTestId('mock-image');
+    const image = screen.getByRole('img');
     expect(image.getAttribute('alt')).toBe('First image caption');
   });
 
@@ -524,26 +477,29 @@ describe('ProjectLightbox', () => {
       <ProjectLightbox {...defaultProps} selectedIndex={0} />
     );
 
-    let image = screen.getByTestId('mock-image');
+    let image = screen.getByRole('img');
     expect(image.getAttribute('src')).toBe('/images/gallery/project1/image1.jpg');
 
     rerender(
       <ProjectLightbox {...defaultProps} selectedIndex={1} />
     );
 
-    image = screen.getByTestId('mock-image');
+    image = screen.getByRole('img');
     expect(image.getAttribute('src')).toBe('/images/gallery/project1/image2.jpg');
   });
 
   /**
-   * Test: Image priority loading is set to true
+   * Test: Image renders as native img element with correct src
+   * Uses native <img> instead of Next.js <Image> for cache compatibility
+   * with useImagePreloader.
    */
-  it('image priority loading is set to true', () => {
+  it('renders native img element with correct src', () => {
     render(
       <ProjectLightbox {...defaultProps} selectedIndex={0} />
     );
-    const image = screen.getByTestId('mock-image');
-    expect(image.getAttribute('data-priority')).toBe('true');
+    const image = screen.getByRole('img');
+    expect(image.tagName).toBe('IMG');
+    expect(image.getAttribute('src')).toBe('/images/gallery/project1/image1.jpg');
   });
 
   /**
@@ -969,7 +925,7 @@ describe('ProjectLightbox', () => {
       );
 
       // Verify lightbox is rendered
-      expect(screen.getByTestId('mock-image')).toBeInTheDocument();
+      expect(screen.getByRole('img')).toBeInTheDocument();
 
       // Rerender with empty images array (edge case)
       rerender(
@@ -1002,7 +958,7 @@ describe('ProjectLightbox', () => {
           selectedIndex={0}
         />
       );
-      const image = screen.getByTestId('mock-image');
+      const image = screen.getByRole('img');
       expect(image.getAttribute('src')).toBe(mockImages[0].url);
     });
 
@@ -1018,7 +974,7 @@ describe('ProjectLightbox', () => {
           selectedIndex={lastIndex}
         />
       );
-      const image = screen.getByTestId('mock-image');
+      const image = screen.getByRole('img');
       expect(image.getAttribute('src')).toBe(mockImages[lastIndex].url);
     });
 
