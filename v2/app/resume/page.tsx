@@ -12,6 +12,7 @@ import {
 } from "../../src/components/resume";
 import { getLocalizedResumeData } from "../../src/data/resume";
 import { useI18n } from "../../src/hooks/useI18n";
+import { usePalette } from "../../src/hooks/usePalette";
 import "./print.css";
 
 /**
@@ -34,10 +35,16 @@ import "./print.css";
  *
  * All content is localized to the user's preferred language (English or French).
  *
+ * Acts as the client boundary for the resume page: calls `usePalette()` and `useI18n()`
+ * here and prop-drills theme colors and translated headings to child components
+ * (CoreCompetencies, ResumeHeader, Education, ClientList, ConferenceSpeaker),
+ * allowing them to be free of client-only hooks.
+ *
  * @returns The complete resume page with print-friendly styling
  */
 export default function ResumePage() {
   const { t } = useI18n();
+  const { palette } = usePalette({ hydrationSafe: true });
   const data = getLocalizedResumeData(t);
 
   return (
@@ -52,7 +59,11 @@ export default function ResumePage() {
       }}
     >
       {/* Header - Full Width */}
-      <ResumeHeader content={data.header} />
+      <ResumeHeader
+        content={data.header}
+        textPrimaryColor={palette.text.primary}
+        textSecondaryColor={palette.text.secondary}
+      />
 
       <Divider sx={{ my: { xs: 3, md: 4 } }} />
 
@@ -73,19 +84,34 @@ export default function ResumePage() {
             minWidth: "320px",
           }}
         >
-          <CoreCompetencies categories={data.skillCategories} />
+          <CoreCompetencies
+            categories={data.skillCategories}
+            cardTextColor={palette.card.text}
+          />
 
           <Divider sx={{ my: 3 }} />
 
-          <Education education={data.education} />
+          <Education
+            education={data.education}
+            cardTextColor={palette.card.text}
+            sectionHeading={t('resume.education.heading', { ns: 'pages' })}
+          />
 
           <Divider sx={{ my: 3 }} />
 
-          <ClientList clients={data.clients} />
+          <ClientList
+            clients={data.clients}
+            cardTextColor={palette.card.text}
+            sectionHeading={t('resume.clients.heading', { ns: 'pages' })}
+          />
 
           <Divider sx={{ my: 3 }} />
 
-          <ConferenceSpeaker content={data.speaking} />
+          <ConferenceSpeaker
+            content={data.speaking}
+            cardTextColor={palette.card.text}
+            sectionHeading={t('resume.conferenceSpeaker.heading', { ns: 'pages' })}
+          />
         </Box>
 
         {/* Left Column: Professional Summary + Work Experience (70% on desktop) */}

@@ -1,9 +1,6 @@
-"use client";
-
 import { Box, Typography, Chip } from "@mui/material";
 import type { SkillCategory } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
-import { usePalette } from "../../hooks/usePalette";
 
 /**
  * Props for the CoreCompetencies component.
@@ -11,6 +8,9 @@ import { usePalette } from "../../hooks/usePalette";
 export interface CoreCompetenciesProps {
   /** Array of skill categories to display */
   categories: SkillCategory[];
+
+  /** Theme-aware text color for card content, sourced from parent's palette.card.text */
+  cardTextColor: string;
 }
 
 /**
@@ -25,15 +25,16 @@ export interface CoreCompetenciesProps {
  *
  * @param props - Component props containing skill categories
  * @param props.categories - Array of skill categories with labels and skill lists
+ * @param props.cardTextColor - Theme-aware text color from parent's palette
  * @returns A section displaying categorized skills
  *
  * @example
- * <CoreCompetencies categories={resumeData.skillCategories} />
+ * <CoreCompetencies categories={resumeData.skillCategories} cardTextColor={palette.card.text} />
  */
 export default function CoreCompetencies({
   categories,
+  cardTextColor,
 }: CoreCompetenciesProps) {
-  const { palette } = usePalette({ hydrationSafe: true });
 
   return (
     <Box component="section" aria-labelledby="skills-heading">
@@ -57,7 +58,7 @@ export default function CoreCompetencies({
             }
             sx={{
               fontWeight: 600,
-              color: palette.card.text,
+              color: cardTextColor,
               fontSize: { xs: "1.1rem", md: "1.25rem" },
               mb: 1.5,
             }}

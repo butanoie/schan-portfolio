@@ -1,5 +1,3 @@
-'use client';
-
 import { Box, Chip, SxProps, Theme } from '@mui/material';
 import { BRAND_COLORS } from '../../constants';
 
