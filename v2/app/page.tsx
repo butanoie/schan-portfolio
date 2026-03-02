@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { fetchProjects } from "../src/lib/projectDataServer";
 import { AsyncProjectsList } from "../src/components/project/AsyncProjectsList";
 import { LocalizedPortfolioDeck } from "../src/components/i18n/LocalizedPortfolioDeck";
 import { Container } from "@mui/material";
-import { getLocaleFromCookie } from "../src/lib/i18nServer";
+import { DEFAULT_LOCALE } from "@/src/lib/i18n-constants";
 import { PAGE_METADATA, SITE_URL, OG_IMAGE } from "@/src/constants/seo";
+
+/**
+ * Forces static generation for the home page.
+ * Fails the build if any dynamic API (cookies, headers, searchParams)
+ * is accidentally introduced, preventing silent SSG regression.
+ */
+export const dynamic = "error";
 
 /**
  * Metadata for the home page.
@@ -52,8 +58,11 @@ export const metadata: Metadata = {
  * 5. Responsive layouts from mobile to desktop
  *
  * **Rendering:**
- * - Server Component (async)
- * - Fetches initial 5 projects server-side (fast initial load)
+ * - Statically generated at build time (SSG) with `dynamic = 'error'`
+ * - Pre-renders initial 5 projects in the default locale (English)
+ * - After hydration, `LocaleProvider` detects the user's preferred
+ *   language from localStorage and `useProjectLoader` automatically
+ *   re-fetches projects in the correct locale
  * - Passes projects to AsyncProjectsList Client Component
  * - Client component manages additional loads on demand
  *
@@ -85,16 +94,19 @@ export const metadata: Metadata = {
  */
 export default async function PortfolioPage() {
   /**
-   * Fetch initial batch of projects server-side.
+   * Fetch initial batch of projects at build time in the default locale.
    * Fetching only 5 projects ensures fast initial page load.
    * User can load more projects on demand via AsyncProjectsList component.
    *
-   * Get locale from user's cookie preference to serve localized content.
-   * Defaults to English if no preference is set.
+   * The page is statically generated in DEFAULT_LOCALE (English).
+   * After hydration, LocaleProvider detects the user's preferred language
+   * from localStorage and useProjectLoader re-fetches in that locale.
    */
-  const cookieStore = await cookies();
-  const locale = getLocaleFromCookie(cookieStore.toString());
-  const { items } = await fetchProjects({ page: 1, pageSize: 5, locale });
+  const { items } = await fetchProjects({
+    page: 1,
+    pageSize: 5,
+    locale: DEFAULT_LOCALE,
+  });
 
   return (
     <Container component="main" role="article" maxWidth="lg">
