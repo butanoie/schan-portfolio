@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Typography, Button, Stack } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -9,8 +7,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LinkIcon from "@mui/icons-material/Link";
 import type { ResumeHeaderContent } from "../../types/resume";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 import { rot13 } from "../../utils/obfuscation";
-import { usePalette } from "../../hooks/usePalette";
 
 /**
  * Props for the ResumeHeader component.
@@ -18,6 +16,12 @@ import { usePalette } from "../../hooks/usePalette";
 export interface ResumeHeaderProps {
   /** Resume header content including name, tagline, and contact links */
   content: ResumeHeaderContent;
+
+  /** Theme-aware primary text color, sourced from parent's textPrimaryColor */
+  textPrimaryColor: string;
+
+  /** Theme-aware secondary text color, sourced from parent's textSecondaryColor */
+  textSecondaryColor: string;
 }
 
 /**
@@ -44,14 +48,19 @@ const iconMap = {
  *
  * @param props - Component props containing resume header content
  * @param props.content - Header content data (name, tagline, contact links)
+ * @param props.textPrimaryColor - Theme-aware primary text color from parent's palette
+ * @param props.textSecondaryColor - Theme-aware secondary text color from parent's palette
  * @returns A section displaying the resume header
  *
  * @example
- * <ResumeHeader content={resumeData.header} />
+ * <ResumeHeader content={resumeData.header} textPrimaryColor={palette.text.primary} textSecondaryColor={palette.text.secondary} />
  */
-export default function ResumeHeader({ content }: ResumeHeaderProps) {
+export default function ResumeHeader({
+  content,
+  textPrimaryColor,
+  textSecondaryColor,
+}: ResumeHeaderProps) {
   const { name, tagline, contactLinks } = content;
-  const { palette } = usePalette({ hydrationSafe: true });
 
   return (
     <Box
@@ -80,9 +89,9 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
           id="resume-name"
           variant="h1"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 700,
-            color: palette.text.primary,
+            color: textPrimaryColor,
             fontSize: { xs: "2rem", md: "2.5rem" },
             mb: 2,
           }}
@@ -98,7 +107,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
               sx={{
                 fontSize: { xs: "1rem", md: "1.1rem" },
                 fontWeight: 600,
-                color: palette.text.primary,
+                color: textPrimaryColor,
               }}
             >
               {tagline.split('–')[0].trim()}
@@ -108,7 +117,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
               sx={{
                 fontSize: { xs: "0.95rem", md: "1rem" },
                 lineHeight: 1.6,
-                color: palette.text.secondary,
+                color: textSecondaryColor,
                 mt: 0.5,
               }}
             >
@@ -121,7 +130,7 @@ export default function ResumeHeader({ content }: ResumeHeaderProps) {
             sx={{
               fontSize: { xs: "1rem", md: "1.1rem" },
               lineHeight: 1.6,
-              color: palette.text.primary,
+              color: textPrimaryColor,
             }}
           >
             {tagline}

@@ -2,23 +2,18 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ResumeHeader from "../../../components/resume/ResumeHeader";
 import type { ResumeHeaderContent } from "../../../types/resume";
-import { ThemeContextProvider } from "../../../contexts/ThemeContext";
 
 /**
  * Tests for the ResumeHeader component.
  * Verifies the resume header with name, tagline, and contact buttons.
+ *
+ * No ThemeContextProvider wrapper needed — palette colors are now passed as props.
  */
 
-/**
- * Wrapper component that provides ThemeContext to tested components.
- *
- * @param props - Component props
- * @param props.children - Child components to render within the theme context
- * @returns The children wrapped with ThemeContextProvider
- */
-function Wrapper({ children }: { children: React.ReactNode }) {
-  return <ThemeContextProvider>{children}</ThemeContextProvider>;
-}
+/** Test color values for prop-drilled palette colors */
+const TEST_TEXT_PRIMARY = "#1a1a1a";
+const TEST_TEXT_SECONDARY = "#666666";
+
 describe("ResumeHeader", () => {
   const mockContent: ResumeHeaderContent = {
     name: "Test User",
@@ -48,7 +43,7 @@ describe("ResumeHeader", () => {
   };
 
   it("should render name as h1", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     expect(
       screen.getByRole("heading", { name: /test user/i, level: 1 })
@@ -56,7 +51,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should render tagline", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     expect(
       screen.getByText("I develop useful and engaging applications.")
@@ -64,7 +59,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should render all contact links as buttons", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const portfolioLink = screen.getByRole("link", {
       name: /portfolio\.example\.com/i,
@@ -84,7 +79,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should have correct href attributes for links", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const portfolioLink = screen.getByRole("link", {
       name: /portfolio\.example\.com/i,
@@ -110,7 +105,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should have target blank for download link", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const downloadLink = screen.getByRole("link", {
       name: /download résumé/i,
@@ -121,7 +116,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should apply print-only class to portfolio link", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const portfolioLink = screen.getByRole("link", {
       name: /portfolio\.example\.com/i,
@@ -131,7 +126,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should apply no-print class to download link", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const downloadLink = screen.getByRole("link", {
       name: /download résumé/i,
@@ -141,7 +136,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should not apply print-only or no-print classes to social links", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const linkedInLink = screen.getByRole("link", {
       name: /linkedin\.com\/in\/test/i,
@@ -155,7 +150,7 @@ describe("ResumeHeader", () => {
   });
 
   it("should have proper accessibility attributes", () => {
-    render(<ResumeHeader content={mockContent} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={mockContent} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     const section = screen.getByRole("region", { name: /test user/i });
     expect(section).toBeInTheDocument();
@@ -167,7 +162,7 @@ describe("ResumeHeader", () => {
       contactLinks: [],
     };
 
-    render(<ResumeHeader content={contentWithNoLinks} />, { wrapper: Wrapper });
+    render(<ResumeHeader content={contentWithNoLinks} textPrimaryColor={TEST_TEXT_PRIMARY} textSecondaryColor={TEST_TEXT_SECONDARY} />);
 
     // Should still render name and tagline
     expect(

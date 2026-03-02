@@ -1,14 +1,62 @@
 "use client";
 
 import { AppBar, Toolbar, Typography, Box, IconButton, Container, useMediaQuery } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { BRAND_COLORS } from "../../constants";
-import { SettingsButton } from "../settings/SettingsButton";
-import HamburgerMenu from "./HamburgerMenu";
-import { NavButtons } from "./NavButtons";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 import { usePalette } from "@/src/hooks/usePalette";
 import { useI18n } from "@/src/hooks/useI18n";
+import dynamic from "next/dynamic";
+import { SettingsButton } from "../settings/SettingsButton";
+import { NavButtons } from "./NavButtons";
+
+/**
+ * Lazily-loaded mobile hamburger menu component.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the hamburger menu is only
+ * rendered on mobile viewports and is interaction-triggered. This defers
+ * the MUI Drawer, icons, and the entire SettingsList sub-tree from the
+ * initial bundle.
+ *
+ * The loading placeholder renders a disabled MenuIcon so that the hamburger
+ * button area is visible immediately on mobile, preventing a flash of missing
+ * content while the chunk downloads.
+ *
+ * @returns The dynamically-loaded HamburgerMenu component
+ */
+const HamburgerMenu = dynamic(
+  /**
+   * Loads the HamburgerMenu module.
+   *
+   * @returns The HamburgerMenu module
+   */
+  () => import("./HamburgerMenu"),
+  {
+    ssr: false,
+    /**
+     * Renders a disabled menu icon placeholder while the chunk loads.
+     * Matches the same sizing (44×44 min tap target) as the real hamburger button.
+     *
+     * @returns A placeholder IconButton with a MenuIcon
+     */
+    loading: () => (
+      <IconButton
+        size="medium"
+        disabled
+        aria-hidden
+        sx={{
+          color: BRAND_COLORS.maroon,
+          minWidth: 44,
+          minHeight: 44,
+        }}
+      >
+        <MenuIcon fontSize="medium" />
+      </IconButton>
+    ),
+  }
+);
 
 /**
  * Header component with site branding, social links, and main navigation.
@@ -61,7 +109,7 @@ export default function Header() {
             <Typography
               component="div"
               sx={{
-                fontFamily: "Oswald",
+                fontFamily: FONT_FAMILY_HEADING,
                 fontSize: "1.25rem",
                 fontWeight: 600,
                 lineHeight: 1.5,

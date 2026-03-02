@@ -2,28 +2,21 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ConferenceSpeaker from "../../../components/resume/ConferenceSpeaker";
 import type { SpeakingContent } from "../../../types/resume";
-import { ThemeContextProvider } from "../../../contexts/ThemeContext";
-import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
 
 /**
  * Tests for the ConferenceSpeaker component.
  * Verifies the conference speaking history display.
+ *
+ * No ThemeContextProvider or LocaleProvider wrapper needed — palette color
+ * and translated heading are now passed as props.
  */
 
-/**
- * Wrapper component that provides ThemeContext and LocaleProvider to tested components.
- *
- * @param props - Component props
- * @param props.children - Child components to render within the contexts
- * @returns The children wrapped with LocaleProvider and ThemeContextProvider
- */
-function Wrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <LocaleProvider initialLocale="en">
-      <ThemeContextProvider>{children}</ThemeContextProvider>
-    </LocaleProvider>
-  );
-}
+/** Test color value for cardTextColor prop */
+const TEST_CARD_TEXT_COLOR = "#333333";
+
+/** Test section heading (matches the English translation) */
+const TEST_HEADING = "Conference Speaker";
+
 describe("ConferenceSpeaker", () => {
   const mockContent: SpeakingContent = {
     intro: "I have presented sessions at the following conferences:",
@@ -49,7 +42,7 @@ describe("ConferenceSpeaker", () => {
   };
 
   it("should render the Conference Speaker heading", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     expect(
       screen.getByRole("heading", { name: /conference speaker/i, level: 3 })
@@ -57,7 +50,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render the intro text when provided", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     expect(
       screen.getByText("I have presented sessions at the following conferences:")
@@ -74,7 +67,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={noIntroContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={noIntroContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     expect(
       screen.queryByText("I have presented sessions at the following conferences:")
@@ -82,7 +75,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render all conference names", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     expect(screen.getByText(/react conf 2023/i)).toBeInTheDocument();
     expect(screen.getByText(/javascript summit 2022/i)).toBeInTheDocument();
@@ -90,7 +83,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render topics when present", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     // Topics are rendered in separate elements
     expect(screen.getByText("React Conf 2023")).toBeInTheDocument();
@@ -100,7 +93,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should not show topic separator when topic is absent", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     // JavaScript Summit 2022 has no topic, so topic element should not be rendered
     const heading = screen.getByText("JavaScript Summit 2022");
@@ -114,7 +107,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render locations when present", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     // Locations are rendered together with year in the same element
     expect(screen.getByText(/2023.*San Francisco, CA/)).toBeInTheDocument();
@@ -133,7 +126,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={noLocationContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={noLocationContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     expect(screen.getByText("Tech Conference 2020")).toBeInTheDocument();
     expect(screen.getByText("2020")).toBeInTheDocument();
@@ -142,7 +135,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should have proper accessibility attributes", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     const section = screen.getByRole("region", { name: /conference speaker/i });
     expect(section).toBeInTheDocument();
@@ -159,7 +152,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={singleEvent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={singleEvent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     expect(screen.getByText("I spoke at one conference:")).toBeInTheDocument();
     expect(screen.getByText("Tech Talk 2020")).toBeInTheDocument();
@@ -172,7 +165,7 @@ describe("ConferenceSpeaker", () => {
       events: [],
     };
 
-    render(<ConferenceSpeaker content={noEvents} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={noEvents} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     // Should still render the heading and intro
     expect(
@@ -184,7 +177,7 @@ describe("ConferenceSpeaker", () => {
   });
 
   it("should render events as list items", () => {
-    render(<ConferenceSpeaker content={mockContent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={mockContent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     // Component renders events as divs with left borders, not ul > li
     expect(screen.getByText("React Conf 2023")).toBeInTheDocument();
@@ -205,7 +198,7 @@ describe("ConferenceSpeaker", () => {
       ],
     };
 
-    render(<ConferenceSpeaker content={fullEvent} />, { wrapper: Wrapper });
+    render(<ConferenceSpeaker content={fullEvent} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
 
     // Component renders each property in separate elements
     expect(screen.getByText("Complete Conference 2024")).toBeInTheDocument();

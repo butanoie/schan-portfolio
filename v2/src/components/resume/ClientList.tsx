@@ -1,9 +1,5 @@
-"use client";
-
 import { Box, Typography, Chip } from "@mui/material";
 import { BRAND_COLORS } from "../../constants";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the ClientList component.
@@ -11,6 +7,12 @@ import { useI18n } from "../../hooks/useI18n";
 export interface ClientListProps {
   /** Array of client names to display */
   clients: string[];
+
+  /** Theme-aware text color for card content, sourced from parent's cardTextColor */
+  cardTextColor: string;
+
+  /** Pre-translated section heading text (e.g., "Enterprise Clients") */
+  sectionHeading: string;
 }
 
 /**
@@ -25,14 +27,18 @@ export interface ClientListProps {
  *
  * @param props - Component props containing clients array
  * @param props.clients - Array of client company names
+ * @param props.cardTextColor - Theme-aware text color from parent's palette
+ * @param props.sectionHeading - Pre-translated heading text
  * @returns A section displaying the client list
  *
  * @example
- * <ClientList clients={resumeData.clients} />
+ * <ClientList clients={resumeData.clients} cardTextColor={palette.card.text} sectionHeading={t('resume.clients.heading', { ns: 'pages' })} />
  */
-export default function ClientList({ clients }: ClientListProps) {
-  const { palette } = usePalette({ hydrationSafe: true });
-  const { t } = useI18n();
+export default function ClientList({
+  clients,
+  cardTextColor,
+  sectionHeading,
+}: ClientListProps) {
 
   return (
     <Box component="section" aria-labelledby="clients-heading">
@@ -50,12 +56,12 @@ export default function ClientList({ clients }: ClientListProps) {
           component="h3"
           sx={{
             fontWeight: 600,
-            color: palette.card.text,
+            color: cardTextColor,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
         >
-          {t('resume.clients.heading', { ns: 'pages' })}
+          {sectionHeading}
         </Typography>
 
         {/* Client Chips */}

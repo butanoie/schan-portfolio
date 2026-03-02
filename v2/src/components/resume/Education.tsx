@@ -1,10 +1,6 @@
-"use client";
-
 import { Box, Typography } from "@mui/material";
 import type { EducationEntry } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the Education component.
@@ -12,6 +8,12 @@ import { useI18n } from "../../hooks/useI18n";
 export interface EducationProps {
   /** Array of education entries to display */
   education: EducationEntry[];
+
+  /** Theme-aware text color for card content, sourced from parent's cardTextColor */
+  cardTextColor: string;
+
+  /** Pre-translated section heading text (e.g., "Education & Certifications") */
+  sectionHeading: string;
 }
 
 /**
@@ -25,14 +27,18 @@ export interface EducationProps {
  *
  * @param props - Component props containing education array
  * @param props.education - Array of education entries (degrees, certifications)
+ * @param props.cardTextColor - Theme-aware text color from parent's palette
+ * @param props.sectionHeading - Pre-translated heading text
  * @returns A section displaying the education entries
  *
  * @example
- * <Education education={resumeData.education} />
+ * <Education education={resumeData.education} cardTextColor={palette.card.text} sectionHeading={t('resume.education.heading', { ns: 'pages' })} />
  */
-export default function Education({ education }: EducationProps) {
-  const { palette } = usePalette({ hydrationSafe: true });
-  const { t } = useI18n();
+export default function Education({
+  education,
+  cardTextColor,
+  sectionHeading,
+}: EducationProps) {
 
   return (
     <Box component="section" aria-labelledby="education-heading">
@@ -50,12 +56,12 @@ export default function Education({ education }: EducationProps) {
           component="h3"
           sx={{
             fontWeight: 600,
-            color: palette.card.text,
+            color: cardTextColor,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
         >
-          {t('resume.education.heading', { ns: 'pages' })}
+          {sectionHeading}
         </Typography>
 
         {/* Education Entries */}
@@ -78,7 +84,7 @@ export default function Education({ education }: EducationProps) {
                 variant="body2"
                 sx={{
                   fontWeight: 600,
-                  color: palette.card.text,
+                  color: cardTextColor,
                   fontSize: "0.9rem",
                 }}
               >
@@ -87,7 +93,7 @@ export default function Education({ education }: EducationProps) {
               <Typography
                 variant="body2"
                 sx={{
-                  color: palette.card.text,
+                  color: cardTextColor,
                   fontSize: "0.85rem",
                   mt: 0.25,
                 }}
@@ -97,7 +103,7 @@ export default function Education({ education }: EducationProps) {
               <Typography
                 variant="body2"
                 sx={{
-                  color: palette.card.text,
+                  color: cardTextColor,
                   fontSize: "0.8rem",
                   mt: 0.25,
                 }}

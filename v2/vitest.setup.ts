@@ -1,9 +1,87 @@
 import '@testing-library/jest-dom';
 import 'vitest-axe/extend-expect';
+import React from 'react';
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeAll, expect, vi } from 'vitest';
 import { configureAxe } from 'vitest-axe';
 import * as matchers from 'vitest-axe/matchers';
+
+/**
+ * Mock `next/font/google` for the Vitest/JSDOM test environment.
+ *
+ * `next/font/google` functions (Open_Sans, Oswald, etc.) are build-time
+ * primitives that download fonts during `next build`. They don't exist at
+ * runtime in Vitest. This mock returns objects matching the NextFont shape
+ * so that `fonts.ts` (and any component importing font constants) resolves.
+ */
+vi.mock('next/font/google', () => {
+  /**
+   * Creates a mock NextFont object matching the shape returned by next/font.
+   *
+   * @param opts - Font configuration options passed by the caller
+   * @param opts.variable - CSS custom property name for the font (e.g., "--font-open-sans")
+   * @returns A mock font object with className, style, and variable properties
+   */
+  const mockFont = (opts?: { variable?: string }) => ({
+    className: 'mock-font',
+    style: { fontFamily: 'mock-font-family' },
+    variable: opts?.variable ?? '--mock-font',
+  });
+
+  return {
+    Open_Sans: mockFont,
+    Oswald: mockFont,
+    Gochi_Hand: mockFont,
+  };
+});
+
+/**
+ * Mock `next/dynamic` for the Vitest/JSDOM test environment.
+ *
+ * `next/dynamic` relies on Next.js webpack internals that don't exist in Vitest.
+ * This mock replicates the core behavior using `React.lazy` + `Suspense`:
+ * - Calls the dynamic import loader function
+ * - Wraps the resolved component in a Suspense boundary
+ * - Uses the `loading` option as the fallback (defaults to null)
+ *
+ * Tests that interact with dynamically-loaded content should use `waitFor`
+ * to wait for the lazy component to resolve.
+ */
+vi.mock('next/dynamic', () => ({
+  __esModule: true,
+  /**
+   * Mock implementation of next/dynamic.
+   *
+   * @param loader - Async function that returns a module with a default export
+   * @param opts - Optional configuration (e.g., loading fallback)
+   * @param opts.loading - Optional function returning a fallback React node while loading
+   * @returns A React component that lazily loads and renders the imported module
+   */
+  default: (
+    loader: () => Promise<{ default: React.ComponentType<unknown> }>,
+    opts?: { loading?: () => React.ReactNode }
+  ) => {
+    const LazyComponent = React.lazy(loader);
+    const fallback = opts?.loading?.() ?? null;
+
+    /**
+     * Test replacement for next/dynamic.
+     * Renders the lazily-loaded component inside a Suspense boundary.
+     *
+     * @param props - Props to forward to the lazily-loaded component
+     * @returns A Suspense-wrapped lazy component
+     */
+    function DynamicMock(props: Record<string, unknown>) {
+      return React.createElement(
+        React.Suspense,
+        { fallback },
+        React.createElement(LazyComponent, props)
+      );
+    }
+    DynamicMock.displayName = 'DynamicMock';
+    return DynamicMock;
+  },
+}));
 
 /**
  * Vitest setup file that runs before each test file.

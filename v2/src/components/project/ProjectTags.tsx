@@ -1,5 +1,3 @@
-'use client';
-
 import { Box, Chip, SxProps, Theme } from '@mui/material';
 import { BRAND_COLORS } from '../../constants';
 
@@ -44,7 +42,7 @@ interface ProjectTagsContainerProps {
  * - Semantic rendering with proper chip styling
  *
  * **Styling:**
- * - Container: flex, wrap, gap 0.75, duck egg background, 2px radius, 2.5 padding
+ * - Container: flex, wrap, gap 0.75, duck egg background, borderRadius 2 (8px), p 1.5 padding
  * - Circa chip: maroon background, white text, 600 weight, 0.75rem size, 26px height
  * - Tag chips: sage background, white text, 600 weight, 0.75rem size, 26px height
  *

@@ -13,6 +13,7 @@
 import { createTheme } from "@mui/material/styles";
 import { ThemeMode, ThemePalette } from "@/src/types/theme";
 import { THEME_PALETTES } from "@/src/constants/colors";
+import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 
 /**
  * Create a Material UI theme from a palette configuration.
@@ -52,34 +53,34 @@ function createThemeFromPalette(palette: ThemePalette) {
       divider: palette.borders,
     },
     typography: {
-      fontFamily: '"Open Sans", "Helvetica", "Arial", sans-serif',
+      fontFamily: FONT_FAMILY_BODY,
       h1: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 700,
         color: palette.text.primary,
       },
       h2: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 700,
         color: palette.text.primary,
       },
       h3: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 400,
         color: palette.text.primary,
       },
       h4: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 400,
         color: palette.text.primary,
       },
       h5: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 400,
         color: palette.text.primary,
       },
       h6: {
-        fontFamily: '"Oswald", "Helvetica", "Arial", sans-serif',
+        fontFamily: FONT_FAMILY_HEADING,
         fontWeight: 400,
         color: palette.text.primary,
       },

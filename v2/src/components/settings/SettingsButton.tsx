@@ -37,11 +37,40 @@ import {
   Divider,
 } from "@mui/material";
 import { Settings as SettingsIcon } from "@mui/icons-material";
-import { SettingsList } from "./SettingsList";
+import dynamic from "next/dynamic";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
 import { usePalette } from "@/src/hooks/usePalette";
 import { BRAND_COLORS } from "@/src/constants";
+
+/**
+ * Lazily-loaded settings list containing ThemeSwitcher, LanguageSwitcher,
+ * and AnimationsSwitcher.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the settings list is only
+ * visible inside a Popover triggered by clicking the gear icon. This defers
+ * the entire settings sub-tree from the initial bundle.
+ *
+ * @returns The dynamically-loaded SettingsList component
+ */
+const SettingsList = dynamic(
+  /**
+   * Loads the SettingsList module, mapping the named export to default.
+   *
+   * @returns The module with SettingsList as the default export
+   */
+  () =>
+    import("./SettingsList").then((m) => ({ default: m.SettingsList })),
+  {
+    ssr: false,
+    /**
+     * No visible fallback needed — popover content loads fast enough.
+     *
+     * @returns Null placeholder
+     */
+    loading: () => null,
+  }
+);
 
 /**
  * Props for the SettingsButton component.
