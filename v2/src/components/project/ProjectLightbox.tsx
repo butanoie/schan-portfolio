@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import {
   Dialog,
   IconButton,
   Typography,
   Box,
   Fade,
+  CircularProgress,
 } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import {
@@ -16,7 +16,7 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
-import { useSwipe, useI18n, useAnimations } from "../../hooks";
+import { useSwipe, useI18n, useAnimations, useImagePreloader } from "../../hooks";
 import { VisuallyHidden } from "../common/VisuallyHidden";
 import {
   SWIPE_THRESHOLD,
@@ -57,6 +57,10 @@ interface ProjectLightboxProps {
  * - Enhanced accessibility (ARIA announcements, screen reader support)
  * - Prevents body scroll when open
  * - Memory-efficient event listener management
+ * - Image preloading: navigations are deferred until the target image is fully loaded, preventing blank flashes between slides
+ * - Proactive adjacent-image preloading for instant future navigations
+ * - Loading spinner overlay displayed on current image during preload
+ * - Graceful timeout (5s) so navigation is never blocked indefinitely
  *
  * **Accessibility Features:**
  * - Assertive ARIA live region announces image changes immediately to screen readers
@@ -67,8 +71,9 @@ interface ProjectLightboxProps {
  * - Focus management when lightbox opens
  *
  * This is a controlled component that relies on the parent to manage navigation state.
- * When navigation is triggered (via buttons, keyboard, or touch), it calls the
- * appropriate callback (`onPrevious` or `onNext`) to let the parent update the index.
+ * When navigation is triggered (via buttons, keyboard, or touch), it preloads the
+ * target image, then calls the appropriate callback (`onPrevious` or `onNext`) to
+ * let the parent update the index — ensuring the slide animation and image appear together.
  *
  * @param props - Component props
  * @param props.images - Array of project images to display
@@ -110,13 +115,14 @@ export function ProjectLightbox({
   onPrevious,
   onNext,
 }: ProjectLightboxProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPreloading, setIsPreloading] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const previousIndexRef = useRef<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { t } = useI18n();
   const { shouldAnimate } = useAnimations();
+  const { preloadImage, preloadAdjacent } = useImagePreloader();
 
   /**
    * Ref to store the keyboard handler function.
@@ -135,30 +141,69 @@ export function ProjectLightbox({
       : null;
 
   /**
-   * Navigates to the previous image in the gallery.
-   * Sets direction state to 'prev' for animation triggering.
-   * Delegates navigation to parent via onPrevious callback.
-   * The parent is responsible for implementing circular navigation logic.
+   * Extracts all full-size image URLs from the images array.
+   * Memoized via useMemo-like pattern (derived from images which is stable per render).
+   * Used by preloadAdjacent to warm the browser cache for neighboring images.
    */
-  const handlePrevious = useCallback(() => {
-    if (validIndex === null || images.length <= 1) return;
-    setIsLoading(true);
+  const imageUrls = images.map((img) => img.url);
+
+  /**
+   * Proactively preloads adjacent images whenever the current image changes.
+   * This warms the browser cache so that the next prev/next navigation is instant
+   * (cache hit in useImagePreloader means preloadImage resolves immediately).
+   */
+  useEffect(() => {
+    if (validIndex === null) return;
+    preloadAdjacent(imageUrls, validIndex);
+  }, [validIndex, imageUrls, preloadAdjacent]);
+
+  /**
+   * Navigates to the previous image in the gallery.
+   * Preloads the target image before triggering navigation to prevent blank flashes.
+   * Shows a loading spinner while the image is being fetched.
+   * On preload failure or timeout, navigates anyway for graceful degradation.
+   */
+  const handlePrevious = useCallback(async () => {
+    if (validIndex === null || images.length <= 1 || isPreloading) return;
+
+    const targetIndex = (validIndex - 1 + images.length) % images.length;
+    const targetUrl = images[targetIndex]?.url;
+
+    if (!targetUrl) return;
+
+    setIsPreloading(true);
     setDirection('prev');
+
+    // Preload the target image; navigate regardless of success/failure
+    await preloadImage(targetUrl);
+
+    setIsPreloading(false);
     onPrevious();
-  }, [validIndex, images.length, onPrevious]);
+  }, [validIndex, images, isPreloading, preloadImage, onPrevious]);
 
   /**
    * Navigates to the next image in the gallery.
-   * Sets direction state to 'next' for animation triggering.
-   * Delegates navigation to parent via onNext callback.
-   * The parent is responsible for implementing circular navigation logic.
+   * Preloads the target image before triggering navigation to prevent blank flashes.
+   * Shows a loading spinner while the image is being fetched.
+   * On preload failure or timeout, navigates anyway for graceful degradation.
    */
-  const handleNext = useCallback(() => {
-    if (validIndex === null || images.length <= 1) return;
-    setIsLoading(true);
+  const handleNext = useCallback(async () => {
+    if (validIndex === null || images.length <= 1 || isPreloading) return;
+
+    const targetIndex = (validIndex + 1) % images.length;
+    const targetUrl = images[targetIndex]?.url;
+
+    if (!targetUrl) return;
+
+    setIsPreloading(true);
     setDirection('next');
+
+    // Preload the target image; navigate regardless of success/failure
+    await preloadImage(targetUrl);
+
+    setIsPreloading(false);
     onNext();
-  }, [validIndex, images.length, onNext]);
+  }, [validIndex, images, isPreloading, preloadImage, onNext]);
 
   /**
    * Set up touch swipe gesture detection for the lightbox.
@@ -203,11 +248,11 @@ export function ProjectLightbox({
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
-          handlePrevious();
+          void handlePrevious();
           break;
         case "ArrowRight":
           event.preventDefault();
-          handleNext();
+          void handleNext();
           break;
         case "Escape":
           event.preventDefault();
@@ -409,14 +454,19 @@ export function ProjectLightbox({
           padding: "24px",
         }}
       >
-        {/* Caption - Above Image, pushed down to hug the image */}
+        {/* Caption - Above Image, pushed down to hug the image.
+            Uses a dark semi-transparent background matching the item counter
+            so caption text remains readable over any image content. */}
         <Typography
           variant="body1"
           sx={{
             color: "#FFFFFF",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            borderRadius: 1,
             textAlign: "center",
             maxWidth: { xs: "90vw", md: "80vw" },
-            px: 1,
+            px: 2,
+            py: 0.5,
             flexShrink: 0,
             marginTop: "auto",
             marginBottom: "24px",
@@ -425,22 +475,47 @@ export function ProjectLightbox({
           {currentImage.caption}
         </Typography>
 
-        {/* Image Wrapper */}
+        {/* Image Wrapper — uses native <img> instead of Next.js <Image> so that
+            the browser HTTP cache populated by useImagePreloader (which uses
+            new Image().src = url) is shared with the displayed element. Next.js
+            <Image> rewrites URLs through /_next/image, creating a cache mismatch. */}
         <Box sx={imageWrapperSx}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={currentImage.url}
             alt={currentImage.caption}
-            fill
-            sizes="80vw"
-            priority={true}
-            onLoad={() => setIsLoading(false)}
-            onError={() => setIsLoading(false)}
             style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
               objectFit: "contain",
-              opacity: isLoading ? 0.5 : 1,
-              transition: shouldAnimate ? "opacity 0.2s ease-in-out" : "none",
             }}
           />
+
+          {/* Loading spinner overlay — shown during image preloading.
+              Centered absolutely within the image wrapper so it overlays
+              the current image without shifting layout. */}
+          {isPreloading && (
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "rgba(0, 0, 0, 0.3)",
+                zIndex: 1,
+              }}
+              role="status"
+              aria-label={t('projectLightbox.loadingImage', { ns: 'components' })}
+            >
+              <CircularProgress
+                size={48}
+                sx={{ color: "rgba(255, 255, 255, 0.8)" }}
+              />
+            </Box>
+          )}
         </Box>
 
         {/* Navigation Controls and Image Counter - pushed up to hug the image */}
@@ -471,7 +546,8 @@ export function ProjectLightbox({
 
             {/* Previous Button */}
             <IconButton
-              onClick={handlePrevious}
+              onClick={() => void handlePrevious()}
+              disabled={isPreloading}
               aria-label={t('projectLightbox.previousButton', { ns: 'components' })}
               sx={lightboxButtonSx}
             >
@@ -500,7 +576,8 @@ export function ProjectLightbox({
 
             {/* Next Button */}
             <IconButton
-              onClick={handleNext}
+              onClick={() => void handleNext()}
+              disabled={isPreloading}
               aria-label={t('projectLightbox.nextButton', { ns: 'components' })}
               sx={lightboxButtonSx}
             >
