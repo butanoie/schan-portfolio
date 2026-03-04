@@ -1,6 +1,6 @@
 # Accessibility Statement
 
-**Last Updated:** February 6, 2026
+**Last Updated:** March 3, 2026
 
 ## Commitment to Accessibility
 
@@ -92,15 +92,15 @@ We use automated accessibility testing tools to continuously verify compliance:
 
 - **axe-core:** Automated accessibility audit engine
 - **vitest-axe:** Accessibility testing in our test suite
-- **WCAG Rules:** 10+ WCAG success criteria automatically validated
-- **Test Coverage:** 120+ accessibility test cases across 54 test files
+- **WCAG Rules:** 11 WCAG success criteria automatically validated
+- **Test Coverage:** 93 dedicated accessibility test cases across 30 test files
 
-**Automated Test Results:**
-- 1,117 total tests passing
-- 87.35% code coverage (exceeds 80% target)
+**Automated Test Results (March 2026):**
+- 1,132 total tests passing across 58 test files
+- 89.57% code coverage (exceeds 80% target)
 - 0 accessibility violations detected
 - 0 TypeScript errors (strict mode)
-- 0 ESLint errors
+- 0 ESLint errors (including jsx-a11y rules)
 
 ### Manual Testing
 
@@ -240,6 +240,7 @@ We welcome feedback on the accessibility of this website. If you encounter any a
 
 ### Accessibility Resources
 
+- [Accessibility Audit Report](ACCESSIBILITY_AUDIT_REPORT.md) - Latest automated test results and metrics
 - [WCAG Compliance Guide](WCAG_COMPLIANCE_GUIDE.md) - How each requirement is implemented
 - [Accessibility Testing Guide](ACCESSIBILITY_TESTING.md) - For developers working on this site
 - [Testing Checklist](ACCESSIBILITY_TESTING_CHECKLIST.md) - Manual testing procedures
@@ -267,6 +268,7 @@ We welcome feedback on the accessibility of this website. If you encounter any a
 | Date | Changes | Status |
 |------|---------|--------|
 | 2026-02-06 | Initial WCAG 2.2 Level AA compliance | ✅ Complete |
+| 2026-03-03 | Automated audit refresh — 1,132 tests, 89.57% coverage, 0 violations | ✅ Complete |
 
 ---
 
@@ -302,6 +304,6 @@ Email: hello@singchan.com
 
 ---
 
-**This accessibility statement was last reviewed and updated on February 6, 2026.**
+**This accessibility statement was last reviewed and updated on March 3, 2026.**
 
 **Commitment:** We are committed to maintaining and improving the accessibility of this website and will make updates as needed to ensure ongoing compliance with WCAG 2.2 Level AA standards.
