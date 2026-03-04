@@ -296,11 +296,7 @@ For accessibility concerns or questions:
 
 **Accessibility Contact:**
 Sing Chan
-Email: accessibility@singchan.com
-
-**General Portfolio Contact:**
-Portfolio: https://portfolio.singchan.com
-Email: hello@singchan.com
+Email: sing@singchan.com
 
 ---
 
