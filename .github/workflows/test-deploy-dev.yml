@@ -91,3 +91,30 @@ jobs:
         run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=development
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+  # Gate job: single required status check for branch protection.
+  # Always runs so non-code PRs (where tests/deploy are skipped) can still merge.
+  # In branch protection settings, replace individual job checks with this one.
+  gate:
+    needs: [check-changes, tests, deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check job results
+        env:
+          HAS_V2_CHANGES: ${{ needs.check-changes.outputs.has-v2-changes }}
+          TESTS_RESULT: ${{ needs.tests.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+        run: |
+          # If v2 changes were detected, tests and deploy must have succeeded
+          if [ "$HAS_V2_CHANGES" == "true" ]; then
+            if [ "$TESTS_RESULT" != "success" ]; then
+              echo "Tests failed or were cancelled"
+              exit 1
+            fi
+            if [ "$DEPLOY_RESULT" != "success" ]; then
+              echo "Deploy failed or was cancelled"
+              exit 1
+            fi
+          fi
+          echo "All required checks passed"
