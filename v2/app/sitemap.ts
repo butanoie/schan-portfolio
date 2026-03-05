@@ -23,6 +23,7 @@ import { SITE_URL } from "@/src/constants/seo";
  * Includes all main routes:
  * - `/` (home/portfolio) - Priority 1.0, most important page, updated weekly
  * - `/resume` - Priority 0.8, moderately important, updated monthly
+ * - `/samples` - Priority 0.7, writing samples, updated monthly
  * - `/colophon` - Priority 0.5, informational page, updated yearly
  *
  * Future Enhancement: When project detail pages are implemented (`/projects/[id]`),
@@ -55,6 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: today,
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/samples`,
+      lastModified: today,
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
     {
       url: `${SITE_URL}/colophon`,

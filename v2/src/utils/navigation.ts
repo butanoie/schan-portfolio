@@ -1,5 +1,6 @@
 import HomeIcon from "@mui/icons-material/Home";
 import DescriptionIcon from "@mui/icons-material/Description";
+import ArticleIcon from "@mui/icons-material/Article";
 import InfoIcon from "@mui/icons-material/Info";
 import { createElement } from "react";
 import type { SxProps, Theme } from "@mui/material/styles";
@@ -30,6 +31,7 @@ export function getNavLinks(): NavLink[] {
   return [
     { labelKey: "nav.portfolio", href: "/", icon: createElement(HomeIcon) },
     { labelKey: "nav.resume", href: "/resume", icon: createElement(DescriptionIcon) },
+    { labelKey: "nav.samples", href: "/samples", icon: createElement(ArticleIcon) },
     { labelKey: "nav.colophon", href: "/colophon", icon: createElement(InfoIcon) },
   ];
 }
