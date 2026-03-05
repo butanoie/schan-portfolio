@@ -1,2 +1,107 @@
 {
+  "samples": {
+    "pageTitle": "Échantillons d'écriture | Portfolio de Sing Chan",
+    "pageDescription": "Échantillons de documentation professionnelle couvrant la stratégie produit, la planification agile, la conception UX, l'évaluation technique, les opérations et l'optimisation des coûts.",
+    "pageDeck": {
+      "imageAlt": "Exemples de rédaction — vitrine de la documentation professionnelle",
+      "heading": "Échantillons d'écriture",
+      "paragraphs": [
+        "Ces échantillons d'écriture représentent les types d'artefacts que je produis tout au long du cycle de vie du produit : des feuilles de route qui définissent où nous allons, aux spécifications qui guident la manière dont nous y parvenons, et enfin aux audits qui prouvent les résultats.",
+        "Chaque document montre comment j'aborde les défis du monde réel en matière de produits, de conception et d'ingénierie."
+      ]
+    },
+    "sections": {
+      "productStrategy": {
+        "heading": "Définir la vision",
+        "intro": "La stratégie produit commence par une compréhension claire de ce qu'il faut construire et pourquoi. Ces documents montrent comment je traduis les objectifs de l'entreprise et les besoins des utilisateurs en feuilles de route structurées selon le modèle SAFe, en décomposant la stratégie en epics, en fonctionnalités et en éléments du backlog produit qui donnent aux équipes une orientation commune et aux parties prenantes une vision transparente de ce qui les attend."
+      },
+      "uxDesign": {
+        "heading": "Concevoir l'expérience",
+        "intro": "Un logiciel utilisable nécessite des décisions de conception intentionnelles, documentées de manière suffisamment claire pour que les développeurs puissent construire et que l'assurance qualité puisse valider. Ces artefacts couvrent les spécifications de conception des interactions, les rapports de conformité à l'accessibilité et les méthodologies d'utilisation, comblant ainsi le fossé entre l'intention de conception et la mise en œuvre."
+      },
+      "technical": {
+        "heading": "Évaluer la technologie",
+        "intro": "Pour prendre des décisions techniques judicieuses, il faut procéder à une évaluation structurée et ne pas se contenter d'une simple opinion. Ces documents montrent comment j'évalue les cadres, pèse les compromis et enregistre les décisions architecturales afin que les équipes comprennent non seulement ce qui a été choisi, mais aussi pourquoi."
+      },
+      "processOps": {
+        "heading": "Opérationnaliser la pratique",
+        "intro": "La livraison constante de logiciels de qualité exige plus que des individus talentueux ; elle nécessite des processus documentés et évolutifs. Ces artefacts couvrent la stratégie d'automatisation de l'assurance qualité, les programmes d'intégration des équipes et les pratiques de gestion des versions qui aident les organisations à passer d'une exécution ad hoc à une discipline reproductible."
+      },
+      "costSavings": {
+        "heading": "Mesurer l'impact",
+        "intro": "La documentation n'est pas seulement une question de planification — il s'agit de prouver les résultats. Cette section montre comment une analyse structurée, des guides opérationnels et des rapports clairs peuvent identifier et valider des réductions de coûts significatives — transformant les audits d'infrastructure en résultats commerciaux mesurables d'une valeur de plus de 360 000 dollars canadiens en économies annualisées pour Collabware."
+      }
+    },
+    "artifacts": {
+      "productRoadmapPhase3": {
+        "title": "Feuille de route produit — Phase 3",
+        "description": "Feuille de route formatée SAFe avec les epics, les fonctionnalités et les éléments du backlog produit pour la phase de développement des pages principales."
+      },
+      "productRoadmapPhase4": {
+        "title": "Feuille de route produit — Phase 4",
+        "description": "Feuille de route formatée SAFe couvrant les fonctionnalités améliorées : thématisation, i18n, animations, accessibilité et référencement."
+      },
+      "prdLightbox": {
+        "title": "Document d'exigences produit — Project Grid & Lightbox",
+        "description": "PRD détaillé pour la disposition de la grille de projet du portfolio et les modèles d'interaction de la lightbox."
+      },
+      "idsLightbox": {
+        "title": "Spécification de conception d'interaction — Project Grid & Lightbox",
+        "description": "IDS complet documentant les modèles d'interaction, les transitions d'état et le comportement réactif pour les composants de la grille de projet et de la lightbox."
+      },
+      "wcagGuide": {
+        "title": "Guide de conformité WCAG 2.2",
+        "description": "Guide détaillé mettant en correspondance les critères de succès WCAG 2.2 niveau AA avec l'approche de mise en œuvre du portfolio."
+      },
+      "accessibilityStatement": {
+        "title": "Déclaration d'accessibilité",
+        "description": "Engagement public en matière d'accessibilité documentant la portée de la conformité, la méthodologie de test et les limites connues."
+      },
+      "adrI18n": {
+        "title": "Compte rendu de décision d'architecture — Sélection de la bibliothèque i18n",
+        "description": "ADR évaluant les approches d'internationalisation pour la migration Next.js, documentant la justification de la sélection de i18next."
+      },
+      "frameworkEval": {
+        "title": "Évaluation des frameworks front-end",
+        "description": "Comparaison structurée des frameworks front-end envisagés pour la modernisation du portfolio, avec des critères de notation et une recommandation finale."
+      },
+      "qaStrategy": {
+        "title": "Stratégie d'automatisation de l'AQ",
+        "description": "Stratégie d'assurance qualité pilotée par BDD avec intégration CI/CD, couvrant la structure de la pyramide de test, la sélection des outils et les objectifs de couverture."
+      },
+      "onboardingGuide": {
+        "title": "Guide d'intégration des connaissances produit Collabspace",
+        "description": "Programme d'intégration en 14 modules conçu pour les nouveaux membres de l'équipe, couvrant la façon dont les clients utilisent les principales fonctionnalités et la connaissance du domaine."
+      },
+      "changelogStrategy": {
+        "title": "Stratégie de changelog et notes de version",
+        "description": "Philosophie de changelog multi-fichiers documentant les conventions de nommage, le format de version et le processus de distillation des notes de version."
+      },
+      "costSavingsRoadmap": {
+        "title": "Feuille de route pour des économies supplémentaires",
+        "description": "Présentation stratégique décrivant les possibilités d'optimisation des coûts d'infrastructure au-delà de la réduction initiale de 40 %, avec un plan de mise en œuvre progressive et les économies prévues."
+      },
+      "elasticsearchRunbook": {
+        "title": "Manuel de mise à l'échelle des nœuds et des disques Elasticsearch",
+        "description": "Manuel opérationnel étape par étape pour réduire en toute sécurité les nœuds du cluster Elasticsearch et l'allocation des disques, avec des procédures de retour en arrière et des points de contrôle de surveillance."
+      },
+      "costCuttingAudit": {
+        "title": "Audit de réduction des coûts",
+        "description": "Audit d'optimisation des coûts de l'infrastructure cloud Azure identifiant une réduction de 40 % des coûts d'hébergement annualisés, documentant la méthodologie d'analyse, les résultats et les économies réalisées de 360K CAD."
+      }
+    },
+    "labels": {
+      "comingSoon": "Bientôt disponible",
+      "download": "Télécharger",
+      "downloadFormat": "Télécharger {{format}}",
+      "viewDocument": "Voir le document : {{title}}",
+      "format": "{{format}}",
+      "pdfOnly": "PDF uniquement"
+    },
+    "meta": {
+      "title": "Échantillons d'écriture | Portfolio de Sing Chan",
+      "description": "Exemples de documentation professionnelle couvrant la stratégie produit, les artefacts agiles, la conception UX, les évaluations techniques et les processus opérationnels.",
+      "keywords": "exemples de rédaction, documentation produit, SAFe agile, UX design, documentation technique, gestion de produit"
+    }
+  }
 }
