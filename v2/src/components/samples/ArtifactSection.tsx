@@ -113,11 +113,13 @@ export default function ArtifactSection({
             sx={{
               display: "flex",
               flexDirection: "column",
-              opacity: item.available ? 1 : 0.7,
               transition: "box-shadow 200ms ease",
-              "&:hover": item.available
-                ? { boxShadow: 3 }
-                : undefined,
+              ...(item.available
+                ? { "&:hover": { boxShadow: 3 } }
+                : {
+                    borderStyle: "dashed",
+                    backgroundColor: palette.surface,
+                  }),
             }}
           >
             <CardContent sx={{ flexGrow: 1 }}>
