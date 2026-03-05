@@ -1,2 +1,107 @@
 {
+  "samples": {
+    "pageTitle": "Writing Samples | Sing Chan's Portfolio",
+    "pageDescription": "Professional documentation samples spanning product strategy, agile planning, UX design, technical evaluation, operations, and cost optimization.",
+    "pageDeck": {
+      "imageAlt": "Writing Samples — professional documentation showcase",
+      "heading": "Writing Samples",
+      "paragraphs": [
+        "Great products start with clear thinking — and clear thinking starts with good documentation. These writing samples represent the kinds of artifacts I produce throughout the product lifecycle: from the roadmaps that define where we're going, to the specifications that guide how we get there, to the audits that prove the results.",
+        "Each document was created as part of this portfolio's modernization project, demonstrating how I approach real-world product, design, and engineering challenges."
+      ]
+    },
+    "sections": {
+      "productStrategy": {
+        "heading": "Defining the Vision",
+        "intro": "Product strategy begins with a clear understanding of what to build and why. These documents show how I translate business objectives and user needs into SAFe-structured roadmaps — decomposing strategy into epics, features, and product backlog items that give teams a shared direction and stakeholders a transparent view of what's ahead."
+      },
+      "uxDesign": {
+        "heading": "Designing the Experience",
+        "intro": "Usable software requires intentional design decisions, documented clearly enough for developers to build and QA to validate. These artifacts cover interaction design specifications, accessibility compliance reports, and usability methodologies — bridging the gap between design intent and implementation."
+      },
+      "technical": {
+        "heading": "Evaluating the Technology",
+        "intro": "Sound technical decisions require structured evaluation, not just opinion. These documents demonstrate how I assess frameworks, weigh trade-offs, and record architectural decisions so that teams understand not just what was chosen, but why — and can revisit those decisions as context evolves."
+      },
+      "processOps": {
+        "heading": "Operationalizing the Practice",
+        "intro": "Shipping great software consistently requires more than talented individuals — it requires documented processes that scale. These artifacts cover QA automation strategy, team onboarding programs, and release management practices that help organizations move from ad hoc execution to repeatable discipline."
+      },
+      "costSavings": {
+        "heading": "Measuring the Impact",
+        "intro": "Documentation isn't just about planning — it's about proving results. This section showcases how structured analysis, operational runbooks, and clear reporting can identify and validate significant cost reductions — turning infrastructure audits into measurable business outcomes worth over $360K CAD in annualized savings."
+      }
+    },
+    "artifacts": {
+      "productRoadmapPhase3": {
+        "title": "Product Roadmap — Phase 3",
+        "description": "SAFe-formatted roadmap with epics, features, and product backlog items for the core pages development phase."
+      },
+      "productRoadmapPhase4": {
+        "title": "Product Roadmap — Phase 4",
+        "description": "SAFe-formatted roadmap covering enhanced features: theming, i18n, animations, accessibility, and SEO."
+      },
+      "prdLightbox": {
+        "title": "Product Requirements Document — Project Grid & Lightbox",
+        "description": "Detailed PRD for the portfolio's project grid layout and image lightbox interaction patterns."
+      },
+      "idsLightbox": {
+        "title": "Interaction Design Specification — Project Grid & Lightbox",
+        "description": "Comprehensive IDS documenting interaction patterns, state transitions, and responsive behavior for the project grid and lightbox components."
+      },
+      "wcagGuide": {
+        "title": "WCAG 2.2 Compliance Guide",
+        "description": "Detailed guide mapping WCAG 2.2 Level AA success criteria to the portfolio's implementation approach."
+      },
+      "accessibilityStatement": {
+        "title": "Accessibility Statement",
+        "description": "Public-facing accessibility commitment documenting compliance scope, testing methodology, and known limitations."
+      },
+      "adrI18n": {
+        "title": "Architecture Decision Record — i18n Library Selection",
+        "description": "ADR evaluating internationalization approaches for the Next.js migration, documenting the rationale for selecting i18next."
+      },
+      "frameworkEval": {
+        "title": "Front-End Framework Evaluation",
+        "description": "Structured comparison of front-end frameworks considered for the portfolio modernization, with scoring criteria and final recommendation."
+      },
+      "qaStrategy": {
+        "title": "QA Automation Strategy",
+        "description": "BDD-driven QA strategy with CI/CD integration, covering test pyramid structure, tooling selection, and coverage targets."
+      },
+      "onboardingGuide": {
+        "title": "Product Knowledge Onboarding Guide",
+        "description": "14-module onboarding curriculum designed for new team members, covering product architecture, workflows, and domain knowledge."
+      },
+      "changelogStrategy": {
+        "title": "Changelog & Release Notes Strategy",
+        "description": "Multi-file changelog philosophy documenting naming conventions, versioning format, and release note distillation process."
+      },
+      "costSavingsRoadmap": {
+        "title": "Additional Cost Savings Roadmap",
+        "description": "Strategic presentation outlining further infrastructure cost optimization opportunities beyond the initial 40% reduction, with phased implementation plan and projected savings."
+      },
+      "elasticsearchRunbook": {
+        "title": "Elasticsearch Node & Disk Scale-Down Runbook",
+        "description": "Step-by-step operational runbook for safely scaling down Elasticsearch cluster nodes and disk allocation, with rollback procedures and monitoring checkpoints."
+      },
+      "costCuttingAudit": {
+        "title": "Cost Cutting Audit",
+        "description": "Azure cloud infrastructure cost optimization audit identifying 40% reduction in annualized hosting costs, documenting analysis methodology, findings, and implemented savings of $360K CAD."
+      }
+    },
+    "labels": {
+      "comingSoon": "Coming Soon",
+      "download": "Download",
+      "downloadFormat": "Download {{format}}",
+      "viewDocument": "View document: {{title}}",
+      "format": "{{format}}",
+      "pdfOnly": "PDF only"
+    },
+    "meta": {
+      "title": "Writing Samples | Sing Chan's Portfolio",
+      "description": "Professional documentation samples spanning product strategy, agile artifacts, UX design, technical evaluations, and operational processes.",
+      "keywords": "writing samples, product documentation, SAFe agile, UX design, technical documentation, product management"
+    }
+  }
 }
