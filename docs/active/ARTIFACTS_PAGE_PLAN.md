@@ -165,7 +165,7 @@ import ArticleIcon from "@mui/icons-material/Article";
       "imageAlt": "Writing Samples — professional documentation showcase",
       "heading": "Writing Samples",
       "paragraphs": [
-        "Great products start with clear thinking — and clear thinking starts with good documentation. These writing samples represent the kinds of artifacts I produce throughout the product lifecycle: from the roadmaps that define where we're going, to the specifications that guide how we get there, to the audits that prove the results.",
+        "These writing samples represent the kinds of artifacts I produce throughout the product lifecycle: from the roadmaps that define where we're going, to the specifications that guide how we get there, to the audits that prove the results.",
         "Each document was created as part of this portfolio's modernization project, demonstrating how I approach real-world product, design, and engineering challenges."
       ]
     },
