@@ -1,14 +1,16 @@
 "use client";
 
 import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
+import MuiLink from "@mui/material/Link";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BRAND_COLORS, UI_COLORS } from "../../constants";
+import { BRAND_COLORS, NAV_COLORS, UI_COLORS } from "../../constants";
 import { useProjectLoading, type ProjectLoadingContextValue } from "../../contexts/ProjectLoadingContext";
+import { getNavLinks, isActivePath } from "../../utils/navigation";
 import { LoadMoreButton } from "../project/LoadMoreButton";
-import { NavButtons } from "./NavButtons";
 import { useI18n } from "@/src/hooks/useI18n";
-import { FONT_FAMILY_CURSIVE } from "@/src/lib/fontConstants";
+import { FONT_FAMILY_BODY, FONT_FAMILY_CURSIVE } from "@/src/lib/fontConstants";
 
 /**
  * Props for the ThoughtBubble component.
@@ -239,18 +241,7 @@ export default function Footer() {
           >
             {/* Navigation Links - Hidden on mobile */}
             {!isMobile && (
-              <Box
-                component="nav"
-                aria-label="Footer navigation"
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  mb: 1,
-                  flexWrap: "wrap",
-                }}
-              >
-                <NavButtons />
-              </Box>
+              <FooterNavLinks pathname={pathname} t={t} />
             )}
 
             {/* Copyright */}
@@ -270,6 +261,81 @@ export default function Footer() {
           </Box>
         </Container>
       </Container>
+    </Box>
+  );
+}
+
+/**
+ * Props for the FooterNavLinks component.
+ */
+interface FooterNavLinksProps {
+  /** Current URL pathname for active link detection */
+  pathname: string;
+  /** Translation function from useI18n */
+  t: (key: string, options?: Record<string, unknown>) => string;
+}
+
+/**
+ * Renders footer navigation as compact text links separated by middot characters.
+ * Uses text links instead of pill-style buttons to fit all 4 nav items without overflow.
+ *
+ * Active page is indicated by an underline. All links meet WCAG 2.2 AA contrast
+ * requirements on the sage green background.
+ *
+ * @param props - Component props
+ * @param props.pathname - Current URL pathname for highlighting the active link
+ * @param props.t - Translation function for localized link labels
+ * @returns A nav element with text-style footer links
+ */
+function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
+  const navLinks = getNavLinks();
+
+  return (
+    <Box
+      component="nav"
+      aria-label="Footer navigation"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        mb: 1,
+        flexWrap: "wrap",
+      }}
+    >
+      {navLinks.map((link, index) => {
+        const active = isActivePath(pathname, link.href);
+        return (
+          <Box key={link.href} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {index > 0 && (
+              <Typography
+                component="span"
+                sx={{ color: NAV_COLORS.text, opacity: 0.6, fontSize: "0.875rem", userSelect: "none" }}
+                aria-hidden
+              >
+                ·
+              </Typography>
+            )}
+            <MuiLink
+              component={Link}
+              href={link.href}
+              underline={active ? "always" : "hover"}
+              aria-current={active ? "page" : undefined}
+              sx={{
+                color: NAV_COLORS.text,
+                fontFamily: FONT_FAMILY_BODY,
+                fontWeight: active ? 700 : 600,
+                fontSize: "0.875rem",
+                textDecorationColor: active ? NAV_COLORS.text : "inherit",
+                "&:hover": {
+                  color: NAV_COLORS.text,
+                },
+              }}
+            >
+              {t(link.labelKey)}
+            </MuiLink>
+          </Box>
+        );
+      })}
     </Box>
   );
 }

@@ -12,15 +12,15 @@ import { getNavLinks, isActivePath, getNavButtonSx } from "@/src/utils/navigatio
 import { NAV_COLORS, BRAND_COLORS } from "@/src/constants";
 
 describe("getNavLinks", () => {
-  it("should return three navigation links", () => {
+  it("should return four navigation links", () => {
     const links = getNavLinks();
-    expect(links).toHaveLength(3);
+    expect(links).toHaveLength(4);
   });
 
-  it("should include portfolio, resume, and colophon links", () => {
+  it("should include portfolio, resume, samples, and colophon links", () => {
     const links = getNavLinks();
     const hrefs = links.map((link) => link.href);
-    expect(hrefs).toEqual(["/", "/resume", "/colophon"]);
+    expect(hrefs).toEqual(["/", "/resume", "/samples", "/colophon"]);
   });
 
   it("should have translation keys for all labels", () => {

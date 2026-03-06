@@ -16,6 +16,12 @@ export type {
   PageDeckData,
 } from './pageDeck';
 
+export type {
+  ArtifactFormat,
+  ArtifactItem,
+  ArtifactSection,
+} from './samples';
+
 export {
   isProject,
   isProjectImage,

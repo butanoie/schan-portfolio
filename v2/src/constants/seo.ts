@@ -94,6 +94,20 @@ export const PAGE_METADATA = {
       "web technologies",
     ],
   },
+  samples: {
+    title: "Writing Samples - Sing Chan's Portfolio",
+    description:
+      "Professional writing samples and documentation artifacts from Sing Chan, including product strategy, agile artifacts, UX design, and technical documentation",
+    keywords: [
+      ...SITE_METADATA.keywords,
+      "writing samples",
+      "documentation",
+      "product strategy",
+      "agile artifacts",
+      "technical writing",
+      "UX documentation",
+    ],
+  },
 };
 
 /**
