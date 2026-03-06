@@ -40,12 +40,16 @@
         "description": "SAFe-formatted roadmap covering enhanced features: theming, i18n, animations, accessibility, and SEO."
       },
       "prdLightbox": {
-        "title": "Product Requirements Document — Project Grid & Lightbox",
-        "description": "Detailed PRD for the portfolio's project grid layout and image lightbox interaction patterns."
+        "title": "Product Requirements Document — Project Gallery & Lightbox",
+        "description": "Detailed PRD for the portfolio's project gallery layout and image lightbox interaction patterns."
       },
       "idsLightbox": {
-        "title": "Interaction Design Specification — Project Grid & Lightbox",
-        "description": "Comprehensive IDS documenting interaction patterns, state transitions, and responsive behavior for the project grid and lightbox components."
+        "title": "Interaction Design Specification — Project Gallery & Lightbox",
+        "description": "Comprehensive IDS documenting interaction patterns, state transitions, and responsive behavior for the project gallery and lightbox components."
+      },
+      "usabilityTestPlan": {
+        "title": "Usability Test Plan & Findings — Project Gallery & Lightbox",
+        "description": "Task-based usability test plan and findings for the project gallery and lightbox, covering test scenarios, participant tasks, success metrics, and actionable findings."
       },
       "wcagGuide": {
         "title": "WCAG 2.2 Compliance Guide",
@@ -85,14 +89,18 @@
       },
       "costSavingsRoadmap": {
         "title": "Additional Cost Savings Roadmap",
-        "description": "Strategic presentation outlining further infrastructure cost optimization opportunities beyond the initial 40% reduction, with phased implementation plan and projected savings."
+        "description": "Strategic presentation outlining further infrastructure cost optimization opportunities. Contact Sing to request a presentation of the full roadmap."
       },
       "elasticsearchRunbook": {
         "title": "Elasticsearch Node & Disk Scale-Down Runbook",
         "description": "Step-by-step operational runbook for safely scaling down Elasticsearch cluster nodes and disk allocation, with rollback procedures and monitoring checkpoints."
       },
+      "defenderRunbook": {
+        "title": "Defender for Storage Reduction Runbook",
+        "description": "PowerShell-based operational runbook for bulk-disabling Microsoft Defender for Storage on Azure accounts, with verification scripts, troubleshooting guide, and cost analysis."
+      },
       "costCuttingAudit": {
-        "title": "Cost Cutting Audit",
+        "title": "Cost Savings Report",
         "description": "Azure cloud infrastructure cost optimization audit identifying 40% reduction in annualized hosting costs, documenting analysis methodology, findings, and implemented savings of $360K CAD."
       }
     },

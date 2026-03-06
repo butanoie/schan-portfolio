@@ -33,8 +33,8 @@ export interface ArtifactItem {
   titleKey: string;
   /** Translation key for the artifact description */
   descriptionKey: string;
-  /** Download format for this artifact */
-  format: ArtifactFormat;
+  /** Download format for this artifact (omit to disable download) */
+  format?: ArtifactFormat;
 }
 
 /**

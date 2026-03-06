@@ -43,7 +43,7 @@ const ARTIFACT_SECTIONS: ArtifactSection[] = [
         {
           titleKey: 'samples.artifacts.prdLightbox.title',
           descriptionKey: 'samples.artifacts.prdLightbox.description',
-          format: { label: 'PDF', href: '/documents/PRD_Project_Grid_and_Lightbox.pdf' },
+          format: { label: 'PDF', href: '/documents/Product_Requirements_Document.pdf' },
         },
       ],
     },
@@ -54,17 +54,17 @@ const ARTIFACT_SECTIONS: ArtifactSection[] = [
         {
           titleKey: 'samples.artifacts.idsLightbox.title',
           descriptionKey: 'samples.artifacts.idsLightbox.description',
-          format: { label: 'PDF', href: '/documents/IDS_Project_Grid_and_Lightbox.pdf' },
+          format: { label: 'PDF', href: '/documents/Interaction_Design_Specification.pdf' },
+        },
+        {
+          titleKey: 'samples.artifacts.usabilityTestPlan.title',
+          descriptionKey: 'samples.artifacts.usabilityTestPlan.description',
+          format: { label: 'PDF', href: '/documents/Usability_Test_Plan_and_Findings.pdf' },
         },
         {
           titleKey: 'samples.artifacts.wcagGuide.title',
           descriptionKey: 'samples.artifacts.wcagGuide.description',
-          format: { label: 'PDF', href: '/documents/WCAG_2_2_Compliance_Guide.pdf' },
-        },
-        {
-          titleKey: 'samples.artifacts.accessibilityStatement.title',
-          descriptionKey: 'samples.artifacts.accessibilityStatement.description',
-          format: { label: 'PDF', href: '/documents/Accessibility_Statement.pdf' },
+          format: { label: 'PDF', href: '/documents/WCAG_Compliance_Guide.pdf' },
         },
       ],
     },
@@ -75,7 +75,7 @@ const ARTIFACT_SECTIONS: ArtifactSection[] = [
         {
           titleKey: 'samples.artifacts.adrI18n.title',
           descriptionKey: 'samples.artifacts.adrI18n.description',
-          format: { label: 'PDF', href: '/documents/ADR_i18n_Library_Selection.pdf' },
+          format: { label: 'PDF', href: '/documents/Architecture_Decision_Record.pdf' },
         },
         {
           titleKey: 'samples.artifacts.frameworkEval.title',
@@ -96,22 +96,22 @@ const ARTIFACT_SECTIONS: ArtifactSection[] = [
         {
           titleKey: 'samples.artifacts.onboardingGuide.title',
           descriptionKey: 'samples.artifacts.onboardingGuide.description',
-          format: { label: 'PDF', href: '/documents/Product_Knowledge_Onboarding_Guide.pdf' },
+          format: { label: 'PDF', href: '/documents/Product_Knowledge_Onboarding.pdf' },
         },
         {
           titleKey: 'samples.artifacts.changelogStrategy.title',
           descriptionKey: 'samples.artifacts.changelogStrategy.description',
-          format: { label: 'PDF', href: '/documents/Changelog_and_Release_Notes_Strategy.pdf' },
+          format: { label: 'PDF', href: '/documents/Changelog_Strategy.pdf' },
         },
         {
           titleKey: 'samples.artifacts.gherkinPhase3.title',
           descriptionKey: 'samples.artifacts.gherkinPhase3.description',
-          format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_3.md' },
+          format: { label: 'Markdown', href: '/documents/PHASE_3_GHERKIN_TEST_CASES.md' },
         },
         {
           titleKey: 'samples.artifacts.gherkinPhase4.title',
           descriptionKey: 'samples.artifacts.gherkinPhase4.description',
-          format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_4.md' },
+          format: { label: 'Markdown', href: '/documents/PHASE_4_GHERKIN_TEST_CASES.md' },
         },
       ],
     },
@@ -122,17 +122,21 @@ const ARTIFACT_SECTIONS: ArtifactSection[] = [
         {
           titleKey: 'samples.artifacts.costCuttingAudit.title',
           descriptionKey: 'samples.artifacts.costCuttingAudit.description',
-          format: { label: 'PDF', href: '/documents/Cost_Cutting_Audit.pdf' },
+          format: { label: 'PDF', href: '/documents/Azure_Cost_Savings_Report.pdf' },
         },
         {
           titleKey: 'samples.artifacts.costSavingsRoadmap.title',
           descriptionKey: 'samples.artifacts.costSavingsRoadmap.description',
-          format: { label: 'PDF', href: '/documents/Additional_Cost_Savings_Roadmap.pdf' },
         },
         {
           titleKey: 'samples.artifacts.elasticsearchRunbook.title',
           descriptionKey: 'samples.artifacts.elasticsearchRunbook.description',
-          format: { label: 'Markdown', href: '/documents/Elasticsearch_Scale_Down_Runbook.md' },
+          format: { label: 'Markdown', href: '/documents/ELASTICSEARCH_REDUCTION_RUNBOOK.md' },
+        },
+        {
+          titleKey: 'samples.artifacts.defenderRunbook.title',
+          descriptionKey: 'samples.artifacts.defenderRunbook.description',
+          format: { label: 'Markdown', href: '/documents/DEFENDER_REDUCTION_RUNBOOK.md' },
         },
       ],
     },
@@ -146,8 +150,8 @@ export interface ResolvedArtifactItem {
   title: string;
   /** Artifact description */
   description: string;
-  /** Download format */
-  format: { label: FormatLabel; href: string };
+  /** Download format (undefined when download is unavailable) */
+  format?: { label: FormatLabel; href: string };
 }
 
 /**

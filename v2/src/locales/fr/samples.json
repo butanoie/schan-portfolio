@@ -47,6 +47,10 @@
         "title": "Spécification de conception d'interaction — Project Grid & Lightbox",
         "description": "IDS complet documentant les modèles d'interaction, les transitions d'état et le comportement réactif pour les composants de la grille de projet et de la lightbox."
       },
+      "usabilityTestPlan": {
+        "title": "Plan et résultats des tests d'utilisabilité — Galerie de projets et Lightbox",
+        "description": "Plan et résultats de tests d'utilisabilité basés sur les tâches pour la grille de la galerie de projets et la lightbox, couvrant les scénarios de test, les tâches des participants, les mesures de succès et les résultats exploitables."
+      },
       "wcagGuide": {
         "title": "Guide de conformité WCAG 2.2",
         "description": "Guide détaillé mettant en correspondance les critères de succès WCAG 2.2 niveau AA avec l'approche de mise en œuvre du portfolio."
@@ -85,14 +89,18 @@
       },
       "costSavingsRoadmap": {
         "title": "Feuille de route pour des économies supplémentaires",
-        "description": "Présentation stratégique décrivant les possibilités d'optimisation des coûts d'infrastructure au-delà de la réduction initiale de 40 %, avec un plan de mise en œuvre progressive et les économies prévues."
+        "description": "Présentation stratégique soulignant les possibilités d'optimisation des coûts d'infrastructure. Contactez Sing pour demander une présentation de la feuille de route complète."
       },
       "elasticsearchRunbook": {
         "title": "Manuel de mise à l'échelle des nœuds et des disques Elasticsearch",
         "description": "Manuel opérationnel étape par étape pour réduire en toute sécurité les nœuds du cluster Elasticsearch et l'allocation des disques, avec des procédures de retour en arrière et des points de contrôle de surveillance."
       },
+      "defenderRunbook": {
+        "title": "Manuel de réduction Defender for Storage",
+        "description": "Manuel opérationnel basé sur PowerShell pour désactiver en masse Microsoft Defender for Storage sur les comptes Azure, avec des scripts de vérification, un guide de dépannage et une analyse des coûts."
+      },
       "costCuttingAudit": {
-        "title": "Audit de réduction des coûts",
+        "title": "Rapport d'économies de coûts",
         "description": "Audit d'optimisation des coûts de l'infrastructure cloud Azure identifiant une réduction de 40 % des coûts d'hébergement annualisés, documentant la méthodologie d'analyse, les résultats et les économies réalisées de 360K CAD."
       }
     },

@@ -135,10 +135,10 @@ describe('SamplesContent', () => {
   });
 
   describe('artifact cards', () => {
-    it('should render 16 artifact titles as h3 headings', () => {
+    it('should render 17 artifact titles as h3 headings', () => {
       render(<SamplesContent />);
       const h3s = screen.getAllByRole('heading', { level: 3 });
-      expect(h3s).toHaveLength(16);
+      expect(h3s).toHaveLength(17);
     });
 
     it('should render specific artifact titles', () => {
@@ -153,14 +153,14 @@ describe('SamplesContent', () => {
         screen.getByRole('heading', { name: /qa automation strategy/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole('heading', { name: /cost cutting audit/i })
+        screen.getByRole('heading', { name: /cost savings report/i })
       ).toBeInTheDocument();
     });
 
     it('should render download links for all artifacts', () => {
       render(<SamplesContent />);
       const links = screen.getAllByRole('link');
-      // 16 artifacts × 1 format each = 16 links
+      // 16 of 17 artifacts have a download link (1 has no format)
       expect(links.length).toBe(16);
     });
   });

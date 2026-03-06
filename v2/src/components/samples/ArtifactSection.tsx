@@ -65,8 +65,9 @@ export default function ArtifactSection({
         sx={{
           fontFamily: FONT_FAMILY_HEADING,
           fontWeight: 700,
-          color: palette.text.primary,
+          color: palette.secondary,
           fontSize: { xs: "1.5rem", md: "2rem" },
+          textAlign: "center",
           mb: 2,
         }}
       >
@@ -94,7 +95,7 @@ export default function ArtifactSection({
       >
         {items.map((item) => (
           <Card
-            key={item.format.href}
+            key={item.format?.href ?? item.title}
             variant="outlined"
             sx={{
               display: "flex",
@@ -127,34 +128,36 @@ export default function ArtifactSection({
               </Typography>
             </CardContent>
 
-            <CardActions sx={{ px: 2, pb: 2, pt: 0 }}>
-              <Button
-                href={item.format.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                size="small"
-                startIcon={<DownloadIcon />}
-                aria-label={t("samples.labels.viewDocument", {
-                  ns: "pages",
-                  title: `${item.title}, ${item.format.label}`,
-                })}
-                variant="contained"
-                sx={{
-                  minHeight: 44,
-                  width: 120,
-                  backgroundColor: BRAND_COLORS.sage,
-                  color: NAV_COLORS.text,
-                  boxShadow: 0,
-                  textTransform: "none",
-                  "&:hover": {
-                    backgroundColor: NAV_COLORS.inactiveHover,
+            {item.format && (
+              <CardActions sx={{ px: 2, pb: 2, pt: 0 }}>
+                <Button
+                  href={item.format.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  size="small"
+                  startIcon={<DownloadIcon />}
+                  aria-label={t("samples.labels.viewDocument", {
+                    ns: "pages",
+                    title: `${item.title}, ${item.format.label}`,
+                  })}
+                  variant="contained"
+                  sx={{
+                    minHeight: 44,
+                    width: 120,
+                    backgroundColor: BRAND_COLORS.sage,
+                    color: NAV_COLORS.text,
                     boxShadow: 0,
-                  },
-                }}
-              >
-                {item.format.label}
-              </Button>
-            </CardActions>
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: NAV_COLORS.inactiveHover,
+                      boxShadow: 0,
+                    },
+                  }}
+                >
+                  {item.format.label}
+                </Button>
+              </CardActions>
+            )}
           </Card>
         ))}
       </Box>

@@ -69,14 +69,14 @@ describe('getLocalizedSamplesData', () => {
       }
     });
 
-    it('should have correct item counts per section (3, 3, 2, 5, 3)', () => {
+    it('should have correct item counts per section (3, 3, 2, 5, 4)', () => {
       const counts = data.sections.map((s) => s.items.length);
-      expect(counts).toEqual([3, 3, 2, 5, 3]);
+      expect(counts).toEqual([3, 3, 2, 5, 4]);
     });
 
-    it('should total 16 artifacts across all sections', () => {
+    it('should total 17 artifacts across all sections', () => {
       const total = data.sections.reduce((sum, s) => sum + s.items.length, 0);
-      expect(total).toBe(16);
+      expect(total).toBe(17);
     });
   });
 
@@ -90,29 +90,32 @@ describe('getLocalizedSamplesData', () => {
       }
     });
 
-    it('should have a format with label and href for every artifact', () => {
+    it('should have a format with label and href for downloadable artifacts', () => {
       for (const section of data.sections) {
         for (const item of section.items) {
-          expect(item.format).toBeDefined();
-          expect(item.format.label).toBeTruthy();
-          expect(item.format.href).toBeTruthy();
+          if (item.format) {
+            expect(item.format.label).toBeTruthy();
+            expect(item.format.href).toBeTruthy();
+          }
         }
       }
     });
 
-    it('should have PDF format for cost savings roadmap', () => {
+    it('should have PDF format for cost savings report', () => {
       const costSavings = data.sections[4];
-      const roadmap = costSavings.items.find((i) =>
-        i.title.includes('costSavingsRoadmap')
+      const report = costSavings.items.find((i) =>
+        i.title.includes('costCuttingAudit')
       );
-      expect(roadmap).toBeDefined();
-      expect(roadmap!.format.label).toBe('PDF');
+      expect(report).toBeDefined();
+      expect(report!.format?.label).toBe('PDF');
     });
 
     it('should have valid href paths for all formats', () => {
       for (const section of data.sections) {
         for (const item of section.items) {
-          expect(item.format.href).toMatch(/^\/documents\/.+\.(pdf|md)$/);
+          if (item.format) {
+            expect(item.format.href).toMatch(/^\/documents\/.+\.(pdf|md)$/);
+          }
         }
       }
     });
