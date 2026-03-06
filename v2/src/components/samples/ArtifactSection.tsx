@@ -113,6 +113,7 @@ export default function ArtifactSection({
                   fontSize: { xs: "1.05rem", md: "1.15rem" },
                   lineHeight: 1.3,
                   mb: 1,
+                  color: palette.card.heading,
                 }}
               >
                 {item.title}
@@ -120,7 +121,7 @@ export default function ArtifactSection({
               <Typography
                 variant="body2"
                 sx={{
-                  color: palette.text.secondary,
+                  color: palette.card.text,
                   lineHeight: 1.6,
                 }}
               >
