@@ -40,12 +40,12 @@
         "description": "Feuille de route formatée SAFe couvrant les fonctionnalités améliorées : thématisation, i18n, animations, accessibilité et référencement."
       },
       "prdLightbox": {
-        "title": "Document d'exigences produit — Project Grid & Lightbox",
-        "description": "PRD détaillé pour la disposition de la grille de projet du portfolio et les modèles d'interaction de la lightbox."
+        "title": "Document d'exigences produit — Galerie de projets et Lightbox",
+        "description": "PRD détaillé pour la disposition de la galerie de projets du portfolio et les modèles d'interaction de la lightbox."
       },
       "idsLightbox": {
-        "title": "Spécification de conception d'interaction — Project Grid & Lightbox",
-        "description": "IDS complet documentant les modèles d'interaction, les transitions d'état et le comportement réactif pour les composants de la grille de projet et de la lightbox."
+        "title": "Spécification de conception d'interaction — Galerie de projets et Lightbox",
+        "description": "IDS complet documentant les modèles d'interaction, les transitions d'état et le comportement réactif pour les composants de la galerie de projets et de la lightbox."
       },
       "usabilityTestPlan": {
         "title": "Plan et résultats des tests d'utilisabilité — Galerie de projets et Lightbox",
@@ -54,10 +54,6 @@
       "wcagGuide": {
         "title": "Guide de conformité WCAG 2.2",
         "description": "Guide détaillé mettant en correspondance les critères de succès WCAG 2.2 niveau AA avec l'approche de mise en œuvre du portfolio."
-      },
-      "accessibilityStatement": {
-        "title": "Déclaration d'accessibilité",
-        "description": "Engagement public en matière d'accessibilité documentant la portée de la conformité, la méthodologie de test et les limites connues."
       },
       "adrI18n": {
         "title": "Compte rendu de décision d'architecture — Sélection de la bibliothèque i18n",

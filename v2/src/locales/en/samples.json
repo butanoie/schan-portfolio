@@ -55,10 +55,6 @@
         "title": "WCAG 2.2 Compliance Guide",
         "description": "Detailed guide mapping WCAG 2.2 Level AA success criteria to the portfolio's implementation approach."
       },
-      "accessibilityStatement": {
-        "title": "Accessibility Statement",
-        "description": "Public-facing accessibility commitment documenting compliance scope, testing methodology, and known limitations."
-      },
       "adrI18n": {
         "title": "Architecture Decision Record — i18n Library Selection",
         "description": "ADR evaluating internationalization approaches for the Next.js migration, documenting the rationale for selecting i18next."

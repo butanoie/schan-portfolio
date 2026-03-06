@@ -4,7 +4,7 @@
  * Verifies:
  * - getLocalizedSamplesData returns correct structure
  * - All sections have heading and intro
- * - All artifacts have title, description, and formats
+ * - All artifacts have title and description; downloadable artifacts have formats
  * - Page deck data is correctly formed
  */
 
