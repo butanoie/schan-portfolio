@@ -77,6 +77,14 @@
         "title": "Stratégie de changelog et notes de version",
         "description": "Philosophie de changelog multi-fichiers documentant les conventions de nommage, le format de version et le processus de distillation des notes de version."
       },
+      "gherkinPhase3": {
+        "title": "Cas de test Gherkin — Développement phase 3",
+        "description": "Critères d'acceptation de type BDD pour la phase des pages principales, couvrant la grille du portfolio, la lightbox projet, le CV et les fonctionnalités du colophon au format Given/When/Then."
+      },
+      "gherkinPhase4": {
+        "title": "Cas de test Gherkin — Développement phase 4",
+        "description": "Critères d'acceptation de type BDD pour les fonctionnalités améliorées, y compris la thématisation, l'internationalisation, les animations de défilement, la conformité à l'accessibilité et l'optimisation du référencement."
+      },
       "costSavingsRoadmap": {
         "title": "Feuille de route pour des économies supplémentaires",
         "description": "Présentation stratégique décrivant les possibilités d'optimisation des coûts d'infrastructure au-delà de la réduction initiale de 40 %, avec un plan de mise en œuvre progressive et les économies prévues."
@@ -91,12 +99,8 @@
       }
     },
     "labels": {
-      "comingSoon": "Bientôt disponible",
       "download": "Télécharger",
-      "downloadFormat": "Télécharger {{format}}",
-      "viewDocument": "Voir le document : {{title}}",
-      "format": "{{format}}",
-      "pdfOnly": "PDF uniquement"
+      "viewDocument": "Voir le document : {{title}}"
     },
     "meta": {
       "title": "Échantillons d'écriture | Portfolio de Sing Chan",

@@ -2,8 +2,7 @@
  * Writing Samples page data — section definitions and artifact mappings.
  *
  * Defines the five content sections and their associated document artifacts.
- * Each artifact specifies its translation keys, available download formats,
- * and availability status.
+ * Each artifact specifies its translation keys and download format.
  *
  * All user-facing strings are localized via i18n from en/samples.json and fr/samples.json.
  * Use getLocalizedSamplesData(t, locale) to retrieve translated content.
@@ -23,8 +22,8 @@ import { getLocalizedImageUrl } from '../utils/imageLocalization';
  * Section order follows the narrative throughline:
  * Vision → Design → Technology → Operations → Impact
  *
- * Each item's `formats` array and `available` flag determine how
- * the artifact card renders (download buttons vs. "Coming Soon" chip).
+ * Each item's `format` determines the download button
+ * rendered on the artifact card.
  *
  * @returns Array of artifact section definitions with translation keys
  */
@@ -37,29 +36,17 @@ function getArtifactSections(): ArtifactSection[] {
         {
           titleKey: 'samples.artifacts.productRoadmapPhase3.title',
           descriptionKey: 'samples.artifacts.productRoadmapPhase3.description',
-          formats: [
-            { label: 'PDF', href: '/documents/PHASE_3_PRODUCT_ROADMAP.pdf' },
-            { label: 'Markdown', href: '/documents/PHASE_3_PRODUCT_ROADMAP.md' },
-          ],
-          available: true,
+          format: { label: 'Markdown', href: '/documents/PHASE_3_PRODUCT_ROADMAP.md' },
         },
         {
           titleKey: 'samples.artifacts.productRoadmapPhase4.title',
           descriptionKey: 'samples.artifacts.productRoadmapPhase4.description',
-          formats: [
-            { label: 'PDF', href: '/documents/PHASE_4_PRODUCT_ROADMAP.pdf' },
-            { label: 'Markdown', href: '/documents/PHASE_4_PRODUCT_ROADMAP.md' },
-          ],
-          available: true,
+          format: { label: 'Markdown', href: '/documents/PHASE_4_PRODUCT_ROADMAP.md' },
         },
         {
           titleKey: 'samples.artifacts.prdLightbox.title',
           descriptionKey: 'samples.artifacts.prdLightbox.description',
-          formats: [
-            { label: 'PDF', href: '/documents/PRD_Project_Grid_and_Lightbox.pdf' },
-            { label: 'Markdown', href: '/documents/PRD_Project_Grid_and_Lightbox.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/PRD_Project_Grid_and_Lightbox.pdf' },
         },
       ],
     },
@@ -70,29 +57,17 @@ function getArtifactSections(): ArtifactSection[] {
         {
           titleKey: 'samples.artifacts.idsLightbox.title',
           descriptionKey: 'samples.artifacts.idsLightbox.description',
-          formats: [
-            { label: 'PDF', href: '/documents/IDS_Project_Grid_and_Lightbox.pdf' },
-            { label: 'Markdown', href: '/documents/IDS_Project_Grid_and_Lightbox.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/IDS_Project_Grid_and_Lightbox.pdf' },
         },
         {
           titleKey: 'samples.artifacts.wcagGuide.title',
           descriptionKey: 'samples.artifacts.wcagGuide.description',
-          formats: [
-            { label: 'PDF', href: '/documents/WCAG_2_2_Compliance_Guide.pdf' },
-            { label: 'Markdown', href: '/documents/WCAG_2_2_Compliance_Guide.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/WCAG_2_2_Compliance_Guide.pdf' },
         },
         {
           titleKey: 'samples.artifacts.accessibilityStatement.title',
           descriptionKey: 'samples.artifacts.accessibilityStatement.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Accessibility_Statement.pdf' },
-            { label: 'Markdown', href: '/documents/Accessibility_Statement.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/Accessibility_Statement.pdf' },
         },
       ],
     },
@@ -103,20 +78,12 @@ function getArtifactSections(): ArtifactSection[] {
         {
           titleKey: 'samples.artifacts.adrI18n.title',
           descriptionKey: 'samples.artifacts.adrI18n.description',
-          formats: [
-            { label: 'PDF', href: '/documents/ADR_i18n_Library_Selection.pdf' },
-            { label: 'Markdown', href: '/documents/ADR_i18n_Library_Selection.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/ADR_i18n_Library_Selection.pdf' },
         },
         {
           titleKey: 'samples.artifacts.frameworkEval.title',
           descriptionKey: 'samples.artifacts.frameworkEval.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Front_End_Framework_Evaluation.pdf' },
-            { label: 'Markdown', href: '/documents/Front_End_Framework_Evaluation.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/Front_End_Framework_Evaluation.pdf' },
         },
       ],
     },
@@ -127,29 +94,27 @@ function getArtifactSections(): ArtifactSection[] {
         {
           titleKey: 'samples.artifacts.qaStrategy.title',
           descriptionKey: 'samples.artifacts.qaStrategy.description',
-          formats: [
-            { label: 'PDF', href: '/documents/QA_Automation_Strategy.pdf' },
-            { label: 'Markdown', href: '/documents/QA_Automation_Strategy.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/QA_Automation_Strategy.pdf' },
         },
         {
           titleKey: 'samples.artifacts.onboardingGuide.title',
           descriptionKey: 'samples.artifacts.onboardingGuide.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Product_Knowledge_Onboarding_Guide.pdf' },
-            { label: 'Markdown', href: '/documents/Product_Knowledge_Onboarding_Guide.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/Product_Knowledge_Onboarding_Guide.pdf' },
         },
         {
           titleKey: 'samples.artifacts.changelogStrategy.title',
           descriptionKey: 'samples.artifacts.changelogStrategy.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Changelog_and_Release_Notes_Strategy.pdf' },
-            { label: 'Markdown', href: '/documents/Changelog_and_Release_Notes_Strategy.md' },
-          ],
-          available: true,
+          format: { label: 'PDF', href: '/documents/Changelog_and_Release_Notes_Strategy.pdf' },
+        },
+        {
+          titleKey: 'samples.artifacts.gherkinPhase3.title',
+          descriptionKey: 'samples.artifacts.gherkinPhase3.description',
+          format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_3.md' },
+        },
+        {
+          titleKey: 'samples.artifacts.gherkinPhase4.title',
+          descriptionKey: 'samples.artifacts.gherkinPhase4.description',
+          format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_4.md' },
         },
       ],
     },
@@ -160,28 +125,17 @@ function getArtifactSections(): ArtifactSection[] {
         {
           titleKey: 'samples.artifacts.costCuttingAudit.title',
           descriptionKey: 'samples.artifacts.costCuttingAudit.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Cost_Cutting_Audit.pdf' },
-            { label: 'Markdown', href: '/documents/Cost_Cutting_Audit.md' },
-          ],
-          available: false,
+          format: { label: 'PDF', href: '/documents/Cost_Cutting_Audit.pdf' },
         },
         {
           titleKey: 'samples.artifacts.costSavingsRoadmap.title',
           descriptionKey: 'samples.artifacts.costSavingsRoadmap.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Additional_Cost_Savings_Roadmap.pdf' },
-          ],
-          available: false,
+          format: { label: 'PDF', href: '/documents/Additional_Cost_Savings_Roadmap.pdf' },
         },
         {
           titleKey: 'samples.artifacts.elasticsearchRunbook.title',
           descriptionKey: 'samples.artifacts.elasticsearchRunbook.description',
-          formats: [
-            { label: 'PDF', href: '/documents/Elasticsearch_Scale_Down_Runbook.pdf' },
-            { label: 'Markdown', href: '/documents/Elasticsearch_Scale_Down_Runbook.md' },
-          ],
-          available: false,
+          format: { label: 'Markdown', href: '/documents/Elasticsearch_Scale_Down_Runbook.md' },
         },
       ],
     },
@@ -206,10 +160,8 @@ export interface SamplesData {
       title: string;
       /** Artifact description */
       description: string;
-      /** Available download formats */
-      formats: { label: string; href: string }[];
-      /** Whether the document is available for download */
-      available: boolean;
+      /** Download format */
+      format: { label: string; href: string };
     }[];
   }[];
 }
@@ -252,8 +204,7 @@ export function getLocalizedSamplesData(
       items: section.items.map((item) => ({
         title: t(item.titleKey, { ns: 'pages' }),
         description: t(item.descriptionKey, { ns: 'pages' }),
-        formats: item.formats,
-        available: item.available,
+        format: item.format,
       })),
     })),
   };

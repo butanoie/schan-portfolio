@@ -4,10 +4,9 @@
  * Verifies:
  * - Section heading renders as h2
  * - Intro paragraph renders
- * - Available artifacts show download buttons with correct aria-labels
- * - Coming-soon artifacts show "Coming Soon" chip, no download buttons
+ * - Artifacts show download button with correct aria-label
  * - Download links have target="_blank" and rel="noopener noreferrer"
- * - PDF-only artifacts show only one download button
+ * - Each artifact has exactly one download button
  * - Accessibility: axe-core scan passes
  */
 
@@ -44,41 +43,25 @@ vi.mock('next/image', () => ({
   },
 }));
 
-/** Available artifact with PDF and Markdown formats. */
-const availableItem = {
+/** Artifact with PDF format. */
+const pdfItem = {
   title: 'Product Roadmap — Phase 3',
   description: 'SAFe-formatted roadmap with epics and features.',
-  formats: [
-    { label: 'PDF', href: '/documents/PHASE_3_PRODUCT_ROADMAP.pdf' },
-    { label: 'Markdown', href: '/documents/PHASE_3_PRODUCT_ROADMAP.md' },
-  ],
-  available: true,
+  format: { label: 'PDF', href: '/documents/PHASE_3_PRODUCT_ROADMAP.pdf' },
 };
 
-/** PDF-only available artifact. */
-const pdfOnlyItem = {
-  title: 'Additional Cost Savings Roadmap',
-  description: 'Strategic presentation outlining cost optimization.',
-  formats: [{ label: 'PDF', href: '/documents/Additional_Cost_Savings_Roadmap.pdf' }],
-  available: true,
-};
-
-/** Coming-soon artifact with no downloads. */
-const comingSoonItem = {
-  title: 'Elasticsearch Scale-Down Runbook',
-  description: 'Step-by-step operational runbook.',
-  formats: [
-    { label: 'PDF', href: '/documents/Elasticsearch_Scale_Down_Runbook.pdf' },
-    { label: 'Markdown', href: '/documents/Elasticsearch_Scale_Down_Runbook.md' },
-  ],
-  available: false,
+/** Artifact with Markdown format. */
+const markdownItem = {
+  title: 'Gherkin Test Cases — Phase 3 Development',
+  description: 'BDD-style acceptance criteria for the core pages phase.',
+  format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_3.md' },
 };
 
 /** Default section props for testing. */
 const defaultProps = {
   heading: 'Defining the Vision',
   intro: 'Product strategy begins with a clear understanding.',
-  items: [availableItem, comingSoonItem],
+  items: [pdfItem, markdownItem],
 };
 
 describe('ArtifactSection', () => {
@@ -100,7 +83,7 @@ describe('ArtifactSection', () => {
     const h3s = screen.getAllByRole('heading', { level: 3 });
     expect(h3s).toHaveLength(2);
     expect(h3s[0]).toHaveTextContent('Product Roadmap — Phase 3');
-    expect(h3s[1]).toHaveTextContent('Elasticsearch Scale-Down Runbook');
+    expect(h3s[1]).toHaveTextContent('Gherkin Test Cases — Phase 3 Development');
   });
 
   it('should render artifact descriptions', () => {
@@ -109,31 +92,25 @@ describe('ArtifactSection', () => {
       screen.getByText('SAFe-formatted roadmap with epics and features.')
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Step-by-step operational runbook.')
+      screen.getByText('BDD-style acceptance criteria for the core pages phase.')
     ).toBeInTheDocument();
   });
 
-  describe('available artifacts', () => {
-    it('should render download buttons for each format', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[availableItem]}
-        />
-      );
+  describe('download buttons', () => {
+    it('should render one download button per artifact', () => {
+      render(<ArtifactSection {...defaultProps} />);
+      const links = screen.getAllByRole('link');
+      expect(links).toHaveLength(2);
+    });
+
+    it('should render the correct format label on each button', () => {
+      render(<ArtifactSection {...defaultProps} />);
       expect(screen.getByText('PDF')).toBeInTheDocument();
       expect(screen.getByText('Markdown')).toBeInTheDocument();
     });
 
     it('should set target="_blank" and rel="noopener noreferrer" on download links', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[availableItem]}
-        />
-      );
+      render(<ArtifactSection {...defaultProps} />);
       const links = screen.getAllByRole('link');
       for (const link of links) {
         expect(link).toHaveAttribute('target', '_blank');
@@ -142,100 +119,21 @@ describe('ArtifactSection', () => {
     });
 
     it('should have correct href values on download links', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[availableItem]}
-        />
-      );
+      render(<ArtifactSection {...defaultProps} />);
       const links = screen.getAllByRole('link');
       const hrefs = links.map((l) => l.getAttribute('href'));
       expect(hrefs).toContain('/documents/PHASE_3_PRODUCT_ROADMAP.pdf');
-      expect(hrefs).toContain('/documents/PHASE_3_PRODUCT_ROADMAP.md');
+      expect(hrefs).toContain('/documents/Gherkin_Test_Cases_Phase_3.md');
     });
 
     it('should have descriptive aria-labels on download links', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[availableItem]}
-        />
-      );
+      render(<ArtifactSection {...defaultProps} />);
       const links = screen.getAllByRole('link');
       for (const link of links) {
         expect(link).toHaveAttribute('aria-label');
         const label = link.getAttribute('aria-label')!;
-        expect(label).toContain('Product Roadmap');
+        expect(label.length).toBeGreaterThan(0);
       }
-    });
-
-    it('should not show "Coming Soon" chip for available artifacts', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[availableItem]}
-        />
-      );
-      expect(screen.queryByText('Coming Soon')).not.toBeInTheDocument();
-    });
-  });
-
-  describe('PDF-only artifacts', () => {
-    it('should render only one download button', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[pdfOnlyItem]}
-        />
-      );
-      const links = screen.getAllByRole('link');
-      expect(links).toHaveLength(1);
-      expect(links[0]).toHaveAttribute(
-        'href',
-        '/documents/Additional_Cost_Savings_Roadmap.pdf'
-      );
-    });
-  });
-
-  describe('coming-soon artifacts', () => {
-    it('should show "Coming Soon" chip', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[comingSoonItem]}
-        />
-      );
-      expect(screen.getByText('Coming Soon')).toBeInTheDocument();
-    });
-
-    it('should have aria-label on "Coming Soon" chip', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[comingSoonItem]}
-        />
-      );
-      const chip = screen.getByText('Coming Soon').closest('.MuiChip-root');
-      expect(chip).toHaveAttribute('aria-label');
-      expect(chip!.getAttribute('aria-label')).toContain('Elasticsearch');
-      expect(chip!.getAttribute('aria-label')).toContain('Coming Soon');
-    });
-
-    it('should not render download buttons for coming-soon artifacts', () => {
-      render(
-        <ArtifactSection
-          heading="Test"
-          intro="Intro"
-          items={[comingSoonItem]}
-        />
-      );
-      expect(screen.queryAllByRole('link')).toHaveLength(0);
     });
   });
 

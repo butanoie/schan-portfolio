@@ -135,10 +135,10 @@ describe('SamplesContent', () => {
   });
 
   describe('artifact cards', () => {
-    it('should render 14 artifact titles as h3 headings', () => {
+    it('should render 16 artifact titles as h3 headings', () => {
       render(<SamplesContent />);
       const h3s = screen.getAllByRole('heading', { level: 3 });
-      expect(h3s).toHaveLength(14);
+      expect(h3s).toHaveLength(16);
     });
 
     it('should render specific artifact titles', () => {
@@ -157,19 +157,11 @@ describe('SamplesContent', () => {
       ).toBeInTheDocument();
     });
 
-    it('should render download links for available artifacts', () => {
+    it('should render download links for all artifacts', () => {
       render(<SamplesContent />);
       const links = screen.getAllByRole('link');
-      // 11 available artifacts × 2 formats each = 22, minus PDF-only items
-      // First 4 sections: 3+3+2+3 = 11 items, all available, all have 2 formats = 22 links
-      expect(links.length).toBe(22);
-    });
-
-    it('should render "Coming Soon" chips for unavailable artifacts', () => {
-      render(<SamplesContent />);
-      const comingSoonChips = screen.getAllByText('Coming Soon');
-      // Cost Savings section has 3 coming-soon items
-      expect(comingSoonChips).toHaveLength(3);
+      // 16 artifacts × 1 format each = 16 links
+      expect(links.length).toBe(16);
     });
   });
 
@@ -191,10 +183,10 @@ describe('SamplesContent', () => {
       ).toBeInTheDocument();
     });
 
-    it('should render "Bientôt disponible" for coming-soon items in French', () => {
+    it('should render French download button labels', () => {
       render(<SamplesContent />, { initialLocale: 'fr' });
-      const chips = screen.getAllByText('Bientôt disponible');
-      expect(chips).toHaveLength(3);
+      const links = screen.getAllByRole('link');
+      expect(links.length).toBe(16);
     });
   });
 

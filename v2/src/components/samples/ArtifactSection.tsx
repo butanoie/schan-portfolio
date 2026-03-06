@@ -6,13 +6,13 @@ import {
   Card,
   CardContent,
   CardActions,
-  Chip,
   Button,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import { BRAND_COLORS, NAV_COLORS } from "@/src/constants";
 
 /**
  * Resolved artifact item data for rendering.
@@ -22,10 +22,8 @@ interface ArtifactItemData {
   title: string;
   /** Description of the artifact */
   description: string;
-  /** Available download formats with labels and URLs */
-  formats: { label: string; href: string }[];
-  /** Whether the document is available for download */
-  available: boolean;
+  /** Download format with label and URL */
+  format: { label: string; href: string };
 }
 
 /**
@@ -44,9 +42,8 @@ interface ArtifactSectionProps {
  * Renders a themed section of the Writing Samples page with artifact cards.
  *
  * Each section displays an h2 heading in Oswald font, an introductory paragraph,
- * and a responsive grid of artifact cards. Available artifacts show download
- * buttons for each format (PDF, Markdown); unavailable artifacts display a
- * "Coming Soon" chip with no download actions.
+ * and a responsive grid of artifact cards. Each card shows the artifact title,
+ * description, and a download button for the document's format (PDF or Markdown).
  *
  * @param props - Section content including heading, intro, and artifact items
  * @param props.heading - Section heading text displayed as h2
@@ -113,46 +110,23 @@ export default function ArtifactSection({
             sx={{
               display: "flex",
               flexDirection: "column",
-              transition: "box-shadow 200ms ease",
-              ...(item.available
-                ? { "&:hover": { boxShadow: 3 } }
-                : {
-                    borderStyle: "dashed",
-                    backgroundColor: palette.surface,
-                  }),
+              backgroundColor: palette.card.background,
             }}
           >
             <CardContent sx={{ flexGrow: 1 }}>
-              <Box
+              <Typography
+                variant="h6"
+                component="h3"
                 sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                  gap: 1,
+                  fontFamily: FONT_FAMILY_HEADING,
+                  fontWeight: 600,
+                  fontSize: { xs: "1.05rem", md: "1.15rem" },
+                  lineHeight: 1.3,
                   mb: 1,
                 }}
               >
-                <Typography
-                  variant="h6"
-                  component="h3"
-                  sx={{
-                    fontFamily: FONT_FAMILY_HEADING,
-                    fontWeight: 600,
-                    fontSize: { xs: "1.05rem", md: "1.15rem" },
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {item.title}
-                </Typography>
-                {!item.available && (
-                  <Chip
-                    label={t("samples.labels.comingSoon", { ns: "pages" })}
-                    size="small"
-                    aria-label={`${item.title}: ${t("samples.labels.comingSoon", { ns: "pages" })}`}
-                    sx={{ flexShrink: 0 }}
-                  />
-                )}
-              </Box>
+                {item.title}
+              </Typography>
               <Typography
                 variant="body2"
                 sx={{
@@ -164,27 +138,34 @@ export default function ArtifactSection({
               </Typography>
             </CardContent>
 
-            {item.available && item.formats.length > 0 && (
-              <CardActions sx={{ px: 2, pb: 2, pt: 0, gap: 1 }}>
-                {item.formats.map((format) => (
-                  <Button
-                    key={format.label}
-                    href={format.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    size="small"
-                    startIcon={<DownloadIcon />}
-                    aria-label={t("samples.labels.viewDocument", {
-                      ns: "pages",
-                      title: `${item.title}, ${format.label}`,
-                    })}
-                    sx={{ minHeight: 44, minWidth: 44 }}
-                  >
-                    {format.label}
-                  </Button>
-                ))}
-              </CardActions>
-            )}
+            <CardActions sx={{ px: 2, pb: 2, pt: 0 }}>
+              <Button
+                href={item.format.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="small"
+                startIcon={<DownloadIcon />}
+                aria-label={t("samples.labels.viewDocument", {
+                  ns: "pages",
+                  title: `${item.title}, ${item.format.label}`,
+                })}
+                variant="contained"
+                sx={{
+                  minHeight: 44,
+                  width: 120,
+                  backgroundColor: BRAND_COLORS.sage,
+                  color: NAV_COLORS.text,
+                  boxShadow: 0,
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: NAV_COLORS.inactiveHover,
+                    boxShadow: 0,
+                  },
+                }}
+              >
+                {item.format.label}
+              </Button>
+            </CardActions>
           </Card>
         ))}
       </Box>

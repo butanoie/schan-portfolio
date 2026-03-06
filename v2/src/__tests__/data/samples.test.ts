@@ -4,9 +4,7 @@
  * Verifies:
  * - getLocalizedSamplesData returns correct structure
  * - All sections have heading and intro
- * - All artifacts have title and description
- * - Available artifacts have non-empty formats arrays
- * - Coming-soon artifacts have available: false
+ * - All artifacts have title, description, and formats
  * - Page deck data is correctly formed
  */
 
@@ -71,14 +69,14 @@ describe('getLocalizedSamplesData', () => {
       }
     });
 
-    it('should have correct item counts per section (3, 3, 2, 3, 3)', () => {
+    it('should have correct item counts per section (3, 3, 2, 5, 3)', () => {
       const counts = data.sections.map((s) => s.items.length);
-      expect(counts).toEqual([3, 3, 2, 3, 3]);
+      expect(counts).toEqual([3, 3, 2, 5, 3]);
     });
 
-    it('should total 14 artifacts across all sections', () => {
+    it('should total 16 artifacts across all sections', () => {
       const total = data.sections.reduce((sum, s) => sum + s.items.length, 0);
-      expect(total).toBe(14);
+      expect(total).toBe(16);
     });
   });
 
@@ -92,54 +90,29 @@ describe('getLocalizedSamplesData', () => {
       }
     });
 
-    it('should have formats array for every artifact', () => {
+    it('should have a format with label and href for every artifact', () => {
       for (const section of data.sections) {
         for (const item of section.items) {
-          expect(Array.isArray(item.formats)).toBe(true);
-          expect(item.formats.length).toBeGreaterThan(0);
+          expect(item.format).toBeDefined();
+          expect(item.format.label).toBeTruthy();
+          expect(item.format.href).toBeTruthy();
         }
       }
     });
 
-    it('should have available boolean for every artifact', () => {
-      for (const section of data.sections) {
-        for (const item of section.items) {
-          expect(typeof item.available).toBe('boolean');
-        }
-      }
-    });
-
-    it('should have available: true for first four sections', () => {
-      for (const section of data.sections.slice(0, 4)) {
-        for (const item of section.items) {
-          expect(item.available).toBe(true);
-        }
-      }
-    });
-
-    it('should have available: false for cost savings section items', () => {
-      const costSavings = data.sections[4];
-      for (const item of costSavings.items) {
-        expect(item.available).toBe(false);
-      }
-    });
-
-    it('should have PDF-only format for cost savings roadmap', () => {
+    it('should have PDF format for cost savings roadmap', () => {
       const costSavings = data.sections[4];
       const roadmap = costSavings.items.find((i) =>
         i.title.includes('costSavingsRoadmap')
       );
       expect(roadmap).toBeDefined();
-      expect(roadmap!.formats).toHaveLength(1);
-      expect(roadmap!.formats[0].label).toBe('PDF');
+      expect(roadmap!.format.label).toBe('PDF');
     });
 
     it('should have valid href paths for all formats', () => {
       for (const section of data.sections) {
         for (const item of section.items) {
-          for (const format of item.formats) {
-            expect(format.href).toMatch(/^\/documents\/.+\.(pdf|md)$/);
-          }
+          expect(item.format.href).toMatch(/^\/documents\/.+\.(pdf|md)$/);
         }
       }
     });

@@ -77,6 +77,14 @@
         "title": "Changelog & Release Notes Strategy",
         "description": "Multi-file changelog philosophy documenting naming conventions, versioning format, and release note distillation process."
       },
+      "gherkinPhase3": {
+        "title": "Gherkin Test Cases — Phase 3 Development",
+        "description": "BDD-style acceptance criteria for the core pages phase, covering portfolio grid, project lightbox, résumé, and colophon features in Given/When/Then format."
+      },
+      "gherkinPhase4": {
+        "title": "Gherkin Test Cases — Phase 4 Development",
+        "description": "BDD-style acceptance criteria for enhanced features including theming, internationalization, scroll animations, accessibility compliance, and SEO optimization."
+      },
       "costSavingsRoadmap": {
         "title": "Additional Cost Savings Roadmap",
         "description": "Strategic presentation outlining further infrastructure cost optimization opportunities beyond the initial 40% reduction, with phased implementation plan and projected savings."
@@ -91,12 +99,8 @@
       }
     },
     "labels": {
-      "comingSoon": "Coming Soon",
       "download": "Download",
-      "downloadFormat": "Download {{format}}",
-      "viewDocument": "View document: {{title}}",
-      "format": "{{format}}",
-      "pdfOnly": "PDF only"
+      "viewDocument": "View document: {{title}}"
     },
     "meta": {
       "title": "Writing Samples | Sing Chan's Portfolio",

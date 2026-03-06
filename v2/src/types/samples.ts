@@ -10,7 +10,7 @@
 /**
  * A downloadable format for an artifact document.
  *
- * Each artifact can have multiple formats (e.g., PDF and Markdown).
+ * Each artifact has exactly one format (either PDF or Markdown).
  */
 export interface ArtifactFormat {
   /** Display label for the format (e.g., "PDF", "Markdown") */
@@ -23,17 +23,15 @@ export interface ArtifactFormat {
  * A single artifact item within a section.
  *
  * Represents one document or writing sample with its metadata
- * and available download formats.
+ * and download format.
  */
 export interface ArtifactItem {
   /** Translation key for the artifact title */
   titleKey: string;
   /** Translation key for the artifact description */
   descriptionKey: string;
-  /** Available download formats for this artifact */
-  formats: ArtifactFormat[];
-  /** Whether the artifact document is available for download */
-  available: boolean;
+  /** Download format for this artifact */
+  format: ArtifactFormat;
 }
 
 /**
