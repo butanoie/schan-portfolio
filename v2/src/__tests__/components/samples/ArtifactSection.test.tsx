@@ -13,6 +13,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '../../test-utils';
 import ArtifactSection from '@/src/components/samples/ArtifactSection';
+import type { ResolvedArtifactItem } from '@/src/data/samples';
 import { runAxe } from '../../utils/axe-helpers';
 
 /**
@@ -44,14 +45,14 @@ vi.mock('next/image', () => ({
 }));
 
 /** Artifact with PDF format. */
-const pdfItem = {
+const pdfItem: ResolvedArtifactItem = {
   title: 'Product Roadmap — Phase 3',
   description: 'SAFe-formatted roadmap with epics and features.',
   format: { label: 'PDF', href: '/documents/PHASE_3_PRODUCT_ROADMAP.pdf' },
 };
 
 /** Artifact with Markdown format. */
-const markdownItem = {
+const markdownItem: ResolvedArtifactItem = {
   title: 'Gherkin Test Cases — Phase 3 Development',
   description: 'BDD-style acceptance criteria for the core pages phase.',
   format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_3.md' },

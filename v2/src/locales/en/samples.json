@@ -1,7 +1,5 @@
 {
   "samples": {
-    "pageTitle": "Writing Samples | Sing Chan's Portfolio",
-    "pageDescription": "Professional documentation samples spanning product strategy, agile planning, UX design, technical evaluation, operations, and cost optimization.",
     "pageDeck": {
       "imageAlt": "Writing Samples — professional documentation showcase",
       "heading": "Writing Samples",
@@ -101,11 +99,6 @@
     "labels": {
       "download": "Download",
       "viewDocument": "View document: {{title}}"
-    },
-    "meta": {
-      "title": "Writing Samples | Sing Chan's Portfolio",
-      "description": "Professional documentation samples spanning product strategy, agile artifacts, UX design, technical evaluations, and operational processes.",
-      "keywords": "writing samples, product documentation, SAFe agile, UX design, technical documentation, product management"
     }
   }
 }

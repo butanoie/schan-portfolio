@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Divider } from "@mui/material";
 import { getLocalizedSamplesData } from "../../data/samples";
 import { useI18n } from "../../hooks/useI18n";
@@ -21,14 +22,14 @@ import ArtifactSection from "./ArtifactSection";
  */
 export default function SamplesContent() {
   const { t, locale } = useI18n();
-  const data = getLocalizedSamplesData(t, locale);
+  const data = useMemo(() => getLocalizedSamplesData(t, locale), [t, locale]);
 
   return (
     <>
       <PageDeck content={data.pageDeck} />
 
-      {data.sections.map((section) => (
-        <div key={section.heading}>
+      {data.sections.map((section, sectionIndex) => (
+        <div key={sectionIndex}>
           <Divider sx={{ my: 6, mx: { xs: 0, md: 8 } }} />
           <ScrollAnimatedSection>
             <ArtifactSection

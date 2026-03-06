@@ -13,18 +13,7 @@ import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
 import { BRAND_COLORS, NAV_COLORS } from "@/src/constants";
-
-/**
- * Resolved artifact item data for rendering.
- */
-interface ArtifactItemData {
-  /** Display title for the artifact */
-  title: string;
-  /** Description of the artifact */
-  description: string;
-  /** Download format with label and URL */
-  format: { label: string; href: string };
-}
+import type { ResolvedArtifactItem } from "@/src/data/samples";
 
 /**
  * Props for the ArtifactSection component.
@@ -35,7 +24,7 @@ interface ArtifactSectionProps {
   /** Section introduction paragraph */
   intro: string;
   /** Artifact items to render as cards */
-  items: ArtifactItemData[];
+  items: ResolvedArtifactItem[];
 }
 
 /**
@@ -105,7 +94,7 @@ export default function ArtifactSection({
       >
         {items.map((item) => (
           <Card
-            key={item.title}
+            key={item.format.href}
             variant="outlined"
             sx={{
               display: "flex",

@@ -1,7 +1,5 @@
 {
   "samples": {
-    "pageTitle": "Échantillons d'écriture | Portfolio de Sing Chan",
-    "pageDescription": "Échantillons de documentation professionnelle couvrant la stratégie produit, la planification agile, la conception UX, l'évaluation technique, les opérations et l'optimisation des coûts.",
     "pageDeck": {
       "imageAlt": "Exemples de rédaction — vitrine de la documentation professionnelle",
       "heading": "Échantillons d'écriture",
@@ -101,11 +99,6 @@
     "labels": {
       "download": "Télécharger",
       "viewDocument": "Voir le document : {{title}}"
-    },
-    "meta": {
-      "title": "Échantillons d'écriture | Portfolio de Sing Chan",
-      "description": "Exemples de documentation professionnelle couvrant la stratégie produit, les artefacts agiles, la conception UX, les évaluations techniques et les processus opérationnels.",
-      "keywords": "exemples de rédaction, documentation produit, SAFe agile, UX design, documentation technique, gestion de produit"
     }
   }
 }

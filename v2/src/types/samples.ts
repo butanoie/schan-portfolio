@@ -7,14 +7,17 @@
  * @module types/samples
  */
 
+/** Allowed format labels for artifact documents. */
+export type FormatLabel = 'PDF' | 'Markdown';
+
 /**
  * A downloadable format for an artifact document.
  *
  * Each artifact has exactly one format (either PDF or Markdown).
  */
 export interface ArtifactFormat {
-  /** Display label for the format (e.g., "PDF", "Markdown") */
-  label: string;
+  /** Display label for the format */
+  label: FormatLabel;
   /** URL path to the downloadable file */
   href: string;
 }

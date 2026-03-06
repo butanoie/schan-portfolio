@@ -10,25 +10,22 @@
  * @module data/samples
  */
 
-import type { ArtifactSection } from '../types/samples';
+import type { ArtifactSection, FormatLabel } from '../types/samples';
 import type { PageDeckData } from '../types';
 import type { TranslationFunction } from '../hooks/useI18n';
 import type { Locale } from '../lib/i18n-constants';
 import { getLocalizedImageUrl } from '../utils/imageLocalization';
 
 /**
- * Defines the five artifact sections with their document items.
+ * Static artifact section definitions with translation keys.
  *
  * Section order follows the narrative throughline:
  * Vision → Design → Technology → Operations → Impact
  *
  * Each item's `format` determines the download button
  * rendered on the artifact card.
- *
- * @returns Array of artifact section definitions with translation keys
  */
-function getArtifactSections(): ArtifactSection[] {
-  return [
+const ARTIFACT_SECTIONS: ArtifactSection[] = [
     {
       headingKey: 'samples.sections.productStrategy.heading',
       introKey: 'samples.sections.productStrategy.intro',
@@ -140,6 +137,17 @@ function getArtifactSections(): ArtifactSection[] {
       ],
     },
   ];
+
+/**
+ * A resolved artifact item with translated strings, ready for rendering.
+ */
+export interface ResolvedArtifactItem {
+  /** Artifact display title */
+  title: string;
+  /** Artifact description */
+  description: string;
+  /** Download format */
+  format: { label: FormatLabel; href: string };
 }
 
 /**
@@ -155,14 +163,7 @@ export interface SamplesData {
     /** Section introduction paragraph */
     intro: string;
     /** Artifact items with resolved titles and descriptions */
-    items: {
-      /** Artifact display title */
-      title: string;
-      /** Artifact description */
-      description: string;
-      /** Download format */
-      format: { label: string; href: string };
-    }[];
+    items: ResolvedArtifactItem[];
   }[];
 }
 
@@ -185,7 +186,7 @@ export function getLocalizedSamplesData(
   t: TranslationFunction,
   locale: Locale
 ): SamplesData {
-  const artifactSections = getArtifactSections();
+  const artifactSections = ARTIFACT_SECTIONS;
 
   return {
     pageDeck: {
