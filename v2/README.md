@@ -2,7 +2,7 @@
 
 Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and Material UI. This is a modernization of the 2013 legacy portfolio (see `../v1`).
 
-## Current Status: Phase 5 Complete ✅ — Phase 6 Next
+## Current Status: Phase 7 In Progress — Monitoring & Analytics
 
 **Completed:**
 
@@ -26,8 +26,12 @@ Modern portfolio website for Sing Chan, built with Next.js 16+, TypeScript, and 
   - ✅ Task 5.4: Client/server boundary audit (6 components converted to server)
   - ✅ Task 5.5: Static Site Generation (home page SSG)
   - ✅ Task 5.6: Performance audits (Lighthouse desktop 97–100, mobile 90–92, SEO 100)
+- ✅ Phase 6: Deployment & Migration
+  - ✅ Railway hosting (dev + production environments)
+  - ✅ CI/CD via GitHub Actions (auto-deploy dev, manual production)
+  - ✅ Deployment approval gates and documentation
 
-**Next: Phase 6 — Deployment & Migration**
+**Current: Phase 7 — Monitoring & Analytics**
 
 ## Phase 1 Complete - Foundation & Setup ✅
 
@@ -459,7 +463,7 @@ Tests run automatically:
 
 - **Pre-commit:** Git hooks run tests on staged files
 - **Pre-push:** All tests must pass before pushing
-- **CI Pipeline:** (Coming in Phase 6) Tests run on every PR
+- **CI Pipeline:** GitHub Actions runs lint, type check, and tests on every PR
 
 ### Test Metrics (Phase 5 Complete)
 
@@ -537,10 +541,9 @@ See the [Modernization Plan](../docs/active/MODERNIZATION_PLAN.md) for the compl
   - ✅ Task 3.4: Shared Components - Lightbox, skeleton loaders, thought bubbles
 - ✅ **Phase 4:** Enhanced Features - Theme switching, i18n, animations, WCAG AA, SEO
 
-### Upcoming Phases
+### Current Phase
 
-- ⬜ **Phase 6:** Deployment & Migration - Hosting, CI/CD, production launch
-- ⬜ **Phase 7:** Post-Launch - Monitoring, analytics, ongoing enhancements
+- 🔄 **Phase 7:** Monitoring & Analytics - PostHog, Sentry, UptimeRobot, Dependabot
 
 ### Key Achievements (Phase 5 Complete)
 
