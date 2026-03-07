@@ -2,15 +2,55 @@ name: Manual Deploy to Production
 
 on:
   workflow_dispatch:
-    inputs:
-      ref:
-        description: 'Git reference to deploy (branch, tag, or commit SHA)'
-        required: false
-        default: 'main'
-        type: string
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify main branch
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Production deployments are only allowed from the main branch."
+          echo "Current ref: $GITHUB_REF"
+          exit 1
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Verify staging deployment on Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+          RAILWAY_STAGING_ENV_ID: ${{ vars.RAILWAY_STAGING_ENVIRONMENT_ID }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          echo "Checking Railway staging for successful deployment of commit $COMMIT_SHA..."
+
+          # Query Railway GraphQL API for deployments matching this commit in staging
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer $RAILWAY_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"query\": \"query { deployments(input: { projectId: \\\"$RAILWAY_PROJECT_ID\\\", environmentId: \\\"$RAILWAY_STAGING_ENV_ID\\\" }) { edges { node { id status meta { commitHash } } } } }\"
+            }" \
+            "https://backboard.railway.app/graphql/v2")
+
+          # Check if any deployment matches this commit SHA and has SUCCESS status
+          MATCH=$(echo "$RESPONSE" | jq -r \
+            --arg sha "$COMMIT_SHA" \
+            '[.data.deployments.edges[].node | select(.meta.commitHash == $sha and .status == "SUCCESS")] | length')
+
+          if [ "$MATCH" = "0" ] || [ "$MATCH" = "null" ] || [ -z "$MATCH" ]; then
+            echo "::error::No successful staging deployment found on Railway for commit $COMMIT_SHA."
+            echo "::error::Railway must auto-deploy this commit to staging before it can be promoted to production."
+            echo "API response for debugging:"
+            echo "$RESPONSE" | jq '.data.deployments.edges[:3]' 2>/dev/null || echo "$RESPONSE"
+            exit 1
+          fi
+
+          echo "Found $MATCH successful staging deployment(s) for this commit. Proceeding."
+
   deploy-production:
+    needs: preflight
     runs-on: ubuntu-latest
     # ⚠️ REQUIRES MANUAL APPROVAL
     # This deployment is protected by environment rules.
@@ -21,8 +61,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.ref || 'main' }}
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli
@@ -33,8 +71,11 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
       - name: Deployment Summary
+        env:
+          DEPLOYED_BY: ${{ github.actor }}
+          COMMIT_SHA: ${{ github.sha }}
         run: |
-          echo "✅ Deployment to production complete"
-          echo "📋 Deployed ref: ${{ github.event.inputs.ref || 'main' }}"
-          echo "👤 Deployed by: ${{ github.actor }}"
-          echo "⏰ Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "Deployment to production complete"
+          echo "Deployed commit: $COMMIT_SHA"
+          echo "Deployed by: $DEPLOYED_BY"
+          echo "Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
