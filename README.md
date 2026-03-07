@@ -90,6 +90,7 @@ npm run typecheck     # TypeScript check
   - [Testing Setup](docs/setup/TESTING_SETUP.md)
   - [MCP Setup](docs/setup/MCP_SETUP.md)
   - [Railway Deployment](docs/setup/RAILWAY_DEPLOYMENT.md)
+  - [PostHog Analytics](docs/setup/POSTHOG_SETUP.md)
 - **Active Plans**
   - [Phase 7: Monitoring & Analytics](docs/active/PHASE7_DETAILED_PLAN.md)
 - **Archive** — [Completed phase plans](docs/archive/)

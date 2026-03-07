@@ -8,6 +8,7 @@ import ThemeProvider from "@/src/components/ThemeProvider";
 import MainLayout from "@/src/components/common/MainLayout";
 import { LocaleProvider } from "@/src/components/i18n/LocaleProvider";
 import LocaleProviderErrorFallback from "@/src/components/i18n/LocaleProviderErrorFallback";
+import PostHogProvider from "@/src/components/PostHogProvider";
 import {
   SITE_METADATA,
   SITE_URL,
@@ -63,6 +64,7 @@ export const metadata: Metadata = {
  * and main layout structure for all pages.
  *
  * Features:
+ * - PostHogProvider: Privacy-friendly analytics (production only, cookieless)
  * - LocaleProvider: Manages application locale and language
  * - ThemeContextProvider: Manages theme state and persistence
  * - AnimationsContextProvider: Manages animations enabled/disabled state
@@ -97,17 +99,19 @@ export default function RootLayout({
           }}
         />
 
-        <LocaleProviderErrorFallback>
-          <LocaleProvider initialLocale="en">
-            <ThemeContextProvider>
-              <AnimationsContextProvider>
-                <ThemeProvider>
-                  <MainLayout>{children}</MainLayout>
-                </ThemeProvider>
-              </AnimationsContextProvider>
-            </ThemeContextProvider>
-          </LocaleProvider>
-        </LocaleProviderErrorFallback>
+        <PostHogProvider>
+          <LocaleProviderErrorFallback>
+            <LocaleProvider initialLocale="en">
+              <ThemeContextProvider>
+                <AnimationsContextProvider>
+                  <ThemeProvider>
+                    <MainLayout>{children}</MainLayout>
+                  </ThemeProvider>
+                </AnimationsContextProvider>
+              </ThemeContextProvider>
+            </LocaleProvider>
+          </LocaleProviderErrorFallback>
+        </PostHogProvider>
       </body>
     </html>
   );
