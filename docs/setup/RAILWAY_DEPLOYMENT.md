@@ -511,14 +511,16 @@ Before deploying to production, you must:
 3. Select **"Manual Deploy to Production"** workflow
 4. Click **"Run workflow"** button
 5. Ensure **Branch: main** is selected (other branches will be rejected)
-6. Click **"Run workflow"**
+6. Optionally enter a **Commit SHA** to deploy a specific previous commit (must be on `main` and have passed staging). Leave blank to deploy the latest.
+7. Click **"Run workflow"**
 
 #### Step 2: Preflight Checks
 
-The workflow automatically runs two checks before deployment:
+The workflow automatically runs three checks before deployment:
 
 1. **Branch verification** - Confirms the workflow is running from `main`. If triggered from another branch, the workflow fails immediately.
-2. **Staging deployment verification** - Queries the Railway GraphQL API to confirm the commit SHA has a successful deployment in the staging environment. If no successful staging deployment is found, the workflow fails with a descriptive error.
+2. **Commit verification** - If a specific commit SHA was provided, confirms it exists on the `main` branch. Otherwise, uses the current HEAD of `main`.
+3. **Staging deployment verification** - Queries the Railway GraphQL API to confirm the commit SHA has a successful deployment in the staging environment. If no successful staging deployment is found, the workflow fails with a descriptive error.
 
 #### Step 3: Approve the Deployment
 
@@ -547,14 +549,19 @@ The workflow will then proceed to deploy to production.
 
 **Workflow Structure:**
 ```yaml
-# No inputs - always deploys the latest main branch commit
 workflow_dispatch:
+  inputs:
+    commit_sha:
+      description: 'Commit SHA to deploy (leave blank for latest)'
+      required: false
 
 jobs:
   preflight:
-    # Verifies: 1) running from main, 2) commit deployed to staging
+    # Verifies: 1) running from main, 2) commit is on main, 3) deployed to staging
     steps:
       - name: Verify main branch
+      - name: Resolve deploy commit
+      - name: Verify commit exists on main
       - name: Verify staging deployment on Railway
 
   deploy-production:
@@ -601,7 +608,7 @@ This gives you:
 - **Staging Gate**: Production deploys are blocked until the commit succeeds in staging
 - **Control**: Manual approval required for all production deployments
 - **Audit Trail**: GitHub records all deployments and approvers
-- **Rollback Option**: Can re-deploy previous `main` commits (as long as they passed staging)
+- **Rollback**: Deploy any previous `main` commit by specifying its SHA (as long as it passed staging)
 
 ### Setting Up Production Approval
 

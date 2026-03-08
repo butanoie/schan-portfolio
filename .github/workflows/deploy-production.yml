@@ -2,10 +2,18 @@ name: Manual Deploy to Production
 
 on:
   workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA to deploy (must be on main and deployed to staging). Leave blank for latest.'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   preflight:
     runs-on: ubuntu-latest
+    outputs:
+      deploy_sha: ${{ steps.resolve.outputs.sha }}
     steps:
       - name: Verify main branch
         if: github.ref != 'refs/heads/main'
@@ -16,12 +24,44 @@ jobs:
         env:
           GITHUB_REF: ${{ github.ref }}
 
+      - name: Resolve deploy commit
+        id: resolve
+        env:
+          INPUT_SHA: ${{ github.event.inputs.commit_sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          if [ -z "$INPUT_SHA" ]; then
+            echo "No commit SHA specified, using HEAD of main: $HEAD_SHA"
+            echo "sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          else
+            echo "Using specified commit SHA: $INPUT_SHA"
+            echo "sha=$INPUT_SHA" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify commit exists on main
+        if: github.event.inputs.commit_sha != ''
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Confirm commit is reachable from main
+        if: github.event.inputs.commit_sha != ''
+        env:
+          DEPLOY_SHA: ${{ steps.resolve.outputs.sha }}
+        run: |
+          if ! git merge-base --is-ancestor "$DEPLOY_SHA" HEAD; then
+            echo "::error::Commit $DEPLOY_SHA is not on the main branch."
+            exit 1
+          fi
+          echo "Confirmed commit $DEPLOY_SHA is on main."
+
       - name: Verify staging deployment on Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
           RAILWAY_STAGING_ENV_ID: ${{ vars.RAILWAY_STAGING_ENVIRONMENT_ID }}
-          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_SHA: ${{ steps.resolve.outputs.sha }}
         run: |
           echo "Checking Railway staging for successful deployment of commit $COMMIT_SHA..."
 
@@ -61,6 +101,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preflight.outputs.deploy_sha }}
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli
@@ -73,7 +115,7 @@ jobs:
       - name: Deployment Summary
         env:
           DEPLOYED_BY: ${{ github.actor }}
-          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_SHA: ${{ needs.preflight.outputs.deploy_sha }}
         run: |
           echo "Deployment to production complete"
           echo "Deployed commit: $COMMIT_SHA"
