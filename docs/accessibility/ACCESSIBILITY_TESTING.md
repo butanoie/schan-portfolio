@@ -4,7 +4,7 @@
 
 **Date:** February 6, 2026
 **WCAG Standard:** WCAG 2.2 Level AA
-**Framework:** Vitest + axe-core
+**Framework:** Vitest + vitest-axe
 
 ---
 
@@ -39,11 +39,10 @@ npm run preview
 
 ## Overview
 
-This project uses **vitest-axe** and **axe-core** for automated accessibility testing. All component tests include accessibility checks using the `testAccessibility()` helper function.
+This project uses **vitest-axe** for automated accessibility testing. vitest-axe wraps the axe-core engine to provide Vitest-compatible matchers. All component tests include accessibility checks using the `testAccessibility()` helper function.
 
 **Key Tools:**
-- **vitest-axe** - Vitest integration for axe-core
-- **axe-core** - Automated accessibility rule engine
+- **vitest-axe** - Vitest integration for axe-core accessibility engine
 - **@testing-library/react** - Component testing utilities
 - **@testing-library/user-event** - User interaction simulation
 

@@ -90,8 +90,7 @@ This conformance claim applies to:
 
 We use automated accessibility testing tools to continuously verify compliance:
 
-- **axe-core:** Automated accessibility audit engine
-- **vitest-axe:** Accessibility testing in our test suite
+- **vitest-axe:** Accessibility testing in our test suite (axe-core engine)
 - **WCAG Rules:** 11 WCAG success criteria automatically validated
 - **Test Coverage:** 93 dedicated accessibility test cases across 30 test files
 

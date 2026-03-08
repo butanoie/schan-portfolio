@@ -58,7 +58,7 @@ This is a portfolio modernization project migrating **portfolio.singchan.com** f
 | **UI Library** | Material UI v7.3.7, Emotion (CSS-in-JS) |
 | **Theming** | MUI theme with Light, Dark, and High Contrast modes |
 | **Internationalization** | i18next with React hooks integration |
-| **Testing** | Vitest 4.0.18, React Testing Library, @axe-core/react |
+| **Testing** | Vitest 4.0.18, React Testing Library, vitest-axe |
 | **Linting** | ESLint 9, eslint-plugin-jsx-a11y, Prettier 3.8 |
 | **Dev Tools** | Husky 9 (git hooks), lint-staged |
 | **Runtime** | Node.js v25.4.0, npm v11.7.0 |
@@ -142,7 +142,7 @@ Key requirements:
 
 Testing tools:
 - ESLint plugin: `eslint-plugin-jsx-a11y`
-- Runtime: `@axe-core/react`
+- Test-time: `vitest-axe` (axe-core engine)
 - Manual: Screen readers, keyboard navigation
 
 ### 3. Testing Requirements
@@ -553,7 +553,7 @@ npm run lint
   "@testing-library/react": "16.3.2",
   "@testing-library/jest-dom": "6.9.1",
   "@testing-library/user-event": "14.6.1",
-  "@axe-core/react": "4.11.0",
+  "vitest-axe": "0.1.0",
   "eslint": "9.x",
   "prettier": "3.8.x",
   "husky": "9.x"

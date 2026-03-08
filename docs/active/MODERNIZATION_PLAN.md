@@ -137,8 +137,7 @@ The following Gumby features are being **completely removed** in V2:
     - Pre-commit hook runs linting and formatting
     - Hook located at `/.husky/pre-commit`
   - Accessibility testing tools installed:
-    - @axe-core/react for React integration
-    - axe-core for automated accessibility testing
+    - vitest-axe for automated accessibility testing (axe-core engine)
 - [x] Create basic layout components
   - Header component with accessible navigation and active page indication
   - Footer component with copyright and navigation links
@@ -551,7 +550,7 @@ The following Gumby features are being **completely removed** in V2:
   - ✅ **Operable:** Full keyboard navigation, skip links, focus indicators, no keyboard traps
   - ✅ **Understandable:** Language attributes, consistent navigation, clear labels
   - ✅ **Robust:** Semantic HTML, ARIA labels, assistive technology compatibility
-  - ✅ **Testing:** Automated axe-core tests, manual testing, screen reader validation
+  - ✅ **Testing:** Automated vitest-axe tests, manual testing, screen reader validation
   - ✅ **Documentation:** Accessibility statement created, WCAG compliance documented
 - [x] Implement SEO optimization
   - ✅ Meta tags (title, description, OG tags) on all pages
@@ -793,8 +792,7 @@ The following Gumby features are being **completely removed** in V2:
 | Vitest (or Jest) | Unit testing framework |
 | @testing-library/react | React component testing |
 | @testing-library/jest-dom | DOM matchers for testing |
-| axe-core | Automated accessibility testing |
-| @axe-core/react | React accessibility testing integration |
+| vitest-axe | Automated accessibility testing (axe-core engine) |
 
 ### Accessibility Testing Tools
 
@@ -1072,7 +1070,7 @@ This project **must** meet WCAG 2.2 Level AA standards. The following are key re
 
 1. **Automated Testing** (catches ~30% of issues)
    - Run during development with ESLint plugins
-   - CI/CD integration with axe-core
+   - CI/CD integration with vitest-axe
    - Lighthouse CI for every build
 
 2. **Manual Testing** (required for full compliance)

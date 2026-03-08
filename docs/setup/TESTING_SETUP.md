@@ -213,7 +213,7 @@ With testing infrastructure complete, Phase 2 can proceed with:
 - CI/CD friendly (LCOV format)
 
 ### Accessibility Testing Ready
-- Can integrate axe-core for automated a11y tests
+- Integrated vitest-axe for automated a11y tests (axe-core engine)
 - Component testing with Testing Library (user-centric approach)
 - ARIA and keyboard navigation testing support
 
