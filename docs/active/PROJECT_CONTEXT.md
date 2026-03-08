@@ -1,9 +1,9 @@
 # Portfolio Modernization - Project Context
 
-**Version:** 1.7
-**Last Updated:** 2026-03-01
-**Current Phase:** Between Phase 5 (Complete) and Phase 6 (Not Started)
-**Current Branch:** `sc/client-server-boundary` (Phase 5 performance optimization)
+**Version:** 1.8
+**Last Updated:** 2026-03-06
+**Current Phase:** Phase 7 — Monitoring & Analytics (In Progress)
+**Current Branch:** `main`
 
 ---
 
@@ -11,7 +11,7 @@
 
 This is a portfolio modernization project migrating **portfolio.singchan.com** from a 2013-era technology stack (Gumby Framework, jQuery, PHP) to a modern React-based application using Next.js 15, TypeScript, and Material UI v7.
 
-**Project Status:** Phase 5 Complete, Phase 6 Not Started
+**Project Status:** Phase 6 Complete, Phase 7 In Progress
 - ✅ Phase 1: Foundation & Setup (Complete - Jan 25)
 - ✅ Phase 2: Data Migration (Complete - Jan 27)
 - ✅ Phase 3: Core Pages Development (Complete - Feb 3)
@@ -32,8 +32,18 @@ This is a portfolio modernization project migrating **portfolio.singchan.com** f
   - ✅ Task 5.4: Client/Server Component Boundary Audit
   - ✅ Task 5.5: Static Site Generation (SSG)
   - ✅ Task 5.6: Performance Audits & Core Web Vitals
-- ⬜ Phase 6: Deployment & Migration (Not Started)
-- ⬜ Phase 7: Post-Launch (Not Started)
+- ✅ Phase 6: Deployment & Migration (Complete - Mar 6)
+  - ✅ Railway hosting (dev + production environments)
+  - ✅ CI/CD via GitHub Actions (2 workflows)
+  - ✅ Manual deployment approval gates
+  - ✅ Deployment documentation
+- 🔄 Phase 7: Monitoring & Analytics (In Progress)
+  - ⬜ Task 7.1: Web Analytics (PostHog)
+  - ⬜ Task 7.2: Core Web Vitals Reporting
+  - ⬜ Task 7.3: Error Tracking (Sentry)
+  - ⬜ Task 7.4: Uptime Monitoring
+  - ⬜ Task 7.5: Dependency Management (Dependabot)
+  - ⬜ Task 7.6: Content & Maintenance Workflow
 
 ---
 
@@ -158,7 +168,16 @@ Filename format: `YYYY-MM-DDTHHMMSS_descriptive-name.md`
 
 ---
 
-## Current Status: Post-Phase 5, Pre-Phase 6
+## Current Status: Phase 7 In Progress
+
+### Phase 6 ✅ COMPLETE (2026-03-06)
+
+Railway hosting and CI/CD pipeline configured. Vercel was evaluated but skipped due to cost.
+
+- **Hosting:** Railway with development + production environments
+- **CI/CD:** GitHub Actions — `test-deploy-dev.yml` (auto-deploy on PR) + `deploy-production.yml` (manual production deploy)
+- **Approval Gates:** Manual approval required for both environments
+- **Documentation:** `docs/setup/RAILWAY_DEPLOYMENT.md`
 
 ### Phase 5 ✅ COMPLETE (2026-03-01)
 
@@ -171,7 +190,7 @@ All 6 tasks completed across 9 commits. Summary:
 - **Task 5.5: SSG** — Home page statically generated, removed `cookies()` dependency, added `dynamic = 'error'` guard
 - **Task 5.6: Performance Audits** — Lighthouse desktop 97–100, mobile 90–92, SEO 100 across all pages
 
-See `docs/active/PHASE5_DETAILED_PLAN.md` for detailed plan.
+See `docs/archive/performance/PHASE5_DETAILED_PLAN.md` for detailed plan.
 See `changelog/2026-03-01T210626_phase5-performance-optimization.md` for full changelog.
 
 ### Post-Phase 4 Refinements (Feb 12 – Mar 1)
@@ -186,7 +205,7 @@ Significant cleanup and hardening work after Phase 4 closure:
 - **Code review fixes** — Shared component extraction (NavButtons, SettingsList), `prefers-reduced-motion` bug fix (#59), `"use client"` directive fixes across 10 files, stale JSDoc corrections
 - **CLAUDE.md updates** — Refactoring safety rules, JSDoc review on modification rule
 
-### Current Metrics (Mar 1, 2026)
+### Current Metrics (Mar 6, 2026)
 
 - ✅ Tests: 1,123 passing across 57 test files
 - ✅ TypeScript: 0 errors (strict mode)
@@ -197,14 +216,15 @@ Significant cleanup and hardening work after Phase 4 closure:
 - ✅ Lighthouse Mobile: 90–92
 - ✅ SEO: 100
 
-### Next Phase: Phase 6 — Deployment & Migration
+### Current Phase: Phase 7 — Monitoring & Analytics
 
-See `docs/active/MODERNIZATION_PLAN.md` Phase 6 for full task list. Key items:
-- Choose hosting platform (Vercel recommended)
-- Set up hosting environment and connect GitHub
-- Configure domain (portfolio.singchan.com) and SSL
-- Set up CI/CD pipeline
-- CDN for images (deferred from Phase 5)
+See `docs/active/PHASE7_DETAILED_PLAN.md` for full task list. Key items:
+- PostHog web analytics (free tier, 1M events/month)
+- Core Web Vitals real-user monitoring via `web-vitals` + PostHog
+- Sentry error tracking (free tier, 5K errors/month)
+- UptimeRobot uptime monitoring (free tier)
+- Dependabot for automated dependency updates
+- Content and maintenance workflow documentation
 
 ---
 
@@ -271,7 +291,26 @@ See Phase 4 detailed plan: `docs/archive/PHASE4_DETAILED_PLAN.md`
 - ✅ Task 5.5: Static Site Generation — Home page SSG with `dynamic = 'error'` guard
 - ✅ Task 5.6: Performance Audits — Desktop 97–100, Mobile 90–92, SEO 100
 
-See detailed plan: `docs/active/PHASE5_DETAILED_PLAN.md`
+See detailed plan: `docs/archive/performance/PHASE5_DETAILED_PLAN.md`
+
+### ✅ Phase 6: Deployment & Migration (Complete: 2026-03-06)
+
+- ✅ Railway hosting selected (Vercel skipped due to cost)
+- ✅ Development + production environments configured
+- ✅ CI/CD via GitHub Actions (2 workflows: auto-deploy dev, manual production)
+- ✅ Manual approval gates for all deployments
+- ✅ Deployment documentation: `docs/setup/RAILWAY_DEPLOYMENT.md`
+
+### 🔄 Phase 7: Monitoring & Analytics (In Progress)
+
+- ⬜ Task 7.1: Web Analytics (PostHog)
+- ⬜ Task 7.2: Core Web Vitals Reporting
+- ⬜ Task 7.3: Error Tracking (Sentry)
+- ⬜ Task 7.4: Uptime Monitoring (UptimeRobot)
+- ⬜ Task 7.5: Dependency Management (Dependabot)
+- ⬜ Task 7.6: Content & Maintenance Workflow
+
+See detailed plan: `docs/active/PHASE7_DETAILED_PLAN.md`
 
 ---
 
@@ -593,6 +632,6 @@ npm run test:coverage # Coverage report
 
 ---
 
-**Last Updated:** 2026-03-01
-**Current Focus:** Phase 5 complete, ready for Phase 6
-**Next Milestone:** Phase 6 — Deployment & Migration
+**Last Updated:** 2026-03-06
+**Current Focus:** Phase 7 — Monitoring & Analytics
+**Next Milestone:** Task 7.1 — PostHog web analytics integration

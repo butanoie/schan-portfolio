@@ -19,9 +19,9 @@ The goal is to show that a personal project, when treated with the same rigour a
 
 ## Status
 
-**Phase 5 Complete** — Performance optimized. Ready for Phase 6.
+**Phase 7 In Progress** — Deployed on Railway. Adding monitoring and analytics.
 
-**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ⬜ | Phase 7 ⬜
+**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ✅ | Phase 7 🔄
 
 ## Stack
 
@@ -68,8 +68,8 @@ npm run typecheck     # TypeScript check
 | 3. Core Pages | ✅ Complete | Homepage, Resume, Colophon, Shared Components, Lightbox |
 | 4. Enhanced Features | ✅ Complete | Theme switching, i18n, animations, WCAG 2.2 AA, SEO |
 | 5. Performance | ✅ Complete | Font optimization, lazy loading, SSG, server components, Lighthouse 97–100 |
-| 6. Deployment | ⬜ Planned | Hosting, CI/CD, production launch |
-| 7. Post-Launch | ⬜ Planned | Monitoring, analytics, enhancements |
+| 6. Deployment | ✅ Complete | Railway hosting, CI/CD via GitHub Actions, approval gates |
+| 7. Monitoring & Analytics | 🔄 In Progress | PostHog, Sentry, UptimeRobot, Dependabot |
 
 ## Documentation
 
@@ -89,6 +89,10 @@ npm run typecheck     # TypeScript check
 - **Setup**
   - [Testing Setup](docs/setup/TESTING_SETUP.md)
   - [MCP Setup](docs/setup/MCP_SETUP.md)
+  - [Railway Deployment](docs/setup/RAILWAY_DEPLOYMENT.md)
+  - [PostHog Analytics](docs/setup/POSTHOG_SETUP.md)
+- **Active Plans**
+  - [Phase 7: Monitoring & Analytics](docs/active/PHASE7_DETAILED_PLAN.md)
 - **Archive** — [Completed phase plans](docs/archive/)
 
 ## Key Requirements
