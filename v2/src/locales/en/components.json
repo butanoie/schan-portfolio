@@ -15,7 +15,12 @@
     "ariaLabel": "Image lightbox",
     "closeButton": "Close lightbox",
     "previousButton": "Previous image",
-    "nextButton": "Next image"
+    "nextButton": "Next image",
+    "viewingImage": "Viewing image {{current}} of {{total}}: {{caption}}",
+    "loadingImage": "Loading image"
+  },
+  "projectImage": {
+    "unavailable": "Image unavailable"
   },
   "loadMoreButton": {
     "loading": "Loading projects...",
@@ -29,7 +34,8 @@
     "youtubePlayer": "YouTube video player"
   },
   "asyncProjectsList": {
-    "loadingError": "Error loading projects"
+    "loadingError": "Error loading projects",
+    "loadingAria": "Loading more projects"
   },
   "frenchTranslationAlert": {
     "title": "Machine Translated",

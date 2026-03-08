@@ -1,10 +1,45 @@
 import { render, screen, within } from '../../test-utils';
 import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ProjectGallery } from '@/src/components/project/ProjectGallery';
 import { testAccessibility } from '@/src/__tests__/utils/axe-helpers';
 import type { ProjectImage } from '@/src/types';
+
+/**
+ * Mock next/dynamic to resolve imports synchronously in JSDOM.
+ *
+ * `next/dynamic` internally uses React.lazy + Suspense. In test environments
+ * without a bundler, the dynamic import() never resolves, causing components
+ * that conditionally render dynamic children (like the lightbox) to hang
+ * indefinitely. This mock eagerly invokes the factory and returns the
+ * resolved component synchronously.
+ */
+vi.mock('next/dynamic', () => ({
+  __esModule: true,
+  /**
+   * Replaces next/dynamic's default export with an eager loader.
+   *
+   * @param loader - The dynamic import factory (e.g., () => import('./Component'))
+   * @returns A synchronous wrapper component that renders the resolved module
+   */
+  default: (loader: () => Promise<{ default: React.ComponentType }>) => {
+    let Component: React.ComponentType | null = null;
+    loader().then((mod) => {
+      Component = mod.default;
+    });
+    /**
+     * Wrapper that renders the dynamically loaded component once resolved.
+     *
+     * @param props - Props forwarded to the resolved component
+     * @returns The resolved component or null while loading
+     */
+    const DynamicComponent = (props: Record<string, unknown>) =>
+      Component ? <Component {...props} /> : null;
+    DynamicComponent.displayName = 'MockDynamic';
+    return DynamicComponent;
+  },
+}));
 
 /**
  * Mock project images for testing.
@@ -143,11 +178,12 @@ describe('ProjectGallery Component', () => {
     const gallery = screen.getByTestId('project-gallery');
     const firstThumbnail = within(gallery).getAllByRole('img')[0];
 
-    // Click thumbnail
+    // Click thumbnail to trigger openLightbox(0)
     await user.click(firstThumbnail);
 
-    // Lightbox should be visible (check for lightbox specific elements)
-    // Note: actual lightbox visibility depends on ProjectLightbox implementation
+    // Lightbox should render — verify via its close button which is unique to the lightbox overlay
+    const closeButton = screen.getByRole('button', { name: /close lightbox/i });
+    expect(closeButton).toBeInTheDocument();
   });
 
   /**

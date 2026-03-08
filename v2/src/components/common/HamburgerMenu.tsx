@@ -2,30 +2,34 @@
 
 import { useState } from "react";
 import { Drawer, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useMediaQuery, useTheme, Divider, Typography } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import HomeIcon from "@mui/icons-material/Home";
-import DescriptionIcon from "@mui/icons-material/Description";
-import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BRAND_COLORS, NAV_COLORS } from "../../constants";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
-import { ThemeSwitcher } from "../settings/ThemeSwitcher";
-import { LanguageSwitcher } from "../settings/LanguageSwitcher";
-import { AnimationsSwitcher } from "../settings/AnimationsSwitcher";
+import { FONT_FAMILY_BODY } from "@/src/lib/fontConstants";
+import { SettingsList } from "../settings/SettingsList";
+import { getNavLinks, isActivePath } from "../../utils/navigation";
 
 /**
- * Navigation link configuration for the hamburger menu.
+ * Generates theme-aware styling for icon buttons (hamburger open and close).
+ * Uses the theme's secondary color so icons adapt to dark and high-contrast modes.
+ *
+ * @param theme - The current MUI theme object
+ * @returns An `sx` style object with color and hover styling
  */
-interface NavLink {
-  /** Translation key for the link label */
-  labelKey: string;
-  /** URL path for the link */
-  href: string;
-  /** Icon component to display */
-  icon: React.ReactNode;
+function getDrawerIconButtonSx(theme: Theme) {
+  return {
+    color: theme.palette.secondary.main,
+    minWidth: 44,
+    minHeight: 44,
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.secondary.main, 0.08),
+    },
+  };
 }
 
 /**
@@ -61,50 +65,14 @@ export default function HamburgerMenu() {
   const { animationsEnabled } = useAnimations();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  /**
-   * Navigation links for the hamburger menu.
-   */
-  const navItems: NavLink[] = [
-    { labelKey: "nav.portfolio", href: "/", icon: <HomeIcon /> },
-    { labelKey: "nav.resume", href: "/resume", icon: <DescriptionIcon /> },
-    { labelKey: "nav.colophon", href: "/colophon", icon: <InfoIcon /> },
-  ];
-
-  /**
-   * Check if a link is the current active page.
-   *
-   * @param href - The link path to check
-   * @returns True if the link matches the current pathname
-   */
-  const isActive = (href: string): boolean => {
-    if (!pathname) {
-      return false;
-    }
-    if (href === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(href);
-  };
-
-  /**
-   * Opens the navigation drawer.
-   */
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const navItems = getNavLinks();
+  const drawerIconButtonSx = getDrawerIconButtonSx(theme);
 
   /**
    * Closes the navigation drawer.
+   * Also used as the click handler for navigation links (closes drawer after navigation).
    */
   const handleClose = () => {
-    setOpen(false);
-  };
-
-  /**
-   * Handles navigation link click.
-   * Closes the drawer after navigation.
-   */
-  const handleNavigate = () => {
     setOpen(false);
   };
 
@@ -117,18 +85,11 @@ export default function HamburgerMenu() {
     <>
       {/* Hamburger Menu Icon Button */}
       <IconButton
-        onClick={handleOpen}
+        onClick={() => setOpen(true)}
         aria-label={t("nav.menu.hamburger")}
         aria-expanded={open}
         size="medium"
-        sx={{
-          color: BRAND_COLORS.maroon,
-          minWidth: 44,
-          minHeight: 44,
-          "&:hover": {
-            backgroundColor: "rgba(139, 21, 56, 0.08)",
-          },
-        }}
+        sx={drawerIconButtonSx}
       >
         <MenuIcon fontSize="medium" />
       </IconButton>
@@ -161,12 +122,7 @@ export default function HamburgerMenu() {
             onClick={handleClose}
             aria-label={t("nav.menu.close")}
             size="medium"
-            sx={{
-              color: BRAND_COLORS.maroon,
-              "&:hover": {
-                backgroundColor: "rgba(139, 21, 56, 0.08)",
-              },
-            }}
+            sx={drawerIconButtonSx}
           >
             <CloseIcon fontSize="medium" />
           </IconButton>
@@ -175,27 +131,28 @@ export default function HamburgerMenu() {
         {/* Navigation List */}
         <Box
           component="nav"
-          role="navigation"
-          aria-label="Mobile navigation menu"
+          aria-label={t('nav.mobileNavigation')}
           sx={{ px: 2 }}
         >
           <List>
-            {navItems.map((item) => (
+            {navItems.map((item) => {
+              const active = isActivePath(pathname, item.href);
+              return (
               <ListItem key={item.href} disablePadding sx={{ mb: 1 }}>
                 <ListItemButton
                   component={Link}
                   href={item.href}
-                  onClick={handleNavigate}
-                  aria-current={isActive(item.href) ? "page" : undefined}
+                  onClick={handleClose}
+                  aria-current={active ? "page" : undefined}
                   sx={{
-                    backgroundColor: isActive(item.href)
+                    backgroundColor: active
                       ? NAV_COLORS.active
                       : BRAND_COLORS.sage,
                     color: NAV_COLORS.text,
                     borderRadius: 1,
                     py: 1.5,
                     "&:hover": {
-                      backgroundColor: isActive(item.href)
+                      backgroundColor: active
                         ? NAV_COLORS.activeHover
                         : NAV_COLORS.inactiveHover,
                     },
@@ -211,14 +168,20 @@ export default function HamburgerMenu() {
                   </ListItemIcon>
                   <ListItemText
                     primary={t(item.labelKey)}
-                    primaryTypographyProps={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontWeight: 600,
+                    slotProps={{
+                      primary: {
+                        sx: {
+                          fontFamily: FONT_FAMILY_BODY,
+                          fontWeight: 600,
+                          color: NAV_COLORS.text,
+                        },
+                      },
                     }}
                   />
                 </ListItemButton>
               </ListItem>
-            ))}
+              );
+            })}
           </List>
         </Box>
 
@@ -239,50 +202,7 @@ export default function HamburgerMenu() {
             {t("settings.title")}
           </Typography>
 
-          {/* Theme Switcher */}
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                fontSize: "0.875rem",
-                opacity: 0.7,
-              }}
-            >
-              {t("settings.theme")}
-            </Typography>
-            <ThemeSwitcher />
-          </Box>
-
-          {/* Language Switcher */}
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                fontSize: "0.875rem",
-                opacity: 0.7,
-              }}
-            >
-              {t("settings.language")}
-            </Typography>
-            <LanguageSwitcher />
-          </Box>
-
-          {/* Animations Switcher */}
-          <Box>
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                fontSize: "0.875rem",
-                opacity: 0.7,
-              }}
-            >
-              {t("settings.animations")}
-            </Typography>
-            <AnimationsSwitcher />
-          </Box>
+          <SettingsList />
         </Box>
       </Drawer>
     </>

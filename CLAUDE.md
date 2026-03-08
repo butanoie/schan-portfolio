@@ -186,6 +186,7 @@ function calculateShipping(weight: number, distance: number): number {
 - **Review requirement**: During code review, check that documentation is complete
 - **Git commit blocks**: The git-commit skill will verify documentation exists
 - **Quality over quantity**: Documentation should be clear, accurate, and helpful
+- **JSDoc review on modification**: When modifying any file, always review and update existing JSDoc/TSDoc comments in that file to ensure they remain accurate. This includes verifying parameter names, types, return values, descriptions, and `@example` blocks still match the current implementation. Treat stale JSDoc as a bug.
 
 ### When Documentation Is Missing
 
@@ -211,6 +212,14 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 - Memoize expensive computations with `useMemo`
 - Memoize callback functions with `useCallback`
 - Keep components small and focused (Single Responsibility Principle)
+- **Persistent layouts preserve state**: Next.js App Router layouts (e.g., `MainLayout`) never unmount during navigation. `useState` does NOT reset when a dependency changes — state persists until explicitly cleared. When refactoring layout components, verify that navigation-related state cleanup (e.g., `useEffect` that clears state on route change) is preserved.
+
+### Refactoring Safety
+**CRITICAL: Before removing or replacing any code during refactoring, check its git history (`git log -p --follow` or `git blame`) to understand WHY it exists.** Code that looks redundant may be a deliberate bug fix. Specifically:
+- **Never remove a `useEffect` without understanding its purpose** — it may handle cleanup, state resets, or edge cases that aren't obvious from reading the code alone
+- **Check if the code was added as a bug fix** — look at commit messages and PR descriptions for context like "fix:", "bugfix", or issue references
+- **If replacing logic, verify behavioral equivalence** — a replacement that handles the "happy path" but drops an edge-case cleanup (e.g., clearing stale state on navigation) introduces a regression
+- **Do not write comments claiming behavior that isn't implemented** — e.g., never claim state "resets automatically" unless the mechanism (like a `key` prop) actually exists in the code
 
 ### Testing Requirements
 - Write tests for all new functionality

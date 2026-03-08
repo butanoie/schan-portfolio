@@ -15,7 +15,12 @@
     "ariaLabel": "Galerie d'images",
     "closeButton": "Fermer la galerie",
     "previousButton": "Image précédente",
-    "nextButton": "Image suivante"
+    "nextButton": "Image suivante",
+    "viewingImage": "Voir l'image {{current}} de {{total}} : {{caption}}",
+    "loadingImage": "Chargement de l'image"
+  },
+  "projectImage": {
+    "unavailable": "Image non disponible"
   },
   "loadMoreButton": {
     "loading": "Chargement des projets...",
@@ -29,7 +34,8 @@
     "youtubePlayer": "Lecteur vidéo YouTube"
   },
   "asyncProjectsList": {
-    "loadingError": "Erreur lors du chargement des projets"
+    "loadingError": "Erreur lors du chargement des projets",
+    "loadingAria": "Chargement de plus de projets"
   },
   "frenchTranslationAlert": {
     "title": "Traduction automatique",

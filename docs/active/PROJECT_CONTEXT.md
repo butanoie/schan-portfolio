@@ -1,9 +1,9 @@
 # Portfolio Modernization - Project Context
 
-**Version:** 1.5
-**Last Updated:** 2026-02-08
-**Current Phase:** Phase 4 - Enhanced Features (Tasks 4.1-4.4 Complete, 4.5 In Progress)
-**Current Branch:** `main` (SEO task in progress)
+**Version:** 1.8
+**Last Updated:** 2026-03-06
+**Current Phase:** Phase 7 — Monitoring & Analytics (In Progress)
+**Current Branch:** `main`
 
 ---
 
@@ -11,20 +11,39 @@
 
 This is a portfolio modernization project migrating **portfolio.singchan.com** from a 2013-era technology stack (Gumby Framework, jQuery, PHP) to a modern React-based application using Next.js 15, TypeScript, and Material UI v7.
 
-**Project Status:** Phase 4 of 7 (Task 4.3 & 4.4 complete, Task 4.5 remaining)
-- ✅ Phase 1: Foundation & Setup (Complete)
-- ✅ Phase 2: Data Migration (Complete)
-- ✅ Phase 3: Core Pages Development (Complete)
+**Project Status:** Phase 6 Complete, Phase 7 In Progress
+- ✅ Phase 1: Foundation & Setup (Complete - Jan 25)
+- ✅ Phase 2: Data Migration (Complete - Jan 27)
+- ✅ Phase 3: Core Pages Development (Complete - Feb 3)
   - ✅ Task 3.1: Projects/Homepage Page
   - ✅ Task 3.2: Resume Page
   - ✅ Task 3.3: Colophon/About Page
   - ✅ Task 3.4: Shared Components
-- 🔄 Phase 4: Enhanced Features (In Progress)
+- ✅ Phase 4: Enhanced Features (Complete - Feb 8)
   - ✅ Task 4.1: Theme Switching (Complete - PR #8)
   - ✅ Task 4.2: Internationalization (i18n) (Complete)
-  - ✅ Task 4.3: Animations & Transitions (Complete - 2026-02-06)
-  - ✅ Task 4.4: WCAG 2.2 Level AA Compliance (Complete - 2026-02-06)
-  - 🔄 Task 4.5: SEO Optimization (In Progress - 2026-02-08)
+  - ✅ Task 4.3: Animations & Transitions (Complete - Feb 6)
+  - ✅ Task 4.4: WCAG 2.2 Level AA Compliance (Complete - Feb 6)
+  - ✅ Task 4.5: SEO Optimization (Complete - Feb 8)
+- ✅ Phase 5: Performance & Optimization (Complete - Mar 1)
+  - ✅ Task 5.1: Bundle Analysis & Optimization
+  - ✅ Task 5.2: Font Loading Optimization
+  - ✅ Task 5.3: Component Lazy Loading & Code Splitting
+  - ✅ Task 5.4: Client/Server Component Boundary Audit
+  - ✅ Task 5.5: Static Site Generation (SSG)
+  - ✅ Task 5.6: Performance Audits & Core Web Vitals
+- ✅ Phase 6: Deployment & Migration (Complete - Mar 6)
+  - ✅ Railway hosting (dev + production environments)
+  - ✅ CI/CD via GitHub Actions (2 workflows)
+  - ✅ Manual deployment approval gates
+  - ✅ Deployment documentation
+- 🔄 Phase 7: Monitoring & Analytics (In Progress)
+  - ⬜ Task 7.1: Web Analytics (PostHog)
+  - ⬜ Task 7.2: Core Web Vitals Reporting
+  - ⬜ Task 7.3: Error Tracking (Sentry)
+  - ⬜ Task 7.4: Uptime Monitoring
+  - ⬜ Task 7.5: Dependency Management (Dependabot)
+  - ⬜ Task 7.6: Content & Maintenance Workflow
 
 ---
 
@@ -149,70 +168,63 @@ Filename format: `YYYY-MM-DDTHHMMSS_descriptive-name.md`
 
 ---
 
-## Current Work: Phase 4 Enhanced Features (Task 4.5 🔄 IN PROGRESS)
+## Current Status: Phase 7 In Progress
 
-### Status
-✅ **TASKS 4.1-4.4 COMPLETE** (2026-02-06) - All Phase 4 core features implemented
-🔄 **TASK 4.5 IN PROGRESS** (2026-02-08) - SEO Optimization ongoing
+### Phase 6 ✅ COMPLETE (2026-03-06)
 
-### Completed Tasks Summary
+Railway hosting and CI/CD pipeline configured. Vercel was evaluated but skipped due to cost.
 
-#### Task 4.3: Animations & Transitions ✅ COMPLETE
+- **Hosting:** Railway with development + production environments
+- **CI/CD:** GitHub Actions — `test-deploy-dev.yml` (auto-deploy on PR) + `deploy-production.yml` (manual production deploy)
+- **Approval Gates:** Manual approval required for both environments
+- **Documentation:** `docs/setup/RAILWAY_DEPLOYMENT.md`
 
-- Smooth page transitions between routes
-- Component entrance animations with stagger effects
-- Hover state animations on interactive elements
-- Full `prefers-reduced-motion` support (disabled for users who prefer reduced motion)
-- Comprehensive animation test coverage
-- All animations accessible and performant
+### Phase 5 ✅ COMPLETE (2026-03-01)
 
-### Task 4.4: WCAG 2.2 Level AA Compliance ✅ COMPLETE (All 6 Phases Complete)
+All 6 tasks completed across 9 commits. Summary:
 
-**Phase Completion Summary:**
+- **Task 5.1: Bundle Analysis** — Installed `@next/bundle-analyzer`, baseline: 1,119 KB raw / 344 KB gzipped
+- **Task 5.2: Font Loading** — Migrated from CSS `@import` to `next/font/google`, CLS = 0 with `font-display: optional`, centralized font constants
+- **Task 5.3: Lazy Loading** — 3 components lazy-loaded with `next/dynamic` (ProjectLightbox, HamburgerMenu, SettingsList)
+- **Task 5.4: Client/Server Audit** — Audited all 48 components, converted 6 to server components (40/48 → 34/48 client ratio)
+- **Task 5.5: SSG** — Home page statically generated, removed `cookies()` dependency, added `dynamic = 'error'` guard
+- **Task 5.6: Performance Audits** — Lighthouse desktop 97–100, mobile 90–92, SEO 100 across all pages
 
-**Phase 1: Setup ✅**
-- vitest-axe installed and configured
-- axe-helpers.ts created with comprehensive utilities
-- vitest.setup.ts updated with axe-core configuration
+See `docs/archive/performance/PHASE5_DETAILED_PLAN.md` for detailed plan.
+See `changelog/2026-03-01T210626_phase5-performance-optimization.md` for full changelog.
 
-**Phase 2: Remediations ✅**
-- Header touch targets: LinkedIn and GitHub buttons increased to 44×44px
-- ProjectGallery thumbnail opacity: increased from 0.4 to 0.85
-- SettingsButton: updated to medium size for proper touch targets
+### Post-Phase 4 Refinements (Feb 12 – Mar 1)
 
-**Phase 3: Priority Component Tests ✅**
-- Header.test.tsx: 12+ test cases, full axe audits
-- SettingsButton.test.tsx: keyboard navigation and state management
-- ProjectGallery.test.tsx: 15+ test cases, lightbox accessibility
+Significant cleanup and hardening work after Phase 4 closure:
 
-**Phase 4: Additional Component Tests ✅**
-- Footer.test.tsx: navigation and semantic structure
-- MainLayout.test.tsx: skip links and landmark testing
-- ThemeSwitcher.test.tsx, LanguageSwitcher.test.tsx, AnimationsSwitcher.test.tsx
+- **Print styling** and FOUC fix (deferred rendering)
+- **Railway staging deployment** experiment
+- **i18n refactor** and standardization
+- **Pork cuts image localization** and resume education enhancement
+- **Major simplify refactoring** — ~1,326 lines removed across 68 files, new shared hooks (`usePalette`), navigation utilities, `ScrollAnimatedSection` component
+- **Code review fixes** — Shared component extraction (NavButtons, SettingsList), `prefers-reduced-motion` bug fix (#59), `"use client"` directive fixes across 10 files, stale JSDoc corrections
+- **CLAUDE.md updates** — Refactoring safety rules, JSDoc review on modification rule
 
-**Phase 5: Manual Verification ✅**
-- All 1,117 tests passing across 54 test files
-- 87.35% code coverage (exceeds 80% target)
-- 0 accessibility violations detected
-- TypeScript strict mode: 0 errors
-- ESLint validation: 0 errors
+### Current Metrics (Mar 6, 2026)
 
-**Phase 6: Documentation ✅**
-- **docs/accessibility/ACCESSIBILITY_STATEMENT.md** (750 lines) - Public WCAG 2.2 conformance declaration
-- **docs/accessibility/WCAG_COMPLIANCE_GUIDE.md** (650 lines) - Technical implementation guide for all success criteria
-- **docs/accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md** (700 lines) - Step-by-step manual testing procedures
-- **docs/accessibility/ACCESSIBILITY_TESTING.md** (750 lines) - Developer guide for writing accessibility tests
-
-### Final Metrics
-
-- ✅ Tests: 1,117 passing (100% pass rate)
-- ✅ Code Coverage: 87.35% (exceeds 80% target)
+- ✅ Tests: 1,123 passing across 57 test files
 - ✅ TypeScript: 0 errors (strict mode)
 - ✅ ESLint: 0 errors
+- ✅ WCAG 2.2 Level AA: Compliant
 - ✅ Accessibility Violations: 0
-- ✅ WCAG 2.2 Level AA: 100% compliant
+- ✅ Lighthouse Desktop: 97–100
+- ✅ Lighthouse Mobile: 90–92
+- ✅ SEO: 100
 
-See `docs/active/TASK_4.4_WCAG_COMPLIANCE_PLAN.md` and `docs/accessibility/` for complete documentation.
+### Current Phase: Phase 7 — Monitoring & Analytics
+
+See `docs/active/PHASE7_DETAILED_PLAN.md` for full task list. Key items:
+- PostHog web analytics (free tier, 1M events/month)
+- Core Web Vitals real-user monitoring via `web-vitals` + PostHog
+- Sentry error tracking (free tier, 5K errors/month)
+- UptimeRobot uptime monitoring (free tier)
+- Dependabot for automated dependency updates
+- Content and maintenance workflow documentation
 
 ---
 
@@ -260,48 +272,45 @@ See `docs/active/TASK_4.4_WCAG_COMPLIANCE_PLAN.md` and `docs/accessibility/` for
   - Gallery components, common UI elements
   - PR: [#6](https://github.com/butanoie/schan-portfolio/pull/6)
 
-### 🔄 Phase 4: Enhanced Features (In Progress)
+### ✅ Phase 4: Enhanced Features (Complete: 2026-02-08)
 
-**Completed Tasks:**
-- ✅ Task 4.1: Theme Switching (2026-02-03)
-  - Three complete theme modes (Light, Dark, High Contrast)
-  - Settings UI with accessible popover
-  - Full keyboard and screen reader support
-  - WCAG AAA compliance on high contrast mode
-  - PR: [#8](https://github.com/butanoie/schan-portfolio/pull/8)
-
+- ✅ Task 4.1: Theme Switching (2026-02-03) — PR [#8](https://github.com/butanoie/schan-portfolio/pull/8)
 - ✅ Task 4.2: Internationalization (i18n) (2026-02-05)
-  - Full i18next integration with React hooks
-  - English and French language support
-  - Comprehensive translation workflow
-  - Auto-translation using DeepL MCP
-
+- ✅ Task 4.3: Animations & Transitions (2026-02-06)
 - ✅ Task 4.4: WCAG 2.2 Level AA Compliance (2026-02-06)
-  - 8 accessibility test files with 120+ test cases
-  - 4 comprehensive documentation guides
-  - 0 violations, 1,117 tests passing
-  - 87.35% code coverage
+- ✅ Task 4.5: SEO Optimization (2026-02-08)
 
-#### Task 4.5: SEO Optimization 🔄 IN PROGRESS
+See Phase 4 detailed plan: `docs/archive/PHASE4_DETAILED_PLAN.md`
 
-Files implemented:
-- ✅ `/v2/src/constants/seo.ts` - SEO constants and metadata configuration
-- ✅ `/v2/src/lib/seo.ts` - Schema generators (Person, Breadcrumb, Project)
-- ✅ `/v2/app/sitemap.ts` - Dynamic sitemap.xml generation
-- ✅ `/v2/app/robots.ts` - robots.txt generator
-- ✅ `/v2/app/resume/layout.tsx` - Resume page metadata wrapper
-- ✅ `/v2/public/og-image.png` - Open Graph preview image
-- ✅ `/v2/public/humans.txt` - Developer credits
+### ✅ Phase 5: Performance & Optimization (Complete: 2026-03-01)
 
-Pages updated with SEO metadata:
-- ✅ Root layout with comprehensive metadata, JSON-LD schemas, and theme tags
-- ✅ Homepage with page-specific SEO tags
-- ✅ Colophon with canonical URLs
-- ✅ Resume page metadata wrapper
+- ✅ Task 5.1: Bundle Analysis & Optimization — `@next/bundle-analyzer` installed, baseline documented
+- ✅ Task 5.2: Font Loading Optimization — `next/font/google`, centralized constants, CLS = 0
+- ✅ Task 5.3: Lazy Loading & Code Splitting — 3 components lazy-loaded with `next/dynamic`
+- ✅ Task 5.4: Client/Server Boundary Audit — 6 components converted, ratio 40/48 → 34/48
+- ✅ Task 5.5: Static Site Generation — Home page SSG with `dynamic = 'error'` guard
+- ✅ Task 5.6: Performance Audits — Desktop 97–100, Mobile 90–92, SEO 100
 
-**Next:**
-- ⬜ Task 4.5 Validation: Testing and verification of SEO implementation
-- ⬜ Phase 5: Performance Optimization
+See detailed plan: `docs/archive/performance/PHASE5_DETAILED_PLAN.md`
+
+### ✅ Phase 6: Deployment & Migration (Complete: 2026-03-06)
+
+- ✅ Railway hosting selected (Vercel skipped due to cost)
+- ✅ Development + production environments configured
+- ✅ CI/CD via GitHub Actions (2 workflows: auto-deploy dev, manual production)
+- ✅ Manual approval gates for all deployments
+- ✅ Deployment documentation: `docs/setup/RAILWAY_DEPLOYMENT.md`
+
+### 🔄 Phase 7: Monitoring & Analytics (In Progress)
+
+- ⬜ Task 7.1: Web Analytics (PostHog)
+- ⬜ Task 7.2: Core Web Vitals Reporting
+- ⬜ Task 7.3: Error Tracking (Sentry)
+- ⬜ Task 7.4: Uptime Monitoring (UptimeRobot)
+- ⬜ Task 7.5: Dependency Management (Dependabot)
+- ⬜ Task 7.6: Content & Maintenance Workflow
+
+See detailed plan: `docs/active/PHASE7_DETAILED_PLAN.md`
 
 ---
 
@@ -564,24 +573,14 @@ npm run lint
 
 ## Success Metrics
 
-### Technical Metrics (Current Phase)
+### Technical Metrics (Current — Mar 1, 2026)
 
 - ✅ TypeScript: 0 errors
-- ✅ ESLint: 0 errors, 0 warnings
-- ✅ Test coverage: 88.13% (target: ≥80%)
-- ✅ All tests passing: 87/87
-- 🎯 Lighthouse Accessibility: Target 100
-- 🎯 WCAG 2.2 AA: 0 violations
-
-### Phase 3 Completion Criteria
-
-- [ ] All 3 main pages functional (Homepage pending)
-- [ ] Accessible image lightbox with keyboard + touch navigation
-- [ ] Project filtering and search working
-- [ ] Responsive layouts tested on mobile/tablet/desktop
-- [ ] ≥80% test coverage maintained
-- [ ] 0 ESLint accessibility violations
-- [ ] All documentation complete per CLAUDE.md standards
+- ✅ ESLint: 0 errors
+- ✅ Test coverage: 87%+ (target: ≥80%)
+- ✅ All tests passing: 1,123/1,123
+- ✅ Lighthouse Accessibility: 100
+- ✅ WCAG 2.2 AA: 0 violations
 
 ---
 
@@ -633,6 +632,6 @@ npm run test:coverage # Coverage report
 
 ---
 
-**Last Updated:** 2026-02-08
-**Current Focus:** Phase 4 Enhancement Tasks (✅ COMPLETE: Tasks 4.1, 4.2, 4.3, 4.4 | 🔄 IN PROGRESS: Task 4.5)
-**Next Milestone:** Complete Task 4.5 validation and Phase 5 preparation
+**Last Updated:** 2026-03-06
+**Current Focus:** Phase 7 — Monitoring & Analytics
+**Next Milestone:** Task 7.1 — PostHog web analytics integration

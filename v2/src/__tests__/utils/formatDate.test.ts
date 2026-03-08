@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { formatDate, formatCirca } from '@/src/utils/formatDate';
+import { formatDate } from '@/src/utils/formatDate';
 
 /**
  * Tests for date formatting utilities.
@@ -69,32 +69,3 @@ describe('formatDate', () => {
   });
 });
 
-/**
- * Tests for circa date formatting.
- */
-describe('formatCirca', () => {
-  it('should return a simple circa string unchanged', () => {
-    const result = formatCirca('Summer 2024');
-    expect(result).toBe('Summer 2024');
-  });
-
-  it('should return a date range unchanged', () => {
-    const result = formatCirca('Fall 2017 - Present');
-    expect(result).toBe('Fall 2017 - Present');
-  });
-
-  it('should handle winter season', () => {
-    const result = formatCirca('Winter 2025');
-    expect(result).toBe('Winter 2025');
-  });
-
-  it('should handle empty string', () => {
-    const result = formatCirca('');
-    expect(result).toBe('');
-  });
-
-  it('should handle complex circa strings', () => {
-    const result = formatCirca('Summer 2016 - Present');
-    expect(result).toBe('Summer 2016 - Present');
-  });
-});

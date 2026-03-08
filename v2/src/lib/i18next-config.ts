@@ -7,7 +7,7 @@
  * Uses inline resources for both production and test environments to avoid
  * dynamic import issues with Next.js/Turbopack bundler.
  *
- * Namespaces: common (includes openGraph and app meta), pages (merged from home/resume/colophon), components
+ * Namespaces: common (includes openGraph and app meta), pages (merged from home/resume/colophon/samples), components
  * Languages: en, fr
  *
  * MUST BE CLIENT COMPONENT: Uses React Context via initReactI18next
@@ -24,12 +24,14 @@ import enCommon from '../locales/en/common.json';
 import enHome from '../locales/en/home.json';
 import enResume from '../locales/en/resume.json';
 import enColophon from '../locales/en/colophon.json';
+import enSamples from '../locales/en/samples.json';
 import enComponents from '../locales/en/components.json';
 
 import frCommon from '../locales/fr/common.json';
 import frHome from '../locales/fr/home.json';
 import frResume from '../locales/fr/resume.json';
 import frColophon from '../locales/fr/colophon.json';
+import frSamples from '../locales/fr/samples.json';
 import frComponents from '../locales/fr/components.json';
 
 /**
@@ -41,17 +43,20 @@ import frComponents from '../locales/fr/components.json';
  * @param home - Home page translations
  * @param resume - Resume page translations
  * @param colophon - Colophon page translations
+ * @param samples - Writing Samples page translations
  * @returns Merged pages namespace object
  */
 function mergePageTranslations(
   home: Record<string, unknown>,
   resume: Record<string, unknown>,
-  colophon: Record<string, unknown>
+  colophon: Record<string, unknown>,
+  samples: Record<string, unknown>
 ): Record<string, unknown> {
   return {
     ...home,
     ...resume,
     ...colophon,
+    ...samples,
   };
 }
 
@@ -60,18 +65,18 @@ function mergePageTranslations(
  * All resources are loaded at build time to ensure Turbopack compatibility
  * and avoid dynamic import resolution issues.
  *
- * Page-specific files (home.json, resume.json, colophon.json) are merged into
+ * Page-specific files (home.json, resume.json, colophon.json, samples.json) are merged into
  * the 'pages' namespace to maintain backward compatibility.
  */
 const resources = {
   en: {
     common: enCommon,
-    pages: mergePageTranslations(enHome, enResume, enColophon),
+    pages: mergePageTranslations(enHome, enResume, enColophon, enSamples),
     components: enComponents,
   },
   fr: {
     common: frCommon,
-    pages: mergePageTranslations(frHome, frResume, frColophon),
+    pages: mergePageTranslations(frHome, frResume, frColophon, frSamples),
     components: frComponents,
   },
 };

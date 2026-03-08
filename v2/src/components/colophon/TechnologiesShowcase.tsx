@@ -15,8 +15,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { TechnologiesContent, Technology } from "../../types/colophon";
 import { BRAND_COLORS } from "../../constants";
-import { getPaletteByMode } from "../../lib/themes";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -48,8 +48,7 @@ export interface TechnologiesShowcaseProps {
  * ```
  */
 function TechnologyCard({ tech }: { tech: Technology }) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette, mode } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -75,7 +74,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
           <Typography
             component="h4"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1rem",
               color: palette.card.heading,
@@ -133,8 +132,7 @@ export default function TechnologiesShowcase({
   content,
 }: TechnologiesShowcaseProps) {
   const { intro, categories, v1 } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
   const { t } = useI18n(); // Used in TechnologyCard and V1 section headers
   const [v1AccordionExpanded, setV1AccordionExpanded] = useState(() => {
     if (typeof window !== "undefined") {
@@ -190,15 +188,18 @@ export default function TechnologiesShowcase({
         {t("colophon.technologies.heading", { ns: "pages" })}
       </Typography>
 
-      <Typography
-        variant="body1"
-        sx={{
-          mb: 4,
-          lineHeight: 1.7
-        }}
-      >
-        {intro}
-      </Typography>
+      {intro.map((paragraph, index) => (
+        <Typography
+          key={index}
+          variant="body1"
+          sx={{
+            mb: index < intro.length - 1 ? 2 : 4,
+            lineHeight: 1.7
+          }}
+        >
+          {paragraph}
+        </Typography>
+      ))}
 
       {/* V2 Technologies by Category */}
       {categories.map((category) => (
@@ -211,7 +212,7 @@ export default function TechnologiesShowcase({
             variant="h3"
             component="h3"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1.25rem",
               mb: 2,
@@ -257,7 +258,7 @@ export default function TechnologiesShowcase({
             variant="h3"
             component="h3"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1.25rem",
             }}

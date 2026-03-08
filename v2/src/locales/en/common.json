@@ -11,6 +11,7 @@
     "portfolio": "Portfolio",
     "resume": "Résumé",
     "colophon": "Colophon",
+    "samples": "Samples",
     "skipToMain": "Skip to main content",
     "social": {
       "linkedin": "LinkedIn",
@@ -19,7 +20,9 @@
     "menu": {
       "hamburger": "Open navigation menu",
       "close": "Close navigation menu"
-    }
+    },
+    "mainNavigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation menu"
   },
   "footer": {
     "copyright": "© {{year}} Sing Chan",

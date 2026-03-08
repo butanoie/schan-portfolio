@@ -182,8 +182,7 @@ export function ProjectLoadingProvider({
  * @throws No exceptions; returns undefined if context not available
  */
 export function useProjectLoading(): ProjectLoadingContextValue | undefined {
-  const context = useContext(ProjectLoadingContext);
-  return context;
+  return useContext(ProjectLoadingContext);
 }
 
 /**

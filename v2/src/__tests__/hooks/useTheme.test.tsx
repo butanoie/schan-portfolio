@@ -4,8 +4,6 @@
  * Verifies:
  * - Hook returns correct theme mode
  * - setTheme updates theme mode
- * - getNextTheme cycles through themes correctly
- * - isTheme checks work properly
  * - isMounted flag for SSR safety
  */
 
@@ -13,7 +11,6 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useTheme } from "@/src/hooks/useTheme";
 import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
-import type { ThemeMode } from "@/src/types/theme";
 
 /**
  * Wrapper component to provide ThemeContext for hook testing.
@@ -54,37 +51,6 @@ describe("useTheme hook", () => {
 
     // After setting theme, it should be dark
     expect(result.current.theme).toBe("dark");
-  });
-
-  it("should cycle through themes with getNextTheme", async () => {
-    const { result } = renderHook(() => useTheme(), { wrapper });
-
-    // Get the current theme
-    const initialTheme = result.current.theme;
-
-    // Get next theme
-    const nextTheme = result.current.getNextTheme();
-
-    // Verify it cycles: light -> dark -> highContrast -> light
-    const themeCycle: Record<ThemeMode, ThemeMode> = {
-      light: "dark",
-      dark: "highContrast",
-      highContrast: "light",
-    };
-
-    expect(nextTheme).toBe(themeCycle[initialTheme]);
-  });
-
-  it("should check if specific theme is active with isTheme", async () => {
-    const { result } = renderHook(() => useTheme(), { wrapper });
-
-    await act(async () => {
-      result.current.setTheme("light");
-    });
-
-    expect(result.current.isTheme("light")).toBe(true);
-    expect(result.current.isTheme("dark")).toBe(false);
-    expect(result.current.isTheme("highContrast")).toBe(false);
   });
 
   it("should have isMounted flag", () => {

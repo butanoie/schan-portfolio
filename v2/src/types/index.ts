@@ -13,20 +13,14 @@ export type {
 } from './project';
 
 export type {
-  ProjectsPageData,
-} from './porfolio';
-
-
-export type {
   PageDeckData,
 } from './pageDeck';
 
 export type {
-  ThemeMode,
-  ColorScheme,
-  ThemePalette,
-  ThemeConfig,
-} from './theme';
+  ArtifactFormat,
+  ArtifactItem,
+  ArtifactSection,
+} from './samples';
 
 export {
   isProject,

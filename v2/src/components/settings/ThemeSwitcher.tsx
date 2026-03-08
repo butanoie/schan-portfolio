@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Theme switcher component with toggle buttons for each theme mode.
  *
@@ -25,8 +27,6 @@
  * ```
  */
 
-"use client";
-
 import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import {
   LightMode as LightModeIcon,
@@ -36,6 +36,7 @@ import {
 import { useTheme } from "@/src/hooks/useTheme";
 import { useI18n } from "@/src/hooks/useI18n";
 import { ThemeMode } from "@/src/types/theme";
+import { TOGGLE_BORDER_COLOR, TOGGLE_BUTTON_SX } from "./toggleStyles";
 
 /**
  * Props for the ThemeSwitcher component.
@@ -58,20 +59,19 @@ interface ThemeSwitcherProps {
 }
 
 /**
- * Maps theme modes to their display icons.
- * Used to show the correct icon for each theme option.
+ * Configuration for each theme toggle option.
+ * Each entry maps a ThemeMode to its icon, ARIA label key, and display label key.
  */
-const THEME_ICONS: Record<ThemeMode, React.ReactNode> = {
-  light: <LightModeIcon />,
-  dark: <DarkModeIcon />,
-  highContrast: <ContrastIcon />,
-};
-
-/**
- * Border color for the theme toggle button group.
- * A light gray that provides subtle visual separation.
- */
-const THEME_SWITCHER_BORDER_COLOR = "#CCCCCC";
+const THEME_OPTIONS: Array<{
+  value: ThemeMode;
+  icon: React.ReactNode;
+  ariaKey: string;
+  labelKey: string;
+}> = [
+  { value: "light", icon: <LightModeIcon />, ariaKey: "theme.lightAria", labelKey: "theme.lightLabel" },
+  { value: "dark", icon: <DarkModeIcon />, ariaKey: "theme.darkAria", labelKey: "theme.darkLabel" },
+  { value: "highContrast", icon: <ContrastIcon />, ariaKey: "theme.highContrastAria", labelKey: "theme.highContrastLabel" },
+];
 
 /**
  * Theme switcher component.
@@ -122,74 +122,23 @@ export function ThemeSwitcher({
         sx={{
           display: "flex",
           width: "100%",
-          border: `1px solid ${THEME_SWITCHER_BORDER_COLOR}`,
+          border: `1px solid ${TOGGLE_BORDER_COLOR}`,
         }}
       >
-        {/* Light Theme Button */}
-        <ToggleButton
-          value="light"
-          aria-label={t("theme.lightAria")}
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: "none",
-          }}
-        >
-          {THEME_ICONS.light}
-          <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
-            {t("theme.lightLabel")}
-          </Typography>
-        </ToggleButton>
-
-        {/* Dark Theme Button */}
-        <ToggleButton
-          value="dark"
-          aria-label={t("theme.darkAria")}
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: "none",
-          }}
-        >
-          {THEME_ICONS.dark}
-          <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
-            {t("theme.darkLabel")}
-          </Typography>
-        </ToggleButton>
-
-        {/* High Contrast Theme Button */}
-        <ToggleButton
-          value="highContrast"
-          aria-label={t("theme.highContrastAria")}
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0.5,
-            py: 1.5,
-            px: 1,
-            textTransform: "none",
-          }}
-        >
-          {THEME_ICONS.highContrast}
-          <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
-            {t("theme.highContrastLabel")}
-          </Typography>
-        </ToggleButton>
+        {THEME_OPTIONS.map((option) => (
+          <ToggleButton
+            key={option.value}
+            value={option.value}
+            aria-label={t(option.ariaKey)}
+            sx={TOGGLE_BUTTON_SX}
+          >
+            {option.icon}
+            <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
+              {t(option.labelKey)}
+            </Typography>
+          </ToggleButton>
+        ))}
       </ToggleButtonGroup>
     </Box>
   );
 }
-
-export default ThemeSwitcher;

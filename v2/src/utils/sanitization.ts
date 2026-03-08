@@ -73,17 +73,43 @@ export function isValidUrlProtocol(url: string): boolean {
  *
  * @see https://owasp.org/www-community/attacks/xss/
  */
-export const SANITIZATION_CONFIG = {
+const SANITIZATION_CONFIG = {
   ALLOWED_TAGS: ['p', 'a', 'strong', 'em', 'ul', 'ol', 'li', 'br'],
   ALLOWED_ATTR: ['href', 'title'],
   // KEEP_CONTENT: true preserves text content when unsafe tags are removed
   // This is safe because we use strict tag and attribute whitelists
   KEEP_CONTENT: true,
-  // Add custom hooks for enhanced URL validation
+  ALLOW_UNKNOWN_PROTOCOLS: false,
   RETURN_DOM: false,
   RETURN_DOM_FRAGMENT: false,
   RETURN_DOM_IMPORT: false,
 };
+
+/**
+ * Module-level DOMPurify hook for validating href attributes and enforcing
+ * security attributes on external links.
+ *
+ * Registered once at module load to avoid race conditions in concurrent
+ * rendering (React 18+). DOMPurify hooks are global singletons, so
+ * adding/removing them per-call can interleave under concurrent rendering,
+ * causing intermittent sanitization failures.
+ *
+ * @see https://github.com/cure53/DOMPurify#hooks
+ */
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'A') {
+    const href = node.getAttribute('href');
+    if (href && !isValidUrlProtocol(href)) {
+      node.removeAttribute('href');
+    }
+
+    // For external links, ensure security attributes
+    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+      node.setAttribute('rel', 'noopener noreferrer');
+      node.setAttribute('target', '_blank');
+    }
+  }
+});
 
 /**
  * Sanitizes HTML content for safe rendering in React components using `dangerouslySetInnerHTML`.
@@ -124,64 +150,10 @@ export function sanitizeHtml(htmlContent: string): string {
     throw new TypeError('HTML content must be a string');
   }
 
-  // Configure custom hooks for security validation
-  const config = {
-    ...SANITIZATION_CONFIG,
-    ALLOW_UNKNOWN_PROTOCOLS: false,
-  };
-
-  // Add hook to validate href attributes
-  DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-    if (node.tagName === 'A') {
-      const href = node.getAttribute('href');
-      if (href && !isValidUrlProtocol(href)) {
-        node.removeAttribute('href');
-      }
-
-      // For external links, ensure security attributes
-      if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-        node.setAttribute('rel', 'noopener noreferrer');
-        node.setAttribute('target', '_blank');
-      }
-    }
-  });
-
   try {
-    const sanitized = DOMPurify.sanitize(htmlContent, config);
-
-    // Remove the hook to prevent interference with other sanitization calls
-    DOMPurify.removeHook('afterSanitizeAttributes');
-
-    return String(sanitized);
+    return String(DOMPurify.sanitize(htmlContent, SANITIZATION_CONFIG));
   } catch (error) {
-    // Remove hook on error as well
-    DOMPurify.removeHook('afterSanitizeAttributes');
-
-    // Log error for debugging but return empty string for safety
     console.error('Error during HTML sanitization:', error);
     return '';
   }
-}
-
-/**
- * Sanitizes HTML with strict configuration optimized for project descriptions.
- *
- * This function is optimized for rendering project descriptions which typically contain:
- * - Formatted text (p, strong, em)
- * - Lists (ul, ol, li)
- * - Links to external resources
- *
- * It applies the same security measures as `sanitizeHtml()` but is named specifically
- * for semantic clarity when used in description contexts.
- *
- * @param htmlContent - Raw HTML description content
- * @returns Sanitized HTML safe for rendering with `dangerouslySetInnerHTML`
- * @throws {TypeError} If htmlContent is not a string
- *
- * @example
- * const description = '<p>Built with <strong>React</strong> and <em>TypeScript</em></p>';
- * const sanitized = sanitizeDescriptionHtml(description);
- */
-export function sanitizeDescriptionHtml(htmlContent: string): string {
-  return sanitizeHtml(htmlContent);
 }

@@ -8,8 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { useReducedMotion } from '../../hooks';
-import { useAnimations } from '../../hooks/useAnimations';
+import { useAnimations } from '../../hooks';
 
 /**
  * Props for the ProjectSkeleton component.
@@ -100,20 +99,13 @@ export function ProjectSkeleton({
 }: ProjectSkeletonProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const prefersReducedMotion = useReducedMotion();
-  const { animationsEnabled } = useAnimations();
+  const { shouldAnimate } = useAnimations();
 
-  // Determine animation based on reduced motion preference and animations setting
-  // When reduced motion is preferred or animations are disabled, disable the wave animation
-  const animationMode = prefersReducedMotion || !animationsEnabled ? false : ('wave' as const);
+  // Disable wave animation when animations are disabled or reduced motion is preferred
+  const animationMode = shouldAnimate ? ('wave' as const) : false;
 
-  // Build responsive variant based on viewport if not explicitly set
-  const responsiveVariant =
-    variant === 'narrow'
-      ? 'narrow'
-      : isMobile
-        ? 'narrow'
-        : variant;
+  // On mobile viewports, always use narrow layout regardless of requested variant
+  const responsiveVariant = isMobile ? 'narrow' : variant;
 
   return (
     <Box
@@ -122,9 +114,7 @@ export function ProjectSkeleton({
       aria-busy="true"
       aria-label="Loading project details"
       sx={{
-        transition: prefersReducedMotion || !animationsEnabled
-          ? 'none'
-          : 'opacity 0.2s ease-in-out',
+        transition: shouldAnimate ? 'opacity 0.2s ease-in-out' : 'none',
         ...sx,
       }}
     >
@@ -141,31 +131,47 @@ export function ProjectSkeleton({
       />
 
       {/* Layout-specific skeletons */}
-      {responsiveVariant === 'narrow' && (
-        <NarrowLayoutSkeleton
-          animationMode={animationMode}
-          prefersReducedMotion={prefersReducedMotion}
-          animationsEnabled={animationsEnabled}
-        />
-      )}
-
-      {responsiveVariant === 'wide-regular' && (
-        <WideRegularLayoutSkeleton
-          animationMode={animationMode}
-          prefersReducedMotion={prefersReducedMotion}
-          animationsEnabled={animationsEnabled}
-        />
-      )}
-
-      {responsiveVariant === 'wide-video' && (
-        <WideVideoLayoutSkeleton
-          animationMode={animationMode}
-          prefersReducedMotion={prefersReducedMotion}
-          animationsEnabled={animationsEnabled}
-        />
-      )}
+      <SkeletonLayout
+        variant={responsiveVariant}
+        animationMode={animationMode}
+        shouldAnimate={shouldAnimate}
+      />
     </Box>
   );
+}
+
+/**
+ * Props shared by all skeleton layout sub-components.
+ */
+interface SkeletonLayoutProps {
+  /** Animation type: 'wave' for shimmer effect or false to disable */
+  animationMode: 'wave' | false;
+  /** Whether animations should play (combines user setting and OS preference) */
+  shouldAnimate: boolean;
+}
+
+/**
+ * Maps a skeleton variant to the corresponding layout sub-component.
+ *
+ * @param props - Component props
+ * @param props.variant - The skeleton variant to render
+ * @param props.animationMode - Animation type for skeletons
+ * @param props.shouldAnimate - Whether transition animations should play
+ * @returns The rendered skeleton layout for the given variant
+ */
+function SkeletonLayout({
+  variant,
+  animationMode,
+  shouldAnimate,
+}: SkeletonLayoutProps & { variant: 'narrow' | 'wide-regular' | 'wide-video' }): React.ReactNode {
+  switch (variant) {
+    case 'narrow':
+      return <NarrowLayoutSkeleton animationMode={animationMode} shouldAnimate={shouldAnimate} />;
+    case 'wide-regular':
+      return <WideRegularLayoutSkeleton animationMode={animationMode} shouldAnimate={shouldAnimate} />;
+    case 'wide-video':
+      return <WideVideoLayoutSkeleton animationMode={animationMode} shouldAnimate={shouldAnimate} />;
+  }
 }
 
 /**
@@ -181,25 +187,17 @@ export function ProjectSkeleton({
  *
  * @param props - Component props
  * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
- * @param props.prefersReducedMotion - Whether user prefers reduced motion
- * @param props.animationsEnabled - Whether animations are enabled in the user's settings
+ * @param props.shouldAnimate - Whether animations should play (combines user setting and OS preference)
  * @returns A skeleton container with narrow layout structure
  */
 function NarrowLayoutSkeleton({
   animationMode,
-  prefersReducedMotion,
-  animationsEnabled,
-}: {
-  animationMode: 'wave' | false;
-  prefersReducedMotion: boolean;
-  animationsEnabled: boolean;
-}) {
+  shouldAnimate,
+}: SkeletonLayoutProps) {
   return (
     <Box
       sx={{
-        transition: prefersReducedMotion || !animationsEnabled
-          ? 'none'
-          : 'opacity 0.2s ease-in-out',
+        transition: shouldAnimate ? 'opacity 0.2s ease-in-out' : 'none',
       }}
     >
       {/* Tags row */}
@@ -265,28 +263,20 @@ function NarrowLayoutSkeleton({
  *
  * @param props - Component props
  * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
- * @param props.prefersReducedMotion - Whether user prefers reduced motion
- * @param props.animationsEnabled - Whether animations are enabled in the user's settings
+ * @param props.shouldAnimate - Whether animations should play (combines user setting and OS preference)
  * @returns A skeleton container with wide-regular layout structure
  */
 function WideRegularLayoutSkeleton({
   animationMode,
-  prefersReducedMotion,
-  animationsEnabled,
-}: {
-  animationMode: 'wave' | false;
-  prefersReducedMotion: boolean;
-  animationsEnabled: boolean;
-}) {
+  shouldAnimate,
+}: SkeletonLayoutProps) {
   return (
     <Box
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '2fr 1fr' },
         gap: { xs: 2, sm: 3, md: 4 },
-        transition: prefersReducedMotion || !animationsEnabled
-          ? 'none'
-          : 'opacity 0.2s ease-in-out',
+        transition: shouldAnimate ? 'opacity 0.2s ease-in-out' : 'none',
       }}
     >
       {/* Left column: Description with floated tags */}
@@ -369,28 +359,20 @@ function WideRegularLayoutSkeleton({
  *
  * @param props - Component props
  * @param props.animationMode - Animation type: 'wave' for shimmer effect or false to disable
- * @param props.prefersReducedMotion - Whether user prefers reduced motion
- * @param props.animationsEnabled - Whether animations are enabled in the user's settings
+ * @param props.shouldAnimate - Whether animations should play (combines user setting and OS preference)
  * @returns A skeleton container with wide-video layout structure
  */
 function WideVideoLayoutSkeleton({
   animationMode,
-  prefersReducedMotion,
-  animationsEnabled,
-}: {
-  animationMode: 'wave' | false;
-  prefersReducedMotion: boolean;
-  animationsEnabled: boolean;
-}) {
+  shouldAnimate,
+}: SkeletonLayoutProps) {
   return (
     <Box
       sx={{
         display: 'grid',
         gridTemplateColumns: { md: '1fr 2fr' },
         gap: { xs: 2, sm: 3, md: 4 },
-        transition: prefersReducedMotion || !animationsEnabled
-          ? 'none'
-          : 'opacity 0.2s ease-in-out',
+        transition: shouldAnimate ? 'opacity 0.2s ease-in-out' : 'none',
       }}
     >
       {/* Left column: Tags + Description */}

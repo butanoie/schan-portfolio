@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
   images: {
@@ -23,4 +24,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+/**
+ * Wraps the Next.js config with bundle analyzer support.
+ * Run `npm run analyze` (sets ANALYZE=true) to generate interactive
+ * treemap visualizations of client and server bundle composition.
+ */
+const analyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
+export default analyzer(nextConfig);

@@ -10,8 +10,8 @@ import {
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { DesignPhilosophyContent, ColorSwatch, TypographyEntry } from "../../types/colophon";
 import { BRAND_COLORS } from "../../constants";
-import { getPaletteByMode } from "../../lib/themes";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -54,8 +54,7 @@ function getContrastTextColor(hexColor: string): string {
  */
 function ColorSwatchCard({ color }: { color: ColorSwatch }) {
   const textColor = getContrastTextColor(color.hex);
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
 
   return (
     <Card
@@ -99,7 +98,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
           variant="subtitle2"
           component="h4"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 600,
             mb: 0.5,
             fontSize: "1rem",
@@ -129,8 +128,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
  * @returns A card displaying the typography sample
  */
 function TypographySampleCard({ font }: { font: TypographyEntry }) {
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette, mode } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -163,7 +161,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             variant="subtitle2"
             component="h4"
             sx={{
-              fontFamily: '"Oswald", sans-serif',
+              fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
               fontSize: "1rem",
               color: palette.card.heading,
@@ -248,8 +246,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
  */
 export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
   const { intro, colors, colorDescription, typography, typographyIntro } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -295,7 +292,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         <Typography
           variant="h3"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 600,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 2,
@@ -336,7 +333,7 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         <Typography
           variant="h3"
           sx={{
-            fontFamily: '"Oswald", sans-serif',
+            fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 600,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 2,

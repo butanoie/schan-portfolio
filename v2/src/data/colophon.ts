@@ -15,6 +15,7 @@ import type { ColophonData } from '../types/colophon';
 import type { TranslationFunction } from '../hooks/useI18n';
 import type { Locale } from '../lib/i18n-constants';
 import { BRAND_COLORS } from '../constants';
+import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING, FONT_FAMILY_CURSIVE } from '../lib/fontConstants';
 import { getLocalizedImageUrl } from '../utils/imageLocalization';
 
 /**
@@ -53,7 +54,11 @@ export function getLocalizedColophonData(
 
     technologies: {
       heading: t('colophon.technologies.heading', { ns: 'pages' }),
-      intro: t('colophon.technologies.intro', { ns: 'pages' }),
+      intro: [
+        t('colophon.technologies.intro.0', { ns: 'pages' }),
+        t('colophon.technologies.intro.1', { ns: 'pages' }),
+        t('colophon.technologies.intro.2', { ns: 'pages' }),
+      ],
 
       categories: [
         {
@@ -281,7 +286,7 @@ export function getLocalizedColophonData(
           name: 'Open Sans',
           usage: t('colophon.designPhilosophy.typography.0.usage', { ns: 'pages' }),
           sample: t('colophon.designPhilosophy.typography.0.sample', { ns: 'pages' }),
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: FONT_FAMILY_BODY,
           fontWeight: 400,
           sampleFontSize: '1rem',
           url: 'https://fonts.google.com/specimen/Open+Sans',
@@ -290,7 +295,7 @@ export function getLocalizedColophonData(
           name: 'Oswald',
           usage: t('colophon.designPhilosophy.typography.1.usage', { ns: 'pages' }),
           sample: t('colophon.designPhilosophy.typography.1.sample', { ns: 'pages' }),
-          fontFamily: '"Oswald", sans-serif',
+          fontFamily: FONT_FAMILY_HEADING,
           fontWeight: 700,
           sampleFontSize: '1.5rem',
           url: 'https://fonts.google.com/specimen/Oswald',
@@ -299,7 +304,7 @@ export function getLocalizedColophonData(
           name: 'Gochi Hand',
           usage: t('colophon.designPhilosophy.typography.2.usage', { ns: 'pages' }),
           sample: t('colophon.designPhilosophy.typography.2.sample', { ns: 'pages' }),
-          fontFamily: '"Gochi Hand", cursive',
+          fontFamily: FONT_FAMILY_CURSIVE,
           fontWeight: 400,
           sampleFontSize: '1.25rem',
           url: 'https://fonts.google.com/specimen/Gochi+Hand',

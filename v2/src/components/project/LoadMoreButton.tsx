@@ -5,8 +5,8 @@ import type { Theme } from '@mui/material/styles';
 import type { SxProps } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { NAV_COLORS, BRAND_COLORS } from '../../constants';
-import { useReducedMotion, useI18n } from '../../hooks';
-import { useAnimations } from '../../hooks/useAnimations';
+import { FONT_FAMILY_BODY } from '@/src/lib/fontConstants';
+import { useI18n, useAnimations } from '../../hooks';
 
 /**
  * Props for the LoadMoreButton component.
@@ -101,8 +101,7 @@ export function LoadMoreButton({
   remainingCount,
   sx,
 }: LoadMoreButtonProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const { animationsEnabled } = useAnimations();
+  const { shouldAnimate } = useAnimations();
   const { t } = useI18n();
 
   // Button text based on state
@@ -110,15 +109,21 @@ export function LoadMoreButton({
     ? t('loadMoreButton.loading', { ns: 'components' })
     : t('loadMoreButton.loadMore', { ns: 'components' });
 
-  // ARIA label with additional context
-  const ariaLabel = disabled
-    ? t('loadMoreButton.allLoaded', { ns: 'components' })
-    : loading
-      ? t('loadMoreButton.loadingAria', { ns: 'components' })
-      : t('loadMoreButton.loadMoreCountAria', {
-          ns: 'components',
-          remainingCount,
-        });
+  /**
+   * Determines the appropriate ARIA label based on the current button state.
+   * Uses if/else instead of nested ternary for clarity.
+   */
+  let ariaLabel: string;
+  if (disabled) {
+    ariaLabel = t('loadMoreButton.allLoaded', { ns: 'components' });
+  } else if (loading) {
+    ariaLabel = t('loadMoreButton.loadingAria', { ns: 'components' });
+  } else {
+    ariaLabel = t('loadMoreButton.loadMoreCountAria', {
+      ns: 'components',
+      remainingCount,
+    });
+  }
 
   return (
     <Button
@@ -131,7 +136,7 @@ export function LoadMoreButton({
         // Nav button styling
         backgroundColor: NAV_COLORS.active,
         color: NAV_COLORS.text,
-        fontFamily: '"Open Sans", sans-serif',
+        fontFamily: FONT_FAMILY_BODY,
         fontSize: { xs: "8pt", md: "10pt" },
         fontWeight: 600,
         textTransform: 'none',
@@ -145,9 +150,9 @@ export function LoadMoreButton({
         minHeight: 'unset',
 
         // Transition effects
-        transition: prefersReducedMotion || !animationsEnabled
-          ? 'none'
-          : 'background-color 0.2s ease-in-out',
+        transition: shouldAnimate
+          ? 'background-color 0.2s ease-in-out'
+          : 'none',
 
         // Hover and focus states
         '&:hover:not(:disabled)': {

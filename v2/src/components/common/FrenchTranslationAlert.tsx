@@ -67,5 +67,3 @@ export function FrenchTranslationAlert(): React.ReactNode {
     </Container>
   );
 }
-
-export default FrenchTranslationAlert;

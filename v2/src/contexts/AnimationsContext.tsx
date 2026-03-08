@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Animations context for managing application animations state.
  *
@@ -7,9 +9,7 @@
  * for accessibility or preference reasons.
  */
 
-"use client";
-
-import React, {
+import {
   createContext,
   useContext,
   useState,

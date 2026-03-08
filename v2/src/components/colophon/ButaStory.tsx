@@ -2,10 +2,9 @@
 
 import { Box, Typography, Paper } from "@mui/material";
 import Image from "next/image";
-import { sanitizeDescriptionHtml } from "../../utils/sanitization";
+import { sanitizeHtml } from "../../utils/sanitization";
 import type { ButaStoryContent } from "../../types/colophon";
-import { getPaletteByMode } from "../../lib/themes";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { usePalette } from "../../hooks/usePalette";
 import { useI18n } from "../../hooks/useI18n";
 
 /**
@@ -35,8 +34,7 @@ export interface ButaStoryProps {
  */
 export default function ButaStory({ content }: ButaStoryProps) {
   const { paragraphs, versusImage, versusImageAlt } = content;
-  const { mode } = useThemeContext();
-  const palette = getPaletteByMode(mode);
+  const { palette } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -100,7 +98,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
               },
             }}
             dangerouslySetInnerHTML={{
-              __html: sanitizeDescriptionHtml(paragraph),
+              __html: sanitizeHtml(paragraph),
             }}
           />
         ))}

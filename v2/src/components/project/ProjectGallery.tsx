@@ -2,10 +2,38 @@
 
 import { Box } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
-import { ProjectImage } from "./ProjectImage";
-import { ProjectLightbox } from "./ProjectLightbox";
-import { useLightbox } from "../../hooks";
+import dynamic from "next/dynamic";
 import type { ProjectImage as ProjectImageType } from "../../types";
+import { ProjectImage } from "./ProjectImage";
+import { useLightbox } from "../../hooks";
+
+/**
+ * Lazily-loaded lightbox modal component.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the lightbox is a client-only
+ * overlay triggered by user click — it is never part of the initial render.
+ * This defers the lightbox chunk (including keyboard/swipe handlers) until needed.
+ *
+ * @returns The dynamically-loaded ProjectLightbox component
+ */
+const ProjectLightbox = dynamic(
+  /**
+   * Loads the ProjectLightbox module, mapping the named export to default.
+   *
+   * @returns The module with ProjectLightbox as the default export
+   */
+  () =>
+    import("./ProjectLightbox").then((m) => ({ default: m.ProjectLightbox })),
+  {
+    ssr: false,
+    /**
+     * No visible fallback needed — lightbox is invisible until opened.
+     *
+     * @returns Null placeholder
+     */
+    loading: () => null,
+  }
+);
 
 /**
  * Props for the ProjectGallery component.
@@ -20,7 +48,7 @@ interface ProjectGalleryProps {
   /** Render in narrow container (reduces column count) */
   narrow?: boolean;
 
-  /** Display 4 columns starting at md breakpoint */
+  /** Display 4 columns at all breakpoints */
   fourColumns?: boolean;
 
   /** Additional MUI sx styles */
@@ -32,34 +60,71 @@ interface ProjectGalleryProps {
  * Supports thumbnail grid with lightbox modal on click.
  *
  * **Grid Layout Modes:**
- * - Default: 2 cols (xs), 3 cols (md), 4 cols (lg)
- * - `altGrid`: 1 col (xs), 2 cols (md), 4 cols (lg)
- * - `fourColumns`: 2 cols (xs), 4 cols (sm and up)
- * - `narrow`: 2 cols (xs and md) - for constrained containers like right 1/3 column
+ * - Default: 2 cols (xs), 4 cols (sm+)
+ * - `altGrid`: 1 col (xs), 4 cols (md+)
+ * - `fourColumns`: 4 cols at all breakpoints
+ * - `narrow`: 4 cols (xs), 2 cols (md+) - for constrained containers like right 1/3 column
  *
  * @param props - Component props
  * @param props.images - Array of project images
- * @param props.altGrid - Enable alternate grid layout (1-2-4 column progression)
- * @param props.fourColumns - Display 4 columns starting at sm breakpoint
- * @param props.narrow - Render in narrow container (reduces to 2 columns)
+ * @param props.altGrid - Enable alternate grid layout (1 col mobile, 4 cols desktop)
+ * @param props.fourColumns - Display 4 columns at all breakpoints
+ * @param props.narrow - Render in narrow container (4 cols mobile, 2 cols desktop)
  * @param props.sx - Additional MUI sx styles
  * @returns Image gallery with lightbox functionality
  *
  * @example
- * // Standard layout: 2-3-4 columns
+ * // Standard layout: 2 cols mobile, 4 cols tablet+
  * <ProjectGallery images={project.images} />
  *
  * @example
- * // Alternate layout: 1-2-4 columns
+ * // Alternate layout: 1 col mobile, 4 cols desktop
  * <ProjectGallery images={project.images} altGrid />
  *
  * @example
- * // Four columns from sm breakpoint: 2 cols mobile, 4 cols tablet+
+ * // Four columns at all sizes
  * <ProjectGallery images={project.images} fourColumns />
  *
  * @example
  * // In a narrow container (1/3 width)
  * <ProjectGallery images={project.images} narrow />
+ */
+
+/**
+ * Determines the responsive grid column layout based on gallery display mode.
+ *
+ * @param narrow - Constrained container mode (2 columns at md)
+ * @param fourColumns - Force 4 columns from xs breakpoint
+ * @param altGrid - Alternate progression (1-4 columns)
+ * @returns Responsive gridTemplateColumns value
+ */
+function getGridColumns(
+  narrow: boolean,
+  fourColumns: boolean,
+  altGrid: boolean
+): Record<string, string> {
+  if (narrow) {
+    return { xs: "repeat(4, 1fr)", md: "repeat(2, 1fr)" };
+  }
+  if (fourColumns) {
+    return { xs: "repeat(4, 1fr)" };
+  }
+  if (altGrid) {
+    return { xs: "1fr", md: "repeat(4, 1fr)" };
+  }
+  return { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" };
+}
+
+/**
+ * Renders a responsive grid of project images with lightbox functionality.
+ *
+ * @param props - Component props
+ * @param props.images - Array of project images to display
+ * @param props.altGrid - Whether to use the alternate grid layout (default: false)
+ * @param props.narrow - Whether to use narrow column layout (default: false)
+ * @param props.fourColumns - Whether to force 4-column layout (default: false)
+ * @param props.sx - Additional MUI sx styles to apply to the grid container
+ * @returns A responsive image grid with click-to-open lightbox
  */
 export function ProjectGallery({
   images,
@@ -95,13 +160,7 @@ export function ProjectGallery({
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: narrow
-            ? { xs: "repeat(4, 1fr)", md: "repeat(2, 1fr)" }
-            : fourColumns
-              ? { xs: "repeat(4, 1fr)" }
-              : altGrid
-                ? { xs: "1fr", md: "repeat(4, 1fr)" }
-                : { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" },
+          gridTemplateColumns: getGridColumns(narrow, fourColumns, altGrid),
           gap: 2,
         }}
       >
@@ -125,14 +184,17 @@ export function ProjectGallery({
         ))}
       </Box>
 
-      {/* Lightbox Modal */}
-      <ProjectLightbox
-        images={images}
-        selectedIndex={selectedIndex}
-        onClose={closeLightbox}
-        onPrevious={handlePreviousImage}
-        onNext={handleNextImage}
-      />
+      {/* Lightbox Modal — only mount when a thumbnail is clicked to avoid
+           loading the dynamic chunk until the user actually needs it */}
+      {selectedIndex !== null && (
+        <ProjectLightbox
+          images={images}
+          selectedIndex={selectedIndex}
+          onClose={closeLightbox}
+          onPrevious={handlePreviousImage}
+          onNext={handleNextImage}
+        />
+      )}
     </Box>
   );
 }

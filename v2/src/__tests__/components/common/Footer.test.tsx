@@ -60,6 +60,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
       const translations: Record<string, string> = {
         "nav.portfolio": "Portfolio",
         "nav.resume": "Résumé",
+        "nav.samples": "Samples",
         "nav.colophon": "Colophon",
         "footer.butaThought": "Buta's thought",
         "footer.allProjectsLoaded": "All projects loaded",
@@ -184,7 +185,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
     render(<Footer />);
 
     const resumeLink = screen.getByRole("link", { name: /résumé|resume/i });
-    expect(resumeLink).toHaveClass("MuiButton-containedPrimary");
+    expect(resumeLink).toHaveAttribute("aria-current", "page");
   });
 
   /**

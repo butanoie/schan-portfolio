@@ -191,7 +191,7 @@ export function AsyncProjectsList({
         <Box
           role="region"
           aria-live="polite"
-          aria-label="Loading more projects"
+          aria-label={t('asyncProjectsList.loadingAria', { ns: 'components' })}
           sx={{ mt: 4 }}
         >
           {Array.from({ length: pageSize }).map((_, i) => (

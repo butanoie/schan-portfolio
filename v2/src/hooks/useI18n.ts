@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Hook for accessing localized strings and formatting utilities.
  *
@@ -12,8 +14,6 @@
  *
  * @module hooks/useI18n
  */
-
-'use client';
 
 import { useContext, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -146,7 +146,7 @@ export function useI18n(): I18nUtils {
           const optionsObj = options as Record<string, unknown>;
           const otherVariables: Record<string, string | number> = {};
           for (const [key, value] of Object.entries(optionsObj)) {
-            if (key !== 'variables' && key !== 'ns' && typeof value === 'string' || typeof value === 'number') {
+            if (key !== 'variables' && key !== 'ns' && (typeof value === 'string' || typeof value === 'number')) {
               otherVariables[key] = value as string | number;
             }
           }

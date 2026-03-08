@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import {
   Dialog,
   IconButton,
   Typography,
   Box,
   Fade,
+  CircularProgress,
 } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import {
@@ -16,7 +16,7 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
 } from "@mui/icons-material";
 import type { ProjectImage as ProjectImageType } from "../../types";
-import { useSwipe, useI18n } from "../../hooks";
+import { useSwipe, useI18n, useAnimations, useImagePreloader } from "../../hooks";
 import { VisuallyHidden } from "../common/VisuallyHidden";
 import {
   SWIPE_THRESHOLD,
@@ -57,6 +57,10 @@ interface ProjectLightboxProps {
  * - Enhanced accessibility (ARIA announcements, screen reader support)
  * - Prevents body scroll when open
  * - Memory-efficient event listener management
+ * - Image preloading: navigations are deferred until the target image is fully loaded, preventing blank flashes between slides
+ * - Proactive adjacent-image preloading for instant future navigations
+ * - Loading spinner overlay displayed on current image during preload
+ * - Graceful timeout (5s) so navigation is never blocked indefinitely
  *
  * **Accessibility Features:**
  * - Assertive ARIA live region announces image changes immediately to screen readers
@@ -67,8 +71,9 @@ interface ProjectLightboxProps {
  * - Focus management when lightbox opens
  *
  * This is a controlled component that relies on the parent to manage navigation state.
- * When navigation is triggered (via buttons, keyboard, or touch), it calls the
- * appropriate callback (`onPrevious` or `onNext`) to let the parent update the index.
+ * When navigation is triggered (via buttons, keyboard, or touch), it preloads the
+ * target image, then calls the appropriate callback (`onPrevious` or `onNext`) to
+ * let the parent update the index — ensuring the slide animation and image appear together.
  *
  * @param props - Component props
  * @param props.images - Array of project images to display
@@ -110,12 +115,14 @@ export function ProjectLightbox({
   onPrevious,
   onNext,
 }: ProjectLightboxProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPreloading, setIsPreloading] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const previousIndexRef = useRef<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { t } = useI18n();
+  const { shouldAnimate } = useAnimations();
+  const { preloadImage, preloadAdjacent } = useImagePreloader();
 
   /**
    * Ref to store the keyboard handler function.
@@ -134,30 +141,69 @@ export function ProjectLightbox({
       : null;
 
   /**
-   * Navigates to the previous image in the gallery.
-   * Sets direction state to 'prev' for animation triggering.
-   * Delegates navigation to parent via onPrevious callback.
-   * The parent is responsible for implementing circular navigation logic.
+   * Extracts all full-size image URLs from the images array.
+   * Memoized via useMemo-like pattern (derived from images which is stable per render).
+   * Used by preloadAdjacent to warm the browser cache for neighboring images.
    */
-  const handlePrevious = useCallback(() => {
-    if (validIndex === null || images.length <= 1) return;
-    setIsLoading(true);
+  const imageUrls = images.map((img) => img.url);
+
+  /**
+   * Proactively preloads adjacent images whenever the current image changes.
+   * This warms the browser cache so that the next prev/next navigation is instant
+   * (cache hit in useImagePreloader means preloadImage resolves immediately).
+   */
+  useEffect(() => {
+    if (validIndex === null) return;
+    preloadAdjacent(imageUrls, validIndex);
+  }, [validIndex, imageUrls, preloadAdjacent]);
+
+  /**
+   * Navigates to the previous image in the gallery.
+   * Preloads the target image before triggering navigation to prevent blank flashes.
+   * Shows a loading spinner while the image is being fetched.
+   * On preload failure or timeout, navigates anyway for graceful degradation.
+   */
+  const handlePrevious = useCallback(async () => {
+    if (validIndex === null || images.length <= 1 || isPreloading) return;
+
+    const targetIndex = (validIndex - 1 + images.length) % images.length;
+    const targetUrl = images[targetIndex]?.url;
+
+    if (!targetUrl) return;
+
+    setIsPreloading(true);
     setDirection('prev');
+
+    // Preload the target image; navigate regardless of success/failure
+    await preloadImage(targetUrl);
+
+    setIsPreloading(false);
     onPrevious();
-  }, [validIndex, images.length, onPrevious]);
+  }, [validIndex, images, isPreloading, preloadImage, onPrevious]);
 
   /**
    * Navigates to the next image in the gallery.
-   * Sets direction state to 'next' for animation triggering.
-   * Delegates navigation to parent via onNext callback.
-   * The parent is responsible for implementing circular navigation logic.
+   * Preloads the target image before triggering navigation to prevent blank flashes.
+   * Shows a loading spinner while the image is being fetched.
+   * On preload failure or timeout, navigates anyway for graceful degradation.
    */
-  const handleNext = useCallback(() => {
-    if (validIndex === null || images.length <= 1) return;
-    setIsLoading(true);
+  const handleNext = useCallback(async () => {
+    if (validIndex === null || images.length <= 1 || isPreloading) return;
+
+    const targetIndex = (validIndex + 1) % images.length;
+    const targetUrl = images[targetIndex]?.url;
+
+    if (!targetUrl) return;
+
+    setIsPreloading(true);
     setDirection('next');
+
+    // Preload the target image; navigate regardless of success/failure
+    await preloadImage(targetUrl);
+
+    setIsPreloading(false);
     onNext();
-  }, [validIndex, images.length, onNext]);
+  }, [validIndex, images, isPreloading, preloadImage, onNext]);
 
   /**
    * Set up touch swipe gesture detection for the lightbox.
@@ -202,11 +248,11 @@ export function ProjectLightbox({
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
-          handlePrevious();
+          void handlePrevious();
           break;
         case "ArrowRight":
           event.preventDefault();
-          handleNext();
+          void handleNext();
           break;
         case "Escape":
           event.preventDefault();
@@ -264,6 +310,19 @@ export function ProjectLightbox({
       return;
     }
 
+    // Skip slide animation when animations are disabled
+    if (!shouldAnimate) {
+      // Defer setState to next microtask to avoid synchronous setState in effect
+      const skipTimer = setTimeout(() => {
+        setDirection(null);
+        setIsAnimating(false);
+      }, 0);
+      previousIndexRef.current = validIndex;
+      return () => {
+        clearTimeout(skipTimer);
+      };
+    }
+
     // Schedule animation start on next microtask to avoid synchronous setState in effect
     const startTimer = setTimeout(() => {
       setIsAnimating(true);
@@ -281,7 +340,7 @@ export function ProjectLightbox({
       clearTimeout(startTimer);
       clearTimeout(resetTimer);
     };
-  }, [validIndex]);
+  }, [validIndex, shouldAnimate]);
 
   // Don't render if no valid index
   if (validIndex === null || images.length === 0) {
@@ -308,52 +367,35 @@ export function ProjectLightbox({
 
   /**
    * Image wrapper styling with responsive constraints and directional animations.
-   * Limits maximum dimensions to prevent overflow on different screen sizes.
+   * Uses flex: 1 + minHeight: 0 to fill available space between the caption and nav bar
+   * within the flex column, preventing overlap on short viewports.
    * Uses overflow: hidden to contain animations and prevent layout shifts from scrollbar changes.
    * Applies slide animations based on navigation direction (next/prev).
    */
   const imageWrapperSx: SxProps<Theme> = {
     position: "relative",
     overflow: "hidden",
-    willChange: isAnimating ? "transform" : "auto",
+    flex: 1,
+    minHeight: 0,
+    willChange: shouldAnimate && isAnimating ? "transform" : "auto",
     width: { xs: "90vw", sm: "85vw", md: "80vw" },
     maxWidth: "1200px",
-    height: { xs: "60vh", sm: "70vh", md: "75vh" },
     maxHeight: "800px",
-    ...(isAnimating && direction && validIndex !== null && {
+    ...(shouldAnimate && isAnimating && direction && validIndex !== null && {
       animation: `${direction === 'next' ? 'slideInFromRight' : 'slideInFromLeft'} 300ms ease-out`,
     }),
   };
 
   /**
-   * Container styling for the lightbox image display.
-   * Uses flexbox to center the image within the viewport.
+   * Shared button styling for lightbox controls.
+   * Semi-transparent white for visibility on dark background.
    */
-  const imageContainerSx: SxProps<Theme> = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 2,
-    padding: { xs: 2, md: 3 },
-  };
-
-  /**
-   * Navigation button styling with fixed positioning.
-   * Buttons are semi-transparent white for visibility on dark background.
-   * Hidden on mobile (xs breakpoint) to avoid interference with swipe gestures.
-   */
-  const navButtonSx: SxProps<Theme> = {
-    position: "fixed",
-    top: "50%",
-    transform: "translateY(-50%)",
-    zIndex: 51,
+  const lightboxButtonSx: SxProps<Theme> = {
     color: "#FFFFFF",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.35)",
     },
-    display: { xs: "none", sm: "flex" },
   };
 
   return (
@@ -375,7 +417,7 @@ export function ProjectLightbox({
           },
         },
         transition: {
-          timeout: DIALOG_FADE_DURATION,
+          timeout: shouldAnimate ? DIALOG_FADE_DURATION : 0,
         },
       }}
       onTouchStart={onTouchStart}
@@ -388,134 +430,162 @@ export function ProjectLightbox({
         onClick={onClose}
         aria-label={t('projectLightbox.closeButton', { ns: 'components' })}
         sx={{
+          ...lightboxButtonSx,
           position: "fixed",
           top: LIGHTBOX_CONTROL_OFFSET,
           right: LIGHTBOX_CONTROL_OFFSET,
           zIndex: 52,
-          color: "#FFFFFF",
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
-          "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.35)",
-          },
         }}
       >
         <CloseIcon fontSize="large" />
       </IconButton>
 
-      {/* Main Image Container */}
+      {/* Main layout container — full-height flex column.
+          Caption, image, and nav are all in normal flow with 24px gaps.
+          The image (flex: 1, minHeight: 0) fills remaining space and shrinks
+          on short viewports, so nothing ever overlaps. */}
       <Box
         sx={{
-          ...imageContainerSx,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           width: "100%",
           height: "100%",
+          padding: "24px",
         }}
       >
-        {/* Image Wrapper */}
-        <Box sx={imageWrapperSx}>
-          <Image
-            src={currentImage.url}
-            alt={currentImage.caption}
-            fill
-            sizes="80vw"
-            priority={true}
-            onLoad={() => setIsLoading(false)}
-            onError={() => setIsLoading(false)}
-            style={{
-              objectFit: "contain",
-              opacity: isLoading ? 0.5 : 1,
-              transition: "opacity 0.2s ease-in-out",
-            }}
-          />
-        </Box>
-
-        {/* Caption - Below Image */}
+        {/* Caption - Above Image, pushed down to hug the image.
+            Uses a dark semi-transparent background matching the item counter
+            so caption text remains readable over any image content. */}
         <Typography
           variant="body1"
           sx={{
             color: "#FFFFFF",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            borderRadius: 1,
             textAlign: "center",
             maxWidth: { xs: "90vw", md: "80vw" },
-            px: 1,
+            px: 2,
+            py: 0.5,
+            flexShrink: 0,
+            marginTop: "auto",
+            marginBottom: "24px",
           }}
         >
           {currentImage.caption}
         </Typography>
-      </Box>
 
-      {/* Previous Button - Left Side */}
-      {showNavigation && (
-        <IconButton
-          onClick={handlePrevious}
-          aria-label={t('projectLightbox.previousButton', { ns: 'components' })}
-          sx={{
-            ...navButtonSx,
-            left: LIGHTBOX_CONTROL_OFFSET,
-          }}
-        >
-          <ArrowBackIcon fontSize="large" sx={{pl:1}} />
-        </IconButton>
-      )}
-
-      {/* Next Button - Right Side */}
-      {showNavigation && (
-        <IconButton
-          onClick={handleNext}
-          aria-label={t('projectLightbox.nextButton', { ns: 'components' })}
-          sx={{
-            ...navButtonSx,
-            right: LIGHTBOX_CONTROL_OFFSET,
-          }}
-        >
-          <ArrowForwardIcon fontSize="large" sx={{pl:.5}}  />
-        </IconButton>
-      )}
-
-      {/* Image Counter and Accessibility Announcements - Bottom Center */}
-      {showNavigation && (
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: LIGHTBOX_CONTROL_OFFSET,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 51,
-          }}
-          role="status"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
-          {/*
-           * Screen reader announcement with full context.
-           * Uses assertive live region for immediate announcement when image changes.
-           * Includes image position, total count, and caption for comprehensive context.
-           * This is hidden visually but announced by screen readers.
-           */}
-          <VisuallyHidden>
-            Viewing image {validIndex + 1} of {images.length}: {currentImage.caption}
-          </VisuallyHidden>
-
-          {/*
-           * Visual counter display for sighted users.
-           * Marked with aria-hidden since screen readers announce via VisuallyHidden above.
-           * This prevents duplicate announcements.
-           */}
-          <Typography
-            variant="body2"
-            aria-hidden="true"
-            sx={{
-              color: "#FFFFFF",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              borderRadius: 1,
-              px: 2,
-              py: 0.5,
-              mb: 2,
-              fontSize: "0.875rem",
+        {/* Image Wrapper — uses native <img> instead of Next.js <Image> so that
+            the browser HTTP cache populated by useImagePreloader (which uses
+            new Image().src = url) is shared with the displayed element. Next.js
+            <Image> rewrites URLs through /_next/image, creating a cache mismatch. */}
+        <Box sx={imageWrapperSx}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={currentImage.url}
+            alt={currentImage.caption}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
             }}
-          >
-            {validIndex + 1} of {images.length}
-          </Typography>
+          />
+
+          {/* Loading spinner overlay — shown during image preloading.
+              Centered absolutely within the image wrapper so it overlays
+              the current image without shifting layout. */}
+          {isPreloading && (
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "rgba(0, 0, 0, 0.3)",
+                zIndex: 1,
+              }}
+              role="status"
+              aria-label={t('projectLightbox.loadingImage', { ns: 'components' })}
+            >
+              <CircularProgress
+                size={48}
+                sx={{ color: "rgba(255, 255, 255, 0.8)" }}
+              />
+            </Box>
+          )}
         </Box>
-      )}
+
+        {/* Navigation Controls and Image Counter - pushed up to hug the image */}
+        {showNavigation && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1,
+              flexShrink: 0,
+              marginTop: "24px",
+              marginBottom: "auto",
+            }}
+            role="status"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            {/*
+             * Screen reader announcement with full context.
+             * Uses assertive live region for immediate announcement when image changes.
+             * Includes image position, total count, and caption for comprehensive context.
+             * This is hidden visually but announced by screen readers.
+             */}
+            <VisuallyHidden>
+              {t('projectLightbox.viewingImage', { ns: 'components', current: validIndex + 1, total: images.length, caption: currentImage.caption })}
+            </VisuallyHidden>
+
+            {/* Previous Button */}
+            <IconButton
+              onClick={() => void handlePrevious()}
+              disabled={isPreloading}
+              aria-label={t('projectLightbox.previousButton', { ns: 'components' })}
+              sx={lightboxButtonSx}
+            >
+              <ArrowBackIcon fontSize="large" sx={{ pl: 1 }} />
+            </IconButton>
+
+            {/*
+             * Visual counter display for sighted users.
+             * Marked with aria-hidden since screen readers announce via VisuallyHidden above.
+             * This prevents duplicate announcements.
+             */}
+            <Typography
+              variant="body2"
+              aria-hidden="true"
+              sx={{
+                color: "#FFFFFF",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                borderRadius: 1,
+                px: 2,
+                py: 0.5,
+                fontSize: "0.875rem",
+              }}
+            >
+              {validIndex + 1} of {images.length}
+            </Typography>
+
+            {/* Next Button */}
+            <IconButton
+              onClick={() => void handleNext()}
+              disabled={isPreloading}
+              aria-label={t('projectLightbox.nextButton', { ns: 'components' })}
+              sx={lightboxButtonSx}
+            >
+              <ArrowForwardIcon fontSize="large" sx={{ pl: 0.5 }} />
+            </IconButton>
+          </Box>
+        )}
+      </Box>
     </Dialog>
   );
 }

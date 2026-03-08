@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Settings button component that opens a popover with theme, language, and animations controls.
  *
@@ -26,26 +28,49 @@
  * ```
  */
 
-"use client";
-
 import { useState } from "react";
 import {
   IconButton,
   Popover,
   Tooltip,
   Typography,
-  Box,
   Divider,
 } from "@mui/material";
 import { Settings as SettingsIcon } from "@mui/icons-material";
-import { ThemeSwitcher } from "./ThemeSwitcher";
-import { LanguageSwitcher } from "./LanguageSwitcher";
-import { AnimationsSwitcher } from "./AnimationsSwitcher";
-import { useTheme } from "@/src/hooks/useTheme";
+import dynamic from "next/dynamic";
 import { useI18n } from "@/src/hooks/useI18n";
 import { useAnimations } from "@/src/hooks/useAnimations";
-import { getPaletteByMode } from "@/src/lib/themes";
+import { usePalette } from "@/src/hooks/usePalette";
 import { BRAND_COLORS } from "@/src/constants";
+
+/**
+ * Lazily-loaded settings list containing ThemeSwitcher, LanguageSwitcher,
+ * and AnimationsSwitcher.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the settings list is only
+ * visible inside a Popover triggered by clicking the gear icon. This defers
+ * the entire settings sub-tree from the initial bundle.
+ *
+ * @returns The dynamically-loaded SettingsList component
+ */
+const SettingsList = dynamic(
+  /**
+   * Loads the SettingsList module, mapping the named export to default.
+   *
+   * @returns The module with SettingsList as the default export
+   */
+  () =>
+    import("./SettingsList").then((m) => ({ default: m.SettingsList })),
+  {
+    ssr: false,
+    /**
+     * No visible fallback needed — popover content loads fast enough.
+     *
+     * @returns Null placeholder
+     */
+    loading: () => null,
+  }
+);
 
 /**
  * Props for the SettingsButton component.
@@ -106,10 +131,9 @@ export function SettingsButton({
 }: SettingsButtonProps): React.ReactNode {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
-  const { theme } = useTheme();
+  const { palette } = usePalette();
   const { t } = useI18n();
   const { animationsEnabled } = useAnimations();
-  const palette = getPaletteByMode(theme);
 
   /**
    * Open the settings popover.
@@ -136,10 +160,11 @@ export function SettingsButton({
 
   return (
     <>
-      {/* Settings Icon Button */}
+      {/* Settings Icon Button - wrapped in span when disabled for Tooltip compatibility.
+           MUI Tooltip requires a non-disabled element to anchor to. */}
       <Tooltip title={t("settings.openSettings")}>
-        {disabled ? (
-          <span>
+        {(() => {
+          const iconButton = (
             <IconButton
               onClick={handleOpen}
               aria-label={t("settings.openSettings")}
@@ -163,32 +188,9 @@ export function SettingsButton({
             >
               <SettingsIcon />
             </IconButton>
-          </span>
-        ) : (
-          <IconButton
-            onClick={handleOpen}
-            aria-label={t("settings.openSettings")}
-            aria-expanded={open}
-            aria-controls={popoverId}
-            disabled={disabled}
-            size={size}
-            className={className}
-            sx={{
-              color: palette.text.primary,
-              transition: animationsEnabled
-                ? "color 150ms ease-in-out"
-                : "none",
-              "&:hover": {
-                color: BRAND_COLORS.maroon,
-              },
-              "@media (prefers-reduced-motion: reduce)": {
-                transition: "none",
-              },
-            }}
-          >
-            <SettingsIcon />
-          </IconButton>
-        )}
+          );
+          return disabled ? <span>{iconButton}</span> : iconButton;
+        })()}
       </Tooltip>
 
       {/* Settings Popover */}
@@ -228,59 +230,9 @@ export function SettingsButton({
           {t("settings.title")}
         </Typography>
 
-        {/* Theme Switcher Component */}
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 1,
-              fontSize: "0.875rem",
-              opacity: 0.7,
-            }}
-          >
-            {t("settings.theme")}
-          </Typography>
-          <ThemeSwitcher />
-        </Box>
-
-        {/* Divider */}
-        <Divider sx={{ my: 2 }} />
-
-        {/* Language Switcher Component */}
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 1,
-              fontSize: "0.875rem",
-              opacity: 0.7,
-            }}
-          >
-            {t("settings.language")}
-          </Typography>
-          <LanguageSwitcher />
-        </Box>
-
-        {/* Divider */}
-        <Divider sx={{ my: 2 }} />
-
-        {/* Animations Switcher Component */}
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 1,
-              fontSize: "0.875rem",
-              opacity: 0.7,
-            }}
-          >
-            {t("settings.animations")}
-          </Typography>
-          <AnimationsSwitcher />
-        </Box>
+        {/* Settings sections: Theme, Language, Animations */}
+        <SettingsList separator={<Divider sx={{ my: 2 }} />} />
       </Popover>
     </>
   );
 }
-
-export default SettingsButton;

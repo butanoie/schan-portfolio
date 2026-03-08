@@ -1,31 +1,62 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Container, useMediaQuery } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import DescriptionIcon from "@mui/icons-material/Description";
-import InfoIcon from "@mui/icons-material/Info";
+import { AppBar, Toolbar, Typography, Box, IconButton, Container, useMediaQuery } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { BRAND_COLORS, NAV_COLORS } from "../../constants";
-import { SettingsButton } from "../settings/SettingsButton";
-import HamburgerMenu from "./HamburgerMenu";
-import { useTheme } from "@/src/hooks/useTheme";
-import { getPaletteByMode } from "@/src/lib/themes";
+import { BRAND_COLORS } from "../../constants";
+import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import { usePalette } from "@/src/hooks/usePalette";
 import { useI18n } from "@/src/hooks/useI18n";
+import dynamic from "next/dynamic";
+import { SettingsButton } from "../settings/SettingsButton";
+import { NavButtons } from "./NavButtons";
 
 /**
- * Navigation link configuration for the header.
+ * Lazily-loaded mobile hamburger menu component.
+ *
+ * Uses `next/dynamic` with `ssr: false` because the hamburger menu is only
+ * rendered on mobile viewports and is interaction-triggered. This defers
+ * the MUI Drawer, icons, and the entire SettingsList sub-tree from the
+ * initial bundle.
+ *
+ * The loading placeholder renders a disabled MenuIcon so that the hamburger
+ * button area is visible immediately on mobile, preventing a flash of missing
+ * content while the chunk downloads.
+ *
+ * @returns The dynamically-loaded HamburgerMenu component
  */
-interface NavLink {
-  /** Translation key for the link label */
-  labelKey: string;
-  /** URL path for the link */
-  href: string;
-  /** Icon component to display */
-  icon: React.ReactNode;
-}
+const HamburgerMenu = dynamic(
+  /**
+   * Loads the HamburgerMenu module.
+   *
+   * @returns The HamburgerMenu module
+   */
+  () => import("./HamburgerMenu"),
+  {
+    ssr: false,
+    /**
+     * Renders a disabled menu icon placeholder while the chunk loads.
+     * Matches the same sizing (44×44 min tap target) as the real hamburger button.
+     *
+     * @returns A placeholder IconButton with a MenuIcon
+     */
+    loading: () => (
+      <IconButton
+        size="medium"
+        disabled
+        aria-hidden
+        sx={{
+          color: BRAND_COLORS.maroon,
+          minWidth: 44,
+          minHeight: 44,
+        }}
+      >
+        <MenuIcon fontSize="medium" />
+      </IconButton>
+    ),
+  }
+);
 
 /**
  * Header component with site branding, social links, and main navigation.
@@ -40,35 +71,18 @@ interface NavLink {
  * @returns An app bar with site branding, social icons, and accessible navigation menu
  */
 export default function Header() {
-  const pathname = usePathname();
-  const { theme } = useTheme();
+  const { palette } = usePalette();
   const { t } = useI18n();
-  const palette = getPaletteByMode(theme);
   const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
-  /**
-   * Navigation links for the header.
-   */
-  const navItems: NavLink[] = [
-    { labelKey: "nav.portfolio", href: "/", icon: <HomeIcon /> },
-    { labelKey: "nav.resume", href: "/resume", icon: <DescriptionIcon /> },
-    { labelKey: "nav.colophon", href: "/colophon", icon: <InfoIcon /> },
-  ];
-
-  /**
-   * Check if a link is the current active page.
-   *
-   * @param href - The link path to check
-   * @returns True if the link matches the current pathname
-   */
-  const isActive = (href: string): boolean => {
-    if (!pathname) {
-      return false;
-    }
-    if (href === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(href);
+  /** Shared styling for social icon buttons (LinkedIn, GitHub) */
+  const socialIconSx = {
+    color: palette.text.primary,
+    minWidth: 44,
+    minHeight: 44,
+    "&:hover": {
+      color: BRAND_COLORS.maroon,
+    },
   };
 
   return (
@@ -95,7 +109,7 @@ export default function Header() {
             <Typography
               component="div"
               sx={{
-                fontFamily: "Oswald",
+                fontFamily: FONT_FAMILY_HEADING,
                 fontSize: "1.25rem",
                 fontWeight: 600,
                 lineHeight: 1.5,
@@ -112,14 +126,7 @@ export default function Header() {
                 rel="noopener noreferrer"
                 aria-label={t("nav.social.linkedin")}
                 size="medium"
-                sx={{
-                  color: palette.text.primary,
-                  minWidth: 44,
-                  minHeight: 44,
-                  "&:hover": {
-                    color: BRAND_COLORS.maroon,
-                  },
-                }}
+                sx={socialIconSx}
               >
                 <LinkedInIcon fontSize="medium" />
               </IconButton>
@@ -129,14 +136,7 @@ export default function Header() {
                 rel="noopener noreferrer"
                 aria-label={t("nav.social.github")}
                 size="medium"
-                sx={{
-                  color: palette.text.primary,
-                  minWidth: 44,
-                  minHeight: 44,
-                  "&:hover": {
-                    color: BRAND_COLORS.maroon,
-                  },
-                }}
+                sx={socialIconSx}
               >
                 <GitHubIcon fontSize="medium" />
               </IconButton>
@@ -144,7 +144,7 @@ export default function Header() {
           </Box>
           <Box
             component="nav"
-            aria-label="Main navigation"
+            aria-label={t('nav.mainNavigation')}
             sx={{
               display: "flex",
               gap: 1,
@@ -156,38 +156,7 @@ export default function Header() {
               <HamburgerMenu />
             ) : (
               <>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.href}
-                    component={Link}
-                    href={item.href}
-                    variant="contained"
-                    startIcon={item.icon}
-                    size="medium"
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                    sx={{
-                      backgroundColor: isActive(item.href)
-                        ? NAV_COLORS.active
-                        : BRAND_COLORS.sage,
-                      color: NAV_COLORS.text,
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontWeight: 600,
-                      textTransform: "none",
-                      borderRadius: 1,
-                      boxShadow: 0,
-                      px: 3,
-                      py: 0.75,
-                      "&:hover": {
-                        backgroundColor: isActive(item.href)
-                          ? NAV_COLORS.activeHover
-                          : NAV_COLORS.inactiveHover,
-                        boxShadow: 0,
-                      },
-                    }}
-                  >
-                    {t(item.labelKey)}
-                  </Button>
-                ))}
+                <NavButtons />
                 <SettingsButton size="medium" />
               </>
             )}

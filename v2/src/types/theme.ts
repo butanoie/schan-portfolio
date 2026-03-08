@@ -51,15 +51,3 @@ export interface ThemePalette {
   };
 }
 
-/**
- * Complete theme configuration.
- * Includes palette, typography, and component overrides for MUI.
- */
-export interface ThemeConfig {
-  palette: ThemePalette;
-  typography?: {
-    fontFamily?: string;
-    sizes?: Record<string, string>;
-  };
-  components?: Record<string, Record<string, unknown>>;
-}

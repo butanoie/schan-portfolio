@@ -44,6 +44,9 @@ secrets.json
 credentials.json
 .secrets/
 
+# lighthouse reports
+/lighthouse-reports/
+
 # vercel
 .vercel
 

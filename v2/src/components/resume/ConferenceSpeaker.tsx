@@ -1,11 +1,6 @@
-"use client";
-
 import { Box, Typography } from "@mui/material";
 import type { SpeakingContent } from "../../types/resume";
 import { BRAND_COLORS } from "../../constants";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { getPaletteByMode } from "../../lib/themes";
-import { useI18n } from "../../hooks/useI18n";
 
 /**
  * Props for the ConferenceSpeaker component.
@@ -13,6 +8,12 @@ import { useI18n } from "../../hooks/useI18n";
 export interface ConferenceSpeakerProps {
   /** Speaking history content with intro and events */
   content: SpeakingContent;
+
+  /** Theme-aware text color for card content, sourced from parent's cardTextColor */
+  cardTextColor: string;
+
+  /** Pre-translated section heading text (e.g., "Conference Speaking") */
+  sectionHeading: string;
 }
 
 /**
@@ -27,18 +28,19 @@ export interface ConferenceSpeakerProps {
  *
  * @param props - Component props containing speaking content
  * @param props.content - Speaking history data (intro text and events array)
+ * @param props.cardTextColor - Theme-aware text color from parent's palette
+ * @param props.sectionHeading - Pre-translated heading text
  * @returns A section displaying conference speaking history
  *
  * @example
- * <ConferenceSpeaker content={resumeData.speaking} />
+ * <ConferenceSpeaker content={resumeData.speaking} cardTextColor={palette.card.text} sectionHeading={t('resume.conferenceSpeaker.heading', { ns: 'pages' })} />
  */
 export default function ConferenceSpeaker({
   content,
+  cardTextColor,
+  sectionHeading,
 }: ConferenceSpeakerProps) {
   const { intro, events } = content;
-  const { mode, isMounted } = useThemeContext();
-  const palette = getPaletteByMode(isMounted ? mode : "light");
-  const { t } = useI18n();
 
   return (
     <Box component="section" aria-labelledby="speaking-heading">
@@ -55,12 +57,12 @@ export default function ConferenceSpeaker({
           variant="h3"
           sx={{
             fontWeight: 600,
-            color: palette.card.text,
+            color: cardTextColor,
             fontSize: { xs: "1.1rem", md: "1.25rem" },
             mb: 1.5,
           }}
         >
-          {t('resume.conferenceSpeaker.heading', { ns: 'pages' })}
+          {sectionHeading}
         </Typography>
 
         {/* Intro Text */}
@@ -68,7 +70,7 @@ export default function ConferenceSpeaker({
           <Typography
             variant="body2"
             sx={{
-              color: palette.card.text,
+              color: cardTextColor,
               fontSize: "0.9rem",
               mb: 1.5,
             }}
@@ -97,7 +99,7 @@ export default function ConferenceSpeaker({
                 variant="body2"
                 sx={{
                   fontWeight: 600,
-                  color: palette.card.text,
+                  color: cardTextColor,
                   fontSize: "0.9rem",
                 }}
               >
@@ -106,7 +108,7 @@ export default function ConferenceSpeaker({
               <Typography
                 variant="body2"
                 sx={{
-                  color: palette.card.text,
+                  color: cardTextColor,
                   fontSize: "0.85rem",
                   mt: 0.25,
                 }}
@@ -118,7 +120,7 @@ export default function ConferenceSpeaker({
                 <Typography
                   variant="body2"
                   sx={{
-                    color: palette.card.text,
+                    color: cardTextColor,
                     fontSize: "0.8rem",
                     mt: 0.25,
                   }}
