@@ -73,9 +73,16 @@ Add **one secret** and **two variables** to GitHub Actions:
 4. **Value:** Paste the service name you found in step 3
 5. Click **Add variable**
 
+**Variable 3 - Railway Staging Environment ID (required for production deploys):**
+1. Still in the **Variables** tab
+2. Click **New repository variable**
+3. **Name:** `RAILWAY_STAGING_ENVIRONMENT_ID`
+4. **Value:** The UUID of your Railway staging environment (find it in the Railway dashboard URL when viewing the staging environment, or run `railway environment list`)
+5. Click **Add variable**
+
 **Why the difference?**
 - **Token** is a secret because it's an authentication credential (sensitive)
-- **Project ID & Service Name** are variables because they're just configuration identifiers (non-sensitive)
+- **Project ID, Service Name & Staging Environment ID** are variables because they're just configuration identifiers (non-sensitive)
 
 ### Step 5: Verify Deployment Configuration
 
@@ -135,6 +142,7 @@ deploy:
 - **Secret:** `RAILWAY_TOKEN` - Your Railway API token
 - **Variable:** `RAILWAY_PROJECT_ID` - Your Railway project ID
 - **Variable:** `RAILWAY_SERVICE_NAME` - Your Railway service name
+- **Variable:** `RAILWAY_STAGING_ENVIRONMENT_ID` - Your Railway staging environment UUID (required for production deploys)
 
 ✅ Confirm environment approval is configured:
 - Go to **Settings** > **Environments** > **Sing Portfolio / development**
@@ -265,19 +273,32 @@ If you need to add or modify environment variables:
 - **Framework:** Next.js 16+
 
 ### GitHub Workflow Configuration
+
+**Development (PR-based):**
 - **Workflow File:** `.github/workflows/test-deploy-dev.yml`
 - **Workflow Name:** "Lint, Type Check, Unit Test, and Deploy"
 - **Trigger:** Pull requests to `main` branch
 - **Smart Execution:** Only runs tests/deploy if `v2/` or `.github/workflows/` folders changed
-- **Change Detection:** First job (`check-changes`) determines if tests run
-- **Tests:** Only run if changes detected (lint, type-check, unit tests)
-- **Environment:** `Sing Portfolio / development` (requires manual approval for deployment)
-- **Deployment Gate:** Manual approval from configured reviewers before deployment
-- **Deploy Source:** Repository root (Railway automatically detects `v2/` as the app directory)
+- **Environment:** `Sing Portfolio / development`
+
+**Development (Manual):**
+- **Workflow File:** `.github/workflows/deploy-dev.yml`
+- **Workflow Name:** "Manual Deploy to Development"
+- **Trigger:** Manual (`workflow_dispatch`) from any branch
+- **Environment:** `Sing Portfolio / development`
+
+**Production:**
+- **Workflow File:** `.github/workflows/deploy-production.yml`
+- **Workflow Name:** "Manual Deploy to Production"
+- **Trigger:** Manual (`workflow_dispatch`) from `main` branch only
+- **Preflight Checks:** Branch verification + Railway staging deployment verification
+- **Environment:** `Sing Portfolio / production`
+
+**Shared Configuration:**
 - **Authentication Secret:** `RAILWAY_TOKEN` (encrypted)
 - **Project ID Variable:** `RAILWAY_PROJECT_ID` (non-sensitive config)
 - **Service Name Variable:** `RAILWAY_SERVICE_NAME` (non-sensitive config)
-- **Deployment Command:** `railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=development`
+- **Staging Environment ID Variable:** `RAILWAY_STAGING_ENVIRONMENT_ID` (used by production workflow for staging verification)
 - **Best Practice:** Token stored as secret (sensitive), configuration stored as variables (non-sensitive)
 
 ## Troubleshooting
@@ -356,7 +377,24 @@ If you need to add or modify environment variables:
    git push
    ```
 
-## Manual Deployment
+## Manual Development Deployment (Any Branch)
+
+In addition to the automatic PR-based deployment, you can manually deploy **any branch** to the development environment using the **"Manual Deploy to Development"** workflow.
+
+**Workflow File:** `.github/workflows/deploy-dev.yml`
+
+### How It Works
+
+1. Go to your GitHub repository > **Actions** tab
+2. Select **"Manual Deploy to Development"** workflow
+3. Click **"Run workflow"**
+4. Choose the branch to deploy from the dropdown (or enter a tag/commit SHA)
+5. Click **"Run workflow"**
+6. Approve the deployment when prompted (environment protection rules apply)
+
+This is useful for testing feature branches in the development environment without creating a PR to `main`.
+
+## Manual CLI Deployment
 
 To deploy manually without using GitHub Actions:
 
@@ -445,16 +483,24 @@ Replace:
 
 ### Manual Production Deployment Workflow
 
-Once your changes are verified in the development environment, you can manually deploy to production using the **"Manual Deploy to Production"** workflow.
+Once your changes are verified in the staging environment, you can manually deploy to production using the **"Manual Deploy to Production"** workflow.
 
 **Workflow File:** `.github/workflows/deploy-production.yml`
 
 ### How It Works
 
-1. **Manual Trigger**: The workflow is triggered manually from GitHub (not automatically on PR merge)
-2. **Choose Deployment Target**: Select which commit/branch to deploy (defaults to `main`)
+1. **Main Branch Only**: Production deployments can only be triggered from the `main` branch
+2. **Staging Gate**: The workflow verifies that the exact commit has been successfully deployed to the Railway staging environment before proceeding
 3. **Approval Gate**: Requires manual approval from configured reviewers before deploying
-4. **Deploy to Production**: Once approved, deploys to your production environment in Railway
+4. **Deploy to Production**: Once all checks pass and approval is granted, deploys to your production environment in Railway
+
+### Prerequisites
+
+Before deploying to production, you must:
+
+1. **Merge to `main`**: All changes must be on the `main` branch
+2. **Staging deployment**: Railway must have auto-deployed the commit to the staging environment. Railway handles this automatically when commits land on `main`.
+3. **Staging success**: The staging deployment must have completed successfully in Railway
 
 ### Deploying to Production
 
@@ -464,28 +510,32 @@ Once your changes are verified in the development environment, you can manually 
 2. Navigate to **Actions** tab
 3. Select **"Manual Deploy to Production"** workflow
 4. Click **"Run workflow"** button
-5. Enter the **Git reference** to deploy (optional):
-   - Leave blank or enter `main` to deploy the latest from main branch
-   - Enter a commit SHA to deploy a specific commit
-   - Enter a tag name to deploy a specific release
+5. Ensure **Branch: main** is selected (other branches will be rejected)
 6. Click **"Run workflow"**
 
-#### Step 2: Approve the Deployment
+#### Step 2: Preflight Checks
 
-After the workflow starts:
+The workflow automatically runs two checks before deployment:
 
-1. The job will pause and show **"Waiting for approval"**
+1. **Branch verification** - Confirms the workflow is running from `main`. If triggered from another branch, the workflow fails immediately.
+2. **Staging deployment verification** - Queries the Railway GraphQL API to confirm the commit SHA has a successful deployment in the staging environment. If no successful staging deployment is found, the workflow fails with a descriptive error.
+
+#### Step 3: Approve the Deployment
+
+After preflight checks pass:
+
+1. The deploy job will pause and show **"Waiting for approval"**
 2. Go to the **Actions** tab and select the running workflow
 3. Click the **"Review deployment"** button
 4. Review the details:
    - **Environment**: Sing Portfolio / production
    - **Deployed by**: Your GitHub username
-   - **Commit**: The commit being deployed
+   - **Commit**: The commit being deployed (verified against staging)
 5. Click **"Approve and deploy"**
 
 The workflow will then proceed to deploy to production.
 
-#### Step 3: Verify Production Deployment
+#### Step 4: Verify Production Deployment
 
 1. Go to Railway Dashboard
 2. Select the **Sing Portfolio** project
@@ -497,41 +547,40 @@ The workflow will then proceed to deploy to production.
 
 **Workflow Structure:**
 ```yaml
+# No inputs - always deploys the latest main branch commit
 workflow_dispatch:
-  inputs:
-    ref:
-      description: 'Git reference to deploy (branch, tag, or commit SHA)'
-      required: false
-      default: 'main'
-      type: string
+
+jobs:
+  preflight:
+    # Verifies: 1) running from main, 2) commit deployed to staging
+    steps:
+      - name: Verify main branch
+      - name: Verify staging deployment on Railway
+
+  deploy-production:
+    needs: preflight
+    environment: "Sing Portfolio / production"
 ```
 
-**Deploy job configuration:**
+**Staging verification uses Railway's GraphQL API:**
 ```yaml
-deploy-production:
-  runs-on: ubuntu-latest
-  environment: "Sing Portfolio / production"
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.inputs.ref || 'main' }}
-
-    - name: Install Railway CLI
-      run: npm install -g @railway/cli
-
-    - name: Deploy to Railway Production
-      run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=production
-      env:
-        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+- name: Verify staging deployment on Railway
+  env:
+    RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+    RAILWAY_STAGING_ENV_ID: ${{ vars.RAILWAY_STAGING_ENVIRONMENT_ID }}
+    COMMIT_SHA: ${{ github.sha }}
+  run: |
+    # Queries Railway API for successful staging deployment matching commit SHA
 ```
 
 **Key Features:**
-- **Manual Trigger**: `workflow_dispatch` allows triggering directly from GitHub UI
-- **Flexible Deployments**: Can deploy from any branch, tag, or specific commit SHA
+- **Main Branch Only**: Cannot deploy from feature branches - enforced at runtime
+- **Staging Gate**: Queries Railway's API to verify the commit was successfully deployed to staging first
 - **Approval Protection**: `environment: "Sing Portfolio / production"` requires manual approval
-- **Same Configuration**: Uses the same `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_NAME`, and `RAILWAY_TOKEN`
-- **Production Environment**: Targets the `production` environment in Railway (not development)
+- **Same Configuration**: Uses `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_NAME`, and `RAILWAY_TOKEN`
+- **Additional Variable**: Requires `RAILWAY_STAGING_ENVIRONMENT_ID` for the staging verification check
+- **Production Environment**: Targets the `production` environment in Railway
 
 ### Recommended Deployment Workflow
 
@@ -539,18 +588,20 @@ deploy-production:
 1. Create PR to `main` with your changes
 2. Tests run automatically and deploy to development (with approval)
 3. Verify changes work correctly in development environment
-4. Test thoroughly in development
-5. When ready for production, manually trigger "Manual Deploy to Production" workflow
-6. Select `main` branch (or specific commit/tag)
-7. Approve the production deployment
-8. Monitor production deployment and verify application works
+4. Merge PR to `main`
+5. Railway auto-deploys the commit to staging
+6. Verify changes work correctly in staging environment
+7. Manually trigger "Manual Deploy to Production" workflow from `main`
+8. Preflight checks verify commit was deployed to staging
+9. Approve the production deployment
+10. Monitor production deployment and verify application works
 
 This gives you:
-- ✅ **Safety**: Development environment for testing before production
-- ✅ **Control**: Manual approval required for all production deployments
-- ✅ **Flexibility**: Deploy any commit, not just the latest
-- ✅ **Audit Trail**: GitHub records all deployments and approvers
-- ✅ **Rollback Option**: Can deploy previous commits if needed
+- **Safety**: Three environments (development -> staging -> production) with progressive validation
+- **Staging Gate**: Production deploys are blocked until the commit succeeds in staging
+- **Control**: Manual approval required for all production deployments
+- **Audit Trail**: GitHub records all deployments and approvers
+- **Rollback Option**: Can re-deploy previous `main` commits (as long as they passed staging)
 
 ### Setting Up Production Approval
 
@@ -568,18 +619,34 @@ To require approval before production deployments:
 
 **Result:** All production deployments will wait for approval from designated reviewers.
 
-### Comparing Development vs Production
+### Comparing Environments
 
-| Aspect | Development | Production |
-|--------|-------------|-----------|
-| **Trigger** | Automatic on PR merge | Manual (workflow_dispatch) |
-| **Frequency** | Every PR with v2 changes | On demand when ready |
-| **Approval** | Required | Required |
-| **Environment** | development | production |
-| **Use Case** | Testing and validation | Live users |
-| **Deployment Source** | Latest from main | Any commit/branch/tag |
+| Aspect | Development | Staging | Production |
+|--------|-------------|---------|-----------|
+| **Trigger** | Automatic on PR / Manual | Auto-deploy on `main` (Railway) | Manual (workflow_dispatch) |
+| **Branch** | Any branch | `main` only | `main` only |
+| **Staging Gate** | No | No | Yes - commit must succeed in staging |
+| **Approval** | Required | N/A (Railway auto-deploy) | Required |
+| **Railway Env** | development | staging | production |
+| **Use Case** | Testing and validation | Pre-production verification | Live users |
+| **Workflow File** | `test-deploy-dev.yml` / `deploy-dev.yml` | Railway event handler | `deploy-production.yml` |
 
 ### Troubleshooting Production Deployment
+
+#### Preflight: "No successful staging deployment found"
+**Problem:** The production workflow fails at the preflight step with a staging verification error.
+
+**Solutions:**
+1. **Commit not on `main`**: Ensure the commit has been merged to `main` and Railway has auto-deployed it to staging
+2. **Staging deployment still in progress**: Wait for Railway to finish the staging deployment, then re-run the workflow
+3. **Staging deployment failed**: Check the Railway dashboard for the staging environment — the deployment may have failed. Fix the issue, push a new commit, and try again
+4. **Wrong environment ID**: Verify the `RAILWAY_STAGING_ENVIRONMENT_ID` variable matches your staging environment UUID in Railway
+5. **API response debugging**: Check the workflow logs for the API response output to identify the issue
+
+#### Preflight: "Production deployments are only allowed from the main branch"
+**Problem:** The production workflow fails because it was triggered from a non-main branch.
+
+**Solution:** Go to Actions > "Manual Deploy to Production" > "Run workflow" and ensure **Branch: main** is selected in the dropdown.
 
 #### "Sing Portfolio / production" Environment Not Found
 **Problem:** Workflow fails because the production environment doesn't exist in GitHub.
