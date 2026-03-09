@@ -56,38 +56,48 @@ jobs:
           fi
           echo "Confirmed commit $DEPLOY_SHA is on main."
 
-      - name: Verify staging deployment on Railway
+      - name: Verify staging deployment via GitHub Deployments
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
-          RAILWAY_STAGING_ENV_ID: ${{ vars.RAILWAY_STAGING_ENVIRONMENT_ID }}
+          GH_TOKEN: ${{ github.token }}
           COMMIT_SHA: ${{ steps.resolve.outputs.sha }}
+          STAGING_ENV: ${{ vars.RAILWAY_STAGING_DEPLOY_ENV_NAME }}
         run: |
-          echo "Checking Railway staging for successful deployment of commit $COMMIT_SHA..."
+          echo "Checking GitHub Deployments for successful staging deployment of commit $COMMIT_SHA..."
 
-          # Query Railway GraphQL API for deployments matching this commit in staging
-          RESPONSE=$(curl -s -X POST \
-            -H "Authorization: Bearer $RAILWAY_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"query\": \"query { deployments(input: { projectId: \\\"$RAILWAY_PROJECT_ID\\\", environmentId: \\\"$RAILWAY_STAGING_ENV_ID\\\" }) { edges { node { id status meta { commitHash } } } } }\"
-            }" \
-            "https://backboard.railway.app/graphql/v2")
+          # Query GitHub Deployments API for this commit in the staging environment
+          DEPLOYMENTS=$(gh api "repos/${{ github.repository }}/deployments?sha=$COMMIT_SHA&environment=$STAGING_ENV&per_page=10" 2>&1)
 
-          # Check if any deployment matches this commit SHA and has SUCCESS status
-          MATCH=$(echo "$RESPONSE" | jq -r \
-            --arg sha "$COMMIT_SHA" \
-            '[.data.deployments.edges[].node | select(.meta.commitHash == $sha and .status == "SUCCESS")] | length')
-
-          if [ "$MATCH" = "0" ] || [ "$MATCH" = "null" ] || [ -z "$MATCH" ]; then
-            echo "::error::No successful staging deployment found on Railway for commit $COMMIT_SHA."
-            echo "::error::Railway must auto-deploy this commit to staging before it can be promoted to production."
-            echo "API response for debugging:"
-            echo "$RESPONSE" | jq '.data.deployments.edges[:3]' 2>/dev/null || echo "$RESPONSE"
+          if [ $? -ne 0 ]; then
+            echo "::error::Failed to query GitHub Deployments API."
+            echo "$DEPLOYMENTS"
             exit 1
           fi
 
-          echo "Found $MATCH successful staging deployment(s) for this commit. Proceeding."
+          COUNT=$(echo "$DEPLOYMENTS" | jq 'length')
+          if [ "$COUNT" = "0" ]; then
+            echo "::error::No staging deployment found for commit $COMMIT_SHA in environment '$STAGING_ENV'."
+            echo "::error::Railway must auto-deploy this commit to staging before it can be promoted to production."
+            exit 1
+          fi
+
+          # Check if any deployment has a successful status
+          FOUND_SUCCESS=false
+          for DEPLOY_ID in $(echo "$DEPLOYMENTS" | jq -r '.[].id'); do
+            STATE=$(gh api "repos/${{ github.repository }}/deployments/$DEPLOY_ID/statuses" --jq '.[0].state')
+            echo "Deployment $DEPLOY_ID status: $STATE"
+            if [ "$STATE" = "success" ]; then
+              FOUND_SUCCESS=true
+              break
+            fi
+          done
+
+          if [ "$FOUND_SUCCESS" != "true" ]; then
+            echo "::error::No successful staging deployment found for commit $COMMIT_SHA."
+            echo "::error::Latest deployment status was: $STATE"
+            exit 1
+          fi
+
+          echo "Confirmed successful staging deployment for commit $COMMIT_SHA. Proceeding."
 
   deploy-production:
     needs: preflight
