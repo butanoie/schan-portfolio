@@ -61,29 +61,40 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
           RAILWAY_STAGING_ENV_ID: ${{ vars.RAILWAY_STAGING_ENVIRONMENT_ID }}
+          RAILWAY_SERVICE_ID: ${{ vars.RAILWAY_SERVICE_ID }}
           COMMIT_SHA: ${{ steps.resolve.outputs.sha }}
         run: |
           echo "Checking Railway staging for successful deployment of commit $COMMIT_SHA..."
 
           # Query Railway GraphQL API for deployments matching this commit in staging
+          # serviceId is required — without it the API returns null for edges
           RESPONSE=$(curl -s -X POST \
             -H "Authorization: Bearer $RAILWAY_TOKEN" \
             -H "Content-Type: application/json" \
             -d "{
-              \"query\": \"query { deployments(input: { projectId: \\\"$RAILWAY_PROJECT_ID\\\", environmentId: \\\"$RAILWAY_STAGING_ENV_ID\\\" }) { edges { node { id status meta { commitHash } } } } }\"
+              \"query\": \"query { deployments(input: { projectId: \\\"$RAILWAY_PROJECT_ID\\\", environmentId: \\\"$RAILWAY_STAGING_ENV_ID\\\", serviceId: \\\"$RAILWAY_SERVICE_ID\\\" }) { edges { node { id status meta { commitHash } } } } }\"
             }" \
             "https://backboard.railway.app/graphql/v2")
 
+          # Verify the API returned valid data before querying
+          ERRORS=$(echo "$RESPONSE" | jq -r '.errors // [] | length')
+          if [ "$ERRORS" != "0" ]; then
+            echo "::error::Railway API returned errors:"
+            echo "$RESPONSE" | jq '.errors' 2>/dev/null || echo "$RESPONSE"
+            exit 1
+          fi
+
           # Check if any deployment matches this commit SHA and has SUCCESS status
+          # Use '// []' fallback to handle null edges gracefully
           MATCH=$(echo "$RESPONSE" | jq -r \
             --arg sha "$COMMIT_SHA" \
-            '[.data.deployments.edges[].node | select(.meta.commitHash == $sha and .status == "SUCCESS")] | length')
+            '[(.data.deployments.edges // [])[] | .node | select(.meta.commitHash == $sha and .status == "SUCCESS")] | length')
 
           if [ "$MATCH" = "0" ] || [ "$MATCH" = "null" ] || [ -z "$MATCH" ]; then
             echo "::error::No successful staging deployment found on Railway for commit $COMMIT_SHA."
             echo "::error::Railway must auto-deploy this commit to staging before it can be promoted to production."
             echo "API response for debugging:"
-            echo "$RESPONSE" | jq '.data.deployments.edges[:3]' 2>/dev/null || echo "$RESPONSE"
+            echo "$RESPONSE" | jq '.' 2>/dev/null || echo "$RESPONSE"
             exit 1
           fi
 
