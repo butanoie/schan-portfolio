@@ -53,6 +53,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: 'v2/package-lock.json'
 
       - name: Install dependencies
         working-directory: v2
