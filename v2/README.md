@@ -44,7 +44,7 @@ All Phase 1 tasks from the [Modernization Plan](../docs/active/MODERNIZATION_PLA
 - ✅ Prettier for code formatting
 - ✅ TypeScript strict mode enabled
 - ✅ Git hooks with Husky and lint-staged
-- ✅ Accessibility testing tools (axe-core)
+- ✅ Accessibility testing tools (vitest-axe)
 - ✅ Basic layout components (Header, Footer, MainLayout)
 - ✅ Custom MUI theme with portfolio color palette
 - ✅ Security: .gitignore configured for secrets management
@@ -66,7 +66,7 @@ All Phase 1 tasks from the [Modernization Plan](../docs/active/MODERNIZATION_PLA
 - **Linting:** ESLint 9 with Next.js and accessibility rules
 - **Formatting:** Prettier 3.8
 - **Git Hooks:** Husky 9 + lint-staged
-- **Accessibility:** axe-core + @axe-core/react
+- **Accessibility:** vitest-axe (axe-core engine)
 
 ## Getting Started
 
