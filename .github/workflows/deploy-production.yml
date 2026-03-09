@@ -72,7 +72,7 @@ jobs:
             -H "Authorization: Bearer $RAILWAY_TOKEN" \
             -H "Content-Type: application/json" \
             -d "{
-              \"query\": \"query { deployments(input: { projectId: \\\"$RAILWAY_PROJECT_ID\\\", environmentId: \\\"$RAILWAY_STAGING_ENV_ID\\\", serviceId: \\\"$RAILWAY_SERVICE_ID\\\" }) { edges { node { id status meta { commitHash } } } } }\"
+              \"query\": \"query { deployments(input: { projectId: \\\"$RAILWAY_PROJECT_ID\\\", environmentId: \\\"$RAILWAY_STAGING_ENV_ID\\\", serviceId: \\\"$RAILWAY_SERVICE_ID\\\" }) { edges { node { id status meta } } } }\"
             }" \
             "https://backboard.railway.app/graphql/v2")
 
@@ -88,7 +88,7 @@ jobs:
           # Use '// []' fallback to handle null edges gracefully
           MATCH=$(echo "$RESPONSE" | jq -r \
             --arg sha "$COMMIT_SHA" \
-            '[(.data.deployments.edges // [])[] | .node | select(.meta.commitHash == $sha and .status == "SUCCESS")] | length')
+            '[(.data.deployments.edges // [])[] | .node | select((.meta.commitHash // .meta.commit_hash // "") == $sha and .status == "SUCCESS")] | length')
 
           if [ "$MATCH" = "0" ] || [ "$MATCH" = "null" ] || [ -z "$MATCH" ]; then
             echo "::error::No successful staging deployment found on Railway for commit $COMMIT_SHA."
