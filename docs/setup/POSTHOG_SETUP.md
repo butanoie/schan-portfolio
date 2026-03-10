@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project uses [PostHog](https://posthog.com) for privacy-friendly web analytics. PostHog tracks pageviews and user behavior without requiring cookie banners, using sessionStorage-based persistence (cookieless mode).
+This project uses [PostHog](https://posthog.com) for privacy-friendly web analytics and Core Web Vitals monitoring. PostHog tracks pageviews, user behavior, and real-user performance metrics (LCP, CLS, INP, TTFB) without requiring cookie banners, using sessionStorage-based persistence (cookieless mode).
 
 **Free Tier:** 1M events/month per project, unlimited team members, no credit card required.
 
@@ -169,14 +169,63 @@ This configuration means:
 - Users can opt out via their browser's Do Not Track setting
 - Session data does not persist across browser sessions
 
+## Core Web Vitals Reporting
+
+PostHog also receives real-user Core Web Vitals data via the `web-vitals` library (v5.1.0). This provides Real User Monitoring (RUM) data — unlike Lighthouse (synthetic, single-snapshot), these metrics come from actual visitors across different devices, networks, and geographies.
+
+### Metrics Captured
+
+| Metric | Full Name | Measures |
+|--------|-----------|----------|
+| **LCP** | Largest Contentful Paint | Loading performance |
+| **CLS** | Cumulative Layout Shift | Visual stability |
+| **INP** | Interaction to Next Paint | Interactivity responsiveness |
+| **TTFB** | Time to First Byte | Server responsiveness |
+
+**Note:** FID (First Input Delay) was deprecated in March 2024, replaced by INP which measures the full latency of all interactions, not just the first.
+
+### How It Works
+
+The `reportWebVitals()` function (`v2/src/lib/webVitals.ts`) registers callbacks for each metric via the `web-vitals` library. When a metric fires (once per page load), it sends a `$web_vitals` custom event to PostHog with these properties:
+
+| Property | Description | Example |
+|----------|-------------|---------|
+| `metric_name` | Which Core Web Vital | `"LCP"` |
+| `metric_value` | Raw metric value (ms or score) | `1234` |
+| `metric_rating` | Performance rating | `"good"`, `"needs-improvement"`, `"poor"` |
+| `metric_delta` | Change since last report | `1234` |
+| `metric_id` | Unique metric instance ID | `"v5-1234567890"` |
+| `metric_navigation_type` | How the page was loaded | `"navigate"`, `"reload"`, `"back-forward"` |
+| `page_path` | URL pathname | `"/resume"` |
+
+### Viewing Web Vitals in PostHog
+
+1. Go to your PostHog project → **Activity** (or **Events**)
+2. Filter for event name `$web_vitals`
+3. Click any event to see its properties
+4. To build a dashboard: create an Insight filtering on `$web_vitals` events, broken down by `metric_name` and `metric_rating`
+
+### Rating Thresholds
+
+Each metric uses Google's recommended thresholds:
+
+| Metric | Good | Needs Improvement | Poor |
+|--------|------|-------------------|------|
+| LCP | ≤ 2500ms | ≤ 4000ms | > 4000ms |
+| CLS | ≤ 0.1 | ≤ 0.25 | > 0.25 |
+| INP | ≤ 200ms | ≤ 500ms | > 500ms |
+| TTFB | ≤ 800ms | ≤ 1800ms | > 1800ms |
+
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `v2/src/components/PostHogProvider.tsx` | Client component that initializes PostHog |
+| `v2/src/components/PostHogProvider.tsx` | Client component that initializes PostHog and web vitals |
+| `v2/src/lib/webVitals.ts` | Core Web Vitals reporter — captures LCP, CLS, INP, TTFB |
 | `v2/app/layout.tsx` | Root layout — wraps app with PostHogProvider |
 | `v2/.env.example` | Documents required environment variables |
-| `v2/src/__tests__/components/PostHogProvider.test.tsx` | Unit tests for PostHogProvider |
+| `v2/src/__tests__/components/PostHogProvider.test.tsx` | Unit tests for PostHogProvider (10 tests) |
+| `v2/src/__tests__/lib/webVitals.test.ts` | Unit tests for web vitals reporter (6 tests) |
 
 ## Troubleshooting
 

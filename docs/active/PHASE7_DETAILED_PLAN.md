@@ -3,7 +3,7 @@
 **Document Version:** 1.0
 **Created:** 2026-03-06
 **Author:** Sing Chan (with Claude Code)
-**Status:** Not Started
+**Status:** In Progress
 **Target Branch:** `sc/phase7-monitoring`
 
 ---
@@ -62,7 +62,7 @@ Unlike Phases 1–6, Phase 7 is ongoing — tasks represent capabilities to set 
 | Error tracking | Sentry (free tier) | 5K errors/month free, first-class Next.js SDK, source maps, performance traces |
 | Uptime monitoring | UptimeRobot (free tier) | 50 monitors, 5-minute intervals, email/webhook alerts, zero config overhead |
 | Dependency updates | Dependabot | Built into GitHub, zero cost, auto-creates PRs for outdated/vulnerable deps |
-| CWV reporting | web-vitals + PostHog | No additional service needed, reports LCP/FID/CLS/INP/TTFB as custom events |
+| CWV reporting | web-vitals + PostHog | No additional service needed, reports LCP/CLS/INP/TTFB as custom events |
 | Hosting (context) | Railway | Vercel skipped due to cost; Railway already configured in Phase 6 |
 
 ---
@@ -159,20 +159,22 @@ Phase 7 Tasks
 
 ### Acceptance Criteria
 
-- [ ] PostHog SDK installed and initialized
-- [ ] Pageviews tracked automatically on navigation
-- [ ] Cookieless mode enabled (no cookie banner needed)
-- [ ] `Do Not Track` browser setting respected
-- [ ] SDK only initializes in production environment
-- [ ] Environment variables documented
+- [x] PostHog SDK installed and initialized
+- [x] Pageviews tracked automatically on navigation
+- [x] Cookieless mode enabled (no cookie banner needed)
+- [x] `Do Not Track` browser setting respected
+- [x] SDK only initializes in production environment
+- [x] Environment variables documented
 
 ---
 
 ## Task 7.2: Core Web Vitals Reporting
 
-**Goal:** Report real-user Core Web Vitals (LCP, FID, CLS, INP, TTFB) to PostHog so performance can be monitored over time from actual user sessions.
+**Goal:** Report real-user Core Web Vitals (LCP, CLS, INP, TTFB) to PostHog so performance can be monitored over time from actual user sessions.
 
 **Why:** Lighthouse gives lab data (synthetic). Real-user monitoring (RUM) captures actual field performance, which varies by device, network, and geography. Regressions may not show in Lighthouse but will appear in RUM data.
+
+**Note:** FID (First Input Delay) was deprecated in favor of INP (Interaction to Next Paint) as of March 2024. INP measures the full latency of all interactions, not just the first. FCP (First Contentful Paint) is excluded as a diagnostic metric — LCP already covers content paint more meaningfully.
 
 ### Implementation Steps
 
@@ -184,13 +186,13 @@ Phase 7 Tasks
 
 2. **Create Web Vitals reporter**
    - File: `v2/src/lib/webVitals.ts`
-   - Use `web-vitals` library to capture LCP, FID, CLS, INP, TTFB
+   - Use `web-vitals` library (v5.1.0) to capture LCP, CLS, INP, TTFB
    - Send each metric as a PostHog custom event (`$web_vitals`)
-   - Include metric name, value, rating (good/needs-improvement/poor), and page path
+   - Include metric name, value, rating (good/needs-improvement/poor), delta, id, navigation type, and page path
 
-3. **Initialize in app layout**
-   - Call the reporter from `PostHogProvider` or a separate `useEffect`
-   - Runs once per page load
+3. **Initialize in PostHogProvider**
+   - Call `reportWebVitals()` after `posthog.init()` in the existing `useEffect`
+   - Runs once per page load, only in production
 
 4. **Create PostHog dashboard (optional)**
    - Use PostHog MCP to create a "Core Web Vitals" dashboard
@@ -202,15 +204,17 @@ Phase 7 Tasks
 | File | Action | Description |
 |------|--------|-------------|
 | `v2/src/lib/webVitals.ts` | Create | Web Vitals capture and reporting utility |
-| `v2/src/components/PostHogProvider.tsx` | Modify | Initialize web vitals reporting |
+| `v2/src/__tests__/lib/webVitals.test.ts` | Create | Unit tests for web vitals reporter |
+| `v2/src/components/PostHogProvider.tsx` | Modify | Call `reportWebVitals()` after `posthog.init()` |
 
 ### Acceptance Criteria
 
-- [ ] `web-vitals` library installed
-- [ ] LCP, FID, CLS, INP, TTFB captured from real users
-- [ ] Metrics sent to PostHog as custom events
-- [ ] Metric rating (good/needs-improvement/poor) included
-- [ ] Page path included for per-page analysis
+- [x] `web-vitals` library installed (v5.1.0)
+- [x] LCP, CLS, INP, TTFB captured from real users
+- [x] Metrics sent to PostHog as `$web_vitals` custom events
+- [x] Metric rating (good/needs-improvement/poor) included
+- [x] Page path included for per-page analysis
+- [x] 6 unit tests covering all metric callbacks and event shape
 
 ---
 
@@ -537,9 +541,9 @@ Most Phase 7 additions are external service integrations. Testing focuses on:
 Tasks are ordered by value and dependency:
 
 ```
-Task 7.1: PostHog Analytics          [No dependencies — start here]
+Task 7.1: PostHog Analytics          [✅ COMPLETE]
     ↓
-Task 7.2: Core Web Vitals            [Depends on 7.1 — uses PostHog for reporting]
+Task 7.2: Core Web Vitals            [✅ COMPLETE]
     ↓
 Task 7.3: Sentry Error Tracking      [Independent — can parallelize with 7.1/7.2]
     ↓
@@ -558,5 +562,5 @@ Task 7.6: Maintenance Workflow       [Last — documents everything set up above
 
 ---
 
-**Last Updated:** 2026-03-06
-**Next Step:** Begin Task 7.1 (PostHog Analytics integration)
+**Last Updated:** 2026-03-10
+**Next Step:** Begin Task 7.3 (Error Tracking — Sentry)

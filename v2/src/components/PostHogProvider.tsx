@@ -2,6 +2,7 @@
 
 import { useEffect, ReactNode } from "react";
 import posthog from "posthog-js";
+import { reportWebVitals } from "@/src/lib/webVitals";
 
 /**
  * Props for the PostHogProvider component.
@@ -47,6 +48,9 @@ function sanitizeProperties(
  * 2. The PostHog API key environment variable is set
  * 3. The browser's Do Not Track setting is not enabled
  *
+ * This guard controls all PostHog-dependent features, including event
+ * capture and Core Web Vitals reporting via {@link reportWebVitals}.
+ *
  * @returns true if PostHog should initialize, false otherwise
  */
 export function shouldInitializePostHog(): boolean {
@@ -66,6 +70,7 @@ export function shouldInitializePostHog(): boolean {
  * Features:
  * - Cookieless tracking via sessionStorage persistence
  * - Automatic pageview capture
+ * - Core Web Vitals reporting (LCP, CLS, INP, TTFB)
  * - Do Not Track (DNT) browser setting respected
  * - Production-only initialization (no-ops in dev/test)
  *
@@ -85,8 +90,9 @@ export default function PostHogProvider({ children }: PostHogProviderProps) {
     if (!shouldInitializePostHog()) return;
 
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host:
-        process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+      // Route through /ingest reverse proxy to avoid Safari ITP and ad blockers
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "/ingest",
+      ui_host: "https://us.posthog.com",
       // Privacy: use sessionStorage instead of cookies (no banner required)
       persistence: "sessionStorage",
       // Automatically capture pageviews on route changes
@@ -96,6 +102,9 @@ export default function PostHogProvider({ children }: PostHogProviderProps) {
       // Do not store any personal data — strip IP addresses
       sanitize_properties: sanitizeProperties,
     });
+
+    // Report Core Web Vitals (LCP, CLS, INP, TTFB) to PostHog
+    reportWebVitals();
   }, []);
 
   return <>{children}</>;

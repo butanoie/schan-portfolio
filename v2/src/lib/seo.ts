@@ -12,7 +12,13 @@
  * - CreativeWork: Portfolio project metadata
  */
 
-import { Person, Organization, BreadcrumbList, CreativeWork } from "schema-dts";
+import {
+  Person,
+  Organization,
+  BreadcrumbList,
+  CreativeWork,
+  WithContext,
+} from "schema-dts";
 import { AUTHOR, SITE_URL, SOCIAL_LINKS } from "@/src/constants/seo";
 import type { Project } from "@/src/types/project";
 
@@ -60,12 +66,13 @@ export function truncate(text: string, maxLength: number = 160): string {
  * This schema establishes site ownership and author information for search engines,
  * supporting rich results that display author information in SERPs.
  *
- * @returns Person schema object following schema.org Person type
+ * @returns Person schema object with `@context` for top-level JSON-LD embedding
  *
  * @example
  * const schema = getPersonSchema();
  * // Returns:
  * // {
+ * //   "@context": "https://schema.org",
  * //   "@type": "Person",
  * //   "name": "Sing Chan",
  * //   "jobTitle": "Product Designer, Developer, and Accessibility Advocate",
@@ -76,8 +83,9 @@ export function truncate(text: string, maxLength: number = 160): string {
  * //   ]
  * // }
  */
-export function getPersonSchema(): Person {
+export function getPersonSchema(): WithContext<Person> {
   return {
+    "@context": "https://schema.org",
     "@type": "Person",
     name: AUTHOR.name,
     jobTitle: AUTHOR.jobTitle,

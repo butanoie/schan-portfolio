@@ -720,15 +720,15 @@ The following Gumby features are being **completely removed** in V2:
 
 ### Tasks
 
-- [ ] Task 7.1: Web Analytics (PostHog)
+- [x] Task 7.1: Web Analytics (PostHog) ✅ Complete (2026-03-10)
   - PostHog React SDK integration
   - Cookieless mode (privacy-first, no cookie banner)
   - Automatic pageview tracking
   - Respect Do Not Track browser setting
-- [ ] Task 7.2: Core Web Vitals Reporting
-  - `web-vitals` library integration
-  - Real-user LCP, FID, CLS, INP, TTFB reporting
-  - Metrics sent to PostHog as custom events
+- [x] Task 7.2: Core Web Vitals Reporting ✅ Complete (2026-03-10)
+  - `web-vitals` v5.1.0 library integration
+  - Real-user LCP, CLS, INP, TTFB reporting (FID deprecated)
+  - Metrics sent to PostHog as `$web_vitals` custom events
 - [ ] Task 7.3: Error Tracking (Sentry)
   - Sentry Next.js SDK with source maps
   - Automatic error capture in production
