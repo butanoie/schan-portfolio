@@ -110,6 +110,16 @@ export default withSentryConfig(analyzer(nextConfig), {
 
 ---
 
+## Impact Assessment
+
+- **Error visibility:** Production bugs are now captured automatically with full stack traces and source maps, eliminating reliance on user reports
+- **Privacy consistency:** The shared `privacy.ts` module ensures PostHog and Sentry (and future integrations) apply identical Do Not Track behavior, reducing the risk of privacy drift between services
+- **Build pipeline:** `withSentryConfig` adds a post-build step for source map upload on Railway; local builds are unaffected (upload silently skips without `SENTRY_AUTH_TOKEN`)
+- **Bundle size:** `@sentry/nextjs` adds to the client bundle; should be verified with `npm run analyze` to stay under the 40KB gzipped target
+- **Developer workflow:** No changes to local development — Sentry is production-only and requires no local setup
+
+---
+
 ## Related Files
 
 **Created (8):**

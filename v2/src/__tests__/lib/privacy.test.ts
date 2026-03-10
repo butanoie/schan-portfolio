@@ -65,4 +65,22 @@ describe("isDoNotTrackEnabled", () => {
     setDoNotTrack("0");
     expect(isDoNotTrackEnabled()).toBe(false);
   });
+
+  it('should return true when navigator.doNotTrack is null but window.doNotTrack is "1" (legacy IE/Edge)', () => {
+    setDoNotTrack(null);
+    Object.defineProperty(window, "doNotTrack", {
+      value: "1",
+      writable: true,
+      configurable: true,
+    });
+
+    expect(isDoNotTrackEnabled()).toBe(true);
+
+    // Clean up legacy property
+    Object.defineProperty(window, "doNotTrack", {
+      value: undefined,
+      writable: true,
+      configurable: true,
+    });
+  });
 });
