@@ -2,6 +2,26 @@ import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
+  /**
+   * Proxies PostHog ingestion and asset requests through the app's own domain.
+   *
+   * Safari's Intelligent Tracking Prevention (ITP) blocks cross-origin fetch
+   * requests to known analytics domains like `us.i.posthog.com`. By rewriting
+   * `/ingest/*` to PostHog's servers, the browser treats these as same-origin
+   * requests, avoiding CORS and ITP blocks. This also bypasses most ad blockers.
+   */
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
+  },
   images: {
     // Allow Next.js to optimize all local images
     // No external image domains needed for v2 (all images are local)

@@ -90,8 +90,9 @@ export default function PostHogProvider({ children }: PostHogProviderProps) {
     if (!shouldInitializePostHog()) return;
 
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host:
-        process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+      // Route through /ingest reverse proxy to avoid Safari ITP and ad blockers
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "/ingest",
+      ui_host: "https://us.posthog.com",
       // Privacy: use sessionStorage instead of cookies (no banner required)
       persistence: "sessionStorage",
       // Automatically capture pageviews on route changes

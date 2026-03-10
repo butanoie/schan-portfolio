@@ -112,7 +112,8 @@ describe("PostHogProvider", () => {
       );
 
       expect(posthog.init).toHaveBeenCalledWith("phc_test_key", {
-        api_host: "https://us.i.posthog.com",
+        api_host: "/ingest",
+        ui_host: "https://us.posthog.com",
         persistence: "sessionStorage",
         capture_pageview: true,
         disable_session_recording: true,
