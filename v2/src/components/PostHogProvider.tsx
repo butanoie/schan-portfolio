@@ -3,6 +3,7 @@
 import { useEffect, ReactNode } from "react";
 import posthog from "posthog-js";
 import { reportWebVitals } from "@/src/lib/webVitals";
+import { isDoNotTrackEnabled } from "@/src/lib/privacy";
 
 /**
  * Props for the PostHogProvider component.
@@ -10,19 +11,6 @@ import { reportWebVitals } from "@/src/lib/webVitals";
 interface PostHogProviderProps {
   /** Child components to render */
   children: ReactNode;
-}
-
-/**
- * Checks whether the browser's Do Not Track setting is enabled.
- *
- * @returns true if DNT is enabled, false otherwise
- */
-function isDoNotTrackEnabled(): boolean {
-  if (typeof window === "undefined") return false;
-  const dnt =
-    navigator.doNotTrack ||
-    (window as unknown as Record<string, unknown>).doNotTrack;
-  return dnt === "1" || dnt === "yes";
 }
 
 /**

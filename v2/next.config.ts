@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
@@ -55,4 +56,25 @@ const analyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-export default analyzer(nextConfig);
+/**
+ * Wraps the config with Sentry for automatic source map upload and
+ * error tracking instrumentation. Sentry must be the outermost wrapper
+ * so its webpack plugin runs last and can process the final source maps.
+ *
+ * Source maps are uploaded during `next build` (on Railway) when
+ * `SENTRY_AUTH_TOKEN` is set. Local builds without the token still
+ * succeed — Sentry silently skips the upload.
+ */
+export default withSentryConfig(analyzer(nextConfig), {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Only log Sentry build output in CI to keep local dev output clean
+  silent: !process.env.CI,
+
+  // Delete .map files after upload so they're not served to browsers
+  sourcemaps: {
+    filesToDeleteAfterUpload: [".next/static/**/*.map"],
+  },
+});
