@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
    * requests to known analytics domains like `us.i.posthog.com`. By rewriting
    * `/ingest/*` to PostHog's servers, the browser treats these as same-origin
    * requests, avoiding CORS and ITP blocks. This also bypasses most ad blockers.
+   *
+   * @returns Array of rewrite rules for PostHog ingestion and static assets
    */
   async rewrites() {
     return [
