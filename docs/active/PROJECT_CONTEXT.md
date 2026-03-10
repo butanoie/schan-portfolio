@@ -39,7 +39,7 @@ This is a portfolio modernization project migrating **portfolio.singchan.com** f
   - ✅ Deployment documentation
 - 🔄 Phase 7: Monitoring & Analytics (In Progress)
   - ✅ Task 7.1: Web Analytics (PostHog) (Complete - Mar 10)
-  - ⬜ Task 7.2: Core Web Vitals Reporting
+  - ✅ Task 7.2: Core Web Vitals Reporting (Complete - Mar 10)
   - ⬜ Task 7.3: Error Tracking (Sentry)
   - ⬜ Task 7.4: Uptime Monitoring
   - ⬜ Task 7.5: Dependency Management (Dependabot)
@@ -312,7 +312,14 @@ See detailed plan: `docs/archive/performance/PHASE5_DETAILED_PLAN.md`
   - 8 unit tests covering all init conditions
   - Environment variables documented in `.env.example`
   - Setup guide: `docs/setup/POSTHOG_SETUP.md`
-- ⬜ Task 7.2: Core Web Vitals Reporting
+- ✅ Task 7.2: Core Web Vitals Reporting (Complete - Mar 10)
+  - `web-vitals` v5.1.0 installed
+  - Reporter utility: `v2/src/lib/webVitals.ts`
+  - Captures LCP, CLS, INP, TTFB (FID deprecated in favor of INP)
+  - Metrics sent as PostHog `$web_vitals` custom events
+  - Includes metric_name, metric_value, metric_rating, metric_delta, page_path
+  - Called after `posthog.init()` in PostHogProvider
+  - 6 unit tests covering all callbacks and event shape
 - ⬜ Task 7.3: Error Tracking (Sentry)
 - ⬜ Task 7.4: Uptime Monitoring (UptimeRobot)
 - ⬜ Task 7.5: Dependency Management (Dependabot)
@@ -642,4 +649,4 @@ npm run test:coverage # Coverage report
 
 **Last Updated:** 2026-03-10
 **Current Focus:** Phase 7 — Monitoring & Analytics
-**Next Milestone:** Task 7.2 — Core Web Vitals Reporting
+**Next Milestone:** Task 7.3 — Error Tracking (Sentry)

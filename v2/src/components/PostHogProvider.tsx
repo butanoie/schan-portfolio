@@ -2,6 +2,7 @@
 
 import { useEffect, ReactNode } from "react";
 import posthog from "posthog-js";
+import { reportWebVitals } from "@/src/lib/webVitals";
 
 /**
  * Props for the PostHogProvider component.
@@ -66,6 +67,7 @@ export function shouldInitializePostHog(): boolean {
  * Features:
  * - Cookieless tracking via sessionStorage persistence
  * - Automatic pageview capture
+ * - Core Web Vitals reporting (LCP, CLS, INP, TTFB)
  * - Do Not Track (DNT) browser setting respected
  * - Production-only initialization (no-ops in dev/test)
  *
@@ -96,6 +98,9 @@ export default function PostHogProvider({ children }: PostHogProviderProps) {
       // Do not store any personal data — strip IP addresses
       sanitize_properties: sanitizeProperties,
     });
+
+    // Report Core Web Vitals (LCP, CLS, INP, TTFB) to PostHog
+    reportWebVitals();
   }, []);
 
   return <>{children}</>;
