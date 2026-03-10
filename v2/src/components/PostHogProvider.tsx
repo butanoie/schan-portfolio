@@ -48,6 +48,9 @@ function sanitizeProperties(
  * 2. The PostHog API key environment variable is set
  * 3. The browser's Do Not Track setting is not enabled
  *
+ * This guard controls all PostHog-dependent features, including event
+ * capture and Core Web Vitals reporting via {@link reportWebVitals}.
+ *
  * @returns true if PostHog should initialize, false otherwise
  */
 export function shouldInitializePostHog(): boolean {
