@@ -81,7 +81,8 @@ export default withSentryConfig(analyzer(nextConfig), {
     name: process.env.SENTRY_RELEASE,
     create: true,
     finalize: true,
-    setCommits: { auto: true },
+    // setCommits requires a .git directory which Railway's `railway up` strips.
+    // Commit association can be done via GitHub integration or sentry-cli in CI.
   },
 
   // Upload a larger set of source maps for prettier stack traces
