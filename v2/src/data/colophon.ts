@@ -125,24 +125,24 @@ export function getLocalizedColophonData(
               url: 'https://context7.io/',
             },
             {
-              name: 'GitHub MCP',
-              description: t('colophon.technologies.categories.2.items.2.description', { ns: 'pages' }),
-              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/github',
-            },
-            {
-              name: 'Filesystem MCP',
-              description: t('colophon.technologies.categories.2.items.3.description', { ns: 'pages' }),
-              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem',
-            },
-            {
-              name: 'Sequential Thinking MCP',
-              description: t('colophon.technologies.categories.2.items.4.description', { ns: 'pages' }),
-              url: 'https://github.com/modelcontextprotocol/servers/tree/main/src/sequential-thinking',
-            },
-            {
               name: 'DeepL MCP',
-              description: t('colophon.technologies.categories.2.items.5.description', { ns: 'pages' }),
+              description: t('colophon.technologies.categories.2.items.2.description', { ns: 'pages' }),
               url: 'https://www.deepl.com/',
+            },
+            {
+              name: 'Sentry MCP',
+              description: t('colophon.technologies.categories.2.items.3.description', { ns: 'pages' }),
+              url: 'https://docs.sentry.io/platforms/javascript/guides/nextjs/',
+            },
+            {
+              name: 'PostHog MCP',
+              description: t('colophon.technologies.categories.2.items.4.description', { ns: 'pages' }),
+              url: 'https://posthog.com/',
+            },
+            {
+              name: 'Playwright MCP',
+              description: t('colophon.technologies.categories.2.items.5.description', { ns: 'pages' }),
+              url: 'https://playwright.dev/',
             },
           ],
         },

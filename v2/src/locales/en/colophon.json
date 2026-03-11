@@ -76,20 +76,20 @@
               "description": "Documentation and code examples retrieval for up-to-date library and framework information."
             },
             {
-              "name": "GitHub MCP",
-              "description": "GitHub integration for repository operations, pull requests, and issue management."
-            },
-            {
-              "name": "Filesystem MCP",
-              "description": "Safe filesystem access for reading and writing files within allowed directories."
-            },
-            {
-              "name": "Sequential Thinking MCP",
-              "description": "Structured reasoning and problem-solving through step-by-step thought processes."
-            },
-            {
               "name": "DeepL MCP",
               "description": "AI-powered translation service for auto-translating content to multiple languages."
+            },
+            {
+              "name": "Sentry MCP",
+              "description": "Error tracking and performance monitoring integration for investigating production issues directly from the development environment."
+            },
+            {
+              "name": "PostHog MCP",
+              "description": "Product analytics integration for querying user behavior data, feature flags, and experiment results during development."
+            },
+            {
+              "name": "Playwright MCP",
+              "description": "Browser automation for visual testing, accessibility audits, and cross-browser verification of UI components."
             }
           ]
         },

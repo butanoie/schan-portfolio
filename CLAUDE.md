@@ -167,7 +167,12 @@ If you discover code without documentation:
 
 Infrastructure docs live in `docs/`. Key references:
 - `docs/setup/MCP_SETUP.md` — MCP server configuration and tokens
+- `docs/setup/RAILWAY_DEPLOYMENT.md` — Railway hosting and CI/CD
+- `docs/setup/POSTHOG_SETUP.md` — PostHog analytics configuration
+- `docs/setup/SENTRY_SETUP.md` — Sentry error tracking configuration
+- `docs/setup/TESTING_SETUP.md` — Testing infrastructure
 - `docs/guides/LOCALIZATION_ARCHITECTURE.md` — i18n architecture, patterns, and translation workflows
+- `docs/guides/MAINTENANCE_WORKFLOW.md` — Operational maintenance procedures
 
 When adding new infrastructure, create docs in the appropriate `docs/` subdirectory. 
 **CRITICAL: Never document actual tokens or secrets — only how to obtain them.**
