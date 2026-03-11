@@ -1,267 +1,185 @@
-# Static Code Analysis Setup Guide
+# Static Code Analysis Setup
 
-This guide covers setting up static code analyzers to enforce documentation requirements and code quality standards.
+This guide documents the project's static analysis tooling — ESLint, Prettier, Husky, and JSDoc enforcement — and how to extend or customize it.
 
-## Current Setup (v2)
+## Current Setup
 
-The v2 project currently has:
-- ✅ ESLint 9 with Next.js and TypeScript configs
-- ✅ Prettier for code formatting
-- ✅ Husky + lint-staged for pre-commit hooks
-- ✅ TypeScript strict mode
+The v2 project uses the following static analysis tools:
 
-## Adding JSDoc Documentation Enforcement
+| Tool | Version | Purpose |
+|------|---------|---------|
+| ESLint | 9.x | Linting (flat config) |
+| Prettier | 3.x | Code formatting |
+| Husky | 9.x | Git hooks |
+| lint-staged | 16.x | Run linters on staged files |
+| eslint-plugin-jsdoc | 62.x | JSDoc documentation enforcement |
+| eslint-plugin-jsx-a11y | 6.x | Accessibility linting (via eslint-config-next) |
+| TypeScript | 5.x | Type checking (strict mode) |
 
-### Step 1: Install eslint-plugin-jsdoc
+### Available Scripts
+
+Run all commands from `v2/`:
 
 ```bash
-cd v2
-npm install --save-dev eslint-plugin-jsdoc
+npm run lint          # ESLint check
+npm run lint:fix      # ESLint with auto-fix
+npm run typecheck     # TypeScript type check (tsc --noEmit)
+npm run format        # Prettier auto-format
+npm run format:check  # Prettier check (no changes)
+npm test              # Vitest (run once)
 ```
 
-### Step 2: Update ESLint Configuration
+## ESLint Configuration
 
-Update `v2/eslint.config.mjs`:
+**File:** `v2/eslint.config.mjs`
+
+The project uses ESLint 9's flat config format with `defineConfig` from `eslint/config`.
 
 ```javascript
-import { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import jsdoc from "eslint-plugin-jsdoc";
 
 const eslintConfig = defineConfig([
+  // Global ignores — must be a standalone config object with only `ignores`
+  {
+    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
+  },
   ...nextVitals,
   ...nextTs,
   {
-    plugins: {
-      jsdoc,
+    plugins: { jsdoc },
+    settings: {
+      jsdoc: {
+        mode: "typescript",
+        tagNamePreference: {
+          returns: "returns",
+          augments: "extends",
+        },
+      },
     },
     rules: {
-      // Enhanced accessibility rules for WCAG 2.2 Level AA compliance
+      // Accessibility
       "@next/next/no-html-link-for-pages": "off",
       "@next/next/no-img-element": "error",
 
-      // JSDoc documentation requirements
-      "jsdoc/require-jsdoc": [
-        "error",
-        {
-          require: {
-            FunctionDeclaration: true,
-            MethodDefinition: true,
-            ClassDeclaration: true,
-            ArrowFunctionExpression: true,
-            FunctionExpression: true,
-          },
-          contexts: [
-            "TSInterfaceDeclaration",
-            "TSTypeAliasDeclaration",
-            "TSEnumDeclaration",
-          ],
-          // Exempt simple React components and config objects
-          exemptEmptyFunctions: false,
-          checkConstructors: true,
-        },
-      ],
-      "jsdoc/require-description": [
-        "error",
-        {
-          contexts: ["any"],
-          descriptionStyle: "body",
-        },
-      ],
-      "jsdoc/require-param": "error",
-      "jsdoc/require-param-description": "error",
-      "jsdoc/require-param-type": "off", // TypeScript provides types
-      "jsdoc/require-returns": "error",
-      "jsdoc/require-returns-description": "error",
-      "jsdoc/require-returns-type": "off", // TypeScript provides types
-      "jsdoc/check-param-names": "error",
-      "jsdoc/check-tag-names": "error",
-      "jsdoc/check-types": "off", // TypeScript handles this
-      "jsdoc/no-undefined-types": "off", // TypeScript handles this
-      "jsdoc/valid-types": "off", // TypeScript handles this
-      "jsdoc/check-alignment": "warn",
-      "jsdoc/check-indentation": "warn",
-      "jsdoc/multiline-blocks": "warn",
-      "jsdoc/tag-lines": ["warn", "any", { startLines: 1 }],
+      // JSDoc enforcement (see rules breakdown below)
+      "jsdoc/require-jsdoc": ["error", { /* ... */ }],
+      // ... additional rules
     },
   },
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
 ]);
 
 export default eslintConfig;
 ```
 
-### Step 3: Configure JSDoc Settings (Optional but Recommended)
+> **Note:** ESLint 9 flat config does **not** export `globalIgnores` from `eslint/config`. Global ignores are defined as a standalone config object containing only an `ignores` array — this must appear before other config entries so the ignored paths are excluded from all subsequent rules.
 
-For even more control, add a `jsdoc` settings section:
+### JSDoc Rules
 
-```javascript
-{
-  settings: {
-    jsdoc: {
-      mode: "typescript",
-      tagNamePreference: {
-        returns: "returns",
-        augments: "extends",
-      },
-      // Configure preferred tags
-      preferredTypes: {
-        object: "Object",
-        "object.<>": "Object<>",
-      },
-    },
-  },
-}
-```
+The following JSDoc rules are enforced at `"error"` level:
 
-### Step 4: Update package.json Scripts
+| Rule | Effect |
+|------|--------|
+| `jsdoc/require-jsdoc` | Requires JSDoc on functions, methods, classes, interfaces, types, enums |
+| `jsdoc/require-description` | Requires a body description in every JSDoc block |
+| `jsdoc/require-param` | Requires `@param` for each parameter |
+| `jsdoc/require-param-description` | Requires description text for each `@param` |
+| `jsdoc/require-returns` | Requires `@returns` tag |
+| `jsdoc/require-returns-description` | Requires description text for `@returns` |
+| `jsdoc/check-param-names` | Validates `@param` names match actual parameters |
+| `jsdoc/check-tag-names` | Validates JSDoc tag names are recognized |
 
-Add a documentation check script to `v2/package.json`:
+The following rules are set to `"warn"`:
 
-```json
-{
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "lint:docs": "eslint . --rule 'jsdoc/require-jsdoc: error'",
-    "type-check": "tsc --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "validate": "npm run typecheck && npm run lint && npm run format:check",
-    "prepare": "husky"
-  }
-}
-```
+| Rule | Effect |
+|------|--------|
+| `jsdoc/check-alignment` | Checks alignment of JSDoc block asterisks |
+| `jsdoc/check-indentation` | Checks indentation within JSDoc blocks |
+| `jsdoc/multiline-blocks` | Enforces multiline JSDoc formatting |
+| `jsdoc/tag-lines` | Controls blank lines between tags |
 
-### Step 5: Gradual Adoption Strategy (Optional)
+TypeScript-redundant rules (`require-param-type`, `require-returns-type`, `check-types`, `no-undefined-types`, `valid-types`) are set to `"off"` since TypeScript already provides type information.
 
-If you have existing code without documentation, you can adopt gradually:
+### Customizing Rules
 
-#### Option A: Warning Mode First
-Change `"error"` to `"warn"` for JSDoc rules initially:
+To adjust JSDoc strictness (e.g., during gradual adoption):
 
+**Warning mode** — change `"error"` to `"warn"` for JSDoc rules:
 ```javascript
 "jsdoc/require-jsdoc": ["warn", { /* config */ }],
 ```
 
-Then upgrade to `"error"` once all code is documented.
-
-#### Option B: Ignore Existing Files
-Create `.eslintignore` to exclude existing files temporarily:
-
-```
-# Temporarily exclude until documented
-app/legacy/**
-```
-
-#### Option C: Per-File Overrides
-Use ESLint overrides to enforce documentation only in new directories:
-
+**Per-directory overrides** — enforce only in specific paths:
 ```javascript
 {
-  files: ["app/new-features/**/*.{ts,tsx}"],
+  files: ["src/new-features/**/*.{ts,tsx}"],
   rules: {
     "jsdoc/require-jsdoc": "error",
   },
 }
 ```
 
-## Additional Recommended Tools
-
-### 1. TypeDoc (Documentation Generator)
-
-Generates beautiful documentation websites from your JSDoc comments.
-
-```bash
-npm install --save-dev typedoc
+**Inline exemptions** — disable for specific code:
+```typescript
+// eslint-disable-next-line jsdoc/require-jsdoc
+export const simpleConfig = () => ({});
 ```
 
-Add to `package.json`:
+## Pre-commit Hooks
+
+**File:** `.husky/pre-commit`
+
+The pre-commit hook runs lint-staged, which processes only staged files:
+
+```sh
+#!/bin/sh
+cd v2 && npx lint-staged
+```
+
+**lint-staged config** (in `v2/package.json`):
+
 ```json
 {
-  "scripts": {
-    "docs:generate": "typedoc --out docs-output src"
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   }
 }
 ```
 
-### 2. TypeScript Strict Mode
+This means every commit automatically:
+1. Runs ESLint (including JSDoc rules) with auto-fix on staged JS/TS files
+2. Runs Prettier formatting on staged files
+3. Blocks the commit if ESLint errors remain after auto-fix
 
-Ensure `v2/tsconfig.json` has strict mode enabled:
-
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true
-  }
-}
-```
-
-### 3. Additional ESLint Plugins
-
-Consider these plugins for enhanced code quality:
-
-```bash
-# Enforce React best practices
-npm install --save-dev eslint-plugin-react-hooks
-
-# Enforce accessibility
-# (Already included via eslint-plugin-jsx-a11y)
-
-# Detect security vulnerabilities
-npm install --save-dev eslint-plugin-security
-
-# Enforce import order and organization
-npm install --save-dev eslint-plugin-import
-```
+> **Note:** TypeScript type checking (`tsc --noEmit`) and tests are **not** run in the pre-commit hook — they run in CI instead. This keeps commits fast while CI catches type and test errors.
 
 ## CI/CD Integration
 
-Add to your CI/CD pipeline (e.g., `.github/workflows/ci.yml`):
+The CI workflow (`.github/workflows/test-deploy-dev.yml`) runs the full validation suite on push and PR:
 
 ```yaml
-name: CI
-on: [push, pull_request]
-
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: cd v2 && npm ci
-      - name: Type check
-        run: cd v2 && npm run typecheck
-      - name: Lint (including JSDoc)
-        run: cd v2 && npm run lint
-      - name: Format check
-        run: cd v2 && npm run format:check
-      - name: Build
-        run: cd v2 && npm run build
+steps:
+  - name: Type check
+    run: cd v2 && npm run typecheck
+  - name: Lint (including JSDoc)
+    run: cd v2 && npm run lint
+  - name: Format check
+    run: cd v2 && npm run format:check
+  - name: Build
+    run: cd v2 && npm run build
 ```
 
 ## VSCode Integration
 
-Ensure VSCode ESLint extension is installed and add to `.vscode/settings.json`:
+For real-time ESLint feedback, install the ESLint extension and add to `.vscode/settings.json`:
 
 ```json
 {
@@ -279,24 +197,13 @@ Ensure VSCode ESLint extension is installed and add to `.vscode/settings.json`:
 }
 ```
 
-## Pre-commit Hook Verification
-
-Your existing lint-staged configuration will automatically check documentation on commit. Verify it's working:
-
-```bash
-cd v2
-# Make a change without documentation
-echo "export function test() { return true; }" > app/test.ts
-git add app/test.ts
-git commit -m "Test commit"
-# Should fail with JSDoc requirement error
-```
-
 ## Testing the Setup
+
+To verify JSDoc enforcement is working:
 
 1. Create a test file without documentation:
 ```typescript
-// app/test-doc.ts
+// v2/src/test-doc.ts
 export function addNumbers(a: number, b: number): number {
   return a + b;
 }
@@ -304,11 +211,10 @@ export function addNumbers(a: number, b: number): number {
 
 2. Run ESLint:
 ```bash
-cd v2
-npm run lint
+cd v2 && npm run lint
 ```
 
-3. Should see error:
+3. Should see:
 ```
 error  Missing JSDoc comment  jsdoc/require-jsdoc
 ```
@@ -327,38 +233,20 @@ export function addNumbers(a: number, b: number): number {
 }
 ```
 
-5. Run ESLint again:
-```bash
-npm run lint
-```
+5. Run ESLint again — should pass.
 
-Should pass without errors.
+## Files
 
-## Exempting Specific Code
+| File | Purpose |
+|------|---------|
+| `v2/eslint.config.mjs` | ESLint flat config with JSDoc rules |
+| `v2/package.json` | Scripts and lint-staged config |
+| `.husky/pre-commit` | Git pre-commit hook (runs lint-staged) |
+| `CLAUDE.md` | Documentation standards and enforcement policy |
+| `docs/guides/JSDOC_EXAMPLES.md` | JSDoc templates and examples |
 
-If certain code shouldn't require documentation (e.g., simple config files), use inline comments:
+## Related Documentation
 
-```typescript
-/* eslint-disable jsdoc/require-jsdoc */
-export const config = {
-  apiUrl: process.env.API_URL,
-};
-/* eslint-enable jsdoc/require-jsdoc */
-```
-
-Or for a single function:
-```typescript
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const simpleConfig = () => ({});
-```
-
-## Summary
-
-With this setup, you'll have:
-- ✅ Automatic documentation enforcement via ESLint
-- ✅ Pre-commit hooks preventing undocumented code
-- ✅ CI/CD integration to catch issues before merge
-- ✅ IDE integration for real-time feedback
-- ✅ Flexible configuration for gradual adoption
-
-All code will be required to have proper JSDoc documentation before it can be committed, enforcing the standards defined in `.claude/claude.md`.
+- [JSDoc Examples](../guides/JSDOC_EXAMPLES.md) — Copy-paste JSDoc templates
+- [Code Review Guidelines](../guides/CODE_REVIEW_GUIDELINES.md) — Review standards including doc checks
+- [Code Quality Dashboard](../guides/CODE_QUALITY_DASHBOARD.md) — Quality metrics

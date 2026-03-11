@@ -2,74 +2,124 @@
 
 This directory contains all project documentation organized by purpose and phase.
 
-## 📋 Quick Navigation
+## Quick Navigation
 
 ### **Active Development**
 - **[Modernization Plan](active/MODERNIZATION_PLAN.md)** - Overall project roadmap and strategy
-- **[Phase 4 Enhanced Features](active/PHASE4_DETAILED_PLAN.md)** - Current work in progress
-  - Task 4.1: Theme Switching ✅
-  - Task 4.2: Internationalization (i18n) ✅
-  - Task 4.3: Animations & Transitions 🔄
-  - Task 4.4: WCAG 2.2 Level AA Compliance
-  - Task 4.5: SEO Optimization
+- **[Project Context](active/PROJECT_CONTEXT.md)** - Project overview and architecture
 
 ### **Reference & Guides**
-- **[PROJECT_CONTEXT.md](guides/PROJECT_CONTEXT.md)** - Project overview and architecture
 - **[CODE_REVIEW_GUIDELINES.md](guides/CODE_REVIEW_GUIDELINES.md)** - Code review standards
 - **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** - Documentation patterns and templates
 - **[THEME_SWITCHING.md](guides/THEME_SWITCHING.md)** - Theme system documentation
 - **[CODE_QUALITY_DASHBOARD.md](guides/CODE_QUALITY_DASHBOARD.md)** - Quality metrics and standards
+- **[LOCALIZATION.md](guides/LOCALIZATION.md)** - i18n quick reference
+- **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** - i18n technical architecture
+- **[TRANSLATION_WORKFLOW.md](guides/TRANSLATION_WORKFLOW.md)** - Translation procedures
+- **[MAINTENANCE_WORKFLOW.md](guides/MAINTENANCE_WORKFLOW.md)** - Maintenance and dependency update workflow
+
+### **Accessibility**
+- **[ACCESSIBILITY_AUDIT_REPORT.md](accessibility/ACCESSIBILITY_AUDIT_REPORT.md)** - Audit findings and results
+- **[ACCESSIBILITY_STATEMENT.md](accessibility/ACCESSIBILITY_STATEMENT.md)** - Public accessibility statement
+- **[ACCESSIBILITY_TESTING.md](accessibility/ACCESSIBILITY_TESTING.md)** - Testing procedures
+- **[ACCESSIBILITY_TESTING_CHECKLIST.md](accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md)** - Testing checklist
+- **[WCAG_COMPLIANCE_GUIDE.md](accessibility/WCAG_COMPLIANCE_GUIDE.md)** - WCAG compliance reference
 
 ### **Development Tools**
 - **[git-commit-haiku-usage.md](tooling/git-commit-haiku-usage.md)** - Using the commit skill
 - **[changelog-create-haiku-usage.md](tooling/changelog-create-haiku-usage.md)** - Creating changelog entries
 - **[haiku-agents-overview.md](tooling/haiku-agents-overview.md)** - AI assistant tools overview
 
-### **Setup & Infrastructure** (Historical Reference)
+### **Setup & Infrastructure**
+- **[MCP_SETUP.md](setup/MCP_SETUP.md)** - MCP server configuration and tokens
+- **[POSTHOG_SETUP.md](setup/POSTHOG_SETUP.md)** - PostHog analytics setup
+- **[SENTRY_SETUP.md](setup/SENTRY_SETUP.md)** - Sentry error tracking setup
+- **[RAILWAY_DEPLOYMENT.md](setup/RAILWAY_DEPLOYMENT.md)** - Railway deployment configuration
 - **[TESTING_SETUP.md](setup/TESTING_SETUP.md)** - Testing infrastructure configuration
 - **[STATIC_ANALYSIS_SETUP.md](setup/STATIC_ANALYSIS_SETUP.md)** - Linting and analysis setup
-- **[LINTING_COMPLIANCE_ANALYSIS.md](setup/LINTING_COMPLIANCE_ANALYSIS.md)** - Compliance analysis results
-
 ### **Completed Phases** (Archive)
-- **[PHASE3_DETAILED_PLAN.md](archive/PHASE3_DETAILED_PLAN.md)** - Core Pages (✅ Complete)
-- **[PHASE2_DETAILED_PLAN.md](archive/PHASE2_DETAILED_PLAN.md)** - Data Migration (✅ Complete)
-- **[ASYNC_LOADING_IMPLEMENTATION_PLAN.md](archive/ASYNC_LOADING_IMPLEMENTATION_PLAN.md)** - Async Loading (✅ Implemented)
-- **[PROJECTS_PAGE_MVP_PLAN.md](archive/PROJECTS_PAGE_MVP_PLAN.md)** - Projects Page MVP (✅ Implemented)
-- **[CODE_REVIEW_REMEDIATION_PLAN.md](archive/CODE_REVIEW_REMEDIATION_PLAN.md)** - Code Remediation (✅ Complete)
+- **[LINTING_COMPLIANCE_ANALYSIS.md](archive/LINTING_COMPLIANCE_ANALYSIS.md)** - Linting remediation report (Complete)
+- **[PHASE7_DETAILED_PLAN.md](archive/PHASE7_DETAILED_PLAN.md)** - Monitoring & Observability (Complete)
+- **[PHASE4_DETAILED_PLAN.md](archive/PHASE4_DETAILED_PLAN.md)** - Enhanced Features (Complete)
+- **[TASK_4.4_WCAG_COMPLIANCE_PLAN.md](archive/TASK_4.4_WCAG_COMPLIANCE_PLAN.md)** - WCAG Compliance (Complete)
+- **[TASK_4_5_SEO_PLAN.md](archive/TASK_4_5_SEO_PLAN.md)** - SEO Optimization (Complete)
+- **[PHASE3_DETAILED_PLAN.md](archive/PHASE3_DETAILED_PLAN.md)** - Core Pages (Complete)
+- **[PHASE2_DETAILED_PLAN.md](archive/PHASE2_DETAILED_PLAN.md)** - Data Migration (Complete)
+- **[PHASE5_DETAILED_PLAN.md](archive/performance/PHASE5_DETAILED_PLAN.md)** - Performance Optimization (Complete)
+- **[ASYNC_LOADING_IMPLEMENTATION_PLAN.md](archive/ASYNC_LOADING_IMPLEMENTATION_PLAN.md)** - Async Loading (Implemented)
+- **[PROJECTS_PAGE_MVP_PLAN.md](archive/PROJECTS_PAGE_MVP_PLAN.md)** - Projects Page MVP (Implemented)
+- **[CODE_REVIEW_REMEDIATION_PLAN.md](archive/CODE_REVIEW_REMEDIATION_PLAN.md)** - Code Remediation (Complete)
+- **[I18N_STANDARDIZATION_PLAN.md](archive/I18N_STANDARDIZATION_PLAN.md)** - i18n Standardization (Complete)
+- **[ARTIFACTS.md](archive/ARTIFACTS.md)** - Artifacts documentation
+- **[ARTIFACTS_PAGE_PLAN.md](archive/ARTIFACTS_PAGE_PLAN.md)** - Artifacts page plan
+- **[gh-issue-19-mobile-navigation-refactor.md](archive/gh-issue-19-mobile-navigation-refactor.md)** - Mobile navigation refactor
+
+#### Performance Archive
+- **[PERFORMANCE_BASELINE.md](archive/performance/PERFORMANCE_BASELINE.md)** - Performance baseline measurements
+- **[PERFORMANCE_REPORT.md](archive/performance/PERFORMANCE_REPORT.md)** - Performance analysis report
+- **[COMPONENT_AUDIT.md](archive/performance/COMPONENT_AUDIT.md)** - Component performance audit
+- **[I18N_BOUNDARY_STRATEGY.md](archive/performance/I18N_BOUNDARY_STRATEGY.md)** - i18n boundary strategy
 
 ### **Screenshots**
 - [screenshots/](screenshots/) - Design mockups and implementation screenshots
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 docs/
 ├── README.md                    # This file
 ├── active/                      # Current work & strategy
 │   ├── MODERNIZATION_PLAN.md
-│   └── PHASE4_DETAILED_PLAN.md
+│   └── PROJECT_CONTEXT.md
+├── accessibility/               # Accessibility documentation
+│   ├── ACCESSIBILITY_AUDIT_REPORT.md
+│   ├── ACCESSIBILITY_STATEMENT.md
+│   ├── ACCESSIBILITY_TESTING.md
+│   ├── ACCESSIBILITY_TESTING_CHECKLIST.md
+│   └── WCAG_COMPLIANCE_GUIDE.md
 ├── guides/                      # Reference materials & standards
-│   ├── PROJECT_CONTEXT.md
+│   ├── CODE_QUALITY_DASHBOARD.md
 │   ├── CODE_REVIEW_GUIDELINES.md
 │   ├── JSDOC_EXAMPLES.md
+│   ├── LOCALIZATION.md
+│   ├── LOCALIZATION_ARCHITECTURE.md
+│   ├── MAINTENANCE_WORKFLOW.md
 │   ├── THEME_SWITCHING.md
-│   └── CODE_QUALITY_DASHBOARD.md
+│   └── TRANSLATION_WORKFLOW.md
 ├── tooling/                     # CLI tools & utilities
 │   ├── git-commit-haiku-usage.md
 │   ├── changelog-create-haiku-usage.md
 │   └── haiku-agents-overview.md
-├── setup/                       # Infrastructure & setup (historical)
-│   ├── TESTING_SETUP.md
+├── setup/                       # Infrastructure & setup
+│   ├── MCP_SETUP.md
+│   ├── POSTHOG_SETUP.md
+│   ├── RAILWAY_DEPLOYMENT.md
+│   ├── SENTRY_SETUP.md
 │   ├── STATIC_ANALYSIS_SETUP.md
-│   └── LINTING_COMPLIANCE_ANALYSIS.md
+│   └── TESTING_SETUP.md
 ├── archive/                     # Completed phases & superseded plans
-│   ├── PHASE3_DETAILED_PLAN.md
-│   ├── PHASE2_DETAILED_PLAN.md
+│   ├── ARTIFACTS.md
+│   ├── ARTIFACTS_PAGE_PLAN.md
 │   ├── ASYNC_LOADING_IMPLEMENTATION_PLAN.md
+│   ├── CODE_REVIEW_REMEDIATION_PLAN.md
+│   ├── I18N_STANDARDIZATION_PLAN.md
+│   ├── LINTING_COMPLIANCE_ANALYSIS.md
+│   ├── PHASE2_DETAILED_PLAN.md
+│   ├── PHASE3_DETAILED_PLAN.md
+│   ├── PHASE4_DETAILED_PLAN.md
+│   ├── PHASE7_DETAILED_PLAN.md
 │   ├── PROJECTS_PAGE_MVP_PLAN.md
-│   └── CODE_REVIEW_REMEDIATION_PLAN.md
+│   ├── TASK_4.4_WCAG_COMPLIANCE_PLAN.md
+│   ├── TASK_4_5_SEO_PLAN.md
+│   ├── gh-issue-19-mobile-navigation-refactor.md
+│   └── performance/
+│       ├── COMPONENT_AUDIT.md
+│       ├── I18N_BOUNDARY_STRATEGY.md
+│       ├── PERFORMANCE_BASELINE.md
+│       ├── PERFORMANCE_REPORT.md
+│       └── PHASE5_DETAILED_PLAN.md
 └── screenshots/                 # Design mockups
     ├── colophon/
     ├── project-layout/
@@ -79,20 +129,25 @@ docs/
 
 ---
 
-## 🎯 Using This Documentation
+## Using This Documentation
 
 ### For Active Development
-- Start with **[Phase 4](active/PHASE4_DETAILED_PLAN.md)** for current tasks
+- Start with **[Modernization Plan](active/MODERNIZATION_PLAN.md)** for the project roadmap
 - Reference **[CODE_REVIEW_GUIDELINES.md](guides/CODE_REVIEW_GUIDELINES.md)** during code reviews
 - Use **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** for documentation patterns
 
-### For New Features
-- Check **[PROJECT_CONTEXT.md](guides/PROJECT_CONTEXT.md)** for architecture
-- Review **[THEME_SWITCHING.md](guides/THEME_SWITCHING.md)** if implementing theme support
-- Consult **[CODE_QUALITY_DASHBOARD.md](guides/CODE_QUALITY_DASHBOARD.md)** for quality standards
+### For Localization
+- Start with **[LOCALIZATION.md](guides/LOCALIZATION.md)** for quick reference
+- See **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** for technical details
+- Follow **[TRANSLATION_WORKFLOW.md](guides/TRANSLATION_WORKFLOW.md)** for adding translations
+
+### For Accessibility
+- Review **[WCAG_COMPLIANCE_GUIDE.md](accessibility/WCAG_COMPLIANCE_GUIDE.md)** for compliance standards
+- Use **[ACCESSIBILITY_TESTING_CHECKLIST.md](accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md)** when testing
 
 ### For Building & Deployment
 - Reference **[setup/](setup/)** for configuration details
+- See **[RAILWAY_DEPLOYMENT.md](setup/RAILWAY_DEPLOYMENT.md)** for deployment
 - See main [README.md](../README.md) for quick start commands
 
 ### For Historical Reference
@@ -101,16 +156,17 @@ docs/
 
 ---
 
-## 📝 Adding New Documentation
+## Adding New Documentation
 
 When creating new documentation:
 
 1. **Determine the category:**
    - Is it active work? → `active/`
    - Is it a reference guide? → `guides/`
+   - Is it accessibility-related? → `accessibility/`
    - Is it a tool guide? → `tooling/`
-   - Is it historical? → `archive/`
    - Is it infrastructure? → `setup/`
+   - Is it historical? → `archive/`
 
 2. **Follow naming conventions:**
    - Use SCREAMING_SNAKE_CASE for documents
@@ -120,4 +176,4 @@ When creating new documentation:
 
 ---
 
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-03-11

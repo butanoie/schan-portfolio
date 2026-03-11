@@ -1,122 +1,187 @@
 # MCP (Model Context Protocol) Setup Guide
 
-This project uses MCP servers for enhanced functionality with Claude Code. Tokens and secrets are managed securely using environment variables.
+This project uses MCP servers for enhanced functionality with Claude Code. Servers are configured at two levels: **project-level** (shared via the repo) and **user-level** (Claude Code plugins, per-developer).
+
+## Architecture
+
+```
+MCP Servers
+├── Project-level (.mcp.json) — shared via git
+│   ├── filesystem         (npx, no secrets)
+│   ├── sequential-thinking (npx, no secrets)
+│   └── deepl              (launcher script, requires DEEPL_API_KEY)
+│
+└── User-level (Claude Code plugins) — per-developer, not in repo
+    ├── context7           (documentation search)
+    ├── playwright         (browser automation)
+    ├── posthog            (analytics queries)
+    └── github             (GitHub API — disabled by default)
+```
+
+## Project-Level Servers (`.mcp.json`)
+
+These servers are configured in `.mcp.json` at the project root and are available to all developers who clone the repo.
+
+### filesystem
+
+Provides file system read/write access to Claude Code.
+
+- **Config:** `npx -y @modelcontextprotocol/server-filesystem`
+- **Secrets:** None
+
+### sequential-thinking
+
+Enables multi-step reasoning for complex problem solving.
+
+- **Config:** `npx -y @modelcontextprotocol/server-sequential-thinking`
+- **Secrets:** None
+
+### deepl
+
+Translation service used for i18n workflows (see [Translation Workflow](../guides/TRANSLATION_WORKFLOW.md)).
+
+- **Config:** Uses `./scripts/mcp-launcher.sh deepl` to load environment variables before starting the server
+- **Secrets:** `DEEPL_API_KEY` (in `.env`)
+
+## User-Level Servers (Claude Code Plugins)
+
+These servers are managed through Claude Code's plugin system. They are configured per-user in `~/.claude/settings.json` under `enabledPlugins` and are **not** part of the project repository.
+
+To install or manage plugins:
+1. Open Claude Code
+2. Use `/plugins` or the plugin marketplace to browse available plugins
+3. Enable/disable plugins as needed
+
+Recommended plugins for this project:
+
+| Plugin | Purpose | Used For |
+|--------|---------|----------|
+| `context7` | Library documentation search | Looking up Next.js, MUI, React docs |
+| `playwright` | Browser automation & testing | Visual testing, screenshots |
+| `posthog` | PostHog analytics queries | Querying analytics data, managing dashboards |
+| `github` | GitHub API access | PR management, issue tracking (optional) |
+
+> **Note:** The `github` plugin is separate from the `GITHUB_TOKEN` environment variable. Claude Code can also access GitHub via the `gh` CLI if authenticated (see [Git Auth memory note](#troubleshooting)).
 
 ## Setup Steps
 
-### 1. Create your `.env` file
-
-Copy the example file and fill in your actual values:
+### Step 1: Create your `.env` file
 
 ```bash
 cp .env.example .env
 ```
 
-### 2. Add your secrets to `.env`
+### Step 2: Add your secrets to `.env`
 
-Edit `.env` and add your actual tokens:
+Edit `.env` and add your actual values:
 
 ```env
-GITHUB_TOKEN=gho_your_actual_token_here
+# DeepL API Key for translation service (required for deepl MCP server)
 DEEPL_API_KEY=your_deepl_key_here
 ```
 
-### 3. Ensure `.env` is in `.gitignore`
+### Step 3: Verify `.env` is gitignored
 
-✓ Already configured - `.env` is ignored by git
+Already configured — `.env` is in `.gitignore`.
 
-### 4. Restart Claude Code
+### Step 4: Restart Claude Code
 
-Restart VSCode/Claude Code to reload the MCP configuration:
+Restart Claude Code to reload MCP configuration:
+1. Close Claude Code completely
+2. Reopen Claude Code
+3. The MCP servers defined in `.mcp.json` will start automatically
 
-- Close Claude Code completely
-- Reopen Claude Code
-- The MCP launcher script will automatically load your `.env` file
+## How the Launcher Script Works
 
-## How It Works
+**File:** `scripts/mcp-launcher.sh`
 
-- **`mcp-launcher.sh`** - Launcher script that loads `.env` and starts MCP servers
-- **`.env`** - Your local secrets file (never committed)
-- **`.env.example`** - Template for required variables (committed to git)
-- **`.mcp.json`** - MCP server configuration (now uses launcher script)
+The launcher script is used for MCP servers that require environment variables (currently only DeepL). It:
 
-## Available MCP Servers
+1. Finds the project root directory
+2. Loads variables from `.env` using `set -a` / `source`
+3. Validates the required variable is set (e.g., `DEEPL_API_KEY`)
+4. Starts the requested server via `npx`
 
-1. **github** - GitHub API access
-   - Requires: `GITHUB_TOKEN`
-   - Access: Public and private repositories
-
-2. **deepl** - Translation service
-   - Requires: `DEEPL_API_KEY`
-   - Function: Translate content automatically
-
-3. **context7** - Documentation search
-   - No secrets required
-   - Function: Search library documentation
-
-4. **filesystem** - File system access
-   - No secrets required
-   - Function: Read/write files
-
-5. **sequential-thinking** - Reasoning enhancement
-   - No secrets required
-   - Function: Multi-step problem solving
+Servers that don't need secrets (filesystem, sequential-thinking) use `npx` directly in `.mcp.json` without the launcher.
 
 ## Getting Your Tokens
 
-### GitHub Token
-```bash
-# If you have gh CLI authenticated (recommended):
-gh auth token
+### DeepL API Key
 
-# Or create one at: https://github.com/settings/tokens
-# Required scopes: repo, workflow, gist
+1. Visit [DeepL API](https://www.deepl.com/pro#developer) and sign up for a free or pro plan
+2. Go to your [account settings](https://www.deepl.com/account/summary) to find your API key
+3. The free tier provides 500,000 characters/month
+
+### GitHub Token (for `gh` CLI)
+
+If using the `gh` CLI for GitHub operations:
+
+```bash
+# Authenticate via browser (recommended):
+gh auth login
+
+# Or check existing token:
+gh auth token
 ```
 
-### DeepL API Key
-Visit: https://www.deepl.com/pro/change-subscription
+> **Note:** `GITHUB_TOKEN` in `.env` is checked by the launcher script for a `github` MCP server case, but `.mcp.json` does not currently define a github server entry — GitHub access is handled via the `gh` CLI or the Claude Code GitHub plugin instead.
 
 ## Troubleshooting
 
-### "⚠ Warning: .env file not found"
+### "Warning: .env file not found"
 
-Run: `cp .env.example .env` and add your token values
+The launcher script could not find `.env`. Run:
+```bash
+cp .env.example .env
+```
+Then add your token values.
 
 ### MCP server fails to start
 
-1. Check that `.env` file exists
-2. Ensure launcher script is executable: `chmod +x scripts/mcp-launcher.sh`
+1. Check that `.env` file exists at the project root
+2. Ensure the launcher script is executable: `chmod +x scripts/mcp-launcher.sh`
 3. Verify token values in `.env` are correct
 4. Restart Claude Code
 
-### Variable substitution not working
+### DeepL translation not working
 
-The old approach with `${VARIABLE}` in `.mcp.json` doesn't work because JSON doesn't support variable expansion. This new setup uses a launcher script instead, which properly loads from `.env`.
+1. Verify `DEEPL_API_KEY` is set in `.env`
+2. Check your DeepL API quota at [deepl.com/account](https://www.deepl.com/account/summary)
+3. Test the key: `curl -H "Authorization: DeepL-Auth-Key YOUR_KEY" https://api-free.deepl.com/v2/usage`
+
+### `gh` CLI authentication issues
+
+The `GITHUB_TOKEN` environment variable can conflict with `gh` CLI authentication in Claude Code sessions. If you encounter auth errors:
+
+```bash
+unset GITHUB_TOKEN
+```
+
+This allows `gh` to fall back to keyring-based authentication.
 
 ## Security Notes
 
-⚠️ **NEVER**:
+**NEVER:**
 - Commit `.env` file to git
-- Share your tokens
-- Paste tokens in code comments
-- Include secrets in logs
+- Share your API keys or tokens
+- Paste tokens in code comments or documentation
+- Include secrets in logs or error messages
 
-✓ **DO**:
-- Keep `.env` in `.gitignore`
-- Regenerate tokens if exposed
-- Use different tokens for different services
-- Store only in `.env` file locally
+**DO:**
+- Keep `.env` in `.gitignore` (already configured)
+- Regenerate tokens immediately if exposed
+- Use the free tiers where available (DeepL free: 500K chars/month)
 
-## File Structure
+## Files
 
-```
-project-root/
-├── .env                    (local, gitignored - never commit)
-├── .env.example           (template, committed to git)
-├── .mcp.json              (MCP configuration)
-├── scripts/
-│   └── mcp-launcher.sh    (loads .env and starts servers)
-└── docs/
-    └── setup/
-        └── MCP_SETUP.md   (this file)
-```
+| File | Purpose |
+|------|---------|
+| `.mcp.json` | Project-level MCP server configuration |
+| `.env` | Local secrets file (gitignored, never committed) |
+| `.env.example` | Template showing required variables |
+| `scripts/mcp-launcher.sh` | Loads `.env` and starts secret-dependent MCP servers |
+
+## Related Documentation
+
+- [Translation Workflow](../guides/TRANSLATION_WORKFLOW.md) — How DeepL MCP is used for i18n
+- [Localization](../guides/LOCALIZATION.md) — i18n quick reference
