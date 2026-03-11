@@ -49,7 +49,7 @@ Unlike Phases 1–6, Phase 7 is ongoing — tasks represent capabilities to set 
 | Analytics | PostHog integration for pageviews, events, and user behavior |
 | Web Vitals | Real-user CWV reporting via `web-vitals` library + PostHog events |
 | Error Tracking | Sentry free tier for error capture and source map support |
-| Uptime | UptimeRobot free tier for availability monitoring and alerting |
+| Uptime | Better Stack free tier for availability monitoring and alerting |
 | Dependencies | Dependabot configuration for automated security and version updates |
 | Content | Documented workflow for adding projects, updating resume |
 | Cost | All tools on free tiers — zero ongoing cost |
@@ -60,7 +60,7 @@ Unlike Phases 1–6, Phase 7 is ongoing — tasks represent capabilities to set 
 |----------|--------|-----------|
 | Analytics platform | PostHog (free tier) | 1M events/month free, PostHog MCP already configured in project, privacy-friendly, no cookie banner required |
 | Error tracking | Sentry (free tier) | 5K errors/month free, first-class Next.js SDK, source maps, performance traces |
-| Uptime monitoring | UptimeRobot (free tier) | 50 monitors, 5-minute intervals, email/webhook alerts, zero config overhead |
+| Uptime monitoring | Better Stack (free tier) | 10 monitors, 3-minute intervals, built-in status page, incident management, polished UI |
 | Dependency updates | Dependabot | Built into GitHub, zero cost, auto-creates PRs for outdated/vulnerable deps |
 | CWV reporting | web-vitals + PostHog | No additional service needed, reports LCP/CLS/INP/TTFB as custom events |
 | Hosting (context) | Railway | Vercel skipped due to cost; Railway already configured in Phase 6 |
@@ -292,13 +292,15 @@ Phase 7 Tasks
 
 **Goal:** Monitor site availability and receive alerts when the site goes down.
 
-**Why:** Railway doesn't include uptime monitoring. Without it, outages could go unnoticed for hours. UptimeRobot provides free monitoring with 5-minute check intervals.
+**Why:** Railway doesn't include uptime monitoring. Without it, outages could go unnoticed for hours. Better Stack provides free monitoring with 3-minute check intervals and a built-in status page.
+
+**Why Better Stack over Better Stack:** Better Stack (formerly Better Uptime) offers 3-minute check intervals vs Better Stack's 5-minute, includes a free public status page, and has a more polished UI with incident management. Better Stack offers more monitors (50 vs 10) but that's unnecessary for a single-site portfolio. Both are free for personal use.
 
 ### Implementation Steps
 
-1. **Create UptimeRobot account**
-   - Sign up at [uptimerobot.com](https://uptimerobot.com)
-   - Free tier: 50 monitors, 5-minute intervals
+1. **Create Better Stack account**
+   - Sign up at [betterstack.com](https://betterstack.com)
+   - Free tier: 10 monitors, 3-minute intervals, status page included
 
 2. **Create monitors**
    - **HTTPS monitor:** `https://portfolio.singchan.com` — checks HTTP 200
@@ -308,19 +310,20 @@ Phase 7 Tasks
    - Email notification on down/up events
    - Optional: Webhook to Slack or other notification channel
 
-4. **Set up status page (optional)**
-   - UptimeRobot provides a free public status page
-   - Can be linked from the portfolio footer or colophon
+4. **Set up status page**
+   - Better Stack includes a free public status page
+   - Link from the portfolio colophon page (Analytics & Monitoring category)
 
 ### Files to Create/Modify
 
-No code changes required — UptimeRobot is an external service configured via its web UI.
+No code changes required — Better Stack is an external service configured via its web UI. Optionally, the colophon page can be updated to link to the status page.
 
 ### Acceptance Criteria
 
 - [ ] HTTPS monitor configured for production URL
 - [ ] Email alerts configured for down/up events
-- [ ] Monitor verified working (check UptimeRobot dashboard)
+- [ ] Monitor verified working (check Better Stack dashboard)
+- [ ] Status page created and linked from colophon
 
 ---
 
@@ -428,7 +431,7 @@ updates:
    - Check PostHog analytics for traffic patterns
    - Review Core Web Vitals trends (p75 values)
    - Check Sentry for unresolved errors
-   - Verify UptimeRobot shows acceptable uptime (target: 99.9%)
+   - Verify Better Stack shows acceptable uptime (target: 99.9%)
    - Run Lighthouse audit and compare with baseline
 
 ### Files to Create/Modify
@@ -456,7 +459,7 @@ Most Phase 7 additions are external service integrations. Testing focuses on:
 1. **PostHog Provider** — Unit test that component renders without crashing, does not initialize in test environment
 2. **Web Vitals Reporter** — Unit test that the reporter function calls PostHog capture with expected event shape
 3. **Sentry Integration** — Manual verification that errors appear in Sentry dashboard with correct source maps
-4. **Uptime Monitor** — Manual verification via UptimeRobot dashboard
+4. **Uptime Monitor** — Manual verification via Better Stack dashboard
 5. **Dependabot** — Verified by first automated PR creation
 
 ### Test Requirements
@@ -484,7 +487,7 @@ Most Phase 7 additions are external service integrations. Testing focuses on:
 |---------|-----------------|---------|
 | PostHog | 1M events/month | Web analytics |
 | Sentry | 5K errors/month | Error tracking |
-| UptimeRobot | 50 monitors, 5-min intervals | Uptime monitoring |
+| Better Stack | 10 monitors, 3-min intervals, status page | Uptime monitoring |
 | Dependabot | Unlimited (GitHub built-in) | Dependency updates |
 | Google Search Console | Unlimited | Real-user CWV data |
 
@@ -508,7 +511,7 @@ Most Phase 7 additions are external service integrations. Testing focuses on:
 - [ ] PostHog tracking pageviews in production
 - [ ] Core Web Vitals reported to PostHog as custom events
 - [ ] Sentry capturing errors with resolved source maps
-- [ ] UptimeRobot monitoring production URL
+- [ ] Better Stack monitoring production URL
 - [ ] Dependabot creating automated dependency PRs
 - [ ] All existing tests passing (1,123+)
 - [ ] No Lighthouse score regression
@@ -557,7 +560,7 @@ Task 7.6: Maintenance Workflow       [Last — documents everything set up above
 **Recommended approach:**
 1. Implement Tasks 7.1 + 7.2 together (PostHog + Web Vitals) — single PR
 2. Implement Task 7.3 (Sentry) — separate PR
-3. Implement Tasks 7.4 + 7.5 (UptimeRobot + Dependabot) — can be done in parallel
+3. Implement Tasks 7.4 + 7.5 (Better Stack + Dependabot) — can be done in parallel
 4. Write Task 7.6 documentation last — captures final state of all monitoring tools
 
 ---

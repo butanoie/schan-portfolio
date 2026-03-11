@@ -734,7 +734,7 @@ The following Gumby features are being **completely removed** in V2:
   - Automatic error capture in production
   - Performance traces (10–20% sampling)
 - [ ] Task 7.4: Uptime Monitoring
-  - UptimeRobot HTTPS monitor for production URL
+  - Better Stack HTTPS monitor for production URL
   - Email alerts on down/up events
 - [ ] Task 7.5: Dependency Management (Dependabot)
   - Automated PRs for npm dependency updates
@@ -751,7 +751,7 @@ The following Gumby features are being **completely removed** in V2:
 - [ ] PostHog analytics tracking in production
 - [ ] Real-user Core Web Vitals monitoring
 - [ ] Sentry error tracking with source maps
-- [ ] UptimeRobot availability monitoring
+- [ ] Better Stack availability monitoring
 - [ ] Dependabot configuration for automated dependency PRs
 - [ ] Maintenance workflow documentation
 
@@ -760,7 +760,7 @@ The following Gumby features are being **completely removed** in V2:
 - PostHog tracking pageviews in production
 - Core Web Vitals reported as custom events
 - Sentry capturing errors with resolved source maps
-- UptimeRobot monitoring production URL with alerts
+- Better Stack monitoring production URL with alerts
 - Dependabot creating automated PRs
 - All tools on free tiers (zero ongoing cost)
 
@@ -984,7 +984,7 @@ const theme = createTheme({
    - PostHog web analytics (free tier, 1M events/month)
    - Core Web Vitals real-user monitoring
    - Sentry error tracking (free tier, 5K errors/month)
-   - UptimeRobot uptime monitoring (free tier)
+   - Better Stack uptime monitoring (free tier)
    - Dependabot dependency management
    - Maintenance workflow documentation
 10. Schedule regular check-ins to review progress

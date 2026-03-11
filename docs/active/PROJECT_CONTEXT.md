@@ -222,7 +222,7 @@ See `docs/active/PHASE7_DETAILED_PLAN.md` for full task list. Key items:
 - PostHog web analytics (free tier, 1M events/month)
 - Core Web Vitals real-user monitoring via `web-vitals` + PostHog
 - Sentry error tracking (free tier, 5K errors/month)
-- UptimeRobot uptime monitoring (free tier)
+- Better Stack uptime monitoring (free tier)
 - Dependabot for automated dependency updates
 - Content and maintenance workflow documentation
 
@@ -321,7 +321,7 @@ See detailed plan: `docs/archive/performance/PHASE5_DETAILED_PLAN.md`
   - Called after `posthog.init()` in PostHogProvider
   - 6 unit tests covering all callbacks and event shape
 - ⬜ Task 7.3: Error Tracking (Sentry)
-- ⬜ Task 7.4: Uptime Monitoring (UptimeRobot)
+- ⬜ Task 7.4: Uptime Monitoring (Better Stack)
 - ⬜ Task 7.5: Dependency Management (Dependabot)
 - ⬜ Task 7.6: Content & Maintenance Workflow
 
