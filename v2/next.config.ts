@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import { execFileSync } from "child_process";
+
+/**
+ * Resolves the current git commit SHA for Sentry release tagging.
+ *
+ * Railway does not expose `RAILWAY_GIT_COMMIT_SHA` as a built-in variable,
+ * so Sentry's auto-detection (`getSentryRelease()`) returns undefined.
+ * This helper runs `git rev-parse HEAD` at config evaluation time to
+ * provide an explicit release name for both source map uploads and
+ * runtime error tagging.
+ *
+ * @returns The full git SHA, or undefined if git is unavailable
+ */
+function getGitSha(): string | undefined {
+  try {
+    return execFileSync("git", ["rev-parse", "HEAD"], {
+      stdio: ["ignore", "pipe", "ignore"],
+    })
+      .toString()
+      .trim();
+  } catch {
+    return undefined;
+  }
+}
 
 const nextConfig: NextConfig = {
   /**
@@ -73,15 +97,17 @@ export default withSentryConfig(analyzer(nextConfig), {
   // Route Sentry requests through your server (avoids ad-blockers)
   //tunnelRoute: "/monitoring",
 
-  // Auto-detect release from git SHA; create and finalize in Sentry
-  // This replaces the need for manual `sentry-cli releases` commands
+  // Tag source maps and runtime errors with the git SHA so Sentry
+  // can correlate them. Uses our explicit getGitSha() because Railway
+  // does not expose RAILWAY_GIT_COMMIT_SHA for Sentry's auto-detection.
   release: {
+    name: getGitSha(),
     create: true,
     finalize: true,
     setCommits: { auto: true },
   },
 
-    // Upload a larger set of source maps for prettier stack traces
+  // Upload a larger set of source maps for prettier stack traces
   widenClientFileUpload: true,
 
   // Only log Sentry build output in CI to keep local dev output clean
