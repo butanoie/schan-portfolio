@@ -36,7 +36,7 @@ Add these to your deployment platform (Railway) and optionally to `.env.local` f
 
 | File | Runtime | Purpose |
 |------|---------|---------|
-| `sentry.client.config.ts` | Browser | Client-side error tracking; respects DNT |
+| `instrumentation-client.ts` | Browser | Client-side error tracking; respects DNT; traces router navigations |
 | `sentry.server.config.ts` | Node.js | Server-side error tracking; always active |
 | `sentry.edge.config.ts` | Edge | Edge runtime error tracking; always active |
 | `instrumentation.ts` | Server startup | Loads the correct config based on `NEXT_RUNTIME` |

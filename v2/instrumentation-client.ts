@@ -1,10 +1,14 @@
 /**
- * Sentry client-side configuration.
+ * Sentry client-side instrumentation.
  *
- * Initializes Sentry error tracking in the browser. Conditional on:
+ * Next.js loads this file automatically in the browser runtime.
+ * Initializes Sentry error tracking conditional on:
  * 1. Production environment (`NODE_ENV === "production"`)
  * 2. DSN being set (`NEXT_PUBLIC_SENTRY_DSN`)
  * 3. Browser Do Not Track (DNT) not enabled — consistent with PostHog privacy behavior
+ *
+ * Exports `onRouterTransitionStart` so Sentry can trace App Router
+ * navigations as performance spans.
  *
  * @see https://docs.sentry.io/platforms/javascript/guides/nextjs/
  */
@@ -34,3 +38,9 @@ if (isProduction && dsn && !isDoNotTrackEnabled()) {
     sendDefaultPii: false,
   });
 }
+
+/**
+ * Instruments Next.js App Router navigations as Sentry performance spans.
+ * Called automatically by Next.js on route transitions.
+ */
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

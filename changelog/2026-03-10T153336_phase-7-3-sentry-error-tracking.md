@@ -29,7 +29,7 @@ Extracted `isDoNotTrackEnabled()` from `PostHogProvider.tsx` into `src/lib/priva
 Three runtime-specific config files for client, server, and edge environments.
 
 **Created:**
-- `v2/sentry.client.config.ts` — browser-side init; respects DNT, production-only
+- `v2/instrumentation-client.ts` — browser-side init; respects DNT, production-only; traces router navigations
 - `v2/sentry.server.config.ts` — Node.js server init; always active in production
 - `v2/sentry.edge.config.ts` — edge runtime init; always active in production
 
@@ -124,7 +124,7 @@ export default withSentryConfig(analyzer(nextConfig), {
 
 **Created (8):**
 - `v2/src/lib/privacy.ts`
-- `v2/sentry.client.config.ts`
+- `v2/instrumentation-client.ts`
 - `v2/sentry.server.config.ts`
 - `v2/sentry.edge.config.ts`
 - `v2/instrumentation.ts`

@@ -70,6 +70,9 @@ export default withSentryConfig(analyzer(nextConfig), {
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
+  // Route Sentry requests through your server (avoids ad-blockers)
+  //tunnelRoute: "/monitoring",
+
   // Auto-detect release from git SHA; create and finalize in Sentry
   // This replaces the need for manual `sentry-cli releases` commands
   release: {
@@ -77,6 +80,9 @@ export default withSentryConfig(analyzer(nextConfig), {
     finalize: true,
     setCommits: { auto: true },
   },
+
+    // Upload a larger set of source maps for prettier stack traces
+  widenClientFileUpload: true,
 
   // Only log Sentry build output in CI to keep local dev output clean
   silent: !process.env.CI,
