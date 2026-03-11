@@ -28,9 +28,10 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Set SENTRY_RELEASE on Railway
-        run: railway variable set SENTRY_RELEASE=$DEPLOY_SHA --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=development --skip-deploys
+        run: railway variable set SENTRY_RELEASE=$DEPLOY_SHA --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=development --skip-deploys
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
           DEPLOY_SHA: ${{ github.sha }}
 
       - name: Deploy to Railway Development
