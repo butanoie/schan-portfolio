@@ -184,6 +184,11 @@ export function getLocalizedColophonData(
               description: t('colophon.technologies.categories.4.items.3.description', { ns: 'pages' }),
               url: 'https://github.com/nickcolley/vitest-axe',
             },
+            {
+              name: 'Playwright',
+              description: t('colophon.technologies.categories.4.items.4.description', { ns: 'pages' }),
+              url: 'https://playwright.dev/',
+            },
           ],
         },
         {
@@ -198,6 +203,31 @@ export function getLocalizedColophonData(
               name: 'GitHub Actions',
               description: t('colophon.technologies.categories.5.items.1.description', { ns: 'pages' }),
               url: 'https://github.com/features/actions',
+            },
+            {
+              name: 'Railway',
+              description: t('colophon.technologies.categories.5.items.2.description', { ns: 'pages' }),
+              url: 'https://railway.app/',
+            },
+          ],
+        },
+        {
+          label: t('colophon.technologies.categories.6.label', { ns: 'pages' }),
+          items: [
+            {
+              name: 'Sentry',
+              description: t('colophon.technologies.categories.6.items.0.description', { ns: 'pages' }),
+              url: 'https://sentry.io/',
+            },
+            {
+              name: 'PostHog',
+              description: t('colophon.technologies.categories.6.items.1.description', { ns: 'pages' }),
+              url: 'https://posthog.com/',
+            },
+            {
+              name: 'Web Vitals',
+              description: t('colophon.technologies.categories.6.items.2.description', { ns: 'pages' }),
+              url: 'https://web.dev/vitals/',
             },
           ],
         },

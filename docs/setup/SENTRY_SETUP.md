@@ -59,7 +59,8 @@ Key options:
 - **`release.create` / `release.finalize`**: Automatically manages the release lifecycle in Sentry
 - **`widenClientFileUpload`**: Uploads a larger set of source maps for better stack traces
 - **`silent`**: Only logs Sentry build output in CI (`!process.env.CI`)
-- **`sourcemaps.filesToDeleteAfterUpload`**: Removes `.map` files from the build to prevent browser access
+- **`sourcemaps.filesToDeleteAfterUpload`**: Removes `.map` files from the build after Sentry upload
+- **Post-build script**: `scripts/strip-source-map-urls.mjs` strips `sourceMappingURL` references from JS/CSS (required because Turbopack bypasses webpack plugins)
 
 ### Release Tagging via GitHub Actions
 
@@ -78,11 +79,14 @@ This ensures:
 ### Source Map Flow
 
 1. GitHub Actions sets `SENTRY_RELEASE` on the Railway service (commit SHA)
-2. During `next build` (on Railway), Sentry's webpack plugin generates source maps
-3. If `SENTRY_AUTH_TOKEN` is set, source maps are uploaded to Sentry tagged with the release
-4. `.map` files are deleted from the build output (`filesToDeleteAfterUpload`)
-5. In production, Sentry resolves stack traces using the uploaded maps
-6. Without the auth token, the build still succeeds — source map upload is silently skipped
+2. During `next build` (on Railway), Turbopack generates source maps
+3. Sentry's `runAfterProductionCompile` hook uploads the maps (if `SENTRY_AUTH_TOKEN` is set)
+4. `filesToDeleteAfterUpload` deletes `.map` files from the build output
+5. The post-build script (`scripts/strip-source-map-urls.mjs`) strips dangling `sourceMappingURL` references from JS and CSS files to prevent browser 404 errors
+6. In production, Sentry resolves stack traces using the uploaded maps
+7. Without the auth token, the build still succeeds — source map upload is silently skipped
+
+> **Why the post-build script?** Next.js 16 defaults to Turbopack, which bypasses webpack entirely. Sentry's `filesToDeleteAfterUpload` deletes the `.map` files but leaves the `//# sourceMappingURL=` (JS) and `/*# sourceMappingURL= */` (CSS) references in the output bundles. Browsers then attempt to fetch the deleted maps and log 404 errors. The post-build script strips these dangling references after both Turbopack and Sentry have finished.
 
 ### Error Boundary
 
@@ -142,6 +146,15 @@ The shared `src/lib/privacy.ts` module provides `isDoNotTrackEnabled()` used by 
 - Verify GitHub Actions deploy workflow ran successfully
 - Check that `SENTRY_RELEASE` was set on the Railway service before the build started
 - Confirm `release.create` is `true` in the `withSentryConfig` options
+
+### Source map 404 errors in browser console
+
+If you see errors like `Failed to load resource: 404 (xxxxx.js.map)` or `(xxxxx.css.map)` in production:
+
+1. Verify the build command includes the post-build script: `next build && node scripts/strip-source-map-urls.mjs`
+2. Check that `scripts/strip-source-map-urls.mjs` exists and is executable
+3. Run `npm run build` locally and verify the output shows `Stripped sourceMappingURL from N/M assets`
+4. After deploying, hard-refresh the page (Cmd+Shift+R) to clear cached assets
 
 ### Local development
 

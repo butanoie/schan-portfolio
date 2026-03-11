@@ -124,6 +124,10 @@
             {
               "name": "vitest-axe",
               "description": "Intégration Vitest pour les tests d'accessibilité au sein de la suite de tests unitaires."
+            },
+            {
+              "name": "Playwright",
+              "description": "Cadre de test de bout en bout du navigateur pour l'automatisation inter-navigateurs et les tests de régression visuels."
             }
           ]
         },
@@ -137,6 +141,27 @@
             {
               "name": "GitHub Actions",
               "description": "Plateforme d'automatisation CI/CD pour les workflows d'intégration et de déploiement continus."
+            },
+            {
+              "name": "Railway",
+              "description": "Plateforme cloud pour le déploiement et l'hébergement de l'application de production avec des constructions automatiques."
+            }
+          ]
+        },
+        {
+          "label": "Analyse et suivi",
+          "items": [
+            {
+              "name": "Sentry",
+              "description": "Suivi des erreurs et contrôle des performances grâce à des cartes de sources et au suivi des versions."
+            },
+            {
+              "name": "PostHog",
+              "description": "Analyse des produits pour connaître le comportement des utilisateurs, les entonnoirs et les caractéristiques des produits."
+            },
+            {
+              "name": "Web Vitals",
+              "description": "Paramètres de Google pour mesurer l'expérience utilisateur dans le monde réel et les principaux indicateurs de performance."
             }
           ]
         }

@@ -8,7 +8,7 @@
 
 ## Summary
 
-Added production error tracking via Sentry to automatically capture bugs with stack traces and source maps. Extracted the shared `isDoNotTrackEnabled()` utility from PostHogProvider into a reusable privacy module for consistent DNT behavior across all third-party integrations.
+Added production error tracking via Sentry to automatically capture bugs with stack traces and source maps. Extracted the shared `isDoNotTrackEnabled()` utility from PostHogProvider into a reusable privacy module for consistent DNT behavior across all third-party integrations. Added a post-build script to strip `sourceMappingURL` references from production bundles, preventing 404 errors caused by Sentry deleting `.map` files after upload.
 
 ---
 
@@ -59,7 +59,20 @@ Three runtime-specific config files for client, server, and edge environments.
 - `v2/src/__tests__/lib/privacy.test.ts` — 5 tests covering SSR, DNT values
 - `v2/src/__tests__/app/global-error.test.tsx` — 3 tests covering rendering, Sentry reporting, reset
 
-### 8. Documentation
+### 8. Source Map 404 Fix
+
+Next.js 16 defaults to Turbopack, which bypasses webpack entirely. Sentry's `filesToDeleteAfterUpload` deletes `.map` files after upload but leaves the `sourceMappingURL` references in JS and CSS bundles. Browsers then attempt to fetch the deleted maps, logging 404 errors in the console.
+
+A post-build script strips these dangling references from all emitted JS and CSS files.
+
+**Created:**
+- `v2/scripts/strip-source-map-urls.mjs` — post-build script that strips `sourceMappingURL` from `.next/static/` assets
+
+**Modified:**
+- `v2/package.json` — build command updated to `next build && node scripts/strip-source-map-urls.mjs`
+- `v2/next.config.ts` — expanded `filesToDeleteAfterUpload` to also cover `.next/server/**/*.map`
+
+### 9. Documentation
 
 **Created:**
 - `docs/setup/SENTRY_SETUP.md` — setup guide, architecture, privacy notes, troubleshooting
@@ -83,13 +96,28 @@ export default withSentryConfig(analyzer(nextConfig), {
   widenClientFileUpload: true,
   silent: !process.env.CI,
   sourcemaps: {
-    filesToDeleteAfterUpload: [".next/static/**/*.map"],
+    filesToDeleteAfterUpload: [
+      ".next/static/**/*.map",
+      ".next/server/**/*.map",
+    ],
   },
 });
 ```
 
 > **Note:** `SENTRY_RELEASE` is set by GitHub Actions deploy workflows to the git commit SHA.
 > Railway's `railway up` strips `.git`, so the SHA must be provided externally.
+
+### Post-Build Source Map Cleanup
+
+Next.js 16 uses Turbopack by default, which bypasses webpack entirely. The `webpack()` config callback in `next.config.ts` is silently ignored. Sentry's `filesToDeleteAfterUpload` deletes `.map` files but leaves `sourceMappingURL` references in the output bundles. A post-build script handles the cleanup:
+
+```json
+"build": "next build && node scripts/strip-source-map-urls.mjs"
+```
+
+The script recursively scans `.next/static/` for `.js` and `.css` files and strips:
+- JS: `//# sourceMappingURL=…`
+- CSS: `/*# sourceMappingURL=… */`
 
 ### Sample Rates
 
@@ -131,7 +159,7 @@ export default withSentryConfig(analyzer(nextConfig), {
 
 ## Related Files
 
-**Created (8):**
+**Created (10):**
 - `v2/src/lib/privacy.ts`
 - `v2/instrumentation-client.ts`
 - `v2/sentry.server.config.ts`
@@ -140,11 +168,13 @@ export default withSentryConfig(analyzer(nextConfig), {
 - `v2/app/global-error.tsx`
 - `v2/src/__tests__/lib/privacy.test.ts`
 - `v2/src/__tests__/app/global-error.test.tsx`
+- `v2/scripts/strip-source-map-urls.mjs`
 - `docs/setup/SENTRY_SETUP.md`
 
-**Modified (3):**
+**Modified (4):**
 - `v2/src/components/PostHogProvider.tsx`
 - `v2/next.config.ts`
+- `v2/package.json`
 - `v2/.env.example`
 
 ---
@@ -153,8 +183,8 @@ export default withSentryConfig(analyzer(nextConfig), {
 
 | Metric | Count |
 |--------|-------|
-| Files created | 9 |
-| Files modified | 3 |
+| Files created | 10 |
+| Files modified | 4 |
 | New tests | 8 |
 | Total tests | 1198 |
 | New npm packages | 1 (`@sentry/nextjs`) |
