@@ -81,7 +81,6 @@ npm run typecheck     # TypeScript check
 - **Guides**
   - [Theme Switching](docs/guides/THEME_SWITCHING.md)
   - [Localization](docs/guides/LOCALIZATION.md)
-  - [Code Review Guidelines](docs/guides/CODE_REVIEW_GUIDELINES.md)
   - [JSDoc Examples](docs/guides/JSDOC_EXAMPLES.md)
 - **Accessibility**
   - [Accessibility Statement](docs/accessibility/ACCESSIBILITY_STATEMENT.md)

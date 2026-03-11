@@ -9,7 +9,6 @@ This directory contains all project documentation organized by purpose and phase
 - **[Project Context](active/PROJECT_CONTEXT.md)** - Project overview and architecture
 
 ### **Reference & Guides**
-- **[CODE_REVIEW_GUIDELINES.md](guides/CODE_REVIEW_GUIDELINES.md)** - Code review standards
 - **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** - Documentation patterns and templates
 - **[THEME_SWITCHING.md](guides/THEME_SWITCHING.md)** - Theme system documentation
 - **[LOCALIZATION.md](guides/LOCALIZATION.md)** - i18n quick reference
@@ -30,7 +29,6 @@ This directory contains all project documentation organized by purpose and phase
 - **[SENTRY_SETUP.md](setup/SENTRY_SETUP.md)** - Sentry error tracking setup
 - **[RAILWAY_DEPLOYMENT.md](setup/RAILWAY_DEPLOYMENT.md)** - Railway deployment configuration
 - **[TESTING_SETUP.md](setup/TESTING_SETUP.md)** - Testing infrastructure configuration
-- **[STATIC_ANALYSIS_SETUP.md](setup/STATIC_ANALYSIS_SETUP.md)** - Linting and analysis setup
 ### **Completed Phases** (Archive)
 - **[LINTING_COMPLIANCE_ANALYSIS.md](archive/LINTING_COMPLIANCE_ANALYSIS.md)** - Linting remediation report (Complete)
 - **[PHASE7_DETAILED_PLAN.md](archive/PHASE7_DETAILED_PLAN.md)** - Monitoring & Observability (Complete)
@@ -74,7 +72,6 @@ docs/
 │   ├── ACCESSIBILITY_TESTING_CHECKLIST.md
 │   └── WCAG_COMPLIANCE_GUIDE.md
 ├── guides/                      # Reference materials & standards
-│   ├── CODE_REVIEW_GUIDELINES.md
 │   ├── JSDOC_EXAMPLES.md
 │   ├── LOCALIZATION.md
 │   ├── LOCALIZATION_ARCHITECTURE.md
@@ -86,7 +83,6 @@ docs/
 │   ├── POSTHOG_SETUP.md
 │   ├── RAILWAY_DEPLOYMENT.md
 │   ├── SENTRY_SETUP.md
-│   ├── STATIC_ANALYSIS_SETUP.md
 │   └── TESTING_SETUP.md
 ├── archive/                     # Completed phases & superseded plans
 │   ├── ARTIFACTS.md
@@ -122,7 +118,6 @@ docs/
 
 ### For Active Development
 - Start with **[Modernization Plan](active/MODERNIZATION_PLAN.md)** for the project roadmap
-- Reference **[CODE_REVIEW_GUIDELINES.md](guides/CODE_REVIEW_GUIDELINES.md)** during code reviews
 - Use **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** for documentation patterns
 
 ### For Localization
