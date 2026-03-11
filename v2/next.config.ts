@@ -1,26 +1,40 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
-import { execFileSync } from "child_process";
+import { readFileSync } from "fs";
+import { resolve } from "path";
 
 /**
  * Resolves the current git commit SHA for Sentry release tagging.
  *
- * Railway does not expose `RAILWAY_GIT_COMMIT_SHA` as a built-in variable,
- * so Sentry's auto-detection (`getSentryRelease()`) returns undefined.
- * This helper runs `git rev-parse HEAD` at config evaluation time to
- * provide an explicit release name for both source map uploads and
- * runtime error tagging.
+ * Railway's Nixpacks build container does not include the `git` binary
+ * or expose `RAILWAY_GIT_COMMIT_SHA`. This helper reads the SHA directly
+ * from the `.git` directory using the filesystem:
  *
- * @returns The full git SHA, or undefined if git is unavailable
+ * 1. Reads `.git/HEAD` to get the current ref (e.g., `ref: refs/heads/main`)
+ * 2. If HEAD is a symbolic ref, reads the SHA from the referenced file
+ * 3. If HEAD is a detached SHA (common in CI), uses it directly
+ *
+ * Falls back to `undefined` if `.git` is not present (e.g., Docker builds
+ * without repo context). The build still succeeds — Sentry just won't
+ * create a named release.
+ *
+ * @returns The full 40-character git SHA, or undefined
  */
 function getGitSha(): string | undefined {
   try {
-    return execFileSync("git", ["rev-parse", "HEAD"], {
-      stdio: ["ignore", "pipe", "ignore"],
-    })
-      .toString()
-      .trim();
+    // Walk up from v2/ to the repo root where .git lives
+    const gitDir = resolve(__dirname, "..", ".git");
+    const head = readFileSync(resolve(gitDir, "HEAD"), "utf-8").trim();
+
+    // Detached HEAD — already a SHA
+    if (!head.startsWith("ref:")) {
+      return head;
+    }
+
+    // Symbolic ref — read the SHA from refs/
+    const ref = head.replace("ref: ", "");
+    return readFileSync(resolve(gitDir, ref), "utf-8").trim();
   } catch {
     return undefined;
   }
@@ -103,29 +117,7 @@ export default withSentryConfig(analyzer(nextConfig), {
   release: {
     name: (() => {
       const sha = getGitSha();
-      // Debug: log all env vars that might contain a git SHA
-      const candidates = [
-        "RAILWAY_GIT_COMMIT_SHA",
-        "RAILWAY_DEPLOYMENT_ID",
-        "RAILWAY_SNAPSHOT_ID",
-        "COMMIT_SHA",
-        "GIT_COMMIT",
-        "SOURCE_COMMIT",
-        "COMMIT_REF",
-        "SENTRY_RELEASE",
-      ];
-      for (const key of candidates) {
-        if (process.env[key]) {
-          console.log(`[Sentry] Found env ${key}=${process.env[key]}`);
-        }
-      }
-      // Also dump all RAILWAY_ vars
-      for (const [key, val] of Object.entries(process.env)) {
-        if (key.startsWith("RAILWAY_")) {
-          console.log(`[Sentry] Railway env: ${key}=${val}`);
-        }
-      }
-      console.log(`[Sentry] getGitSha() = ${sha ?? "undefined"}`);
+      console.log(`[Sentry] Release: ${sha ?? "undefined (no .git found)"}`);
       return sha;
     })(),
     create: true,
