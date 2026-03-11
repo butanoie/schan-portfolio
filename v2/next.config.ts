@@ -2,12 +2,82 @@ import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
+/** CSS sourceMappingURL pattern: `/*# sourceMappingURL=… *​/` */
+const CSS_SOURCE_MAP_PATTERN = /\/\*#\s*sourceMappingURL=[^*]*\*\//g;
+
+/** JS sourceMappingURL pattern: `//# sourceMappingURL=…` */
+const JS_SOURCE_MAP_PATTERN = /\/\/# sourceMappingURL=.+$/gm;
+
+/**
+ * Webpack plugin that strips `sourceMappingURL` references from emitted
+ * JS and CSS assets.
+ *
+ * Sentry's `filesToDeleteAfterUpload` removes `.map` files after uploading
+ * them but leaves the `sourceMappingURL` references in the output bundles.
+ * Browsers then attempt to fetch the deleted maps and log 404 errors.
+ *
+ * JS: Sentry sets `devtool: 'hidden-source-map'` which should omit
+ * `//# sourceMappingURL` comments, but other plugins (e.g. Sentry's own
+ * webpack plugin) can re-add them.
+ *
+ * CSS: Next.js's CSS minimizer returns `SourceMapSource` objects that
+ * cause webpack to append `/*#​ sourceMappingURL *​/` regardless of the
+ * PostCSS `annotation: false` setting.
+ *
+ * Runs at `PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER` — after source maps
+ * have been generated for Sentry upload but before final emission.
+ */
+const stripSourceMapUrls: { apply: (c: import("webpack").Compiler) => void } =
+  {
+    /**
+     * Registers the `processAssets` hook on the given webpack compiler.
+     *
+     * @param compiler - The webpack compiler instance provided by Next.js
+     */
+    apply(compiler) {
+      compiler.hooks.compilation.tap(
+        "StripSourceMapUrls",
+        (compilation: import("webpack").Compilation) => {
+          compilation.hooks.processAssets.tap(
+            {
+              name: "StripSourceMapUrls",
+              stage:
+                compiler.webpack.Compilation
+                  .PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER,
+            },
+            () => {
+              for (const { name, source } of compilation.getAssets()) {
+                let pattern: RegExp | undefined;
+                if (name.endsWith(".css")) {
+                  pattern = CSS_SOURCE_MAP_PATTERN;
+                } else if (name.endsWith(".js")) {
+                  pattern = JS_SOURCE_MAP_PATTERN;
+                }
+                if (!pattern) continue;
+
+                const src = source.source().toString();
+                if (!src.includes("sourceMappingURL")) continue;
+
+                pattern.lastIndex = 0;
+                const stripped = src.replace(pattern, "");
+                if (stripped !== src) {
+                  compilation.updateAsset(
+                    name,
+                    new compiler.webpack.sources.RawSource(stripped),
+                  );
+                }
+              }
+            },
+          );
+        },
+      );
+    },
+  };
+
 const nextConfig: NextConfig = {
   /**
-   * Use `hidden-source-map` so webpack generates .map files for Sentry
-   * upload but does NOT append `//# sourceMappingURL=` comments to the
-   * output bundles. This prevents browsers from trying to fetch the
-   * (deleted-after-upload) .map files and logging 404 console errors.
+   * Adds the {@link stripSourceMapUrls} plugin to client builds so that
+   * browsers don't attempt to load source maps deleted by Sentry.
    *
    * @param config - The webpack configuration object provided by Next.js
    * @param root0 - Next.js webpack context options
@@ -16,7 +86,7 @@ const nextConfig: NextConfig = {
    */
   webpack(config, { isServer }) {
     if (!isServer) {
-      config.devtool = "hidden-source-map";
+      config.plugins.push(stripSourceMapUrls);
     }
     return config;
   },
