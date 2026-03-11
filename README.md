@@ -2,6 +2,8 @@
 
 Modern portfolio website built with Next.js, TypeScript, and Material UI.
 
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/2h5o5.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
 ## About This Project
 This portfolio modernization is more than just a website rebuild — it's a showcase of how I approach software development. By migrating my portfolio from a 2013-era stack to a modern React-based application, I'm demonstrating the full lifecycle of a real-world enterprise project using the tools, processes, and discipline I'd bring to any professional engagement.
 
@@ -19,9 +21,9 @@ The goal is to show that a personal project, when treated with the same rigour a
 
 ## Status
 
-**Phase 7 In Progress** — Deployed on Railway. Adding monitoring and analytics.
+**All Phases Complete** — Deployed on Railway with full monitoring and analytics.
 
-**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ✅ | Phase 7 🔄
+**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ✅ | Phase 7 ✅
 
 ## Stack
 
@@ -69,7 +71,7 @@ npm run typecheck     # TypeScript check
 | 4. Enhanced Features | ✅ Complete | Theme switching, i18n, animations, WCAG 2.2 AA, SEO |
 | 5. Performance | ✅ Complete | Font optimization, lazy loading, SSG, server components, Lighthouse 97–100 |
 | 6. Deployment | ✅ Complete | Railway hosting, CI/CD via GitHub Actions, approval gates |
-| 7. Monitoring & Analytics | 🔄 In Progress | PostHog ✅, Web Vitals ✅, Sentry, UptimeRobot, Dependabot |
+| 7. Monitoring & Analytics | ✅ Complete | PostHog, Web Vitals, Sentry, Better Stack, Dependabot |
 
 ## Documentation
 
@@ -92,7 +94,7 @@ npm run typecheck     # TypeScript check
   - [Railway Deployment](docs/setup/RAILWAY_DEPLOYMENT.md)
   - [PostHog Analytics](docs/setup/POSTHOG_SETUP.md)
 - **Active Plans**
-  - [Phase 7: Monitoring & Analytics](docs/active/PHASE7_DETAILED_PLAN.md)
+  - [Phase 7: Monitoring & Analytics](docs/archive/PHASE7_DETAILED_PLAN.md)
 - **Archive** — [Completed phase plans](docs/archive/)
 
 ## Key Requirements
@@ -100,7 +102,6 @@ npm run typecheck     # TypeScript check
 - **Accessibility:** WCAG 2.2 Level AA compliance (mandatory)
 - **Testing:** 80%+ coverage for data layer, 100% for critical paths
 - **Documentation:** All code must have JSDoc comments
-- **Security:** No secrets in source control (use .env.local)
 
 ## License
 
