@@ -71,7 +71,7 @@ Projects use a **JSON Merge Pattern** — structural data lives in `projects.ts`
 4. **Add translations (French)**
 
    Edit `v2/src/locales/fr/projects.json` with the French translations.
-   Use the DeepL MCP server for translation assistance. See [TRANSLATION_WORKFLOW.md](./TRANSLATION_WORKFLOW.md) for the full procedure.
+   Use the DeepL MCP server for translation assistance. See [LOCALIZATION_ARCHITECTURE.md](./LOCALIZATION_ARCHITECTURE.md#translation-workflow) for the full procedure.
 
 5. **Update project count**
 

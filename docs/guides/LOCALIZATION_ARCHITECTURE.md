@@ -14,9 +14,11 @@ This document describes the localization (i18n) architecture for the portfolio a
 2. [JSON-First Pattern](#json-first-pattern)
 3. [Type System](#type-system)
 4. [Server-Side Architecture Pattern](#server-side-architecture-pattern)
-5. [Directory Structure](#directory-structure)
-6. [Implementation Guide](#implementation-guide)
-7. [Best Practices](#best-practices)
+5. [Current Implementation](#current-implementation)
+6. [Directory Structure](#directory-structure)
+7. [Implementation Guide](#implementation-guide)
+8. [Best Practices](#best-practices)
+9. [Translation Workflow](#translation-workflow)
 
 ---
 
@@ -332,6 +334,36 @@ export default async function ProjectsPage() {
 - Fetching projects or other localized data server-side
 - Accessing locale from request context (cookies)
 - Avoiding unnecessary client-side JavaScript
+
+---
+
+## Current Implementation
+
+### Pages (Resume, Colophon, Home, Portfolio)
+- **Structure:** `v2/src/data/[page].ts` (function only, no static exports)
+- **English:** `v2/src/locales/en/[page].json`
+- **French:** `v2/src/locales/fr/[page].json`
+- **Function:** `getLocalized[Page]Data(t)` receives translation function
+- **Pattern:** JSON-first with synchronous `t()` calls
+
+### Projects
+- **Structure:** `v2/src/data/projects.ts` (base structure with empty strings)
+- **English:** `v2/src/locales/en/projects.json`
+- **French:** `v2/src/locales/fr/projects.json`
+- **Function:** `getLocalizedProjects(locale)` - async with merge
+- **Pattern:** JSON-first with runtime merge
+
+---
+
+## What NOT to Translate
+
+Keep these in code (not JSON):
+
+- **Proper nouns:** Company names, product names, people's names
+- **Technical terms:** Programming language names, framework names
+- **URLs and email addresses**
+- **Icons and image paths**
+- **Numeric IDs**
 
 ---
 
@@ -729,15 +761,55 @@ export function getLocalizedData(t: TranslationFunction): DataType {}
 
 ---
 
-## Related Documentation
+## Translation Workflow
 
-- **[TRANSLATION_WORKFLOW.md](./TRANSLATION_WORKFLOW.md)** - Translation workflow and procedures
-- **[data/projects.ts](../v2/src/data/projects.ts)** - Project data structure and base data
-- **[data/localization.ts](../v2/src/data/localization.ts)** - Project merge and localization functions
-- **[hooks/useI18n.ts](../v2/src/hooks/useI18n.ts)** - i18n hook, types, and utilities
-- **[lib/i18nServer.ts](../v2/src/lib/i18nServer.ts)** - Server-side i18n utilities
-- **[lib/projectDataServer.ts](../v2/src/lib/projectDataServer.ts)** - Server-side project data actions
-- **[lib/i18n-constants.ts](../v2/src/lib/i18n-constants.ts)** - Locale constants and types
+### Adding Translation Keys
+
+1. Add English text to the appropriate locale file in `v2/src/locales/en/`
+2. Request French translation via Claude + DeepL MCP (see below)
+3. Add translated text to `v2/src/locales/fr/`
+4. If new key: update the data file's `getLocalized*Data(t)` function
+5. Verify (see checklist below)
+
+### Requesting Translations via DeepL MCP
+
+Ask Claude to translate strings using DeepL MCP. Provide context for accuracy:
+
+```
+I need to translate these strings to French for the portfolio site.
+
+FILE: v2/src/locales/en/resume.json
+SECTION: resume
+
+STRINGS:
+- "Resume | Sing Chan's Portfolio" (page title)
+- "Full-Stack Developer & Product Manager" (tagline)
+
+Please translate using DeepL and provide the formatted JSON for v2/src/locales/fr/resume.json
+```
+
+For batch translations, group strings by file and section in your request.
+
+### Translation Tips
+
+- **Provide context** — mention what the string is used for (heading, button, description)
+- **French is ~20-30% longer** than English — account for layout impact
+- **Use formal language** — professional tone for a portfolio site
+- **Maintain terminology** — keep technical terms consistent across translations
+- **Review machine translations** — DeepL is good but not perfect
+
+### Verification Checklist
+
+After adding translations:
+
+- [ ] English strings added to `v2/src/locales/en/[file].json`
+- [ ] French translations added to `v2/src/locales/fr/[file].json`
+- [ ] JSON syntax is valid (no trailing commas, proper nesting)
+- [ ] Data file updated to use `t()` for any new keys
+- [ ] `npm run typecheck` passes
+- [ ] `npm run lint` passes
+- [ ] `npm test` passes
+- [ ] Visually tested in both English and French
 
 ---
 
