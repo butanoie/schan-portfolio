@@ -70,6 +70,14 @@ export default withSentryConfig(analyzer(nextConfig), {
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
+  // Auto-detect release from git SHA; create and finalize in Sentry
+  // This replaces the need for manual `sentry-cli releases` commands
+  release: {
+    create: true,
+    finalize: true,
+    setCommits: { auto: true },
+  },
+
   // Only log Sentry build output in CI to keep local dev output clean
   silent: !process.env.CI,
 
