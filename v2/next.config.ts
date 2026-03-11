@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
@@ -55,4 +56,48 @@ const analyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-export default analyzer(nextConfig);
+/**
+ * Wraps the config with Sentry for automatic source map upload and
+ * error tracking instrumentation. Sentry must be the outermost wrapper
+ * so its webpack plugin runs last and can process the final source maps.
+ *
+ * Source maps are uploaded during `next build` (on Railway) when
+ * `SENTRY_AUTH_TOKEN` is set. Local builds without the token still
+ * succeed — Sentry silently skips the upload.
+ */
+export default withSentryConfig(analyzer(nextConfig), {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Route Sentry requests through your server (avoids ad-blockers)
+  //tunnelRoute: "/monitoring",
+
+  // Tag source maps and runtime errors with the git SHA so Sentry
+  // can correlate them. SENTRY_RELEASE is set by the GitHub Actions
+  // deploy workflows (Railway's `railway up` strips .git and doesn't
+  // expose RAILWAY_GIT_COMMIT_SHA like GitHub-triggered deploys do).
+  release: {
+    name: process.env.SENTRY_RELEASE,
+    create: true,
+    finalize: true,
+    // setCommits requires a .git directory which Railway's `railway up` strips.
+    // Commit association can be done via GitHub integration or sentry-cli in CI.
+  },
+
+  // Upload a larger set of source maps for prettier stack traces
+  widenClientFileUpload: true,
+
+  // Only log Sentry build output in CI to keep local dev output clean
+  silent: !process.env.CI,
+
+  sourcemaps: {
+    // Delete .map files after Sentry upload so they're not served to browsers.
+    // Both static (client) and server maps are removed to prevent 404 errors.
+    filesToDeleteAfterUpload: [
+      ".next/static/**/*.map",
+      ".next/server/**/*.map",
+    ],
+  },
+
+});

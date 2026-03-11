@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/strip-source-map-urls.mjs",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "eslint .",
@@ -23,6 +23,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
+    "@sentry/nextjs": "^10.43.0",
     "i18next": "^25.8.1",
     "isomorphic-dompurify": "^2.35.0",
     "next": "^16.1.6",

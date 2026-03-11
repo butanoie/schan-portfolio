@@ -124,6 +124,10 @@
             {
               "name": "vitest-axe",
               "description": "Vitest integration for accessibility testing within unit test suite."
+            },
+            {
+              "name": "Playwright",
+              "description": "End-to-end browser testing framework for cross-browser automation and visual regression testing."
             }
           ]
         },
@@ -137,6 +141,27 @@
             {
               "name": "GitHub Actions",
               "description": "CI/CD automation platform for continuous integration and deployment workflows."
+            },
+            {
+              "name": "Railway",
+              "description": "Cloud platform for deploying and hosting the production application with automatic builds."
+            }
+          ]
+        },
+        {
+          "label": "Analytics & Monitoring",
+          "items": [
+            {
+              "name": "Sentry",
+              "description": "Error tracking and performance monitoring with source maps and release tracking."
+            },
+            {
+              "name": "PostHog",
+              "description": "Product analytics for user behavior insights, funnels, and feature flags."
+            },
+            {
+              "name": "Web Vitals",
+              "description": "Google's metrics for measuring real-world user experience and core performance indicators."
             }
           ]
         }
