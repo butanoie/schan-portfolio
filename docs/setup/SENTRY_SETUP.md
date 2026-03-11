@@ -88,12 +88,39 @@ This ensures:
 
 > **Why the post-build script?** Next.js 16 defaults to Turbopack, which bypasses webpack entirely. Sentry's `filesToDeleteAfterUpload` deletes the `.map` files but leaves the `//# sourceMappingURL=` (JS) and `/*# sourceMappingURL= */` (CSS) references in the output bundles. Browsers then attempt to fetch the deleted maps and log 404 errors. The post-build script strips these dangling references after both Turbopack and Sentry have finished.
 
-### Error Boundary
+### Error Handling Layers
 
-`app/global-error.tsx` catches errors in the root layout itself — errors that no other `error.tsx` can catch. It:
-- Reports the error to Sentry via `captureException`
-- Renders a minimal recovery page with a "Try again" button
-- Uses hardcoded English (LocaleProvider is unavailable at this level)
+The app has three error boundary layers, each catching errors at a different level. All three report to Sentry via `captureException`.
+
+```
+app/global-error.tsx              ← Layer 1: Root layout crashes
+  └── LocaleProviderErrorFallback ← Layer 2: i18n initialization failures
+        └── ErrorBoundary         ← Layer 3: Component-level errors
+              └── {page content}
+```
+
+#### Layer 1: `app/global-error.tsx`
+
+Catches errors in the root layout itself — errors that no other `error.tsx` can catch. Because the entire layout has crashed, this component:
+- Renders its own `<html>/<body>` tags (the root layout is gone)
+- Uses hardcoded English (LocaleProvider is unavailable)
+- Provides a "Try again" button that calls Next.js's `reset()` to re-render the root layout
+- Uses inline styles (MUI ThemeProvider is unavailable)
+
+#### Layer 2: `src/components/i18n/LocaleProviderErrorFallback.tsx`
+
+Catches errors during LocaleProvider initialization (e.g., i18next fails to load). Wraps LocaleProvider in the component tree. Because i18n has failed:
+- Uses hardcoded English strings (cannot use `useI18n()`)
+- Renders a styled MUI fallback UI (MUI is available at this level)
+- Reports to Sentry and provides a retry button
+
+#### Layer 3: `src/components/common/ErrorBoundary.tsx`
+
+General-purpose error boundary for component-level errors. Used to wrap individual sections or features. Unlike the other layers:
+- Uses `useI18n()` for localized error messages (i18n is available)
+- Accepts optional `fallback`, `onError`, and `onErrorRecovery` props
+- Renders a styled MUI error UI with localized text
+- Shows error details in development mode
 
 ### Custom Error Hierarchy
 
@@ -162,8 +189,28 @@ Sentry does not initialize in development (`NODE_ENV !== "production"`). To test
 1. Set `NEXT_PUBLIC_SENTRY_DSN` in `.env.local`
 2. Run `NODE_ENV=production npm run build && npm start`
 
+## Files
+
+| File | Purpose |
+|------|---------|
+| `v2/instrumentation-client.ts` | Client-side Sentry config (browser, respects DNT) |
+| `v2/sentry.server.config.ts` | Server-side Sentry config (Node.js) |
+| `v2/sentry.edge.config.ts` | Edge runtime Sentry config |
+| `v2/instrumentation.ts` | Server startup hook — loads config based on `NEXT_RUNTIME` |
+| `v2/next.config.ts` | `withSentryConfig` wrapper for source map upload |
+| `v2/scripts/strip-source-map-urls.mjs` | Post-build script to strip dangling sourceMappingURL references |
+| `v2/app/global-error.tsx` | Layer 1: Root layout error boundary (hardcoded English, inline styles) |
+| `v2/src/components/i18n/LocaleProviderErrorFallback.tsx` | Layer 2: i18n initialization error boundary (hardcoded English, MUI) |
+| `v2/src/components/common/ErrorBoundary.tsx` | Layer 3: Component-level error boundary (localized, MUI) |
+| `v2/src/utils/errors.ts` | Custom error hierarchy (AppError, ValidationError, etc.) |
+| `v2/src/lib/privacy.ts` | Shared DNT detection utility |
+| `v2/src/__tests__/app/global-error.test.tsx` | Tests for global error boundary |
+| `v2/src/__tests__/components/common/ErrorBoundary.test.tsx` | Tests for ErrorBoundary component |
+| `v2/src/__tests__/utils/errors.test.ts` | Tests for custom error classes |
+| `v2/src/__tests__/lib/privacy.test.ts` | Tests for DNT utility |
+
 ## Related Documentation
 
-- [PostHog Setup](./POSTHOG_SETUP.md) — Analytics (Phase 7.1)
-- [Sentry Next.js Guide](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
-- [Custom Error Hierarchy](../../v2/src/utils/errors.ts) — Application error classes
+- [PostHog Setup](./POSTHOG_SETUP.md) — Analytics and privacy configuration
+- [Sentry Next.js Guide](https://docs.sentry.io/platforms/javascript/guides/nextjs/) — Official Sentry docs
+- [Railway Deployment](./RAILWAY_DEPLOYMENT.md) — Deploy workflows that set `SENTRY_RELEASE`

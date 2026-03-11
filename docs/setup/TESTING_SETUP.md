@@ -1,112 +1,75 @@
-# Testing Infrastructure Setup - Complete ✅
+# Testing Infrastructure Setup
 
-**Date:** 2026-01-27
-**Phase:** Phase 2 - Data Migration (Testing Prerequisites)
+This document covers the project's testing setup: Vitest, React Testing Library, accessibility testing with vitest-axe, and test utilities.
 
-## Summary
+## Overview
 
-Successfully set up comprehensive testing infrastructure for the v2 portfolio application using Vitest and React Testing Library.
+| Tool | Purpose |
+|------|---------|
+| Vitest | Test runner (native ESM, parallel execution) |
+| React Testing Library | Component rendering and user-centric queries |
+| @testing-library/jest-dom | Enhanced DOM assertions (e.g., `toBeVisible()`) |
+| @testing-library/user-event | Realistic user interaction simulation |
+| vitest-axe | Automated accessibility testing (axe-core engine) |
+| @vitest/coverage-v8 | Code coverage reporting |
+| jsdom | DOM environment for Node.js |
 
----
+**Current stats:** 1,199 tests across 65 test files (as of 2026-03-11).
 
-## What Was Installed
+## Commands
 
-### Core Testing Dependencies
+Run from `v2/`:
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `vitest` | 4.0.18 | Fast, modern test runner with native ESM support |
-| `@testing-library/react` | 16.3.2 | React component testing utilities |
-| `@testing-library/jest-dom` | 6.9.1 | Custom DOM matchers for better assertions |
-| `@testing-library/user-event` | 14.6.1 | Simulate user interactions |
-| `@vitejs/plugin-react` | 5.1.2 | React support for Vitest |
-| `jsdom` | 27.4.0 | DOM environment for Node.js testing |
-| `@vitest/coverage-v8` | 4.0.18 | Code coverage reporting with V8 |
-
----
-
-## Files Created
-
-### Configuration Files
-
-1. **[vitest.config.ts](../v2/vitest.config.ts)** - Main Vitest configuration
-   - JSDOM environment for DOM testing
-   - Global test utilities (describe, it, expect)
-   - Coverage thresholds set to 80% (per modernization plan)
-   - Path aliases configured (`@/*` → project root)
-   - Exclusions for node_modules, .next, coverage, etc.
-
-2. **[vitest.setup.ts](../v2/vitest.setup.ts)** - Test setup file
-   - Imports jest-dom matchers
-   - Configures automatic cleanup after each test
-   - Prevents memory leaks and test pollution
-
-### Directory Structure
-
-```
-v2/src/__tests__/
-├── README.md           # Comprehensive testing guide
-├── components/         # Component tests (ready for Phase 3)
-├── lib/               # Library tests (ready for Phase 2)
-└── utils/             # Utility tests
-    └── formatDate.test.ts  # Sample test (11 tests, 100% coverage)
+```bash
+npm test              # Run all tests once
+npm run test:watch    # Watch mode (re-runs on file changes)
+npm run test:coverage # Run with coverage report
+npm run test:ui       # Interactive browser-based test UI
 ```
 
-### Sample Code
+## Configuration
 
-1. **[src/utils/formatDate.ts](../v2/src/utils/formatDate.ts)** - Sample utility
-   - `formatDate()` - Format ISO dates to human-readable strings
-   - `formatCirca()` - Format circa date ranges
-   - Fully documented with JSDoc comments
-   - Error handling for invalid dates
+### vitest.config.ts
 
-2. **[src/__tests__/utils/formatDate.test.ts](../v2/src/__tests__/utils/formatDate.test.ts)** - Sample tests
-   - 11 comprehensive tests
-   - Tests edge cases (invalid dates, empty strings)
-   - Uses Arrange-Act-Assert pattern
-   - Includes mocking examples (console.error spy)
-   - 100% code coverage achieved
+**File:** `v2/vitest.config.ts`
 
-3. **[src/__tests__/README.md](../v2/src/__tests__/README.md)** - Testing guide
-   - File naming conventions
-   - Test structure best practices
-   - Component testing examples
-   - Coverage goals and running tests
+Key settings:
 
-### Documentation Updates
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `environment` | `jsdom` | DOM simulation for component tests |
+| `globals` | `true` | `describe`, `it`, `expect` available without imports |
+| `setupFiles` | `./vitest.setup.ts` | Global mocks and matchers |
+| `coverage.provider` | `v8` | V8-based coverage (fast, accurate) |
+| `coverage.thresholds` | 80% all | Lines, functions, branches, statements |
+| `resolve.alias` | `@` → project root | Matches Next.js path aliases (`@/src/*`) |
 
-1. **[v2/README.md](../v2/README.md)** - Updated with testing section
-   - Added testing scripts documentation
-   - Added Vitest to technology stack
-   - Included test directory in project structure
-   - Added example test code snippet
+Coverage reports are generated in multiple formats: text (console), HTML (`coverage/index.html`), JSON, and LCOV (for CI).
 
-2. **[v2/package.json](../v2/package.json)** - Added test scripts
-   - `npm test` - Run all tests once
-   - `npm run test:watch` - Watch mode for development
-   - `npm run test:coverage` - Generate coverage report
-   - `npm run test:ui` - Interactive test UI
+### vitest.setup.ts
 
----
+**File:** `v2/vitest.setup.ts`
 
-## NPM Scripts Added
+The setup file runs before each test file and configures the global test environment:
 
-```json
-{
-  "test": "vitest run",
-  "test:watch": "vitest",
-  "test:coverage": "vitest run --coverage",
-  "test:ui": "vitest --ui"
-}
-```
+| Setup | Purpose |
+|-------|---------|
+| `@testing-library/jest-dom` | DOM matchers (`toBeInTheDocument`, `toHaveAttribute`, etc.) |
+| `vitest-axe/matchers` | Accessibility matchers (`toHaveNoViolations`) |
+| `configureAxe` | Enables WCAG 2.2 AA rules (region, color-contrast, landmark-one-main) |
+| `next/font/google` mock | Mocks `Open_Sans`, `Oswald`, `Gochi_Hand` — these are build-time only |
+| `next/dynamic` mock | Replaces `next/dynamic` with `React.lazy` + `Suspense` |
+| `window.matchMedia` mock | Required for `useReducedMotion` hook and responsive components |
+| `HTMLCanvasElement.getContext` mock | Prevents canvas errors from MUI/icon libraries |
+| `IntersectionObserver` mock | Required for `useScrollAnimation` hook — auto-triggers with `isIntersecting: true` |
+| `localStorage` mock | Clean mock with `clear()` between tests |
+| MUI warning suppression | Filters kebab-case sx property warnings |
+| `afterEach` cleanup | DOM cleanup + localStorage clear after every test |
 
----
+### TypeScript Configuration
 
-## Configuration Updates
+`v2/tsconfig.json` includes Vitest and Testing Library types:
 
-### TypeScript ([tsconfig.json](../v2/tsconfig.json))
-
-Added Vitest and Testing Library types:
 ```json
 {
   "compilerOptions": {
@@ -115,124 +78,171 @@ Added Vitest and Testing Library types:
 }
 ```
 
----
+## Test Utilities
 
-## Verification Results
+### renderWithProviders
 
-### ✅ All Quality Checks Passing
+**File:** `v2/src/__tests__/test-utils.tsx`
 
-```bash
-npm run typecheck  # ✅ No TypeScript errors
-npm run lint        # ✅ No ESLint errors
-npm test            # ✅ 11/11 tests passing
-npm run test:coverage  # ✅ 100% coverage on sample code
-```
-
-### Test Output
+Custom render function that wraps components with all required context providers, matching the actual app's provider hierarchy:
 
 ```
-Test Files  1 passed (1)
-Tests       11 passed (11)
-Duration    504ms
-
-Coverage:
-File           | % Stmts | % Branch | % Funcs | % Lines
----------------|---------|----------|---------|----------
-All files      |     100 |      100 |     100 |     100
- formatDate.ts |     100 |      100 |     100 |     100
+LocaleProviderErrorFallback
+  └── LocaleProvider (initialLocale)
+        └── ThemeContextProvider
+              └── AnimationsContextProvider
+                    └── ThemeProvider (MUI)
+                          └── {children}
 ```
 
----
+**Usage:**
 
-## Coverage Configuration
+```tsx
+import { renderWithProviders } from '@/__tests__/test-utils';
 
-Per the [modernization plan](MODERNIZATION_PLAN.md#phase-2-data-migration), coverage thresholds are set to:
+// Default (English locale)
+renderWithProviders(<MyComponent />);
 
-- **Lines:** 80%
-- **Functions:** 80%
-- **Branches:** 80%
-- **Statements:** 80%
+// French locale
+renderWithProviders(<MyComponent />, { initialLocale: 'fr' });
+```
 
-Coverage reports are generated in multiple formats:
-- **Text** - Console output
-- **HTML** - `coverage/index.html` (interactive report)
-- **JSON** - `coverage/coverage-final.json`
-- **LCOV** - `coverage/lcov.info` (for CI/CD integration)
+The module also re-exports everything from `@testing-library/react`, so you can import `screen`, `waitFor`, `fireEvent`, etc. from the same file.
 
----
+### Accessibility Helpers
 
-## Testing Best Practices Established
+**File:** `v2/src/__tests__/utils/axe-helpers.ts`
 
-1. **File Naming:** `{filename}.test.ts` or `{filename}.test.tsx`
-2. **Location:** Mirror source structure in `__tests__` directory
-3. **Pattern:** Arrange-Act-Assert for clarity
-4. **Isolation:** Each test is independent
-5. **Descriptive Names:** Use "should" statements
-6. **Path Aliases:** Use `@/src/*` for imports (matches existing codebase)
+Provides convenience functions for accessibility testing with axe-core:
 
----
+| Function | Purpose |
+|----------|---------|
+| `runAxe(container, options?)` | Run axe on a DOM container and assert no violations |
+| `testAccessibility(renderResult)` | Full WCAG 2.2 AA test suite (color contrast, landmarks, ARIA, labels, touch targets) |
+| `canReceiveFocus(element)` | Check if an element can receive keyboard focus |
+| `hasAccessibleName(element)` | Check if an element has an accessible name (aria-label, text content, etc.) |
 
-## Next Steps for Phase 2
+**Usage:**
 
-With testing infrastructure complete, Phase 2 can proceed with:
+```tsx
+import { testAccessibility, runAxe } from '@/__tests__/utils/axe-helpers';
 
-1. **Create TypeScript interfaces** for project data
-   - Write tests for type guards
-   - Write tests for validation functions
+it('should be accessible', async () => {
+  const result = renderWithProviders(<MyComponent />);
+  await testAccessibility(result);
+});
 
-2. **Migrate PHP data to TypeScript/JSON**
-   - Test data transformation
-   - Test data integrity
+// Or with custom axe options:
+it('should pass color contrast', async () => {
+  const { container } = renderWithProviders(<MyComponent />);
+  await runAxe(container, {
+    rules: { 'color-contrast': { enabled: true } },
+  });
+});
+```
 
-3. **Implement data fetching utilities**
-   - Test `getProjects()` function
-   - Test pagination logic
-   - Test filtering/search
+## Directory Structure
 
-4. **Achieve >80% test coverage** on all data layer code
+```
+v2/src/__tests__/
+├── test-utils.tsx              # renderWithProviders and re-exports
+├── README.md                   # Testing conventions guide
+├── app/                        # Page-level tests
+│   ├── colophon/
+│   └── global-error.test.tsx
+├── components/                 # Component tests
+│   ├── colophon/
+│   ├── common/                 # Header, Footer, MainLayout, ErrorBoundary, etc.
+│   ├── i18n/
+│   ├── portfolio/
+│   ├── project/
+│   ├── resume/
+│   ├── samples/
+│   ├── settings/
+│   └── PostHogProvider.test.tsx
+├── contexts/                   # Context tests
+├── data/                       # Data validation tests
+├── hooks/                      # Custom hook tests
+├── integration/                # Integration tests (data layer)
+├── lib/                        # Library tests (i18n, webVitals, privacy)
+├── types/                      # Type guard tests
+└── utils/                      # Utility tests + axe-helpers.ts
+```
 
----
+## Writing Tests
 
-## Key Features
+### Conventions
 
-### Fast Test Execution
-- Vitest is ~10x faster than Jest
-- Native ESM support (no transpilation needed)
-- Parallel test execution
+- **File naming:** `{component}.test.tsx` or `{util}.test.ts`
+- **Location:** Mirror source structure under `__tests__/`
+- **Pattern:** Arrange-Act-Assert
+- **Naming:** Use descriptive `it('should ...')` statements
+- **Imports:** Use `@/` path aliases (e.g., `@/src/components/...`)
 
-### Developer Experience
-- Watch mode for instant feedback
-- Interactive UI mode (`npm run test:ui`)
-- Clear error messages and diffs
-- Hot Module Replacement (HMR) for tests
+### Component Test Template
 
-### Coverage Reporting
-- Multiple output formats
-- Interactive HTML reports
-- Configurable thresholds
-- CI/CD friendly (LCOV format)
+```tsx
+import { renderWithProviders, screen } from '@/__tests__/test-utils';
+import { testAccessibility } from '@/__tests__/utils/axe-helpers';
+import MyComponent from '@/src/components/MyComponent';
 
-### Accessibility Testing Ready
-- Integrated vitest-axe for automated a11y tests (axe-core engine)
-- Component testing with Testing Library (user-centric approach)
-- ARIA and keyboard navigation testing support
+describe('MyComponent', () => {
+  it('should render correctly', () => {
+    renderWithProviders(<MyComponent />);
+    expect(screen.getByText('Expected text')).toBeInTheDocument();
+  });
 
----
+  it('should be accessible', async () => {
+    const result = renderWithProviders(<MyComponent />);
+    await testAccessibility(result);
+  });
+});
+```
 
-## Documentation Resources
+### Testing Dynamic Imports
 
-- **Testing Guide:** [src/__tests__/README.md](../v2/src/__tests__/README.md)
-- **Vitest Docs:** https://vitest.dev/
-- **React Testing Library:** https://testing-library.com/react
-- **Project README:** [v2/README.md](../v2/README.md#testing)
+Components loaded with `next/dynamic` are mocked via `React.lazy` in the setup file. Use `waitFor` to wait for lazy components to resolve:
 
----
+```tsx
+import { renderWithProviders, screen, waitFor } from '@/__tests__/test-utils';
 
-## Conclusion
+it('should render dynamic component', async () => {
+  renderWithProviders(<PageWithDynamic />);
+  await waitFor(() => {
+    expect(screen.getByText('Dynamic content')).toBeInTheDocument();
+  });
+});
+```
 
-The testing infrastructure is **production-ready** and follows industry best practices. All tests pass, documentation is complete, and the system is ready to support Phase 2 development with comprehensive test coverage.
+## Coverage
 
-**Status:** ✅ Complete
-**Tests:** 11 passing
-**Coverage:** 100% (sample code)
-**Quality Checks:** All passing
+Coverage thresholds are set to 80% for all metrics (per the [modernization plan](../active/MODERNIZATION_PLAN.md)):
+
+| Metric | Threshold |
+|--------|-----------|
+| Lines | 80% |
+| Functions | 80% |
+| Branches | 80% |
+| Statements | 80% |
+
+Coverage reports:
+- **Console:** text summary after `npm run test:coverage`
+- **HTML:** `v2/coverage/index.html` (interactive, open in browser)
+- **JSON:** `v2/coverage/coverage-final.json`
+- **LCOV:** `v2/coverage/lcov.info` (CI integration)
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `v2/vitest.config.ts` | Vitest configuration (environment, coverage, aliases) |
+| `v2/vitest.setup.ts` | Global test setup (mocks, matchers, cleanup) |
+| `v2/src/__tests__/test-utils.tsx` | `renderWithProviders` custom render + re-exports |
+| `v2/src/__tests__/utils/axe-helpers.ts` | Accessibility testing helpers |
+| `v2/src/__tests__/README.md` | Testing conventions guide |
+
+## Related Documentation
+
+- [Accessibility Testing](../accessibility/ACCESSIBILITY_TESTING.md) — Manual and automated a11y testing procedures
+- [Accessibility Testing Checklist](../accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md) — Testing checklist
+- [Modernization Plan](../active/MODERNIZATION_PLAN.md) — Coverage goals and testing strategy

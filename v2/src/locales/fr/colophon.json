@@ -76,20 +76,20 @@
               "description": "Récupération de documentation et d'exemples de code pour les informations actualisées sur les bibliothèques et les frameworks."
             },
             {
-              "name": "GitHub MCP",
-              "description": "Intégration GitHub pour les opérations de dépôt, les demandes de fusion et la gestion des problèmes."
-            },
-            {
-              "name": "Filesystem MCP",
-              "description": "Accès sécurisé au système de fichiers pour la lecture et l'écriture de fichiers dans les répertoires autorisés."
-            },
-            {
-              "name": "Sequential Thinking MCP",
-              "description": "Raisonnement structuré et résolution de problèmes par des processus de réflexion étape par étape."
-            },
-            {
               "name": "DeepL MCP",
               "description": "Service de traduction piloté par l'IA pour la traduction automatique du contenu dans plusieurs langues."
+            },
+            {
+              "name": "Sentry MCP",
+              "description": "Intégration du suivi des erreurs et de la surveillance des performances pour étudier les problèmes de production directement à partir de l'environnement de développement."
+            },
+            {
+              "name": "PostHog MCP",
+              "description": "Intégration de l'analyse des produits pour l'interrogation des données sur le comportement des utilisateurs, des caractéristiques et des résultats d'expériences au cours du développement."
+            },
+            {
+              "name": "Playwright MCP",
+              "description": "Automatisation des navigateurs pour les tests visuels, les audits d'accessibilité et la vérification des composants de l'interface utilisateur entre les navigateurs."
             }
           ]
         },

@@ -822,6 +822,59 @@ interface TypeName {
 
 ---
 
+## ESLint JSDoc Rules
+
+The following JSDoc rules are enforced via `eslint-plugin-jsdoc` in `v2/eslint.config.mjs`:
+
+### Error-level rules (block commit)
+
+| Rule | Effect |
+|------|--------|
+| `jsdoc/require-jsdoc` | Requires JSDoc on functions, methods, classes, interfaces, types, enums |
+| `jsdoc/require-description` | Requires a body description in every JSDoc block |
+| `jsdoc/require-param` | Requires `@param` for each parameter |
+| `jsdoc/require-param-description` | Requires description text for each `@param` |
+| `jsdoc/require-returns` | Requires `@returns` tag |
+| `jsdoc/require-returns-description` | Requires description text for `@returns` |
+| `jsdoc/check-param-names` | Validates `@param` names match actual parameters |
+| `jsdoc/check-tag-names` | Validates JSDoc tag names are recognized |
+
+### Warning-level rules
+
+| Rule | Effect |
+|------|--------|
+| `jsdoc/check-alignment` | Checks alignment of JSDoc block asterisks |
+| `jsdoc/check-indentation` | Checks indentation within JSDoc blocks |
+| `jsdoc/multiline-blocks` | Enforces multiline JSDoc formatting |
+| `jsdoc/tag-lines` | Controls blank lines between tags |
+
+TypeScript-redundant rules (`require-param-type`, `require-returns-type`, `check-types`, `no-undefined-types`, `valid-types`) are set to `"off"` since TypeScript already provides type information.
+
+### Customizing Rules
+
+**Warning mode** — change `"error"` to `"warn"` for gradual adoption:
+```javascript
+"jsdoc/require-jsdoc": ["warn", { /* config */ }],
+```
+
+**Per-directory overrides** — enforce only in specific paths:
+```javascript
+{
+  files: ["src/new-features/**/*.{ts,tsx}"],
+  rules: {
+    "jsdoc/require-jsdoc": "error",
+  },
+}
+```
+
+**Inline exemptions** — disable for specific code:
+```typescript
+// eslint-disable-next-line jsdoc/require-jsdoc
+export const simpleConfig = () => ({});
+```
+
+---
+
 ## Summary Checklist
 
 Before committing code, verify:
@@ -835,4 +888,4 @@ Before committing code, verify:
 - [ ] **No `any` types:** Use proper type definitions
 - [ ] **Examples:** Complex functions include @example usage
 
-For more information, see [CLAUDE.md](../.claude/CLAUDE.md) - the source of truth for documentation standards.
+For more information, see [CLAUDE.md](../../CLAUDE.md) - the source of truth for documentation standards.

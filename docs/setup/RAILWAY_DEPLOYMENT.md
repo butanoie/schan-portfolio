@@ -73,16 +73,16 @@ Add **one secret** and **two variables** to GitHub Actions:
 4. **Value:** Paste the service name you found in step 3
 5. Click **Add variable**
 
-**Variable 3 - Railway Staging Environment ID (required for production deploys):**
+**Variable 3 - Staging Deploy Environment Name (required for production deploys):**
 1. Still in the **Variables** tab
 2. Click **New repository variable**
-3. **Name:** `RAILWAY_STAGING_ENVIRONMENT_ID`
-4. **Value:** The UUID of your Railway staging environment (find it in the Railway dashboard URL when viewing the staging environment, or run `railway environment list`)
+3. **Name:** `RAILWAY_STAGING_DEPLOY_ENV_NAME`
+4. **Value:** The GitHub Deployments environment name that Railway creates when it auto-deploys to staging (e.g., `"Sing Portfolio / staging"`). You can find this under **Settings > Environments** in your GitHub repository.
 5. Click **Add variable**
 
 **Why the difference?**
 - **Token** is a secret because it's an authentication credential (sensitive)
-- **Project ID, Service Name & Staging Environment ID** are variables because they're just configuration identifiers (non-sensitive)
+- **Project ID, Service Name & Staging Deploy Env Name** are variables because they're just configuration identifiers (non-sensitive)
 
 ### Step 5: Verify Deployment Configuration
 
@@ -142,14 +142,14 @@ deploy:
 - **Secret:** `RAILWAY_TOKEN` - Your Railway API token
 - **Variable:** `RAILWAY_PROJECT_ID` - Your Railway project ID
 - **Variable:** `RAILWAY_SERVICE_NAME` - Your Railway service name
-- **Variable:** `RAILWAY_STAGING_ENVIRONMENT_ID` - Your Railway staging environment UUID (required for production deploys)
+- **Variable:** `RAILWAY_STAGING_DEPLOY_ENV_NAME` - GitHub Deployments environment name for staging (required for production deploys)
 
 ✅ Confirm environment approval is configured:
 - Go to **Settings** > **Environments** > **Sing Portfolio / development**
 - Add **Required reviewers** (GitHub users who must approve deployments)
 - Consider adding team leads or project maintainers
 
-### Step 7: Configure Deployment Approval (Optional but Recommended)
+### Step 6: Configure Deployment Approval (Optional but Recommended)
 
 To add an extra layer of safety, configure required reviewers for the development environment:
 
@@ -167,7 +167,7 @@ To add an extra layer of safety, configure required reviewers for the developmen
 - 👥 **Team Control** - Multiple people can review before deployment
 - 📋 **Audit Trail** - GitHub records who approved each deployment
 
-### Step 6: Test the Deployment
+### Step 7: Test the Deployment
 
 1. Create a test branch from `main`:
    ```bash
@@ -287,18 +287,25 @@ If you need to add or modify environment variables:
 - **Trigger:** Manual (`workflow_dispatch`) from any branch
 - **Environment:** `Sing Portfolio / development`
 
+**Staging (Manual):**
+- **Workflow File:** `.github/workflows/deploy-staging.yml`
+- **Workflow Name:** "Manual Deploy to Staging"
+- **Trigger:** Manual (`workflow_dispatch`) from `main` branch only
+- **Preflight Checks:** Branch verification + commit-on-main verification
+- **Environment:** `Sing Portfolio / staging`
+
 **Production:**
 - **Workflow File:** `.github/workflows/deploy-production.yml`
 - **Workflow Name:** "Manual Deploy to Production"
 - **Trigger:** Manual (`workflow_dispatch`) from `main` branch only
-- **Preflight Checks:** Branch verification + Railway staging deployment verification
+- **Preflight Checks:** Branch verification + staging deployment verification (via GitHub Deployments API)
 - **Environment:** `Sing Portfolio / production`
 
 **Shared Configuration:**
 - **Authentication Secret:** `RAILWAY_TOKEN` (encrypted)
 - **Project ID Variable:** `RAILWAY_PROJECT_ID` (non-sensitive config)
 - **Service Name Variable:** `RAILWAY_SERVICE_NAME` (non-sensitive config)
-- **Staging Environment ID Variable:** `RAILWAY_STAGING_ENVIRONMENT_ID` (used by production workflow for staging verification)
+- **Staging Deploy Env Name Variable:** `RAILWAY_STAGING_DEPLOY_ENV_NAME` (GitHub Deployments environment name used by production workflow for staging verification)
 - **Best Practice:** Token stored as secret (sensitive), configuration stored as variables (non-sensitive)
 
 ## Troubleshooting
@@ -479,6 +486,38 @@ Replace:
 - Review GitHub Actions logs for any sensitive information leaks
 - Regularly audit deployed code and environment variables
 
+## Manual Staging Deployment
+
+In addition to Railway's automatic staging deployments (triggered when commits land on `main`), you can manually deploy a specific commit to the staging environment.
+
+**Workflow File:** `.github/workflows/deploy-staging.yml`
+
+### How It Works
+
+1. Go to your GitHub repository > **Actions** tab
+2. Select **"Manual Deploy to Staging"** workflow
+3. Click **"Run workflow"**
+4. Ensure **Branch: main** is selected (other branches will be rejected)
+5. Optionally enter a **Commit SHA** to deploy a specific commit (must be on `main`). Leave blank for latest.
+6. Click **"Run workflow"**
+7. Approve the deployment when prompted (environment protection rules apply)
+
+### Preflight Checks
+
+The workflow validates:
+1. **Branch verification** — Confirms the workflow is running from `main`
+2. **Commit verification** — If a specific SHA was provided, confirms it exists on `main`
+
+After validation, the workflow deploys to Railway's staging environment and sets the `SENTRY_RELEASE` variable for error tracking.
+
+### When to Use
+
+- **Re-deploy a specific commit** to staging for verification before promoting to production
+- **Re-trigger a staging deploy** if Railway's automatic deployment failed
+- **Test a rollback** by deploying an older `main` commit to staging
+
+---
+
 ## Production Deployment
 
 ### Manual Production Deployment Workflow
@@ -520,7 +559,7 @@ The workflow automatically runs three checks before deployment:
 
 1. **Branch verification** - Confirms the workflow is running from `main`. If triggered from another branch, the workflow fails immediately.
 2. **Commit verification** - If a specific commit SHA was provided, confirms it exists on the `main` branch. Otherwise, uses the current HEAD of `main`.
-3. **Staging deployment verification** - Queries the Railway GraphQL API to confirm the commit SHA has a successful deployment in the staging environment. If no successful staging deployment is found, the workflow fails with a descriptive error.
+3. **Staging deployment verification** - Queries the GitHub Deployments API to confirm the commit SHA has a successful deployment in the staging environment. Railway's GitHub integration automatically creates deployment records, so this check verifies that Railway successfully deployed the commit to staging. If no successful staging deployment is found, the workflow fails with a descriptive error.
 
 #### Step 3: Approve the Deployment
 
@@ -569,24 +608,24 @@ jobs:
     environment: "Sing Portfolio / production"
 ```
 
-**Staging verification uses Railway's GraphQL API:**
+**Staging verification uses the GitHub Deployments API:**
 ```yaml
-- name: Verify staging deployment on Railway
+- name: Verify staging deployment via GitHub Deployments
   env:
-    RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-    RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
-    RAILWAY_STAGING_ENV_ID: ${{ vars.RAILWAY_STAGING_ENVIRONMENT_ID }}
-    COMMIT_SHA: ${{ github.sha }}
+    GH_TOKEN: ${{ github.token }}
+    COMMIT_SHA: ${{ steps.resolve.outputs.sha }}
+    STAGING_ENV: ${{ vars.RAILWAY_STAGING_DEPLOY_ENV_NAME }}
   run: |
-    # Queries Railway API for successful staging deployment matching commit SHA
+    # Queries GitHub Deployments API for successful staging deployment matching commit SHA
+    # Railway's GitHub integration automatically creates deployment records
 ```
 
 **Key Features:**
 - **Main Branch Only**: Cannot deploy from feature branches - enforced at runtime
-- **Staging Gate**: Queries Railway's API to verify the commit was successfully deployed to staging first
+- **Staging Gate**: Queries the GitHub Deployments API to verify the commit was successfully deployed to staging first (Railway auto-creates deployment records via its GitHub integration)
 - **Approval Protection**: `environment: "Sing Portfolio / production"` requires manual approval
 - **Same Configuration**: Uses `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_NAME`, and `RAILWAY_TOKEN`
-- **Additional Variable**: Requires `RAILWAY_STAGING_ENVIRONMENT_ID` for the staging verification check
+- **Additional Variable**: Requires `RAILWAY_STAGING_DEPLOY_ENV_NAME` (GitHub environment name) for the staging verification check
 - **Production Environment**: Targets the `production` environment in Railway
 
 ### Recommended Deployment Workflow
@@ -630,13 +669,13 @@ To require approval before production deployments:
 
 | Aspect | Development | Staging | Production |
 |--------|-------------|---------|-----------|
-| **Trigger** | Automatic on PR / Manual | Auto-deploy on `main` (Railway) | Manual (workflow_dispatch) |
+| **Trigger** | Automatic on PR / Manual | Auto-deploy on `main` (Railway) / Manual | Manual (workflow_dispatch) |
 | **Branch** | Any branch | `main` only | `main` only |
 | **Staging Gate** | No | No | Yes - commit must succeed in staging |
-| **Approval** | Required | N/A (Railway auto-deploy) | Required |
+| **Approval** | Required | N/A (auto) / Required (manual) | Required |
 | **Railway Env** | development | staging | production |
 | **Use Case** | Testing and validation | Pre-production verification | Live users |
-| **Workflow File** | `test-deploy-dev.yml` / `deploy-dev.yml` | Railway event handler | `deploy-production.yml` |
+| **Workflow File** | `test-deploy-dev.yml` / `deploy-dev.yml` | Railway auto / `deploy-staging.yml` | `deploy-production.yml` |
 
 ### Troubleshooting Production Deployment
 
@@ -647,8 +686,8 @@ To require approval before production deployments:
 1. **Commit not on `main`**: Ensure the commit has been merged to `main` and Railway has auto-deployed it to staging
 2. **Staging deployment still in progress**: Wait for Railway to finish the staging deployment, then re-run the workflow
 3. **Staging deployment failed**: Check the Railway dashboard for the staging environment — the deployment may have failed. Fix the issue, push a new commit, and try again
-4. **Wrong environment ID**: Verify the `RAILWAY_STAGING_ENVIRONMENT_ID` variable matches your staging environment UUID in Railway
-5. **API response debugging**: Check the workflow logs for the API response output to identify the issue
+4. **Wrong environment name**: Verify the `RAILWAY_STAGING_DEPLOY_ENV_NAME` variable matches the GitHub Deployments environment name that Railway uses (check **Settings > Environments** in your GitHub repository)
+5. **API response debugging**: Check the workflow logs for the GitHub Deployments API response output to identify the issue
 
 #### Preflight: "Production deployments are only allowed from the main branch"
 **Problem:** The production workflow fails because it was triggered from a non-main branch.
