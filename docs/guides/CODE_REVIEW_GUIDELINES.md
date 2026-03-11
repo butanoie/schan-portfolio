@@ -452,7 +452,6 @@ See [JSDOC_EXAMPLES.md](./JSDOC_EXAMPLES.md#hook-with-effect--cleanup) for the p
 - **Standards & Requirements:** [CLAUDE.md](../.claude/CLAUDE.md)
 - **Code Examples & Patterns:** [JSDOC_EXAMPLES.md](./JSDOC_EXAMPLES.md)
 - **PR Checklist:** [pull_request_template.md](../.github/pull_request_template.md)
-- **Quality Metrics:** [CODE_QUALITY_DASHBOARD.md](./CODE_QUALITY_DASHBOARD.md)
 
 ---
 

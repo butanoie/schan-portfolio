@@ -12,7 +12,6 @@ This directory contains all project documentation organized by purpose and phase
 - **[CODE_REVIEW_GUIDELINES.md](guides/CODE_REVIEW_GUIDELINES.md)** - Code review standards
 - **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** - Documentation patterns and templates
 - **[THEME_SWITCHING.md](guides/THEME_SWITCHING.md)** - Theme system documentation
-- **[CODE_QUALITY_DASHBOARD.md](guides/CODE_QUALITY_DASHBOARD.md)** - Quality metrics and standards
 - **[LOCALIZATION.md](guides/LOCALIZATION.md)** - i18n quick reference
 - **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** - i18n technical architecture
 - **[TRANSLATION_WORKFLOW.md](guides/TRANSLATION_WORKFLOW.md)** - Translation procedures
@@ -75,7 +74,6 @@ docs/
 │   ├── ACCESSIBILITY_TESTING_CHECKLIST.md
 │   └── WCAG_COMPLIANCE_GUIDE.md
 ├── guides/                      # Reference materials & standards
-│   ├── CODE_QUALITY_DASHBOARD.md
 │   ├── CODE_REVIEW_GUIDELINES.md
 │   ├── JSDOC_EXAMPLES.md
 │   ├── LOCALIZATION.md

@@ -249,4 +249,3 @@ export function addNumbers(a: number, b: number): number {
 
 - [JSDoc Examples](../guides/JSDOC_EXAMPLES.md) — Copy-paste JSDoc templates
 - [Code Review Guidelines](../guides/CODE_REVIEW_GUIDELINES.md) — Review standards including doc checks
-- [Code Quality Dashboard](../guides/CODE_QUALITY_DASHBOARD.md) — Quality metrics

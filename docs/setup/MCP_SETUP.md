@@ -9,7 +9,7 @@ MCP Servers
 ├── Project-level (.mcp.json) — shared via git
 │   ├── filesystem         (npx, no secrets)
 │   ├── sequential-thinking (npx, no secrets)
-│   └── deepl              (launcher script, requires DEEPL_API_KEY)
+│   └── deepl              (npx, requires DEEPL_API_KEY via env)
 │
 └── User-level (Claude Code plugins) — per-developer, not in repo
     ├── context7           (documentation search)
@@ -40,8 +40,8 @@ Enables multi-step reasoning for complex problem solving.
 
 Translation service used for i18n workflows (see [Translation Workflow](../guides/TRANSLATION_WORKFLOW.md)).
 
-- **Config:** Uses `./scripts/mcp-launcher.sh deepl` to load environment variables before starting the server
-- **Secrets:** `DEEPL_API_KEY` (in `.env`)
+- **Config:** `npx -y deepl-mcp-server` with `env` field for secret injection
+- **Secrets:** `DEEPL_API_KEY` — passed via `${DEEPL_API_KEY}` expansion in `.mcp.json`, must be set in the shell environment (e.g., via `direnv`, shell profile, or `source .env`)
 
 ## User-Level Servers (Claude Code Plugins)
 
@@ -71,13 +71,25 @@ Recommended plugins for this project:
 cp .env.example .env
 ```
 
-### Step 2: Add your secrets to `.env`
+### Step 2: Make `DEEPL_API_KEY` available in your shell
 
-Edit `.env` and add your actual values:
+The DeepL MCP server requires `DEEPL_API_KEY` in the environment. Choose one approach:
 
-```env
-# DeepL API Key for translation service (required for deepl MCP server)
-DEEPL_API_KEY=your_deepl_key_here
+**Option A: direnv (recommended)**
+```bash
+# Install direnv, then create .envrc:
+echo 'dotenv' > .envrc
+direnv allow
+```
+
+**Option B: Source `.env` before launching Claude Code**
+```bash
+source .env && claude
+```
+
+**Option C: Export in your shell profile**
+```bash
+export DEEPL_API_KEY=your_deepl_key_here
 ```
 
 ### Step 3: Verify `.env` is gitignored
@@ -91,18 +103,21 @@ Restart Claude Code to reload MCP configuration:
 2. Reopen Claude Code
 3. The MCP servers defined in `.mcp.json` will start automatically
 
-## How the Launcher Script Works
+## How Secret Injection Works
 
-**File:** `scripts/mcp-launcher.sh`
+Claude Code's `.mcp.json` supports `${VAR}` expansion in `env`, `command`, `args`, `url`, and `headers` fields. For the DeepL server:
 
-The launcher script is used for MCP servers that require environment variables (currently only DeepL). It:
+```json
+"deepl": {
+  "command": "npx",
+  "args": ["-y", "deepl-mcp-server"],
+  "env": {
+    "DEEPL_API_KEY": "${DEEPL_API_KEY}"
+  }
+}
+```
 
-1. Finds the project root directory
-2. Loads variables from `.env` using `set -a` / `source`
-3. Validates the required variable is set (e.g., `DEEPL_API_KEY`)
-4. Starts the requested server via `npx`
-
-Servers that don't need secrets (filesystem, sequential-thinking) use `npx` directly in `.mcp.json` without the launcher.
+At startup, `${DEEPL_API_KEY}` is expanded from the shell environment. This keeps secrets out of checked-in config while avoiding wrapper scripts.
 
 ## Getting Your Tokens
 
@@ -124,24 +139,15 @@ gh auth login
 gh auth token
 ```
 
-> **Note:** `GITHUB_TOKEN` in `.env` is checked by the launcher script for a `github` MCP server case, but `.mcp.json` does not currently define a github server entry — GitHub access is handled via the `gh` CLI or the Claude Code GitHub plugin instead.
+> **Note:** GitHub access is handled via the `gh` CLI or the Claude Code GitHub plugin — there is no github MCP server in `.mcp.json`.
 
 ## Troubleshooting
 
-### "Warning: .env file not found"
-
-The launcher script could not find `.env`. Run:
-```bash
-cp .env.example .env
-```
-Then add your token values.
-
 ### MCP server fails to start
 
-1. Check that `.env` file exists at the project root
-2. Ensure the launcher script is executable: `chmod +x scripts/mcp-launcher.sh`
-3. Verify token values in `.env` are correct
-4. Restart Claude Code
+1. Verify `DEEPL_API_KEY` is set in your shell: `echo $DEEPL_API_KEY`
+2. Check that the variable is exported (not just set)
+3. Restart Claude Code after changing environment variables
 
 ### DeepL translation not working
 
@@ -176,10 +182,9 @@ This allows `gh` to fall back to keyring-based authentication.
 
 | File | Purpose |
 |------|---------|
-| `.mcp.json` | Project-level MCP server configuration |
+| `.mcp.json` | Project-level MCP server configuration (uses `${VAR}` expansion for secrets) |
 | `.env` | Local secrets file (gitignored, never committed) |
 | `.env.example` | Template showing required variables |
-| `scripts/mcp-launcher.sh` | Loads `.env` and starts secret-dependent MCP servers |
 
 ## Related Documentation
 
