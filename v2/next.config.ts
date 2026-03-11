@@ -103,7 +103,29 @@ export default withSentryConfig(analyzer(nextConfig), {
   release: {
     name: (() => {
       const sha = getGitSha();
-      console.log(`[Sentry] Resolved release: ${sha ?? "undefined (git not available)"}`);
+      // Debug: log all env vars that might contain a git SHA
+      const candidates = [
+        "RAILWAY_GIT_COMMIT_SHA",
+        "RAILWAY_DEPLOYMENT_ID",
+        "RAILWAY_SNAPSHOT_ID",
+        "COMMIT_SHA",
+        "GIT_COMMIT",
+        "SOURCE_COMMIT",
+        "COMMIT_REF",
+        "SENTRY_RELEASE",
+      ];
+      for (const key of candidates) {
+        if (process.env[key]) {
+          console.log(`[Sentry] Found env ${key}=${process.env[key]}`);
+        }
+      }
+      // Also dump all RAILWAY_ vars
+      for (const [key, val] of Object.entries(process.env)) {
+        if (key.startsWith("RAILWAY_")) {
+          console.log(`[Sentry] Railway env: ${key}=${val}`);
+        }
+      }
+      console.log(`[Sentry] getGitSha() = ${sha ?? "undefined"}`);
       return sha;
     })(),
     create: true,
