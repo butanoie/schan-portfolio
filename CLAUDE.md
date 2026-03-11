@@ -161,15 +161,13 @@ If you discover code without documentation:
 - Auto-translate new strings using DeepL MCP
 - User's language preference is persisted to localStorage
 
-**See [LOCALIZATION.md](docs/guides/LOCALIZATION.md) for quick reference. For architecture, see [LOCALIZATION_ARCHITECTURE.md](docs/guides/LOCALIZATION_ARCHITECTURE.md). For translation workflows, see [TRANSLATION_WORKFLOW.md](docs/guides/TRANSLATION_WORKFLOW.md).**
+**See [LOCALIZATION_ARCHITECTURE.md](docs/guides/LOCALIZATION_ARCHITECTURE.md) for architecture, patterns, and translation workflows.**
 
 ## Infrastructure & Setup Documentation
 
 Infrastructure docs live in `docs/`. Key references:
 - `docs/setup/MCP_SETUP.md` — MCP server configuration and tokens
-- `docs/guides/LOCALIZATION.md` — i18n quick reference
-- `docs/guides/LOCALIZATION_ARCHITECTURE.md` — i18n technical architecture
-- `docs/guides/TRANSLATION_WORKFLOW.md` — Translation procedures
+- `docs/guides/LOCALIZATION_ARCHITECTURE.md` — i18n architecture, patterns, and translation workflows
 
 When adding new infrastructure, create docs in the appropriate `docs/` subdirectory. 
 **CRITICAL: Never document actual tokens or secrets — only how to obtain them.**

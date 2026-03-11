@@ -80,7 +80,7 @@ npm run typecheck     # TypeScript check
 - **[v2 README](v2/README.md)** — Detailed v2 documentation
 - **Guides**
   - [Theme Switching](docs/guides/THEME_SWITCHING.md)
-  - [Localization](docs/guides/LOCALIZATION.md)
+  - [Localization](docs/guides/LOCALIZATION_ARCHITECTURE.md)
   - [JSDoc Examples](docs/guides/JSDOC_EXAMPLES.md)
 - **Accessibility**
   - [Accessibility Statement](docs/accessibility/ACCESSIBILITY_STATEMENT.md)

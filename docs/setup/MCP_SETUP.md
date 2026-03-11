@@ -38,7 +38,7 @@ Enables multi-step reasoning for complex problem solving.
 
 ### deepl
 
-Translation service used for i18n workflows (see [Translation Workflow](../guides/TRANSLATION_WORKFLOW.md)).
+Translation service used for i18n workflows (see [Localization Architecture](../guides/LOCALIZATION_ARCHITECTURE.md#translation-workflow)).
 
 - **Config:** `npx -y deepl-mcp-server` with `env` field for secret injection
 - **Secrets:** `DEEPL_API_KEY` — passed via `${DEEPL_API_KEY}` expansion in `.mcp.json`, must be set in the shell environment (e.g., via `direnv`, shell profile, or `source .env`)
@@ -188,5 +188,5 @@ This allows `gh` to fall back to keyring-based authentication.
 
 ## Related Documentation
 
-- [Translation Workflow](../guides/TRANSLATION_WORKFLOW.md) — How DeepL MCP is used for i18n
-- [Localization](../guides/LOCALIZATION.md) — i18n quick reference
+- [Localization Architecture](../guides/LOCALIZATION_ARCHITECTURE.md) — i18n architecture and translation workflows
+- [Localization](../guides/LOCALIZATION_ARCHITECTURE.md) — i18n architecture and patterns

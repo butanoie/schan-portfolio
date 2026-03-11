@@ -11,9 +11,7 @@ This directory contains all project documentation organized by purpose and phase
 ### **Reference & Guides**
 - **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** - Documentation patterns and templates
 - **[THEME_SWITCHING.md](guides/THEME_SWITCHING.md)** - Theme system documentation
-- **[LOCALIZATION.md](guides/LOCALIZATION.md)** - i18n quick reference
-- **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** - i18n technical architecture
-- **[TRANSLATION_WORKFLOW.md](guides/TRANSLATION_WORKFLOW.md)** - Translation procedures
+- **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** - i18n architecture, patterns, and translation workflows
 - **[MAINTENANCE_WORKFLOW.md](guides/MAINTENANCE_WORKFLOW.md)** - Maintenance and dependency update workflow
 
 ### **Accessibility**
@@ -73,11 +71,9 @@ docs/
 │   └── WCAG_COMPLIANCE_GUIDE.md
 ├── guides/                      # Reference materials & standards
 │   ├── JSDOC_EXAMPLES.md
-│   ├── LOCALIZATION.md
 │   ├── LOCALIZATION_ARCHITECTURE.md
 │   ├── MAINTENANCE_WORKFLOW.md
-│   ├── THEME_SWITCHING.md
-│   └── TRANSLATION_WORKFLOW.md
+│   └── THEME_SWITCHING.md
 ├── setup/                       # Infrastructure & setup
 │   ├── MCP_SETUP.md
 │   ├── POSTHOG_SETUP.md
@@ -121,9 +117,7 @@ docs/
 - Use **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** for documentation patterns
 
 ### For Localization
-- Start with **[LOCALIZATION.md](guides/LOCALIZATION.md)** for quick reference
-- See **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** for technical details
-- Follow **[TRANSLATION_WORKFLOW.md](guides/TRANSLATION_WORKFLOW.md)** for adding translations
+- See **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** for architecture, patterns, and translation workflows
 
 ### For Accessibility
 - Review **[WCAG_COMPLIANCE_GUIDE.md](accessibility/WCAG_COMPLIANCE_GUIDE.md)** for compliance standards
