@@ -101,7 +101,11 @@ export default withSentryConfig(analyzer(nextConfig), {
   // can correlate them. Uses our explicit getGitSha() because Railway
   // does not expose RAILWAY_GIT_COMMIT_SHA for Sentry's auto-detection.
   release: {
-    name: getGitSha(),
+    name: (() => {
+      const sha = getGitSha();
+      console.log(`[Sentry] Resolved release: ${sha ?? "undefined (git not available)"}`);
+      return sha;
+    })(),
     create: true,
     finalize: true,
     setCommits: { auto: true },
@@ -110,8 +114,8 @@ export default withSentryConfig(analyzer(nextConfig), {
   // Upload a larger set of source maps for prettier stack traces
   widenClientFileUpload: true,
 
-  // Only log Sentry build output in CI to keep local dev output clean
-  silent: !process.env.CI,
+  // TODO: revert to `silent: !process.env.CI` after confirming release works
+  silent: false,
 
   // Delete .map files after upload so they're not served to browsers
   sourcemaps: {
