@@ -294,7 +294,7 @@ Phase 7 Tasks
 
 **Why:** Railway doesn't include uptime monitoring. Without it, outages could go unnoticed for hours. Better Stack provides free monitoring with 3-minute check intervals and a built-in status page.
 
-**Why Better Stack over Better Stack:** Better Stack (formerly Better Uptime) offers 3-minute check intervals vs Better Stack's 5-minute, includes a free public status page, and has a more polished UI with incident management. Better Stack offers more monitors (50 vs 10) but that's unnecessary for a single-site portfolio. Both are free for personal use.
+**Why Better Stack over UptimeRobot:** Better Stack (formerly Better Uptime) offers 3-minute check intervals vs UptimeRobot's 5-minute, includes a free public status page, and has a more polished UI with incident management. UptimeRobot offers more monitors (50 vs 10) but that's unnecessary for a single-site portfolio. Both are free for personal use.
 
 ### Implementation Steps
 
