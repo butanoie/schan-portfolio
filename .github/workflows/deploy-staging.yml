@@ -1,0 +1,96 @@
+name: Manual Deploy to Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA to deploy (must be on main). Leave blank for latest.'
+        required: false
+        default: ''
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      deploy_sha: ${{ steps.resolve.outputs.sha }}
+    steps:
+      - name: Verify main branch
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Staging deployments are only allowed from the main branch."
+          echo "Current ref: $GITHUB_REF"
+          exit 1
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Resolve deploy commit
+        id: resolve
+        env:
+          INPUT_SHA: ${{ github.event.inputs.commit_sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          if [ -z "$INPUT_SHA" ]; then
+            echo "No commit SHA specified, using HEAD of main: $HEAD_SHA"
+            echo "sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          else
+            echo "Using specified commit SHA: $INPUT_SHA"
+            echo "sha=$INPUT_SHA" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify commit exists on main
+        if: github.event.inputs.commit_sha != ''
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Confirm commit is reachable from main
+        if: github.event.inputs.commit_sha != ''
+        env:
+          DEPLOY_SHA: ${{ steps.resolve.outputs.sha }}
+        run: |
+          if ! git merge-base --is-ancestor "$DEPLOY_SHA" HEAD; then
+            echo "::error::Commit $DEPLOY_SHA is not on the main branch."
+            exit 1
+          fi
+          echo "Confirmed commit $DEPLOY_SHA is on main."
+
+  deploy-staging:
+    needs: validate
+    runs-on: ubuntu-latest
+    # ⚠️ REQUIRES MANUAL APPROVAL
+    # This deployment is protected by environment rules.
+    # Configure in: Settings → Environments → Sing Portfolio / staging → Required reviewers
+    environment: "Sing Portfolio / staging"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.deploy_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Set SENTRY_RELEASE on Railway
+        run: railway variable set SENTRY_RELEASE=$DEPLOY_SHA --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging --skip-deploys
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+          DEPLOY_SHA: ${{ needs.validate.outputs.deploy_sha }}
+
+      - name: Deploy to Railway Staging
+        run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=staging
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deployment Summary
+        env:
+          DEPLOYED_BY: ${{ github.actor }}
+          COMMIT_SHA: ${{ needs.validate.outputs.deploy_sha }}
+        run: |
+          echo "Deployment to staging complete"
+          echo "Deployed commit: $COMMIT_SHA"
+          echo "Deployed by: $DEPLOYED_BY"
+          echo "Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
