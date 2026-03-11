@@ -74,22 +74,22 @@ Set the PostHog environment variables in each Railway environment. The API key d
 1. Go to [railway.com](https://railway.com) → your portfolio project
 2. Click on your **production** service
 3. Go to the **Variables** tab
-4. Add two variables:
+4. Add the PostHog key:
    - `NEXT_PUBLIC_POSTHOG_KEY` = your production PostHog API key
-   - `NEXT_PUBLIC_POSTHOG_HOST` = `https://us.i.posthog.com` (or `https://eu.i.posthog.com` for EU)
 5. Redeploy for changes to take effect
+
+> **Note:** `NEXT_PUBLIC_POSTHOG_HOST` is not required — it defaults to `/ingest`, which routes through the app's built-in reverse proxy (see [Reverse Proxy](#reverse-proxy)). Only set it explicitly if you need to bypass the proxy (e.g., `https://us.i.posthog.com` for US or `https://eu.i.posthog.com` for EU).
 
 #### Development environment (remote dev)
 1. Switch to your **development** service/environment in Railway
 2. Go to the **Variables** tab
-3. Add two variables:
+3. Add the PostHog key:
    - `NEXT_PUBLIC_POSTHOG_KEY` = your development PostHog API key
-   - `NEXT_PUBLIC_POSTHOG_HOST` = `https://us.i.posthog.com` (or `https://eu.i.posthog.com` for EU)
 4. Redeploy for changes to take effect
 
 #### Staging environment
 1. Switch to your **staging** service/environment in Railway
-2. Add the same two variables using the **development** PostHog API key
+2. Add `NEXT_PUBLIC_POSTHOG_KEY` using the **development** PostHog API key
 3. Redeploy for changes to take effect
 
 ### Step 4: Update Local Environment (Optional)
@@ -100,7 +100,7 @@ For local development, PostHog does **not** initialize (since `NODE_ENV=developm
 # Only add these if you need to test PostHog locally
 # Remember to also set NODE_ENV=production in your dev command
 NEXT_PUBLIC_POSTHOG_KEY=phc_your_development_key
-NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+# NEXT_PUBLIC_POSTHOG_HOST defaults to /ingest (reverse proxy) — no need to set
 ```
 
 Under normal development, you do **not** need these variables set locally.
@@ -112,7 +112,7 @@ Under normal development, you do **not** need these variables set locally.
 2. Visit your production URL
 3. Open browser DevTools → **Network** tab
 4. Filter for `posthog`
-5. You should see requests to `us.i.posthog.com` (or `eu.i.posthog.com`)
+5. You should see requests to `/ingest` (the reverse proxy routes these to PostHog)
 6. Go to your production PostHog project → **Activity** to see the pageview event
 
 #### Verify development tracking
@@ -140,7 +140,7 @@ Under normal development, you do **not** need these variables set locally.
 | Variable | Required | Description | Example |
 |----------|----------|-------------|---------|
 | `NEXT_PUBLIC_POSTHOG_KEY` | Yes (for tracking) | PostHog project API key (public, safe for client code) | `phc_abc123...` |
-| `NEXT_PUBLIC_POSTHOG_HOST` | No | PostHog instance URL (defaults to `https://us.i.posthog.com`) | `https://eu.i.posthog.com` |
+| `NEXT_PUBLIC_POSTHOG_HOST` | No | PostHog instance URL (defaults to `/ingest` reverse proxy — see [Reverse Proxy](#reverse-proxy) below) | `https://eu.i.posthog.com` |
 
 ## Environment Matrix
 
@@ -224,8 +224,25 @@ Each metric uses Google's recommended thresholds:
 | `v2/src/lib/webVitals.ts` | Core Web Vitals reporter — captures LCP, CLS, INP, TTFB |
 | `v2/app/layout.tsx` | Root layout — wraps app with PostHogProvider |
 | `v2/.env.example` | Documents required environment variables |
+| `v2/src/lib/privacy.ts` | Shared DNT detection utility (used by both PostHog and Sentry) |
 | `v2/src/__tests__/components/PostHogProvider.test.tsx` | Unit tests for PostHogProvider (10 tests) |
 | `v2/src/__tests__/lib/webVitals.test.ts` | Unit tests for web vitals reporter (6 tests) |
+| `v2/src/__tests__/lib/privacy.test.ts` | Unit tests for privacy utilities (5 tests) |
+
+## Reverse Proxy
+
+PostHog requests are proxied through the app's own domain (`/ingest`) rather than going directly to `us.i.posthog.com`. This is configured in `v2/next.config.ts` and is **active by default**.
+
+**How it works:**
+- `/ingest/:path*` → `https://us.i.posthog.com/:path*`
+- `/ingest/static/:path*` → `https://us-assets.i.posthog.com/static/:path*`
+
+**Why:**
+- **Safari ITP:** Safari's Intelligent Tracking Prevention blocks cross-origin requests to known analytics domains. Same-origin requests via `/ingest` bypass this.
+- **Ad blockers:** Most ad blockers filter requests to `posthog.com` domains. Proxied requests through your own domain are not blocked.
+- **CORS:** Eliminates cross-origin request issues entirely.
+
+The `PostHogProvider` defaults `api_host` to `"/ingest"`, so the proxy works without any environment variable configuration. The `NEXT_PUBLIC_POSTHOG_HOST` variable only needs to be set if you want to bypass the proxy.
 
 ## Troubleshooting
 
@@ -255,12 +272,13 @@ Each metric uses Google's recommended thresholds:
 **Problem:** Ad blockers (uBlock Origin, etc.) may block requests to `posthog.com`.
 
 **Solutions:**
-- This is expected behavior — users with ad blockers will not be tracked
-- For more complete tracking, consider setting up a [reverse proxy](https://posthog.com/docs/advanced/proxy) (optional, not required for a portfolio site)
+- The built-in reverse proxy (`/ingest`) already mitigates most ad blockers and Safari ITP by making PostHog requests appear as same-origin (see [Reverse Proxy](#reverse-proxy))
+- If requests are still blocked, verify the proxy is working by checking the Network tab for `/ingest` requests
+- Some aggressive ad blockers may still detect PostHog's SDK — this is expected and acceptable
 
 ## Related Documentation
 
-- [Phase 7 Detailed Plan](../active/PHASE7_DETAILED_PLAN.md) — Full Phase 7 implementation plan
+- [Phase 7 Detailed Plan](../archive/PHASE7_DETAILED_PLAN.md) — Full Phase 7 implementation plan
 - [Railway Deployment](RAILWAY_DEPLOYMENT.md) — Railway environment configuration
 - [PostHog Documentation](https://posthog.com/docs) — Official PostHog docs
 - [PostHog Free Tier](https://posthog.com/pricing) — Pricing and free tier limits

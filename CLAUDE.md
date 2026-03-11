@@ -2,6 +2,54 @@
 
 This document defines coding standards and requirements for all code produced in this project.
 
+## Quick Reference
+
+### Tech Stack
+Next.js 16 (App Router) · React 19 · TypeScript (strict) · MUI 7 · Vitest · Sentry · PostHog · i18next
+
+### Commands (run from `v2/`)
+```bash
+npm run dev          # Start dev server
+npm run build        # Production build (+ source map strip)
+npm run lint         # ESLint
+npm run lint:fix     # ESLint with auto-fix
+npm run typecheck    # TypeScript type check (tsc --noEmit)
+npm test             # Vitest (run once)
+npm run test:watch   # Vitest (watch mode)
+npm run test:coverage # Vitest with coverage
+npm run format:check # Prettier check
+npm run format       # Prettier auto-format
+```
+
+### Project Structure
+```
+v2/                  # Active app (v1/ is legacy, do not modify)
+├── app/             # Next.js App Router (routes, layouts, pages)
+├── src/
+│   ├── components/  # React components
+│   ├── hooks/       # Custom hooks
+│   ├── lib/         # Core libraries (i18n, etc.)
+│   ├── contexts/    # React contexts
+│   ├── data/        # Static data / content
+│   ├── types/       # TypeScript types
+│   ├── utils/       # Utility functions
+│   ├── constants/   # Constants
+│   ├── styles/      # Global styles
+│   ├── locales/     # Translation files
+│   └── __tests__/   # Test files
+├── public/          # Static assets
+└── vitest.config.ts # Test configuration
+docs/                # Infrastructure & setup docs
+changelog/           # Changelog entries
+```
+
+### Key Files
+- `v2/app/layout.tsx` — Root layout (persistent across navigation)
+- `v2/src/lib/i18n.ts` — i18n configuration and translation keys
+- `v2/next.config.ts` — Next.js configuration
+- `v2/vitest.config.ts` — Test configuration
+- `v2/eslint.config.mjs` — Lint rules
+
 ## Documentation Requirements
 
 **CRITICAL: All new code MUST include comprehensive documentation.**
@@ -18,36 +66,7 @@ All functions must have JSDoc/TSDoc comments that include:
 - **Side Effects**: Any state changes, API calls, or important behavior
 - **Examples**: For complex functions, include usage examples
 
-**Example:**
-```typescript
-/**
- * Calculates the total price including tax and discounts.
- *
- * @param basePrice - The initial price before any modifications
- * @param taxRate - The tax rate as a decimal (e.g., 0.08 for 8%)
- * @param discountPercent - Optional discount percentage (0-100)
- * @returns The final price after tax and discounts
- * @throws {Error} If basePrice or taxRate is negative
- *
- * @example
- * const total = calculateTotal(100, 0.08, 10);
- * // Returns 97.2 (100 - 10% discount + 8% tax on $90)
- */
-function calculateTotal(
-  basePrice: number,
-  taxRate: number,
-  discountPercent?: number
-): number {
-  if (basePrice < 0 || taxRate < 0) {
-    throw new Error('Price and tax rate must be non-negative');
-  }
-  // Apply discount first, then calculate tax
-  const discounted = discountPercent
-    ? basePrice * (1 - discountPercent / 100)
-    : basePrice;
-  return discounted * (1 + taxRate);
-}
-```
+> See [JSDOC_EXAMPLES.md](docs/guides/JSDOC_EXAMPLES.md) for full examples and copy-paste templates.
 
 #### React Components
 All React components must document:
@@ -56,58 +75,10 @@ All React components must document:
 - **Context**: Any context or hooks used
 - **State**: Complex state management explanations
 
-**Example:**
-```typescript
-/**
- * A button component that displays a loading spinner while an async action is in progress.
- * Automatically handles loading state and error display.
- *
- * @param onClick - Async function to execute when clicked
- * @param children - Button label text
- * @param variant - Visual style variant (default: 'primary')
- * @param disabled - Whether the button is disabled (default: false)
- * @returns A button element with loading state management
- *
- * @example
- * <AsyncButton onClick={async () => await saveData()} variant="primary">
- *   Save Changes
- * </AsyncButton>
- */
-export function AsyncButton({
-  onClick,
-  children,
-  variant = 'primary',
-  disabled = false
-}: AsyncButtonProps) {
-  const [loading, setLoading] = useState(false);
-  // Implementation...
-}
-```
-
 #### Interfaces and Types
 All interfaces and types must include:
 - **Purpose**: What the interface/type represents
 - **Property Descriptions**: Each property should be documented
-
-**Example:**
-```typescript
-/**
- * Configuration options for the API client.
- */
-interface ApiConfig {
-  /** Base URL for all API requests */
-  baseUrl: string;
-
-  /** Authentication token for API requests */
-  authToken: string;
-
-  /** Request timeout in milliseconds (default: 5000) */
-  timeout?: number;
-
-  /** Custom headers to include with every request */
-  headers?: Record<string, string>;
-}
-```
 
 #### Classes
 All classes must document:
@@ -116,69 +87,11 @@ All classes must document:
 - **Public Methods**: Full documentation as per function requirements
 - **Important Properties**: Complex or public properties
 
-**Example:**
-```typescript
-/**
- * Manages user session state and authentication.
- * Handles token refresh, session expiry, and user data caching.
- */
-class SessionManager {
-  /**
-   * Creates a new SessionManager instance.
-   *
-   * @param config - Session configuration options
-   * @param storage - Storage adapter for persisting session data
-   */
-  constructor(config: SessionConfig, storage: StorageAdapter) {
-    // Implementation...
-  }
-
-  // All public methods must be documented...
-}
-```
-
 #### Complex Logic
 Complex algorithms, business logic, or non-obvious code must include:
 - **Inline comments** explaining the "why" not just the "what"
 - **Algorithm descriptions** for complex logic
 - **References** to external documentation or specifications if applicable
-
-**Example:**
-```typescript
-function calculateShipping(weight: number, distance: number): number {
-  // Use tiered pricing based on weight brackets
-  // Tier 1: 0-5kg = $5 base + $0.50/km
-  // Tier 2: 5-20kg = $10 base + $0.75/km
-  // Tier 3: 20kg+ = $20 base + $1.00/km
-
-  let baseRate: number;
-  let perKmRate: number;
-
-  if (weight <= 5) {
-    baseRate = 5;
-    perKmRate = 0.5;
-  } else if (weight <= 20) {
-    baseRate = 10;
-    perKmRate = 0.75;
-  } else {
-    baseRate = 20;
-    perKmRate = 1.0;
-  }
-
-  return baseRate + (distance * perKmRate);
-}
-```
-
-### Documentation Resources
-
-**Detailed Examples:** See [JSDOC_EXAMPLES.md](../docs/guides/JSDOC_EXAMPLES.md) for comprehensive real-world patterns and templates:
-- Simple functions and async operations
-- React components with complex props
-- Custom hooks with state and effects
-- Type definitions and interfaces
-- Error handling patterns
-- Common anti-patterns to avoid
-- Quick copy-paste templates
 
 ### Documentation Enforcement
 
@@ -195,7 +108,7 @@ If you discover code without documentation:
 2. **Add the required documentation**
 3. **Then proceed**
 
-Treat missing documentation as a critical blocker, equivalent to a compile error.
+**CRITICAL: Treat missing documentation as a critical blocker, equivalent to a compile error.**
 
 ## Code Quality Standards
 
@@ -248,95 +161,21 @@ Treat missing documentation as a critical blocker, equivalent to a compile error
 - Auto-translate new strings using DeepL MCP
 - User's language preference is persisted to localStorage
 
-**See [LOCALIZATION.md](../docs/guides/LOCALIZATION.md) for quick reference and best practices. For detailed architecture, see [LOCALIZATION_ARCHITECTURE.md](../docs/guides/LOCALIZATION_ARCHITECTURE.md). For translation workflows, see [TRANSLATION_WORKFLOW.md](../docs/guides/TRANSLATION_WORKFLOW.md).**
-
-## File Organization
-
-- Keep files focused and single-purpose
-- Use clear, descriptive file names
-- Group related files in directories
-- Maintain consistent directory structure
+**See [LOCALIZATION_ARCHITECTURE.md](docs/guides/LOCALIZATION_ARCHITECTURE.md) for architecture, patterns, and translation workflows.**
 
 ## Infrastructure & Setup Documentation
 
-**Location:** All infrastructure and setup documentation goes in the `/docs` folder
+Infrastructure docs live in `docs/`. Key references:
+- `docs/setup/MCP_SETUP.md` — MCP server configuration and tokens
+- `docs/setup/RAILWAY_DEPLOYMENT.md` — Railway hosting and CI/CD
+- `docs/setup/POSTHOG_SETUP.md` — PostHog analytics configuration
+- `docs/setup/SENTRY_SETUP.md` — Sentry error tracking configuration
+- `docs/setup/TESTING_SETUP.md` — Testing infrastructure
+- `docs/guides/LOCALIZATION_ARCHITECTURE.md` — i18n architecture, patterns, and translation workflows
+- `docs/guides/MAINTENANCE_WORKFLOW.md` — Operational maintenance procedures
 
-### Required Infrastructure Documentation
-
-Create comprehensive markdown files in `/docs` for all infrastructure, tools, and configuration:
-
-#### MCP (Model Context Protocol) Setup
-**File:** `docs/setup/MCP_SETUP.md`
-
-Document:
-- **Purpose**: What MCP servers are available and what they do
-- **Installation**: Step-by-step setup instructions
-- **Configuration**: How to configure `.mcp.json` and environment variables
-- **Token Management**: How to obtain and manage API tokens
-- **Troubleshooting**: Common issues and solutions
-- **Security**: Best practices for handling secrets
-
-**Example sections:**
-- Available MCP Servers (with capabilities)
-- Getting Your Tokens (links to services)
-- Setting Up `.env` File
-- Environment Variable Loading
-- File Structure and Organization
-
-#### Development Setup
-**File:** `docs/DEVELOPMENT_SETUP.md` (if needed)
-
-Document:
-- Development environment prerequisites
-- Installation instructions
-- Configuration files and what they do
-- How to run development server
-- Environment variables required
-
-#### Localization & i18n
-**Files:** `docs/guides/LOCALIZATION.md`, `docs/guides/LOCALIZATION_ARCHITECTURE.md`, `docs/guides/TRANSLATION_WORKFLOW.md`
-
-Three-part documentation structure:
-- **LOCALIZATION.md** - Quick reference and overview (entry point)
-- **LOCALIZATION_ARCHITECTURE.md** - Technical architecture and implementation patterns
-- **TRANSLATION_WORKFLOW.md** - Step-by-step translation workflow and procedures
-
-### Security Guidelines for Documentation
-
-When documenting configuration and setup:
-
-✅ **DO Document:**
-- How to obtain tokens (links to official sources)
-- `.env.example` file locations and structure
-- Configuration file format and options
-- Error messages and troubleshooting
-- Security best practices
-
-❌ **NEVER Document:**
-- Actual token values
-- API keys or secrets
-- Hardcoded credentials
-- Private authentication details
-
-### Documentation File Standards
-
-Infrastructure documentation files should include:
-
-1. **Clear Overview** - What the system is and why it exists
-2. **Quick Start** - Get users started in 5 minutes
-3. **Detailed Setup** - Step-by-step instructions
-4. **Configuration Reference** - All available options
-5. **Troubleshooting** - Common issues and solutions
-6. **Security Notes** - Important security considerations
-7. **Related Documentation** - Links to other relevant docs
-
-### Keeping Documentation Updated
-
-- Update documentation when changing configuration
-- Update when adding new environment variables
-- Update when changing MCP setup or tools
-- Keep examples current with actual file structures
-- Review documentation during code reviews
+When adding new infrastructure, create docs in the appropriate `docs/` subdirectory. 
+**CRITICAL: Never document actual tokens or secrets — only how to obtain them.**
 
 ## Commit Standards
 
@@ -347,48 +186,7 @@ Infrastructure documentation files should include:
 
 ### Automatic Git Commits
 
-**CRITICAL: Never automatically create git commits under any circumstances unless explicitly requested by the user.**
-
-#### What "Explicitly Requested" Means
-
-Git commits should ONLY be created when the user:
-- Calls `/git-commit` skill directly
-- Says "create a commit" or "commit these changes"
-- Says "commit with message: ..." (with specific message)
-- Directly requests a PR or commit action
-- Explicitly approves after being asked
-
-#### What Does NOT Count as a Request
-
-**These do NOT grant permission to commit:**
-- "proceed" or "start implementing" (means: begin work, NOT commit when done)
-- "implement this feature" (means: write code, NOT commit automatically)
-- Completing tasks or fixing issues successfully
-- Running tests or linters successfully
-- Any task completion without explicit commit request
-- General workflow instructions without commit language
-
-#### Implementation Workflow (REQUIRED)
-
-1. User requests a feature/fix/task
-2. You implement and complete the work
-3. You describe what was completed and changes made
-4. **YOU MUST ASK:** "Would you like me to commit these changes?" or "Should I create a commit for this?"
-5. **WAIT for explicit approval** before committing
-6. Only then proceed with commit
-
-#### When in Doubt: Always Ask First
-
-**Never assume permission to commit.** This includes:
-- Do NOT commit after completing a task unless asked
-- Do NOT commit after running tests successfully unless asked
-- Do NOT commit after fixing all errors unless asked
-- Do NOT commit during implementation cleanup
-- Do NOT commit when making follow-up fixes
-
-This ensures full control over git history, commit timing, and workflow consistency.
-
-**Remember:** The user maintains authority over all commits to their repository.
+**CRITICAL: Never commit unless the user explicitly asks** (e.g., "commit these changes", `/git-commit`, or explicit approval after being asked). Completing a task, running tests, or "proceed" does NOT grant commit permission. After finishing work, always ask "Would you like me to commit?" and wait for confirmation.
 
 
 ## Changelog
@@ -411,7 +209,7 @@ See `changelog/CLAUDE.md` for required sections, template structure, and best pr
 
 ### Changelog Enforcement
 
-- **Significant changes require changelog** - Use the `/changelog-create` skill
+- **Significant changes require changelog**
 - **Commit references** - Link changelog in commit message when applicable
 - **Review requirement** - Verify changelog entry during code review
 - **Historical record** - Changelogs help track project evolution
