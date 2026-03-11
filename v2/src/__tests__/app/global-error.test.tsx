@@ -37,6 +37,7 @@ describe("GlobalError", () => {
   it("should report the error to Sentry", () => {
     render(<GlobalError error={testError} reset={mockReset} />);
 
+    expect(Sentry.captureException).toHaveBeenCalledOnce();
     expect(Sentry.captureException).toHaveBeenCalledWith(testError);
   });
 

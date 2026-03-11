@@ -75,12 +75,21 @@ export default withSentryConfig(analyzer(nextConfig), {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
+  release: {
+    name: process.env.SENTRY_RELEASE,
+    create: true,
+    finalize: true,
+  },
+  widenClientFileUpload: true,
   silent: !process.env.CI,
   sourcemaps: {
     filesToDeleteAfterUpload: [".next/static/**/*.map"],
   },
 });
 ```
+
+> **Note:** `SENTRY_RELEASE` is set by GitHub Actions deploy workflows to the git commit SHA.
+> Railway's `railway up` strips `.git`, so the SHA must be provided externally.
 
 ### Sample Rates
 

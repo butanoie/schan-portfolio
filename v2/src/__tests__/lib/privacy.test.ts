@@ -39,11 +39,13 @@ describe("isDoNotTrackEnabled", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (globalThis as any).window = undefined;
 
-    expect(isDoNotTrackEnabled()).toBe(false);
-
-    // Restore window
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (globalThis as any).window = originalWindow;
+    try {
+      expect(isDoNotTrackEnabled()).toBe(false);
+    } finally {
+      // Restore window even if assertion fails
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (globalThis as any).window = originalWindow;
+    }
   });
 
   it('should return true when DNT is "1"', () => {
@@ -74,13 +76,15 @@ describe("isDoNotTrackEnabled", () => {
       configurable: true,
     });
 
-    expect(isDoNotTrackEnabled()).toBe(true);
-
-    // Clean up legacy property
-    Object.defineProperty(window, "doNotTrack", {
-      value: undefined,
-      writable: true,
-      configurable: true,
-    });
+    try {
+      expect(isDoNotTrackEnabled()).toBe(true);
+    } finally {
+      // Clean up legacy property even if assertion fails
+      Object.defineProperty(window, "doNotTrack", {
+        value: undefined,
+        writable: true,
+        configurable: true,
+      });
+    }
   });
 });

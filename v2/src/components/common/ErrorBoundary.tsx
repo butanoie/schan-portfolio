@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ReactNode, ReactElement } from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { Box, Typography, Button, Container } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useI18n } from '@/src/hooks/useI18n';
@@ -105,6 +106,7 @@ class ErrorBoundaryClass extends React.Component<
    */
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     this.setState({ errorInfo });
+    Sentry.captureException(error);
 
     if (process.env.NODE_ENV === 'development') {
       console.error('Error caught by ErrorBoundary:', error);
