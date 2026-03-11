@@ -17,7 +17,7 @@ const isProduction = process.env.NODE_ENV === "production";
 if (isProduction && dsn) {
   Sentry.init({
     dsn,
-    environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV,
+    environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
 
     // Capture 100% of errors — portfolio is low-traffic, every error matters
     sampleRate: 1.0,
