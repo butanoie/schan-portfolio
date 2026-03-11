@@ -1,44 +1,6 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
-import { readFileSync } from "fs";
-import { resolve } from "path";
-
-/**
- * Resolves the current git commit SHA for Sentry release tagging.
- *
- * Railway's Nixpacks build container does not include the `git` binary
- * or expose `RAILWAY_GIT_COMMIT_SHA`. This helper reads the SHA directly
- * from the `.git` directory using the filesystem:
- *
- * 1. Reads `.git/HEAD` to get the current ref (e.g., `ref: refs/heads/main`)
- * 2. If HEAD is a symbolic ref, reads the SHA from the referenced file
- * 3. If HEAD is a detached SHA (common in CI), uses it directly
- *
- * Falls back to `undefined` if `.git` is not present (e.g., Docker builds
- * without repo context). The build still succeeds — Sentry just won't
- * create a named release.
- *
- * @returns The full 40-character git SHA, or undefined
- */
-function getGitSha(): string | undefined {
-  try {
-    // Walk up from v2/ to the repo root where .git lives
-    const gitDir = resolve(__dirname, "..", ".git");
-    const head = readFileSync(resolve(gitDir, "HEAD"), "utf-8").trim();
-
-    // Detached HEAD — already a SHA
-    if (!head.startsWith("ref:")) {
-      return head;
-    }
-
-    // Symbolic ref — read the SHA from refs/
-    const ref = head.replace("ref: ", "");
-    return readFileSync(resolve(gitDir, ref), "utf-8").trim();
-  } catch {
-    return undefined;
-  }
-}
 
 const nextConfig: NextConfig = {
   /**
@@ -112,14 +74,11 @@ export default withSentryConfig(analyzer(nextConfig), {
   //tunnelRoute: "/monitoring",
 
   // Tag source maps and runtime errors with the git SHA so Sentry
-  // can correlate them. Uses our explicit getGitSha() because Railway
-  // does not expose RAILWAY_GIT_COMMIT_SHA for Sentry's auto-detection.
+  // can correlate them. SENTRY_RELEASE is set by the GitHub Actions
+  // deploy workflows (Railway's `railway up` strips .git and doesn't
+  // expose RAILWAY_GIT_COMMIT_SHA like GitHub-triggered deploys do).
   release: {
-    name: (() => {
-      const sha = getGitSha();
-      console.log(`[Sentry] Release: ${sha ?? "undefined (no .git found)"}`);
-      return sha;
-    })(),
+    name: process.env.SENTRY_RELEASE,
     create: true,
     finalize: true,
     setCommits: { auto: true },
@@ -128,8 +87,8 @@ export default withSentryConfig(analyzer(nextConfig), {
   // Upload a larger set of source maps for prettier stack traces
   widenClientFileUpload: true,
 
-  // TODO: revert to `silent: !process.env.CI` after confirming release works
-  silent: false,
+  // Only log Sentry build output in CI to keep local dev output clean
+  silent: !process.env.CI,
 
   // Delete .map files after upload so they're not served to browsers
   sourcemaps: {

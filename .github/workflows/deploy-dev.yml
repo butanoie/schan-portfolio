@@ -31,6 +31,7 @@ jobs:
         run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=development
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          SENTRY_RELEASE: ${{ github.sha }}
 
       - name: Deployment Summary
         env:

@@ -121,6 +121,7 @@ jobs:
         run: railway up --project=${{ vars.RAILWAY_PROJECT_ID }} --service=${{ vars.RAILWAY_SERVICE_NAME }} --environment=production
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          SENTRY_RELEASE: ${{ needs.preflight.outputs.deploy_sha }}
 
       - name: Deployment Summary
         env:
