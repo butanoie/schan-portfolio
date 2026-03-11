@@ -10,7 +10,6 @@ This directory contains all project documentation organized by purpose and phase
 
 ### **Reference & Guides**
 - **[JSDOC_EXAMPLES.md](guides/JSDOC_EXAMPLES.md)** - Documentation patterns and templates
-- **[THEME_SWITCHING.md](guides/THEME_SWITCHING.md)** - Theme system documentation
 - **[LOCALIZATION_ARCHITECTURE.md](guides/LOCALIZATION_ARCHITECTURE.md)** - i18n architecture, patterns, and translation workflows
 - **[MAINTENANCE_WORKFLOW.md](guides/MAINTENANCE_WORKFLOW.md)** - Maintenance and dependency update workflow
 
@@ -72,8 +71,7 @@ docs/
 ├── guides/                      # Reference materials & standards
 │   ├── JSDOC_EXAMPLES.md
 │   ├── LOCALIZATION_ARCHITECTURE.md
-│   ├── MAINTENANCE_WORKFLOW.md
-│   └── THEME_SWITCHING.md
+│   └── MAINTENANCE_WORKFLOW.md
 ├── setup/                       # Infrastructure & setup
 │   ├── MCP_SETUP.md
 │   ├── POSTHOG_SETUP.md
