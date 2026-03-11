@@ -70,11 +70,6 @@ export default withSentryConfig(analyzer(nextConfig), {
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
-  // Tag uploaded source maps with the release so Sentry can match them to errors
-  release: {
-    name: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
-  },
-
   // Only log Sentry build output in CI to keep local dev output clean
   silent: !process.env.CI,
 

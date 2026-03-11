@@ -18,7 +18,6 @@ const isProduction = process.env.NODE_ENV === "production";
 if (isProduction && dsn && !isDoNotTrackEnabled()) {
   Sentry.init({
     dsn,
-    release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
     environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV,
 
     // Capture 100% of errors — portfolio is low-traffic, every error matters
