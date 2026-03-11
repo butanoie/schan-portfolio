@@ -3,7 +3,7 @@
 **Document Version:** 1.0
 **Created:** 2026-03-06
 **Author:** Sing Chan (with Claude Code)
-**Status:** In Progress
+**Status:** Complete
 **Target Branch:** `sc/phase7-monitoring`
 
 ---
@@ -279,12 +279,12 @@ Phase 7 Tasks
 
 ### Acceptance Criteria
 
-- [ ] Sentry SDK installed and initialized
-- [ ] Unhandled errors captured automatically
-- [ ] Source maps uploaded and resolving correctly
-- [ ] Environment tags set (development/production)
-- [ ] Error sampling at 100%, performance sampling at 10–20%
-- [ ] DSN stored as environment variable (not hardcoded)
+- [x] Sentry SDK installed and initialized
+- [x] Unhandled errors captured automatically
+- [x] Source maps uploaded and resolving correctly
+- [x] Environment tags set (development/production)
+- [x] Error sampling at 100%, performance sampling at 10%
+- [x] DSN stored as environment variable (not hardcoded)
 
 ---
 
@@ -320,10 +320,10 @@ No code changes required — Better Stack is an external service configured via 
 
 ### Acceptance Criteria
 
-- [ ] HTTPS monitor configured for production URL
-- [ ] Email alerts configured for down/up events
-- [ ] Monitor verified working (check Better Stack dashboard)
-- [ ] Status page created and linked from colophon
+- [x] HTTPS monitor configured for production URL
+- [x] Email alerts configured for down/up events
+- [x] Monitor verified working (check Better Stack dashboard)
+- [x] Status page created and linked from colophon
 
 ---
 
@@ -391,11 +391,11 @@ updates:
 
 ### Acceptance Criteria
 
-- [ ] Dependabot configuration created
-- [ ] npm dependencies monitored weekly for `v2/`
-- [ ] GitHub Actions monitored weekly
-- [ ] PR limits set to prevent flooding
-- [ ] Conventional commit prefixes configured
+- [x] Dependabot configuration created
+- [x] npm dependencies monitored weekly for `v2/`
+- [x] GitHub Actions monitored weekly
+- [x] PR limits set to prevent flooding
+- [x] Conventional commit prefixes configured
 
 ---
 
@@ -442,11 +442,11 @@ updates:
 
 ### Acceptance Criteria
 
-- [ ] Maintenance workflow documentation created
-- [ ] Procedures for adding projects documented
-- [ ] Procedures for updating resume documented
-- [ ] Quarterly dependency review process documented
-- [ ] Monthly performance review checklist documented
+- [x] Maintenance workflow documentation created
+- [x] Procedures for adding projects documented
+- [x] Procedures for updating resume documented
+- [x] Quarterly dependency review process documented
+- [x] Monthly performance review checklist documented
 
 ---
 
@@ -508,21 +508,21 @@ Most Phase 7 additions are external service integrations. Testing focuses on:
 
 ### Technical Criteria
 
-- [ ] PostHog tracking pageviews in production
-- [ ] Core Web Vitals reported to PostHog as custom events
-- [ ] Sentry capturing errors with resolved source maps
-- [ ] Better Stack monitoring production URL
-- [ ] Dependabot creating automated dependency PRs
-- [ ] All existing tests passing (1,123+)
-- [ ] No Lighthouse score regression
-- [ ] Bundle size increase < 70 KB gzipped (PostHog + Sentry + web-vitals)
+- [x] PostHog tracking pageviews in production
+- [x] Core Web Vitals reported to PostHog as custom events
+- [x] Sentry capturing errors with resolved source maps
+- [x] Better Stack monitoring production URL
+- [x] Dependabot creating automated dependency PRs
+- [x] All existing tests passing (1,123+)
+- [x] No Lighthouse score regression
+- [x] Bundle size increase < 70 KB gzipped (PostHog + Sentry + web-vitals)
 
 ### Operational Criteria
 
-- [ ] Maintenance workflow documented
-- [ ] Monthly performance review checklist available
-- [ ] Content update procedures documented
-- [ ] All environment variables documented in `.env.example`
+- [x] Maintenance workflow documented
+- [x] Monthly performance review checklist available
+- [x] Content update procedures documented
+- [x] All environment variables documented in `.env.example`
 
 ---
 
@@ -548,13 +548,13 @@ Task 7.1: PostHog Analytics          [✅ COMPLETE]
     ↓
 Task 7.2: Core Web Vitals            [✅ COMPLETE]
     ↓
-Task 7.3: Sentry Error Tracking      [Independent — can parallelize with 7.1/7.2]
+Task 7.3: Sentry Error Tracking      [✅ COMPLETE]
     ↓
-Task 7.4: Uptime Monitoring          [Independent — external service, no code]
+Task 7.4: Uptime Monitoring          [✅ COMPLETE]
     ↓
-Task 7.5: Dependabot                 [Independent — GitHub config only]
+Task 7.5: Dependabot                 [✅ COMPLETE]
     ↓
-Task 7.6: Maintenance Workflow       [Last — documents everything set up above]
+Task 7.6: Maintenance Workflow       [✅ COMPLETE]
 ```
 
 **Recommended approach:**
@@ -565,5 +565,5 @@ Task 7.6: Maintenance Workflow       [Last — documents everything set up above
 
 ---
 
-**Last Updated:** 2026-03-10
-**Next Step:** Begin Task 7.3 (Error Tracking — Sentry)
+**Last Updated:** 2026-03-11
+**Status:** ✅ All tasks complete. Phase 7 finished.
