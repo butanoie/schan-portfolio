@@ -4,6 +4,23 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
   /**
+   * Use `hidden-source-map` so webpack generates .map files for Sentry
+   * upload but does NOT append `//# sourceMappingURL=` comments to the
+   * output bundles. This prevents browsers from trying to fetch the
+   * (deleted-after-upload) .map files and logging 404 console errors.
+   *
+   * @param config - The webpack configuration object provided by Next.js
+   * @param root0 - Next.js webpack context options
+   * @param root0.isServer - Whether this build is for the server bundle
+   * @returns The modified webpack configuration
+   */
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      config.devtool = "hidden-source-map";
+    }
+    return config;
+  },
+  /**
    * Proxies PostHog ingestion and asset requests through the app's own domain.
    *
    * Safari's Intelligent Tracking Prevention (ITP) blocks cross-origin fetch
@@ -91,8 +108,13 @@ export default withSentryConfig(analyzer(nextConfig), {
   // Only log Sentry build output in CI to keep local dev output clean
   silent: !process.env.CI,
 
-  // Delete .map files after upload so they're not served to browsers
   sourcemaps: {
-    filesToDeleteAfterUpload: [".next/static/**/*.map"],
+    // Delete .map files after Sentry upload so they're not served to browsers.
+    // Both static (client) and server maps are removed to prevent 404 errors.
+    filesToDeleteAfterUpload: [
+      ".next/static/**/*.map",
+      ".next/server/**/*.map",
+    ],
   },
+
 });
