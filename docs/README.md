@@ -25,11 +25,6 @@ This directory contains all project documentation organized by purpose and phase
 - **[ACCESSIBILITY_TESTING_CHECKLIST.md](accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md)** - Testing checklist
 - **[WCAG_COMPLIANCE_GUIDE.md](accessibility/WCAG_COMPLIANCE_GUIDE.md)** - WCAG compliance reference
 
-### **Development Tools**
-- **[git-commit-haiku-usage.md](tooling/git-commit-haiku-usage.md)** - Using the commit skill
-- **[changelog-create-haiku-usage.md](tooling/changelog-create-haiku-usage.md)** - Creating changelog entries
-- **[haiku-agents-overview.md](tooling/haiku-agents-overview.md)** - AI assistant tools overview
-
 ### **Setup & Infrastructure**
 - **[MCP_SETUP.md](setup/MCP_SETUP.md)** - MCP server configuration and tokens
 - **[POSTHOG_SETUP.md](setup/POSTHOG_SETUP.md)** - PostHog analytics setup
@@ -88,10 +83,6 @@ docs/
 │   ├── MAINTENANCE_WORKFLOW.md
 │   ├── THEME_SWITCHING.md
 │   └── TRANSLATION_WORKFLOW.md
-├── tooling/                     # CLI tools & utilities
-│   ├── git-commit-haiku-usage.md
-│   ├── changelog-create-haiku-usage.md
-│   └── haiku-agents-overview.md
 ├── setup/                       # Infrastructure & setup
 │   ├── MCP_SETUP.md
 │   ├── POSTHOG_SETUP.md
@@ -164,8 +155,7 @@ When creating new documentation:
    - Is it active work? → `active/`
    - Is it a reference guide? → `guides/`
    - Is it accessibility-related? → `accessibility/`
-   - Is it a tool guide? → `tooling/`
-   - Is it infrastructure? → `setup/`
+- Is it infrastructure? → `setup/`
    - Is it historical? → `archive/`
 
 2. **Follow naming conventions:**
