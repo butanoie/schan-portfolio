@@ -75,12 +75,11 @@ npm run typecheck     # TypeScript check
 
 ## Documentation
 
-- **[Modernization Plan](docs/active/MODERNIZATION_PLAN.md)** — Complete roadmap
-- **[Project Context](docs/active/PROJECT_CONTEXT.md)** — Current status and architecture
-- **[v2 README](v2/README.md)** — Detailed v2 documentation
+- **[v2 README](v2/README.md)** — Getting started and development guide
 - **Guides**
   - [Localization](docs/guides/LOCALIZATION_ARCHITECTURE.md)
   - [JSDoc Examples](docs/guides/JSDOC_EXAMPLES.md)
+  - [Maintenance Workflow](docs/guides/MAINTENANCE_WORKFLOW.md)
 - **Accessibility**
   - [Accessibility Statement](docs/accessibility/ACCESSIBILITY_STATEMENT.md)
   - [WCAG Compliance Guide](docs/accessibility/WCAG_COMPLIANCE_GUIDE.md)
@@ -91,9 +90,8 @@ npm run typecheck     # TypeScript check
   - [MCP Setup](docs/setup/MCP_SETUP.md)
   - [Railway Deployment](docs/setup/RAILWAY_DEPLOYMENT.md)
   - [PostHog Analytics](docs/setup/POSTHOG_SETUP.md)
-- **Active Plans**
-  - [Phase 7: Monitoring & Analytics](docs/archive/PHASE7_DETAILED_PLAN.md)
-- **Archive** — [Completed phase plans](docs/archive/)
+  - [Sentry Error Tracking](docs/setup/SENTRY_SETUP.md)
+- **Archive** — [Completed phase plans and modernization roadmap](docs/archive/)
 
 ## Key Requirements
 
