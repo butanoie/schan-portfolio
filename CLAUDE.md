@@ -223,6 +223,10 @@ This catches issues that code-review agents miss (JSDoc, React hooks rules, form
 1. **Update project docs** — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.
 2. **Run `/claude-md-management:revise-claude-md`** — capture gotchas and conventions into directory-scoped CLAUDE.md files (e.g., `v2/e2e/CLAUDE.md`, `v2/src/components/CLAUDE.md`). Create new scoped CLAUDE.md files when a feature introduces a new directory with its own conventions. Only add to root CLAUDE.md if the learning applies project-wide.
 
+### CLAUDE.md Authoring Pattern
+
+When adding workflow gates to CLAUDE.md, use the `CRITICAL` + imperative pattern: start with `**CRITICAL:**`, use explicit `Do NOT skip` / `Do NOT combine`, and include `Treat as a blocker, equivalent to a failing build`. Descriptive/suggestive language (e.g., "always update...") gets deprioritized against active skill prompts and is unreliable as a gate.
+
 ## Changelog
 
 Create a changelog entry for:
