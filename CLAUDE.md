@@ -199,6 +199,14 @@ When using the feature-dev skill (or any structured multi-phase workflow), after
 
 This ensures documentation stays ahead of implementation, not behind it.
 
+### Verification Gate
+
+**Before considering any implementation phase complete, run the full automated quality gate:**
+```bash
+cd v2 && npm run lint && npm run typecheck && npm run format:check && npm test
+```
+This catches issues that code-review agents miss (JSDoc, React hooks rules, formatting). Run this after Phase 5 (Implementation) and after Phase 6 (Quality Review) fixes.
+
 After Phase 6 (Quality Review) issues have been **fixed**, update documentation in two steps before Phase 7 (Summary):
 
 1. **Update project docs** alongside the fixes — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.

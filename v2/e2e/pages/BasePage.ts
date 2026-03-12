@@ -14,6 +14,7 @@ import type { Locator, Page } from '@playwright/test';
 import { Navigation } from '../components/Navigation';
 import { SettingsPanel } from '../components/SettingsPanel';
 
+/** Abstract base page object shared by all page POMs. */
 export abstract class BasePage {
   /** Playwright Page instance. */
   readonly page: Page;
@@ -30,6 +31,11 @@ export abstract class BasePage {
   /** Settings sub-POM for theme, language, and animations controls. */
   readonly settings: SettingsPanel;
 
+  /**
+   * Initialize base locators and compose Navigation and SettingsPanel sub-POMs.
+   *
+   * @param page - Playwright Page instance
+   */
   constructor(page: Page) {
     this.page = page;
     this.skipLink = page.getByRole('link', { name: /skip to main/i });

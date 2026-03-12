@@ -11,6 +11,11 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
 
+/**
+ * Validate that a production build exists before starting the test server.
+ *
+ * @throws Error if `.next/BUILD_ID` is missing
+ */
 export default function globalSetup(): void {
   const buildId = resolve(__dirname, '..', '.next', 'BUILD_ID');
 

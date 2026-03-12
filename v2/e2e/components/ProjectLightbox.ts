@@ -17,6 +17,7 @@ import type { Locator, Page } from '@playwright/test';
 /** Swipe direction for gesture simulation. */
 type SwipeDirection = 'left' | 'right';
 
+/** ProjectLightbox sub-POM for image lightbox dialog interactions. */
 export class ProjectLightbox {
   /** Page instance for keyboard and mouse interactions. */
   readonly page: Page;
@@ -50,6 +51,8 @@ export class ProjectLightbox {
   readonly counter: Locator;
 
   /**
+   * Create a ProjectLightbox sub-POM bound to the given page.
+   *
    * @param page - Playwright Page instance used for all locator queries
    */
   constructor(page: Page) {

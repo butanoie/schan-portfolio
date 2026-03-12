@@ -27,6 +27,7 @@ const NAV_LABELS: Record<NavTarget, RegExp> = {
   samples: /samples/i,
 };
 
+/** Navigation sub-POM for header nav links and mobile hamburger drawer. */
 export class Navigation {
   /** Page instance for keyboard and navigation actions. */
   readonly page: Page;
@@ -44,6 +45,8 @@ export class Navigation {
   readonly closeDrawerButton: Locator;
 
   /**
+   * Create a Navigation sub-POM bound to the given page.
+   *
    * @param page - Playwright Page instance used for all locator queries
    */
   constructor(page: Page) {

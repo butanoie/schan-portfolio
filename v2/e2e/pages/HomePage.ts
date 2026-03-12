@@ -11,6 +11,7 @@ import type { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { ProjectLightbox } from '../components/ProjectLightbox';
 
+/** HomePage POM for the portfolio home route (/). */
 export class HomePage extends BasePage {
   /** ProjectLightbox sub-POM for image lightbox interactions. */
   readonly lightbox: ProjectLightbox;
@@ -18,6 +19,11 @@ export class HomePage extends BasePage {
   /** "Load more projects" button for progressive loading. */
   readonly loadMoreButton: Locator;
 
+  /**
+   * Initialize home page locators and compose the ProjectLightbox sub-POM.
+   *
+   * @param page - Playwright Page instance
+   */
   constructor(page: Page) {
     super(page);
     this.lightbox = new ProjectLightbox(page);

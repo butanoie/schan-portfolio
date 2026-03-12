@@ -14,6 +14,7 @@
 import type { Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
+/** SamplesPage POM for the writing samples route (/samples). */
 export class SamplesPage extends BasePage {
   /**
    * Navigate to the samples page.

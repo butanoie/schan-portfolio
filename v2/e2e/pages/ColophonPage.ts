@@ -10,6 +10,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
+/** ColophonPage POM for the colophon route (/colophon). */
 export class ColophonPage extends BasePage {
   /** Technologies showcase section. */
   readonly technologiesSection: Locator;
@@ -29,6 +30,11 @@ export class ColophonPage extends BasePage {
   /** V1 accordion content panel. */
   readonly v1AccordionContent: Locator;
 
+  /**
+   * Initialize colophon-specific section and accordion locators.
+   *
+   * @param page - Playwright Page instance
+   */
   constructor(page: Page) {
     super(page);
     this.technologiesSection = page.locator(

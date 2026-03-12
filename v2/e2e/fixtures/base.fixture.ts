@@ -39,15 +39,43 @@ interface AppFixtures {
 }
 
 export const test = base.extend<AppFixtures>({
+  /**
+   * Provide a HomePage POM instance scoped to the current test page.
+   *
+   * @param root0 - Playwright fixtures object
+   * @param root0.page - Browser page instance
+   * @param use - Fixture callback to provide the page object
+   */
   homePage: async ({ page }, use) => {
     await use(new HomePage(page));
   },
+  /**
+   * Provide a ResumePage POM instance scoped to the current test page.
+   *
+   * @param root0 - Playwright fixtures object
+   * @param root0.page - Browser page instance
+   * @param use - Fixture callback to provide the page object
+   */
   resumePage: async ({ page }, use) => {
     await use(new ResumePage(page));
   },
+  /**
+   * Provide a ColophonPage POM instance scoped to the current test page.
+   *
+   * @param root0 - Playwright fixtures object
+   * @param root0.page - Browser page instance
+   * @param use - Fixture callback to provide the page object
+   */
   colophonPage: async ({ page }, use) => {
     await use(new ColophonPage(page));
   },
+  /**
+   * Provide a SamplesPage POM instance scoped to the current test page.
+   *
+   * @param root0 - Playwright fixtures object
+   * @param root0.page - Browser page instance
+   * @param use - Fixture callback to provide the page object
+   */
   samplesPage: async ({ page }, use) => {
     await use(new SamplesPage(page));
   },

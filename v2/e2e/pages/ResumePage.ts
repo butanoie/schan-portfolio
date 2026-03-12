@@ -10,6 +10,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
+/** ResumePage POM for the résumé route (/resume). */
 export class ResumePage extends BasePage {
   /** Header section containing name, title, and contact info. */
   readonly headerSection: Locator;
@@ -32,6 +33,11 @@ export class ResumePage extends BasePage {
   /** Speaking engagements section. */
   readonly speakingSection: Locator;
 
+  /**
+   * Initialize résumé section locators from `aria-labelledby` IDs.
+   *
+   * @param page - Playwright Page instance
+   */
   constructor(page: Page) {
     super(page);
     this.headerSection = page.locator('section[aria-labelledby="resume-name"]');

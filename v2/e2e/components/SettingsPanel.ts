@@ -39,6 +39,7 @@ const LOCALE_LABELS: Record<LocaleOption, RegExp> = {
   fr: /français/i,
 };
 
+/** SettingsPanel sub-POM for gear button, popover, and preference controls. */
 export class SettingsPanel {
   /** Page instance for interactions. */
   readonly page: Page;
@@ -66,6 +67,8 @@ export class SettingsPanel {
   readonly animationsSwitch: Locator;
 
   /**
+   * Create a SettingsPanel sub-POM bound to the given page.
+   *
    * @param page - Playwright Page instance used for all locator queries
    */
   constructor(page: Page) {
