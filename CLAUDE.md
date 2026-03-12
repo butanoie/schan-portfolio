@@ -188,6 +188,16 @@ When adding new infrastructure, create docs in the appropriate `docs/` subdirect
 
 **CRITICAL: Never commit unless the user explicitly asks** (e.g., "commit these changes", `/git-commit`, or explicit approval after being asked). Completing a task, running tests, or "proceed" does NOT grant commit permission. After finishing work, always ask "Would you like me to commit?" and wait for confirmation.
 
+## Feature Development Workflow
+
+When using the feature-dev skill (or any structured multi-phase workflow), after Phase 3 (Clarifying Questions) answers are received, always update relevant documentation with the decisions made before proceeding to Phase 4 (Architecture Design). This includes:
+
+- **Architecture docs** — Update specifications with confirmed details, refined selectors, or new technical constraints
+- **Roadmaps** — Reflect scope changes, new checklist items, or adjusted priorities
+- **GitHub issues** — Sync issue bodies with the latest decisions and technical notes
+- **CLAUDE.md** — Add new conventions or standards that emerged from the discussion
+
+This ensures documentation stays ahead of implementation, not behind it.
 
 ## Changelog
 
