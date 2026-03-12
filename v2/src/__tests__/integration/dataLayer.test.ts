@@ -91,3 +91,100 @@ describe('Data Layer Integration', () => {
     expect(results.end).toBe(-1); // End is -1 when there are no items
   });
 });
+
+/**
+ * Locale consistency tests for the data layer.
+ *
+ * Verifies that English and French locales return structurally consistent
+ * data through the public `getProjects` API, and that translated fields
+ * are populated and differ between locales.
+ *
+ * Deeper localization pipeline tests (cache behavior, caption index alignment,
+ * unknown locale fallback) are planned for localizationPipeline.test.ts (Phase 1,
+ * not yet implemented — see docs/active/TESTING_ROADMAP.md).
+ */
+describe('Data Layer — Locale Consistency', () => {
+  it('should return the same number of projects for both locales', async () => {
+    const en = await getProjects({ pageSize: 100, locale: 'en' });
+    const fr = await getProjects({ pageSize: 100, locale: 'fr' });
+
+    expect(en.total).toBe(fr.total);
+    expect(en.total).toBe(PROJECTS.length);
+  });
+
+  it('should return the same project IDs in both locales', async () => {
+    const en = await getProjects({ pageSize: 100, locale: 'en' });
+    const fr = await getProjects({ pageSize: 100, locale: 'fr' });
+
+    const enIds = en.items.map((p) => p.id);
+    const frIds = fr.items.map((p) => p.id);
+
+    expect(enIds).toEqual(frIds);
+  });
+
+  it('should have non-empty translatable fields in English', async () => {
+    const { items } = await getProjects({ pageSize: 100, locale: 'en' });
+
+    for (const project of items) {
+      expect(project.title, `${project.id}: title`).toBeTruthy();
+      expect(project.desc.length, `${project.id}: desc`).toBeGreaterThan(0);
+      expect(project.desc[0], `${project.id}: desc[0]`).toBeTruthy();
+      expect(project.circa, `${project.id}: circa`).toBeTruthy();
+    }
+  });
+
+  it('should have non-empty translatable fields in French', async () => {
+    const { items } = await getProjects({ pageSize: 100, locale: 'fr' });
+
+    for (const project of items) {
+      expect(project.title, `${project.id}: title`).toBeTruthy();
+      expect(project.desc.length, `${project.id}: desc`).toBeGreaterThan(0);
+      expect(project.desc[0], `${project.id}: desc[0]`).toBeTruthy();
+      expect(project.circa, `${project.id}: circa`).toBeTruthy();
+    }
+  });
+
+  it('should have different descriptions between English and French for every project', async () => {
+    const en = await getProjects({ pageSize: 100, locale: 'en' });
+    const fr = await getProjects({ pageSize: 100, locale: 'fr' });
+
+    // At least one desc paragraph must differ per project, proving the merge
+    // pipeline applied translations. Titles may be identical for brand names
+    // (e.g., "Collabware - Collabmail"), but prose descriptions always differ.
+    for (let i = 0; i < en.items.length; i++) {
+      const enProject = en.items[i];
+      const frProject = fr.items[i];
+
+      const descsDiffer = enProject.desc.some(
+        (s, j) => s !== frProject.desc[j]
+      );
+      expect(
+        descsDiffer,
+        `${enProject.id}: EN and FR descriptions should differ`
+      ).toBe(true);
+    }
+  });
+
+  it('should preserve structural fields across locales', async () => {
+    const en = await getProjects({ pageSize: 100, locale: 'en' });
+    const fr = await getProjects({ pageSize: 100, locale: 'fr' });
+
+    for (let i = 0; i < en.items.length; i++) {
+      const enProject = en.items[i];
+      const frProject = fr.items[i];
+
+      // Structural fields should be identical regardless of locale
+      expect(enProject.id).toBe(frProject.id);
+      expect(enProject.tags).toEqual(frProject.tags);
+      expect(enProject.altGrid).toBe(frProject.altGrid);
+      expect(enProject.videos).toEqual(frProject.videos);
+      expect(enProject.images.length).toBe(frProject.images.length);
+
+      // Image URLs (structural) should be identical; captions (translated) may differ
+      for (let j = 0; j < enProject.images.length; j++) {
+        expect(enProject.images[j].url).toBe(frProject.images[j].url);
+        expect(enProject.images[j].tnUrl).toBe(frProject.images[j].tnUrl);
+      }
+    }
+  });
+});
