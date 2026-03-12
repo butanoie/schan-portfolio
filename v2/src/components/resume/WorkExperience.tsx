@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Box, Typography } from "@mui/material";
-import type { Job } from "../../types/resume";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
+import { Box, Typography } from '@mui/material';
+import type { Job } from '../../types/resume';
+import { usePalette } from '../../hooks/usePalette';
+import { useI18n } from '../../hooks/useI18n';
 
 /**
  * Props for the WorkExperience component.
@@ -46,7 +46,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
         sx={{
           fontWeight: 600,
           color: palette.text.primary,
-          fontSize: { xs: "1.75rem", md: "2rem" },
+          fontSize: { xs: '1.75rem', md: '2rem' },
           mb: 3,
         }}
       >
@@ -59,7 +59,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
           className="job-entry"
           sx={{
             mb: 5,
-            pageBreakInside: "avoid",
+            pageBreakInside: 'avoid',
           }}
         >
           {/* Company Name */}
@@ -68,7 +68,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
             sx={{
               fontWeight: 600,
               color: palette.secondary,
-              fontSize: { xs: "1.35rem", md: "1.5rem" },
+              fontSize: { xs: '1.35rem', md: '1.5rem' },
               mb: 1.5,
             }}
           >
@@ -80,9 +80,9 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
             <Box
               key={roleIndex}
               sx={{
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                justifyContent: { xs: "flex-start", md: "space-between" },
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                justifyContent: { xs: 'flex-start', md: 'space-between' },
                 mb: 1,
               }}
             >
@@ -92,9 +92,9 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 component="div"
                 sx={{
                   fontWeight: 600,
-                  fontSize: { xs: "0.95rem", md: "1rem" },
+                  fontSize: { xs: '0.95rem', md: '1rem' },
                   color: palette.text.secondary,
-                  flex: { md: "1" },
+                  flex: { md: '1' },
                 }}
               >
                 {role.title}
@@ -106,11 +106,11 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 component="div"
                 sx={{
                   fontWeight: 600,
-                  fontSize: { xs: "0.95rem", md: "1rem" },
+                  fontSize: { xs: '0.95rem', md: '1rem' },
                   color: palette.text.secondary,
-                  textAlign: { xs: "left", md: "right" },
-                  flex: { md: "0 0 auto" },
-                  minWidth: { md: "180px" },
+                  textAlign: { xs: 'left', md: 'right' },
+                  flex: { md: '0 0 auto' },
+                  minWidth: { md: '180px' },
                 }}
               >
                 {role.startDate} - {role.endDate}
@@ -127,7 +127,7 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 mb: job.keyContributions ? 1.5 : 0,
                 lineHeight: 1.7,
                 color: palette.text.primary,
-                fontSize: { xs: "0.95rem", md: "1rem" },
+                fontSize: { xs: '0.95rem', md: '1rem' },
               }}
             >
               {job.description}
@@ -142,12 +142,12 @@ export default function WorkExperience({ jobs }: WorkExperienceProps) {
                 sx={{
                   pl: 3,
                   m: 0,
-                  listStyleType: "disc",
-                  "& li": {
+                  listStyleType: 'disc',
+                  '& li': {
                     mb: 0.75,
                     lineHeight: 1.6,
                     color: palette.text.primary,
-                    fontSize: { xs: "0.9rem", md: "1rem" },
+                    fontSize: { xs: '0.9rem', md: '1rem' },
                   },
                 }}
               >

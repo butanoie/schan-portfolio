@@ -69,13 +69,13 @@
   }
 
   /* Override theme-specific CSS variables for Dark theme */
-  html[data-theme="dark"] {
+  html[data-theme='dark'] {
     --foreground: #2c2c2c !important;
     --background: #ffffff !important;
   }
 
   /* Override theme-specific CSS variables for High Contrast theme */
-  html[data-theme="highContrast"] {
+  html[data-theme='highContrast'] {
     --foreground: #2c2c2c !important;
     --background: #ffffff !important;
   }
@@ -101,7 +101,7 @@
   }
 
   /* Full width containers */
-  [class*="MuiContainer-root"] {
+  [class*='MuiContainer-root'] {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -115,7 +115,7 @@
     padding: 0 !important;
   }
 
- /* Ensure footer remains hidden */
+  /* Ensure footer remains hidden */
   footer.MuiBox-root {
     display: none !important;
   }
@@ -193,14 +193,14 @@
      ProjectGallery renders with a grid inside a root Box.
      The grid Box is a direct child and must preserve display: grid for the
      4-column thumbnail layout to render correctly. */
-  [data-testid="project-gallery"] > div {
+  [data-testid='project-gallery'] > div {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 1rem !important;
   }
 
   /* Force 4:3 aspect ratio for thumbnail images in print mode */
-  [data-testid="project-gallery"] img {
+  [data-testid='project-gallery'] img {
     aspect-ratio: 4 / 3 !important;
     object-fit: cover !important;
     width: 100% !important;
@@ -326,10 +326,10 @@
   header,
   footer,
   nav,
-  [role="contentinfo"],
-  [data-testid*="footer"],
-  [class*="footer"],
-  [class*="Footer"] {
+  [role='contentinfo'],
+  [data-testid*='footer'],
+  [class*='footer'],
+  [class*='Footer'] {
     display: none !important;
   }
 
@@ -349,16 +349,16 @@
   }
 
   /* Hide Material-UI AppBar */
-  [class*="MuiAppBar-root"] {
+  [class*='MuiAppBar-root'] {
     display: none !important;
   }
 
   /* Hide theme and settings controls */
-  [class*="ThemeSwitcher"],
-  [class*="LanguageSwitcher"],
-  [class*="AnimationsSwitcher"],
-  [class*="SettingsButton"],
-  [class*="MuiPopover-root"],
+  [class*='ThemeSwitcher'],
+  [class*='LanguageSwitcher'],
+  [class*='AnimationsSwitcher'],
+  [class*='SettingsButton'],
+  [class*='MuiPopover-root'],
   #settings-popover,
   .no-print {
     display: none !important;
@@ -436,8 +436,8 @@
   }
 
   /* Remove URL printing for links */
-  a[href^="http"]:after {
-    content: "" !important;
+  a[href^='http']:after {
+    content: '' !important;
   }
 
   /* ========================================================================
@@ -480,7 +480,7 @@
 
   /* Preserve maroon background for date chips */
   .MuiChip-root.project-circa {
-    background-color: #8B1538 !important;
+    background-color: #8b1538 !important;
   }
 
   .MuiChip-label {
@@ -488,8 +488,8 @@
   }
 
   /* Style section backgrounds with duck egg color */
-  section > div[style*="backgroundColor"],
-  div[style*="backgroundColor: rgb"] {
+  section > div[style*='backgroundColor'],
+  div[style*='backgroundColor: rgb'] {
     background-color: #dcebe4 !important;
   }
 
@@ -506,14 +506,14 @@
   /* Remove background colors from containers except where specified.
      Exclude color-swatch-display because color swatches need their background color
      to display the actual color for visual reference in the printed colophon. */
-  [class*="MuiBox-root"]:not(.color-swatch-display),
-  [class*="MuiPaper-root"] {
+  [class*='MuiBox-root']:not(.color-swatch-display),
+  [class*='MuiPaper-root'] {
     background-color: transparent !important;
     border: none !important;
   }
 
   /* Hide all dividers */
-  [class*="MuiDivider-root"],
+  [class*='MuiDivider-root'],
   hr {
     display: none !important;
   }
@@ -541,7 +541,7 @@
   }
 
   /* Avoid breaking inside common content blocks */
-  [class*="job-entry"],
+  [class*='job-entry'],
   section,
   article {
     page-break-inside: avoid;

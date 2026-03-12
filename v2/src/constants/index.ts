@@ -10,7 +10,7 @@ export {
   NAV_COLORS,
   THEME_COLORS,
   COLORS,
-} from "./colors";
+} from './colors';
 
 export {
   LOADING_DELAY,
@@ -20,4 +20,4 @@ export {
   STRING_CONSTRAINTS,
   DIMENSION_CONSTRAINTS,
   VIDEO_ID_PATTERNS,
-} from "./app";
+} from './app';

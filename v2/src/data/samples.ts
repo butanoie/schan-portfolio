@@ -26,121 +26,160 @@ import { getLocalizedImageUrl } from '../utils/imageLocalization';
  * rendered on the artifact card.
  */
 const ARTIFACT_SECTIONS: ArtifactSection[] = [
-    {
-      headingKey: 'samples.sections.productStrategy.heading',
-      introKey: 'samples.sections.productStrategy.intro',
-      items: [
-        {
-          titleKey: 'samples.artifacts.productRoadmapPhase3.title',
-          descriptionKey: 'samples.artifacts.productRoadmapPhase3.description',
-          format: { label: 'Markdown', href: '/documents/PHASE_3_PRODUCT_ROADMAP.md' },
+  {
+    headingKey: 'samples.sections.productStrategy.heading',
+    introKey: 'samples.sections.productStrategy.intro',
+    items: [
+      {
+        titleKey: 'samples.artifacts.productRoadmapPhase3.title',
+        descriptionKey: 'samples.artifacts.productRoadmapPhase3.description',
+        format: {
+          label: 'Markdown',
+          href: '/documents/PHASE_3_PRODUCT_ROADMAP.md',
         },
-        {
-          titleKey: 'samples.artifacts.productRoadmapPhase4.title',
-          descriptionKey: 'samples.artifacts.productRoadmapPhase4.description',
-          format: { label: 'Markdown', href: '/documents/PHASE_4_PRODUCT_ROADMAP.md' },
+      },
+      {
+        titleKey: 'samples.artifacts.productRoadmapPhase4.title',
+        descriptionKey: 'samples.artifacts.productRoadmapPhase4.description',
+        format: {
+          label: 'Markdown',
+          href: '/documents/PHASE_4_PRODUCT_ROADMAP.md',
         },
-        {
-          titleKey: 'samples.artifacts.prdLightbox.title',
-          descriptionKey: 'samples.artifacts.prdLightbox.description',
-          format: { label: 'PDF', href: '/documents/Product_Requirements_Document.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.prdLightbox.title',
+        descriptionKey: 'samples.artifacts.prdLightbox.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Product_Requirements_Document.pdf',
         },
-      ],
-    },
-    {
-      headingKey: 'samples.sections.uxDesign.heading',
-      introKey: 'samples.sections.uxDesign.intro',
-      items: [
-        {
-          titleKey: 'samples.artifacts.idsLightbox.title',
-          descriptionKey: 'samples.artifacts.idsLightbox.description',
-          format: { label: 'PDF', href: '/documents/Interaction_Design_Specification.pdf' },
+      },
+    ],
+  },
+  {
+    headingKey: 'samples.sections.uxDesign.heading',
+    introKey: 'samples.sections.uxDesign.intro',
+    items: [
+      {
+        titleKey: 'samples.artifacts.idsLightbox.title',
+        descriptionKey: 'samples.artifacts.idsLightbox.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Interaction_Design_Specification.pdf',
         },
-        {
-          titleKey: 'samples.artifacts.usabilityTestPlan.title',
-          descriptionKey: 'samples.artifacts.usabilityTestPlan.description',
-          format: { label: 'PDF', href: '/documents/Usability_Test_Plan_and_Findings.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.usabilityTestPlan.title',
+        descriptionKey: 'samples.artifacts.usabilityTestPlan.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Usability_Test_Plan_and_Findings.pdf',
         },
-        {
-          titleKey: 'samples.artifacts.wcagGuide.title',
-          descriptionKey: 'samples.artifacts.wcagGuide.description',
-          format: { label: 'PDF', href: '/documents/WCAG_Compliance_Guide.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.wcagGuide.title',
+        descriptionKey: 'samples.artifacts.wcagGuide.description',
+        format: { label: 'PDF', href: '/documents/WCAG_Compliance_Guide.pdf' },
+      },
+    ],
+  },
+  {
+    headingKey: 'samples.sections.technical.heading',
+    introKey: 'samples.sections.technical.intro',
+    items: [
+      {
+        titleKey: 'samples.artifacts.adrI18n.title',
+        descriptionKey: 'samples.artifacts.adrI18n.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Architecture_Decision_Record.pdf',
         },
-      ],
-    },
-    {
-      headingKey: 'samples.sections.technical.heading',
-      introKey: 'samples.sections.technical.intro',
-      items: [
-        {
-          titleKey: 'samples.artifacts.adrI18n.title',
-          descriptionKey: 'samples.artifacts.adrI18n.description',
-          format: { label: 'PDF', href: '/documents/Architecture_Decision_Record.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.frameworkEval.title',
+        descriptionKey: 'samples.artifacts.frameworkEval.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Front_End_Framework_Evaluation.pdf',
         },
-        {
-          titleKey: 'samples.artifacts.frameworkEval.title',
-          descriptionKey: 'samples.artifacts.frameworkEval.description',
-          format: { label: 'PDF', href: '/documents/Front_End_Framework_Evaluation.pdf' },
+      },
+    ],
+  },
+  {
+    headingKey: 'samples.sections.processOps.heading',
+    introKey: 'samples.sections.processOps.intro',
+    items: [
+      {
+        titleKey: 'samples.artifacts.qaStrategy.title',
+        descriptionKey: 'samples.artifacts.qaStrategy.description',
+        format: { label: 'PDF', href: '/documents/QA_Automation_Strategy.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.onboardingGuide.title',
+        descriptionKey: 'samples.artifacts.onboardingGuide.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Product_Knowledge_Onboarding.pdf',
         },
-      ],
-    },
-    {
-      headingKey: 'samples.sections.processOps.heading',
-      introKey: 'samples.sections.processOps.intro',
-      items: [
-        {
-          titleKey: 'samples.artifacts.qaStrategy.title',
-          descriptionKey: 'samples.artifacts.qaStrategy.description',
-          format: { label: 'PDF', href: '/documents/QA_Automation_Strategy.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.changelogStrategy.title',
+        descriptionKey: 'samples.artifacts.changelogStrategy.description',
+        format: { label: 'PDF', href: '/documents/Changelog_Strategy.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.gherkinPhase3.title',
+        descriptionKey: 'samples.artifacts.gherkinPhase3.description',
+        format: {
+          label: 'Markdown',
+          href: '/documents/PHASE_3_GHERKIN_TEST_CASES.md',
         },
-        {
-          titleKey: 'samples.artifacts.onboardingGuide.title',
-          descriptionKey: 'samples.artifacts.onboardingGuide.description',
-          format: { label: 'PDF', href: '/documents/Product_Knowledge_Onboarding.pdf' },
+      },
+      {
+        titleKey: 'samples.artifacts.gherkinPhase4.title',
+        descriptionKey: 'samples.artifacts.gherkinPhase4.description',
+        format: {
+          label: 'Markdown',
+          href: '/documents/PHASE_4_GHERKIN_TEST_CASES.md',
         },
-        {
-          titleKey: 'samples.artifacts.changelogStrategy.title',
-          descriptionKey: 'samples.artifacts.changelogStrategy.description',
-          format: { label: 'PDF', href: '/documents/Changelog_Strategy.pdf' },
+      },
+    ],
+  },
+  {
+    headingKey: 'samples.sections.costSavings.heading',
+    introKey: 'samples.sections.costSavings.intro',
+    items: [
+      {
+        titleKey: 'samples.artifacts.costCuttingAudit.title',
+        descriptionKey: 'samples.artifacts.costCuttingAudit.description',
+        format: {
+          label: 'PDF',
+          href: '/documents/Azure_Cost_Savings_Report.pdf',
         },
-        {
-          titleKey: 'samples.artifacts.gherkinPhase3.title',
-          descriptionKey: 'samples.artifacts.gherkinPhase3.description',
-          format: { label: 'Markdown', href: '/documents/PHASE_3_GHERKIN_TEST_CASES.md' },
+      },
+      {
+        titleKey: 'samples.artifacts.costSavingsRoadmap.title',
+        descriptionKey: 'samples.artifacts.costSavingsRoadmap.description',
+      },
+      {
+        titleKey: 'samples.artifacts.elasticsearchRunbook.title',
+        descriptionKey: 'samples.artifacts.elasticsearchRunbook.description',
+        format: {
+          label: 'Markdown',
+          href: '/documents/ELASTICSEARCH_REDUCTION_RUNBOOK.md',
         },
-        {
-          titleKey: 'samples.artifacts.gherkinPhase4.title',
-          descriptionKey: 'samples.artifacts.gherkinPhase4.description',
-          format: { label: 'Markdown', href: '/documents/PHASE_4_GHERKIN_TEST_CASES.md' },
+      },
+      {
+        titleKey: 'samples.artifacts.defenderRunbook.title',
+        descriptionKey: 'samples.artifacts.defenderRunbook.description',
+        format: {
+          label: 'Markdown',
+          href: '/documents/DEFENDER_REDUCTION_RUNBOOK.md',
         },
-      ],
-    },
-    {
-      headingKey: 'samples.sections.costSavings.heading',
-      introKey: 'samples.sections.costSavings.intro',
-      items: [
-        {
-          titleKey: 'samples.artifacts.costCuttingAudit.title',
-          descriptionKey: 'samples.artifacts.costCuttingAudit.description',
-          format: { label: 'PDF', href: '/documents/Azure_Cost_Savings_Report.pdf' },
-        },
-        {
-          titleKey: 'samples.artifacts.costSavingsRoadmap.title',
-          descriptionKey: 'samples.artifacts.costSavingsRoadmap.description',
-        },
-        {
-          titleKey: 'samples.artifacts.elasticsearchRunbook.title',
-          descriptionKey: 'samples.artifacts.elasticsearchRunbook.description',
-          format: { label: 'Markdown', href: '/documents/ELASTICSEARCH_REDUCTION_RUNBOOK.md' },
-        },
-        {
-          titleKey: 'samples.artifacts.defenderRunbook.title',
-          descriptionKey: 'samples.artifacts.defenderRunbook.description',
-          format: { label: 'Markdown', href: '/documents/DEFENDER_REDUCTION_RUNBOOK.md' },
-        },
-      ],
-    },
-  ];
+      },
+    ],
+  },
+];
 
 /**
  * A resolved artifact item with translated strings, ready for rendering.

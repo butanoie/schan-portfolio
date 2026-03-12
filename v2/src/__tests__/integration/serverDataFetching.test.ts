@@ -163,9 +163,7 @@ describe('Server Data Fetching — fetchProjects', () => {
     expect(result.items.length).toBeGreaterThan(0);
 
     for (const project of result.items) {
-      expect(project.tags, `${project.id}: should have C# tag`).toContain(
-        'C#'
-      );
+      expect(project.tags, `${project.id}: should have C# tag`).toContain('C#');
       expect(
         project.title,
         `${project.id}: FR title should be non-empty`

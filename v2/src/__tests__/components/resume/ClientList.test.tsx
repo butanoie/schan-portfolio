@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import ClientList from "../../../components/resume/ClientList";
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import ClientList from '../../../components/resume/ClientList';
 
 /**
  * Tests for the ClientList component.
@@ -11,97 +11,151 @@ import ClientList from "../../../components/resume/ClientList";
  */
 
 /** Test color value for cardTextColor prop */
-const TEST_CARD_TEXT_COLOR = "#333333";
+const TEST_CARD_TEXT_COLOR = '#333333';
 
 /** Test section heading (matches the English translation) */
-const TEST_HEADING = "Clients";
+const TEST_HEADING = 'Clients';
 
-describe("ClientList", () => {
+describe('ClientList', () => {
   const mockClients = [
-    "Microsoft",
-    "Google",
-    "Amazon",
-    "Apple",
-    "Meta",
-    "Tesla",
+    'Microsoft',
+    'Google',
+    'Amazon',
+    'Apple',
+    'Meta',
+    'Tesla',
   ];
 
-  it("should render the Clients heading", () => {
-    render(<ClientList clients={mockClients} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+  it('should render the Clients heading', () => {
+    render(
+      <ClientList
+        clients={mockClients}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
     expect(
-      screen.getByRole("heading", { name: /clients/i, level: 3 })
+      screen.getByRole('heading', { name: /clients/i, level: 3 })
     ).toBeInTheDocument();
   });
 
-  it("should render all client names", () => {
-    render(<ClientList clients={mockClients} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+  it('should render all client names', () => {
+    render(
+      <ClientList
+        clients={mockClients}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
-    expect(screen.getByText("Microsoft")).toBeInTheDocument();
-    expect(screen.getByText("Google")).toBeInTheDocument();
-    expect(screen.getByText("Amazon")).toBeInTheDocument();
-    expect(screen.getByText("Apple")).toBeInTheDocument();
-    expect(screen.getByText("Meta")).toBeInTheDocument();
-    expect(screen.getByText("Tesla")).toBeInTheDocument();
+    expect(screen.getByText('Microsoft')).toBeInTheDocument();
+    expect(screen.getByText('Google')).toBeInTheDocument();
+    expect(screen.getByText('Amazon')).toBeInTheDocument();
+    expect(screen.getByText('Apple')).toBeInTheDocument();
+    expect(screen.getByText('Meta')).toBeInTheDocument();
+    expect(screen.getByText('Tesla')).toBeInTheDocument();
   });
 
-  it("should render correct number of clients", () => {
-    const { container } = render(<ClientList clients={mockClients} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+  it('should render correct number of clients', () => {
+    const { container } = render(
+      <ClientList
+        clients={mockClients}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
     const chips = container.querySelectorAll('[class*="MuiChip-root"]');
     expect(chips).toHaveLength(6);
   });
 
-  it("should have proper accessibility attributes", () => {
-    render(<ClientList clients={mockClients} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+  it('should have proper accessibility attributes', () => {
+    render(
+      <ClientList
+        clients={mockClients}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
-    const section = screen.getByRole("region", { name: /clients/i });
+    const section = screen.getByRole('region', { name: /clients/i });
     expect(section).toBeInTheDocument();
   });
 
-  it("should render with single client", () => {
-    const singleClient = ["Single Client"];
+  it('should render with single client', () => {
+    const singleClient = ['Single Client'];
 
-    render(<ClientList clients={singleClient} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+    render(
+      <ClientList
+        clients={singleClient}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
-    expect(screen.getByText("Single Client")).toBeInTheDocument();
+    expect(screen.getByText('Single Client')).toBeInTheDocument();
   });
 
-  it("should render with empty clients array", () => {
-    render(<ClientList clients={[]} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+  it('should render with empty clients array', () => {
+    render(
+      <ClientList
+        clients={[]}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
     // Should still render the heading
     expect(
-      screen.getByRole("heading", { name: /clients/i, level: 3 })
+      screen.getByRole('heading', { name: /clients/i, level: 3 })
     ).toBeInTheDocument();
 
-    const { container } = render(<ClientList clients={[]} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+    const { container } = render(
+      <ClientList
+        clients={[]}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
     const chips = container.querySelectorAll('[class*="MuiChip-root"]');
     expect(chips).toHaveLength(0);
   });
 
-  it("should render with many clients", () => {
+  it('should render with many clients', () => {
     const manyClients = Array.from({ length: 50 }, (_, i) => `Client ${i + 1}`);
 
-    render(<ClientList clients={manyClients} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+    render(
+      <ClientList
+        clients={manyClients}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
-    expect(screen.getByText("Client 1")).toBeInTheDocument();
-    expect(screen.getByText("Client 25")).toBeInTheDocument();
-    expect(screen.getByText("Client 50")).toBeInTheDocument();
+    expect(screen.getByText('Client 1')).toBeInTheDocument();
+    expect(screen.getByText('Client 25')).toBeInTheDocument();
+    expect(screen.getByText('Client 50')).toBeInTheDocument();
   });
 
-  it("should render clients with special characters", () => {
+  it('should render clients with special characters', () => {
     const specialClients = [
-      "AT&T",
-      "3M Company",
+      'AT&T',
+      '3M Company',
       "O'Reilly Media",
       "Ben & Jerry's",
     ];
 
-    render(<ClientList clients={specialClients} cardTextColor={TEST_CARD_TEXT_COLOR} sectionHeading={TEST_HEADING} />);
+    render(
+      <ClientList
+        clients={specialClients}
+        cardTextColor={TEST_CARD_TEXT_COLOR}
+        sectionHeading={TEST_HEADING}
+      />
+    );
 
-    expect(screen.getByText("AT&T")).toBeInTheDocument();
-    expect(screen.getByText("3M Company")).toBeInTheDocument();
+    expect(screen.getByText('AT&T')).toBeInTheDocument();
+    expect(screen.getByText('3M Company')).toBeInTheDocument();
     expect(screen.getByText("O'Reilly Media")).toBeInTheDocument();
     expect(screen.getByText("Ben & Jerry's")).toBeInTheDocument();
   });

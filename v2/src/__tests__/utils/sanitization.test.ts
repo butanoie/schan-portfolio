@@ -1,8 +1,5 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import {
-  sanitizeHtml,
-  isValidUrlProtocol,
-} from '../../utils/sanitization';
+import { sanitizeHtml, isValidUrlProtocol } from '../../utils/sanitization';
 
 describe('sanitization utilities', () => {
   describe('isValidUrlProtocol', () => {
@@ -31,8 +28,12 @@ describe('sanitization utilities', () => {
     });
 
     it('should block data protocol', () => {
-      expect(isValidUrlProtocol('data:text/html,<script>alert("XSS")</script>')).toBe(false);
-      expect(isValidUrlProtocol('data:image/svg+xml,<svg onload="alert(\'XSS\')">')).toBe(false);
+      expect(
+        isValidUrlProtocol('data:text/html,<script>alert("XSS")</script>')
+      ).toBe(false);
+      expect(
+        isValidUrlProtocol('data:image/svg+xml,<svg onload="alert(\'XSS\')">')
+      ).toBe(false);
     });
 
     it('should block vbscript protocol', () => {
@@ -46,9 +47,15 @@ describe('sanitization utilities', () => {
     });
 
     it('should throw TypeError for non-string input', () => {
-      expect(() => isValidUrlProtocol(null as unknown as string)).toThrow(TypeError);
-      expect(() => isValidUrlProtocol(undefined as unknown as string)).toThrow(TypeError);
-      expect(() => isValidUrlProtocol(123 as unknown as string)).toThrow(TypeError);
+      expect(() => isValidUrlProtocol(null as unknown as string)).toThrow(
+        TypeError
+      );
+      expect(() => isValidUrlProtocol(undefined as unknown as string)).toThrow(
+        TypeError
+      );
+      expect(() => isValidUrlProtocol(123 as unknown as string)).toThrow(
+        TypeError
+      );
     });
   });
 
@@ -98,7 +105,8 @@ describe('sanitization utilities', () => {
       });
 
       it('should block embed tag', () => {
-        const dangerous = '<embed src="data:text/html,<script>alert(\'XSS\')</script>">';
+        const dangerous =
+          '<embed src="data:text/html,<script>alert(\'XSS\')</script>">';
         const sanitized = sanitizeHtml(dangerous);
         expect(sanitized).not.toContain('<embed>');
       });
@@ -110,13 +118,15 @@ describe('sanitization utilities', () => {
       });
 
       it('should block style tag with javascript', () => {
-        const dangerous = '<style>body{background:url("javascript:alert(\'XSS\')")}</style>';
+        const dangerous =
+          '<style>body{background:url("javascript:alert(\'XSS\')")}</style>';
         const sanitized = sanitizeHtml(dangerous);
         expect(sanitized).not.toContain('<style>');
       });
 
       it('should block form and input tags', () => {
-        const dangerous = '<form><input onfocus="alert(\'XSS\')" autofocus></form>';
+        const dangerous =
+          '<form><input onfocus="alert(\'XSS\')" autofocus></form>';
         const sanitized = sanitizeHtml(dangerous);
         expect(sanitized).not.toContain('<form>');
         expect(sanitized).not.toContain('<input>');
@@ -140,7 +150,8 @@ describe('sanitization utilities', () => {
       });
 
       it('should remove data protocol from href', () => {
-        const dangerous = '<a href="data:text/html,<script>alert(\'XSS\')</script>">Click</a>';
+        const dangerous =
+          '<a href="data:text/html,<script>alert(\'XSS\')</script>">Click</a>';
         const sanitized = sanitizeHtml(dangerous);
         expect(sanitized).not.toContain('data:');
         expect(sanitized).not.toContain('href=');
@@ -281,7 +292,8 @@ describe('sanitization utilities', () => {
       });
 
       it('should handle nested safe tags', () => {
-        const html = '<p>Paragraph with <strong>bold <em>and italic</em></strong> text</p>';
+        const html =
+          '<p>Paragraph with <strong>bold <em>and italic</em></strong> text</p>';
         const sanitized = sanitizeHtml(html);
         expect(sanitized).toContain('<p>');
         expect(sanitized).toContain('<strong>');
@@ -289,7 +301,8 @@ describe('sanitization utilities', () => {
       });
 
       it('should handle multiple links', () => {
-        const html = '<p><a href="https://example.com">Link 1</a> and <a href="https://example.org">Link 2</a></p>';
+        const html =
+          '<p><a href="https://example.com">Link 1</a> and <a href="https://example.org">Link 2</a></p>';
         const sanitized = sanitizeHtml(html);
         expect(sanitized.match(/href=/g)?.length).toBe(2);
       });
@@ -315,8 +328,12 @@ describe('sanitization utilities', () => {
     // Error Handling
     describe('Error Handling', () => {
       it('should throw TypeError for non-string input', () => {
-        expect(() => sanitizeHtml(null as unknown as string)).toThrow(TypeError);
-        expect(() => sanitizeHtml(undefined as unknown as string)).toThrow(TypeError);
+        expect(() => sanitizeHtml(null as unknown as string)).toThrow(
+          TypeError
+        );
+        expect(() => sanitizeHtml(undefined as unknown as string)).toThrow(
+          TypeError
+        );
         expect(() => sanitizeHtml(123 as unknown as string)).toThrow(TypeError);
         expect(() => sanitizeHtml({} as unknown as string)).toThrow(TypeError);
         expect(() => sanitizeHtml([] as unknown as string)).toThrow(TypeError);
@@ -369,5 +386,4 @@ describe('sanitization utilities', () => {
       });
     });
   });
-
 });

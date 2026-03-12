@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -7,13 +7,13 @@ import {
   CardContent,
   CardActions,
   Button,
-} from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
-import { BRAND_COLORS, NAV_COLORS } from "@/src/constants";
-import type { ResolvedArtifactItem } from "@/src/data/samples";
+} from '@mui/material';
+import DownloadIcon from '@mui/icons-material/Download';
+import { usePalette } from '../../hooks/usePalette';
+import { useI18n } from '../../hooks/useI18n';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
+import { BRAND_COLORS, NAV_COLORS } from '@/src/constants';
+import type { ResolvedArtifactItem } from '@/src/data/samples';
 
 /**
  * Props for the ArtifactSection component.
@@ -66,8 +66,8 @@ export default function ArtifactSection({
           fontFamily: FONT_FAMILY_HEADING,
           fontWeight: 700,
           color: palette.secondary,
-          fontSize: { xs: "1.5rem", md: "2rem" },
-          textAlign: "center",
+          fontSize: { xs: '1.5rem', md: '2rem' },
+          textAlign: 'center',
           mb: 2,
         }}
       >
@@ -79,7 +79,7 @@ export default function ArtifactSection({
         sx={{
           mb: 4,
           lineHeight: 1.7,
-          fontSize: { xs: "1rem", md: "1.05rem" },
+          fontSize: { xs: '1rem', md: '1.05rem' },
           color: palette.text.secondary,
         }}
       >
@@ -88,8 +88,8 @@ export default function ArtifactSection({
 
       <Box
         sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
           gap: 3,
         }}
       >
@@ -98,8 +98,8 @@ export default function ArtifactSection({
             key={item.format?.href ?? item.title}
             variant="outlined"
             sx={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               backgroundColor: palette.card.background,
             }}
           >
@@ -110,7 +110,7 @@ export default function ArtifactSection({
                 sx={{
                   fontFamily: FONT_FAMILY_HEADING,
                   fontWeight: 600,
-                  fontSize: { xs: "1.05rem", md: "1.15rem" },
+                  fontSize: { xs: '1.05rem', md: '1.15rem' },
                   lineHeight: 1.3,
                   mb: 1,
                   color: palette.card.heading,
@@ -137,8 +137,8 @@ export default function ArtifactSection({
                   rel="noopener noreferrer"
                   size="small"
                   startIcon={<DownloadIcon />}
-                  aria-label={t("samples.labels.viewDocument", {
-                    ns: "pages",
+                  aria-label={t('samples.labels.viewDocument', {
+                    ns: 'pages',
                     title: `${item.title}, ${item.format.label}`,
                   })}
                   variant="contained"
@@ -148,8 +148,8 @@ export default function ArtifactSection({
                     backgroundColor: BRAND_COLORS.sage,
                     color: NAV_COLORS.text,
                     boxShadow: 0,
-                    textTransform: "none",
-                    "&:hover": {
+                    textTransform: 'none',
+                    '&:hover': {
                       backgroundColor: NAV_COLORS.inactiveHover,
                       boxShadow: 0,
                     },

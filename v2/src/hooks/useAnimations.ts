@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Hook for accessing and managing animations state.
@@ -7,8 +7,8 @@
  * Automatically persists user preference and respects system settings.
  */
 
-import { useAnimationsContext } from "@/src/contexts/AnimationsContext";
-import { useReducedMotion } from "./useReducedMotion";
+import { useAnimationsContext } from '@/src/contexts/AnimationsContext';
+import { useReducedMotion } from './useReducedMotion';
 
 /**
  * Interface for the useAnimations hook return value.

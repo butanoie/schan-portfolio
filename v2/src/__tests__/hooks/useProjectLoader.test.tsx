@@ -42,9 +42,12 @@ describe('useProjectLoader', () => {
 
   describe('Initial state', () => {
     it('should initialize with provided initial projects', () => {
-      const { result } = renderHook(() => useProjectLoader([...mockProjects], 5), {
-        wrapper: LocaleProviderWrapper,
-      });
+      const { result } = renderHook(
+        () => useProjectLoader([...mockProjects], 5),
+        {
+          wrapper: LocaleProviderWrapper,
+        }
+      );
 
       expect(result.current.projects).toEqual(mockProjects);
       expect(result.current.projects).toHaveLength(5);
@@ -87,9 +90,12 @@ describe('useProjectLoader', () => {
 
   describe('hasMore and remainingCount calculations', () => {
     it('should show hasMore as true when not all projects loaded', () => {
-      const { result } = renderHook(() => useProjectLoader([...mockProjects], 5), {
-        wrapper: LocaleProviderWrapper,
-      });
+      const { result } = renderHook(
+        () => useProjectLoader([...mockProjects], 5),
+        {
+          wrapper: LocaleProviderWrapper,
+        }
+      );
 
       expect(result.current.hasMore).toBe(true);
       expect(result.current.allLoaded).toBe(false);
@@ -354,8 +360,8 @@ describe('useProjectLoader', () => {
 
   describe('Return value stability', () => {
     it('should return consistent project references', () => {
-      const { result, rerender } = renderHook(() =>
-        useProjectLoader(mockProjects, 5),
+      const { result, rerender } = renderHook(
+        () => useProjectLoader(mockProjects, 5),
         { wrapper: LocaleProviderWrapper }
       );
 

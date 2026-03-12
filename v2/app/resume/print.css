@@ -53,7 +53,7 @@
      ======================================================================== */
 
   /* Remove top spacing from resume header */
-  .resume-page section[aria-labelledby="resume-name"] {
+  .resume-page section[aria-labelledby='resume-name'] {
     padding-top: 0 !important;
     margin-top: 0 !important;
     margin-bottom: 16pt !important;
@@ -65,20 +65,20 @@
   }
 
   /* Resume header - name/tagline (60%) */
-  .resume-page section[aria-labelledby="resume-name"] > div:first-of-type {
+  .resume-page section[aria-labelledby='resume-name'] > div:first-of-type {
     flex: 0 0 65% !important;
     width: 65% !important;
   }
 
   /* Resume header - contact buttons (35%) */
-  .resume-page section[aria-labelledby="resume-name"] .MuiStack-root {
+  .resume-page section[aria-labelledby='resume-name'] .MuiStack-root {
     flex: 0 0 30% !important;
     width: 30% !important;
     gap: 0 !important;
     margin: 0 !important;
   }
 
-  .resume-page section[aria-labelledby="resume-name"] p {
+  .resume-page section[aria-labelledby='resume-name'] p {
     margin: 0 !important;
   }
 
@@ -116,7 +116,7 @@
   }
 
   /* Avoid breaking inside job entries */
-  .resume-page [class*="job-entry"] {
+  .resume-page [class*='job-entry'] {
     page-break-inside: avoid;
   }
 
@@ -187,14 +187,18 @@
   }
 
   /* Reduce gap between icon and text in resume header buttons */
-  .resume-page section[aria-labelledby="resume-name"] button.MuiButton-root,
-  .resume-page section[aria-labelledby="resume-name"] a.MuiButton-root {
+  .resume-page section[aria-labelledby='resume-name'] button.MuiButton-root,
+  .resume-page section[aria-labelledby='resume-name'] a.MuiButton-root {
     gap: 2pt !important;
   }
 
-  .resume-page section[aria-labelledby="resume-name"] button[aria-label="portfolio.singchan.com"],
-  .resume-page section[aria-labelledby="resume-name"] a[aria-label="portfolio.singchan.com"] {
-    background-color: #8B1538 !important;
+  .resume-page
+    section[aria-labelledby='resume-name']
+    button[aria-label='portfolio.singchan.com'],
+  .resume-page
+    section[aria-labelledby='resume-name']
+    a[aria-label='portfolio.singchan.com'] {
+    background-color: #8b1538 !important;
   }
 
   /* ========================================================================
@@ -221,14 +225,26 @@
      ======================================================================== */
 
   /* Reduce gap between education and conference speaker entries */
-  .resume-page section[aria-labelledby="education-heading"] > div > div,
-  .resume-page section[aria-labelledby="speaking-heading"] > div > div {
+  .resume-page section[aria-labelledby='education-heading'] > div > div,
+  .resume-page section[aria-labelledby='speaking-heading'] > div > div {
     gap: 0 !important;
   }
 
   /* Ensure left borders are visible and properly colored */
-  .resume-page > div:last-of-type > div:first-child section[aria-labelledby="education-heading"] > div > div > div,
-  .resume-page > div:last-of-type > div:first-child section[aria-labelledby="speaking-heading"] > div > div > div {
+  .resume-page
+    > div:last-of-type
+    > div:first-child
+    section[aria-labelledby='education-heading']
+    > div
+    > div
+    > div,
+  .resume-page
+    > div:last-of-type
+    > div:first-child
+    section[aria-labelledby='speaking-heading']
+    > div
+    > div
+    > div {
     border-left: 3px solid #85b09c !important;
     padding-left: 4pt !important;
     print-color-adjust: exact !important;
@@ -237,22 +253,42 @@
   }
 
   /* Reduce line spacing within each entry's typography elements */
-  .resume-page section[aria-labelledby="education-heading"] .MuiTypography-root,
-  .resume-page section[aria-labelledby="speaking-heading"] .MuiTypography-root {
+  .resume-page section[aria-labelledby='education-heading'] .MuiTypography-root,
+  .resume-page section[aria-labelledby='speaking-heading'] .MuiTypography-root {
     line-height: 1.2 !important;
     margin-top: 0 !important;
     margin-bottom: 1pt !important;
   }
 
   /* Remove top margin from first typography in each entry */
-  .resume-page section[aria-labelledby="education-heading"] > div > div > div .MuiTypography-root:first-child,
-  .resume-page section[aria-labelledby="speaking-heading"] > div > div > div .MuiTypography-root:first-child {
+  .resume-page
+    section[aria-labelledby='education-heading']
+    > div
+    > div
+    > div
+    .MuiTypography-root:first-child,
+  .resume-page
+    section[aria-labelledby='speaking-heading']
+    > div
+    > div
+    > div
+    .MuiTypography-root:first-child {
     margin-top: 0 !important;
   }
 
   /* Remove bottom margin from last typography in each entry */
-  .resume-page section[aria-labelledby="education-heading"] > div > div > div .MuiTypography-root:last-child,
-  .resume-page section[aria-labelledby="speaking-heading"] > div > div > div .MuiTypography-root:last-child {
+  .resume-page
+    section[aria-labelledby='education-heading']
+    > div
+    > div
+    > div
+    .MuiTypography-root:last-child,
+  .resume-page
+    section[aria-labelledby='speaking-heading']
+    > div
+    > div
+    > div
+    .MuiTypography-root:last-child {
     margin-bottom: 0 !important;
   }
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Hook for accessing and managing theme state.
@@ -7,8 +7,8 @@
  * Automatically persists user preference and respects system settings.
  */
 
-import { useThemeContext } from "@/src/contexts/ThemeContext";
-import { ThemeMode } from "@/src/types/theme";
+import { useThemeContext } from '@/src/contexts/ThemeContext';
+import { ThemeMode } from '@/src/types/theme';
 
 /**
  * Interface for the useTheme hook return value.

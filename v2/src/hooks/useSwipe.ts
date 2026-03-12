@@ -144,7 +144,10 @@ export function useSwipe(
 
       // Check for downward swipe to close (works regardless of image count)
       // Requires: significant downward movement + minimal horizontal movement
-      if (verticalDistance >= threshold && Math.abs(horizontalDistance) < threshold) {
+      if (
+        verticalDistance >= threshold &&
+        Math.abs(horizontalDistance) < threshold
+      ) {
         onSwipeDown();
         return;
       }
@@ -156,7 +159,10 @@ export function useSwipe(
 
       // Check for horizontal swipes to navigate (left or right)
       // Requires: significant horizontal movement + minimal vertical movement
-      if (Math.abs(horizontalDistance) >= threshold && Math.abs(verticalDistance) < threshold) {
+      if (
+        Math.abs(horizontalDistance) >= threshold &&
+        Math.abs(verticalDistance) < threshold
+      ) {
         if (horizontalDistance > 0) {
           // Swipe left: typically "next image"
           onSwipeLeft();

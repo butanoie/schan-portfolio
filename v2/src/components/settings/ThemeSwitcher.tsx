@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Theme switcher component with toggle buttons for each theme mode.
@@ -27,16 +27,21 @@
  * ```
  */
 
-import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import {
+  Box,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import {
   LightMode as LightModeIcon,
   DarkMode as DarkModeIcon,
   Contrast as ContrastIcon,
-} from "@mui/icons-material";
-import { useTheme } from "@/src/hooks/useTheme";
-import { useI18n } from "@/src/hooks/useI18n";
-import { ThemeMode } from "@/src/types/theme";
-import { TOGGLE_BORDER_COLOR, TOGGLE_BUTTON_SX } from "./toggleStyles";
+} from '@mui/icons-material';
+import { useTheme } from '@/src/hooks/useTheme';
+import { useI18n } from '@/src/hooks/useI18n';
+import { ThemeMode } from '@/src/types/theme';
+import { TOGGLE_BORDER_COLOR, TOGGLE_BUTTON_SX } from './toggleStyles';
 
 /**
  * Props for the ThemeSwitcher component.
@@ -68,9 +73,24 @@ const THEME_OPTIONS: Array<{
   ariaKey: string;
   labelKey: string;
 }> = [
-  { value: "light", icon: <LightModeIcon />, ariaKey: "theme.lightAria", labelKey: "theme.lightLabel" },
-  { value: "dark", icon: <DarkModeIcon />, ariaKey: "theme.darkAria", labelKey: "theme.darkLabel" },
-  { value: "highContrast", icon: <ContrastIcon />, ariaKey: "theme.highContrastAria", labelKey: "theme.highContrastLabel" },
+  {
+    value: 'light',
+    icon: <LightModeIcon />,
+    ariaKey: 'theme.lightAria',
+    labelKey: 'theme.lightLabel',
+  },
+  {
+    value: 'dark',
+    icon: <DarkModeIcon />,
+    ariaKey: 'theme.darkAria',
+    labelKey: 'theme.darkLabel',
+  },
+  {
+    value: 'highContrast',
+    icon: <ContrastIcon />,
+    ariaKey: 'theme.highContrastAria',
+    labelKey: 'theme.highContrastLabel',
+  },
 ];
 
 /**
@@ -118,10 +138,10 @@ export function ThemeSwitcher({
         value={theme}
         exclusive
         onChange={handleChange}
-        aria-label={t("theme.selectTheme")}
+        aria-label={t('theme.selectTheme')}
         sx={{
-          display: "flex",
-          width: "100%",
+          display: 'flex',
+          width: '100%',
           border: `1px solid ${TOGGLE_BORDER_COLOR}`,
         }}
       >
@@ -133,7 +153,7 @@ export function ThemeSwitcher({
             sx={TOGGLE_BUTTON_SX}
           >
             {option.icon}
-            <Typography variant="caption" sx={{ fontSize: "0.75rem" }}>
+            <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
               {t(option.labelKey)}
             </Typography>
           </ToggleButton>

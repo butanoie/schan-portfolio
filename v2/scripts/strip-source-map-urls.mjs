@@ -16,11 +16,11 @@
  * // "build": "next build && node scripts/strip-source-map-urls.mjs"
  */
 
-import { readdir, readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 
 /** Directory containing Turbopack/webpack-emitted static chunks */
-const STATIC_DIR = join(import.meta.dirname, "..", ".next", "static");
+const STATIC_DIR = join(import.meta.dirname, '..', '.next', 'static');
 
 /** JS sourceMappingURL pattern: `//# sourceMappingURL=…` */
 const JS_PATTERN = /\/\/# sourceMappingURL=.+$/gm;
@@ -42,7 +42,7 @@ async function findAssets(dir) {
     const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
       results.push(...(await findAssets(fullPath)));
-    } else if (entry.name.endsWith(".js") || entry.name.endsWith(".css")) {
+    } else if (entry.name.endsWith('.js') || entry.name.endsWith('.css')) {
       results.push(fullPath);
     }
   }
@@ -57,15 +57,15 @@ async function findAssets(dir) {
  * @returns `true` if the file was modified, `false` otherwise
  */
 async function stripFile(filePath) {
-  const content = await readFile(filePath, "utf-8");
-  if (!content.includes("sourceMappingURL")) return false;
+  const content = await readFile(filePath, 'utf-8');
+  if (!content.includes('sourceMappingURL')) return false;
 
-  const pattern = filePath.endsWith(".css") ? CSS_PATTERN : JS_PATTERN;
+  const pattern = filePath.endsWith('.css') ? CSS_PATTERN : JS_PATTERN;
   pattern.lastIndex = 0;
-  const stripped = content.replace(pattern, "");
+  const stripped = content.replace(pattern, '');
 
   if (stripped !== content) {
-    await writeFile(filePath, stripped, "utf-8");
+    await writeFile(filePath, stripped, 'utf-8');
     return true;
   }
   return false;
@@ -77,9 +77,9 @@ let count = 0;
 await Promise.all(
   files.map(async (file) => {
     if (await stripFile(file)) count++;
-  }),
+  })
 );
 
 console.log(
-  `[strip-source-map-urls] Stripped sourceMappingURL from ${count}/${files.length} assets`,
+  `[strip-source-map-urls] Stripped sourceMappingURL from ${count}/${files.length} assets`
 );

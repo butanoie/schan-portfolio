@@ -327,10 +327,7 @@ describe('ProjectImage', () => {
      */
     it('accepts custom sx styles to wrapper', () => {
       const { container } = render(
-        <ProjectImage
-          image={mockImage}
-          sx={{ border: '1px solid red' }}
-        />
+        <ProjectImage image={mockImage} sx={{ border: '1px solid red' }} />
       );
 
       const wrapper = container.firstChild as HTMLElement;
@@ -343,10 +340,7 @@ describe('ProjectImage', () => {
      */
     it('merges default styles with custom sx props', () => {
       const { container } = render(
-        <ProjectImage
-          image={mockImage}
-          sx={{ opacity: 0.5 }}
-        />
+        <ProjectImage image={mockImage} sx={{ opacity: 0.5 }} />
       );
 
       const wrapper = container.firstChild as HTMLElement;

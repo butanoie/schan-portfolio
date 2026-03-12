@@ -50,7 +50,10 @@ export default defineConfig({
     },
 
     // Include test files
-    include: ['**/__tests__/**/*.{test,spec}.{ts,tsx}', '**/*.{test,spec}.{ts,tsx}'],
+    include: [
+      '**/__tests__/**/*.{test,spec}.{ts,tsx}',
+      '**/*.{test,spec}.{ts,tsx}',
+    ],
 
     // Exclude files from testing
     exclude: [

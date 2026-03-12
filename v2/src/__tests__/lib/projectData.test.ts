@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  getProjects,
-  getProjectById,
-} from '../../lib/projectData';
+import { getProjects, getProjectById } from '../../lib/projectData';
 
 /**
  * Tests for project data utilities.
@@ -56,7 +53,10 @@ describe('Project Data Utilities', () => {
       // All results should have "Collabware" in title or description
       response.items.forEach((project) => {
         const matchesTitle = project.title.toLowerCase().includes('collabware');
-        const matchesDesc = project.desc.join(' ').toLowerCase().includes('collabware');
+        const matchesDesc = project.desc
+          .join(' ')
+          .toLowerCase()
+          .includes('collabware');
         expect(matchesTitle || matchesDesc).toBe(true);
       });
     });
@@ -110,7 +110,10 @@ describe('Project Data Utilities', () => {
       const total = firstPage.total;
       const lastPageSize = 5;
       const lastPage = Math.ceil(total / lastPageSize);
-      const response = await getProjects({ page: lastPage, pageSize: lastPageSize });
+      const response = await getProjects({
+        page: lastPage,
+        pageSize: lastPageSize,
+      });
 
       expect(response.end).toBe(total - 1); // End should be last item index
     });
@@ -158,5 +161,4 @@ describe('Project Data Utilities', () => {
       expect(project?.videos.length).toBeGreaterThan(0);
     });
   });
-
 });

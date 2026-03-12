@@ -1,10 +1,14 @@
-"use client";
+'use client';
 
-import { Button } from "@mui/material";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useI18n } from "@/src/hooks/useI18n";
-import { getNavLinks, isActivePath, getNavButtonSx } from "../../utils/navigation";
+import { Button } from '@mui/material';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useI18n } from '@/src/hooks/useI18n';
+import {
+  getNavLinks,
+  isActivePath,
+  getNavButtonSx,
+} from '../../utils/navigation';
 
 /**
  * Renders the primary navigation buttons used in both Header and Footer.
@@ -39,7 +43,7 @@ export function NavButtons(): React.ReactNode {
             variant="contained"
             startIcon={link.icon}
             size="medium"
-            aria-current={active ? "page" : undefined}
+            aria-current={active ? 'page' : undefined}
             sx={getNavButtonSx(active)}
           >
             {t(link.labelKey)}

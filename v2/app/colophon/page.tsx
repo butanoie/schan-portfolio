@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import { Container } from "@mui/material";
-import ColophonContent from "../../src/components/colophon/ColophonContent";
-import { PAGE_METADATA, SITE_URL, OG_IMAGE } from "@/src/constants/seo";
+import type { Metadata } from 'next';
+import { Container } from '@mui/material';
+import ColophonContent from '../../src/components/colophon/ColophonContent';
+import { PAGE_METADATA, SITE_URL, OG_IMAGE } from '@/src/constants/seo';
 
 /**
  * Metadata for the colophon page.
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: PAGE_METADATA.colophon.title,
     description: PAGE_METADATA.colophon.description,
     url: `${SITE_URL}/colophon`,
-    type: "website",
+    type: 'website',
     images: [
       {
         url: OG_IMAGE.url,

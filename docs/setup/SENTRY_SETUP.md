@@ -18,14 +18,14 @@ Sentry provides automatic error tracking with stack traces and source maps for t
 
 Add these to your deployment platform (Railway) and optionally to `.env.local` for local testing:
 
-| Variable | Where | Purpose |
-|----------|-------|---------|
-| `NEXT_PUBLIC_SENTRY_DSN` | Client + Server | Public DSN for sending errors to Sentry |
-| `SENTRY_AUTH_TOKEN` | Build-time only | Auth token for uploading source maps and creating releases |
-| `SENTRY_ORG` | Build-time only | Your Sentry organization slug |
-| `SENTRY_PROJECT` | Build-time only | Your Sentry project slug |
-| `SENTRY_RELEASE` | Build-time + Runtime | Git commit SHA used to tag releases; set by GitHub Actions deploy workflows |
-| `NEXT_PUBLIC_SENTRY_ENVIRONMENT` | Client + Server | Optional override for the Sentry environment tag (defaults to `NODE_ENV`) |
+| Variable                         | Where                | Purpose                                                                     |
+| -------------------------------- | -------------------- | --------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SENTRY_DSN`         | Client + Server      | Public DSN for sending errors to Sentry                                     |
+| `SENTRY_AUTH_TOKEN`              | Build-time only      | Auth token for uploading source maps and creating releases                  |
+| `SENTRY_ORG`                     | Build-time only      | Your Sentry organization slug                                               |
+| `SENTRY_PROJECT`                 | Build-time only      | Your Sentry project slug                                                    |
+| `SENTRY_RELEASE`                 | Build-time + Runtime | Git commit SHA used to tag releases; set by GitHub Actions deploy workflows |
+| `NEXT_PUBLIC_SENTRY_ENVIRONMENT` | Client + Server      | Optional override for the Sentry environment tag (defaults to `NODE_ENV`)   |
 
 ### Getting Your Auth Token
 
@@ -39,12 +39,12 @@ Add these to your deployment platform (Railway) and optionally to `.env.local` f
 
 ### Config Files
 
-| File | Runtime | Purpose |
-|------|---------|---------|
-| `instrumentation-client.ts` | Browser | Client-side error tracking; respects DNT; traces router navigations |
-| `sentry.server.config.ts` | Node.js | Server-side error tracking; always active |
-| `sentry.edge.config.ts` | Edge | Edge runtime error tracking; always active |
-| `instrumentation.ts` | Server startup | Loads the correct config based on `NEXT_RUNTIME`; captures unhandled request errors |
+| File                        | Runtime        | Purpose                                                                             |
+| --------------------------- | -------------- | ----------------------------------------------------------------------------------- |
+| `instrumentation-client.ts` | Browser        | Client-side error tracking; respects DNT; traces router navigations                 |
+| `sentry.server.config.ts`   | Node.js        | Server-side error tracking; always active                                           |
+| `sentry.edge.config.ts`     | Edge           | Edge runtime error tracking; always active                                          |
+| `instrumentation.ts`        | Server startup | Loads the correct config based on `NEXT_RUNTIME`; captures unhandled request errors |
 
 ### Next.js Config Integration
 
@@ -55,6 +55,7 @@ withSentryConfig(analyzer(nextConfig), sentryOptions)
 ```
 
 Key options:
+
 - **`release.name`**: Set from `SENTRY_RELEASE` (git SHA), correlating errors to specific commits
 - **`release.create` / `release.finalize`**: Automatically manages the release lifecycle in Sentry
 - **`widenClientFileUpload`**: Uploads a larger set of source maps for better stack traces
@@ -72,6 +73,7 @@ railway variable set SENTRY_RELEASE=$DEPLOY_SHA \
 ```
 
 This ensures:
+
 - Source maps are tagged with the correct commit SHA during `next build`
 - Runtime errors are associated with the same release
 - Sentry can correlate errors to specific commits in the dashboard
@@ -102,6 +104,7 @@ app/global-error.tsx              ← Layer 1: Root layout crashes
 #### Layer 1: `app/global-error.tsx`
 
 Catches errors in the root layout itself — errors that no other `error.tsx` can catch. Because the entire layout has crashed, this component:
+
 - Renders its own `<html>/<body>` tags (the root layout is gone)
 - Uses hardcoded English (LocaleProvider is unavailable)
 - Provides a "Try again" button that calls Next.js's `reset()` to re-render the root layout
@@ -110,6 +113,7 @@ Catches errors in the root layout itself — errors that no other `error.tsx` ca
 #### Layer 2: `src/components/i18n/LocaleProviderErrorFallback.tsx`
 
 Catches errors during LocaleProvider initialization (e.g., i18next fails to load). Wraps LocaleProvider in the component tree. Because i18n has failed:
+
 - Uses hardcoded English strings (cannot use `useI18n()`)
 - Renders a styled MUI fallback UI (MUI is available at this level)
 - Reports to Sentry and provides a retry button
@@ -117,6 +121,7 @@ Catches errors during LocaleProvider initialization (e.g., i18next fails to load
 #### Layer 3: `src/components/common/ErrorBoundary.tsx`
 
 General-purpose error boundary for component-level errors. Used to wrap individual sections or features. Unlike the other layers:
+
 - Uses `useI18n()` for localized error messages (i18n is available)
 - Accepts optional `fallback`, `onError`, and `onErrorRecovery` props
 - Renders a styled MUI error UI with localized text
@@ -126,15 +131,16 @@ General-purpose error boundary for component-level errors. Used to wrap individu
 
 `src/utils/errors.ts` provides a typed error hierarchy for categorized error handling:
 
-| Class | Category | Code Prefix | Use Case |
-|-------|----------|-------------|----------|
-| `AppError` | generic | `APP_` | Base class for all custom errors |
-| `ValidationError` | validation | `VAL_` | User input / data format failures |
-| `SecurityError` | security | `SEC_` | XSS, injection, protocol violations |
-| `DataError` | data | `DATA_` | Fetch, parse, database failures |
-| `NetworkError` | network | `NET_` | HTTP request failures (includes `statusCode`) |
+| Class             | Category   | Code Prefix | Use Case                                      |
+| ----------------- | ---------- | ----------- | --------------------------------------------- |
+| `AppError`        | generic    | `APP_`      | Base class for all custom errors              |
+| `ValidationError` | validation | `VAL_`      | User input / data format failures             |
+| `SecurityError`   | security   | `SEC_`      | XSS, injection, protocol violations           |
+| `DataError`       | data       | `DATA_`     | Fetch, parse, database failures               |
+| `NetworkError`    | network    | `NET_`      | HTTP request failures (includes `statusCode`) |
 
 Helper functions:
+
 - `getUserFriendlyMessage(error)` — converts error categories to user-facing messages
 - `isAppError(error)` — type guard for `instanceof` checks
 
@@ -144,14 +150,14 @@ These custom errors provide better context when captured by Sentry, including er
 
 The shared `src/lib/privacy.ts` module provides `isDoNotTrackEnabled()` used by both Sentry and PostHog for consistent DNT behavior.
 
-| Behavior | Setting |
-|----------|---------|
-| Do Not Track (client) | Respected — Sentry skips initialization if DNT is enabled |
+| Behavior                   | Setting                                                                |
+| -------------------------- | ---------------------------------------------------------------------- |
+| Do Not Track (client)      | Respected — Sentry skips initialization if DNT is enabled              |
 | Do Not Track (server/edge) | Ignored — server errors are always captured (no `navigator` available) |
-| PII collection | Disabled (`sendDefaultPii: false`) |
-| Session replay | Disabled (`replaysSessionSampleRate: 0`) |
-| Error sample rate | 100% — every error is captured |
-| Performance sample rate | 10% — sampled to reduce overhead |
+| PII collection             | Disabled (`sendDefaultPii: false`)                                     |
+| Session replay             | Disabled (`replaysSessionSampleRate: 0`)                               |
+| Error sample rate          | 100% — every error is captured                                         |
+| Performance sample rate    | 10% — sampled to reduce overhead                                       |
 
 ## Troubleshooting
 
@@ -186,28 +192,29 @@ If you see errors like `Failed to load resource: 404 (xxxxx.js.map)` or `(xxxxx.
 ### Local development
 
 Sentry does not initialize in development (`NODE_ENV !== "production"`). To test Sentry locally:
+
 1. Set `NEXT_PUBLIC_SENTRY_DSN` in `.env.local`
 2. Run `NODE_ENV=production npm run build && npm start`
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `v2/instrumentation-client.ts` | Client-side Sentry config (browser, respects DNT) |
-| `v2/sentry.server.config.ts` | Server-side Sentry config (Node.js) |
-| `v2/sentry.edge.config.ts` | Edge runtime Sentry config |
-| `v2/instrumentation.ts` | Server startup hook — loads config based on `NEXT_RUNTIME` |
-| `v2/next.config.ts` | `withSentryConfig` wrapper for source map upload |
-| `v2/scripts/strip-source-map-urls.mjs` | Post-build script to strip dangling sourceMappingURL references |
-| `v2/app/global-error.tsx` | Layer 1: Root layout error boundary (hardcoded English, inline styles) |
-| `v2/src/components/i18n/LocaleProviderErrorFallback.tsx` | Layer 2: i18n initialization error boundary (hardcoded English, MUI) |
-| `v2/src/components/common/ErrorBoundary.tsx` | Layer 3: Component-level error boundary (localized, MUI) |
-| `v2/src/utils/errors.ts` | Custom error hierarchy (AppError, ValidationError, etc.) |
-| `v2/src/lib/privacy.ts` | Shared DNT detection utility |
-| `v2/src/__tests__/app/global-error.test.tsx` | Tests for global error boundary |
-| `v2/src/__tests__/components/common/ErrorBoundary.test.tsx` | Tests for ErrorBoundary component |
-| `v2/src/__tests__/utils/errors.test.ts` | Tests for custom error classes |
-| `v2/src/__tests__/lib/privacy.test.ts` | Tests for DNT utility |
+| File                                                        | Purpose                                                                |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `v2/instrumentation-client.ts`                              | Client-side Sentry config (browser, respects DNT)                      |
+| `v2/sentry.server.config.ts`                                | Server-side Sentry config (Node.js)                                    |
+| `v2/sentry.edge.config.ts`                                  | Edge runtime Sentry config                                             |
+| `v2/instrumentation.ts`                                     | Server startup hook — loads config based on `NEXT_RUNTIME`             |
+| `v2/next.config.ts`                                         | `withSentryConfig` wrapper for source map upload                       |
+| `v2/scripts/strip-source-map-urls.mjs`                      | Post-build script to strip dangling sourceMappingURL references        |
+| `v2/app/global-error.tsx`                                   | Layer 1: Root layout error boundary (hardcoded English, inline styles) |
+| `v2/src/components/i18n/LocaleProviderErrorFallback.tsx`    | Layer 2: i18n initialization error boundary (hardcoded English, MUI)   |
+| `v2/src/components/common/ErrorBoundary.tsx`                | Layer 3: Component-level error boundary (localized, MUI)               |
+| `v2/src/utils/errors.ts`                                    | Custom error hierarchy (AppError, ValidationError, etc.)               |
+| `v2/src/lib/privacy.ts`                                     | Shared DNT detection utility                                           |
+| `v2/src/__tests__/app/global-error.test.tsx`                | Tests for global error boundary                                        |
+| `v2/src/__tests__/components/common/ErrorBoundary.test.tsx` | Tests for ErrorBoundary component                                      |
+| `v2/src/__tests__/utils/errors.test.ts`                     | Tests for custom error classes                                         |
+| `v2/src/__tests__/lib/privacy.test.ts`                      | Tests for DNT utility                                                  |
 
 ## Related Documentation
 

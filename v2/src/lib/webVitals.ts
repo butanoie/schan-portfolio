@@ -1,6 +1,6 @@
-import { onCLS, onINP, onLCP, onTTFB } from "web-vitals";
-import type { Metric } from "web-vitals";
-import posthog from "posthog-js";
+import { onCLS, onINP, onLCP, onTTFB } from 'web-vitals';
+import type { Metric } from 'web-vitals';
+import posthog from 'posthog-js';
 
 /**
  * Sends a single Core Web Vital metric to PostHog as a custom event.
@@ -17,14 +17,14 @@ import posthog from "posthog-js";
  * ```
  */
 function sendMetricToPostHog(metric: Metric): void {
-  posthog.capture("$web_vitals", {
+  posthog.capture('$web_vitals', {
     metric_name: metric.name,
     metric_value: metric.value,
     metric_rating: metric.rating,
     metric_delta: metric.delta,
     metric_id: metric.id,
     metric_navigation_type: metric.navigationType,
-    page_path: typeof window !== "undefined" ? window.location.pathname : "",
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
   });
 }
 

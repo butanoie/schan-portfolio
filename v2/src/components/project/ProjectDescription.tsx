@@ -71,7 +71,6 @@ function getDescriptionSx(theme: Theme): SxProps<Theme> {
   };
 }
 
-
 /**
  * Renders project description with multiple paragraphs, optional tags, and HTML sanitization.
  *
@@ -152,7 +151,7 @@ export function ProjectDescription({
    * security measures across all components that handle user-provided HTML.
    */
   const sanitizedParagraphs = useMemo(
-    () => paragraphArray.map(p => sanitizeHtml(p)),
+    () => paragraphArray.map((p) => sanitizeHtml(p)),
     [paragraphArray]
   );
 
@@ -160,10 +159,7 @@ export function ProjectDescription({
    * Memoize the description styles to avoid recalculating on every render.
    * Uses the current theme to provide colors with proper contrast in all modes.
    */
-  const descriptionSx = useMemo(
-    () => getDescriptionSx(theme),
-    [theme]
-  );
+  const descriptionSx = useMemo(() => getDescriptionSx(theme), [theme]);
 
   /**
    * Helper function to render a single sanitized paragraph.
@@ -188,9 +184,7 @@ export function ProjectDescription({
    * @returns A Box component with all sanitized paragraphs
    */
   const renderDescription = () => (
-    <Box sx={descriptionSx}>
-      {sanitizedParagraphs.map(renderParagraph)}
-    </Box>
+    <Box sx={descriptionSx}>{sanitizedParagraphs.map(renderParagraph)}</Box>
   );
 
   // Render tags in stacked layout (above description)
@@ -198,7 +192,7 @@ export function ProjectDescription({
     return (
       <Box sx={sx}>
         {/* Tags and Date */}
-        <ProjectTagsContainer tags={tags} circa={circa} sx={{mb:2}} />
+        <ProjectTagsContainer tags={tags} circa={circa} sx={{ mb: 2 }} />
 
         {/* Description */}
         {renderDescription()}

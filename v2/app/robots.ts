@@ -12,8 +12,8 @@
  * @see {@link https://www.robotstxt.org/} for Robots.txt Standard
  */
 
-import { MetadataRoute } from "next";
-import { SITE_URL } from "@/src/constants/seo";
+import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/src/constants/seo';
 
 /**
  * Generates the robots.txt configuration for search engine crawlers.
@@ -38,8 +38,8 @@ import { SITE_URL } from "@/src/constants/seo";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: "*",
-      allow: "/",
+      userAgent: '*',
+      allow: '/',
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

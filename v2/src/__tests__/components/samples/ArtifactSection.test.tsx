@@ -55,7 +55,10 @@ const pdfItem: ResolvedArtifactItem = {
 const markdownItem: ResolvedArtifactItem = {
   title: 'Gherkin Test Cases — Phase 3 Development',
   description: 'BDD-style acceptance criteria for the core pages phase.',
-  format: { label: 'Markdown', href: '/documents/Gherkin_Test_Cases_Phase_3.md' },
+  format: {
+    label: 'Markdown',
+    href: '/documents/Gherkin_Test_Cases_Phase_3.md',
+  },
 };
 
 /** Default section props for testing. */
@@ -84,7 +87,9 @@ describe('ArtifactSection', () => {
     const h3s = screen.getAllByRole('heading', { level: 3 });
     expect(h3s).toHaveLength(2);
     expect(h3s[0]).toHaveTextContent('Product Roadmap — Phase 3');
-    expect(h3s[1]).toHaveTextContent('Gherkin Test Cases — Phase 3 Development');
+    expect(h3s[1]).toHaveTextContent(
+      'Gherkin Test Cases — Phase 3 Development'
+    );
   });
 
   it('should render artifact descriptions', () => {
@@ -93,7 +98,9 @@ describe('ArtifactSection', () => {
       screen.getByText('SAFe-formatted roadmap with epics and features.')
     ).toBeInTheDocument();
     expect(
-      screen.getByText('BDD-style acceptance criteria for the core pages phase.')
+      screen.getByText(
+        'BDD-style acceptance criteria for the core pages phase.'
+      )
     ).toBeInTheDocument();
   });
 

@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import PageDeck from "../../../components/common/PageDeck";
-import type { PageDeckData } from "../../../types/pageDeck";
-import { ThemeContextProvider } from "../../../contexts/ThemeContext";
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import PageDeck from '../../../components/common/PageDeck';
+import type { PageDeckData } from '../../../types/pageDeck';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 
 /**
  * Tests for the PageDeck component.
@@ -19,45 +19,49 @@ import { ThemeContextProvider } from "../../../contexts/ThemeContext";
 function Wrapper({ children }: { children: React.ReactNode }) {
   return <ThemeContextProvider>{children}</ThemeContextProvider>;
 }
-describe("PageDeck", () => {
+describe('PageDeck', () => {
   const mockContent: PageDeckData = {
-    imageUrl: "/images/test-header.png",
-    imageAlt: "Test header image",
-    headingId: "test-heading",
-    heading: "Test Section",
+    imageUrl: '/images/test-header.png',
+    imageAlt: 'Test header image',
+    headingId: 'test-heading',
+    heading: 'Test Section',
     paragraphs: [
-      "First paragraph of the deck.",
-      "Second paragraph with more details.",
-      "Third paragraph to conclude.",
+      'First paragraph of the deck.',
+      'Second paragraph with more details.',
+      'Third paragraph to conclude.',
     ],
   };
 
-  it("should render the page heading", () => {
+  it('should render the page heading', () => {
     render(<PageDeck content={mockContent} />, { wrapper: Wrapper });
 
     expect(
-      screen.getByRole("heading", { name: "Test Section", level: 1 })
+      screen.getByRole('heading', { name: 'Test Section', level: 1 })
     ).toBeInTheDocument();
   });
 
-  it("should render all deck paragraphs", () => {
+  it('should render all deck paragraphs', () => {
     render(<PageDeck content={mockContent} />, { wrapper: Wrapper });
 
-    expect(screen.getByText("First paragraph of the deck.")).toBeInTheDocument();
     expect(
-      screen.getByText("Second paragraph with more details.")
+      screen.getByText('First paragraph of the deck.')
     ).toBeInTheDocument();
-    expect(screen.getByText("Third paragraph to conclude.")).toBeInTheDocument();
+    expect(
+      screen.getByText('Second paragraph with more details.')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Third paragraph to conclude.')
+    ).toBeInTheDocument();
   });
 
-  it("should have proper accessibility attributes", () => {
+  it('should have proper accessibility attributes', () => {
     render(<PageDeck content={mockContent} />, { wrapper: Wrapper });
 
-    const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading).toHaveAttribute("id", "test-heading");
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading).toHaveAttribute('id', 'test-heading');
   });
 
-  it("should render with empty deck", () => {
+  it('should render with empty deck', () => {
     const contentWithEmptyDeck: PageDeckData = {
       ...mockContent,
       paragraphs: [],
@@ -67,7 +71,7 @@ describe("PageDeck", () => {
 
     // Should still render the heading
     expect(
-      screen.getByRole("heading", { name: "Test Section", level: 1 })
+      screen.getByRole('heading', { name: 'Test Section', level: 1 })
     ).toBeInTheDocument();
   });
 });

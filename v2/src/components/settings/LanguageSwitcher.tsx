@@ -27,7 +27,12 @@
  * ```
  */
 
-import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import {
+  Box,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import { useLocale } from '@/src/hooks/useLocale';
 import { useI18n } from '@/src/hooks/useI18n';
 import { type Locale } from '@/src/lib/i18n';

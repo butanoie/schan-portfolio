@@ -4,11 +4,11 @@ This document defines the technical architecture for integration tests (Vitest) 
 
 ## Overview
 
-| Layer | Tool | Scope | Runs Against |
-|-------|------|-------|-------------|
-| Unit tests | Vitest + RTL | Individual functions, components, hooks | jsdom (existing, 1,199 tests) |
-| Integration tests | Vitest + RTL | Multi-module workflows, data pipelines, hook lifecycles | jsdom (new) |
-| E2E / UI tests | Playwright | Full browser, real pages, user journeys | `next start` (production build) |
+| Layer             | Tool         | Scope                                                   | Runs Against                    |
+| ----------------- | ------------ | ------------------------------------------------------- | ------------------------------- |
+| Unit tests        | Vitest + RTL | Individual functions, components, hooks                 | jsdom (existing, 1,199 tests)   |
+| Integration tests | Vitest + RTL | Multi-module workflows, data pipelines, hook lifecycles | jsdom (new)                     |
+| E2E / UI tests    | Playwright   | Full browser, real pages, user journeys                 | `next start` (production build) |
 
 ### Guiding Principles
 
@@ -24,13 +24,13 @@ This document defines the technical architecture for integration tests (Vitest) 
 
 ### What Qualifies as Integration vs Unit
 
-| Test | Classification | Reason |
-|------|---------------|--------|
-| `getProjects({ tags, search, page })` in isolation | Unit (exists) | Single function, single module |
+| Test                                                                                | Classification  | Reason                                                   |
+| ----------------------------------------------------------------------------------- | --------------- | -------------------------------------------------------- |
+| `getProjects({ tags, search, page })` in isolation                                  | Unit (exists)   | Single function, single module                           |
 | `fetchProjects` through `projectDataServer` → `projectData` → `localization` → JSON | **Integration** | Crosses 3 module boundaries including dynamic `import()` |
-| `getProjects('fr')` returning French titles with real JSON merge | **Integration** | Tests the full localization pipeline end-to-end |
-| `useProjectLoader` with locale switch from `'en'` to `'fr'` | **Integration** | Hook + localization layer + context interacting together |
-| `AsyncProjectsList` rendering initial batch + loadMore + skeletons | **Integration** | Component + hook + data layer + context in DOM |
+| `getProjects('fr')` returning French titles with real JSON merge                    | **Integration** | Tests the full localization pipeline end-to-end          |
+| `useProjectLoader` with locale switch from `'en'` to `'fr'`                         | **Integration** | Hook + localization layer + context interacting together |
+| `AsyncProjectsList` rendering initial batch + loadMore + skeletons                  | **Integration** | Component + hook + data layer + context in DOM           |
 
 ### New Test Files
 
@@ -48,6 +48,7 @@ v2/src/__tests__/integration/
 ### Mocking Strategy
 
 **Test real (never mock):**
+
 - `PROJECTS` data constant
 - `localization.ts` and its JSON imports — the core under test
 - `getProjects` / `getProjectById` / `fetchProjects`
@@ -55,12 +56,14 @@ v2/src/__tests__/integration/
 - Locale JSON files (`src/locales/{en,fr}/projects.json`)
 
 **Mock at framework boundaries:**
+
 - `next/navigation` (`usePathname`, `useRouter`) — jsdom cannot satisfy Next.js router
 - `next/image` → plain `<img>` (established codebase pattern)
 - `@mui/material useMediaQuery` → `() => false` (established pattern)
 - `ProjectLoadingStateBridgeContext` → null bridge or `vi.fn()` spy
 
 **Never directly mutate or spy on:**
+
 - The `localeCache` Map in `localization.ts` — test through observable outputs only. Do not use `vi.spyOn` or direct property access on the cache.
 - `SIMULATED_LOAD_DELAY` — already 0 when `NODE_ENV === 'test'` (computed from `LOADING_DELAY` constant in `constants/app.ts`)
 
@@ -69,17 +72,17 @@ v2/src/__tests__/integration/
 The `localeCache` Map in `localization.ts` is module-level and persists across tests in the same Vitest worker. Tests must tolerate cached state. For the "unknown locale fallback" test case, use `vi.resetModules()` followed by a **dynamic import** to get a fresh module instance. The top-level static import still holds the old module reference, so the test must use the dynamically imported function:
 
 ```typescript
-describe('unknown locale fallback', () => {
-  let getLocalizedProjects: typeof import('@/src/data/localization').getLocalizedProjects;
+describe("unknown locale fallback", () => {
+  let getLocalizedProjects: typeof import("@/src/data/localization").getLocalizedProjects;
 
   beforeAll(async () => {
     vi.resetModules();
-    const mod = await import('@/src/data/localization');
+    const mod = await import("@/src/data/localization");
     getLocalizedProjects = mod.getLocalizedProjects;
   });
 
-  it('should fall back to base data for unsupported locale', async () => {
-    const projects = await getLocalizedProjects('de' as Locale);
+  it("should fall back to base data for unsupported locale", async () => {
+    const projects = await getLocalizedProjects("de" as Locale);
     // Assert empty translatable fields (base PROJECTS data)
   });
 });
@@ -260,6 +263,7 @@ Mobile breakpoint is 600px (MUI `sm`). The `viewport.fixture.ts` provides:
 - `asDesktop()` → 1280x800
 
 Tests verify:
+
 - Mobile: hamburger visible, desktop nav hidden, drawer opens with nav + settings
 - Desktop: nav buttons visible, hamburger hidden, settings in popover
 
@@ -268,7 +272,7 @@ Tests verify:
 Gherkin scenarios appear as JSDoc comments and descriptive test names. No `.feature` files, no step definitions.
 
 ```typescript
-test.describe('Project Lightbox', () => {
+test.describe("Project Lightbox", () => {
   /**
    * Scenario: User navigates images with keyboard Arrow keys.
    *
@@ -277,7 +281,9 @@ test.describe('Project Lightbox', () => {
    * Then image 2 is displayed and the counter reads "2 of N"
    * And the ARIA status region announces the new image position
    */
-  test('Given lightbox open, When ArrowRight pressed, Then shows next image', async ({ homePage }) => {
+  test("Given lightbox open, When ArrowRight pressed, Then shows next image", async ({
+    homePage,
+  }) => {
     // Given
     await homePage.goto();
     await homePage.openLightboxForImage(0, 0);
@@ -287,18 +293,18 @@ test.describe('Project Lightbox', () => {
     await homePage.lightbox.nextByKeyboard();
 
     // Then
-    await expect(homePage.lightbox.counter).toContainText('2 of');
-    await expect(homePage.lightbox.liveRegion).toContainText('2');
+    await expect(homePage.lightbox.counter).toContainText("2 of");
+    await expect(homePage.lightbox.liveRegion).toContainText("2");
   });
 });
 ```
 
 ### localStorage Keys
 
-| Preference | Key | Values |
-|------------|-----|--------|
-| Theme | `portfolio-theme-mode` | `light`, `dark`, `highContrast` |
-| Locale | `locale` | `en`, `fr` |
+| Preference | Key                    | Values                          |
+| ---------- | ---------------------- | ------------------------------- |
+| Theme      | `portfolio-theme-mode` | `light`, `dark`, `highContrast` |
+| Locale     | `locale`               | `en`, `fr`                      |
 
 ### localStorage and Preference Persistence
 
@@ -306,12 +312,19 @@ Between tests, Playwright creates a fresh browser context (clean `localStorage`)
 
 ```typescript
 // helpers/storage.ts
-export async function seedTheme(page: Page, theme: 'light' | 'dark' | 'highContrast') {
-  await page.addInitScript((t) => { localStorage.setItem('portfolio-theme-mode', t); }, theme);
+export async function seedTheme(
+  page: Page,
+  theme: "light" | "dark" | "highContrast",
+) {
+  await page.addInitScript((t) => {
+    localStorage.setItem("portfolio-theme-mode", t);
+  }, theme);
 }
 
-export async function seedLocale(page: Page, locale: 'en' | 'fr') {
-  await page.addInitScript((l) => { localStorage.setItem('locale', l); }, locale);
+export async function seedLocale(page: Page, locale: "en" | "fr") {
+  await page.addInitScript((l) => {
+    localStorage.setItem("locale", l);
+  }, locale);
 }
 ```
 
@@ -320,7 +333,7 @@ export async function seedLocale(page: Page, locale: 'en' | 'fr') {
 The home page is SSG'd in English. After switching to French, `useProjectLoader` re-fetches client-side. Tests must wait for French content to appear:
 
 ```typescript
-await homePage.settings.switchLanguage('fr');
+await homePage.settings.switchLanguage("fr");
 await expect(page.getByText(/projets/i)).toBeVisible({ timeout: 5_000 });
 ```
 
@@ -329,7 +342,7 @@ await expect(page.getByText(/projets/i)).toBeVisible({ timeout: 5_000 });
 The `ProjectLightbox` sub-POM uses `mouse.down/move/up` rather than `touchscreen.tap` for cross-browser consistency. Swipe tests that fail in headless WebKit should be annotated:
 
 ```typescript
-test.skip(browserName === 'webkit', 'Touch events unstable in headless WebKit');
+test.skip(browserName === "webkit", "Touch events unstable in headless WebKit");
 ```
 
 ### npm Scripts
@@ -366,7 +379,7 @@ npx playwright install chromium webkit
 Extends Playwright's `test` object with typed page objects:
 
 ```typescript
-import { test as base } from '@playwright/test';
+import { test as base } from "@playwright/test";
 // ... page object imports
 
 type AppFixtures = {
@@ -377,12 +390,16 @@ type AppFixtures = {
 };
 
 export const test = base.extend<AppFixtures>({
-  homePage: async ({ page }, use) => { await use(new HomePage(page)); },
-  resumePage: async ({ page }, use) => { await use(new ResumePage(page)); },
+  homePage: async ({ page }, use) => {
+    await use(new HomePage(page));
+  },
+  resumePage: async ({ page }, use) => {
+    await use(new ResumePage(page));
+  },
   // ...
 });
 
-export { expect } from '@playwright/test';
+export { expect } from "@playwright/test";
 ```
 
 All spec files import `test` and `expect` from `base.fixture.ts` instead of `@playwright/test`.

@@ -248,7 +248,7 @@ return <Button>{t('buttons.loadMore')}</Button>;
 
 ```tsx
 formatDate(new Date(2025, 0, 1), 'en-US'); // "January 1, 2025"
-formatDate(new Date(2025, 0, 1), 'fr');    // "1 janvier 2025"
+formatDate(new Date(2025, 0, 1), 'fr'); // "1 janvier 2025"
 ```
 
 **Acceptance Criteria:**
@@ -357,12 +357,20 @@ function useScrollAnimation(options?: IntersectionObserverInit): {
 
 ```css
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
@@ -437,10 +445,10 @@ function useScrollAnimation(options?: IntersectionObserverInit): {
 **Description:** Create `v2/src/__tests__/utils/axe-helpers.ts` (~150 lines) with reusable a11y testing utilities.
 
 ```tsx
-runAxe(container)            // Execute axe audit
-testAccessibility(container) // Full WCAG 2.2 AA suite
-canReceiveFocus(element)     // Check focusability
-hasAccessibleName(element)   // Verify naming
+runAxe(container); // Execute axe audit
+testAccessibility(container); // Full WCAG 2.2 AA suite
+canReceiveFocus(element); // Check focusability
+hasAccessibleName(element); // Verify naming
 ```
 
 **Acceptance Criteria:**
@@ -600,11 +608,11 @@ Key criteria: 1.1.1 Non-text Content, 1.4.3 Contrast Minimum, 1.4.11 Non-text Co
 **Description:** Create `v2/src/lib/seo.ts` with JSON-LD schema generators.
 
 ```tsx
-generatePersonSchema()      // Site author
-generateBreadcrumbSchema()  // Navigation
-generateProjectSchema()     // CollectionPage
-stripHtml(str)              // Remove tags
-truncate(str, max)          // Cap at 160 chars
+generatePersonSchema(); // Site author
+generateBreadcrumbSchema(); // Navigation
+generateProjectSchema(); // CollectionPage
+stripHtml(str); // Remove tags
+truncate(str, max); // Cap at 160 chars
 ```
 
 **Acceptance Criteria:**
@@ -753,14 +761,14 @@ All PBIs must meet:
 
 ## Phase 4 Actuals
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Total Tests | 900+ | 1,117 |
-| Test Coverage | 80%+ | 87.35% |
-| A11y Test Cases | 100+ | 120+ |
-| WCAG Violations | 0 | 0 |
-| Lighthouse A11y | 100 | 100 |
-| TypeScript Errors | 0 | 0 |
-| ESLint Violations | 0 | 0 |
-| Theme Switch | <100ms | Achieved |
-| Bundle Increase | <50KB/feature | Within target |
+| Metric            | Target        | Actual        |
+| ----------------- | ------------- | ------------- |
+| Total Tests       | 900+          | 1,117         |
+| Test Coverage     | 80%+          | 87.35%        |
+| A11y Test Cases   | 100+          | 120+          |
+| WCAG Violations   | 0             | 0             |
+| Lighthouse A11y   | 100           | 100           |
+| TypeScript Errors | 0             | 0             |
+| ESLint Violations | 0             | 0             |
+| Theme Switch      | <100ms        | Achieved      |
+| Bundle Increase   | <50KB/feature | Within target |

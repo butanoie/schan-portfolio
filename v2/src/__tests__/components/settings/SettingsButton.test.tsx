@@ -3,7 +3,10 @@ import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 import { SettingsButton } from '@/src/components/settings/SettingsButton';
-import { testAccessibility, canReceiveFocus } from '@/src/__tests__/utils/axe-helpers';
+import {
+  testAccessibility,
+  canReceiveFocus,
+} from '@/src/__tests__/utils/axe-helpers';
 
 /**
  * Test suite for SettingsButton component accessibility and functionality.

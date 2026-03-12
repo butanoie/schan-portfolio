@@ -65,10 +65,7 @@ describe('ProjectSkeleton', () => {
     it('should have aria-label for loading state', () => {
       render(<ProjectSkeleton />);
       const skeleton = screen.getByRole('progressbar');
-      expect(skeleton).toHaveAttribute(
-        'aria-label',
-        'Loading project details'
-      );
+      expect(skeleton).toHaveAttribute('aria-label', 'Loading project details');
     });
   });
 
@@ -76,7 +73,9 @@ describe('ProjectSkeleton', () => {
     it('should render tag skeletons', () => {
       const { container } = render(<ProjectSkeleton variant="narrow" />);
       // Narrow layout should render multiple skeleton elements
-      const skeletonElements = container.querySelectorAll('[role="progressbar"]');
+      const skeletonElements = container.querySelectorAll(
+        '[role="progressbar"]'
+      );
       expect(skeletonElements.length).toBeGreaterThan(0);
     });
 
@@ -97,26 +96,20 @@ describe('ProjectSkeleton', () => {
 
   describe('Wide-regular layout variant', () => {
     it('should render with wide-regular variant', () => {
-      render(
-        <ProjectSkeleton variant="wide-regular" />
-      );
+      render(<ProjectSkeleton variant="wide-regular" />);
       // Component should render without errors
       const section = screen.getByRole('progressbar');
       expect(section).toBeInTheDocument();
     });
 
     it('should render tag skeletons in left column', () => {
-      render(
-        <ProjectSkeleton variant="wide-regular" />
-      );
+      render(<ProjectSkeleton variant="wide-regular" />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toHaveAttribute('aria-busy', 'true');
     });
 
     it('should render image grid in right column', () => {
-      render(
-        <ProjectSkeleton variant="wide-regular" />
-      );
+      render(<ProjectSkeleton variant="wide-regular" />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toHaveAttribute('aria-label', 'Loading project details');
     });
@@ -160,18 +153,14 @@ describe('ProjectSkeleton', () => {
 
   describe('Custom styling', () => {
     it('should accept and apply custom sx prop', () => {
-      render(
-        <ProjectSkeleton sx={{ opacity: 0.5 }} />
-      );
+      render(<ProjectSkeleton sx={{ opacity: 0.5 }} />);
       const section = screen.getByRole('progressbar');
       // Component should render with custom styling applied
       expect(section).toBeInTheDocument();
     });
 
     it('should merge custom sx with default styles', () => {
-      render(
-        <ProjectSkeleton variant="narrow" sx={{ mb: 2 }} />
-      );
+      render(<ProjectSkeleton variant="narrow" sx={{ mb: 2 }} />);
       const skeleton = screen.getByRole('progressbar');
       expect(skeleton).toBeInTheDocument();
     });
@@ -200,9 +189,11 @@ describe('ProjectSkeleton', () => {
   describe('Content structure', () => {
     it('should have divider between projects', () => {
       render(<ProjectSkeleton />);
-      const dividers = screen.getByRole('progressbar')
-        .closest('section')
-        ?.querySelectorAll('hr') || [];
+      const dividers =
+        screen
+          .getByRole('progressbar')
+          .closest('section')
+          ?.querySelectorAll('hr') || [];
       expect(dividers.length).toBeGreaterThan(-1);
     });
 

@@ -217,7 +217,9 @@ describe('Type Guards', () => {
 
     it('should throw error for non-array input', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => validateProjects({} as any)).toThrow('Projects data must be an array');
+      expect(() => validateProjects({} as any)).toThrow(
+        'Projects data must be an array'
+      );
     });
 
     it('should throw error for array with invalid project', () => {
@@ -226,7 +228,9 @@ describe('Type Guards', () => {
         { id: 'invalid' }, // Missing required fields
       ];
 
-      expect(() => validateProjects(invalidProjects)).toThrow(/Invalid project at index 1/);
+      expect(() => validateProjects(invalidProjects)).toThrow(
+        /Invalid project at index 1/
+      );
     });
 
     it('should return true for empty array', () => {
@@ -257,7 +261,9 @@ describe('Type Guards', () => {
 
     it('should throw TypeError for non-string input', () => {
       expect(() => isValidString(null as unknown as string)).toThrow(TypeError);
-      expect(() => isValidString(undefined as unknown as string)).toThrow(TypeError);
+      expect(() => isValidString(undefined as unknown as string)).toThrow(
+        TypeError
+      );
       expect(() => isValidString(123 as unknown as string)).toThrow(TypeError);
     });
   });
@@ -302,8 +308,12 @@ describe('Type Guards', () => {
     });
 
     it('should throw TypeError for non-string input', () => {
-      expect(() => isValidUrlPath(null as unknown as string)).toThrow(TypeError);
-      expect(() => isValidUrlPath(undefined as unknown as string)).toThrow(TypeError);
+      expect(() => isValidUrlPath(null as unknown as string)).toThrow(
+        TypeError
+      );
+      expect(() => isValidUrlPath(undefined as unknown as string)).toThrow(
+        TypeError
+      );
       expect(() => isValidUrlPath(123 as unknown as string)).toThrow(TypeError);
     });
   });

@@ -15,7 +15,11 @@ import type { ColophonData } from '../types/colophon';
 import type { TranslationFunction } from '../hooks/useI18n';
 import type { Locale } from '../lib/i18n-constants';
 import { BRAND_COLORS } from '../constants';
-import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING, FONT_FAMILY_CURSIVE } from '../lib/fontConstants';
+import {
+  FONT_FAMILY_BODY,
+  FONT_FAMILY_HEADING,
+  FONT_FAMILY_CURSIVE,
+} from '../lib/fontConstants';
 import { getLocalizedImageUrl } from '../utils/imageLocalization';
 
 /**
@@ -66,17 +70,26 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'Next.js 16',
-              description: t('colophon.technologies.categories.0.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.0.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://nextjs.org/',
             },
             {
               name: 'React 19',
-              description: t('colophon.technologies.categories.0.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.0.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://react.dev/',
             },
             {
               name: 'TypeScript',
-              description: t('colophon.technologies.categories.0.items.2.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.0.items.2.description',
+                { ns: 'pages' }
+              ),
               url: 'https://www.typescriptlang.org/',
             },
           ],
@@ -86,27 +99,42 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'i18next',
-              description: t('colophon.technologies.categories.1.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.1.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://www.i18next.com/',
             },
             {
               name: 'JSDoc',
-              description: t('colophon.technologies.categories.1.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.1.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://jsdoc.app/',
             },
             {
               name: 'Prettier',
-              description: t('colophon.technologies.categories.1.items.2.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.1.items.2.description',
+                { ns: 'pages' }
+              ),
               url: 'https://prettier.io/',
             },
             {
               name: 'ESLint',
-              description: t('colophon.technologies.categories.1.items.3.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.1.items.3.description',
+                { ns: 'pages' }
+              ),
               url: 'https://eslint.org/',
             },
             {
               name: 'Husky',
-              description: t('colophon.technologies.categories.1.items.4.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.1.items.4.description',
+                { ns: 'pages' }
+              ),
               url: 'https://typicode.github.io/husky/',
             },
           ],
@@ -116,32 +144,50 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'Claude Code',
-              description: t('colophon.technologies.categories.2.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.2.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://claude.ai/',
             },
             {
               name: 'Context7',
-              description: t('colophon.technologies.categories.2.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.2.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://context7.io/',
             },
             {
               name: 'DeepL MCP',
-              description: t('colophon.technologies.categories.2.items.2.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.2.items.2.description',
+                { ns: 'pages' }
+              ),
               url: 'https://www.deepl.com/',
             },
             {
               name: 'Sentry MCP',
-              description: t('colophon.technologies.categories.2.items.3.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.2.items.3.description',
+                { ns: 'pages' }
+              ),
               url: 'https://docs.sentry.io/platforms/javascript/guides/nextjs/',
             },
             {
               name: 'PostHog MCP',
-              description: t('colophon.technologies.categories.2.items.4.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.2.items.4.description',
+                { ns: 'pages' }
+              ),
               url: 'https://posthog.com/',
             },
             {
               name: 'Playwright MCP',
-              description: t('colophon.technologies.categories.2.items.5.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.2.items.5.description',
+                { ns: 'pages' }
+              ),
               url: 'https://playwright.dev/',
             },
           ],
@@ -151,12 +197,18 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'Material UI (MUI)',
-              description: t('colophon.technologies.categories.3.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.3.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://mui.com/',
             },
             {
               name: 'Emotion',
-              description: t('colophon.technologies.categories.3.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.3.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://emotion.sh/',
             },
           ],
@@ -166,27 +218,42 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'Vitest',
-              description: t('colophon.technologies.categories.4.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.4.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://vitest.dev/',
             },
             {
               name: 'React Testing Library',
-              description: t('colophon.technologies.categories.4.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.4.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://testing-library.com/react',
             },
             {
               name: 'axe-core',
-              description: t('colophon.technologies.categories.4.items.2.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.4.items.2.description',
+                { ns: 'pages' }
+              ),
               url: 'https://www.deque.com/axe/core/',
             },
             {
               name: 'vitest-axe',
-              description: t('colophon.technologies.categories.4.items.3.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.4.items.3.description',
+                { ns: 'pages' }
+              ),
               url: 'https://github.com/nickcolley/vitest-axe',
             },
             {
               name: 'Playwright',
-              description: t('colophon.technologies.categories.4.items.4.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.4.items.4.description',
+                { ns: 'pages' }
+              ),
               url: 'https://playwright.dev/',
             },
           ],
@@ -196,17 +263,26 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'npm',
-              description: t('colophon.technologies.categories.5.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.5.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://www.npmjs.com/',
             },
             {
               name: 'GitHub Actions',
-              description: t('colophon.technologies.categories.5.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.5.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://github.com/features/actions',
             },
             {
               name: 'Railway',
-              description: t('colophon.technologies.categories.5.items.2.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.5.items.2.description',
+                { ns: 'pages' }
+              ),
               url: 'https://railway.app/',
             },
           ],
@@ -216,17 +292,26 @@ export function getLocalizedColophonData(
           items: [
             {
               name: 'Sentry',
-              description: t('colophon.technologies.categories.6.items.0.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.6.items.0.description',
+                { ns: 'pages' }
+              ),
               url: 'https://sentry.io/',
             },
             {
               name: 'PostHog',
-              description: t('colophon.technologies.categories.6.items.1.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.6.items.1.description',
+                { ns: 'pages' }
+              ),
               url: 'https://posthog.com/',
             },
             {
               name: 'Web Vitals',
-              description: t('colophon.technologies.categories.6.items.2.description', { ns: 'pages' }),
+              description: t(
+                'colophon.technologies.categories.6.items.2.description',
+                { ns: 'pages' }
+              ),
               url: 'https://web.dev/vitals/',
             },
           ],
@@ -239,32 +324,44 @@ export function getLocalizedColophonData(
         items: [
           {
             name: 'Gumby Framework',
-            description: t('colophon.technologies.v1.items.0.description', { ns: 'pages' }),
+            description: t('colophon.technologies.v1.items.0.description', {
+              ns: 'pages',
+            }),
             url: 'http://gumbyframework.com',
           },
           {
             name: 'jQuery',
-            description: t('colophon.technologies.v1.items.1.description', { ns: 'pages' }),
+            description: t('colophon.technologies.v1.items.1.description', {
+              ns: 'pages',
+            }),
             url: 'https://jquery.com/',
           },
           {
             name: 'PHP',
-            description: t('colophon.technologies.v1.items.2.description', { ns: 'pages' }),
+            description: t('colophon.technologies.v1.items.2.description', {
+              ns: 'pages',
+            }),
             url: 'https://www.php.net/',
           },
           {
             name: 'Swipebox',
-            description: t('colophon.technologies.v1.items.3.description', { ns: 'pages' }),
+            description: t('colophon.technologies.v1.items.3.description', {
+              ns: 'pages',
+            }),
             url: 'https://github.com/brutaldesign/swipebox',
           },
           {
             name: 'SWFObject',
-            description: t('colophon.technologies.v1.items.4.description', { ns: 'pages' }),
+            description: t('colophon.technologies.v1.items.4.description', {
+              ns: 'pages',
+            }),
             url: 'https://github.com/swfobject/swfobject',
           },
           {
             name: 'Sass & Compass',
-            description: t('colophon.technologies.v1.items.5.description', { ns: 'pages' }),
+            description: t('colophon.technologies.v1.items.5.description', {
+              ns: 'pages',
+            }),
             url: 'https://sass-lang.com/',
           },
         ],
@@ -278,44 +375,64 @@ export function getLocalizedColophonData(
         {
           name: t('colophon.designPhilosophy.colors.0.name', { ns: 'pages' }),
           hex: BRAND_COLORS.sakura,
-          description: t('colophon.designPhilosophy.colors.0.description', { ns: 'pages' }),
+          description: t('colophon.designPhilosophy.colors.0.description', {
+            ns: 'pages',
+          }),
         },
         {
           name: t('colophon.designPhilosophy.colors.1.name', { ns: 'pages' }),
           hex: BRAND_COLORS.duckEgg,
-          description: t('colophon.designPhilosophy.colors.1.description', { ns: 'pages' }),
+          description: t('colophon.designPhilosophy.colors.1.description', {
+            ns: 'pages',
+          }),
         },
         {
           name: t('colophon.designPhilosophy.colors.2.name', { ns: 'pages' }),
           hex: BRAND_COLORS.skyBlue,
-          description: t('colophon.designPhilosophy.colors.2.description', { ns: 'pages' }),
+          description: t('colophon.designPhilosophy.colors.2.description', {
+            ns: 'pages',
+          }),
         },
         {
           name: t('colophon.designPhilosophy.colors.3.name', { ns: 'pages' }),
           hex: BRAND_COLORS.graphite,
-          description: t('colophon.designPhilosophy.colors.3.description', { ns: 'pages' }),
+          description: t('colophon.designPhilosophy.colors.3.description', {
+            ns: 'pages',
+          }),
         },
         {
           name: t('colophon.designPhilosophy.colors.4.name', { ns: 'pages' }),
           hex: BRAND_COLORS.sage,
-          description: t('colophon.designPhilosophy.colors.4.description', { ns: 'pages' }),
+          description: t('colophon.designPhilosophy.colors.4.description', {
+            ns: 'pages',
+          }),
         },
         {
           name: t('colophon.designPhilosophy.colors.5.name', { ns: 'pages' }),
           hex: BRAND_COLORS.maroon,
-          description: t('colophon.designPhilosophy.colors.5.description', { ns: 'pages' }),
+          description: t('colophon.designPhilosophy.colors.5.description', {
+            ns: 'pages',
+          }),
         },
       ],
 
-      colorDescription: t('colophon.designPhilosophy.colorDescription', { ns: 'pages' }),
+      colorDescription: t('colophon.designPhilosophy.colorDescription', {
+        ns: 'pages',
+      }),
 
-      typographyIntro: t('colophon.designPhilosophy.typographyIntro', { ns: 'pages' }),
+      typographyIntro: t('colophon.designPhilosophy.typographyIntro', {
+        ns: 'pages',
+      }),
 
       typography: [
         {
           name: 'Open Sans',
-          usage: t('colophon.designPhilosophy.typography.0.usage', { ns: 'pages' }),
-          sample: t('colophon.designPhilosophy.typography.0.sample', { ns: 'pages' }),
+          usage: t('colophon.designPhilosophy.typography.0.usage', {
+            ns: 'pages',
+          }),
+          sample: t('colophon.designPhilosophy.typography.0.sample', {
+            ns: 'pages',
+          }),
           fontFamily: FONT_FAMILY_BODY,
           fontWeight: 400,
           sampleFontSize: '1rem',
@@ -323,8 +440,12 @@ export function getLocalizedColophonData(
         },
         {
           name: 'Oswald',
-          usage: t('colophon.designPhilosophy.typography.1.usage', { ns: 'pages' }),
-          sample: t('colophon.designPhilosophy.typography.1.sample', { ns: 'pages' }),
+          usage: t('colophon.designPhilosophy.typography.1.usage', {
+            ns: 'pages',
+          }),
+          sample: t('colophon.designPhilosophy.typography.1.sample', {
+            ns: 'pages',
+          }),
           fontFamily: FONT_FAMILY_HEADING,
           fontWeight: 700,
           sampleFontSize: '1.5rem',
@@ -332,8 +453,12 @@ export function getLocalizedColophonData(
         },
         {
           name: 'Gochi Hand',
-          usage: t('colophon.designPhilosophy.typography.2.usage', { ns: 'pages' }),
-          sample: t('colophon.designPhilosophy.typography.2.sample', { ns: 'pages' }),
+          usage: t('colophon.designPhilosophy.typography.2.usage', {
+            ns: 'pages',
+          }),
+          sample: t('colophon.designPhilosophy.typography.2.sample', {
+            ns: 'pages',
+          }),
           fontFamily: FONT_FAMILY_CURSIVE,
           fontWeight: 400,
           sampleFontSize: '1.25rem',

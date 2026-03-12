@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Box } from "@mui/material";
-import { useScrollAnimation, useAnimations } from "../../hooks";
+import { Box } from '@mui/material';
+import { useScrollAnimation, useAnimations } from '../../hooks';
 
 /**
  * Wrapper component that applies fade-in and slide-up animations as content enters the viewport.
@@ -26,7 +26,11 @@ import { useScrollAnimation, useAnimations } from "../../hooks";
  * <ProjectDetail project={project} />
  * </ScrollAnimatedSection>
  */
-export function ScrollAnimatedSection({ children }: { children: React.ReactNode }) {
+export function ScrollAnimatedSection({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { ref, isInView } = useScrollAnimation();
   const { shouldAnimate } = useAnimations();
 

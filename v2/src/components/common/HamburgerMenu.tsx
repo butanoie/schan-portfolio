@@ -1,18 +1,31 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Drawer, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useMediaQuery, useTheme, Divider, Typography } from "@mui/material";
-import { alpha, type Theme } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { BRAND_COLORS, NAV_COLORS } from "../../constants";
-import { useI18n } from "@/src/hooks/useI18n";
-import { useAnimations } from "@/src/hooks/useAnimations";
-import { FONT_FAMILY_BODY } from "@/src/lib/fontConstants";
-import { SettingsList } from "../settings/SettingsList";
-import { getNavLinks, isActivePath } from "../../utils/navigation";
+import { useState } from 'react';
+import {
+  Drawer,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+  Divider,
+  Typography,
+} from '@mui/material';
+import { alpha, type Theme } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BRAND_COLORS, NAV_COLORS } from '../../constants';
+import { useI18n } from '@/src/hooks/useI18n';
+import { useAnimations } from '@/src/hooks/useAnimations';
+import { FONT_FAMILY_BODY } from '@/src/lib/fontConstants';
+import { SettingsList } from '../settings/SettingsList';
+import { getNavLinks, isActivePath } from '../../utils/navigation';
 
 /**
  * Generates theme-aware styling for icon buttons (hamburger open and close).
@@ -26,7 +39,7 @@ function getDrawerIconButtonSx(theme: Theme) {
     color: theme.palette.secondary.main,
     minWidth: 44,
     minHeight: 44,
-    "&:hover": {
+    '&:hover': {
       backgroundColor: alpha(theme.palette.secondary.main, 0.08),
     },
   };
@@ -86,7 +99,7 @@ export default function HamburgerMenu() {
       {/* Hamburger Menu Icon Button */}
       <IconButton
         onClick={() => setOpen(true)}
-        aria-label={t("nav.menu.hamburger")}
+        aria-label={t('nav.menu.hamburger')}
         aria-expanded={open}
         size="medium"
         sx={drawerIconButtonSx}
@@ -101,26 +114,26 @@ export default function HamburgerMenu() {
         onClose={handleClose}
         transitionDuration={animationsEnabled ? undefined : 0}
         sx={{
-          "& .MuiDrawer-paper": {
+          '& .MuiDrawer-paper': {
             width: 250,
-            boxSizing: "border-box",
+            boxSizing: 'border-box',
           },
-          "& .MuiBackdrop-root": {
-            transition: animationsEnabled ? undefined : "none !important",
+          '& .MuiBackdrop-root': {
+            transition: animationsEnabled ? undefined : 'none !important',
           },
         }}
       >
         {/* Drawer Header with Close Button */}
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "flex-end",
+            display: 'flex',
+            justifyContent: 'flex-end',
             p: 1,
           }}
         >
           <IconButton
             onClick={handleClose}
-            aria-label={t("nav.menu.close")}
+            aria-label={t('nav.menu.close')}
             size="medium"
             sx={drawerIconButtonSx}
           >
@@ -138,48 +151,48 @@ export default function HamburgerMenu() {
             {navItems.map((item) => {
               const active = isActivePath(pathname, item.href);
               return (
-              <ListItem key={item.href} disablePadding sx={{ mb: 1 }}>
-                <ListItemButton
-                  component={Link}
-                  href={item.href}
-                  onClick={handleClose}
-                  aria-current={active ? "page" : undefined}
-                  sx={{
-                    backgroundColor: active
-                      ? NAV_COLORS.active
-                      : BRAND_COLORS.sage,
-                    color: NAV_COLORS.text,
-                    borderRadius: 1,
-                    py: 1.5,
-                    "&:hover": {
-                      backgroundColor: active
-                        ? NAV_COLORS.activeHover
-                        : NAV_COLORS.inactiveHover,
-                    },
-                  }}
-                >
-                  <ListItemIcon
+                <ListItem key={item.href} disablePadding sx={{ mb: 1 }}>
+                  <ListItemButton
+                    component={Link}
+                    href={item.href}
+                    onClick={handleClose}
+                    aria-current={active ? 'page' : undefined}
                     sx={{
+                      backgroundColor: active
+                        ? NAV_COLORS.active
+                        : BRAND_COLORS.sage,
                       color: NAV_COLORS.text,
-                      minWidth: 40,
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={t(item.labelKey)}
-                    slotProps={{
-                      primary: {
-                        sx: {
-                          fontFamily: FONT_FAMILY_BODY,
-                          fontWeight: 600,
-                          color: NAV_COLORS.text,
-                        },
+                      borderRadius: 1,
+                      py: 1.5,
+                      '&:hover': {
+                        backgroundColor: active
+                          ? NAV_COLORS.activeHover
+                          : NAV_COLORS.inactiveHover,
                       },
                     }}
-                  />
-                </ListItemButton>
-              </ListItem>
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color: NAV_COLORS.text,
+                        minWidth: 40,
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={t(item.labelKey)}
+                      slotProps={{
+                        primary: {
+                          sx: {
+                            fontFamily: FONT_FAMILY_BODY,
+                            fontWeight: 600,
+                            color: NAV_COLORS.text,
+                          },
+                        },
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
               );
             })}
           </List>
@@ -195,11 +208,11 @@ export default function HamburgerMenu() {
             variant="h6"
             sx={{
               mb: 2,
-              fontSize: "1rem",
+              fontSize: '1rem',
               fontWeight: 600,
             }}
           >
-            {t("settings.title")}
+            {t('settings.title')}
           </Typography>
 
           <SettingsList />

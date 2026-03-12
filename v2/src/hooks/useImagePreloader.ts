@@ -80,7 +80,10 @@ export function useImagePreloader(): UseImagePreloaderResult {
    * @returns Promise resolving to true on success, false on failure/timeout
    */
   const preloadImage = useCallback(
-    (url: string, timeoutMs: number = DEFAULT_PRELOAD_TIMEOUT): Promise<boolean> => {
+    (
+      url: string,
+      timeoutMs: number = DEFAULT_PRELOAD_TIMEOUT
+    ): Promise<boolean> => {
       // Already cached — resolve immediately
       if (cacheRef.current.has(url)) {
         return Promise.resolve(true);

@@ -8,9 +8,9 @@
  * - Starts hidden (opacity 0, translated down) before entering viewport
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { ScrollAnimatedSection } from "@/src/components/common/ScrollAnimatedSection";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { ScrollAnimatedSection } from '@/src/components/common/ScrollAnimatedSection';
 
 /** Mock return value for useScrollAnimation */
 const mockScrollAnimation = {
@@ -25,7 +25,7 @@ const mockAnimations = {
   toggleAnimations: vi.fn(),
 };
 
-vi.mock("../../../hooks", () => ({
+vi.mock('../../../hooks', () => ({
   /**
    * Returns mock scroll animation state for controlling viewport visibility.
    *
@@ -41,51 +41,51 @@ vi.mock("../../../hooks", () => ({
   useAnimations: () => mockAnimations,
 }));
 
-describe("ScrollAnimatedSection", () => {
+describe('ScrollAnimatedSection', () => {
   beforeEach(() => {
     mockScrollAnimation.isInView = false;
     mockAnimations.shouldAnimate = true;
   });
 
-  it("should render children", () => {
+  it('should render children', () => {
     render(
       <ScrollAnimatedSection>
         <div data-testid="child">Test content</div>
       </ScrollAnimatedSection>
     );
-    expect(screen.getByTestId("child")).toBeInTheDocument();
-    expect(screen.getByText("Test content")).toBeInTheDocument();
+    expect(screen.getByTestId('child')).toBeInTheDocument();
+    expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
-  it("should start with hidden styles when not in view", () => {
+  it('should start with hidden styles when not in view', () => {
     render(
       <ScrollAnimatedSection>
         <div>Content</div>
       </ScrollAnimatedSection>
     );
-    const wrapper = screen.getByText("Content").parentElement;
+    const wrapper = screen.getByText('Content').parentElement;
     expect(wrapper).toHaveStyle({ opacity: 0 });
   });
 
-  it("should show content when in view", () => {
+  it('should show content when in view', () => {
     mockScrollAnimation.isInView = true;
     render(
       <ScrollAnimatedSection>
         <div>Content</div>
       </ScrollAnimatedSection>
     );
-    const wrapper = screen.getByText("Content").parentElement;
+    const wrapper = screen.getByText('Content').parentElement;
     expect(wrapper).toHaveStyle({ opacity: 1 });
   });
 
-  it("should disable transitions when animations are disabled", () => {
+  it('should disable transitions when animations are disabled', () => {
     mockAnimations.shouldAnimate = false;
     render(
       <ScrollAnimatedSection>
         <div>Content</div>
       </ScrollAnimatedSection>
     );
-    const wrapper = screen.getByText("Content").parentElement;
-    expect(wrapper).toHaveStyle({ transition: "none" });
+    const wrapper = screen.getByText('Content').parentElement;
+    expect(wrapper).toHaveStyle({ transition: 'none' });
   });
 });

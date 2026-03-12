@@ -3,7 +3,11 @@ import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Header from '@/src/components/common/Header';
-import { testAccessibility, canReceiveFocus, hasAccessibleName } from '@/src/__tests__/utils/axe-helpers';
+import {
+  testAccessibility,
+  canReceiveFocus,
+  hasAccessibleName,
+} from '@/src/__tests__/utils/axe-helpers';
 
 /**
  * Mock next/navigation usePathname hook

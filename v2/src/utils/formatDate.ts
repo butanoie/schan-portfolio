@@ -35,4 +35,3 @@ export function formatDate(
     return dateString; // Return original string if formatting fails
   }
 }
-

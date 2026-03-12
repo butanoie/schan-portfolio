@@ -7,31 +7,31 @@
  * @module MainLayout.test
  */
 
-import { render, screen, act } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import MainLayout from "../../../components/common/MainLayout";
-import { usePathname } from "next/navigation";
-import { useI18n } from "../../../hooks/useI18n";
-import { testAccessibility, canReceiveFocus } from "../../utils/axe-helpers";
+import { render, screen, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import MainLayout from '../../../components/common/MainLayout';
+import { usePathname } from 'next/navigation';
+import { useI18n } from '../../../hooks/useI18n';
+import { testAccessibility, canReceiveFocus } from '../../utils/axe-helpers';
 
 /**
  * Mock next/navigation module
  */
-vi.mock("next/navigation", () => ({
+vi.mock('next/navigation', () => ({
   usePathname: vi.fn(),
 }));
 
 /**
  * Mock useI18n hook
  */
-vi.mock("../../../hooks/useI18n", () => ({
+vi.mock('../../../hooks/useI18n', () => ({
   useI18n: vi.fn(),
 }));
 
 /**
  * Mock FrenchTranslationAlert component
  */
-vi.mock("../../../components/common/FrenchTranslationAlert", () => ({
+vi.mock('../../../components/common/FrenchTranslationAlert', () => ({
   /**
    * Mocked FrenchTranslationAlert component that returns null
    *
@@ -43,7 +43,7 @@ vi.mock("../../../components/common/FrenchTranslationAlert", () => ({
 /**
  * Mock Header component
  */
-vi.mock("../../../components/common/Header", () => ({
+vi.mock('../../../components/common/Header', () => ({
   /**
    * Mocked Header component for testing
    *
@@ -55,7 +55,7 @@ vi.mock("../../../components/common/Header", () => ({
 /**
  * Mock Footer component
  */
-vi.mock("../../../components/common/Footer", () => ({
+vi.mock('../../../components/common/Footer', () => ({
   /**
    * Mocked Footer component for testing
    *
@@ -64,7 +64,7 @@ vi.mock("../../../components/common/Footer", () => ({
   default: () => <div data-testid="footer-mock">Footer</div>,
 }));
 
-describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
+describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
   /**
    * Mock translations for testing
    */
@@ -77,7 +77,7 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
      */
     t: (key: string): string => {
       const translations: Record<string, string> = {
-        "nav.skipToMain": "Skip to main content",
+        'nav.skipToMain': 'Skip to main content',
       };
       return translations[key] || key;
     },
@@ -92,12 +92,14 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
     /**
      * Mock usePathname to return home page by default
      */
-    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue("/");
+    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue('/');
 
     /**
      * Mock useI18n to return translation function
      */
-    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockTranslations);
+    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      mockTranslations
+    );
   });
 
   /**
@@ -106,16 +108,16 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 2.4.1 - Bypass Blocks
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should have skip to main content link", () => {
+  it('should have skip to main content link', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const skipLink = screen.getByRole("link", { name: /skip to main/i });
+    const skipLink = screen.getByRole('link', { name: /skip to main/i });
     expect(skipLink).toBeInTheDocument();
-    expect(skipLink).toHaveAttribute("href", "#main-content");
+    expect(skipLink).toHaveAttribute('href', '#main-content');
   });
 
   /**
@@ -124,14 +126,14 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 2.1.1 - Keyboard Accessible
    * WCAG 2.4.7 - Focus Visible
    */
-  it("should have keyboard accessible skip link", () => {
+  it('should have keyboard accessible skip link', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const skipLink = screen.getByRole("link", { name: /skip to main/i });
+    const skipLink = screen.getByRole('link', { name: /skip to main/i });
     expect(canReceiveFocus(skipLink as HTMLElement)).toBe(true);
   });
 
@@ -140,15 +142,15 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.4.1 - Bypass Blocks
    */
-  it("should have main content area with id", () => {
+  it('should have main content area with id', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const main = screen.getByRole("main");
-    expect(main).toHaveAttribute("id", "main-content");
+    const main = screen.getByRole('main');
+    expect(main).toHaveAttribute('id', 'main-content');
   });
 
   /**
@@ -156,14 +158,14 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should have main landmark", () => {
+  it('should have main landmark', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const main = screen.getByRole("main");
+    const main = screen.getByRole('main');
     expect(main).toBeInTheDocument();
   });
 
@@ -172,14 +174,14 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should render header component", () => {
+  it('should render header component', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    expect(screen.getByTestId("header-mock")).toBeInTheDocument();
+    expect(screen.getByTestId('header-mock')).toBeInTheDocument();
   });
 
   /**
@@ -187,14 +189,14 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should render footer component", () => {
+  it('should render footer component', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    expect(screen.getByTestId("footer-mock")).toBeInTheDocument();
+    expect(screen.getByTestId('footer-mock')).toBeInTheDocument();
   });
 
   /**
@@ -202,8 +204,8 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should render children in main content area", () => {
-    const testContent = "Test page content";
+  it('should render children in main content area', () => {
+    const testContent = 'Test page content';
 
     render(
       <MainLayout>
@@ -219,18 +221,18 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.4.1 - Bypass Blocks
    */
-  it("should hide skip link off-screen initially", () => {
+  it('should hide skip link off-screen initially', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const skipLink = screen.getByRole("link", { name: /skip to main/i });
+    const skipLink = screen.getByRole('link', { name: /skip to main/i });
     const styles = window.getComputedStyle(skipLink);
 
     // Off-screen positioning
-    expect(styles.left).toBe("-9999px");
+    expect(styles.left).toBe('-9999px');
   });
 
   /**
@@ -239,14 +241,16 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 2.4.1 - Bypass Blocks
    * WCAG 2.4.7 - Focus Visible
    */
-  it("should show skip link on focus", () => {
+  it('should show skip link on focus', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const skipLink = screen.getByRole("link", { name: /skip to main/i }) as HTMLElement;
+    const skipLink = screen.getByRole('link', {
+      name: /skip to main/i,
+    }) as HTMLElement;
     skipLink.focus();
 
     // After focus, should be visible
@@ -258,7 +262,7 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should have proper semantic structure (flex layout)", () => {
+  it('should have proper semantic structure (flex layout)', () => {
     const { container } = render(
       <MainLayout>
         <div>Test content</div>
@@ -270,8 +274,8 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
     expect(wrapper).toBeInTheDocument();
 
     // Verify header and footer are present in the layout
-    expect(screen.getByTestId("header-mock")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-mock")).toBeInTheDocument();
+    expect(screen.getByTestId('header-mock')).toBeInTheDocument();
+    expect(screen.getByTestId('footer-mock')).toBeInTheDocument();
   });
 
   /**
@@ -279,7 +283,7 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.2 Level AA comprehensive scan
    */
-  it("should pass axe accessibility audit", async () => {
+  it('should pass axe accessibility audit', async () => {
     const { container } = render(
       <MainLayout>
         <div>Test content</div>
@@ -287,7 +291,9 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
     );
 
     await act(async () => {
-      await testAccessibility({ container } as unknown as Parameters<typeof testAccessibility>[0]);
+      await testAccessibility({ container } as unknown as Parameters<
+        typeof testAccessibility
+      >[0]);
     });
   });
 
@@ -296,7 +302,7 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1 - Operable
    */
-  it("should fill full viewport height", () => {
+  it('should fill full viewport height', () => {
     const { container } = render(
       <MainLayout>
         <div>Test content</div>
@@ -306,9 +312,9 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
     const wrapper = container.firstChild as HTMLElement;
     const styles = window.getComputedStyle(wrapper);
 
-    expect(styles.minHeight).toBe("100vh");
-    expect(styles.display).toBe("flex");
-    expect(styles.flexDirection).toBe("column");
+    expect(styles.minHeight).toBe('100vh');
+    expect(styles.display).toBe('flex');
+    expect(styles.flexDirection).toBe('column');
   });
 
   /**
@@ -316,23 +322,23 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1 - Operable
    */
-  it("should have flexible main content area", () => {
+  it('should have flexible main content area', () => {
     render(
       <MainLayout>
         <div>Test content</div>
       </MainLayout>
     );
 
-    const main = screen.getByRole("main");
+    const main = screen.getByRole('main');
 
     // Verify main element exists and is properly rendered
     expect(main).toBeInTheDocument();
 
     // Verify it's wrapped in a Container component with proper attributes
-    expect(main).toHaveAttribute("id", "main-content");
+    expect(main).toHaveAttribute('id', 'main-content');
 
     // Verify children are rendered within main
-    expect(screen.getByText("Test content")).toBeInTheDocument();
+    expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
   /**
@@ -340,7 +346,7 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 3.1.1 - Language of Page
    */
-  it("should use translated text for skip link", () => {
+  it('should use translated text for skip link', () => {
     render(
       <MainLayout>
         <div>Test content</div>
@@ -348,7 +354,7 @@ describe("MainLayout - WCAG 2.2 Level AA Accessibility", () => {
     );
 
     // The skip link uses t() function which should resolve to the translation
-    const skipLink = screen.getByRole("link", { name: /skip to main/i });
+    const skipLink = screen.getByRole('link', { name: /skip to main/i });
     expect(skipLink).toBeInTheDocument();
   });
 });

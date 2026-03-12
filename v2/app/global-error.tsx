@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Root-level error boundary for the Next.js App Router.
@@ -19,8 +19,8 @@
  * @see https://nextjs.org/docs/app/building-your-application/routing/error-handling#handling-errors-in-root-layouts
  */
 
-import * as Sentry from "@sentry/nextjs";
-import { useEffect } from "react";
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
 
 /** Props provided by Next.js to the global error boundary. */
 interface GlobalErrorProps {
@@ -52,32 +52,32 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
       <body>
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            fontFamily: "system-ui, sans-serif",
-            padding: "2rem",
-            textAlign: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '100vh',
+            fontFamily: 'system-ui, sans-serif',
+            padding: '2rem',
+            textAlign: 'center',
           }}
         >
-          <h1 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
+          <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
             Something went wrong
           </h1>
-          <p style={{ color: "#666", marginBottom: "2rem", maxWidth: "30rem" }}>
+          <p style={{ color: '#666', marginBottom: '2rem', maxWidth: '30rem' }}>
             An unexpected error occurred. Please try again, or refresh the page
             if the problem persists.
           </p>
           <button
             onClick={reset}
             style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: "1rem",
-              cursor: "pointer",
-              border: "1px solid #ccc",
-              borderRadius: "0.375rem",
-              backgroundColor: "#fff",
+              padding: '0.75rem 1.5rem',
+              fontSize: '1rem',
+              cursor: 'pointer',
+              border: '1px solid #ccc',
+              borderRadius: '0.375rem',
+              backgroundColor: '#fff',
             }}
           >
             Try again

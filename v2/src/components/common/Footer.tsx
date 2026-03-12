@@ -1,16 +1,25 @@
-"use client";
+'use client';
 
-import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
-import MuiLink from "@mui/material/Link";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { BRAND_COLORS, NAV_COLORS, UI_COLORS } from "../../constants";
-import { useProjectLoading, type ProjectLoadingContextValue } from "../../contexts/ProjectLoadingContext";
-import { getNavLinks, isActivePath } from "../../utils/navigation";
-import { LoadMoreButton } from "../project/LoadMoreButton";
-import { useI18n } from "@/src/hooks/useI18n";
-import { FONT_FAMILY_BODY, FONT_FAMILY_CURSIVE } from "@/src/lib/fontConstants";
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import MuiLink from '@mui/material/Link';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BRAND_COLORS, NAV_COLORS, UI_COLORS } from '../../constants';
+import {
+  useProjectLoading,
+  type ProjectLoadingContextValue,
+} from '../../contexts/ProjectLoadingContext';
+import { getNavLinks, isActivePath } from '../../utils/navigation';
+import { LoadMoreButton } from '../project/LoadMoreButton';
+import { useI18n } from '@/src/hooks/useI18n';
+import { FONT_FAMILY_BODY, FONT_FAMILY_CURSIVE } from '@/src/lib/fontConstants';
 
 /**
  * Props for the ThoughtBubble component.
@@ -28,10 +37,10 @@ const CURRENT_YEAR = new Date().getFullYear();
 /** Shared typography styling for thought bubble text in Gochi Hand cursive font */
 const THOUGHT_BUBBLE_TEXT_SX = {
   fontFamily: FONT_FAMILY_CURSIVE,
-  fontSize: "1rem",
+  fontSize: '1rem',
   color: UI_COLORS.secondaryText,
-  "@media (min-width: 760px)": {
-    fontSize: "1.125rem",
+  '@media (min-width: 760px)': {
+    fontSize: '1.125rem',
   },
 } as const;
 
@@ -48,37 +57,37 @@ function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
   return (
     <Box
       sx={{
-        position: "absolute",
+        position: 'absolute',
         bottom: 230,
         right: 145,
         width: 180,
         height: 90,
-        padding: "15px 16px",
+        padding: '15px 16px',
         border: `2px solid ${UI_COLORS.border}`,
-        textAlign: "center",
+        textAlign: 'center',
         color: UI_COLORS.secondaryText,
         backgroundColor: UI_COLORS.cardBackground,
-        borderRadius: "160px / 80px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        borderRadius: '160px / 80px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         zIndex: 10,
-        pointerEvents: "auto",
-        "@media (max-width: 599px)": {
+        pointerEvents: 'auto',
+        '@media (max-width: 599px)': {
           bottom: 185,
         },
-        "@media (min-width: 760px)": {
+        '@media (min-width: 760px)': {
           bottom: 165,
           right: 225,
           width: 250,
           height: 125,
-          padding: "25px 20px",
+          padding: '25px 20px',
         },
         // Small thought bubble circles
-        "&::before": {
+        '&::before': {
           content: '""',
-          position: "absolute",
+          position: 'absolute',
           zIndex: 10,
           bottom: -25,
           right: 30,
@@ -86,15 +95,15 @@ function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
           height: 17,
           border: `2px solid ${UI_COLORS.border}`,
           backgroundColor: UI_COLORS.cardBackground,
-          borderRadius: "50%",
-          display: "block",
-          "@media (min-width: 760px)": {
+          borderRadius: '50%',
+          display: 'block',
+          '@media (min-width: 760px)': {
             right: 52,
           },
         },
-        "&::after": {
+        '&::after': {
           content: '""',
-          position: "absolute",
+          position: 'absolute',
           zIndex: 10,
           bottom: -35,
           right: 20,
@@ -102,9 +111,9 @@ function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
           height: 8,
           border: `2px solid ${UI_COLORS.border}`,
           backgroundColor: UI_COLORS.cardBackground,
-          borderRadius: "50%",
-          display: "block",
-          "@media (min-width: 760px)": {
+          borderRadius: '50%',
+          display: 'block',
+          '@media (min-width: 760px)': {
             right: 35,
           },
         },
@@ -149,10 +158,10 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        position: "relative",
+        position: 'relative',
         pt: 30,
-        overflow: "hidden",
-        "@media (min-width: 760px)": {
+        overflow: 'hidden',
+        '@media (min-width: 760px)': {
           pt: 25,
         },
       }}
@@ -161,29 +170,29 @@ export default function Footer() {
       <Container
         maxWidth="lg"
         sx={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       >
         {/* Buta Mascot - positioned relative to centered column */}
         <Box
           sx={{
-            position: "absolute",
+            position: 'absolute',
             bottom: 90,
             right: 16,
             width: 180,
             height: 125,
             margin: 0,
             zIndex: 0,
-            pointerEvents: "auto",
-            "@media (max-width: 599px)": {
+            pointerEvents: 'auto',
+            '@media (max-width: 599px)': {
               bottom: 45,
             },
-            "@media (min-width: 760px)": {
+            '@media (min-width: 760px)': {
               bottom: -56,
               right: 16,
               width: 300,
@@ -198,9 +207,9 @@ export default function Footer() {
             width={300}
             height={209}
             style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "contain",
+              width: '100%',
+              height: 'auto',
+              objectFit: 'contain',
             }}
           />
         </Box>
@@ -221,35 +230,33 @@ export default function Footer() {
           backgroundColor: BRAND_COLORS.sage,
           pt: 2,
           pb: 0,
-          pl: { xs: 2, sm:3, md: 4, lg: 10 },
+          pl: { xs: 2, sm: 3, md: 4, lg: 10 },
           pr: { xs: 3, md: 5 },
-          position: "relative",
+          position: 'relative',
           zIndex: 1,
         }}
       >
         <Container
           maxWidth="lg"
           sx={{
-            position: "relative",
+            position: 'relative',
           }}
         >
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
             {/* Navigation Links - Hidden on mobile */}
-            {!isMobile && (
-              <FooterNavLinks pathname={pathname} t={t} />
-            )}
+            {!isMobile && <FooterNavLinks pathname={pathname} t={t} />}
 
             {/* Copyright */}
             <Typography
               variant="body2"
               sx={{
                 color: UI_COLORS.copyrightText,
-                fontSize: "0.8125rem",
+                fontSize: '0.8125rem',
                 lineHeight: 1.4,
                 py: 1.25,
               }}
@@ -295,21 +302,29 @@ function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
       component="nav"
       aria-label="Footer navigation"
       sx={{
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
         gap: 1,
         mb: 1,
-        flexWrap: "wrap",
+        flexWrap: 'wrap',
       }}
     >
       {navLinks.map((link, index) => {
         const active = isActivePath(pathname, link.href);
         return (
-          <Box key={link.href} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box
+            key={link.href}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
             {index > 0 && (
               <Typography
                 component="span"
-                sx={{ color: NAV_COLORS.text, opacity: 0.6, fontSize: "0.875rem", userSelect: "none" }}
+                sx={{
+                  color: NAV_COLORS.text,
+                  opacity: 0.6,
+                  fontSize: '0.875rem',
+                  userSelect: 'none',
+                }}
                 aria-hidden
               >
                 ·
@@ -318,15 +333,15 @@ function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
             <MuiLink
               component={Link}
               href={link.href}
-              underline={active ? "always" : "hover"}
-              aria-current={active ? "page" : undefined}
+              underline={active ? 'always' : 'hover'}
+              aria-current={active ? 'page' : undefined}
               sx={{
                 color: NAV_COLORS.text,
                 fontFamily: FONT_FAMILY_BODY,
                 fontWeight: active ? 700 : 600,
-                fontSize: "0.875rem",
-                textDecorationColor: active ? NAV_COLORS.text : "inherit",
-                "&:hover": {
+                fontSize: '0.875rem',
+                textDecorationColor: active ? NAV_COLORS.text : 'inherit',
+                '&:hover': {
                   color: NAV_COLORS.text,
                 },
               }}
@@ -367,11 +382,17 @@ interface FooterThoughtBubbleProps {
  * @param props.t - Translation function
  * @returns The appropriate thought bubble, or null if none should be shown
  */
-function FooterThoughtBubble({ pathname, loadingContext, t }: FooterThoughtBubbleProps): React.ReactNode {
+function FooterThoughtBubble({
+  pathname,
+  loadingContext,
+  t,
+}: FooterThoughtBubbleProps): React.ReactNode {
   // Non-home pages: default thought bubble
   if (pathname !== '/') {
     return (
-      <ThoughtBubble ariaLabel={`Buta's thought bubble saying: ${t('footer.butaThought')}`}>
+      <ThoughtBubble
+        ariaLabel={`Buta's thought bubble saying: ${t('footer.butaThought')}`}
+      >
         <Typography sx={THOUGHT_BUBBLE_TEXT_SX}>
           {t('footer.butaThought')}
         </Typography>
@@ -402,7 +423,13 @@ function FooterThoughtBubble({ pathname, loadingContext, t }: FooterThoughtBubbl
   if (loadingContext.allLoaded) {
     return (
       <ThoughtBubble ariaLabel={t('footer.allProjectsLoaded')}>
-        <Typography sx={{ ...THOUGHT_BUBBLE_TEXT_SX, margin: 0, color: BRAND_COLORS.maroon }}>
+        <Typography
+          sx={{
+            ...THOUGHT_BUBBLE_TEXT_SX,
+            margin: 0,
+            color: BRAND_COLORS.maroon,
+          }}
+        >
           {t('footer.allProjectsLoaded')}
         </Typography>
         <Typography sx={THOUGHT_BUBBLE_TEXT_SX}>

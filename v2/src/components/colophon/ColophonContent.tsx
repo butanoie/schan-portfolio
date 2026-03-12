@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Divider } from "@mui/material";
-import { getLocalizedColophonData } from "../../data/colophon";
-import { useI18n } from "../../hooks/useI18n";
-import PageDeck from "../common/PageDeck";
-import { ScrollAnimatedSection } from "../common/ScrollAnimatedSection";
-import TechnologiesShowcase from "./TechnologiesShowcase";
-import DesignPhilosophy from "./DesignPhilosophy";
-import ButaStory from "./ButaStory";
+import { Divider } from '@mui/material';
+import { getLocalizedColophonData } from '../../data/colophon';
+import { useI18n } from '../../hooks/useI18n';
+import PageDeck from '../common/PageDeck';
+import { ScrollAnimatedSection } from '../common/ScrollAnimatedSection';
+import TechnologiesShowcase from './TechnologiesShowcase';
+import DesignPhilosophy from './DesignPhilosophy';
+import ButaStory from './ButaStory';
 
 /**
  * ColophonContent renders the localized colophon page content.

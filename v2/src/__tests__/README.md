@@ -85,6 +85,7 @@ describe('ComponentName', () => {
 ### Coverage Goals
 
 Per the modernization plan, aim for:
+
 - **80%+ coverage** for data layer utilities
 - **100% coverage** for critical business logic
 - **Meaningful tests** over achieving coverage numbers
@@ -108,6 +109,7 @@ npm run test:ui
 ### Coverage Reports
 
 After running `npm run test:coverage`, view the HTML report:
+
 - Open `coverage/index.html` in your browser for detailed coverage analysis
 
 ### Accessibility Testing

@@ -15,7 +15,7 @@ export interface ContactLink {
   url: string;
 
   /** Icon identifier for the button */
-  icon: "link" | "linkedin" | "github" | "email" | "download" | "phone";
+  icon: 'link' | 'linkedin' | 'github' | 'email' | 'download' | 'phone';
 }
 
 /**
@@ -30,7 +30,7 @@ export interface Role {
   startDate: string;
 
   /** End date of the role, or "Present" if current */
-  endDate: string | "Present";
+  endDate: string | 'Present';
 }
 
 /**

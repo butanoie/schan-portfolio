@@ -3,6 +3,7 @@
 This guide provides detailed, real-world examples of JSDoc patterns used in this project. Reference these patterns when writing code.
 
 **Quick Links:**
+
 - [Simple Functions](#simple-functions)
 - [React Components](#react-components)
 - [Custom Hooks](#custom-hooks)
@@ -46,9 +47,12 @@ function add(a: number, b: number): number {
  * formatPhone('1234567890', 'dots')   // Returns '123.456.7890'
  * formatPhone('1234567890')           // Returns '123-456-7890' (default)
  */
-function formatPhone(phone: string, format: 'dashes' | 'dots' | 'spaces' = 'dashes'): string {
-  const digits = phone.replace(/\D/g, '');
-  const separators = { dashes: '-', dots: '.', spaces: ' ' };
+function formatPhone(
+  phone: string,
+  format: "dashes" | "dots" | "spaces" = "dashes",
+): string {
+  const digits = phone.replace(/\D/g, "");
+  const separators = { dashes: "-", dots: ".", spaces: " " };
   return `${digits.slice(0, 3)}${separators[format]}${digits.slice(3, 6)}${separators[format]}${digits.slice(6)}`;
 }
 ```
@@ -70,10 +74,10 @@ function formatPhone(phone: string, format: 'dashes' | 'dots' | 'spaces' = 'dash
  */
 function saveUserData(userId: string, data: UserData): void {
   if (!window.localStorage) {
-    throw new Error('localStorage is not available');
+    throw new Error("localStorage is not available");
   }
   window.localStorage.setItem(`user_${userId}`, JSON.stringify(data));
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     console.log(`User data saved for ${userId}`);
   }
 }
@@ -97,8 +101,8 @@ function validateEmail(email: string): string {
   }
 
   const normalized = email.toLowerCase();
-  const blacklistedDomains = ['example.com', 'test.com'];
-  const domain = normalized.split('@')[1];
+  const blacklistedDomains = ["example.com", "test.com"];
+  const domain = normalized.split("@")[1];
 
   if (blacklistedDomains.includes(domain)) {
     throw new Error(`Email domain is blacklisted: ${domain}`);
@@ -296,7 +300,7 @@ function useToggle(initialValue: boolean = false) {
  * @example
  * useKeyPress(() => setIsOpen(false), 'Escape');
  */
-function useKeyPress(callback: () => void, targetKey: string = 'Escape') {
+function useKeyPress(callback: () => void, targetKey: string = "Escape") {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === targetKey) {
@@ -304,11 +308,11 @@ function useKeyPress(callback: () => void, targetKey: string = 'Escape') {
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
 
     // Cleanup function removes listener on unmount
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [callback, targetKey]);
 }
@@ -343,7 +347,7 @@ function useKeyPress(callback: () => void, targetKey: string = 'Escape') {
  */
 interface UseFetchOptions {
   headers?: Record<string, string>;
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   body?: Record<string, any>;
 }
 
@@ -356,7 +360,7 @@ interface UseFetchResult<T> {
 
 function useFetch<T = unknown>(
   url: string,
-  options?: UseFetchOptions
+  options?: UseFetchOptions,
 ): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
@@ -439,7 +443,7 @@ interface ProjectConfig {
   /** Deployment target configuration */
   deploy?: {
     /** Deployment service provider */
-    provider: 'vercel' | 'netlify' | 'aws';
+    provider: "vercel" | "netlify" | "aws";
     /** Environment variables for deployment */
     env: Record<string, string>;
     /** Regions to deploy to */
@@ -509,7 +513,7 @@ interface Paginated<T> {
  */
 function parseJSONSafely<T = unknown>(jsonString: string | null): T {
   if (!jsonString) {
-    throw new Error('JSON string cannot be null or empty');
+    throw new Error("JSON string cannot be null or empty");
   }
 
   try {
@@ -543,7 +547,7 @@ async function fetchUserData(userId: string): Promise<User> {
     const response = await fetch(`/api/users/${userId}`);
 
     if (response.status === 404) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     if (!response.ok) {
@@ -553,13 +557,13 @@ async function fetchUserData(userId: string): Promise<User> {
     const data = await response.json();
 
     if (!data.id || !data.name) {
-      throw new Error('Invalid user data received');
+      throw new Error("Invalid user data received");
     }
 
     return data as User;
   } catch (error) {
     if (error instanceof TypeError) {
-      throw new Error('Failed to fetch user: Network error');
+      throw new Error("Failed to fetch user: Network error");
     }
     throw error;
   }
@@ -592,7 +596,7 @@ async function fetchUserData(userId: string): Promise<User> {
  */
 async function uploadFile(
   file: File,
-  destination: 'profile' | 'projects' = 'projects'
+  destination: "profile" | "projects" = "projects",
 ): Promise<string> {
   const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -601,11 +605,11 @@ async function uploadFile(
   }
 
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('destination', destination);
+  formData.append("file", file);
+  formData.append("destination", destination);
 
-  const response = await fetch('/api/upload', {
-    method: 'POST',
+  const response = await fetch("/api/upload", {
+    method: "POST",
     body: formData,
   });
 
@@ -632,6 +636,7 @@ function calculateDiscount(price, percent) {
 ```
 
 **Fix:**
+
 ```typescript
 // GOOD: Complete JSDoc
 /**
@@ -657,6 +662,7 @@ const handleClick = (event: any) => {
 ```
 
 **Fix:**
+
 ```typescript
 // GOOD: Proper typing
 interface FormState {
@@ -687,6 +693,7 @@ function MyComponent() {
 ```
 
 **Fix:**
+
 ```typescript
 // GOOD: All dependencies included
 function MyComponent() {
@@ -717,12 +724,13 @@ JSDoc `{type}`, the return type is only discoverable by reading the implementati
  * @returns Promise resolving to the first 5 English projects
  */
 async function getInitialProjects() {
-  const response = await getProjects({ page: 1, pageSize: 5, locale: 'en' });
+  const response = await getProjects({ page: 1, pageSize: 5, locale: "en" });
   return response.items;
 }
 ```
 
 **Fix:**
+
 ```typescript
 // GOOD: Explicit return type annotation matches the @returns description
 /**
@@ -731,7 +739,7 @@ async function getInitialProjects() {
  * @returns {Promise<Project[]>} Promise resolving to the first 5 English projects
  */
 async function getInitialProjects(): Promise<Project[]> {
-  const response = await getProjects({ page: 1, pageSize: 5, locale: 'en' });
+  const response = await getProjects({ page: 1, pageSize: 5, locale: "en" });
   return response.items;
 }
 ```
@@ -762,10 +770,13 @@ function BridgeWrapper({
 }: {
   children: ReactNode;
   captured: { current: LoadingState | null };
-}) { /* ... */ }
+}) {
+  /* ... */
+}
 ```
 
 **Fix:**
+
 ```typescript
 // GOOD: "capturedRef" suffix satisfies lint; JSDoc describes mutability contract
 /**
@@ -784,10 +795,13 @@ function BridgeWrapper({
 }: {
   children: ReactNode;
   capturedRef: React.RefObject<LoadingState | null>;
-}) { /* ... */ }
+}) {
+  /* ... */
+}
 ```
 
 > **Key points:**
+>
 > - Name the parameter with a `Ref` suffix (`capturedRef`, `stateRef`, `valueRef`)
 > - Use `React.RefObject<T>` as the type instead of `{ current: T }`
 > - Document who writes to `.current`, when, and what the initial value is
@@ -802,6 +816,7 @@ function Button({ onClick, children, disabled, ...rest }) {
 ```
 
 **Fix:**
+
 ```typescript
 // GOOD: Props fully documented
 /**
@@ -893,9 +908,14 @@ export function ComponentName({ propName }: ComponentNameProps) {
 function useHookName(paramName: Type) {
   const [state, setState] = useState<Type>(initialValue);
 
-  useEffect(() => {
-    // Effect implementation
-  }, [/* dependencies */]);
+  useEffect(
+    () => {
+      // Effect implementation
+    },
+    [
+      /* dependencies */
+    ],
+  );
 
   return [state, setState] as const;
 }
@@ -921,36 +941,38 @@ The following JSDoc rules are enforced via `eslint-plugin-jsdoc` in `v2/eslint.c
 
 ### Error-level rules (block commit)
 
-| Rule | Effect |
-|------|--------|
-| `jsdoc/require-jsdoc` | Requires JSDoc on functions, methods, classes, interfaces, types, enums |
-| `jsdoc/require-description` | Requires a body description in every JSDoc block |
-| `jsdoc/require-param` | Requires `@param` for each parameter |
-| `jsdoc/require-param-description` | Requires description text for each `@param` |
-| `jsdoc/require-returns` | Requires `@returns` tag |
-| `jsdoc/require-returns-description` | Requires description text for `@returns` |
-| `jsdoc/check-param-names` | Validates `@param` names match actual parameters |
-| `jsdoc/check-tag-names` | Validates JSDoc tag names are recognized |
+| Rule                                | Effect                                                                  |
+| ----------------------------------- | ----------------------------------------------------------------------- |
+| `jsdoc/require-jsdoc`               | Requires JSDoc on functions, methods, classes, interfaces, types, enums |
+| `jsdoc/require-description`         | Requires a body description in every JSDoc block                        |
+| `jsdoc/require-param`               | Requires `@param` for each parameter                                    |
+| `jsdoc/require-param-description`   | Requires description text for each `@param`                             |
+| `jsdoc/require-returns`             | Requires `@returns` tag                                                 |
+| `jsdoc/require-returns-description` | Requires description text for `@returns`                                |
+| `jsdoc/check-param-names`           | Validates `@param` names match actual parameters                        |
+| `jsdoc/check-tag-names`             | Validates JSDoc tag names are recognized                                |
 
 ### Warning-level rules
 
-| Rule | Effect |
-|------|--------|
-| `jsdoc/check-alignment` | Checks alignment of JSDoc block asterisks |
-| `jsdoc/check-indentation` | Checks indentation within JSDoc blocks |
-| `jsdoc/multiline-blocks` | Enforces multiline JSDoc formatting |
-| `jsdoc/tag-lines` | Controls blank lines between tags |
+| Rule                      | Effect                                    |
+| ------------------------- | ----------------------------------------- |
+| `jsdoc/check-alignment`   | Checks alignment of JSDoc block asterisks |
+| `jsdoc/check-indentation` | Checks indentation within JSDoc blocks    |
+| `jsdoc/multiline-blocks`  | Enforces multiline JSDoc formatting       |
+| `jsdoc/tag-lines`         | Controls blank lines between tags         |
 
 TypeScript-redundant rules (`require-param-type`, `require-returns-type`, `check-types`, `no-undefined-types`, `valid-types`) are set to `"off"` since TypeScript already provides type information.
 
 ### Customizing Rules
 
 **Warning mode** — change `"error"` to `"warn"` for gradual adoption:
+
 ```javascript
 "jsdoc/require-jsdoc": ["warn", { /* config */ }],
 ```
 
 **Per-directory overrides** — enforce only in specific paths:
+
 ```javascript
 {
   files: ["src/new-features/**/*.{ts,tsx}"],
@@ -961,6 +983,7 @@ TypeScript-redundant rules (`require-param-type`, `require-returns-type`, `check
 ```
 
 **Inline exemptions** — disable for specific code:
+
 ```typescript
 // eslint-disable-next-line jsdoc/require-jsdoc
 export const simpleConfig = () => ({});

@@ -7,28 +7,28 @@
  * @module AnimationsSwitcher.test
  */
 
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { AnimationsSwitcher } from "../../../components/settings/AnimationsSwitcher";
-import { useAnimations } from "../../../hooks/useAnimations";
-import { useI18n } from "../../../hooks/useI18n";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { AnimationsSwitcher } from '../../../components/settings/AnimationsSwitcher';
+import { useAnimations } from '../../../hooks/useAnimations';
+import { useI18n } from '../../../hooks/useI18n';
 
 /**
  * Mock useAnimations hook
  */
-vi.mock("../../../hooks/useAnimations", () => ({
+vi.mock('../../../hooks/useAnimations', () => ({
   useAnimations: vi.fn(),
 }));
 
 /**
  * Mock useI18n hook
  */
-vi.mock("../../../hooks/useI18n", () => ({
+vi.mock('../../../hooks/useI18n', () => ({
   useI18n: vi.fn(),
 }));
 
-describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
+describe('AnimationsSwitcher - WCAG 2.2 Level AA Accessibility', () => {
   /**
    * Mock translations for testing
    */
@@ -41,9 +41,9 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
      */
     t: (key: string): string => {
       const translations: Record<string, string> = {
-        "settings.animationsToggle": "Toggle animations",
-        "settings.animationsEnabled": "Animations enabled",
-        "settings.animationsDisabled": "Animations disabled",
+        'settings.animationsToggle': 'Toggle animations',
+        'settings.animationsEnabled': 'Animations enabled',
+        'settings.animationsDisabled': 'Animations disabled',
       };
       return translations[key] || key;
     },
@@ -71,7 +71,9 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
     /**
      * Mock useI18n to return translation function
      */
-    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockTranslations);
+    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      mockTranslations
+    );
   });
 
   /**
@@ -79,10 +81,10 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should render animations switcher with switch control", () => {
+  it('should render animations switcher with switch control', () => {
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
     expect(switchControl).toBeInTheDocument();
   });
 
@@ -92,10 +94,12 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 4.1.2 - Name, Role, Value
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should have accessible label for animations toggle", () => {
+  it('should have accessible label for animations toggle', () => {
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch", { name: /toggle animations/i });
+    const switchControl = screen.getByRole('switch', {
+      name: /toggle animations/i,
+    });
     expect(switchControl).toBeInTheDocument();
   });
 
@@ -104,10 +108,10 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should show animations enabled state", () => {
+  it('should show animations enabled state', () => {
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch") as HTMLInputElement;
+    const switchControl = screen.getByRole('switch') as HTMLInputElement;
     // MUI Switch uses a checkbox input that is checked when enabled
     expect(switchControl.checked).toBe(true);
     expect(screen.getByText(/animations enabled/i)).toBeInTheDocument();
@@ -118,19 +122,19 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should be keyboard navigable and operable", async () => {
+  it('should be keyboard navigable and operable', async () => {
     const user = userEvent.setup();
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
 
     // Tab to switch
     await user.tab();
     expect(switchControl).toHaveFocus();
 
     // Toggle with Space key
-    await user.keyboard(" ");
+    await user.keyboard(' ');
     expect(mockSetAnimationsEnabled).toHaveBeenCalledWith(false);
   });
 
@@ -139,15 +143,15 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should toggle animations with Space key", async () => {
+  it('should toggle animations with Space key', async () => {
     const user = userEvent.setup();
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
     switchControl.focus();
 
-    await user.keyboard(" ");
+    await user.keyboard(' ');
 
     expect(mockSetAnimationsEnabled).toHaveBeenCalledWith(false);
   });
@@ -157,24 +161,24 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should toggle animations with Enter key", async () => {
+  it('should toggle animations with Enter key', async () => {
     const user = userEvent.setup();
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
     switchControl.focus();
 
     // Enter key on a switch input is not standard - Space is the standard key
     // MUI Switch may not respond to Enter, but we verify the switch is focusable
-    await user.keyboard("{Enter}");
+    await user.keyboard('{Enter}');
 
     // Verify the switch is properly focused and can be interacted with
     expect(switchControl).toHaveFocus();
 
     // For proper Enter key support, verify Space key still works
     mockSetAnimationsEnabled.mockClear();
-    await user.keyboard(" ");
+    await user.keyboard(' ');
     expect(mockSetAnimationsEnabled).toHaveBeenCalled();
   });
 
@@ -183,12 +187,12 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1 - Operable
    */
-  it("should toggle animations with mouse click", async () => {
+  it('should toggle animations with mouse click', async () => {
     const user = userEvent.setup();
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
     await user.click(switchControl);
 
     expect(mockSetAnimationsEnabled).toHaveBeenCalledWith(false);
@@ -199,13 +203,13 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should call onChange callback when animations are toggled", async () => {
+  it('should call onChange callback when animations are toggled', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<AnimationsSwitcher onChange={onChange} />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
     await user.click(switchControl);
 
     expect(onChange).toHaveBeenCalledWith(false);
@@ -216,7 +220,7 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should show animations disabled state", () => {
+  it('should show animations disabled state', () => {
     (useAnimations as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       animationsEnabled: false,
       setAnimationsEnabled: mockSetAnimationsEnabled,
@@ -224,7 +228,7 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch") as HTMLInputElement;
+    const switchControl = screen.getByRole('switch') as HTMLInputElement;
     // MUI Switch uses a checkbox input that is unchecked when disabled
     expect(switchControl.checked).toBe(false);
     expect(screen.getByText(/animations disabled/i)).toBeInTheDocument();
@@ -236,7 +240,7 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 1.3.1 - Info and Relationships
    * WCAG 2.4.4 - Link Purpose (In Context)
    */
-  it("should display label text describing state", () => {
+  it('should display label text describing state', () => {
     render(<AnimationsSwitcher />);
 
     expect(screen.getByText(/animations enabled/i)).toBeInTheDocument();
@@ -248,12 +252,12 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 2.1.1 - Keyboard Accessible
    * WCAG 2.4.7 - Focus Visible
    */
-  it("should be focusable with Tab key", async () => {
+  it('should be focusable with Tab key', async () => {
     const user = userEvent.setup();
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
 
     // Initially should not have focus
     expect(switchControl).not.toHaveFocus();
@@ -268,17 +272,17 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.5.8 - Target Size (Minimum)
    */
-  it("should have sufficient touch target size", () => {
+  it('should have sufficient touch target size', () => {
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
 
     // Verify the switch control is properly rendered and is interactive
     expect(switchControl).toBeInTheDocument();
 
     // In jsdom, getBoundingClientRect() returns 0, so we verify it's properly
     // rendered and has the correct structure for a touch target
-    expect(switchControl).toHaveAttribute("type", "checkbox");
+    expect(switchControl).toHaveAttribute('type', 'checkbox');
 
     // MUI Switch wraps the input in a span for sizing, verify that exists
     const switchParent = switchControl.parentElement;
@@ -290,10 +294,12 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1 - Operable
    */
-  it("should apply className prop", () => {
-    const { container } = render(<AnimationsSwitcher className="custom-class" />);
+  it('should apply className prop', () => {
+    const { container } = render(
+      <AnimationsSwitcher className="custom-class" />
+    );
 
-    const wrapper = container.querySelector(".custom-class");
+    const wrapper = container.querySelector('.custom-class');
     expect(wrapper).toBeInTheDocument();
   });
 
@@ -302,10 +308,10 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should have proper label association", () => {
+  it('should have proper label association', () => {
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
     const label = screen.getByText(/animations/i);
 
     // Label should be associated with switch (via FormControlLabel)
@@ -318,7 +324,7 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should update label when animations state changes", async () => {
+  it('should update label when animations state changes', async () => {
     const { rerender } = render(<AnimationsSwitcher />);
 
     expect(screen.getByText(/animations enabled/i)).toBeInTheDocument();
@@ -338,12 +344,12 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should handle multiple toggle operations", async () => {
+  it('should handle multiple toggle operations', async () => {
     const user = userEvent.setup();
 
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
 
     // First toggle
     await user.click(switchControl);
@@ -361,13 +367,13 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should have proper ARIA attributes", () => {
+  it('should have proper ARIA attributes', () => {
     render(<AnimationsSwitcher />);
 
-    const switchControl = screen.getByRole("switch");
+    const switchControl = screen.getByRole('switch');
 
     // MUI Switch is a checkbox role, not switch role
-    expect(switchControl).toHaveAttribute("type", "checkbox");
+    expect(switchControl).toHaveAttribute('type', 'checkbox');
 
     // Verify the switch is properly labeled via FormControlLabel
     // The label is associated through the parent FormControlLabel component
@@ -375,7 +381,7 @@ describe("AnimationsSwitcher - WCAG 2.2 Level AA Accessibility", () => {
     expect(switchParent).toBeInTheDocument();
 
     // Verify the switch is accessible via FormControlLabel association
-    const formLabel = switchControl.closest(".MuiFormControlLabel-root");
+    const formLabel = switchControl.closest('.MuiFormControlLabel-root');
     expect(formLabel).toBeInTheDocument();
   });
 });

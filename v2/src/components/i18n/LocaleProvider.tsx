@@ -12,8 +12,16 @@
 
 import { ReactNode, useEffect, useState, useCallback } from 'react';
 import i18next from 'i18next';
-import { LocaleContext, type LocaleContextValue } from '@/src/contexts/LocaleContext';
-import { type Locale, DEFAULT_LOCALE, detectLocale, LOCALES } from '@/src/lib/i18n';
+import {
+  LocaleContext,
+  type LocaleContextValue,
+} from '@/src/contexts/LocaleContext';
+import {
+  type Locale,
+  DEFAULT_LOCALE,
+  detectLocale,
+  LOCALES,
+} from '@/src/lib/i18n';
 
 /**
  * Props for LocaleProvider component.
@@ -50,7 +58,9 @@ export function LocaleProvider({
   children,
   initialLocale,
 }: LocaleProviderProps) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
+  const [locale, setLocaleState] = useState<Locale>(
+    initialLocale ?? DEFAULT_LOCALE
+  );
   const [isInitialized, setIsInitialized] = useState(false);
 
   /**
@@ -89,7 +99,8 @@ export function LocaleProvider({
     // Expires in 365 days to persist user preference across sessions
     // SameSite=Lax prevents CSRF attacks while allowing navigation
     // Secure ensures cookie only sent over HTTPS in production
-    const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    const isSecure =
+      typeof window !== 'undefined' && window.location.protocol === 'https:';
     const secureFlag = isSecure ? '; Secure' : '';
     document.cookie = `locale=${nextLocale}; max-age=31536000; path=/; SameSite=Lax${secureFlag}`;
 
@@ -124,7 +135,8 @@ export function LocaleProvider({
     // Expires in 365 days to persist user preference across sessions
     // SameSite=Lax prevents CSRF attacks while allowing navigation
     // Secure ensures cookie only sent over HTTPS in production
-    const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    const isSecure =
+      typeof window !== 'undefined' && window.location.protocol === 'https:';
     const secureFlag = isSecure ? '; Secure' : '';
     document.cookie = `locale=${newLocale}; max-age=31536000; path=/; SameSite=Lax${secureFlag}`;
     // Sync locale change with i18next

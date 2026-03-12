@@ -17,7 +17,12 @@
 
 import { useContext, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatDate, formatNumber, formatCurrency, type Locale } from '@/src/lib/i18n';
+import {
+  formatDate,
+  formatNumber,
+  formatCurrency,
+  type Locale,
+} from '@/src/lib/i18n';
 import { LocaleContext } from '@/src/contexts/LocaleContext';
 
 /**
@@ -131,7 +136,10 @@ export function useI18n(): I18nUtils {
    * Wraps i18next's t() function with variable substitution support and namespace handling.
    */
   const t = useCallback<TranslationFunction>(
-    (key: string, options?: TranslationOptions | Record<string, string | number>): string => {
+    (
+      key: string,
+      options?: TranslationOptions | Record<string, string | number>
+    ): string => {
       // Determine if options is TranslationOptions or a variables Record
       let variables: Record<string, string | number> | undefined;
       let namespace: string | undefined;
@@ -146,7 +154,11 @@ export function useI18n(): I18nUtils {
           const optionsObj = options as Record<string, unknown>;
           const otherVariables: Record<string, string | number> = {};
           for (const [key, value] of Object.entries(optionsObj)) {
-            if (key !== 'variables' && key !== 'ns' && (typeof value === 'string' || typeof value === 'number')) {
+            if (
+              key !== 'variables' &&
+              key !== 'ns' &&
+              (typeof value === 'string' || typeof value === 'number')
+            ) {
               otherVariables[key] = value as string | number;
             }
           }

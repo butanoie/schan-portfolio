@@ -12,15 +12,9 @@ export type {
   ProjectQueryOptions,
 } from './project';
 
-export type {
-  PageDeckData,
-} from './pageDeck';
+export type { PageDeckData } from './pageDeck';
 
-export type {
-  ArtifactFormat,
-  ArtifactItem,
-  ArtifactSection,
-} from './samples';
+export type { ArtifactFormat, ArtifactItem, ArtifactSection } from './samples';
 
 export {
   isProject,

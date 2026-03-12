@@ -153,7 +153,11 @@ export class ValidationError extends AppError {
    * 'VAL_002'
    * );
    */
-  constructor(message: string, code: string = 'VAL_001', originalError?: Error) {
+  constructor(
+    message: string,
+    code: string = 'VAL_001',
+    originalError?: Error
+  ) {
     super(message, 'validation', code, originalError);
     this.name = 'ValidationError';
     Object.setPrototypeOf(this, ValidationError.prototype);
@@ -203,7 +207,11 @@ export class SecurityError extends AppError {
    * 'SEC_001'
    * );
    */
-  constructor(message: string, code: string = 'SEC_001', originalError?: Error) {
+  constructor(
+    message: string,
+    code: string = 'SEC_001',
+    originalError?: Error
+  ) {
     super(message, 'security', code, originalError);
     this.name = 'SecurityError';
     Object.setPrototypeOf(this, SecurityError.prototype);
@@ -257,7 +265,11 @@ export class DataError extends AppError {
    * parseError
    * );
    */
-  constructor(message: string, code: string = 'DATA_001', originalError?: Error) {
+  constructor(
+    message: string,
+    code: string = 'DATA_001',
+    originalError?: Error
+  ) {
     super(message, 'data', code, originalError);
     this.name = 'DataError';
     Object.setPrototypeOf(this, DataError.prototype);

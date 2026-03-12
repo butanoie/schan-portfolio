@@ -1,11 +1,11 @@
-import HomeIcon from "@mui/icons-material/Home";
-import DescriptionIcon from "@mui/icons-material/Description";
-import ArticleIcon from "@mui/icons-material/Article";
-import InfoIcon from "@mui/icons-material/Info";
-import { createElement } from "react";
-import type { SxProps, Theme } from "@mui/material/styles";
-import { NAV_COLORS, BRAND_COLORS } from "../constants";
-import { FONT_FAMILY_BODY } from "@/src/lib/fontConstants";
+import HomeIcon from '@mui/icons-material/Home';
+import DescriptionIcon from '@mui/icons-material/Description';
+import ArticleIcon from '@mui/icons-material/Article';
+import InfoIcon from '@mui/icons-material/Info';
+import { createElement } from 'react';
+import type { SxProps, Theme } from '@mui/material/styles';
+import { NAV_COLORS, BRAND_COLORS } from '../constants';
+import { FONT_FAMILY_BODY } from '@/src/lib/fontConstants';
 
 /**
  * Navigation link configuration used across Header, HamburgerMenu, and Footer.
@@ -29,10 +29,22 @@ export interface NavLink {
  */
 export function getNavLinks(): NavLink[] {
   return [
-    { labelKey: "nav.portfolio", href: "/", icon: createElement(HomeIcon) },
-    { labelKey: "nav.resume", href: "/resume", icon: createElement(DescriptionIcon) },
-    { labelKey: "nav.samples", href: "/samples", icon: createElement(ArticleIcon) },
-    { labelKey: "nav.colophon", href: "/colophon", icon: createElement(InfoIcon) },
+    { labelKey: 'nav.portfolio', href: '/', icon: createElement(HomeIcon) },
+    {
+      labelKey: 'nav.resume',
+      href: '/resume',
+      icon: createElement(DescriptionIcon),
+    },
+    {
+      labelKey: 'nav.samples',
+      href: '/samples',
+      icon: createElement(ArticleIcon),
+    },
+    {
+      labelKey: 'nav.colophon',
+      href: '/colophon',
+      icon: createElement(InfoIcon),
+    },
   ];
 }
 
@@ -56,8 +68,8 @@ export function isActivePath(pathname: string | null, href: string): boolean {
   if (!pathname) {
     return false;
   }
-  if (href === "/") {
-    return pathname === "/";
+  if (href === '/') {
+    return pathname === '/';
   }
   return pathname.startsWith(href);
 }
@@ -81,12 +93,12 @@ export function getNavButtonSx(isActive: boolean): SxProps<Theme> {
     color: NAV_COLORS.text,
     fontFamily: FONT_FAMILY_BODY,
     fontWeight: 600,
-    textTransform: "none",
+    textTransform: 'none',
     borderRadius: 1,
     boxShadow: 0,
     px: 3,
     py: 0.75,
-    "&:hover": {
+    '&:hover': {
       backgroundColor: isActive
         ? NAV_COLORS.activeHover
         : NAV_COLORS.inactiveHover,

@@ -54,11 +54,15 @@ describe('useScrollAnimation', () => {
       expect(result.current.isInView).toBe(true);
 
       // Verify it's using the mock
-      expect(mockMatchMedia).toHaveBeenCalledWith('(prefers-reduced-motion: reduce)');
+      expect(mockMatchMedia).toHaveBeenCalledWith(
+        '(prefers-reduced-motion: reduce)'
+      );
     });
 
     it('should respect user changing motion preference at runtime', () => {
-      let mockMatchMediaCallback: ((event: MediaQueryListEvent) => void) | null = null;
+      let mockMatchMediaCallback:
+        | ((event: MediaQueryListEvent) => void)
+        | null = null;
 
       /**
        * Mock addEventListener that captures the callback for testing.
@@ -66,14 +70,20 @@ describe('useScrollAnimation', () => {
        * @param _event - Event name (unused)
        * @param callback - Callback function to register
        */
-      const mockAddEventListener = (_event: string, callback: (event: MediaQueryListEvent) => void): void => {
+      const mockAddEventListener = (
+        _event: string,
+        callback: (event: MediaQueryListEvent) => void
+      ): void => {
         mockMatchMediaCallback = callback;
       };
 
       const mockMatchMedia = vi.fn((query: string) => ({
         matches: false,
         media: query,
-        addEventListener: query === '(prefers-reduced-motion: reduce)' ? mockAddEventListener : vi.fn(),
+        addEventListener:
+          query === '(prefers-reduced-motion: reduce)'
+            ? mockAddEventListener
+            : vi.fn(),
         removeEventListener: vi.fn(),
       }));
       global.matchMedia = mockMatchMedia as unknown as typeof window.matchMedia;
@@ -111,7 +121,9 @@ describe('useScrollAnimation', () => {
       const { result, rerender } = renderHook(() => useScrollAnimation());
 
       const mockElement = document.createElement('div');
-      (result.current.ref as React.MutableRefObject<HTMLDivElement | null>).current = mockElement;
+      (
+        result.current.ref as React.MutableRefObject<HTMLDivElement | null>
+      ).current = mockElement;
 
       // Multiple rapid re-renders
       rerender();

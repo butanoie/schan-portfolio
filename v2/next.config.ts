@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
-import { withSentryConfig } from "@sentry/nextjs";
-import withBundleAnalyzer from "@next/bundle-analyzer";
+import type { NextConfig } from 'next';
+import { withSentryConfig } from '@sentry/nextjs';
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig: NextConfig = {
   /**
@@ -16,12 +16,12 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/ingest/static/:path*",
-        destination: "https://us-assets.i.posthog.com/static/:path*",
+        source: '/ingest/static/:path*',
+        destination: 'https://us-assets.i.posthog.com/static/:path*',
       },
       {
-        source: "/ingest/:path*",
-        destination: "https://us.i.posthog.com/:path*",
+        source: '/ingest/:path*',
+        destination: 'https://us.i.posthog.com/:path*',
       },
     ];
   },
@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
     // No external image domains needed for v2 (all images are local)
 
     // Image formats to support (Next.js will automatically convert to WebP/AVIF)
-    formats: ["image/avif", "image/webp"],
+    formats: ['image/avif', 'image/webp'],
 
     // Device sizes for responsive images (aligned with Material-UI breakpoints)
     // xs: 640, sm: 768, md: 900, lg: 1024, xl: 1200, 2xl: 1536, 3xl: 1920, 4xl: 2560
@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
  * treemap visualizations of client and server bundle composition.
  */
 const analyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
+  enabled: process.env.ANALYZE === 'true',
 });
 
 /**
@@ -95,9 +95,8 @@ export default withSentryConfig(analyzer(nextConfig), {
     // Delete .map files after Sentry upload so they're not served to browsers.
     // Both static (client) and server maps are removed to prevent 404 errors.
     filesToDeleteAfterUpload: [
-      ".next/static/**/*.map",
-      ".next/server/**/*.map",
+      '.next/static/**/*.map',
+      '.next/server/**/*.map',
     ],
   },
-
 });

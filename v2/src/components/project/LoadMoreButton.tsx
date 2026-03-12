@@ -137,7 +137,7 @@ export function LoadMoreButton({
         backgroundColor: NAV_COLORS.active,
         color: NAV_COLORS.text,
         fontFamily: FONT_FAMILY_BODY,
-        fontSize: { xs: "8pt", md: "10pt" },
+        fontSize: { xs: '8pt', md: '10pt' },
         fontWeight: 600,
         textTransform: 'none',
         borderRadius: 1,
@@ -146,7 +146,7 @@ export function LoadMoreButton({
         px: { xs: 0.5, '@media (min-width: 760px)': 2 } as any,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         py: { xs: 0.5, '@media (min-width: 760px)': 1 } as any,
-        minWidth: "95%",
+        minWidth: '95%',
         minHeight: 'unset',
 
         // Transition effects
@@ -169,7 +169,7 @@ export function LoadMoreButton({
           opacity: 0.6,
           cursor: 'not-allowed',
           backgroundColor: BRAND_COLORS.sage,
-          color: "#010101",
+          color: '#010101',
         },
 
         ...sx,
@@ -198,7 +198,7 @@ export function LoadMoreButton({
               size={20}
               thickness={4}
               sx={{
-                color: "#111111",
+                color: '#111111',
               }}
             />
           ) : (

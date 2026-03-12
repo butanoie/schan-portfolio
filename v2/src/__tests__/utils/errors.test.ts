@@ -36,7 +36,12 @@ describe('Error Hierarchy', () => {
      */
     it('preserves original error when wrapping', () => {
       const originalError = new Error('Original error');
-      const appError = new AppError('Wrapped error', 'generic', 'APP_001', originalError);
+      const appError = new AppError(
+        'Wrapped error',
+        'generic',
+        'APP_001',
+        originalError
+      );
       expect(appError.originalError).toBe(originalError);
       expect(appError.originalError?.message).toBe('Original error');
     });
@@ -141,7 +146,12 @@ describe('Error Hierarchy', () => {
         new SecurityError('Protocol', 'SEC_003'),
         new SecurityError('Access', 'SEC_004'),
       ];
-      expect(errors.map(e => e.code)).toEqual(['SEC_001', 'SEC_002', 'SEC_003', 'SEC_004']);
+      expect(errors.map((e) => e.code)).toEqual([
+        'SEC_001',
+        'SEC_002',
+        'SEC_003',
+        'SEC_004',
+      ]);
     });
 
     /**
@@ -181,7 +191,11 @@ describe('Error Hierarchy', () => {
      */
     it('can wrap original fetch error', () => {
       const original = new Error('Network timeout');
-      const error = new DataError('Failed to load projects', 'DATA_001', original);
+      const error = new DataError(
+        'Failed to load projects',
+        'DATA_001',
+        original
+      );
       expect(error.originalError?.message).toBe('Network timeout');
     });
 
@@ -195,7 +209,12 @@ describe('Error Hierarchy', () => {
         new DataError('Database error', 'DATA_003'),
         new DataError('File not found', 'DATA_004'),
       ];
-      expect(errors.map(e => e.code)).toEqual(['DATA_001', 'DATA_002', 'DATA_003', 'DATA_004']);
+      expect(errors.map((e) => e.code)).toEqual([
+        'DATA_001',
+        'DATA_002',
+        'DATA_003',
+        'DATA_004',
+      ]);
     });
 
     /**
@@ -243,7 +262,12 @@ describe('Error Hierarchy', () => {
      */
     it('supports different HTTP status codes', () => {
       const error404 = new NetworkError('Not found', 'NET_004', undefined, 404);
-      const error500 = new NetworkError('Server error', 'NET_003', undefined, 500);
+      const error500 = new NetworkError(
+        'Server error',
+        'NET_003',
+        undefined,
+        500
+      );
       expect(error404.statusCode).toBe(404);
       expect(error500.statusCode).toBe(500);
     });
@@ -280,7 +304,7 @@ describe('Error Hierarchy', () => {
         new DataError('test'),
         new NetworkError('test'),
       ];
-      errors.forEach(error => {
+      errors.forEach((error) => {
         expect(error instanceof AppError).toBe(true);
         expect(error instanceof Error).toBe(true);
       });
@@ -356,7 +380,9 @@ describe('Error Hierarchy', () => {
     it('returns network message for NetworkError', () => {
       const error = new NetworkError('Connection failed');
       const message = getUserFriendlyMessage(error);
-      expect(message).toBe('Network connection failed. Please check your internet.');
+      expect(message).toBe(
+        'Network connection failed. Please check your internet.'
+      );
     });
 
     /**
@@ -382,8 +408,12 @@ describe('Error Hierarchy', () => {
      */
     it('handles null and undefined gracefully', () => {
       expect(getUserFriendlyMessage(null)).toBe('An unexpected error occurred');
-      expect(getUserFriendlyMessage(undefined)).toBe('An unexpected error occurred');
-      expect(getUserFriendlyMessage('string')).toBe('An unexpected error occurred');
+      expect(getUserFriendlyMessage(undefined)).toBe(
+        'An unexpected error occurred'
+      );
+      expect(getUserFriendlyMessage('string')).toBe(
+        'An unexpected error occurred'
+      );
     });
   });
 
@@ -478,10 +508,7 @@ describe('Error Hierarchy', () => {
        */
       const validateVideoId = (id: string): void => {
         if (!/^\d{8,11}$/.test(id)) {
-          throw new ValidationError(
-            'Video ID must be 8-11 digits',
-            'VAL_002'
-          );
+          throw new ValidationError('Video ID must be 8-11 digits', 'VAL_002');
         }
       };
 
@@ -500,10 +527,7 @@ describe('Error Hierarchy', () => {
        */
       const validateUrl = (url: string): void => {
         if (url.includes('javascript:')) {
-          throw new SecurityError(
-            'Insecure protocol detected',
-            'SEC_003'
-          );
+          throw new SecurityError('Insecure protocol detected', 'SEC_003');
         }
       };
 
@@ -559,7 +583,9 @@ describe('Error Hierarchy', () => {
         return 'unknown_error';
       };
 
-      expect(handleError(new ValidationError('test'))).toBe('validation_failed');
+      expect(handleError(new ValidationError('test'))).toBe(
+        'validation_failed'
+      );
       expect(handleError(new SecurityError('test'))).toBe('security_violation');
       expect(handleError(new DataError('test'))).toBe('data_error');
       expect(handleError(new NetworkError('test'))).toBe('network_error');

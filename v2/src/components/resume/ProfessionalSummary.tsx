@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Box, Typography } from "@mui/material";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
+import { Box, Typography } from '@mui/material';
+import { usePalette } from '../../hooks/usePalette';
+import { useI18n } from '../../hooks/useI18n';
 
 /**
  * ProfessionalSummary displays a brief overview of the professional's career and expertise.
@@ -34,7 +34,7 @@ export default function ProfessionalSummary() {
         sx={{
           fontWeight: 600,
           color: palette.text.primary,
-          fontSize: { xs: "1.75rem", md: "2rem" },
+          fontSize: { xs: '1.75rem', md: '2rem' },
           mb: 2,
         }}
       >
@@ -46,7 +46,7 @@ export default function ProfessionalSummary() {
         sx={{
           lineHeight: 1.8,
           color: palette.text.primary,
-          fontSize: { xs: "0.95rem", md: "1rem" },
+          fontSize: { xs: '0.95rem', md: '1rem' },
           mb: 3,
         }}
       >

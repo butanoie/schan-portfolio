@@ -10,9 +10,12 @@
  * - Hydration-safe initialization
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { ThemeContextProvider, useThemeContext } from "@/src/contexts/ThemeContext";
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  ThemeContextProvider,
+  useThemeContext,
+} from '@/src/contexts/ThemeContext';
 
 /**
  * Test component that uses the ThemeContext.
@@ -26,78 +29,82 @@ function TestComponent() {
     <div>
       <div data-testid="current-theme">{mode}</div>
       <div data-testid="system-scheme">{systemScheme}</div>
-      <div data-testid="is-mounted">{isMounted ? "mounted" : "not-mounted"}</div>
-      <button onClick={() => setMode("light")}>Set Light</button>
-      <button onClick={() => setMode("dark")}>Set Dark</button>
-      <button onClick={() => setMode("highContrast")}>Set High Contrast</button>
+      <div data-testid="is-mounted">
+        {isMounted ? 'mounted' : 'not-mounted'}
+      </div>
+      <button onClick={() => setMode('light')}>Set Light</button>
+      <button onClick={() => setMode('dark')}>Set Dark</button>
+      <button onClick={() => setMode('highContrast')}>Set High Contrast</button>
     </div>
   );
 }
 
-describe("ThemeContext", () => {
+describe('ThemeContext', () => {
   beforeEach(() => {
     localStorage.clear();
     // Reset document theme attribute
-    document.documentElement.removeAttribute("data-theme");
+    document.documentElement.removeAttribute('data-theme');
     // Reset all mocks
     vi.clearAllMocks();
   });
 
-  it("should provide theme context to children", () => {
+  it('should provide theme context to children', () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const themeElement = screen.getByTestId("current-theme");
+    const themeElement = screen.getByTestId('current-theme');
     expect(themeElement).toBeInTheDocument();
   });
 
-  it("should initialize with a valid theme mode", () => {
+  it('should initialize with a valid theme mode', () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const themeElement = screen.getByTestId("current-theme");
-    expect(["light", "dark", "highContrast"]).toContain(themeElement.textContent);
+    const themeElement = screen.getByTestId('current-theme');
+    expect(['light', 'dark', 'highContrast']).toContain(
+      themeElement.textContent
+    );
   });
 
-  it("should allow changing theme mode", async () => {
+  it('should allow changing theme mode', async () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const lightButton = screen.getByText("Set Light");
+    const lightButton = screen.getByText('Set Light');
     fireEvent.click(lightButton);
 
     await waitFor(() => {
-      expect(screen.getByTestId("current-theme")).toHaveTextContent("light");
+      expect(screen.getByTestId('current-theme')).toHaveTextContent('light');
     });
   });
 
-  it("should persist theme to localStorage", async () => {
+  it('should persist theme to localStorage', async () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const darkButton = screen.getByText("Set Dark");
+    const darkButton = screen.getByText('Set Dark');
     fireEvent.click(darkButton);
 
     await waitFor(() => {
-      const saved = localStorage.getItem("portfolio-theme-mode");
-      expect(saved).toBe("dark");
+      const saved = localStorage.getItem('portfolio-theme-mode');
+      expect(saved).toBe('dark');
     });
   });
 
-  it("should load saved theme from localStorage on mount", () => {
-    localStorage.setItem("portfolio-theme-mode", "highContrast");
+  it('should load saved theme from localStorage on mount', () => {
+    localStorage.setItem('portfolio-theme-mode', 'highContrast');
 
     render(
       <ThemeContextProvider>
@@ -106,15 +113,15 @@ describe("ThemeContext", () => {
     );
 
     // After mounting, the saved theme should be loaded
-    const themeElement = screen.getByTestId("current-theme");
-    expect(themeElement.textContent).toBe("highContrast");
+    const themeElement = screen.getByTestId('current-theme');
+    expect(themeElement.textContent).toBe('highContrast');
   });
 
-  it("should detect system color scheme preference", () => {
+  it('should detect system color scheme preference', () => {
     // Mock matchMedia for dark mode
     const mockMediaQuery = {
       matches: true,
-      media: "(prefers-color-scheme: dark)",
+      media: '(prefers-color-scheme: dark)',
       onchange: null,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
@@ -131,44 +138,44 @@ describe("ThemeContext", () => {
       </ThemeContextProvider>
     );
 
-    const systemSchemeElement = screen.getByTestId("system-scheme");
-    expect(systemSchemeElement.textContent).toBe("dark");
+    const systemSchemeElement = screen.getByTestId('system-scheme');
+    expect(systemSchemeElement.textContent).toBe('dark');
   });
 
-  it("should apply theme to document element", async () => {
+  it('should apply theme to document element', async () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const darkButton = screen.getByText("Set Dark");
+    const darkButton = screen.getByText('Set Dark');
     fireEvent.click(darkButton);
 
     await waitFor(() => {
-      const theme = document.documentElement.getAttribute("data-theme");
-      expect(theme).toBe("dark");
+      const theme = document.documentElement.getAttribute('data-theme');
+      expect(theme).toBe('dark');
     });
   });
 
-  it("should set theme-color meta tag", async () => {
+  it('should set theme-color meta tag', async () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const darkButton = screen.getByText("Set Dark");
+    const darkButton = screen.getByText('Set Dark');
     fireEvent.click(darkButton);
 
     await waitFor(() => {
       const metaTag = document.querySelector('meta[name="theme-color"]');
       expect(metaTag).toBeInTheDocument();
-      expect(metaTag?.getAttribute("content")).toBe("#121212"); // Dark theme color
+      expect(metaTag?.getAttribute('content')).toBe('#121212'); // Dark theme color
     });
   });
 
-  it("should indicate when component is mounted", async () => {
+  it('should indicate when component is mounted', async () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
@@ -177,45 +184,45 @@ describe("ThemeContext", () => {
 
     // After render, component should be mounted
     await waitFor(() => {
-      expect(screen.getByTestId("is-mounted")).toHaveTextContent("mounted");
+      expect(screen.getByTestId('is-mounted')).toHaveTextContent('mounted');
     });
   });
 
-  it("should throw error when useThemeContext is used outside provider", () => {
-    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  it('should throw error when useThemeContext is used outside provider', () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(() => {
       render(<TestComponent />);
-    }).toThrow("useThemeContext must be used within a ThemeContextProvider");
+    }).toThrow('useThemeContext must be used within a ThemeContextProvider');
 
     consoleSpy.mockRestore();
   });
 
-  it("should cycle through multiple theme changes", async () => {
+  it('should cycle through multiple theme changes', async () => {
     render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    const lightButton = screen.getByText("Set Light");
-    const darkButton = screen.getByText("Set Dark");
-    const highContrastButton = screen.getByText("Set High Contrast");
+    const lightButton = screen.getByText('Set Light');
+    const darkButton = screen.getByText('Set Dark');
+    const highContrastButton = screen.getByText('Set High Contrast');
 
     fireEvent.click(lightButton);
     await waitFor(() =>
-      expect(screen.getByTestId("current-theme")).toHaveTextContent("light")
+      expect(screen.getByTestId('current-theme')).toHaveTextContent('light')
     );
 
     fireEvent.click(darkButton);
     await waitFor(() =>
-      expect(screen.getByTestId("current-theme")).toHaveTextContent("dark")
+      expect(screen.getByTestId('current-theme')).toHaveTextContent('dark')
     );
 
     fireEvent.click(highContrastButton);
     await waitFor(() =>
-      expect(screen.getByTestId("current-theme")).toHaveTextContent(
-        "highContrast"
+      expect(screen.getByTestId('current-theme')).toHaveTextContent(
+        'highContrast'
       )
     );
   });

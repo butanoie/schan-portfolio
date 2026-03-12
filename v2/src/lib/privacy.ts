@@ -23,9 +23,9 @@
  * ```
  */
 export function isDoNotTrackEnabled(): boolean {
-  if (typeof window === "undefined") return false;
+  if (typeof window === 'undefined') return false;
   const dnt =
     navigator.doNotTrack ||
     (window as unknown as Record<string, unknown>).doNotTrack;
-  return dnt === "1" || dnt === "yes";
+  return dnt === '1' || dnt === 'yes';
 }

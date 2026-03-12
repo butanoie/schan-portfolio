@@ -170,30 +170,30 @@
         "heading": "Original V1 Technologies (Historical)",
         "description": "The original portfolio site was built with these technologies:",
         "items": [
-        {
-          "name": "Gumby Framework",
-          "description": "Responsive grid layout, Entypo icon set, and base UI element styles."
-        },
-        {
-          "name": "jQuery",
-          "description": "Asynchronously loading portfolio projects, DOM manipulation, and UI effects."
-        },
-        {
-          "name": "PHP",
-          "description": "Simple web service to serve up the portfolio projects."
-        },
-        {
-          "name": "Swipebox",
-          "description": "jQuery plugin for the project image lightboxes."
-        },
-        {
-          "name": "SWFObject",
-          "description": "Determined whether to show links to Adobe Flash projects."
-        },
-        {
-          "name": "Sass & Compass",
-          "description": "Custom CSS written in SCSS syntax and compiled with Compass."
-        }
+          {
+            "name": "Gumby Framework",
+            "description": "Responsive grid layout, Entypo icon set, and base UI element styles."
+          },
+          {
+            "name": "jQuery",
+            "description": "Asynchronously loading portfolio projects, DOM manipulation, and UI effects."
+          },
+          {
+            "name": "PHP",
+            "description": "Simple web service to serve up the portfolio projects."
+          },
+          {
+            "name": "Swipebox",
+            "description": "jQuery plugin for the project image lightboxes."
+          },
+          {
+            "name": "SWFObject",
+            "description": "Determined whether to show links to Adobe Flash projects."
+          },
+          {
+            "name": "Sass & Compass",
+            "description": "Custom CSS written in SCSS syntax and compiled with Compass."
+          }
         ]
       }
     },

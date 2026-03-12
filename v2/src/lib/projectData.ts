@@ -1,5 +1,8 @@
 import { PROJECTS } from '../data/projects';
-import { getLocalizedProjects, getLocalizedProject } from '../data/localization';
+import {
+  getLocalizedProjects,
+  getLocalizedProject,
+} from '../data/localization';
 import type { Project, ProjectsResponse, ProjectQueryOptions } from '../types';
 import type { Locale } from './i18n-constants';
 
@@ -101,7 +104,10 @@ export async function getProjects(
  * @example
  * const frenchProject = await getProjectById('collabspace', 'fr');
  */
-export async function getProjectById(id: string, locale: string = 'en'): Promise<Project | null> {
+export async function getProjectById(
+  id: string,
+  locale: string = 'en'
+): Promise<Project | null> {
   const project = await getLocalizedProject(id, locale as Locale);
   return project ?? null;
 }
@@ -125,4 +131,3 @@ export async function getProjectById(id: string, locale: string = 'en'): Promise
 export function getTotalProjectCount(): number {
   return PROJECTS.length;
 }
-

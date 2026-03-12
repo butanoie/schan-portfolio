@@ -210,7 +210,9 @@ describe('ProjectGallery Component', () => {
    * for constrained container layouts.
    */
   it('should render with narrow layout when prop is set', () => {
-    const { container } = render(<ProjectGallery images={mockImages} narrow={true} />);
+    const { container } = render(
+      <ProjectGallery images={mockImages} narrow={true} />
+    );
 
     const gallery = container.querySelector('[data-testid="project-gallery"]');
     expect(gallery).toHaveAttribute('data-narrow', 'true');
@@ -223,7 +225,9 @@ describe('ProjectGallery Component', () => {
    * with different column progression.
    */
   it('should render with alternate grid layout when prop is set', () => {
-    const { container } = render(<ProjectGallery images={mockImages} altGrid={true} />);
+    const { container } = render(
+      <ProjectGallery images={mockImages} altGrid={true} />
+    );
 
     const gallery = container.querySelector('[data-testid="project-gallery"]');
     expect(gallery).toBeInTheDocument();
@@ -235,7 +239,9 @@ describe('ProjectGallery Component', () => {
    * Verifies that the gallery supports fixed four-column layout.
    */
   it('should render with four columns layout when prop is set', () => {
-    const { container } = render(<ProjectGallery images={mockImages} fourColumns={true} />);
+    const { container } = render(
+      <ProjectGallery images={mockImages} fourColumns={true} />
+    );
 
     const gallery = container.querySelector('[data-testid="project-gallery"]');
     expect(gallery).toBeInTheDocument();

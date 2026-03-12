@@ -10,7 +10,7 @@
  * no layout shift. On repeat visits the font will be cached and used immediately.
  */
 
-import { Open_Sans, Oswald, Gochi_Hand } from "next/font/google";
+import { Open_Sans, Oswald, Gochi_Hand } from 'next/font/google';
 
 /**
  * Body text font — Open Sans with 4 weight variants.
@@ -21,10 +21,10 @@ import { Open_Sans, Oswald, Gochi_Hand } from "next/font/google";
  * @see {@link https://fonts.google.com/specimen/Open+Sans}
  */
 export const openSans = Open_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-  display: "optional",
-  variable: "--font-open-sans",
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '700'],
+  display: 'optional',
+  variable: '--font-open-sans',
 });
 
 /**
@@ -36,10 +36,10 @@ export const openSans = Open_Sans({
  * @see {@link https://fonts.google.com/specimen/Oswald}
  */
 export const oswald = Oswald({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "optional",
-  variable: "--font-oswald",
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'optional',
+  variable: '--font-oswald',
 });
 
 /**
@@ -50,8 +50,8 @@ export const oswald = Oswald({
  * @see {@link https://fonts.google.com/specimen/Gochi+Hand}
  */
 export const gochiHand = Gochi_Hand({
-  subsets: ["latin"],
-  weight: "400",
-  display: "optional",
-  variable: "--font-gochi-hand",
+  subsets: ['latin'],
+  weight: '400',
+  display: 'optional',
+  variable: '--font-gochi-hand',
 });

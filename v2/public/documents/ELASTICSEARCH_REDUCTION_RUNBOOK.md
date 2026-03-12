@@ -4,10 +4,10 @@
 
 This document details the procedures to optimize disk costs on two Elasticsearch clusters. Both use RAID 0 (mdadm) with Azure managed disks. All work must be performed **one node at a time** to maintain cluster availability.
 
-| Cluster | Nodes | Current Disks | Target Disks | Changes |
-|---|---|---|---|---|
-| CA Cluster | 6 | 6 × 1TB Premium SSD per node | 4 × 1TB Standard SSD per node | Reduce disks + SKU change |
-| US Cluster | 3 | 3 × 1TB Premium SSD per node | 3 × 1TB Standard SSD per node | SKU change only |
+| Cluster    | Nodes | Current Disks                | Target Disks                  | Changes                   |
+| ---------- | ----- | ---------------------------- | ----------------------------- | ------------------------- |
+| CA Cluster | 6     | 6 × 1TB Premium SSD per node | 4 × 1TB Standard SSD per node | Reduce disks + SKU change |
+| US Cluster | 3     | 3 × 1TB Premium SSD per node | 3 × 1TB Standard SSD per node | SKU change only           |
 
 ---
 
@@ -15,14 +15,14 @@ This document details the procedures to optimize disk costs on two Elasticsearch
 
 ## CA Cluster Details
 
-| Property | Value |
-|---|---|
-| Nodes | 6 (ca-node-00 through ca-node-05) |
+| Property               | Value                                |
+| ---------------------- | ------------------------------------ |
+| Nodes                  | 6 (ca-node-00 through ca-node-05)    |
 | Current disks per node | 6 × 1TB Standard SSD (E30) in RAID 0 |
-| Target disks per node | 4 × 1TB Standard SSD (E30) in RAID 0 |
-| RAID type | RAID 0 (mdadm) |
-| Elasticsearch version | 7.x (latest) |
-| Replicas | 1 |
+| Target disks per node  | 4 × 1TB Standard SSD (E30) in RAID 0 |
+| RAID type              | RAID 0 (mdadm)                       |
+| Elasticsearch version  | 7.x (latest)                         |
+| Replicas               | 1                                    |
 
 ## Prerequisites
 
@@ -153,6 +153,7 @@ az disk update --sku StandardSSD_LRS --name <remaining-disk-4> --resource-group 
 ```
 
 > **Note:** This step only needs to be performed if the disks are not already on the Standard SSD (StandardSSD_LRS) SKU. You can check the current SKU with:
+>
 > ```bash
 > az disk show --name <disk-name> --resource-group <resource-group> --query "sku.name" -o tsv
 > ```
@@ -260,14 +261,14 @@ az disk delete --resource-group <resource-group> --name <disk-name-2> --yes
 
 Use this checklist to track progress across all nodes.
 
-| Node | Shards Drained | ES Stopped | Disks Detached | RAID Rebuilt | ES Started | Cluster Green | Disks Deleted |
-|---|---|---|---|---|---|---|---|
-| ca-node-00 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| ca-node-01 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| ca-node-02 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| ca-node-03 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| ca-node-04 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| ca-node-05 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Node       | Shards Drained | ES Stopped | Disks Detached | RAID Rebuilt | ES Started | Cluster Green | Disks Deleted |
+| ---------- | -------------- | ---------- | -------------- | ------------ | ---------- | ------------- | ------------- |
+| ca-node-00 | ☐              | ☐          | ☐              | ☐            | ☐          | ☐             | ☐             |
+| ca-node-01 | ☐              | ☐          | ☐              | ☐            | ☐          | ☐             | ☐             |
+| ca-node-02 | ☐              | ☐          | ☐              | ☐            | ☐          | ☐             | ☐             |
+| ca-node-03 | ☐              | ☐          | ☐              | ☐            | ☐          | ☐             | ☐             |
+| ca-node-04 | ☐              | ☐          | ☐              | ☐            | ☐          | ☐             | ☐             |
+| ca-node-05 | ☐              | ☐          | ☐              | ☐            | ☐          | ☐             | ☐             |
 
 ---
 
@@ -283,29 +284,29 @@ If issues occur during the procedure:
 
 ### Full Optimization Journey
 
-| Phase | Configuration | USD/Month | CAD/Month |
-|---|---|---|---|
-| Original | 10 nodes × 6 Premium SSD (60 disks) | $7,005 | $9,527 |
-| After node reduction | 6 nodes × 6 Premium SSD (36 disks) | $4,203 | $5,716 |
+| Phase                  | Configuration                           | USD/Month  | CAD/Month  |
+| ---------------------- | --------------------------------------- | ---------- | ---------- |
+| Original               | 10 nodes × 6 Premium SSD (60 disks)     | $7,005     | $9,527     |
+| After node reduction   | 6 nodes × 6 Premium SSD (36 disks)      | $4,203     | $5,716     |
 | **After this runbook** | **6 nodes × 4 Standard SSD (24 disks)** | **$1,950** | **$2,652** |
 
 ### Detailed Breakdown (Current → Target)
 
-| Metric | Current (36 Premium SSD, 1-yr Reserved) | Target (24 Standard SSD, Pay-as-you-go) | Savings (USD) | Savings (CAD) |
-|---|---|---|---|---|
-| Disk provisioning | 36 × $116.75 = $4,203 | 24 × $76.80 = $1,843 | $2,360 | $3,210 |
-| Transactions (8.5 ops/s)* | $0 (no tx cost) | ~$107 | -$107 | -$146 |
-| **Total** | **$4,203** | **$1,950** | **~$2,253** | **~$3,064** |
+| Metric                     | Current (36 Premium SSD, 1-yr Reserved) | Target (24 Standard SSD, Pay-as-you-go) | Savings (USD) | Savings (CAD) |
+| -------------------------- | --------------------------------------- | --------------------------------------- | ------------- | ------------- |
+| Disk provisioning          | 36 × $116.75 = $4,203                   | 24 × $76.80 = $1,843                    | $2,360        | $3,210        |
+| Transactions (8.5 ops/s)\* | $0 (no tx cost)                         | ~$107                                   | -$107         | -$146         |
+| **Total**                  | **$4,203**                              | **$1,950**                              | **~$2,253**   | **~$3,064**   |
 
 ### Total Savings from Original Baseline
 
-| | Monthly (USD) | Monthly (CAD) | Annual (USD) | Annual (CAD) |
-|---|---|---|---|---|
-| Node reduction (60 → 36 disks) | $2,802 | $3,811 | $33,624 | $45,729 |
-| Disk reduction + SKU change (36 → 24 disks) | $2,253 | $3,064 | $27,036 | $36,769 |
-| **Total savings vs. original** | **$5,055** | **$6,875** | **$60,660** | **$82,498** |
+|                                             | Monthly (USD) | Monthly (CAD) | Annual (USD) | Annual (CAD) |
+| ------------------------------------------- | ------------- | ------------- | ------------ | ------------ |
+| Node reduction (60 → 36 disks)              | $2,802        | $3,811        | $33,624      | $45,729      |
+| Disk reduction + SKU change (36 → 24 disks) | $2,253        | $3,064        | $27,036      | $36,769      |
+| **Total savings vs. original**              | **$5,055**    | **$6,875**    | **$60,660**  | **$82,498**  |
 
-*Premium SSDs have no transaction costs. Standard SSDs charge $0.002 per 10,000 transactions, adding a small cost.
+\*Premium SSDs have no transaction costs. Standard SSDs charge $0.002 per 10,000 transactions, adding a small cost.
 
 > **Note on reservation:** The "current" cost uses the 1-year reserved P30 price of ~$116.75/disk/month (~14% discount vs. $135.17 pay-as-you-go). If the reservation has not yet expired, the remaining committed months are a sunk cost — savings will only be realized from the expiration date onward. Standard SSDs do not support reservations.
 
@@ -315,15 +316,15 @@ If issues occur during the procedure:
 
 ## US Cluster Details
 
-| Property | Value |
-|---|---|
-| Nodes | 3 (us-node-00, us-node-01, us-node-02) |
-| Current disks per node | 3 × 1TB Premium SSD (P30) in RAID 0 |
-| Target disks per node | 3 × 1TB Standard SSD (E30) in RAID 0 |
-| RAID type | RAID 0 (mdadm) |
-| Current disk used per node | Varies — check with `df -h` |
-| Current disk utilization | Low (well under 50%) |
-| Post-change utilization | Unchanged — same disk count |
+| Property                   | Value                                  |
+| -------------------------- | -------------------------------------- |
+| Nodes                      | 3 (us-node-00, us-node-01, us-node-02) |
+| Current disks per node     | 3 × 1TB Premium SSD (P30) in RAID 0    |
+| Target disks per node      | 3 × 1TB Standard SSD (E30) in RAID 0   |
+| RAID type                  | RAID 0 (mdadm)                         |
+| Current disk used per node | Varies — check with `df -h`            |
+| Current disk utilization   | Low (well under 50%)                   |
+| Post-change utilization    | Unchanged — same disk count            |
 
 ## US Cluster Prerequisites
 
@@ -514,11 +515,11 @@ curl -s 'http://localhost:9200/_cat/allocation?v'
 
 ## US Cluster Node Checklist
 
-| Node | Shards Drained | ES Stopped | SKU Changed | RAID Rebuilt | ES Started | Cluster Green |
-|---|---|---|---|---|---|---|
-| us-node-00 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| us-node-01 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| us-node-02 | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Node       | Shards Drained | ES Stopped | SKU Changed | RAID Rebuilt | ES Started | Cluster Green |
+| ---------- | -------------- | ---------- | ----------- | ------------ | ---------- | ------------- |
+| us-node-00 | ☐              | ☐          | ☐           | ☐            | ☐          | ☐             |
+| us-node-01 | ☐              | ☐          | ☐           | ☐            | ☐          | ☐             |
+| us-node-02 | ☐              | ☐          | ☐           | ☐            | ☐          | ☐             |
 
 ## US Cluster Rollback Plan
 
@@ -532,29 +533,29 @@ If issues occur during the procedure:
 
 ### Full Optimization Journey
 
-| Phase | Configuration | USD/Month | CAD/Month |
-|---|---|---|---|
-| Original | 4 nodes × 3 Premium SSD (12 disks) | $1,401 | $1,905 |
-| After node reduction | 3 nodes × 3 Premium SSD (9 disks) | $1,051 | $1,429 |
-| **After this runbook** | **3 nodes × 3 Standard SSD (9 disks)** | **$731** | **$994** |
+| Phase                  | Configuration                          | USD/Month | CAD/Month |
+| ---------------------- | -------------------------------------- | --------- | --------- |
+| Original               | 4 nodes × 3 Premium SSD (12 disks)     | $1,401    | $1,905    |
+| After node reduction   | 3 nodes × 3 Premium SSD (9 disks)      | $1,051    | $1,429    |
+| **After this runbook** | **3 nodes × 3 Standard SSD (9 disks)** | **$731**  | **$994**  |
 
 ### Detailed Breakdown (Current → Target)
 
-| Metric | Current (9 Premium SSD, 1-yr Reserved) | Target (9 Standard SSD, Pay-as-you-go) | Savings (USD) | Savings (CAD) |
-|---|---|---|---|---|
-| Disk provisioning | 9 × $116.75 = $1,051 | 9 × $76.80 = $691 | $360 | $490 |
-| Transactions (8.5 ops/s)* | $0 (no tx cost) | ~$40 | -$40 | -$54 |
-| **Total** | **$1,051** | **$731** | **~$320** | **~$435** |
+| Metric                     | Current (9 Premium SSD, 1-yr Reserved) | Target (9 Standard SSD, Pay-as-you-go) | Savings (USD) | Savings (CAD) |
+| -------------------------- | -------------------------------------- | -------------------------------------- | ------------- | ------------- |
+| Disk provisioning          | 9 × $116.75 = $1,051                   | 9 × $76.80 = $691                      | $360          | $490          |
+| Transactions (8.5 ops/s)\* | $0 (no tx cost)                        | ~$40                                   | -$40          | -$54          |
+| **Total**                  | **$1,051**                             | **$731**                               | **~$320**     | **~$435**     |
 
 ### Total Savings from Original Baseline
 
-| | Monthly (USD) | Monthly (CAD) | Annual (USD) | Annual (CAD) |
-|---|---|---|---|---|
-| Node reduction (12 → 9 disks) | $350 | $476 | $4,200 | $5,712 |
-| SKU change (Premium → Standard) | $320 | $435 | $3,840 | $5,222 |
-| **Total savings vs. original** | **$670** | **$911** | **$8,040** | **$10,934** |
+|                                 | Monthly (USD) | Monthly (CAD) | Annual (USD) | Annual (CAD) |
+| ------------------------------- | ------------- | ------------- | ------------ | ------------ |
+| Node reduction (12 → 9 disks)   | $350          | $476          | $4,200       | $5,712       |
+| SKU change (Premium → Standard) | $320          | $435          | $3,840       | $5,222       |
+| **Total savings vs. original**  | **$670**      | **$911**      | **$8,040**   | **$10,934**  |
 
-*Premium SSDs have no transaction costs. Standard SSDs charge $0.002 per 10,000 transactions, adding a small cost.
+\*Premium SSDs have no transaction costs. Standard SSDs charge $0.002 per 10,000 transactions, adding a small cost.
 
 > **Note on reservation:** The "current" cost uses the 1-year reserved P30 price of ~$116.75/disk/month (~14% discount vs. $135.17 pay-as-you-go). If the reservation has not yet expired, the remaining committed months are a sunk cost — savings will only be realized from the expiration date onward. Standard SSDs do not support reservations.
 
@@ -564,19 +565,19 @@ If issues occur during the procedure:
 
 ### End-to-End Optimization (Original → Target)
 
-| Cluster | Original (USD/mo) | Target (USD/mo) | Savings (USD/mo) | Savings (CAD/mo) | Savings (USD/yr) | Savings (CAD/yr) |
-|---|---|---|---|---|---|---|
-| CA (60 Premium → 24 Standard) | $7,005 | $1,950 | ~$5,055 | ~$6,875 | ~$60,660 | ~$82,498 |
-| US (12 Premium → 9 Standard) | $1,401 | $731 | ~$670 | ~$911 | ~$8,040 | ~$10,934 |
-| **Total** | **$8,406** | **$2,681** | **~$5,725** | **~$7,786** | **~$68,700** | **~$93,432** |
+| Cluster                       | Original (USD/mo) | Target (USD/mo) | Savings (USD/mo) | Savings (CAD/mo) | Savings (USD/yr) | Savings (CAD/yr) |
+| ----------------------------- | ----------------- | --------------- | ---------------- | ---------------- | ---------------- | ---------------- |
+| CA (60 Premium → 24 Standard) | $7,005            | $1,950          | ~$5,055          | ~$6,875          | ~$60,660         | ~$82,498         |
+| US (12 Premium → 9 Standard)  | $1,401            | $731            | ~$670            | ~$911            | ~$8,040          | ~$10,934         |
+| **Total**                     | **$8,406**        | **$2,681**      | **~$5,725**      | **~$7,786**      | **~$68,700**     | **~$93,432**     |
 
 ### Savings by Phase
 
-| Phase | Combined (USD/mo) | Combined (CAD/mo) | Combined (USD/yr) | Combined (CAD/yr) |
-|---|---|---|---|---|
-| Node reduction (completed) | $3,152 | $4,287 | $37,824 | $51,441 |
-| Disk reduction + SKU change (this runbook) | $2,573 | $3,499 | $30,876 | $41,991 |
-| **Total** | **$5,725** | **$7,786** | **$68,700** | **$93,432** |
+| Phase                                      | Combined (USD/mo) | Combined (CAD/mo) | Combined (USD/yr) | Combined (CAD/yr) |
+| ------------------------------------------ | ----------------- | ----------------- | ----------------- | ----------------- |
+| Node reduction (completed)                 | $3,152            | $4,287            | $37,824           | $51,441           |
+| Disk reduction + SKU change (this runbook) | $2,573            | $3,499            | $30,876           | $41,991           |
+| **Total**                                  | **$5,725**        | **$7,786**        | **$68,700**       | **$93,432**       |
 
 > **Note:** "Original" and "current" prices use the 1-year reserved P30 rate of ~$116.75 USD/disk/month. "Target" prices use Standard SSD E30 pay-as-you-go at ~$76.80 USD/disk/month plus transaction costs. Standard SSDs do not offer reservation pricing. Actual prices may vary by region — verify current pricing at the [Azure Managed Disks pricing page](https://azure.microsoft.com/en-us/pricing/details/managed-disks/).
 >

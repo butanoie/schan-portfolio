@@ -110,7 +110,10 @@ function getNumberFormatter(
  * @returns A cached Intl.NumberFormat instance for the locale and currency
  * @internal
  */
-function getCurrencyFormatter(locale: string, currency: string): Intl.NumberFormat {
+function getCurrencyFormatter(
+  locale: string,
+  currency: string
+): Intl.NumberFormat {
   const cacheKey = `${locale}:${currency}`;
   if (!currencyFormatterCache.has(cacheKey)) {
     currencyFormatterCache.set(

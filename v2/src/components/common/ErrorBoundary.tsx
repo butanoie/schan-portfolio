@@ -65,7 +65,11 @@ export interface ErrorBoundaryProps {
  * @internal Used internally by the ErrorBoundary wrapper
  */
 class ErrorBoundaryClass extends React.Component<
-  ErrorBoundaryProps & { errorTitle: string; errorMessage: string; retryButtonText: string },
+  ErrorBoundaryProps & {
+    errorTitle: string;
+    errorMessage: string;
+    retryButtonText: string;
+  },
   { hasError: boolean; error: Error | null; errorInfo: React.ErrorInfo | null }
 > {
   /**
@@ -143,7 +147,8 @@ class ErrorBoundaryClass extends React.Component<
    */
   render(): ReactNode {
     const { hasError, error } = this.state;
-    const { children, fallback, errorTitle, errorMessage, retryButtonText } = this.props;
+    const { children, fallback, errorTitle, errorMessage, retryButtonText } =
+      this.props;
 
     if (hasError) {
       return (

@@ -207,9 +207,13 @@ describe('useImagePreloader', () => {
     const srcAssignments: string[] = [];
     globalThis.Image = class TrackingMockImage {
       /** No-op onload setter — adjacent preloads are fire-and-forget. */
-      set onload(_fn: (() => void) | null) { /* no-op */ }
+      set onload(_fn: (() => void) | null) {
+        /* no-op */
+      }
       /** No-op onerror setter — adjacent preloads are fire-and-forget. */
-      set onerror(_fn: (() => void) | null) { /* no-op */ }
+      set onerror(_fn: (() => void) | null) {
+        /* no-op */
+      }
       /** Records the src URL for assertion. */
       set src(val: string) {
         srcAssignments.push(val);

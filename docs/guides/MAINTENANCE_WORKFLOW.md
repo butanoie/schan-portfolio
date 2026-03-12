@@ -109,7 +109,6 @@ The resume uses the **Direct i18n Pattern** — `getLocalizedResumeData(t)` call
    - `education` — degrees and certifications
 
 2. **Add/update translation keys**
-
    - English: `v2/src/locales/en/resume.json`
    - French: `v2/src/locales/fr/resume.json`
    - Common strings: `v2/src/locales/en/pages.json` (for page-level text like titles)
@@ -153,7 +152,6 @@ Writing samples use the **Direct i18n Pattern** like the resume.
    ```
 
 3. **Add translations**
-
    - English: `v2/src/locales/en/samples.json`
    - French: `v2/src/locales/fr/samples.json`
 
@@ -260,11 +258,11 @@ A quick health check across all monitoring tools. Takes ~15 minutes.
 
 Quick reference for all monitoring services used by the project.
 
-| Service | Purpose | Free Tier | Setup Docs |
-|---------|---------|-----------|------------|
-| [PostHog](https://us.posthog.com) | Web analytics + Core Web Vitals | 1M events/month | [POSTHOG_SETUP.md](../setup/POSTHOG_SETUP.md) |
-| [Sentry](https://sentry.io) | Error tracking with source maps | 5K errors/month | [SENTRY_SETUP.md](../setup/SENTRY_SETUP.md) |
-| [Better Stack](https://betterstack.com) | Uptime monitoring + status page | 10 monitors, 3-min intervals | External service (no code) |
-| [Dependabot](https://github.com) | Automated dependency PRs | Unlimited (GitHub built-in) | `.github/dependabot.yml` |
+| Service                                 | Purpose                         | Free Tier                    | Setup Docs                                    |
+| --------------------------------------- | ------------------------------- | ---------------------------- | --------------------------------------------- |
+| [PostHog](https://us.posthog.com)       | Web analytics + Core Web Vitals | 1M events/month              | [POSTHOG_SETUP.md](../setup/POSTHOG_SETUP.md) |
+| [Sentry](https://sentry.io)             | Error tracking with source maps | 5K errors/month              | [SENTRY_SETUP.md](../setup/SENTRY_SETUP.md)   |
+| [Better Stack](https://betterstack.com) | Uptime monitoring + status page | 10 monitors, 3-min intervals | External service (no code)                    |
+| [Dependabot](https://github.com)        | Automated dependency PRs        | Unlimited (GitHub built-in)  | `.github/dependabot.yml`                      |
 
 All services are on free tiers — zero ongoing cost.

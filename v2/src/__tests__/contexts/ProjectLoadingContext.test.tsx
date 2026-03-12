@@ -50,9 +50,7 @@ describe('ProjectLoadingContext', () => {
      * @returns Rendered provider with children
      */
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <ProjectLoadingProvider value={value}>
-        {children}
-      </ProjectLoadingProvider>
+      <ProjectLoadingProvider value={value}>{children}</ProjectLoadingProvider>
     );
     wrapper.displayName = 'ProjectLoadingWrapper';
     return wrapper;
@@ -66,12 +64,9 @@ describe('ProjectLoadingContext', () => {
      * @returns void
      */
     it('should render children without error', () => {
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(mockContextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(mockContextValue),
+      });
 
       expect(result.current).toBeDefined();
     });
@@ -83,12 +78,9 @@ describe('ProjectLoadingContext', () => {
      * @returns void
      */
     it('should provide context value to children', () => {
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(mockContextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(mockContextValue),
+      });
 
       expect(result.current).toEqual(mockContextValue);
     });
@@ -166,12 +158,24 @@ describe('ProjectLoadingContext', () => {
        * @param root0.children - Children to render
        * @returns Provider with multiple children
        */
-      const multiChildrenWrapper = ({ children }: { children: React.ReactNode }) => (
+      const multiChildrenWrapper = ({
+        children,
+      }: {
+        children: React.ReactNode;
+      }) => (
         <ProjectLoadingProvider value={mockContextValue}>
           {/* Callback to capture first child value, bypassing JSDoc requirement for inline callbacks */}
-          <FirstChild onValue={(value) => { capturedValues.first = value; }} />
+          <FirstChild
+            onValue={(value) => {
+              capturedValues.first = value;
+            }}
+          />
           {/* Callback to capture second child value, bypassing JSDoc requirement for inline callbacks */}
-          <SecondChild onValue={(value) => { capturedValues.second = value; }} />
+          <SecondChild
+            onValue={(value) => {
+              capturedValues.second = value;
+            }}
+          />
           {children}
         </ProjectLoadingProvider>
       );
@@ -226,12 +230,9 @@ describe('ProjectLoadingContext', () => {
         </ProjectLoadingProvider>
       );
 
-      const { rerender } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: updateWrapper,
-        }
-      );
+      const { rerender } = renderHook(() => useProjectLoading(), {
+        wrapper: updateWrapper,
+      });
 
       currentValue = updatedValue;
       rerender();
@@ -249,12 +250,9 @@ describe('ProjectLoadingContext', () => {
      * @returns void
      */
     it('should return context value when inside provider', () => {
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(mockContextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(mockContextValue),
+      });
 
       expect(result.current).toEqual(mockContextValue);
     });
@@ -278,12 +276,9 @@ describe('ProjectLoadingContext', () => {
      * @returns void
      */
     it('should return context properties correctly', () => {
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(mockContextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(mockContextValue),
+      });
 
       expect(result.current?.isHomePage).toBe(true);
       expect(result.current?.loading).toBe(false);
@@ -344,12 +339,9 @@ describe('ProjectLoadingContext', () => {
       );
 
       // Inner provider should override outer
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: nestedWrapper,
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: nestedWrapper,
+      });
 
       expect(result.current).toEqual(innerValue);
     });
@@ -363,12 +355,9 @@ describe('ProjectLoadingContext', () => {
      * @returns void
      */
     it('should return context value when inside provider', () => {
-      const { result } = renderHook(
-        () => useProjectLoadingRequired(),
-        {
-          wrapper: createWrapper(mockContextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoadingRequired(), {
+        wrapper: createWrapper(mockContextValue),
+      });
 
       expect(result.current).toEqual(mockContextValue);
     });
@@ -394,18 +383,17 @@ describe('ProjectLoadingContext', () => {
      * @returns void
      */
     it('should have same properties as useProjectLoading when successful', () => {
-      const { result } = renderHook(
-        () => useProjectLoadingRequired(),
-        {
-          wrapper: createWrapper(mockContextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoadingRequired(), {
+        wrapper: createWrapper(mockContextValue),
+      });
 
       expect(result.current.isHomePage).toBe(mockContextValue.isHomePage);
       expect(result.current.loading).toBe(mockContextValue.loading);
       expect(result.current.hasMore).toBe(mockContextValue.hasMore);
       expect(result.current.allLoaded).toBe(mockContextValue.allLoaded);
-      expect(result.current.remainingCount).toBe(mockContextValue.remainingCount);
+      expect(result.current.remainingCount).toBe(
+        mockContextValue.remainingCount
+      );
     });
   });
 
@@ -431,12 +419,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore: () => {},
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(contextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(contextValue),
+      });
 
       expect(result.current?.isHomePage).toBe(true);
     });
@@ -462,12 +447,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore: () => {},
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(contextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(contextValue),
+      });
 
       expect(result.current?.isHomePage).toBe(false);
     });
@@ -493,12 +475,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore: () => {},
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(loadingValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(loadingValue),
+      });
 
       expect(result.current?.loading).toBe(true);
     });
@@ -524,12 +503,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore: () => {},
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(completedValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(completedValue),
+      });
 
       expect(result.current?.allLoaded).toBe(true);
       expect(result.current?.hasMore).toBe(false);
@@ -562,12 +538,9 @@ describe('ProjectLoadingContext', () => {
         },
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(contextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(contextValue),
+      });
 
       result.current?.onLoadMore();
 
@@ -643,12 +616,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore: () => {},
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(contextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(contextValue),
+      });
 
       expect(result.current?.remainingCount).toBe(0);
     });
@@ -674,12 +644,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore: () => {},
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(contextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(contextValue),
+      });
 
       expect(result.current?.remainingCount).toBe(1000);
     });
@@ -708,12 +675,9 @@ describe('ProjectLoadingContext', () => {
         onLoadMore,
       };
 
-      const { result } = renderHook(
-        () => useProjectLoading(),
-        {
-          wrapper: createWrapper(contextValue),
-        }
-      );
+      const { result } = renderHook(() => useProjectLoading(), {
+        wrapper: createWrapper(contextValue),
+      });
 
       expect(result.current?.onLoadMore).toBe(onLoadMore);
     });
