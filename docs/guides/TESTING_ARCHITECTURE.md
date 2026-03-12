@@ -150,6 +150,13 @@ v2/
   fullyParallel: true,           // Static site, no shared mutation
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
+  outputDir: './e2e/test-results',
+  reporter: [['html', { outputFolder: 'e2e/reports/html' }], ['list']],
+
+  use: {
+    baseURL: 'http://localhost:3000',   // All page.goto() calls use relative paths
+    trace: 'on-first-retry',           // Capture traces only on failure retry
+  },
 
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
@@ -170,6 +177,8 @@ v2/
 
 `global-setup.ts` validates that `.next/BUILD_ID` exists before the test server starts. Without this, failures manifest as "could not connect to server" instead of the actionable "run `npm run build` first".
 
+Browser installation is handled separately via `npx playwright install chromium webkit` (see [Setup](#setup) below). If browsers are not installed, Playwright surfaces its own clear error message — `global-setup.ts` does not duplicate that check.
+
 ### TypeScript Configuration
 
 A separate `tsconfig.e2e.json` extends the main config to avoid polluting it with Playwright types:
@@ -178,13 +187,18 @@ A separate `tsconfig.e2e.json` extends the main config to avoid polluting it wit
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["@playwright/test"],
+    "types": ["@playwright/test", "node"],
     "baseUrl": ".",
     "paths": { "@/*": ["./*"] }
   },
-  "include": ["e2e/**/*.ts"]
+  "include": ["e2e/**/*.ts"],
+  "exclude": ["node_modules"]
 }
 ```
+
+**Note:** `"node"` is required in `types` because `global-setup.ts` imports `fs` and `path`. The explicit `"exclude": ["node_modules"]` overrides the parent's `"exclude"` which includes `"e2e"` — without this, the child tsconfig would inherit the parent's exclusion and find no input files.
+
+**Isolation requirement:** The main `tsconfig.json` must add `"e2e"` to its `"exclude"` array. Without this, `tsc --noEmit` will fail with conflicts between `vitest/globals` and `@playwright/test` type declarations (both define `test`, `expect`, and `describe` in the global scope). Similarly, `vitest.config.ts` must add `'e2e'` to its `exclude` array to prevent Vitest from discovering `.spec.ts` files in the `e2e/specs/` directory.
 
 ### Page Object Model Design
 
@@ -203,45 +217,116 @@ All page objects extend `BasePage`, which encapsulates the persistent shell:
 
 The most critical sub-POM — exercised on every page:
 
+- `gearButton` → `getByRole('button', { name: /open settings/i })`
+- `popover` → `locator('#settings-popover')`
 - `open()` / `close()` — gear button + popover visibility
 - `switchTheme(mode: 'light' | 'dark' | 'highContrast')`
 - `switchLanguage(locale: 'en' | 'fr')`
 - `toggleAnimations()`
 
-Waits for `gearButton` to be visible before clicking (handles `next/dynamic` hydration delay).
+Waits for `gearButton` to be visible before clicking (handles `next/dynamic` hydration delay). `SettingsButton` uses `next/dynamic` with `ssr: false`, so the gear button is absent from the initial HTML and appears only after React hydration. `open()` must wait with an extended timeout: `await this.gearButton.waitFor({ state: 'visible', timeout: 10_000 })`.
 
 **Note:** The settings panel uses MUI `Popover` (not `Dialog`), so it does not have `role="dialog"`. Locate it through its trigger button (`getByRole('button', { name: /open settings/i })`) and its child controls (theme toggle buttons, language toggle, animations switch).
+
+**Selector details (confirmed from source):**
+
+- Theme: `ToggleButtonGroup` renders as `role="group"` with `aria-label="Select theme"`. Individual buttons: `"Light theme"`, `"Dark theme"`, `"High contrast theme"` (from `theme.lightAria`, `theme.darkAria`, `theme.highContrastAria`). Selected button gets `aria-pressed="true"`.
+- Language: `ToggleButtonGroup` with `aria-label="Language"`. Buttons: `"English"`, `"Français"` (from `settings.english`, `settings.french`).
+- Animations: MUI `Switch` renders as `role="switch"` with `aria-label="Toggle animations"`.
+
+**Mobile context:** The mobile drawer renders `SettingsList` inline (not in a popover). The same child controls appear with identical ARIA labels. In mobile tests, callers must call `navigation.openDrawer()` first, then interact with theme/language/animation controls directly — `open()` should not be called since there is no popover to open.
 
 #### ProjectLightbox (sub-POM)
 
 Covers all interaction modes:
 
+- `dialog` → `getByRole('dialog', { name: /image lightbox/i })`
+- `closeButton` → `getByRole('button', { name: /close lightbox/i })`
+- `prevButton` → `getByRole('button', { name: /previous image/i })`
+- `nextButton` → `getByRole('button', { name: /next image/i })`
+- `liveRegion` → `locator('[role="status"][aria-live="assertive"]')`
 - `closeByButton()` / `closeByKeyboard()` (Escape)
 - `nextByKeyboard()` / `prevByKeyboard()` (ArrowRight/Left)
 - `swipe(direction: 'left' | 'right')` — mouse-based gesture simulation for cross-browser compatibility
-- `getCounterText()` — reads the "N of M" counter
-- ARIA: `dialog`, `liveRegion` locators
+- `getCounterText()` — reads the visual `"N of M"` counter (the `aria-hidden="true"` `Typography`, not the `VisuallyHidden` SR text)
+- `waitForOpen()` / `waitForClose()` — dialog visibility assertions
+
+The lightbox uses `next/dynamic` with `ssr: false` — the component chunk loads only after the first thumbnail click. `waitForOpen()` must account for both chunk loading and the dialog mount.
 
 #### Navigation (sub-POM)
 
-- `navigateTo('portfolio' | 'resume' | 'colophon' | 'samples')`
+- `desktopNav` → `getByRole('navigation', { name: /main navigation/i })`
+- `mobileNav` → `getByRole('navigation', { name: /mobile navigation menu/i })`
+- `hamburgerButton` → `getByRole('button', { name: /open navigation menu/i })`
+- `closeDrawerButton` → `getByRole('button', { name: /close navigation menu/i })`
+- `navigateTo('portfolio' | 'resume' | 'colophon' | 'samples')` — context-aware: detects mobile vs desktop via hamburger button visibility
 - `activeLink()` → locator for `[aria-current="page"]`
-- `hamburgerButton` — mobile menu trigger
 - `openDrawer()` / `closeDrawer()` — hamburger menu interactions
 
 **Note:** The hamburger drawer uses MUI `Drawer` (not `Dialog`). The drawer contains a `<nav aria-label="Mobile navigation menu">` with navigation links and settings controls. Locate drawer contents via `getByRole('navigation', { name: /mobile navigation menu/i })`.
 
+**Desktop nav buttons:** MUI `Button` with `component={Link}` renders as `<a>` elements. `NavButtons` wraps them in `<Box component="nav" aria-label="Main navigation">`. The hamburger `IconButton` has `aria-expanded` reflecting drawer state. Active links carry `aria-current="page"` in both desktop and mobile contexts.
+
+#### HomePage
+
+Extends `BasePage` for `/`:
+
+- `lightbox` → `ProjectLightbox` sub-POM instance
+- `loadMoreButton` → `getByRole('button', { name: /load more/i })`
+- `projectSections()` → `mainContent.getByRole('heading', { level: 2 })` (each `ProjectDetail` renders an h2)
+- `galleryImages(projectIndex)` → images within the nth `ProjectGallery`
+- `openLightboxForImage(projectIndex, imageIndex)` → clicks a gallery thumbnail, waits for the lightbox dialog
+
+#### ResumePage
+
+Extends `BasePage` for `/resume`. All sections use `aria-labelledby` with stable IDs:
+
+- `headerSection` → `locator('section[aria-labelledby="resume-name"]')`
+- `summarySection` → `locator('section[aria-labelledby="professional-summary-heading"]')`
+- `workSection` → `locator('section[aria-labelledby="work-experience-heading"]')`
+- `skillsSection` → `locator('section[aria-labelledby="skills-heading"]')`
+- `educationSection` → `locator('section[aria-labelledby="education-heading"]')`
+- `clientsSection` → `locator('section[aria-labelledby="clients-heading"]')`
+- `speakingSection` → `locator('section[aria-labelledby="speaking-heading"]')`
+- `contactButtons()` → `headerSection.getByRole('link')` (MUI `Button` with `href` renders as `<a>`)
+- `pdfDownloadButton()` → `headerSection.getByRole('link', { name: /opens in new tab/i })` (hardcoded suffix in `ResumeHeader.tsx`)
+
+#### ColophonPage
+
+Extends `BasePage` for `/colophon`. Sections use `aria-labelledby`:
+
+- `technologiesSection` → `locator('section[aria-labelledby="technologies-heading"]')`
+- `designSection` → `locator('section[aria-labelledby="design-heading"]')`
+- `butaSection` → `locator('section[aria-labelledby="buta-heading"]')` (heading is visually hidden / sr-only)
+- `v1Accordion` → `locator('#v1-accordion')`
+- `v1AccordionSummary` → `locator('#v1-technologies-header')`
+- `v1AccordionContent` → `locator('#v1-technologies-content')`
+- `expandV1Accordion()` / `collapseV1Accordion()` — checks `aria-expanded` state before clicking to avoid toggling in the wrong direction
+
+#### SamplesPage
+
+Extends `BasePage` for `/samples`. Artifact sections use `aria-label` (not `aria-labelledby`):
+
+- `artifactSection(heading)` → `locator('section[aria-label="${heading}"]')` — heading is the translated section title
+- `allArtifactSections()` → `locator('#main-content section[aria-label]')` — returns all 5 sections for positional access via `.nth(index)`, avoiding locale dependency
+- `downloadButtons(section)` → `section.getByRole('link')` — download buttons render as `<a>` elements with `aria-label` containing the artifact title and format
+- 5 sections in order: Product Strategy, UX Design, Technical, Process & Ops, Cost Savings
+
 ### Selector Strategy
 
-No `data-testid` attributes. The existing codebase uses semantic ARIA exclusively. E2E tests follow the same approach:
+Semantic ARIA selectors are the primary approach. E2E tests use the same interface that assistive technologies rely on — when a selector breaks, it signals a real accessibility regression. This makes the test suite a continuous accessibility monitor, not just a functional check.
 
-- `getByRole('button', { name: /open settings/i })` — from ARIA labels in production code
-- `getByRole('navigation', { name: /main navigation/i })`
-- `getByRole('dialog', { name: /image lightbox/i })`
-- `locator('[role="status"][aria-live="assertive"]')` — for the lightbox image position announcements
-- `locator('#main-content')` — for skip link target (real `id` in `MainLayout.tsx`)
+**Preferred selectors (in priority order):**
+
+1. `getByRole` with accessible name — `getByRole('button', { name: /open settings/i })`
+2. `getByRole` with navigation landmark — `getByRole('navigation', { name: /main navigation/i })`
+3. Stable `id` attributes — `locator('#main-content')` (real `id` in `MainLayout.tsx`)
+4. ARIA attribute combinations — `locator('[role="status"][aria-live="assertive"]')`
+5. `aria-labelledby` section targeting — `locator('section[aria-labelledby="resume-name"]')`
 
 If a locator proves fragile, add an `aria-label` to the production element (improves accessibility simultaneously).
+
+**Note on `data-testid`:** One legacy `data-testid="project-gallery"` exists in `ProjectGallery.tsx`. The `HomePage` POM may reference it for gallery scoping, but new production code should not introduce additional `data-testid` attributes. Prefer semantic alternatives where possible.
 
 ### Accessibility Testing
 
@@ -339,7 +424,7 @@ await expect(page.getByText(/projets/i)).toBeVisible({ timeout: 5_000 });
 
 ### Touch Gestures
 
-The `ProjectLightbox` sub-POM uses `mouse.down/move/up` rather than `touchscreen.tap` for cross-browser consistency. Swipe tests that fail in headless WebKit should be annotated:
+The `ProjectLightbox` sub-POM uses `mouse.down/move/up` rather than `touchscreen.tap` for cross-browser consistency. However, the production `useSwipe` hook listens for `touchstart`/`touchend` events (not mouse events), so mouse-based simulation may not trigger the swipe handler. The `swipe()` method exists in the POM for spec authors to use; actual test behavior should be verified per-browser and annotated accordingly:
 
 ```typescript
 test.skip(browserName === "webkit", "Touch events unstable in headless WebKit");
@@ -352,7 +437,8 @@ test.skip(browserName === "webkit", "Touch events unstable in headless WebKit");
   "test:e2e": "playwright test",
   "test:e2e:ui": "playwright test --ui",
   "test:e2e:debug": "playwright test --debug",
-  "test:e2e:report": "playwright show-report e2e/reports/html"
+  "test:e2e:report": "playwright show-report e2e/reports/html",
+  "test:e2e:install": "playwright install chromium webkit"
 }
 ```
 
@@ -367,8 +453,26 @@ e2e/test-results/
 
 ```bash
 npm install --save-dev @playwright/test @axe-core/playwright
-npx playwright install chromium webkit
 ```
+
+### Setup
+
+After installing npm dependencies, Playwright browser binaries must be downloaded separately (~400MB for Chromium + WebKit). This is a one-time operation per Playwright version upgrade:
+
+```bash
+# One-time browser installation (from v2/)
+npm run test:e2e:install
+```
+
+**First-time workflow:**
+1. `npm install` — installs `@playwright/test` and `@axe-core/playwright`
+2. `npm run test:e2e:install` — downloads Chromium and WebKit browser binaries
+3. `npm run build` — creates the production build (required before E2E tests)
+4. `npm run test:e2e` — runs E2E tests against the production build
+
+**When to re-run `test:e2e:install`:** Only after upgrading `@playwright/test` to a new version. Playwright pins browser versions to its own release — a Playwright upgrade requires re-downloading browsers.
+
+**CI:** Cache the Playwright browser directory (`~/.cache/ms-playwright`) keyed on `npx playwright --version` to avoid re-downloading on every CI run. See [CI Integration](#ci-integration-deferred) for details.
 
 ---
 

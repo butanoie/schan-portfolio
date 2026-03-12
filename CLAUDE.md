@@ -188,6 +188,29 @@ When adding new infrastructure, create docs in the appropriate `docs/` subdirect
 
 **CRITICAL: Never commit unless the user explicitly asks** (e.g., "commit these changes", `/git-commit`, or explicit approval after being asked). Completing a task, running tests, or "proceed" does NOT grant commit permission. After finishing work, always ask "Would you like me to commit?" and wait for confirmation.
 
+## Feature Development Workflow
+
+When using the feature-dev skill (or any structured multi-phase workflow), after Phase 3 (Clarifying Questions) answers are received, always update relevant documentation with the decisions made before proceeding to Phase 4 (Architecture Design). This includes:
+
+- **Architecture docs** — Update specifications with confirmed details, refined selectors, or new technical constraints
+- **Roadmaps** — Reflect scope changes, new checklist items, or adjusted priorities
+- **GitHub issues** — Sync issue bodies with the latest decisions and technical notes
+- **CLAUDE.md** — Add new conventions or standards that emerged from the discussion
+
+This ensures documentation stays ahead of implementation, not behind it.
+
+### Verification Gate
+
+**Before considering any implementation phase complete, run the full automated quality gate:**
+```bash
+cd v2 && npm run lint && npm run typecheck && npm run format:check && npm test
+```
+This catches issues that code-review agents miss (JSDoc, React hooks rules, formatting). Run this after Phase 5 (Implementation) and after Phase 6 (Quality Review) fixes.
+
+After Phase 6 (Quality Review) issues have been **fixed**, update documentation in two steps before Phase 7 (Summary):
+
+1. **Update project docs** alongside the fixes — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.
+2. **Run `/claude-md-management:revise-claude-md`** — capture gotchas and conventions into directory-scoped CLAUDE.md files (e.g., `v2/e2e/CLAUDE.md`, `v2/src/components/CLAUDE.md`). Create new scoped CLAUDE.md files when a feature introduces a new directory with its own conventions. Only add to root CLAUDE.md if the learning applies project-wide.
 
 ## Changelog
 

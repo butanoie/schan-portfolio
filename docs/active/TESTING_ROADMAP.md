@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Planning complete. Implementation not started.
+**Status:** Phase 5 (Playwright infrastructure) complete. Ready for Phase 6 (Accessibility).
 
 ---
 
@@ -17,7 +17,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 | 2 | Integration: Server Data Fetching | Vitest | High | ~15 | [INT_SERVER_DATA_FETCHING](../test-scenarios/INT_SERVER_DATA_FETCHING.md) |
 | 3 | Integration: useProjectLoader Lifecycle | Vitest | High | ~18 | [INT_USE_PROJECT_LOADER](../test-scenarios/INT_USE_PROJECT_LOADER.md) |
 | 4 | Integration: AsyncProjectsList Rendering | Vitest | Medium | ~12 | [INT_ASYNC_PROJECTS_LIST](../test-scenarios/INT_ASYNC_PROJECTS_LIST.md) |
-| 5 | E2E: Playwright Setup & Infrastructure | Playwright | High | 0 (infra) | — |
+| 5 | E2E: Playwright Setup & Infrastructure (full POMs) | Playwright | High | 0 (infra) | — |
 | 6 | E2E: Accessibility (all pages) | Playwright | **Highest** | ~30 | [E2E_ACCESSIBILITY](../test-scenarios/E2E_ACCESSIBILITY.md) |
 | 7 | E2E: Navigation & Smoke Tests | Playwright | High | ~15 | [E2E_NAVIGATION](../test-scenarios/E2E_NAVIGATION.md) |
 | 8 | E2E: Settings (Theme/Language/Animations) | Playwright | High | ~20 | [E2E_SETTINGS](../test-scenarios/E2E_SETTINGS.md) |
@@ -40,13 +40,13 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `localizationPipeline.test.ts`
-- [ ] Implement `getLocalizedProjects` cross-locale tests
-- [ ] Implement `getLocalizedProject` merge correctness tests
-- [ ] Implement caption index tests
-- [ ] Implement unknown locale fallback test (requires `vi.resetModules()`)
-- [ ] Implement consistency tests (count, structure)
-- [ ] Verify all tests pass: `npm test -- localizationPipeline`
+- [x] Create `localizationPipeline.test.ts`
+- [x] Implement `getLocalizedProjects` cross-locale tests
+- [x] Implement `getLocalizedProject` merge correctness tests
+- [x] Implement caption index tests
+- [x] Implement unknown locale fallback test (requires `vi.resetModules()`)
+- [x] Implement consistency tests (count, structure)
+- [x] Verify all tests pass: `npm test -- localizationPipeline` (16 tests)
 
 ---
 
@@ -59,12 +59,12 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `serverDataFetching.test.ts`
-- [ ] Implement SSG simulation tests (page 1, DEFAULT_LOCALE)
-- [ ] Implement locale variant tests (EN vs FR comparison)
-- [ ] Implement combined filter + locale tests
-- [ ] Implement pagination coverage test
-- [ ] Verify all tests pass: `npm test -- serverDataFetching`
+- [x] Create `serverDataFetching.test.ts`
+- [x] Implement SSG simulation tests (page 1, DEFAULT_LOCALE)
+- [x] Implement locale variant tests (EN vs FR comparison)
+- [x] Implement combined filter + locale tests
+- [x] Implement pagination coverage test
+- [x] Verify all tests pass: `npm test -- serverDataFetching` (7 tests)
 
 ---
 
@@ -84,14 +84,14 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `useProjectLoaderIntegration.test.tsx`
-- [ ] Build `ControlledLocaleWrapper` test helper
-- [ ] Implement EN → FR locale switch test
-- [ ] Implement loadMore after locale switch
-- [ ] Implement pagination reset test
-- [ ] Implement concurrent locale switch test
-- [ ] Implement allLoaded boundary test
-- [ ] Verify all tests pass: `npm test -- useProjectLoaderIntegration`
+- [x] Create `useProjectLoaderIntegration.test.tsx`
+- [x] Build `ControlledLocaleWrapper` test helper
+- [x] Implement EN → FR locale switch test
+- [x] Implement loadMore after locale switch
+- [x] Implement pagination reset test
+- [x] Implement concurrent locale switch test
+- [x] Implement allLoaded boundary test
+- [x] Verify all tests pass: `npm test -- useProjectLoaderIntegration` (18 tests)
 
 ---
 
@@ -110,39 +110,57 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `asyncProjectsList.test.tsx`
-- [ ] Set up mocks (navigation, image, useMediaQuery)
-- [ ] Implement initial render test
-- [ ] Implement context provision tests
-- [ ] Implement locale-driven re-render test
-- [ ] Implement error handling test
-- [ ] Verify all tests pass: `npm test -- asyncProjectsList`
+- [x] Create `asyncProjectsList.test.tsx`
+- [x] Set up mocks (navigation, image, useMediaQuery)
+- [x] Implement initial render test
+- [x] Implement context provision tests
+- [x] Implement locale-driven re-render test
+- [x] Implement error handling test
+- [x] Verify all tests pass: `npm test -- asyncProjectsList` (10 tests)
 
 ---
 
 ## Phase 5: E2E — Playwright Setup & Infrastructure
 
-**Goal:** Install Playwright, create configuration, build POM infrastructure. No test specs yet.
+**Goal:** Install Playwright, create configuration, build full POM infrastructure. No test specs yet.
 
 ### Checklist
 
-- [ ] Install dependencies: `npm install --save-dev @playwright/test @axe-core/playwright`
-- [ ] Install browsers: `npx playwright install chromium webkit`
-- [ ] Create `v2/playwright.config.ts` at project root (Chromium + WebKit, webServer on port 3000)
-- [ ] Create `v2/e2e/global-setup.ts` (validates `.next/BUILD_ID` exists)
-- [ ] Create `v2/tsconfig.e2e.json` (extends main tsconfig with Playwright types)
-- [ ] Create `v2/e2e/helpers/axe.ts` (axe-core wrapper with WCAG 2.2 AA rules)
-- [ ] Create `v2/e2e/helpers/storage.ts` (localStorage seed helpers)
-- [ ] Create `v2/e2e/fixtures/base.fixture.ts` (page object fixtures)
-- [ ] Create `v2/e2e/fixtures/viewport.fixture.ts` (mobile/desktop presets)
-- [ ] Create `v2/e2e/pages/BasePage.ts` (abstract base with shared shell)
-- [ ] Create `v2/e2e/components/Navigation.ts` (nav links + hamburger)
-- [ ] Create `v2/e2e/components/SettingsPanel.ts` (gear + popover + 3 switchers)
-- [ ] Create `v2/e2e/components/ProjectLightbox.ts` (dialog + all interaction modes)
-- [ ] Create page objects: `HomePage.ts`, `ResumePage.ts`, `ColophonPage.ts`, `SamplesPage.ts`
-- [ ] Add npm scripts to `package.json`: `test:e2e`, `test:e2e:ui`, `test:e2e:debug`, `test:e2e:report`
-- [ ] Add `e2e/reports/` and `e2e/test-results/` to `.gitignore`
-- [ ] Verify `npm run build && npm run test:e2e` runs without errors (zero tests, no failures)
+#### Dependencies & Config
+- [x] Install dependencies: `npm install --save-dev @playwright/test @axe-core/playwright`
+- [x] Install browsers: `npm run test:e2e:install` (runs `playwright install chromium webkit`)
+- [x] Create `v2/playwright.config.ts` (Chromium + WebKit, webServer on port 3000, `outputDir`, `reporter`, `baseURL`, `trace`)
+- [x] Create `v2/e2e/global-setup.ts` (validates `.next/BUILD_ID` exists — build check only, not browser check)
+- [x] Create `v2/tsconfig.e2e.json` (extends main tsconfig with `@playwright/test` and `node` types)
+
+#### Type & Runner Isolation
+- [x] Add `"e2e"` to `v2/tsconfig.json` `exclude` array (prevents type conflicts between Vitest and Playwright globals)
+- [x] Add `'e2e'` to `v2/vitest.config.ts` `exclude` array (prevents Vitest from discovering `.spec.ts` files in `e2e/`)
+
+#### Helpers
+- [x] Create `v2/e2e/helpers/axe.ts` (axe-core wrapper with WCAG 2.2 AA rules, excludes PostHog/Sentry iframes)
+- [x] Create `v2/e2e/helpers/storage.ts` (localStorage seed helpers: `seedTheme`, `seedLocale` via `page.addInitScript`)
+
+#### Fixtures
+- [x] Create `v2/e2e/fixtures/base.fixture.ts` (page object fixtures with typed `AppFixtures`)
+- [x] Create `v2/e2e/fixtures/viewport.fixture.ts` (mobile 375x812, desktop 1280x800)
+
+#### Component Objects (sub-POMs)
+- [x] Create `v2/e2e/components/Navigation.ts` (desktop nav + hamburger, context-aware `navigateTo()`, `openDrawer`/`closeDrawer`)
+- [x] Create `v2/e2e/components/SettingsPanel.ts` (gear button with hydration wait, popover, theme/language/animations controls, mobile context note)
+- [x] Create `v2/e2e/components/ProjectLightbox.ts` (dialog, keyboard/button/swipe navigation, live region, counter, `waitForOpen`/`waitForClose`)
+
+#### Page Objects (full POMs, not stubs)
+- [x] Create `v2/e2e/pages/BasePage.ts` (abstract base: skip link, main content, settings + navigation sub-POMs, `activateSkipLink()`)
+- [x] Create `v2/e2e/pages/HomePage.ts` (project sections, gallery images, load more, lightbox sub-POM, `openLightboxForImage()`)
+- [x] Create `v2/e2e/pages/ResumePage.ts` (7 sections via `aria-labelledby` IDs, contact buttons, PDF download link)
+- [x] Create `v2/e2e/pages/ColophonPage.ts` (technologies/design/buta sections, V1 accordion expand/collapse)
+- [x] Create `v2/e2e/pages/SamplesPage.ts` (5 artifact sections via `aria-label`, download buttons, `allArtifactSections()`)
+
+#### Integration
+- [x] Add npm scripts: `test:e2e`, `test:e2e:ui`, `test:e2e:debug`, `test:e2e:report`, `test:e2e:install`
+- [x] Add `e2e/reports/` and `e2e/test-results/` to `.gitignore`
+- [x] Verify `npm run build && npm run test:e2e` runs without errors (smoke test passes on Chromium + WebKit)
 
 ---
 
@@ -200,6 +218,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 - [ ] Implement language persistence tests
 - [ ] Implement animations toggle tests
 - [ ] Implement popover open/close tests
+- [ ] Implement mobile settings tests (settings controls inline within drawer, no popover)
 
 ---
 
@@ -246,17 +265,25 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Files:** `v2/e2e/specs/resume.spec.ts`, `v2/e2e/specs/colophon.spec.ts`, `v2/e2e/specs/samples.spec.ts`
 **Scenarios:** [E2E_CONTENT_PAGES.md](../test-scenarios/E2E_CONTENT_PAGES.md)
 
-**Goal:** Content verification and basic interaction tests for each content page.
+**Goal:** Content verification and interaction tests for each content page. Full POMs are already built in Phase 5 — this phase writes the specs.
 
 ### Checklist
 
 - [ ] Create `resume.spec.ts`
+  - [ ] Section presence tests (all 7 sections via `aria-labelledby`)
+  - [ ] Contact button tests (LinkedIn, GitHub, email, phone links)
+  - [ ] PDF download link test (`aria-label` containing "opens in new tab")
+  - [ ] French locale content test
 - [ ] Create `colophon.spec.ts`
+  - [ ] Section presence tests (technologies, design philosophy, buta story)
+  - [ ] V1 accordion expand/collapse test
+  - [ ] Technology card external link tests
+  - [ ] French locale content test
 - [ ] Create `samples.spec.ts`
-- [ ] Implement content presence tests for each page
-- [ ] Implement French locale tests for each page
-- [ ] Implement resume-specific tests (download link, LinkedIn/GitHub)
-- [ ] Implement colophon-specific tests (technology cards)
+  - [ ] All 5 artifact sections present
+  - [ ] Download button tests (PDF and Markdown formats)
+  - [ ] Artifact without download button (Cost Savings Roadmap) renders correctly
+  - [ ] French locale content test
 
 ---
 
@@ -271,8 +298,8 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 - [ ] Create `responsive.spec.ts`
 - [ ] Implement mobile hamburger visibility tests
-- [ ] Implement hamburger drawer interaction tests
-- [ ] Implement drawer navigation tests
+- [ ] Implement hamburger drawer interaction tests (open/close, `aria-expanded` state)
+- [ ] Implement drawer navigation tests (nav links + inline settings controls)
 - [ ] Implement desktop nav visibility tests
 - [ ] Implement footer responsive tests
 
@@ -297,8 +324,8 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 These should be addressed before or during Phase 1:
 
-- [ ] Delete duplicate `v2/src/__tests__/hooks/useProjectLoader.test.ts` (keep the `.tsx` version)
-- [ ] Extend `v2/src/__tests__/integration/dataLayer.test.ts` with locale consistency `describe` block
+- [x] Delete duplicate `v2/src/__tests__/hooks/useProjectLoader.test.ts` (keep the `.tsx` version)
+- [x] Extend `v2/src/__tests__/integration/dataLayer.test.ts` with locale consistency `describe` block
 
 ---
 

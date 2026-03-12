@@ -73,6 +73,15 @@ const eslintConfig = defineConfig([
       'jsdoc/tag-lines': ['warn', 'any', { startLines: 1 }],
     },
   },
+  // E2E (Playwright) files — disable React-specific rules that produce false positives.
+  // Playwright's test.extend() uses `{ use }` destructuring, which triggers
+  // react-hooks/rules-of-hooks because ESLint sees it as React's `use()` hook.
+  {
+    files: ['e2e/**/*.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+    },
+  },
 ]);
 
 export default eslintConfig;
