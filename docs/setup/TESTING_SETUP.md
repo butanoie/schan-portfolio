@@ -216,7 +216,7 @@ it('should render dynamic component', async () => {
 
 ## Coverage
 
-Coverage thresholds are set to 80% for all metrics (per the [modernization plan](../active/MODERNIZATION_PLAN.md)):
+Coverage thresholds are set to 80% for all metrics (per the [modernization plan](../archive/MODERNIZATION_PLAN.md)):
 
 | Metric | Threshold |
 |--------|-----------|
@@ -243,6 +243,8 @@ Coverage reports:
 
 ## Related Documentation
 
+- [Testing Architecture](../guides/TESTING_ARCHITECTURE.md) — Integration & E2E test architecture (POM, Playwright, axe)
+- [Testing Roadmap](../active/TESTING_ROADMAP.md) — Integration & E2E test implementation roadmap
 - [Accessibility Testing](../accessibility/ACCESSIBILITY_TESTING.md) — Manual and automated a11y testing procedures
 - [Accessibility Testing Checklist](../accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md) — Testing checklist
-- [Modernization Plan](../active/MODERNIZATION_PLAN.md) — Coverage goals and testing strategy
+- [Modernization Plan](../archive/MODERNIZATION_PLAN.md) — Coverage goals and testing strategy

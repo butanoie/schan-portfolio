@@ -21,9 +21,10 @@ The goal is to show that a personal project, when treated with the same rigour a
 
 ## Status
 
-**All Phases Complete** — Deployed on Railway with full monitoring and analytics.
+**Phases 1–7 Complete** — Deployed on Railway with full monitoring and analytics.
+**Phase 8 (Testing Expansion) In Progress** — Adding integration tests and Playwright E2E tests. See the [Testing Roadmap](docs/active/TESTING_ROADMAP.md).
 
-**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ✅ | Phase 7 ✅
+**Completion:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 ✅ | Phase 7 ✅ | Phase 8 🔄
 
 ## Stack
 
@@ -72,11 +73,15 @@ npm run typecheck     # TypeScript check
 | 5. Performance | ✅ Complete | Font optimization, lazy loading, SSG, server components, Lighthouse 97–100 |
 | 6. Deployment | ✅ Complete | Railway hosting, CI/CD via GitHub Actions, approval gates |
 | 7. Monitoring & Analytics | ✅ Complete | PostHog, Web Vitals, Sentry, Better Stack, Dependabot |
+| [8. Testing Expansion](docs/active/TESTING_ROADMAP.md) | 🔄 In Progress | Integration tests (Vitest), E2E/UI tests (Playwright), accessibility scans |
 
 ## Documentation
 
 - **[v2 README](v2/README.md)** — Getting started and development guide
+- **Active Plans**
+  - [Testing Roadmap](docs/active/TESTING_ROADMAP.md) — Integration & E2E test implementation (13 phases)
 - **Guides**
+  - [Testing Architecture](docs/guides/TESTING_ARCHITECTURE.md) — Integration & E2E test architecture (POM, Playwright, axe)
   - [Localization](docs/guides/LOCALIZATION_ARCHITECTURE.md)
   - [JSDoc Examples](docs/guides/JSDOC_EXAMPLES.md)
   - [Maintenance Workflow](docs/guides/MAINTENANCE_WORKFLOW.md)
