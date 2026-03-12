@@ -39,10 +39,18 @@ function main() {
     // Summary statistics
     console.log('📊 Summary Statistics:');
     console.log(`   Total Projects: ${PROJECTS.length}`);
-    console.log(`   Projects with Videos: ${PROJECTS.filter((p) => p.videos.length > 0).length}`);
-    console.log(`   Projects with altGrid: ${PROJECTS.filter((p) => p.altGrid).length}`);
-    console.log(`   Total Images: ${PROJECTS.reduce((sum, p) => sum + p.images.length, 0)}`);
-    console.log(`   Total Tags: ${PROJECTS.reduce((sum, p) => sum + p.tags.length, 0)}`);
+    console.log(
+      `   Projects with Videos: ${PROJECTS.filter((p) => p.videos.length > 0).length}`
+    );
+    console.log(
+      `   Projects with altGrid: ${PROJECTS.filter((p) => p.altGrid).length}`
+    );
+    console.log(
+      `   Total Images: ${PROJECTS.reduce((sum, p) => sum + p.images.length, 0)}`
+    );
+    console.log(
+      `   Total Tags: ${PROJECTS.reduce((sum, p) => sum + p.tags.length, 0)}`
+    );
 
     console.log('\n✅ All validations passed!');
   } catch (error) {

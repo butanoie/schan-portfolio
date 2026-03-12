@@ -5,5 +5,5 @@
  * documentation artifacts across five themed sections.
  */
 
-export { default as ArtifactSection } from "./ArtifactSection";
-export { default as SamplesContent } from "./SamplesContent";
+export { default as ArtifactSection } from './ArtifactSection';
+export { default as SamplesContent } from './SamplesContent';

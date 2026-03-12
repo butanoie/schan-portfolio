@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import ProfessionalSummary from "../../../components/resume/ProfessionalSummary";
-import { ThemeContextProvider } from "../../../contexts/ThemeContext";
-import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import ProfessionalSummary from '../../../components/resume/ProfessionalSummary';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
+import { LocaleProvider } from '../../../components/i18n/LocaleProvider';
 
 /**
  * Tests for the ProfessionalSummary component.
@@ -19,10 +19,10 @@ import { LocaleProvider } from "../../../components/i18n/LocaleProvider";
  */
 function Wrapper({
   children,
-  initialLocale = "en",
+  initialLocale = 'en',
 }: {
   children: React.ReactNode;
-  initialLocale?: "en" | "fr";
+  initialLocale?: 'en' | 'fr';
 }) {
   return (
     <LocaleProvider initialLocale={initialLocale}>
@@ -31,19 +31,19 @@ function Wrapper({
   );
 }
 
-describe("ProfessionalSummary", () => {
-  it("should render the Professional Summary heading", () => {
+describe('ProfessionalSummary', () => {
+  it('should render the Professional Summary heading', () => {
     render(<ProfessionalSummary />, { wrapper: Wrapper });
 
     expect(
-      screen.getByRole("heading", {
+      screen.getByRole('heading', {
         name: /professional summary/i,
         level: 2,
       })
     ).toBeInTheDocument();
   });
 
-  it("should render the professional summary content", () => {
+  it('should render the professional summary content', () => {
     render(<ProfessionalSummary />, { wrapper: Wrapper });
 
     // Check for key phrases from the summary
@@ -61,7 +61,7 @@ describe("ProfessionalSummary", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render with French locale", () => {
+  it('should render with French locale', () => {
     /**
      * Custom wrapper that provides French locale to the component.
      *
@@ -81,7 +81,7 @@ describe("ProfessionalSummary", () => {
 
     // Check for French heading
     expect(
-      screen.getByRole("heading", {
+      screen.getByRole('heading', {
         name: /résumé professionnel/i,
         level: 2,
       })
@@ -93,23 +93,25 @@ describe("ProfessionalSummary", () => {
     ).toBeInTheDocument();
   });
 
-  it("should have proper accessibility attributes", () => {
+  it('should have proper accessibility attributes', () => {
     render(<ProfessionalSummary />, { wrapper: Wrapper });
 
-    const section = screen.getByRole("region", {
+    const section = screen.getByRole('region', {
       name: /professional summary/i,
     });
     expect(section).toBeInTheDocument();
   });
 
-  it("should render as a section element", () => {
+  it('should render as a section element', () => {
     const { container } = render(<ProfessionalSummary />, { wrapper: Wrapper });
 
-    const section = container.querySelector('section[aria-labelledby="professional-summary-heading"]');
+    const section = container.querySelector(
+      'section[aria-labelledby="professional-summary-heading"]'
+    );
     expect(section).toBeInTheDocument();
   });
 
-  it("should contain the full professional summary text", () => {
+  it('should contain the full professional summary text', () => {
     render(<ProfessionalSummary />, { wrapper: Wrapper });
 
     // The full summary should be present as a complete text block
@@ -119,35 +121,32 @@ describe("ProfessionalSummary", () => {
     expect(summaryText).toBeInTheDocument();
   });
 
-  it("should have proper id attribute on heading", () => {
+  it('should have proper id attribute on heading', () => {
     render(<ProfessionalSummary />, { wrapper: Wrapper });
 
-    const heading = screen.getByRole("heading", {
+    const heading = screen.getByRole('heading', {
       name: /professional summary/i,
       level: 2,
     });
-    expect(heading).toHaveAttribute(
-      "id",
-      "professional-summary-heading"
-    );
+    expect(heading).toHaveAttribute('id', 'professional-summary-heading');
   });
 
-  it("should render correctly with all content sections", () => {
+  it('should render correctly with all content sections', () => {
     render(<ProfessionalSummary />, { wrapper: Wrapper });
 
     // Verify the component renders with proper structure
-    const section = screen.getByRole("region", {
+    const section = screen.getByRole('region', {
       name: /professional summary/i,
     });
     expect(section).toBeInTheDocument();
 
     // Verify heading is a direct child of section
-    const heading = section.querySelector("h2");
+    const heading = section.querySelector('h2');
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent("Professional Summary");
+    expect(heading).toHaveTextContent('Professional Summary');
 
     // Verify content paragraph is present
-    const paragraph = section.querySelector("p");
+    const paragraph = section.querySelector('p');
     expect(paragraph).toBeInTheDocument();
   });
 });

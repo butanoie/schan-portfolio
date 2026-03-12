@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Animations switcher component with toggle for enabling/disabling animations.
@@ -23,10 +23,10 @@
  * ```
  */
 
-import { Box, Switch, FormControlLabel, Typography } from "@mui/material";
-import { useAnimations } from "@/src/hooks/useAnimations";
-import { useI18n } from "@/src/hooks/useI18n";
-import { BRAND_COLORS } from "@/src/constants";
+import { Box, Switch, FormControlLabel, Typography } from '@mui/material';
+import { useAnimations } from '@/src/hooks/useAnimations';
+import { useI18n } from '@/src/hooks/useI18n';
+import { BRAND_COLORS } from '@/src/constants';
 
 /**
  * Props for the AnimationsSwitcher component.
@@ -85,12 +85,12 @@ export function AnimationsSwitcher({
           <Switch
             checked={animationsEnabled}
             onChange={handleChange}
-            aria-label={t("settings.animationsToggle")}
+            aria-label={t('settings.animationsToggle')}
             sx={{
-              "& .MuiSwitch-switchBase.Mui-checked": {
+              '& .MuiSwitch-switchBase.Mui-checked': {
                 color: BRAND_COLORS.sage,
               },
-              "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+              '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
                 backgroundColor: BRAND_COLORS.sage,
               },
             }}
@@ -99,13 +99,13 @@ export function AnimationsSwitcher({
         label={
           <Typography variant="body2">
             {animationsEnabled
-              ? t("settings.animationsEnabled")
-              : t("settings.animationsDisabled")}
+              ? t('settings.animationsEnabled')
+              : t('settings.animationsDisabled')}
           </Typography>
         }
         sx={{
-          display: "flex",
-          width: "100%",
+          display: 'flex',
+          width: '100%',
           m: 0,
         }}
       />

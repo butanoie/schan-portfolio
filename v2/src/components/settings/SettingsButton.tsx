@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Settings button component that opens a popover with theme, language, and animations controls.
@@ -28,20 +28,20 @@
  * ```
  */
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   IconButton,
   Popover,
   Tooltip,
   Typography,
   Divider,
-} from "@mui/material";
-import { Settings as SettingsIcon } from "@mui/icons-material";
-import dynamic from "next/dynamic";
-import { useI18n } from "@/src/hooks/useI18n";
-import { useAnimations } from "@/src/hooks/useAnimations";
-import { usePalette } from "@/src/hooks/usePalette";
-import { BRAND_COLORS } from "@/src/constants";
+} from '@mui/material';
+import { Settings as SettingsIcon } from '@mui/icons-material';
+import dynamic from 'next/dynamic';
+import { useI18n } from '@/src/hooks/useI18n';
+import { useAnimations } from '@/src/hooks/useAnimations';
+import { usePalette } from '@/src/hooks/usePalette';
+import { BRAND_COLORS } from '@/src/constants';
 
 /**
  * Lazily-loaded settings list containing ThemeSwitcher, LanguageSwitcher,
@@ -59,8 +59,7 @@ const SettingsList = dynamic(
    *
    * @returns The module with SettingsList as the default export
    */
-  () =>
-    import("./SettingsList").then((m) => ({ default: m.SettingsList })),
+  () => import('./SettingsList').then((m) => ({ default: m.SettingsList })),
   {
     ssr: false,
     /**
@@ -83,7 +82,7 @@ interface SettingsButtonProps {
    *
    * @default 'medium'
    */
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
 
   /**
    * Optional CSS class name for styling.
@@ -125,7 +124,7 @@ interface SettingsButtonProps {
  * @returns Settings button with popover containing theme, language, and animations controls
  */
 export function SettingsButton({
-  size = "medium",
+  size = 'medium',
   className,
   disabled = false,
 }: SettingsButtonProps): React.ReactNode {
@@ -156,18 +155,18 @@ export function SettingsButton({
     setAnchorEl(null);
   };
 
-  const popoverId = open ? "settings-popover" : undefined;
+  const popoverId = open ? 'settings-popover' : undefined;
 
   return (
     <>
       {/* Settings Icon Button - wrapped in span when disabled for Tooltip compatibility.
            MUI Tooltip requires a non-disabled element to anchor to. */}
-      <Tooltip title={t("settings.openSettings")}>
+      <Tooltip title={t('settings.openSettings')}>
         {(() => {
           const iconButton = (
             <IconButton
               onClick={handleOpen}
-              aria-label={t("settings.openSettings")}
+              aria-label={t('settings.openSettings')}
               aria-expanded={open}
               aria-controls={popoverId}
               disabled={disabled}
@@ -176,13 +175,13 @@ export function SettingsButton({
               sx={{
                 color: palette.text.primary,
                 transition: animationsEnabled
-                  ? "color 150ms ease-in-out"
-                  : "none",
-                "&:hover": {
+                  ? 'color 150ms ease-in-out'
+                  : 'none',
+                '&:hover': {
                   color: BRAND_COLORS.maroon,
                 },
-                "@media (prefers-reduced-motion: reduce)": {
-                  transition: "none",
+                '@media (prefers-reduced-motion: reduce)': {
+                  transition: 'none',
                 },
               }}
             >
@@ -200,12 +199,12 @@ export function SettingsButton({
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         slotProps={{
           paper: {
@@ -223,11 +222,11 @@ export function SettingsButton({
           variant="h6"
           sx={{
             mb: 2,
-            fontSize: "1rem",
+            fontSize: '1rem',
             fontWeight: 600,
           }}
         >
-          {t("settings.title")}
+          {t('settings.title')}
         </Typography>
 
         {/* Settings sections: Theme, Language, Animations */}

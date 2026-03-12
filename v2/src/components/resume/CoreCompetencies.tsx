@@ -1,6 +1,6 @@
-import { Box, Typography, Chip } from "@mui/material";
-import type { SkillCategory } from "../../types/resume";
-import { BRAND_COLORS } from "../../constants";
+import { Box, Typography, Chip } from '@mui/material';
+import type { SkillCategory } from '../../types/resume';
+import { BRAND_COLORS } from '../../constants';
 
 /**
  * Props for the CoreCompetencies component.
@@ -35,7 +35,6 @@ export default function CoreCompetencies({
   categories,
   cardTextColor,
 }: CoreCompetenciesProps) {
-
   return (
     <Box component="section" aria-labelledby="skills-heading">
       {categories.map((category, categoryIndex) => (
@@ -53,13 +52,13 @@ export default function CoreCompetencies({
             variant="h3"
             id={
               categoryIndex === 0
-                ? "skills-heading"
-                : `skills-${category.label.toLowerCase().replace(/\s+/g, "-")}`
+                ? 'skills-heading'
+                : `skills-${category.label.toLowerCase().replace(/\s+/g, '-')}`
             }
             sx={{
               fontWeight: 600,
               color: cardTextColor,
-              fontSize: { xs: "1.1rem", md: "1.25rem" },
+              fontSize: { xs: '1.1rem', md: '1.25rem' },
               mb: 1.5,
             }}
           >
@@ -69,8 +68,8 @@ export default function CoreCompetencies({
           {/* Skills as Chips */}
           <Box
             sx={{
-              display: "flex",
-              flexWrap: "wrap",
+              display: 'flex',
+              flexWrap: 'wrap',
               gap: 0.75,
             }}
           >
@@ -81,12 +80,12 @@ export default function CoreCompetencies({
                 size="small"
                 sx={{
                   backgroundColor: BRAND_COLORS.sage,
-                  color: "#ffffff",
+                  color: '#ffffff',
                   fontWeight: 600,
-                  fontSize: "0.8rem",
-                  height: "28px",
-                  borderRadius: "3px",
-                  "& .MuiChip-label": {
+                  fontSize: '0.8rem',
+                  height: '28px',
+                  borderRadius: '3px',
+                  '& .MuiChip-label': {
                     px: 1.5,
                   },
                 }}

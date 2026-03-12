@@ -14,8 +14,8 @@
  * @see {@link https://www.sitemaps.org/protocol.html} for XML Sitemap Protocol
  */
 
-import { MetadataRoute } from "next";
-import { SITE_URL } from "@/src/constants/seo";
+import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/src/constants/seo';
 
 /**
  * Generates the sitemap for the application.
@@ -42,31 +42,31 @@ import { SITE_URL } from "@/src/constants/seo";
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   // Use today's date for lastModified
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
 
   return [
     {
       url: `${SITE_URL}/`,
       lastModified: today,
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 1.0,
     },
     {
       url: `${SITE_URL}/resume`,
       lastModified: today,
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${SITE_URL}/samples`,
       lastModified: today,
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${SITE_URL}/colophon`,
       lastModified: today,
-      changeFrequency: "yearly",
+      changeFrequency: 'yearly',
       priority: 0.5,
     },
   ];

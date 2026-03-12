@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Dialog,
   IconButton,
@@ -8,21 +8,26 @@ import {
   Box,
   Fade,
   CircularProgress,
-} from "@mui/material";
-import type { SxProps, Theme } from "@mui/material/styles";
+} from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
 import {
   Close as CloseIcon,
   ArrowBackIos as ArrowBackIcon,
   ArrowForwardIos as ArrowForwardIcon,
-} from "@mui/icons-material";
-import type { ProjectImage as ProjectImageType } from "../../types";
-import { useSwipe, useI18n, useAnimations, useImagePreloader } from "../../hooks";
-import { VisuallyHidden } from "../common/VisuallyHidden";
+} from '@mui/icons-material';
+import type { ProjectImage as ProjectImageType } from '../../types';
+import {
+  useSwipe,
+  useI18n,
+  useAnimations,
+  useImagePreloader,
+} from '../../hooks';
+import { VisuallyHidden } from '../common/VisuallyHidden';
 import {
   SWIPE_THRESHOLD,
   DIALOG_FADE_DURATION,
   LIGHTBOX_CONTROL_OFFSET,
-} from "../../constants/app";
+} from '../../constants/app';
 
 /**
  * Props for the ProjectLightbox component.
@@ -136,7 +141,9 @@ export function ProjectLightbox({
 
   // Validate that selectedIndex is within bounds
   const validIndex =
-    selectedIndex !== null && selectedIndex >= 0 && selectedIndex < images.length
+    selectedIndex !== null &&
+    selectedIndex >= 0 &&
+    selectedIndex < images.length
       ? selectedIndex
       : null;
 
@@ -213,9 +220,9 @@ export function ProjectLightbox({
    * Configured with maxImages to prevent horizontal navigation on single-image galleries.
    */
   const { onTouchStart, onTouchEnd } = useSwipe(
-    handleNext,    // onSwipeLeft
+    handleNext, // onSwipeLeft
     handlePrevious, // onSwipeRight
-    onClose,       // onSwipeDown
+    onClose, // onSwipeDown
     { maxImages: images.length, threshold: SWIPE_THRESHOLD }
   );
 
@@ -246,15 +253,15 @@ export function ProjectLightbox({
       }
 
       switch (event.key) {
-        case "ArrowLeft":
+        case 'ArrowLeft':
           event.preventDefault();
           void handlePrevious();
           break;
-        case "ArrowRight":
+        case 'ArrowRight':
           event.preventDefault();
           void handleNext();
           break;
-        case "Escape":
+        case 'Escape':
           event.preventDefault();
           onClose();
           break;
@@ -287,11 +294,11 @@ export function ProjectLightbox({
       handleKeyDownRef.current(event);
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
 
     // Cleanup event listener on unmount or when lightbox closes
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [validIndex]);
 
@@ -358,7 +365,7 @@ export function ProjectLightbox({
   if (!currentImage) {
     console.error(
       `ProjectLightbox: currentImage is undefined at index ${validIndex}. ` +
-      `Images array length: ${images.length}. This should not happen with valid validIndex.`
+        `Images array length: ${images.length}. This should not happen with valid validIndex.`
     );
     return null;
   }
@@ -373,17 +380,20 @@ export function ProjectLightbox({
    * Applies slide animations based on navigation direction (next/prev).
    */
   const imageWrapperSx: SxProps<Theme> = {
-    position: "relative",
-    overflow: "hidden",
+    position: 'relative',
+    overflow: 'hidden',
     flex: 1,
     minHeight: 0,
-    willChange: shouldAnimate && isAnimating ? "transform" : "auto",
-    width: { xs: "90vw", sm: "85vw", md: "80vw" },
-    maxWidth: "1200px",
-    maxHeight: "800px",
-    ...(shouldAnimate && isAnimating && direction && validIndex !== null && {
-      animation: `${direction === 'next' ? 'slideInFromRight' : 'slideInFromLeft'} 300ms ease-out`,
-    }),
+    willChange: shouldAnimate && isAnimating ? 'transform' : 'auto',
+    width: { xs: '90vw', sm: '85vw', md: '80vw' },
+    maxWidth: '1200px',
+    maxHeight: '800px',
+    ...(shouldAnimate &&
+      isAnimating &&
+      direction &&
+      validIndex !== null && {
+        animation: `${direction === 'next' ? 'slideInFromRight' : 'slideInFromLeft'} 300ms ease-out`,
+      }),
   };
 
   /**
@@ -391,10 +401,10 @@ export function ProjectLightbox({
    * Semi-transparent white for visibility on dark background.
    */
   const lightboxButtonSx: SxProps<Theme> = {
-    color: "#FFFFFF",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.35)",
+    color: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.35)',
     },
   };
 
@@ -410,9 +420,9 @@ export function ProjectLightbox({
       slotProps={{
         paper: {
           sx: {
-            overflow: "hidden",
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-            boxShadow: "none",
+            overflow: 'hidden',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            boxShadow: 'none',
             margin: 0,
           },
         },
@@ -431,7 +441,7 @@ export function ProjectLightbox({
         aria-label={t('projectLightbox.closeButton', { ns: 'components' })}
         sx={{
           ...lightboxButtonSx,
-          position: "fixed",
+          position: 'fixed',
           top: LIGHTBOX_CONTROL_OFFSET,
           right: LIGHTBOX_CONTROL_OFFSET,
           zIndex: 52,
@@ -446,12 +456,12 @@ export function ProjectLightbox({
           on short viewports, so nothing ever overlaps. */}
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100%",
-          height: "100%",
-          padding: "24px",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+          padding: '24px',
         }}
       >
         {/* Caption - Above Image, pushed down to hug the image.
@@ -460,16 +470,16 @@ export function ProjectLightbox({
         <Typography
           variant="body1"
           sx={{
-            color: "#FFFFFF",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            color: '#FFFFFF',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             borderRadius: 1,
-            textAlign: "center",
-            maxWidth: { xs: "90vw", md: "80vw" },
+            textAlign: 'center',
+            maxWidth: { xs: '90vw', md: '80vw' },
             px: 2,
             py: 0.5,
             flexShrink: 0,
-            marginTop: "auto",
-            marginBottom: "24px",
+            marginTop: 'auto',
+            marginBottom: '24px',
           }}
         >
           {currentImage.caption}
@@ -485,11 +495,11 @@ export function ProjectLightbox({
             src={currentImage.url}
             alt={currentImage.caption}
             style={{
-              position: "absolute",
+              position: 'absolute',
               inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
             }}
           />
 
@@ -499,20 +509,22 @@ export function ProjectLightbox({
           {isPreloading && (
             <Box
               sx={{
-                position: "absolute",
+                position: 'absolute',
                 inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
                 zIndex: 1,
               }}
               role="status"
-              aria-label={t('projectLightbox.loadingImage', { ns: 'components' })}
+              aria-label={t('projectLightbox.loadingImage', {
+                ns: 'components',
+              })}
             >
               <CircularProgress
                 size={48}
-                sx={{ color: "rgba(255, 255, 255, 0.8)" }}
+                sx={{ color: 'rgba(255, 255, 255, 0.8)' }}
               />
             </Box>
           )}
@@ -522,13 +534,13 @@ export function ProjectLightbox({
         {showNavigation && (
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
               gap: 1,
               flexShrink: 0,
-              marginTop: "24px",
-              marginBottom: "auto",
+              marginTop: '24px',
+              marginBottom: 'auto',
             }}
             role="status"
             aria-live="assertive"
@@ -541,14 +553,21 @@ export function ProjectLightbox({
              * This is hidden visually but announced by screen readers.
              */}
             <VisuallyHidden>
-              {t('projectLightbox.viewingImage', { ns: 'components', current: validIndex + 1, total: images.length, caption: currentImage.caption })}
+              {t('projectLightbox.viewingImage', {
+                ns: 'components',
+                current: validIndex + 1,
+                total: images.length,
+                caption: currentImage.caption,
+              })}
             </VisuallyHidden>
 
             {/* Previous Button */}
             <IconButton
               onClick={() => void handlePrevious()}
               disabled={isPreloading}
-              aria-label={t('projectLightbox.previousButton', { ns: 'components' })}
+              aria-label={t('projectLightbox.previousButton', {
+                ns: 'components',
+              })}
               sx={lightboxButtonSx}
             >
               <ArrowBackIcon fontSize="large" sx={{ pl: 1 }} />
@@ -563,12 +582,12 @@ export function ProjectLightbox({
               variant="body2"
               aria-hidden="true"
               sx={{
-                color: "#FFFFFF",
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                color: '#FFFFFF',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 borderRadius: 1,
                 px: 2,
                 py: 0.5,
-                fontSize: "0.875rem",
+                fontSize: '0.875rem',
               }}
             >
               {validIndex + 1} of {images.length}

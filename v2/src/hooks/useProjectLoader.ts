@@ -159,7 +159,10 @@ export function useProjectLoader(
   const SIMULATED_LOAD_DELAY =
     typeof window === 'undefined' || process.env.NODE_ENV === 'test'
       ? 0 // Instant loading in tests and SSR
-      : parseInt(process.env.NEXT_PUBLIC_LOAD_DELAY || LOADING_DELAY.toString(), 10);
+      : parseInt(
+          process.env.NEXT_PUBLIC_LOAD_DELAY || LOADING_DELAY.toString(),
+          10
+        );
 
   // Get total project count from actual data (dynamic, not hardcoded)
   const totalProjects = getTotalProjectCount();

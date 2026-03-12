@@ -56,7 +56,9 @@ vi.mock('../../../components/settings/LanguageSwitcher', () => ({
    *
    * @returns A test placeholder div with data-testid
    */
-  LanguageSwitcher: () => <div data-testid="language-switcher">Language Switcher</div>,
+  LanguageSwitcher: () => (
+    <div data-testid="language-switcher">Language Switcher</div>
+  ),
 }));
 
 vi.mock('../../../components/settings/AnimationsSwitcher', () => ({
@@ -65,7 +67,9 @@ vi.mock('../../../components/settings/AnimationsSwitcher', () => ({
    *
    * @returns A test placeholder div with data-testid
    */
-  AnimationsSwitcher: () => <div data-testid="animations-switcher">Animations Switcher</div>,
+  AnimationsSwitcher: () => (
+    <div data-testid="animations-switcher">Animations Switcher</div>
+  ),
 }));
 
 /**
@@ -155,13 +159,17 @@ describe('HamburgerMenu', () => {
     });
 
     // Initially drawer should be closed
-    expect(screen.queryByRole('navigation', { name: 'Mobile navigation menu' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('navigation', { name: 'Mobile navigation menu' })
+    ).not.toBeInTheDocument();
 
     // Click to open
     fireEvent.click(hamburgerButton);
 
     // Drawer should now be visible
-    expect(screen.getByRole('navigation', { name: 'Mobile navigation menu' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('navigation', { name: 'Mobile navigation menu' })
+    ).toBeInTheDocument();
   });
 
   /**
@@ -183,7 +191,9 @@ describe('HamburgerMenu', () => {
     fireEvent.click(closeButton);
 
     // Drawer should be closed
-    expect(screen.queryByRole('navigation', { name: 'Mobile navigation menu' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('navigation', { name: 'Mobile navigation menu' })
+    ).not.toBeInTheDocument();
   });
 
   /**
@@ -199,7 +209,9 @@ describe('HamburgerMenu', () => {
     fireEvent.click(hamburgerButton);
 
     // Verify drawer is open
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     expect(nav).toBeInTheDocument();
 
     // Press Escape key on the drawer container
@@ -217,7 +229,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Check for all navigation links
     expect(screen.getByText('Portfolio')).toBeInTheDocument();
@@ -232,9 +246,13 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
 
     const portfolioLink = within(nav).getByText('Portfolio').closest('a');
     const resumeLink = within(nav).getByText('Résumé').closest('a');
@@ -254,9 +272,13 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     const resumeButton = within(nav).getByText('Résumé').closest('a');
 
     expect(resumeButton).toHaveAttribute('aria-current', 'page');
@@ -271,9 +293,13 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     const portfolioButton = within(nav).getByText('Portfolio').closest('a');
 
     expect(portfolioButton).toHaveAttribute('aria-current', 'page');
@@ -286,14 +312,18 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Click navigation link
     const portfolioLink = screen.getByText('Portfolio').closest('a');
     fireEvent.click(portfolioLink!);
 
     // Drawer should be closed
-    expect(screen.queryByRole('navigation', { name: 'Mobile navigation menu' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('navigation', { name: 'Mobile navigation menu' })
+    ).not.toBeInTheDocument();
   });
 
   /**
@@ -303,7 +333,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Check for settings title
     expect(screen.getByText('Settings')).toBeInTheDocument();
@@ -316,7 +348,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Check for theme label and switcher
     expect(screen.getByText('Theme')).toBeInTheDocument();
@@ -330,7 +364,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Check for language label and switcher
     expect(screen.getByText('Language')).toBeInTheDocument();
@@ -344,7 +380,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Check for animations label and switcher
     expect(screen.getByText('Animations')).toBeInTheDocument();
@@ -358,7 +396,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Check for divider element (MUI Divider uses hr role)
     const dividers = screen.getAllByRole('separator');
@@ -408,11 +448,15 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // The component passes transitionDuration={0} when animations are disabled
     // Verify the drawer content is rendered (component logic is applied)
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     expect(nav).toBeInTheDocument();
   });
 
@@ -431,10 +475,14 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Verify drawer is rendered with animations enabled
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     expect(nav).toBeInTheDocument();
   });
 
@@ -455,7 +503,9 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Verify translation function was called for all labels
     expect(mockTranslate).toHaveBeenCalledWith('nav.menu.hamburger');
@@ -479,9 +529,13 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     const colophonButton = within(nav).getByText('Colophon').closest('a');
 
     expect(colophonButton).toHaveAttribute('aria-current', 'page');
@@ -494,10 +548,14 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Should have navigation landmark
-    const nav = screen.getByRole('navigation', { name: 'Mobile navigation menu' });
+    const nav = screen.getByRole('navigation', {
+      name: 'Mobile navigation menu',
+    });
     expect(nav).toBeInTheDocument();
   });
 
@@ -508,10 +566,14 @@ describe('HamburgerMenu', () => {
     render(<HamburgerMenu />);
 
     // Open drawer
-    fireEvent.click(screen.getByRole('button', { name: 'Open navigation menu' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open navigation menu' })
+    );
 
     // Verify all major sections are rendered
-    expect(screen.getByRole('navigation', { name: 'Mobile navigation menu' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('navigation', { name: 'Mobile navigation menu' })
+    ).toBeInTheDocument();
     expect(screen.getByText('Portfolio')).toBeInTheDocument();
     expect(screen.getByText('Settings')).toBeInTheDocument();
     expect(screen.getByTestId('theme-switcher')).toBeInTheDocument();

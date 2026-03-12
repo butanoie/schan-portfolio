@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { Box, Typography } from "@mui/material";
-import type { PageDeckData } from "../../types";
-import { usePalette } from "../../hooks/usePalette";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import Image from 'next/image';
+import { Box, Typography } from '@mui/material';
+import type { PageDeckData } from '../../types';
+import { usePalette } from '../../hooks/usePalette';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
 
 /**
  * Props for the PageDeck component.
@@ -42,7 +42,7 @@ export default function PageDeck({ content }: PageDeckProps) {
       aria-labelledby={headingId}
       sx={{
         mt: 4,
-        textAlign: "center",
+        textAlign: 'center',
       }}
     >
       <Image
@@ -52,8 +52,8 @@ export default function PageDeck({ content }: PageDeckProps) {
         height={240}
         priority
         style={{
-          width: "100%",
-          height: "auto",
+          width: '100%',
+          height: 'auto',
         }}
       />
 
@@ -66,7 +66,7 @@ export default function PageDeck({ content }: PageDeckProps) {
           fontFamily: FONT_FAMILY_HEADING,
           fontWeight: 700,
           color: palette.text.primary,
-          fontSize: { xs: "2rem", md: "2.5rem" },
+          fontSize: { xs: '2rem', md: '2.5rem' },
           mt: 6,
           mb: 3,
         }}
@@ -82,7 +82,7 @@ export default function PageDeck({ content }: PageDeckProps) {
             mt: 2,
             mx: { xs: 2, md: 10 },
             lineHeight: 1.7,
-            fontSize: { xs: "1rem", md: "1.1rem" },
+            fontSize: { xs: '1rem', md: '1.1rem' },
           }}
         >
           {paragraph}

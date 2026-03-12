@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -6,13 +6,17 @@ import {
   Card,
   CardContent,
   Link as MuiLink,
-} from "@mui/material";
-import LaunchIcon from "@mui/icons-material/Launch";
-import type { DesignPhilosophyContent, ColorSwatch, TypographyEntry } from "../../types/colophon";
-import { BRAND_COLORS } from "../../constants";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
+} from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch';
+import type {
+  DesignPhilosophyContent,
+  ColorSwatch,
+  TypographyEntry,
+} from '../../types/colophon';
+import { BRAND_COLORS } from '../../constants';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
+import { usePalette } from '../../hooks/usePalette';
+import { useI18n } from '../../hooks/useI18n';
 
 /**
  * Props for the DesignPhilosophy component.
@@ -31,7 +35,7 @@ export interface DesignPhilosophyProps {
  */
 function getContrastTextColor(hexColor: string): string {
   // Remove # if present
-  const hex = hexColor.replace("#", "");
+  const hex = hexColor.replace('#', '');
 
   // Parse RGB values
   const r = parseInt(hex.substring(0, 2), 16);
@@ -42,7 +46,7 @@ function getContrastTextColor(hexColor: string): string {
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
   // Return white for dark backgrounds, dark for light backgrounds
-  return luminance > 0.5 ? BRAND_COLORS.graphite : "#FFFFFF";
+  return luminance > 0.5 ? BRAND_COLORS.graphite : '#FFFFFF';
 }
 
 /**
@@ -61,33 +65,35 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
       className="color-card"
       variant="outlined"
       sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
         backgroundColor: palette.card.background,
       }}
     >
       <Box
         className="color-swatch-display"
-        sx={{
-          backgroundColor: color.hex,
-          height: 80,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: textColor,
-          "--swatch-color": color.hex,
-        } as React.CSSProperties}
+        sx={
+          {
+            backgroundColor: color.hex,
+            height: 80,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: textColor,
+            '--swatch-color': color.hex,
+          } as React.CSSProperties
+        }
         aria-hidden="true"
       >
         <Typography
           variant="caption"
           sx={{
-            fontFamily: "monospace",
+            fontFamily: 'monospace',
             fontWeight: 600,
             letterSpacing: 1,
-            fontSize: "1rem",
+            fontSize: '1rem',
           }}
         >
           {color.hex}
@@ -101,7 +107,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
             fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 600,
             mb: 0.5,
-            fontSize: "1rem",
+            fontSize: '1rem',
             color: palette.card.heading,
           }}
         >
@@ -136,24 +142,24 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
       className="typography-card"
       variant="outlined"
       sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: palette.card.background,
       }}
     >
       <CardContent
         sx={{
           flexGrow: 1,
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             mb: 1,
           }}
         >
@@ -163,7 +169,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             sx={{
               fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
-              fontSize: "1rem",
+              fontSize: '1rem',
               color: palette.card.heading,
             }}
           >
@@ -174,11 +180,15 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               href={font.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={t("colophon.designPhilosophy.googleFontsAriaLabel", { variables: { name: font.name }, ns: "pages" })}
+              aria-label={t('colophon.designPhilosophy.googleFontsAriaLabel', {
+                variables: { name: font.name },
+                ns: 'pages',
+              })}
               sx={{
                 color: palette.card.text,
-                "&:hover": {
-                  color: mode === "highContrast" ? "#000000" : BRAND_COLORS.maroon,
+                '&:hover': {
+                  color:
+                    mode === 'highContrast' ? '#000000' : BRAND_COLORS.maroon,
                 },
               }}
             >
@@ -202,12 +212,12 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
           className="typography-sample"
           sx={{
             p: 2,
-            backgroundColor: "background.default",
+            backgroundColor: 'background.default',
             borderRadius: 1,
-            textAlign: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             minHeight: 80,
           }}
           aria-label={`Sample of ${font.name} font`}
@@ -216,7 +226,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
             sx={{
               fontFamily: font.fontFamily,
               fontWeight: font.fontWeight || 400,
-              fontSize: font.sampleFontSize || "1rem",
+              fontSize: font.sampleFontSize || '1rem',
               lineHeight: 1.4,
             }}
           >
@@ -245,7 +255,8 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
  * <DesignPhilosophy content={colophonData.designPhilosophy} />
  */
 export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
-  const { intro, colors, colorDescription, typography, typographyIntro } = content;
+  const { intro, colors, colorDescription, typography, typographyIntro } =
+    content;
   const { palette } = usePalette();
   const { t } = useI18n();
 
@@ -254,9 +265,9 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
       id="design-philosophy"
       component="section"
       aria-labelledby="design-heading"
-      sx={{ 
+      sx={{
         mb: 6,
-        pb: 1
+        pb: 1,
       }}
     >
       <Typography
@@ -265,50 +276,47 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
         variant="h2"
         sx={{
           color: palette.secondary,
-          fontSize: "2rem",
+          fontSize: '2rem',
           mt: 0,
           mb: 3,
-          textAlign: "center",
+          textAlign: 'center',
         }}
       >
-        {t("colophon.designPhilosophy.heading", { ns: "pages" })}
+        {t('colophon.designPhilosophy.heading', { ns: 'pages' })}
       </Typography>
 
       <Typography
         variant="body1"
         sx={{
           mb: 4,
-          lineHeight: 1.7
+          lineHeight: 1.7,
         }}
       >
         {intro}
       </Typography>
 
       {/* Color Palette */}
-      <Box
-        className="design-category"
-        sx={{ mb: 5 }}
-      >
+      <Box className="design-category" sx={{ mb: 5 }}>
         <Typography
           variant="h3"
           sx={{
             fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 600,
-            fontSize: { xs: "1.1rem", md: "1.25rem" },
+            fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 2,
           }}
         >
-          {t("colophon.designPhilosophy.colorPaletteHeading", { ns: "pages" })}
+          {t('colophon.designPhilosophy.colorPaletteHeading', { ns: 'pages' })}
         </Typography>
 
         <Box
           className="color-palette-grid"
           sx={{
-            display: "grid",
+            display: 'grid',
             gridTemplateColumns: {
-              xs: "repeat(2, 1fr)",
-              sm: "repeat(4, 1fr)",
-              md: "repeat(6, 1fr)",
+              xs: 'repeat(2, 1fr)',
+              sm: 'repeat(4, 1fr)',
+              md: 'repeat(6, 1fr)',
             },
             gap: 2,
             mb: 3,
@@ -319,43 +327,34 @@ export default function DesignPhilosophy({ content }: DesignPhilosophyProps) {
           ))}
         </Box>
 
-        <Typography
-          variant="body1"
-        >
-          {colorDescription}
-        </Typography>
+        <Typography variant="body1">{colorDescription}</Typography>
       </Box>
 
       {/* Typography */}
-      <Box
-        className="design-category"
-      >
+      <Box className="design-category">
         <Typography
           variant="h3"
           sx={{
             fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 600,
-            fontSize: { xs: "1.1rem", md: "1.25rem" },
+            fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 2,
           }}
         >
-          {t("colophon.designPhilosophy.typographyHeading", { ns: "pages" })}
+          {t('colophon.designPhilosophy.typographyHeading', { ns: 'pages' })}
         </Typography>
 
-        <Typography
-          variant="body1"
-          sx={{ mb: 3, maxWidth: "65ch" }}
-        >
+        <Typography variant="body1" sx={{ mb: 3, maxWidth: '65ch' }}>
           {typographyIntro}
         </Typography>
 
         <Box
           sx={{
-            display: "grid",
+            display: 'grid',
             gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
             },
             gap: 2,
           }}

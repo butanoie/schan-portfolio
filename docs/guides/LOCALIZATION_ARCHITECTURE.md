@@ -29,6 +29,7 @@ This document describes the localization (i18n) architecture for the portfolio a
 All translatable content is stored in external JSON files, not in TypeScript code.
 
 **Rationale:**
+
 - TypeScript files define structure and logic
 - JSON files contain content for each language
 - Clear separation enables better tooling, translation workflows, and maintenance
@@ -36,6 +37,7 @@ All translatable content is stored in external JSON files, not in TypeScript cod
 ### Single Source of Truth
 
 Each language has exactly one source of truth:
+
 - **English:** `locales/en/*.json`
 - **French:** `locales/fr/*.json`
 
@@ -94,13 +96,14 @@ While all content follows JSON-First, implementation varies by use case:
 **Used For:** Resume, Colophon, Home, Portfolio
 
 **Implementation:**
+
 ```typescript
 // v2/src/data/resume.ts
 export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
   return {
-    pageTitle: t('resume.pageTitle', { ns: 'pages' }),
+    pageTitle: t("resume.pageTitle", { ns: "pages" }),
     header: {
-      name: t('resume.header.name', { ns: 'pages' }),
+      name: t("resume.header.name", { ns: "pages" }),
       // ... more fields using t()
     },
   };
@@ -108,6 +111,7 @@ export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
 ```
 
 **Characteristics:**
+
 - ✅ Synchronous - called at render time
 - ✅ Works in Client Components
 - ✅ Minimal overhead
@@ -118,6 +122,7 @@ export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
 **Used For:** Project collection with rich metadata
 
 **Implementation:**
+
 ```typescript
 // v2/src/data/localization.ts
 export async function getLocalizedProjects(locale: Locale): Promise<Project[]> {
@@ -127,6 +132,7 @@ export async function getLocalizedProjects(locale: Locale): Promise<Project[]> {
 ```
 
 **Characteristics:**
+
 - ✅ Asynchronous - loaded server-side
 - ✅ Works in Server Components
 - ✅ Supports large data sets
@@ -156,14 +162,14 @@ All data localization functions use a **single, unified type** for the translati
  */
 export type TranslationFunction = (
   key: string,
-  options?: TranslationOptions | Record<string, string | number>
+  options?: TranslationOptions | Record<string, string | number>,
 ) => string;
 ```
 
 **Usage:**
 
 ```typescript
-import type { TranslationFunction } from '@/src/hooks/useI18n';
+import type { TranslationFunction } from "@/src/hooks/useI18n";
 
 export function getLocalizedColophonData(t: TranslationFunction): ColophonData {
   // ... implementation
@@ -173,12 +179,15 @@ export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
   // ... implementation
 }
 
-export function getLocalizedPortfolioData(t: TranslationFunction): ProjectsPageData {
+export function getLocalizedPortfolioData(
+  t: TranslationFunction,
+): ProjectsPageData {
   // ... implementation
 }
 ```
 
 **Benefits:**
+
 - ✅ Consistent type signature across all data files
 - ✅ Easier to understand and maintain
 - ✅ Less boilerplate and duplication
@@ -204,12 +213,13 @@ Contains all locale-related constants used throughout the application:
 
 ```typescript
 // LOCALES and DEFAULT_LOCALE constants
-export const LOCALES = ['en', 'fr'] as const;
-export const DEFAULT_LOCALE = 'en';
+export const LOCALES = ["en", "fr"] as const;
+export const DEFAULT_LOCALE = "en";
 export type Locale = (typeof LOCALES)[number];
 ```
 
 **Usage:**
+
 - Re-exported by `src/lib/i18n.ts` for client-side use
 - Directly imported by `src/lib/i18nServer.ts` for server-side use
 - Provides single source of truth for supported locales
@@ -221,6 +231,7 @@ Initializes and configures i18next for client-side usage.
 **Location:** `src/lib/i18next-config.ts`
 
 **Responsibilities:**
+
 - i18next initialization with all supported namespaces
 - Dynamic loading of translation files
 - Detection of user locale from browser/app context
@@ -243,7 +254,7 @@ Server-side utilities for accessing locale information without client-side depen
  * @param cookieString - The cookie header string from the request
  * @returns The user's preferred locale or default
  */
-export function getLocaleFromCookie(cookieString: string): Locale
+export function getLocaleFromCookie(cookieString: string): Locale;
 ```
 
 **Usage in Server Components:**
@@ -264,6 +275,7 @@ export default async function ServerComponent() {
 ```
 
 **Advantages:**
+
 - ✅ Works in Server Components without client-side overhead
 - ✅ No React hooks required
 - ✅ Minimal dependencies (only i18n-constants)
@@ -282,21 +294,21 @@ Server actions for fetching project data with locale support.
  * Server action to fetch projects.
  */
 export async function fetchProjects(
-  options: ProjectQueryOptions = {}
-): Promise<ProjectsResponse>
+  options: ProjectQueryOptions = {},
+): Promise<ProjectsResponse>;
 
 /**
  * Server action to fetch a single project by ID with locale.
  */
 export async function fetchProjectById(
   id: string,
-  locale: string = 'en'
-): Promise<Project | null>
+  locale: string = "en",
+): Promise<Project | null>;
 
 /**
  * Server action to fetch all unique tags.
  */
-export async function fetchAllTags(): Promise<string[]>
+export async function fetchAllTags(): Promise<string[]>;
 ```
 
 **Usage in Server Components:**
@@ -313,23 +325,25 @@ export default async function ProjectsPage() {
 
 ### Client vs. Server Pattern Comparison
 
-| Aspect | Client-Side | Server-Side |
-|--------|------------|-----------|
-| **Module** | `useI18n()` hook | `i18nServer.ts` utilities |
-| **Data Access** | `getLocalized*Data(t)` functions | `getLocalizedProject()` functions |
-| **Locale Source** | Context (from cookies) | Cookies via `getLocaleFromCookie()` |
-| **Dependencies** | React hooks, i18next | None (i18n-constants only) |
-| **Bundle Impact** | Lightweight (hook) | Zero (server-only code) |
-| **Use Case** | Client Components | Server Components, API routes |
+| Aspect            | Client-Side                      | Server-Side                         |
+| ----------------- | -------------------------------- | ----------------------------------- |
+| **Module**        | `useI18n()` hook                 | `i18nServer.ts` utilities           |
+| **Data Access**   | `getLocalized*Data(t)` functions | `getLocalizedProject()` functions   |
+| **Locale Source** | Context (from cookies)           | Cookies via `getLocaleFromCookie()` |
+| **Dependencies**  | React hooks, i18next             | None (i18n-constants only)          |
+| **Bundle Impact** | Lightweight (hook)               | Zero (server-only code)             |
+| **Use Case**      | Client Components                | Server Components, API routes       |
 
 ### When to Use Each Pattern
 
 **Use Client-Side Pattern When:**
+
 - Building Client Components (pages, components with `'use client'`)
 - Directly accessing translation function with `useI18n()`
 - Rendering locale-aware UI in the browser
 
 **Use Server-Side Pattern When:**
+
 - Building Server Components (default in Next.js 13+)
 - Fetching projects or other localized data server-side
 - Accessing locale from request context (cookies)
@@ -340,6 +354,7 @@ export default async function ProjectsPage() {
 ## Current Implementation
 
 ### Pages (Resume, Colophon, Home, Portfolio)
+
 - **Structure:** `v2/src/data/[page].ts` (function only, no static exports)
 - **English:** `v2/src/locales/en/[page].json`
 - **French:** `v2/src/locales/fr/[page].json`
@@ -347,6 +362,7 @@ export default async function ProjectsPage() {
 - **Pattern:** JSON-first with synchronous `t()` calls
 
 ### Projects
+
 - **Structure:** `v2/src/data/projects.ts` (base structure with empty strings)
 - **English:** `v2/src/locales/en/projects.json`
 - **French:** `v2/src/locales/fr/projects.json`
@@ -432,8 +448,8 @@ v2/
 
 ```typescript
 // src/data/newpage.ts
-import type { NewPageData } from '../types/newpage';
-import type { TranslationFunction } from '../hooks/useI18n';
+import type { NewPageData } from "../types/newpage";
+import type { TranslationFunction } from "../hooks/useI18n";
 
 /**
  * Get new page data localized for the current language.
@@ -444,12 +460,12 @@ import type { TranslationFunction } from '../hooks/useI18n';
  */
 export function getLocalizedNewPageData(t: TranslationFunction): NewPageData {
   return {
-    pageTitle: t('newpage.pageTitle', { ns: 'pages' }),
-    pageDescription: t('newpage.pageDescription', { ns: 'pages' }),
+    pageTitle: t("newpage.pageTitle", { ns: "pages" }),
+    pageDescription: t("newpage.pageDescription", { ns: "pages" }),
     section1: {
-      heading: t('newpage.section1.heading', { ns: 'pages' }),
-      content: t('newpage.section1.content', { ns: 'pages' }),
-    }
+      heading: t("newpage.section1.heading", { ns: "pages" }),
+      content: t("newpage.section1.content", { ns: "pages" }),
+    },
   };
 }
 ```
@@ -515,21 +531,21 @@ export default function NewPageComponent() {
 export const PROJECTS: readonly Project[] = [
   // ... existing projects
   {
-    id: 'newProjectId',
-    title: '',              // Will be filled from JSON
-    desc: '',               // Will be filled from JSON
-    circa: '',              // Will be filled from JSON
-    tags: ['React', 'TypeScript'],  // Non-translatable, keep in code
+    id: "newProjectId",
+    title: "", // Will be filled from JSON
+    desc: "", // Will be filled from JSON
+    circa: "", // Will be filled from JSON
+    tags: ["React", "TypeScript"], // Non-translatable, keep in code
     images: [
       {
-        url: '/images/new-project/screenshot1.png',
-        tnUrl: '/images/new-project/screenshot1_tn.png',
-        caption: '',        // Will be filled from JSON
-      }
+        url: "/images/new-project/screenshot1.png",
+        tnUrl: "/images/new-project/screenshot1_tn.png",
+        caption: "", // Will be filled from JSON
+      },
     ],
     videos: [],
-    altGrid: false
-  }
+    altGrid: false,
+  },
 ];
 ```
 
@@ -563,10 +579,13 @@ export const PROJECTS: readonly Project[] = [
 
 ```typescript
 // In a server or client component
-import { getLocalizedProject, getLocalizedProjects } from '@/src/data/localization';
+import {
+  getLocalizedProject,
+  getLocalizedProjects,
+} from "@/src/data/localization";
 
 // Get specific project (async)
-const project = await getLocalizedProject('newProjectId', locale);
+const project = await getLocalizedProject("newProjectId", locale);
 
 // Get all projects (async)
 const projects = await getLocalizedProjects(locale);
@@ -579,28 +598,33 @@ const projects = await getLocalizedProjects(locale);
 ### Naming Conventions
 
 **Translation Keys:**
+
 - Use dot notation: `colophon.title`, `resume.header.tagline`
 - Use descriptive names: `pageTitle`, `pageDescription`
 - Group related strings: `contact.email`, `contact.phone`
 
 **Namespace:**
+
 - Pages use `ns: 'pages'`
 - Components use `ns: 'components'`
 - Common strings use `ns: 'common'`
 
 **File Names:**
+
 - Match content location: `colophon.json`, `resume.json`, `projects.json`
 - Use standard structure: `locales/[lang]/[file].json`
 
 ### Translation Quality
 
 **Text Guidelines:**
+
 - Keep source text (English) accurate and complete
 - Use consistent terminology across all pages
 - Provide context in code comments for translators
 - Keep translations concise but clear
 
 **Automated Translation:**
+
 - Use DeepL MCP for initial translations
 - Review and refine machine translations
 - Test in both languages before deployment
@@ -609,40 +633,45 @@ const projects = await getLocalizedProjects(locale);
 ### Type Safety
 
 **Always Use TranslationFunction Type:**
+
 ```typescript
 // ✅ Good
 export function getLocalizedData(t: TranslationFunction): DataType {
-  return { title: t('key') };
+  return { title: t("key") };
 }
 
 // ❌ Bad - Custom type signature
 export function getLocalizedData(t: (key: string) => string): DataType {
-  return { title: t('key') };
+  return { title: t("key") };
 }
 ```
 
 **Validate Translation Keys:**
+
 ```typescript
 // ✅ Use consistent namespaces
-t('colophon.title', { ns: 'pages' })
+t("colophon.title", { ns: "pages" });
 
 // ❌ Inconsistent namespace
-t('colophon.title', { ns: 'colophon' })
+t("colophon.title", { ns: "colophon" });
 ```
 
 ### Performance
 
 **Caching:**
+
 - Projects use caching in `localization.ts`
 - Page translations are lightweight (no caching needed)
 - Clear cache when locale changes
 
 **Async Operations:**
+
 - Use `getLocalizedProjects(locale)` in server components
 - Use suspense boundaries for async data
 - Avoid blocking renders with translations
 
 **Code Splitting:**
+
 - Locales are dynamically imported
 - No translation bundles loaded upfront
 - Minimal impact on initial page load
@@ -685,32 +714,34 @@ const captions = t('project.captions.0', { ns: 'pages' })
 ### Error Handling
 
 **Translation Not Found:**
+
 ```typescript
 // i18next returns the key if translation not found
-const title = t('missing.key', { ns: 'pages' });
+const title = t("missing.key", { ns: "pages" });
 // Result: 'missing.key' (fallback to key)
 
 // Prevent in development:
 i18next.init({
-  saveMissing: true,  // Log missing translations
+  saveMissing: true, // Log missing translations
   missingKeyHandler: (key) => {
     console.warn(`Missing translation: ${key}`);
-  }
+  },
 });
 ```
 
 ### Testing Translations
 
 **Unit Tests:**
-```typescript
-import { getLocalizedColophonData } from '@/src/data/colophon';
 
-describe('Localization', () => {
-  it('should include translated title', () => {
+```typescript
+import { getLocalizedColophonData } from "@/src/data/colophon";
+
+describe("Localization", () => {
+  it("should include translated title", () => {
     const mockT = (key: string) => `[${key}]`;
     const data = getLocalizedColophonData(mockT);
 
-    expect(data.pageTitle).toBe('[colophon.pageTitle]');
+    expect(data.pageTitle).toBe("[colophon.pageTitle]");
   });
 });
 ```
@@ -722,12 +753,14 @@ describe('Localization', () => {
 ### Missing Translations
 
 **Problem:** Text shows the key instead of translation
+
 ```
 Expected: "About this site"
 Actual: "colophon.description"
 ```
 
 **Solution:**
+
 1. Check locale file exists: `src/locales/[lang]/[file].json`
 2. Verify key path matches exactly
 3. Check namespace is correct: `{ ns: 'pages' }`
@@ -736,14 +769,16 @@ Actual: "colophon.description"
 ### Type Errors
 
 **Problem:** `TranslationFunction` not found
+
 ```
 Error: Cannot find module 'TranslationFunction'
 ```
 
 **Solution:**
+
 ```typescript
 // ✅ Correct import
-import type { TranslationFunction } from '@/src/hooks/useI18n';
+import type { TranslationFunction } from "@/src/hooks/useI18n";
 
 // Use in function signature
 export function getLocalizedData(t: TranslationFunction): DataType {}
@@ -754,6 +789,7 @@ export function getLocalizedData(t: TranslationFunction): DataType {}
 **Problem:** Changing locale doesn't update translations
 
 **Solution:**
+
 1. Verify `LocaleProvider` wraps component tree
 2. Check `LocaleContext` is properly initialized
 3. Ensure components use `useI18n()` hook
@@ -834,6 +870,7 @@ This architecture follows industry best practices for i18n, treating all languag
 **Status:** ✅ JSON-First Pattern Standardized
 
 **Change Log:**
+
 - **v3.0** (2026-02-12): Standardized to JSON-First pattern per [I18N_STANDARDIZATION_PLAN.md](../archive/I18N_STANDARDIZATION_PLAN.md), removed dual-pattern description, clarified single pattern approach
 - **v2.1** (2026-02-06): Added server-side architecture pattern, documented i18n-constants and i18next-config, updated directory structure
 - **v2.0** (2026-02-05): Initial complete architecture documentation

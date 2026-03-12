@@ -10,10 +10,10 @@
  * High-contrast theme meets WCAG AAA (7:1+) standards.
  */
 
-import { createTheme } from "@mui/material/styles";
-import { ThemeMode, ThemePalette } from "@/src/types/theme";
-import { THEME_PALETTES } from "@/src/constants/colors";
-import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import { createTheme } from '@mui/material/styles';
+import { ThemeMode, ThemePalette } from '@/src/types/theme';
+import { THEME_PALETTES } from '@/src/constants/colors';
+import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
 
 /**
  * Create a Material UI theme from a palette configuration.
@@ -28,7 +28,7 @@ function createThemeFromPalette(palette: ThemePalette) {
   return createTheme({
     palette: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mode: palette.mode === "highContrast" ? "dark" : (palette.mode as any),
+      mode: palette.mode === 'highContrast' ? 'dark' : (palette.mode as any),
       primary: {
         main: palette.primary,
         light: palette.accents.blue,
@@ -95,13 +95,13 @@ function createThemeFromPalette(palette: ThemePalette) {
       MuiButton: {
         styleOverrides: {
           root: {
-            transition: "all 150ms ease-in-out",
-            "&:focus-visible": {
+            transition: 'all 150ms ease-in-out',
+            '&:focus-visible': {
               outline:
-                palette.mode === "highContrast"
-                  ? "2px solid #FFFF00"
+                palette.mode === 'highContrast'
+                  ? '2px solid #FFFF00'
                   : `2px solid ${palette.primary}`,
-              outlineOffset: "2px",
+              outlineOffset: '2px',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
@@ -110,13 +110,13 @@ function createThemeFromPalette(palette: ThemePalette) {
       MuiIconButton: {
         styleOverrides: {
           root: {
-            transition: "all 150ms ease-in-out",
-            "&:focus-visible": {
+            transition: 'all 150ms ease-in-out',
+            '&:focus-visible': {
               outline:
-                palette.mode === "highContrast"
-                  ? "2px solid #FFFF00"
+                palette.mode === 'highContrast'
+                  ? '2px solid #FFFF00'
                   : `2px solid ${palette.primary}`,
-              outlineOffset: "2px",
+              outlineOffset: '2px',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
@@ -126,18 +126,18 @@ function createThemeFromPalette(palette: ThemePalette) {
         styleOverrides: {
           root: {
             color: palette.primary,
-            cursor: "pointer",
-            textDecoration: "underline",
-            transition: "all 150ms ease-in-out",
-            "&:hover": {
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            transition: 'all 150ms ease-in-out',
+            '&:hover': {
               color: palette.secondary,
             },
-            "&:focus-visible": {
+            '&:focus-visible': {
               outline:
-                palette.mode === "highContrast"
-                  ? "2px solid #FFFF00"
+                palette.mode === 'highContrast'
+                  ? '2px solid #FFFF00'
                   : `2px solid ${palette.primary}`,
-              outlineOffset: "2px",
+              outlineOffset: '2px',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
@@ -148,7 +148,7 @@ function createThemeFromPalette(palette: ThemePalette) {
           root: {
             backgroundColor: palette.surface,
             borderColor: palette.borders,
-            transition: "all 200ms ease-out",
+            transition: 'all 200ms ease-out',
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
         },
@@ -158,17 +158,18 @@ function createThemeFromPalette(palette: ThemePalette) {
           body: {
             backgroundColor: palette.background,
             color: palette.text.primary,
-            transition: "background-color 300ms ease-in-out, color 300ms ease-in-out",
+            transition:
+              'background-color 300ms ease-in-out, color 300ms ease-in-out',
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
-          "@media (prefers-reduced-motion: reduce)": {
-            "*": {
-              animationDuration: "0.01ms !important",
-              animationIterationCount: "1 !important",
-              transitionDuration: "0.01ms !important",
+          '@media (prefers-reduced-motion: reduce)': {
+            '*': {
+              animationDuration: '0.01ms !important',
+              animationIterationCount: '1 !important',
+              transitionDuration: '0.01ms !important',
             },
             body: {
-              transition: "none",
+              transition: 'none',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
@@ -195,7 +196,9 @@ export const darkTheme = createThemeFromPalette(THEME_PALETTES.dark);
  * High-contrast theme configuration.
  * Black and white theme for maximum accessibility (WCAG AAA).
  */
-export const highContrastTheme = createThemeFromPalette(THEME_PALETTES.highContrast);
+export const highContrastTheme = createThemeFromPalette(
+  THEME_PALETTES.highContrast
+);
 
 /** Map of theme mode to MUI theme object for direct lookup. */
 const THEMES_BY_MODE = {

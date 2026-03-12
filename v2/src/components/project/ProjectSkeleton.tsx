@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Box,
-  Skeleton,
-  Divider,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Skeleton, Divider, useMediaQuery, useTheme } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import { useAnimations } from '../../hooks';
 
@@ -163,14 +157,31 @@ function SkeletonLayout({
   variant,
   animationMode,
   shouldAnimate,
-}: SkeletonLayoutProps & { variant: 'narrow' | 'wide-regular' | 'wide-video' }): React.ReactNode {
+}: SkeletonLayoutProps & {
+  variant: 'narrow' | 'wide-regular' | 'wide-video';
+}): React.ReactNode {
   switch (variant) {
     case 'narrow':
-      return <NarrowLayoutSkeleton animationMode={animationMode} shouldAnimate={shouldAnimate} />;
+      return (
+        <NarrowLayoutSkeleton
+          animationMode={animationMode}
+          shouldAnimate={shouldAnimate}
+        />
+      );
     case 'wide-regular':
-      return <WideRegularLayoutSkeleton animationMode={animationMode} shouldAnimate={shouldAnimate} />;
+      return (
+        <WideRegularLayoutSkeleton
+          animationMode={animationMode}
+          shouldAnimate={shouldAnimate}
+        />
+      );
     case 'wide-video':
-      return <WideVideoLayoutSkeleton animationMode={animationMode} shouldAnimate={shouldAnimate} />;
+      return (
+        <WideVideoLayoutSkeleton
+          animationMode={animationMode}
+          shouldAnimate={shouldAnimate}
+        />
+      );
   }
 }
 
@@ -241,7 +252,7 @@ function NarrowLayoutSkeleton({
             animation={animationMode}
             variant="rectangular"
             width="100%"
-            sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2, }}
+            sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2 }}
           />
         ))}
       </Box>
@@ -337,7 +348,7 @@ function WideRegularLayoutSkeleton({
             animation={animationMode}
             variant="rectangular"
             width="100%"
-            sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2, }}
+            sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2 }}
           />
         ))}
       </Box>
@@ -429,7 +440,11 @@ function WideVideoLayoutSkeleton({
               animation={animationMode}
               variant="rectangular"
               width="100%"
-              sx={{ paddingBottom: '75%', position: 'relative', borderRadius: 2, }}
+              sx={{
+                paddingBottom: '75%',
+                position: 'relative',
+                borderRadius: 2,
+              }}
             />
           ))}
         </Box>

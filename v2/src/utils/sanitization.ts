@@ -36,10 +36,12 @@ export function isValidUrlProtocol(url: string): boolean {
     return SAFE_URL_PROTOCOLS.includes(parsedUrl.protocol);
   } catch {
     // If URL parsing fails, check for relative URLs (safe by default)
-    return !url.startsWith('javascript:') &&
-           !url.startsWith('data:') &&
-           !url.startsWith('vbscript:') &&
-           !url.startsWith('file:');
+    return (
+      !url.startsWith('javascript:') &&
+      !url.startsWith('data:') &&
+      !url.startsWith('vbscript:') &&
+      !url.startsWith('file:')
+    );
   }
 }
 

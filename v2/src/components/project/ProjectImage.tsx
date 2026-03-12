@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import type { SxProps, Theme } from "@mui/material/styles";
-import type { ProjectImage as ProjectImageType } from "../../types";
-import { useI18n, useAnimations } from "../../hooks";
+import Image from 'next/image';
+import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
+import type { ProjectImage as ProjectImageType } from '../../types';
+import { useI18n, useAnimations } from '../../hooks';
 
 /**
  * Props for the ProjectImage component.
@@ -15,7 +15,7 @@ interface ProjectImageProps {
   image: ProjectImageType;
 
   /** Display size variant */
-  size?: "thumbnail" | "full";
+  size?: 'thumbnail' | 'full';
 
   /** Priority loading for above-the-fold images */
   priority?: boolean;
@@ -58,7 +58,7 @@ interface ProjectImageProps {
  */
 export function ProjectImage({
   image,
-  size = "thumbnail",
+  size = 'thumbnail',
   priority = false,
   onClick,
   sx,
@@ -67,7 +67,7 @@ export function ProjectImage({
   const { shouldAnimate } = useAnimations();
   const { t } = useI18n();
 
-  const imageSrc = size === "thumbnail" ? image.tnUrl : image.url;
+  const imageSrc = size === 'thumbnail' ? image.tnUrl : image.url;
 
   /**
    * Handles image load errors by setting error state.
@@ -81,18 +81,20 @@ export function ProjectImage({
     return (
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "grey.200",
-          width: "100%",
-          aspectRatio: "4 / 3",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'grey.200',
+          width: '100%',
+          aspectRatio: '4 / 3',
           ...sx,
         }}
         role="img"
         aria-label={image.caption}
       >
-        <Typography sx={{ color: "grey.500" }}>{t('projectImage.unavailable', { ns: 'components' })}</Typography>
+        <Typography sx={{ color: 'grey.500' }}>
+          {t('projectImage.unavailable', { ns: 'components' })}
+        </Typography>
       </Box>
     );
   }
@@ -100,14 +102,14 @@ export function ProjectImage({
   return (
     <Box
       sx={{
-        position: "relative",
-        width: "100%",
-        aspectRatio: "4 / 3",
-        overflow: "hidden",
-        transition: shouldAnimate ? "all 200ms ease-out" : "none",
-        "&:hover": {
-          boxShadow: onClick ? 8 : "none",
-          transform: onClick && shouldAnimate ? "translateY(-4px)" : "none",
+        position: 'relative',
+        width: '100%',
+        aspectRatio: '4 / 3',
+        overflow: 'hidden',
+        transition: shouldAnimate ? 'all 200ms ease-out' : 'none',
+        '&:hover': {
+          boxShadow: onClick ? 8 : 'none',
+          transform: onClick && shouldAnimate ? 'translateY(-4px)' : 'none',
         },
         ...sx,
       }}
@@ -123,8 +125,8 @@ export function ProjectImage({
         placeholder="blur"
         blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg=="
         style={{
-          cursor: onClick ? "pointer" : "default",
-          objectFit: "cover",
+          cursor: onClick ? 'pointer' : 'default',
+          objectFit: 'cover',
         }}
       />
     </Box>

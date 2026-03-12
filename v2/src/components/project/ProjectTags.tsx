@@ -71,7 +71,7 @@ export function ProjectTagsContainer({
     >
       {circa && (
         <Chip
-          className='project-circa'
+          className="project-circa"
           label={circa}
           size="small"
           sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.maroon }}

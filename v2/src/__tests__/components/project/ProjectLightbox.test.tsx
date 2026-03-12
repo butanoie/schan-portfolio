@@ -81,13 +81,13 @@ describe('ProjectLightbox', () => {
    * Test: Displays correct image when lightbox opens
    */
   it('displays correct image when lightbox opens', () => {
-    render(
-      <ProjectLightbox {...defaultProps} selectedIndex={0} />
-    );
+    render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
     // Use getByTestId for more reliable element lookup
     const image = screen.getByRole('img');
     expect(image).toBeInTheDocument();
-    expect(image.getAttribute('src')).toBe('/images/gallery/project1/image1.jpg');
+    expect(image.getAttribute('src')).toBe(
+      '/images/gallery/project1/image1.jpg'
+    );
   });
 
   /**
@@ -128,11 +128,7 @@ describe('ProjectLightbox', () => {
   it('close button closes lightbox', () => {
     const onClose = vi.fn();
     render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onClose={onClose}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onClose={onClose} />
     );
     const closeButton = screen.getByLabelText('Close lightbox');
     fireEvent.click(closeButton);
@@ -145,11 +141,7 @@ describe('ProjectLightbox', () => {
   it('clicking backdrop closes lightbox', async () => {
     const onClose = vi.fn();
     const { container } = render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onClose={onClose}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onClose={onClose} />
     );
 
     // Find and click the Dialog backdrop
@@ -187,11 +179,7 @@ describe('ProjectLightbox', () => {
   it('next button triggers onNext callback', async () => {
     const onNext = vi.fn();
     render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onNext={onNext}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onNext={onNext} />
     );
     const nextButton = screen.getByLabelText('Next image');
     fireEvent.click(nextButton);
@@ -207,11 +195,7 @@ describe('ProjectLightbox', () => {
   it('arrow right key navigates to next image', async () => {
     const onNext = vi.fn();
     render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onNext={onNext}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onNext={onNext} />
     );
     fireEvent.keyDown(window, { key: 'ArrowRight' });
     await waitFor(() => {
@@ -244,11 +228,7 @@ describe('ProjectLightbox', () => {
   it('escape key closes lightbox', () => {
     const onClose = vi.fn();
     render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onClose={onClose}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onClose={onClose} />
     );
     fireEvent.keyDown(window, { key: 'Escape' });
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -300,16 +280,12 @@ describe('ProjectLightbox', () => {
   it('touch swipe left navigates to next image', async () => {
     const onNext = vi.fn();
     const { container } = render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onNext={onNext}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onNext={onNext} />
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate touch swipe: start at 100px, end at 40px (60px difference, exceeds 50px threshold)
@@ -340,8 +316,8 @@ describe('ProjectLightbox', () => {
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate touch swipe: start at 40px, end at 100px (60px difference, exceeds 50px threshold)
@@ -363,16 +339,12 @@ describe('ProjectLightbox', () => {
   it('touch swipe down closes lightbox', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onClose={onClose}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onClose={onClose} />
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate touch swipe down: start at 200px, end at 350px (150px downward)
@@ -402,8 +374,8 @@ describe('ProjectLightbox', () => {
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate touch swipe: only 30px (below 50px threshold)
@@ -449,9 +421,7 @@ describe('ProjectLightbox', () => {
    * Test: Image counter has aria-live attribute
    */
   it('image counter has aria-live attribute', () => {
-    render(
-      <ProjectLightbox {...defaultProps} selectedIndex={0} />
-    );
+    render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
     // Query all elements in the entire document to find aria-live
     // Uses assertive live region for immediate announcements
     const counter = document.querySelector('[aria-live="assertive"]');
@@ -462,9 +432,7 @@ describe('ProjectLightbox', () => {
    * Test: Image has correct alt text from caption
    */
   it('image has correct alt text from caption', () => {
-    render(
-      <ProjectLightbox {...defaultProps} selectedIndex={0} />
-    );
+    render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
     const image = screen.getByRole('img');
     expect(image.getAttribute('alt')).toBe('First image caption');
   });
@@ -478,14 +446,16 @@ describe('ProjectLightbox', () => {
     );
 
     let image = screen.getByRole('img');
-    expect(image.getAttribute('src')).toBe('/images/gallery/project1/image1.jpg');
-
-    rerender(
-      <ProjectLightbox {...defaultProps} selectedIndex={1} />
+    expect(image.getAttribute('src')).toBe(
+      '/images/gallery/project1/image1.jpg'
     );
 
+    rerender(<ProjectLightbox {...defaultProps} selectedIndex={1} />);
+
     image = screen.getByRole('img');
-    expect(image.getAttribute('src')).toBe('/images/gallery/project1/image2.jpg');
+    expect(image.getAttribute('src')).toBe(
+      '/images/gallery/project1/image2.jpg'
+    );
   });
 
   /**
@@ -494,12 +464,12 @@ describe('ProjectLightbox', () => {
    * with useImagePreloader.
    */
   it('renders native img element with correct src', () => {
-    render(
-      <ProjectLightbox {...defaultProps} selectedIndex={0} />
-    );
+    render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
     const image = screen.getByRole('img');
     expect(image.tagName).toBe('IMG');
-    expect(image.getAttribute('src')).toBe('/images/gallery/project1/image1.jpg');
+    expect(image.getAttribute('src')).toBe(
+      '/images/gallery/project1/image1.jpg'
+    );
   });
 
   /**
@@ -508,11 +478,7 @@ describe('ProjectLightbox', () => {
   it('keyboard navigation disabled when lightbox is closed', () => {
     const onNext = vi.fn();
     render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={null}
-        onNext={onNext}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={null} onNext={onNext} />
     );
     fireEvent.keyDown(window, { key: 'ArrowRight' });
     expect(onNext).not.toHaveBeenCalled();
@@ -540,16 +506,12 @@ describe('ProjectLightbox', () => {
   it('short downward swipe is ignored', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onClose={onClose}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onClose={onClose} />
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate short downward swipe: only 30px (below 50px threshold)
@@ -579,8 +541,8 @@ describe('ProjectLightbox', () => {
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate diagonal swipe: 80px horizontal + 80px vertical (diagonal down-left)
@@ -603,16 +565,12 @@ describe('ProjectLightbox', () => {
   it('upward swipe is ignored', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <ProjectLightbox
-        {...defaultProps}
-        selectedIndex={0}
-        onClose={onClose}
-      />
+      <ProjectLightbox {...defaultProps} selectedIndex={0} onClose={onClose} />
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate upward swipe: start at 350px, end at 200px (150px upward - negative vertical distance)
@@ -643,8 +601,8 @@ describe('ProjectLightbox', () => {
     );
 
     // Find Dialog element
-    const dialog = container.querySelector('[role="presentation"]') ||
-      container.firstChild;
+    const dialog =
+      container.querySelector('[role="presentation"]') || container.firstChild;
     if (!dialog) return;
 
     // Simulate downward swipe
@@ -662,14 +620,14 @@ describe('ProjectLightbox', () => {
    * Test: Dialog has proper accessibility attributes
    */
   it('dialog has proper accessibility attributes', () => {
-    render(
-      <ProjectLightbox {...defaultProps} selectedIndex={0} />
-    );
+    render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
     // MUI Dialog renders in portal with aria-label
     const dialog = document.querySelector('[aria-label="Image lightbox"]');
     expect(dialog).toBeInTheDocument();
     // Dialog element should have role to ensure proper accessibility
-    const dialogWithRole = document.querySelector('[aria-label="Image lightbox"][role]');
+    const dialogWithRole = document.querySelector(
+      '[aria-label="Image lightbox"][role]'
+    );
     expect(dialogWithRole).toBeInTheDocument();
   });
 
@@ -685,11 +643,12 @@ describe('ProjectLightbox', () => {
     it('attaches keyboard event listener when lightbox opens', () => {
       const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
 
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        'keydown',
+        expect.any(Function)
+      );
       addEventListenerSpy.mockRestore();
     });
 
@@ -704,11 +663,12 @@ describe('ProjectLightbox', () => {
       );
 
       // Close lightbox
-      rerender(
-        <ProjectLightbox {...defaultProps} selectedIndex={null} />
-      );
+      rerender(<ProjectLightbox {...defaultProps} selectedIndex={null} />);
 
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
+      expect(removeEventListenerSpy).toHaveBeenCalledWith(
+        'keydown',
+        expect.any(Function)
+      );
       removeEventListenerSpy.mockRestore();
     });
 
@@ -805,14 +765,10 @@ describe('ProjectLightbox', () => {
 
       // Close and open multiple times
       for (let i = 0; i < 3; i++) {
-        rerender(
-          <ProjectLightbox {...defaultProps} selectedIndex={null} />
-        );
+        rerender(<ProjectLightbox {...defaultProps} selectedIndex={null} />);
         expect(removeEventListenerSpy).toHaveBeenCalledTimes(i + 1);
 
-        rerender(
-          <ProjectLightbox {...defaultProps} selectedIndex={0} />
-        );
+        rerender(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
         expect(addEventListenerSpy).toHaveBeenCalledTimes(i + 2);
       }
 
@@ -834,11 +790,7 @@ describe('ProjectLightbox', () => {
       const onNext2 = vi.fn();
 
       const { rerender } = render(
-        <ProjectLightbox
-          {...defaultProps}
-          selectedIndex={0}
-          onNext={onNext1}
-        />
+        <ProjectLightbox {...defaultProps} selectedIndex={0} onNext={onNext1} />
       );
 
       // Trigger event on first instance
@@ -849,11 +801,7 @@ describe('ProjectLightbox', () => {
 
       // Switch to second instance
       rerender(
-        <ProjectLightbox
-          {...defaultProps}
-          selectedIndex={0}
-          onNext={onNext2}
-        />
+        <ProjectLightbox {...defaultProps} selectedIndex={0} onNext={onNext2} />
       );
 
       // Trigger event on second instance
@@ -892,7 +840,7 @@ describe('ProjectLightbox', () => {
       const { container } = render(
         <ProjectLightbox
           {...defaultProps}
-          selectedIndex={100}  // Out of bounds
+          selectedIndex={100} // Out of bounds
         />
       );
       expect(container.firstChild).toBeNull();
@@ -903,10 +851,7 @@ describe('ProjectLightbox', () => {
      */
     it('renders nothing when selectedIndex is negative', () => {
       const { container } = render(
-        <ProjectLightbox
-          {...defaultProps}
-          selectedIndex={-1}
-        />
+        <ProjectLightbox {...defaultProps} selectedIndex={-1} />
       );
       expect(container.firstChild).toBeNull();
     });
@@ -929,20 +874,12 @@ describe('ProjectLightbox', () => {
 
       // Rerender with empty images array (edge case)
       rerender(
-        <ProjectLightbox
-          {...defaultProps}
-          images={[]}
-          selectedIndex={0}
-        />
+        <ProjectLightbox {...defaultProps} images={[]} selectedIndex={0} />
       );
 
       // Should render nothing due to length check
       const { container } = render(
-        <ProjectLightbox
-          {...defaultProps}
-          images={[]}
-          selectedIndex={0}
-        />
+        <ProjectLightbox {...defaultProps} images={[]} selectedIndex={0} />
       );
       expect(container.firstChild).toBeNull();
     });
@@ -952,12 +889,7 @@ describe('ProjectLightbox', () => {
      * Ensures selectedIndex 0 correctly selects first image
      */
     it('correctly handles zero-based indexing', () => {
-      render(
-        <ProjectLightbox
-          {...defaultProps}
-          selectedIndex={0}
-        />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
       const image = screen.getByRole('img');
       expect(image.getAttribute('src')).toBe(mockImages[0].url);
     });
@@ -968,12 +900,7 @@ describe('ProjectLightbox', () => {
      */
     it('correctly handles maximum valid index', () => {
       const lastIndex = mockImages.length - 1;
-      render(
-        <ProjectLightbox
-          {...defaultProps}
-          selectedIndex={lastIndex}
-        />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={lastIndex} />);
       const image = screen.getByRole('img');
       expect(image.getAttribute('src')).toBe(mockImages[lastIndex].url);
     });
@@ -983,7 +910,9 @@ describe('ProjectLightbox', () => {
      * Verifies error logging when currentImage is unexpectedly undefined
      */
     it('logs console error when currentImage validation fails', () => {
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       // This shouldn't happen with normal usage, but test the defensive check
       // by directly testing the error scenario
@@ -1003,9 +932,7 @@ describe('ProjectLightbox', () => {
      * Test: Assertive live region is present for announcements
      */
     it('has assertive aria-live region for announcements', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
       const liveRegion = document.querySelector('[aria-live="assertive"]');
       expect(liveRegion).toBeInTheDocument();
     });
@@ -1014,9 +941,7 @@ describe('ProjectLightbox', () => {
      * Test: Live region has aria-atomic attribute
      */
     it('live region has aria-atomic for full region updates', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
       const liveRegion = document.querySelector('[aria-live="assertive"]');
       expect(liveRegion).toHaveAttribute('aria-atomic', 'true');
     });
@@ -1025,9 +950,7 @@ describe('ProjectLightbox', () => {
      * Test: Live region has status role
      */
     it('live region has status role', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
       const liveRegion = document.querySelector('[role="status"]');
       expect(liveRegion).toBeInTheDocument();
     });
@@ -1036,9 +959,7 @@ describe('ProjectLightbox', () => {
      * Test: Screen reader announcement includes image number and caption
      */
     it('screen reader announcement includes full image context', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={1} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={1} />);
 
       // The VisuallyHidden component should announce the full context
       const visibilityHidden = document.querySelector('.visually-hidden');
@@ -1051,9 +972,7 @@ describe('ProjectLightbox', () => {
      * Test: Visual counter is hidden from screen readers
      */
     it('visual counter is hidden from screen readers with aria-hidden', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
 
       // Find the visual counter Typography
       const typography = screen.getByText('1 of 3');
@@ -1073,9 +992,7 @@ describe('ProjectLightbox', () => {
       expect(visibilityHidden?.textContent).toContain('First image caption');
 
       // Navigate to next image
-      rerender(
-        <ProjectLightbox {...defaultProps} selectedIndex={1} />
-      );
+      rerender(<ProjectLightbox {...defaultProps} selectedIndex={1} />);
 
       visibilityHidden = document.querySelector('.visually-hidden');
       expect(visibilityHidden?.textContent).toContain('Viewing image 2 of 3');
@@ -1086,9 +1003,7 @@ describe('ProjectLightbox', () => {
      * Test: VisuallyHidden component renders for screen readers
      */
     it('includes VisuallyHidden component for full announcement', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
 
       // VisuallyHidden content should be in the document
       const visibilityHidden = document.querySelector('.visually-hidden');
@@ -1100,9 +1015,7 @@ describe('ProjectLightbox', () => {
      * Test: Caption is included in screen reader announcement
      */
     it('includes image caption in screen reader announcement', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={2} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={2} />);
 
       const visibilityHidden = document.querySelector('.visually-hidden');
       expect(visibilityHidden?.textContent).toContain('Third image caption');
@@ -1112,9 +1025,7 @@ describe('ProjectLightbox', () => {
      * Test: All interactive buttons have ARIA labels
      */
     it('all interactive buttons have proper ARIA labels', () => {
-      render(
-        <ProjectLightbox {...defaultProps} selectedIndex={0} />
-      );
+      render(<ProjectLightbox {...defaultProps} selectedIndex={0} />);
 
       expect(screen.getByLabelText('Close lightbox')).toBeInTheDocument();
       expect(screen.getByLabelText('Previous image')).toBeInTheDocument();

@@ -142,7 +142,8 @@ class LocaleProviderErrorBoundaryClass extends React.Component<
                 mb: 3,
               }}
             >
-              Failed to load localization settings. Some features may not work correctly.
+              Failed to load localization settings. Some features may not work
+              correctly.
             </Typography>
 
             {/* Error Details (Development Mode Only) */}

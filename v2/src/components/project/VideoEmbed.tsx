@@ -91,7 +91,7 @@ export function VideoEmbed({ video, sx }: VideoEmbedProps) {
     if (!isValidVideoId(video.id, video.type)) {
       throw new SecurityError(
         `Invalid ${video.type} video ID: "${video.id}". ` +
-        `Expected ${video.type === 'vimeo' ? '8-11 digits' : '11 alphanumeric characters (including - and _)'}.`,
+          `Expected ${video.type === 'vimeo' ? '8-11 digits' : '11 alphanumeric characters (including - and _)'}.`,
         'SEC_003'
       );
     }
@@ -122,9 +122,10 @@ export function VideoEmbed({ video, sx }: VideoEmbedProps) {
    * Determine video title for accessibility.
    * Provides context for screen reader users.
    */
-  const videoTitle = video.type === 'vimeo'
-    ? t('videoEmbed.vimeoPlayer', { ns: 'components' })
-    : t('videoEmbed.youtubePlayer', { ns: 'components' });
+  const videoTitle =
+    video.type === 'vimeo'
+      ? t('videoEmbed.vimeoPlayer', { ns: 'components' })
+      : t('videoEmbed.youtubePlayer', { ns: 'components' });
 
   return (
     <Box

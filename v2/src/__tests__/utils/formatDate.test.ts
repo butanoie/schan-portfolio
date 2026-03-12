@@ -68,4 +68,3 @@ describe('formatDate', () => {
     expect(formatDate('2000-01-01T12:00:00Z')).toBe('January 1, 2000');
   });
 });
-

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, ReactNode } from "react";
-import posthog from "posthog-js";
-import { reportWebVitals } from "@/src/lib/webVitals";
-import { isDoNotTrackEnabled } from "@/src/lib/privacy";
+import { useEffect, ReactNode } from 'react';
+import posthog from 'posthog-js';
+import { reportWebVitals } from '@/src/lib/webVitals';
+import { isDoNotTrackEnabled } from '@/src/lib/privacy';
 
 /**
  * Props for the PostHogProvider component.
@@ -23,7 +23,7 @@ interface PostHogProviderProps {
 function sanitizeProperties(
   properties: Record<string, unknown>
 ): Record<string, unknown> {
-  delete properties["$ip"];
+  delete properties['$ip'];
   return properties;
 }
 
@@ -42,7 +42,7 @@ function sanitizeProperties(
  * @returns true if PostHog should initialize, false otherwise
  */
 export function shouldInitializePostHog(): boolean {
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = process.env.NODE_ENV === 'production';
   const hasKey = Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY);
   const dntEnabled = isDoNotTrackEnabled();
   return isProduction && hasKey && !dntEnabled;
@@ -79,10 +79,10 @@ export default function PostHogProvider({ children }: PostHogProviderProps) {
 
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       // Route through /ingest reverse proxy to avoid Safari ITP and ad blockers
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "/ingest",
-      ui_host: "https://us.posthog.com",
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || '/ingest',
+      ui_host: 'https://us.posthog.com',
       // Privacy: use sessionStorage instead of cookies (no banner required)
-      persistence: "sessionStorage",
+      persistence: 'sessionStorage',
       // Automatically capture pageviews on route changes
       capture_pageview: true,
       // Disable session recording on free tier to conserve quota

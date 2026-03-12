@@ -1,6 +1,6 @@
-import { Box, Typography } from "@mui/material";
-import type { SpeakingContent } from "../../types/resume";
-import { BRAND_COLORS } from "../../constants";
+import { Box, Typography } from '@mui/material';
+import type { SpeakingContent } from '../../types/resume';
+import { BRAND_COLORS } from '../../constants';
 
 /**
  * Props for the ConferenceSpeaker component.
@@ -58,7 +58,7 @@ export default function ConferenceSpeaker({
           sx={{
             fontWeight: 600,
             color: cardTextColor,
-            fontSize: { xs: "1.1rem", md: "1.25rem" },
+            fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 1.5,
           }}
         >
@@ -71,7 +71,7 @@ export default function ConferenceSpeaker({
             variant="body2"
             sx={{
               color: cardTextColor,
-              fontSize: "0.9rem",
+              fontSize: '0.9rem',
               mb: 1.5,
             }}
           >
@@ -82,8 +82,8 @@ export default function ConferenceSpeaker({
         {/* Events List */}
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             gap: 1.5,
           }}
         >
@@ -100,7 +100,7 @@ export default function ConferenceSpeaker({
                 sx={{
                   fontWeight: 600,
                   color: cardTextColor,
-                  fontSize: "0.9rem",
+                  fontSize: '0.9rem',
                 }}
               >
                 {event.conference}
@@ -109,7 +109,7 @@ export default function ConferenceSpeaker({
                 variant="body2"
                 sx={{
                   color: cardTextColor,
-                  fontSize: "0.85rem",
+                  fontSize: '0.85rem',
                   mt: 0.25,
                 }}
               >
@@ -121,7 +121,7 @@ export default function ConferenceSpeaker({
                   variant="body2"
                   sx={{
                     color: cardTextColor,
-                    fontSize: "0.8rem",
+                    fontSize: '0.8rem',
                     mt: 0.25,
                   }}
                 >

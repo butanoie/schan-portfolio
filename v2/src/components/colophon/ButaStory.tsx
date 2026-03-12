@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Box, Typography, Paper } from "@mui/material";
-import Image from "next/image";
-import { sanitizeHtml } from "../../utils/sanitization";
-import type { ButaStoryContent } from "../../types/colophon";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
+import { Box, Typography, Paper } from '@mui/material';
+import Image from 'next/image';
+import { sanitizeHtml } from '../../utils/sanitization';
+import type { ButaStoryContent } from '../../types/colophon';
+import { usePalette } from '../../hooks/usePalette';
+import { useI18n } from '../../hooks/useI18n';
 
 /**
  * Props for the ButaStory component.
@@ -44,42 +44,42 @@ export default function ButaStory({ content }: ButaStoryProps) {
         variant="h2"
         sx={{
           // Visually hidden but accessible to screen readers (sr-only)
-          position: "absolute",
-          width: "1px",
-          height: "1px",
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
           padding: 0,
-          margin: "-1px",
-          overflow: "hidden",
-          clip: "rect(0, 0, 0, 0)",
-          whiteSpace: "nowrap",
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0, 0, 0, 0)',
+          whiteSpace: 'nowrap',
           border: 0,
         }}
       >
-        {t("colophon.butaStory.heading", { ns: "pages" })}
+        {t('colophon.butaStory.heading', { ns: 'pages' })}
       </Typography>
 
       {/* Boo vs Bu Image */}
-        <Paper
-          className="buta-story-heading"
-          elevation={0}
-          sx={{
-            p: 2,
-            backgroundColor: "transparent",
-            width: "100%",
+      <Paper
+        className="buta-story-heading"
+        elevation={0}
+        sx={{
+          p: 2,
+          backgroundColor: 'transparent',
+          width: '100%',
+        }}
+      >
+        <Image
+          src={versusImage}
+          alt={versusImageAlt}
+          width={1400}
+          height={160}
+          style={{
+            width: '100%',
+            height: 'auto',
+            objectFit: 'cover',
           }}
-        >
-          <Image
-            src={versusImage}
-            alt={versusImageAlt}
-            width={1400}
-            height={160}
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-            }}
-          />
-        </Paper>
+        />
+      </Paper>
 
       {/* Story Paragraphs */}
       <Box>
@@ -89,10 +89,10 @@ export default function ButaStory({ content }: ButaStoryProps) {
             variant="body1"
             sx={{
               mb: 2,
-              "& a": {
-                color: "primary.dark",
-                textDecoration: "underline",
-                "&:hover": {
+              '& a': {
+                color: 'primary.dark',
+                textDecoration: 'underline',
+                '&:hover': {
                   color: palette.accents.red,
                 },
               },

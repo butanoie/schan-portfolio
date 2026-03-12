@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Theme context for managing application theme state.
@@ -16,8 +16,8 @@ import {
   useState,
   useEffect,
   ReactNode,
-} from "react";
-import { ThemeMode, ColorScheme } from "@/src/types/theme";
+} from 'react';
+import { ThemeMode, ColorScheme } from '@/src/types/theme';
 
 /**
  * Context value shape for theme management.
@@ -45,13 +45,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 /**
  * Storage key for persisting theme preference.
  */
-const THEME_STORAGE_KEY = "portfolio-theme-mode";
+const THEME_STORAGE_KEY = 'portfolio-theme-mode';
 
 /**
  * Valid theme modes.
  * Used for validating localStorage values to prevent invalid states.
  */
-const VALID_THEMES: ThemeMode[] = ["light", "dark", "highContrast"];
+const VALID_THEMES: ThemeMode[] = ['light', 'dark', 'highContrast'];
 
 /**
  * Apply theme to document element and update meta tags.
@@ -59,27 +59,27 @@ const VALID_THEMES: ThemeMode[] = ["light", "dark", "highContrast"];
  * @param themeMode - Theme mode to apply
  */
 function applyTheme(themeMode: ThemeMode): void {
-  if (typeof document === "undefined") return;
+  if (typeof document === 'undefined') return;
 
   // Update data attribute for CSS-based theme switching
-  document.documentElement.setAttribute("data-theme", themeMode);
+  document.documentElement.setAttribute('data-theme', themeMode);
 
   // Update meta theme-color tag for browser chrome
   let metaThemeColor = document.querySelector('meta[name="theme-color"]');
   if (!metaThemeColor) {
-    metaThemeColor = document.createElement("meta");
-    metaThemeColor.setAttribute("name", "theme-color");
+    metaThemeColor = document.createElement('meta');
+    metaThemeColor.setAttribute('name', 'theme-color');
     document.head.appendChild(metaThemeColor);
   }
 
   // Set theme color based on mode
   const themeColors = {
-    light: "#8BA888", // Sage green
-    dark: "#121212", // Dark background
-    highContrast: "#000000", // Pure black
+    light: '#8BA888', // Sage green
+    dark: '#121212', // Dark background
+    highContrast: '#000000', // Pure black
   };
 
-  metaThemeColor.setAttribute("content", themeColors[themeMode]);
+  metaThemeColor.setAttribute('content', themeColors[themeMode]);
 }
 
 /**
@@ -106,25 +106,25 @@ function applyTheme(themeMode: ThemeMode): void {
 export function ThemeContextProvider({ children }: { children: ReactNode }) {
   // Initialize state with system preference during SSR-safe setup
   const [mode, setModeState] = useState<ThemeMode>(() => {
-    if (typeof window === "undefined") {
-      return "light";
+    if (typeof window === 'undefined') {
+      return 'light';
     }
-    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const savedRaw = localStorage.getItem(THEME_STORAGE_KEY);
     // Validate that saved theme is a valid theme mode before using it
     const saved =
       savedRaw && VALID_THEMES.includes(savedRaw as ThemeMode)
         ? (savedRaw as ThemeMode)
         : null;
-    return saved || (darkModeQuery.matches ? "dark" : "light");
+    return saved || (darkModeQuery.matches ? 'dark' : 'light');
   });
 
   const [systemScheme, setSystemScheme] = useState<ColorScheme>(() => {
-    if (typeof window === "undefined") {
-      return "light";
+    if (typeof window === 'undefined') {
+      return 'light';
     }
-    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    return darkModeQuery.matches ? "dark" : "light";
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    return darkModeQuery.matches ? 'dark' : 'light';
   });
 
   const [isMounted, setIsMounted] = useState(false);
@@ -134,7 +134,7 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
    * Runs once on mount to set up listeners.
    */
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     // Apply theme to document immediately
     const savedRaw = localStorage.getItem(THEME_STORAGE_KEY);
@@ -150,7 +150,7 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
     setIsMounted(true);
 
     // Set up listener for system preference changes
-    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     /**
      * Handle changes to system color scheme preference.
@@ -159,19 +159,19 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
      * @param e - MediaQueryListEvent from the media query listener
      */
     const handleChange = (e: MediaQueryListEvent) => {
-      const newScheme = e.matches ? "dark" : "light";
+      const newScheme = e.matches ? 'dark' : 'light';
       setSystemScheme(newScheme);
 
       // If no saved preference, update theme when system changes
       if (!saved) {
-        const newMode: ThemeMode = e.matches ? "dark" : "light";
+        const newMode: ThemeMode = e.matches ? 'dark' : 'light';
         setModeState(newMode);
         applyTheme(newMode);
       }
     };
 
-    darkModeQuery.addEventListener("change", handleChange);
-    return () => darkModeQuery.removeEventListener("change", handleChange);
+    darkModeQuery.addEventListener('change', handleChange);
+    return () => darkModeQuery.removeEventListener('change', handleChange);
   }, [mode]);
 
   /**
@@ -185,7 +185,7 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(THEME_STORAGE_KEY, themeMode);
 
     // Dispatch custom event for other listeners
-    const event = new CustomEvent("themechange", {
+    const event = new CustomEvent('themechange', {
       detail: { mode: themeMode },
     });
     window.dispatchEvent(event);
@@ -227,7 +227,7 @@ export function useThemeContext(): ThemeContextType {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error(
-      "useThemeContext must be used within a ThemeContextProvider"
+      'useThemeContext must be used within a ThemeContextProvider'
     );
   }
   return context;

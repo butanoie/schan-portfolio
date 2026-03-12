@@ -1,16 +1,24 @@
-"use client";
+'use client';
 
-import { AppBar, Toolbar, Typography, Box, IconButton, Container, useMediaQuery } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import { BRAND_COLORS } from "../../constants";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
-import { usePalette } from "@/src/hooks/usePalette";
-import { useI18n } from "@/src/hooks/useI18n";
-import dynamic from "next/dynamic";
-import { SettingsButton } from "../settings/SettingsButton";
-import { NavButtons } from "./NavButtons";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  IconButton,
+  Container,
+  useMediaQuery,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { BRAND_COLORS } from '../../constants';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
+import { usePalette } from '@/src/hooks/usePalette';
+import { useI18n } from '@/src/hooks/useI18n';
+import dynamic from 'next/dynamic';
+import { SettingsButton } from '../settings/SettingsButton';
+import { NavButtons } from './NavButtons';
 
 /**
  * Lazily-loaded mobile hamburger menu component.
@@ -32,7 +40,7 @@ const HamburgerMenu = dynamic(
    *
    * @returns The HamburgerMenu module
    */
-  () => import("./HamburgerMenu"),
+  () => import('./HamburgerMenu'),
   {
     ssr: false,
     /**
@@ -73,14 +81,14 @@ const HamburgerMenu = dynamic(
 export default function Header() {
   const { palette } = usePalette();
   const { t } = useI18n();
-  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   /** Shared styling for social icon buttons (LinkedIn, GitHub) */
   const socialIconSx = {
     color: palette.text.primary,
     minWidth: 44,
     minHeight: 44,
-    "&:hover": {
+    '&:hover': {
       color: BRAND_COLORS.maroon,
     },
   };
@@ -91,40 +99,42 @@ export default function Header() {
         <Container
           maxWidth="lg"
           sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            width: "100%",
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            width: '100%',
             my: 3,
             px: { xs: 3, lg: 6 },
-            alignItems: { xs: "center", md: "center" },
+            alignItems: { xs: 'center', md: 'center' },
             gap: { xs: 2, md: 0 },
           }}
         >
-          <Box sx={{
+          <Box
+            sx={{
               flexGrow: { xs: 0, md: 1 },
-              display: "flex",
-              alignItems: "bottom",
-              gap: 1
-            }}>
+              display: 'flex',
+              alignItems: 'bottom',
+              gap: 1,
+            }}
+          >
             <Typography
               component="div"
               sx={{
                 fontFamily: FONT_FAMILY_HEADING,
-                fontSize: "1.25rem",
+                fontSize: '1.25rem',
                 fontWeight: 600,
                 lineHeight: 1.5,
-                display: "flex",
-                alignItems: "center"
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              {t("header.siteTitle")}
+              {t('header.siteTitle')}
             </Typography>
-            <Box sx={{ display: "flex", gap: 0.25, alignItems: "baseline" }}>
+            <Box sx={{ display: 'flex', gap: 0.25, alignItems: 'baseline' }}>
               <IconButton
                 href="https://www.linkedin.com/in/sing-chan/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={t("nav.social.linkedin")}
+                aria-label={t('nav.social.linkedin')}
                 size="medium"
                 sx={socialIconSx}
               >
@@ -134,7 +144,7 @@ export default function Header() {
                 href="https://github.com/butanoie"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={t("nav.social.github")}
+                aria-label={t('nav.social.github')}
                 size="medium"
                 sx={socialIconSx}
               >
@@ -146,9 +156,9 @@ export default function Header() {
             component="nav"
             aria-label={t('nav.mainNavigation')}
             sx={{
-              display: "flex",
+              display: 'flex',
               gap: 1,
-              alignSelf: { xs: "auto", md: "flex-end" },
+              alignSelf: { xs: 'auto', md: 'flex-end' },
             }}
           >
             {/* Show hamburger on mobile, full nav + settings on desktop */}

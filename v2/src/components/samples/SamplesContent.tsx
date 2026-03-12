@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import { Divider } from "@mui/material";
-import { getLocalizedSamplesData } from "../../data/samples";
-import { useI18n } from "../../hooks/useI18n";
-import PageDeck from "../common/PageDeck";
-import { ScrollAnimatedSection } from "../common/ScrollAnimatedSection";
-import ArtifactSection from "./ArtifactSection";
+import { useMemo } from 'react';
+import { Divider } from '@mui/material';
+import { getLocalizedSamplesData } from '../../data/samples';
+import { useI18n } from '../../hooks/useI18n';
+import PageDeck from '../common/PageDeck';
+import { ScrollAnimatedSection } from '../common/ScrollAnimatedSection';
+import ArtifactSection from './ArtifactSection';
 
 /**
  * Client component for the Writing Samples page.

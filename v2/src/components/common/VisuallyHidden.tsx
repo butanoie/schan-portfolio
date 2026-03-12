@@ -51,7 +51,10 @@ interface VisuallyHiddenProps {
  * <Typography>{currentIndex + 1} of {total}</Typography>
  * </Box>
  */
-export function VisuallyHidden({ children, className = '' }: VisuallyHiddenProps) {
+export function VisuallyHidden({
+  children,
+  className = '',
+}: VisuallyHiddenProps) {
   return (
     <span
       className={`visually-hidden ${className}`}

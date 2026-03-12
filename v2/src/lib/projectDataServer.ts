@@ -27,4 +27,3 @@ export async function fetchProjects(
   // For now, we use the in-memory data
   return getProjects(options);
 }
-

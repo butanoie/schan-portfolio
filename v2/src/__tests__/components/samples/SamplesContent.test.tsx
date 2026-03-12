@@ -116,18 +116,12 @@ describe('SamplesContent', () => {
   describe('section intros', () => {
     it('should render intro text for each section', () => {
       render(<SamplesContent />);
-      expect(
-        screen.getByText(/product strategy begins/i)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/usable software requires/i)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/product strategy begins/i)).toBeInTheDocument();
+      expect(screen.getByText(/usable software requires/i)).toBeInTheDocument();
       expect(
         screen.getByText(/sound technical decisions/i)
       ).toBeInTheDocument();
-      expect(
-        screen.getByText(/shipping great software/i)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/shipping great software/i)).toBeInTheDocument();
       expect(
         screen.getByText(/documentation isn't just about planning/i)
       ).toBeInTheDocument();
@@ -169,7 +163,10 @@ describe('SamplesContent', () => {
     it('should render French heading when locale is fr', () => {
       render(<SamplesContent />, { initialLocale: 'fr' });
       expect(
-        screen.getByRole('heading', { name: /échantillons d'écriture/i, level: 1 })
+        screen.getByRole('heading', {
+          name: /échantillons d'écriture/i,
+          level: 1,
+        })
       ).toBeInTheDocument();
     });
 

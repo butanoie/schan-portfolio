@@ -170,30 +170,30 @@
         "heading": "Original V1 Technologies (Historique)",
         "description": "Le site original du portefeuille a été construit avec ces technologies :",
         "items": [
-        {
-          "name": "Gumby Framework",
-          "description": "Grille réactive, jeu d'icônes Entypo et styles d'éléments d'interface utilisateur de base."
-        },
-        {
-          "name": "jQuery",
-          "description": "Chargement asynchrone des projets du portefeuille, manipulation du DOM et effets de l'interface utilisateur."
-        },
-        {
-          "name": "PHP",
-          "description": "Service web simple pour servir les projets du portefeuille."
-        },
-        {
-          "name": "Swipebox",
-          "description": "Plugin jQuery pour les boîtes lumineuses des images des projets."
-        },
-        {
-          "name": "SWFObject",
-          "description": "Détermination de l'affichage des liens vers les projets Adobe Flash."
-        },
-        {
-          "name": "Sass et Compass",
-          "description": "CSS personnalisé écrit en syntaxe SCSS et compilé avec Compass."
-        }
+          {
+            "name": "Gumby Framework",
+            "description": "Grille réactive, jeu d'icônes Entypo et styles d'éléments d'interface utilisateur de base."
+          },
+          {
+            "name": "jQuery",
+            "description": "Chargement asynchrone des projets du portefeuille, manipulation du DOM et effets de l'interface utilisateur."
+          },
+          {
+            "name": "PHP",
+            "description": "Service web simple pour servir les projets du portefeuille."
+          },
+          {
+            "name": "Swipebox",
+            "description": "Plugin jQuery pour les boîtes lumineuses des images des projets."
+          },
+          {
+            "name": "SWFObject",
+            "description": "Détermination de l'affichage des liens vers les projets Adobe Flash."
+          },
+          {
+            "name": "Sass et Compass",
+            "description": "CSS personnalisé écrit en syntaxe SCSS et compilé avec Compass."
+          }
         ]
       }
     },

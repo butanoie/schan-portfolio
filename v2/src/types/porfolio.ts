@@ -3,7 +3,7 @@
  * Defines the structure for the projects page intro section with name, logo, and description.
  */
 
-import { PageDeckData } from "./pageDeck";
+import { PageDeckData } from './pageDeck';
 
 /**
  * Complete projects page data structure.

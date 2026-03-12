@@ -133,7 +133,9 @@ export function useScrollAnimation(
     // Don't set up observer if element ref isn't available yet
     if (!ref.current) return;
 
-    const parsedOptions = JSON.parse(serializedOptions) as IntersectionObserverInit | null;
+    const parsedOptions = JSON.parse(
+      serializedOptions
+    ) as IntersectionObserverInit | null;
 
     /**
      * Callback invoked when element's intersection state changes.

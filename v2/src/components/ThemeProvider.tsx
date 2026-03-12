@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { useTheme } from "@/src/hooks/useTheme";
-import { getThemeByMode } from "@/src/lib/themes";
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useTheme } from '@/src/hooks/useTheme';
+import { getThemeByMode } from '@/src/lib/themes';
 
 /**
  * Enhanced theme provider component that manages dynamic theme switching.
@@ -38,7 +38,7 @@ export default function EnhancedThemeProvider({
   const { theme: themeMode, isMounted } = useTheme();
 
   // During SSR or before hydration, use light theme to prevent mismatch
-  const muiTheme = getThemeByMode(isMounted ? themeMode : "light");
+  const muiTheme = getThemeByMode(isMounted ? themeMode : 'light');
 
   return (
     <MuiThemeProvider theme={muiTheme}>

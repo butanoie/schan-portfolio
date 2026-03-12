@@ -151,7 +151,9 @@ describe('VideoEmbed', () => {
     }
 
     expect(() => {
-      rtlRender(<VideoEmbed video={invalidVideo} />, { wrapper: MinimalWrapper });
+      rtlRender(<VideoEmbed video={invalidVideo} />, {
+        wrapper: MinimalWrapper,
+      });
     }).toThrow();
   });
 

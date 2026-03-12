@@ -1,6 +1,6 @@
-import { Box, Typography } from "@mui/material";
-import type { EducationEntry } from "../../types/resume";
-import { BRAND_COLORS } from "../../constants";
+import { Box, Typography } from '@mui/material';
+import type { EducationEntry } from '../../types/resume';
+import { BRAND_COLORS } from '../../constants';
 
 /**
  * Props for the Education component.
@@ -39,7 +39,6 @@ export default function Education({
   cardTextColor,
   sectionHeading,
 }: EducationProps) {
-
   return (
     <Box component="section" aria-labelledby="education-heading">
       <Box
@@ -57,7 +56,7 @@ export default function Education({
           sx={{
             fontWeight: 600,
             color: cardTextColor,
-            fontSize: { xs: "1.1rem", md: "1.25rem" },
+            fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 1.5,
           }}
         >
@@ -67,8 +66,8 @@ export default function Education({
         {/* Education Entries */}
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             gap: 1.5,
           }}
         >
@@ -85,7 +84,7 @@ export default function Education({
                 sx={{
                   fontWeight: 600,
                   color: cardTextColor,
-                  fontSize: "0.9rem",
+                  fontSize: '0.9rem',
                 }}
               >
                 {entry.institution}
@@ -94,7 +93,7 @@ export default function Education({
                 variant="body2"
                 sx={{
                   color: cardTextColor,
-                  fontSize: "0.85rem",
+                  fontSize: '0.85rem',
                   mt: 0.25,
                 }}
               >
@@ -104,7 +103,7 @@ export default function Education({
                 variant="body2"
                 sx={{
                   color: cardTextColor,
-                  fontSize: "0.8rem",
+                  fontSize: '0.8rem',
                   mt: 0.25,
                 }}
               >

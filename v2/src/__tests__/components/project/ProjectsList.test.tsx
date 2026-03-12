@@ -146,7 +146,9 @@ describe('ProjectsList', () => {
     it('renders nothing when projects array is empty', () => {
       const { container } = render(<ProjectsList projects={[]} />);
 
-      expect(container.querySelectorAll('[data-testid^="project-"]')).toHaveLength(0);
+      expect(
+        container.querySelectorAll('[data-testid^="project-"]')
+      ).toHaveLength(0);
     });
 
     /**
@@ -167,7 +169,9 @@ describe('ProjectsList', () => {
      */
     it('renders projects without key prop warnings', () => {
       // Mock console.error to catch React warnings
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       render(<ProjectsList projects={mockProjects} />);
 
@@ -211,8 +215,9 @@ describe('ProjectsList', () => {
     it('animation wrapper has proper styling attributes', () => {
       const { container } = render(<ProjectsList projects={mockProjects} />);
 
-      const firstWrapper = container.querySelector('[data-testid="project-project-1"]')
-        ?.parentElement;
+      const firstWrapper = container.querySelector(
+        '[data-testid="project-project-1"]'
+      )?.parentElement;
       // Should have animation-related styles (opacity, transform)
       expect(firstWrapper).toBeInTheDocument();
     });
@@ -224,7 +229,9 @@ describe('ProjectsList', () => {
       const { container } = render(<ProjectsList projects={mockProjects} />);
 
       // The wrapper div should exist and be ready for animation
-      const wrappers = container.querySelectorAll('[style*="opacity"], [style*="transform"]');
+      const wrappers = container.querySelectorAll(
+        '[style*="opacity"], [style*="transform"]'
+      );
       expect(wrappers.length).toBeGreaterThanOrEqual(0); // May not have inline styles
     });
   });
@@ -263,7 +270,9 @@ describe('ProjectsList', () => {
     it('handles empty projects array gracefully', () => {
       const { container } = render(<ProjectsList projects={[]} />);
 
-      expect(container.querySelectorAll('[data-testid^="project-"]')).toHaveLength(0);
+      expect(
+        container.querySelectorAll('[data-testid^="project-"]')
+      ).toHaveLength(0);
     });
 
     /**
@@ -286,7 +295,9 @@ describe('ProjectsList', () => {
      * Test: Updates when projects array changes
      */
     it('updates when projects array changes', () => {
-      const { rerender } = render(<ProjectsList projects={[mockProjects[0]]} />);
+      const { rerender } = render(
+        <ProjectsList projects={[mockProjects[0]]} />
+      );
 
       expect(screen.getByText('Project One')).toBeInTheDocument();
       expect(screen.queryByText('Project Two')).not.toBeInTheDocument();
@@ -303,7 +314,9 @@ describe('ProjectsList', () => {
      * Test: Updates when adding projects to array
      */
     it('updates when adding projects to array', () => {
-      const { rerender } = render(<ProjectsList projects={[mockProjects[0]]} />);
+      const { rerender } = render(
+        <ProjectsList projects={[mockProjects[0]]} />
+      );
 
       expect(screen.getAllByTestId(/^project-/)).toHaveLength(1);
 
@@ -343,7 +356,9 @@ describe('ProjectsList', () => {
     it('maintains proper DOM hierarchy for each project', () => {
       const { container } = render(<ProjectsList projects={mockProjects} />);
 
-      const projectDivs = container.querySelectorAll('[data-testid^="project-"]');
+      const projectDivs = container.querySelectorAll(
+        '[data-testid^="project-"]'
+      );
       projectDivs.forEach((div) => {
         expect(div.parentElement).toBeInTheDocument();
       });
@@ -430,7 +445,9 @@ describe('ProjectsList', () => {
       const { container } = render(<ProjectsList projects={mockProjects} />);
 
       // Should have wrapper elements with animation styles
-      const projectElements = container.querySelectorAll('[data-testid^="project-"]');
+      const projectElements = container.querySelectorAll(
+        '[data-testid^="project-"]'
+      );
       expect(projectElements.length).toBeGreaterThan(0);
     });
 
@@ -453,7 +470,9 @@ describe('ProjectsList', () => {
       const { container } = render(<ProjectsList projects={mockProjects} />);
 
       // Projects should be wrapped in div that has animation properties
-      const projectDivs = container.querySelectorAll('[data-testid^="project-"]');
+      const projectDivs = container.querySelectorAll(
+        '[data-testid^="project-"]'
+      );
       projectDivs.forEach((project) => {
         expect(project.parentElement).toBeTruthy();
       });
@@ -471,9 +490,13 @@ describe('ProjectsList', () => {
         title: `Project ${i}`,
       }));
 
-      const { container } = render(<ProjectsList projects={largeProjectList} />);
+      const { container } = render(
+        <ProjectsList projects={largeProjectList} />
+      );
 
-      const projectElements = container.querySelectorAll('[data-testid^="project-"]');
+      const projectElements = container.querySelectorAll(
+        '[data-testid^="project-"]'
+      );
       expect(projectElements).toHaveLength(100);
     });
 

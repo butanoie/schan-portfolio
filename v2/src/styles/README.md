@@ -9,6 +9,7 @@ This directory contains CSS styling for the portfolio application, with a focus 
 Global animation definitions including keyframes and utility classes.
 
 **Keyframe Animations:**
+
 - `fadeIn` - Fade from transparent to opaque (300ms)
 - `fadeOut` - Fade from opaque to transparent (300ms)
 - `slideUp` - Slide upward with fade (400ms)
@@ -23,6 +24,7 @@ Global animation definitions including keyframes and utility classes.
 - `bounce` - Bounce effect on hover (300ms)
 
 **Utility Classes:**
+
 - `.animate-fade-in` - Apply fadeIn animation
 - `.animate-fade-out` - Apply fadeOut animation
 - `.animate-slide-up` - Apply slideUp animation
@@ -39,13 +41,9 @@ Global animation definitions including keyframes and utility classes.
 Use utility classes directly on HTML elements:
 
 ```html
-<div class="animate-fade-in">
-  Content that fades in
-</div>
+<div class="animate-fade-in">Content that fades in</div>
 
-<div class="animate-slide-up">
-  Content that slides up
-</div>
+<div class="animate-slide-up">Content that slides up</div>
 ```
 
 ### React/MUI Components
@@ -114,14 +112,14 @@ export function FadeInOnScroll() {
 
 The portfolio uses consistent animation timing across all components:
 
-| Duration | Use Case |
-|----------|----------|
-| 0ms | No animation (instant changes) |
-| 150ms | Fast interactive elements (buttons, links) |
-| 200ms | Standard transitions (cards, images) |
-| 300ms | Dialogs, modals, theme transitions |
-| 400ms | Scroll animations, larger transitions |
-| 500ms | Page transitions, major layout changes |
+| Duration | Use Case                                   |
+| -------- | ------------------------------------------ |
+| 0ms      | No animation (instant changes)             |
+| 150ms    | Fast interactive elements (buttons, links) |
+| 200ms    | Standard transitions (cards, images)       |
+| 300ms    | Dialogs, modals, theme transitions         |
+| 400ms    | Scroll animations, larger transitions      |
+| 500ms    | Page transitions, major layout changes     |
 
 These constants are defined in `v2/src/constants/app.ts` as:
 

@@ -51,6 +51,7 @@ Before setting up automatic deployments, ensure you have:
 Add **one secret** and **two variables** to GitHub Actions:
 
 **Secret - Railway Token (Authentication):**
+
 1. Go to your GitHub repository
 2. Navigate to **Settings** > **Secrets and variables** > **Actions**
 3. Click **New repository secret**
@@ -59,6 +60,7 @@ Add **one secret** and **two variables** to GitHub Actions:
 6. Click **Add secret**
 
 **Variable 1 - Railway Project ID:**
+
 1. Still in **Settings** > **Secrets and variables** > **Actions**
 2. Click the **Variables** tab
 3. Click **New repository variable**
@@ -67,6 +69,7 @@ Add **one secret** and **two variables** to GitHub Actions:
 6. Click **Add variable**
 
 **Variable 2 - Railway Service Name:**
+
 1. Still in the **Variables** tab
 2. Click **New repository variable**
 3. **Name:** `RAILWAY_SERVICE_NAME`
@@ -74,6 +77,7 @@ Add **one secret** and **two variables** to GitHub Actions:
 5. Click **Add variable**
 
 **Variable 3 - Staging Deploy Environment Name (required for production deploys):**
+
 1. Still in the **Variables** tab
 2. Click **New repository variable**
 3. **Name:** `RAILWAY_STAGING_DEPLOY_ENV_NAME`
@@ -81,6 +85,7 @@ Add **one secret** and **two variables** to GitHub Actions:
 5. Click **Add variable**
 
 **Why the difference?**
+
 - **Token** is a secret because it's an authentication credential (sensitive)
 - **Project ID, Service Name & Staging Deploy Env Name** are variables because they're just configuration identifiers (non-sensitive)
 
@@ -89,6 +94,7 @@ Add **one secret** and **two variables** to GitHub Actions:
 The workflow is already configured in [`.github/workflows/test-deploy-dev.yml`](.github/workflows/test-deploy-dev.yml).
 
 **Workflow Structure:**
+
 ```yaml
 # Smart change detection
 check-changes:
@@ -109,6 +115,7 @@ deploy:
 ```
 
 **Deploy job configuration:**
+
 ```yaml
 deploy:
   needs: [check-changes, tests]
@@ -129,6 +136,7 @@ deploy:
 ```
 
 **Explanation:**
+
 - **Smart Detection**: The `check-changes` job prevents unnecessary test runs when only docs or other non-v2 files change
 - **Tests Conditional**: Tests only run if v2/ or workflow files changed (saves CI time)
 - **Deployment Conditional**: Deployment only runs if changes detected AND tests pass
@@ -139,12 +147,14 @@ deploy:
 - **Environment Protection**: The "Sing Portfolio / development" environment requires manual approval before deployment
 
 ✅ Confirm all configuration is added:
+
 - **Secret:** `RAILWAY_TOKEN` - Your Railway API token
 - **Variable:** `RAILWAY_PROJECT_ID` - Your Railway project ID
 - **Variable:** `RAILWAY_SERVICE_NAME` - Your Railway service name
 - **Variable:** `RAILWAY_STAGING_DEPLOY_ENV_NAME` - GitHub Deployments environment name for staging (required for production deploys)
 
 ✅ Confirm environment approval is configured:
+
 - Go to **Settings** > **Environments** > **Sing Portfolio / development**
 - Add **Required reviewers** (GitHub users who must approve deployments)
 - Consider adding team leads or project maintainers
@@ -163,6 +173,7 @@ To add an extra layer of safety, configure required reviewers for the developmen
 **Result:** Deployments will wait for approval from one of the designated reviewers before proceeding to Railway.
 
 **Benefits:**
+
 - 🔒 **Safety Gate** - Prevents accidental deployments
 - 👥 **Team Control** - Multiple people can review before deployment
 - 📋 **Audit Trail** - GitHub records who approved each deployment
@@ -170,6 +181,7 @@ To add an extra layer of safety, configure required reviewers for the developmen
 ### Step 7: Test the Deployment
 
 1. Create a test branch from `main`:
+
    ```bash
    git checkout main
    git pull origin main
@@ -177,6 +189,7 @@ To add an extra layer of safety, configure required reviewers for the developmen
    ```
 
 2. Make a small change in the `v2/` folder (this triggers the workflow):
+
    ```bash
    # For example, update a comment or documentation in v2/
    echo "# test" >> v2/README.md
@@ -203,18 +216,21 @@ To add an extra layer of safety, configure required reviewers for the developmen
 ## Workflow Behavior
 
 ### When Tests and Deployment Run
+
 ✅ PR is opened against `main` branch
 ✅ Changes detected in `v2/` folder OR `.github/workflows/` folder
 ✅ All lint, type check, and unit tests pass
 ✅ Manual approval provided by configured reviewer(s)
 
 ### When Tests Skip (Workflow Still Runs)
+
 ⏭️ PR targets `main` branch
 ⏭️ Changes only in `docs/`, `changelog/`, or other non-v2 folders
 ⏭️ The workflow runs but `check-changes` outputs `has-v2-changes=false`
 ⏭️ Tests and deployment jobs are skipped (saves CI time)
 
 ### When Deployment Does NOT Run
+
 ❌ PR targets a branch other than `main`
 ❌ Tests fail
 ❌ Type checking fails
@@ -243,13 +259,13 @@ The workflow includes intelligent change detection to save CI time and resources
 
 ### Example Scenarios
 
-| Changes | Tests Run? | Deploy? | Why |
-|---------|-----------|--------|-----|
-| Changes in `v2/src/` | ✅ Yes | ✅ Yes (after approval) | Application code changed |
-| Changes in `.github/workflows/` | ✅ Yes | ✅ Yes (after approval) | Workflow configuration changed |
-| Changes in `docs/` only | ❌ No | ❌ No | Only documentation changed |
-| Changes in `changelog/` only | ❌ No | ❌ No | Only changelog changed |
-| Mix of `v2/` + `docs/` | ✅ Yes | ✅ Yes (after approval) | Application code changed |
+| Changes                         | Tests Run? | Deploy?                 | Why                            |
+| ------------------------------- | ---------- | ----------------------- | ------------------------------ |
+| Changes in `v2/src/`            | ✅ Yes     | ✅ Yes (after approval) | Application code changed       |
+| Changes in `.github/workflows/` | ✅ Yes     | ✅ Yes (after approval) | Workflow configuration changed |
+| Changes in `docs/` only         | ❌ No      | ❌ No                   | Only documentation changed     |
+| Changes in `changelog/` only    | ❌ No      | ❌ No                   | Only changelog changed         |
+| Mix of `v2/` + `docs/`          | ✅ Yes     | ✅ Yes (after approval) | Application code changed       |
 
 ### Deployment Environment Variables
 
@@ -267,6 +283,7 @@ If you need to add or modify environment variables:
 ## Configuration Reference
 
 ### Railway Project Details
+
 - **Project Name:** Sing Portfolio
 - **Environment:** development
 - **Deploy Source:** GitHub repository root (Railway detects `v2/` as the application directory)
@@ -275,6 +292,7 @@ If you need to add or modify environment variables:
 ### GitHub Workflow Configuration
 
 **Development (PR-based):**
+
 - **Workflow File:** `.github/workflows/test-deploy-dev.yml`
 - **Workflow Name:** "Lint, Type Check, Unit Test, and Deploy"
 - **Trigger:** Pull requests to `main` branch
@@ -282,12 +300,14 @@ If you need to add or modify environment variables:
 - **Environment:** `Sing Portfolio / development`
 
 **Development (Manual):**
+
 - **Workflow File:** `.github/workflows/deploy-dev.yml`
 - **Workflow Name:** "Manual Deploy to Development"
 - **Trigger:** Manual (`workflow_dispatch`) from any branch
 - **Environment:** `Sing Portfolio / development`
 
 **Staging (Manual):**
+
 - **Workflow File:** `.github/workflows/deploy-staging.yml`
 - **Workflow Name:** "Manual Deploy to Staging"
 - **Trigger:** Manual (`workflow_dispatch`) from `main` branch only
@@ -295,6 +315,7 @@ If you need to add or modify environment variables:
 - **Environment:** `Sing Portfolio / staging`
 
 **Production:**
+
 - **Workflow File:** `.github/workflows/deploy-production.yml`
 - **Workflow Name:** "Manual Deploy to Production"
 - **Trigger:** Manual (`workflow_dispatch`) from `main` branch only
@@ -302,6 +323,7 @@ If you need to add or modify environment variables:
 - **Environment:** `Sing Portfolio / production`
 
 **Shared Configuration:**
+
 - **Authentication Secret:** `RAILWAY_TOKEN` (encrypted)
 - **Project ID Variable:** `RAILWAY_PROJECT_ID` (non-sensitive config)
 - **Service Name Variable:** `RAILWAY_SERVICE_NAME` (non-sensitive config)
@@ -311,9 +333,11 @@ If you need to add or modify environment variables:
 ## Troubleshooting
 
 ### Deployment Job Not Running
+
 **Problem:** The deploy job doesn't appear in the workflow run.
 
 **Solutions:**
+
 - Verify the PR targets the `main` branch
 - Verify changes are in the `v2/` folder or `.github/workflows/` folder (check the `check-changes` job output)
 - Check that all previous jobs (check-changes, lint, type-check, test) completed successfully
@@ -321,9 +345,11 @@ If you need to add or modify environment variables:
 - Review the workflow file for syntax errors
 
 ### Deployment Waiting for Approval
+
 **Problem:** The deploy job appears in the workflow but shows "Waiting for approval" or "Waiting for reviewer".
 
 **Solutions:**
+
 1. This is expected behavior - the environment requires manual approval
 2. Approve the deployment:
    - Go to the PR's **Checks** section
@@ -335,9 +361,11 @@ If you need to add or modify environment variables:
    - Check **Required reviewers** configuration
 
 ### "Token not found" Error
+
 **Problem:** Deployment fails with "RAILWAY_TOKEN not found" or similar error.
 
 **Solutions:**
+
 1. Verify the secret was added correctly:
    - Go to Settings > Secrets and variables > Actions
    - Confirm `RAILWAY_TOKEN` exists
@@ -347,9 +375,11 @@ If you need to add or modify environment variables:
    - Update the `RAILWAY_TOKEN` secret in GitHub with the new value
 
 ### Deployment Fails with Project Not Found
+
 **Problem:** Railway reports "Project not found" or similar error.
 
 **Solutions:**
+
 1. Verify the `RAILWAY_PROJECT_ID` variable is set correctly:
    - Go to Settings > Secrets and variables > Actions > Variables tab
    - Confirm `RAILWAY_PROJECT_ID` is present and not empty
@@ -363,18 +393,22 @@ If you need to add or modify environment variables:
 5. Verify the development environment exists in your Railway project
 
 ### Railway Deployment Timeout
+
 **Problem:** Deployment takes too long and times out.
 
 **Solutions:**
+
 1. Check Railway Dashboard for deployment logs
 2. Monitor your Next.js build time in the Railway logs
 3. Optimize Next.js build if it's taking too long
 4. Consider increasing build resources in Railway project settings
 
 ### Environment Variables Not Loading
+
 **Problem:** Deployed application reports missing environment variables.
 
 **Solutions:**
+
 1. Verify variables are set in Railway project settings
 2. Check that variables are set for the "staging" environment (not just project-level)
 3. Redeploy after adding/changing variables:
@@ -408,19 +442,23 @@ To deploy manually without using GitHub Actions:
 ### Option 1: Using Project Linking (Recommended)
 
 1. Install Railway CLI:
+
    ```bash
    npm install -g @railway/cli
    ```
 
 2. Log in:
+
    ```bash
    railway login
    ```
 
 3. Link to project:
+
    ```bash
    railway link
    ```
+
    Select "Sing Portfolio" when prompted.
 
 4. Deploy:
@@ -449,6 +487,7 @@ railway up --project=your-project-id --service=your-service-name --environment=d
 ```
 
 Replace:
+
 - `your-project-id` with your Railway project ID
 - `your-service-name` with your Railway service name
 
@@ -457,17 +496,20 @@ Replace:
 ## Monitoring Deployments
 
 ### View Deployment History
+
 1. Go to Railway Dashboard
 2. Select "Sing Portfolio" project
 3. Select "development" environment
 4. View the **Deployments** tab
 
 ### View Logs
+
 1. Select a deployment from the history
 2. Click **Logs** tab
 3. Review build and runtime logs
 
 ### Rollback to Previous Deployment
+
 1. Go to the **Deployments** tab
 2. Find the deployment you want to restore
 3. Click the **Redeploy** button
@@ -475,12 +517,14 @@ Replace:
 ## Security Considerations
 
 ✅ **Safe Practices:**
+
 - Railway token stored as GitHub secret (never in code or logs)
 - Token only has deployment permissions
 - Environment-specific deployments (staging isolated from production)
 - All deployments logged and auditable in GitHub Actions
 
 ⚠️ **Important:**
+
 - Never commit your Railway token to version control
 - Regenerate token if it's accidentally exposed
 - Review GitHub Actions logs for any sensitive information leaks
@@ -505,6 +549,7 @@ In addition to Railway's automatic staging deployments (triggered when commits l
 ### Preflight Checks
 
 The workflow validates:
+
 1. **Branch verification** — Confirms the workflow is running from `main`
 2. **Commit verification** — If a specific SHA was provided, confirms it exists on `main`
 
@@ -587,11 +632,12 @@ The workflow will then proceed to deploy to production.
 ### Production Deployment Configuration
 
 **Workflow Structure:**
+
 ```yaml
 workflow_dispatch:
   inputs:
     commit_sha:
-      description: 'Commit SHA to deploy (leave blank for latest)'
+      description: "Commit SHA to deploy (leave blank for latest)"
       required: false
 
 jobs:
@@ -609,6 +655,7 @@ jobs:
 ```
 
 **Staging verification uses the GitHub Deployments API:**
+
 ```yaml
 - name: Verify staging deployment via GitHub Deployments
   env:
@@ -621,6 +668,7 @@ jobs:
 ```
 
 **Key Features:**
+
 - **Main Branch Only**: Cannot deploy from feature branches - enforced at runtime
 - **Staging Gate**: Queries the GitHub Deployments API to verify the commit was successfully deployed to staging first (Railway auto-creates deployment records via its GitHub integration)
 - **Approval Protection**: `environment: "Sing Portfolio / production"` requires manual approval
@@ -631,6 +679,7 @@ jobs:
 ### Recommended Deployment Workflow
 
 **Best Practice:**
+
 1. Create PR to `main` with your changes
 2. Tests run automatically and deploy to development (with approval)
 3. Verify changes work correctly in development environment
@@ -643,6 +692,7 @@ jobs:
 10. Monitor production deployment and verify application works
 
 This gives you:
+
 - **Safety**: Three environments (development -> staging -> production) with progressive validation
 - **Staging Gate**: Production deploys are blocked until the commit succeeds in staging
 - **Control**: Manual approval required for all production deployments
@@ -667,22 +717,24 @@ To require approval before production deployments:
 
 ### Comparing Environments
 
-| Aspect | Development | Staging | Production |
-|--------|-------------|---------|-----------|
-| **Trigger** | Automatic on PR / Manual | Auto-deploy on `main` (Railway) / Manual | Manual (workflow_dispatch) |
-| **Branch** | Any branch | `main` only | `main` only |
-| **Staging Gate** | No | No | Yes - commit must succeed in staging |
-| **Approval** | Required | N/A (auto) / Required (manual) | Required |
-| **Railway Env** | development | staging | production |
-| **Use Case** | Testing and validation | Pre-production verification | Live users |
-| **Workflow File** | `test-deploy-dev.yml` / `deploy-dev.yml` | Railway auto / `deploy-staging.yml` | `deploy-production.yml` |
+| Aspect            | Development                              | Staging                                  | Production                           |
+| ----------------- | ---------------------------------------- | ---------------------------------------- | ------------------------------------ |
+| **Trigger**       | Automatic on PR / Manual                 | Auto-deploy on `main` (Railway) / Manual | Manual (workflow_dispatch)           |
+| **Branch**        | Any branch                               | `main` only                              | `main` only                          |
+| **Staging Gate**  | No                                       | No                                       | Yes - commit must succeed in staging |
+| **Approval**      | Required                                 | N/A (auto) / Required (manual)           | Required                             |
+| **Railway Env**   | development                              | staging                                  | production                           |
+| **Use Case**      | Testing and validation                   | Pre-production verification              | Live users                           |
+| **Workflow File** | `test-deploy-dev.yml` / `deploy-dev.yml` | Railway auto / `deploy-staging.yml`      | `deploy-production.yml`              |
 
 ### Troubleshooting Production Deployment
 
 #### Preflight: "No successful staging deployment found"
+
 **Problem:** The production workflow fails at the preflight step with a staging verification error.
 
 **Solutions:**
+
 1. **Commit not on `main`**: Ensure the commit has been merged to `main` and Railway has auto-deployed it to staging
 2. **Staging deployment still in progress**: Wait for Railway to finish the staging deployment, then re-run the workflow
 3. **Staging deployment failed**: Check the Railway dashboard for the staging environment — the deployment may have failed. Fix the issue, push a new commit, and try again
@@ -690,14 +742,17 @@ To require approval before production deployments:
 5. **API response debugging**: Check the workflow logs for the GitHub Deployments API response output to identify the issue
 
 #### Preflight: "Production deployments are only allowed from the main branch"
+
 **Problem:** The production workflow fails because it was triggered from a non-main branch.
 
 **Solution:** Go to Actions > "Manual Deploy to Production" > "Run workflow" and ensure **Branch: main** is selected in the dropdown.
 
 #### "Sing Portfolio / production" Environment Not Found
+
 **Problem:** Workflow fails because the production environment doesn't exist in GitHub.
 
 **Solution:**
+
 1. Go to your GitHub repository
 2. Navigate to **Settings** > **Environments**
 3. Click **New environment**
@@ -707,9 +762,11 @@ To require approval before production deployments:
 7. Click **Save protection rules**
 
 #### Production Deployment Fails with Environment Error
+
 **Problem:** Railway reports "environment not found" or similar error.
 
 **Solution:**
+
 1. Verify the production environment exists in Railway:
    - Go to Railway Dashboard
    - Select "Sing Portfolio" project
@@ -724,9 +781,11 @@ To require approval before production deployments:
    - Ensure they match your production requirements
 
 #### Permission Denied Error
+
 **Problem:** Deployment fails with permission or authentication error.
 
 **Solution:**
+
 1. Verify the Railway token has production deployment permissions:
    - Go to Railway Account Settings > Tokens
    - Check the token permissions

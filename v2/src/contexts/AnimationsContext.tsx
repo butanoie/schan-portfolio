@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Animations context for managing application animations state.
@@ -15,7 +15,7 @@ import {
   useState,
   useEffect,
   ReactNode,
-} from "react";
+} from 'react';
 
 /**
  * Context value shape for animations management.
@@ -42,13 +42,13 @@ const AnimationsContext = createContext<AnimationsContextType | undefined>(
 /**
  * Storage key for persisting animations preference.
  */
-const ANIMATIONS_STORAGE_KEY = "portfolio-animations-enabled";
+const ANIMATIONS_STORAGE_KEY = 'portfolio-animations-enabled';
 
 /**
  * Valid animation preference values stored as strings in localStorage.
  * Used for validating localStorage values to prevent invalid states.
  */
-const VALID_ANIMATION_VALUES = new Set<string>(["true", "false"]);
+const VALID_ANIMATION_VALUES = new Set<string>(['true', 'false']);
 
 /**
  * Provider component that manages animations state.
@@ -69,28 +69,34 @@ const VALID_ANIMATION_VALUES = new Set<string>(["true", "false"]);
  * </AnimationsContextProvider>
  * ```
  */
-export function AnimationsContextProvider({ children }: { children: ReactNode }) {
+export function AnimationsContextProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   // Initialize state with stored preference, defaulting to true (animations enabled)
-  const [animationsEnabled, setAnimationsEnabledState] = useState<boolean>(() => {
-    if (typeof window === "undefined") {
+  const [animationsEnabled, setAnimationsEnabledState] = useState<boolean>(
+    () => {
+      if (typeof window === 'undefined') {
+        return true;
+      }
+      const savedRaw = localStorage.getItem(ANIMATIONS_STORAGE_KEY);
+      // If nothing saved, default to true (animations enabled)
+      // If saved, validate it's a valid value before parsing
+      if (savedRaw === null) {
+        return true;
+      }
+      if (VALID_ANIMATION_VALUES.has(savedRaw)) {
+        return savedRaw === 'true';
+      }
+      // If invalid value found in localStorage, reset to default and log warning
+      console.warn(
+        `Invalid animations preference "${savedRaw}" found in localStorage. Resetting to default.`
+      );
+      localStorage.removeItem(ANIMATIONS_STORAGE_KEY);
       return true;
     }
-    const savedRaw = localStorage.getItem(ANIMATIONS_STORAGE_KEY);
-    // If nothing saved, default to true (animations enabled)
-    // If saved, validate it's a valid value before parsing
-    if (savedRaw === null) {
-      return true;
-    }
-    if (VALID_ANIMATION_VALUES.has(savedRaw)) {
-      return savedRaw === "true";
-    }
-    // If invalid value found in localStorage, reset to default and log warning
-    console.warn(
-      `Invalid animations preference "${savedRaw}" found in localStorage. Resetting to default.`
-    );
-    localStorage.removeItem(ANIMATIONS_STORAGE_KEY);
-    return true;
-  });
+  );
 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -111,12 +117,12 @@ export function AnimationsContextProvider({ children }: { children: ReactNode })
    */
   const setAnimationsEnabled = (enabled: boolean) => {
     setAnimationsEnabledState(enabled);
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     localStorage.setItem(ANIMATIONS_STORAGE_KEY, String(enabled));
 
     // Dispatch custom event for other listeners
-    const event = new CustomEvent("animationschange", {
+    const event = new CustomEvent('animationschange', {
       detail: { enabled },
     });
     window.dispatchEvent(event);
@@ -161,7 +167,7 @@ export function useAnimationsContext(): AnimationsContextType {
   const context = useContext(AnimationsContext);
   if (!context) {
     throw new Error(
-      "useAnimationsContext must be used within an AnimationsContextProvider"
+      'useAnimationsContext must be used within an AnimationsContextProvider'
     );
   }
   return context;

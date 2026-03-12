@@ -48,18 +48,19 @@ Translation service used for i18n workflows (see [Localization Architecture](../
 These servers are managed through Claude Code's plugin system. They are configured per-user in `~/.claude/settings.json` under `enabledPlugins` and are **not** part of the project repository.
 
 To install or manage plugins:
+
 1. Open Claude Code
 2. Use `/plugins` or the plugin marketplace to browse available plugins
 3. Enable/disable plugins as needed
 
 Recommended plugins for this project:
 
-| Plugin | Purpose | Used For |
-|--------|---------|----------|
-| `context7` | Library documentation search | Looking up Next.js, MUI, React docs |
-| `playwright` | Browser automation & testing | Visual testing, screenshots |
-| `posthog` | PostHog analytics queries | Querying analytics data, managing dashboards |
-| `github` | GitHub API access | PR management, issue tracking (optional) |
+| Plugin       | Purpose                      | Used For                                     |
+| ------------ | ---------------------------- | -------------------------------------------- |
+| `context7`   | Library documentation search | Looking up Next.js, MUI, React docs          |
+| `playwright` | Browser automation & testing | Visual testing, screenshots                  |
+| `posthog`    | PostHog analytics queries    | Querying analytics data, managing dashboards |
+| `github`     | GitHub API access            | PR management, issue tracking (optional)     |
 
 > **Note:** The `github` plugin is separate from the `GITHUB_TOKEN` environment variable. Claude Code can also access GitHub via the `gh` CLI if authenticated (see [Git Auth memory note](#troubleshooting)).
 
@@ -76,6 +77,7 @@ cp .env.example .env
 The DeepL MCP server requires `DEEPL_API_KEY` in the environment. Choose one approach:
 
 **Option A: direnv (recommended)**
+
 ```bash
 # Install direnv, then create .envrc:
 echo 'dotenv' > .envrc
@@ -83,11 +85,13 @@ direnv allow
 ```
 
 **Option B: Source `.env` before launching Claude Code**
+
 ```bash
 source .env && claude
 ```
 
 **Option C: Export in your shell profile**
+
 ```bash
 export DEEPL_API_KEY=your_deepl_key_here
 ```
@@ -99,6 +103,7 @@ Already configured — `.env` is in `.gitignore`.
 ### Step 4: Restart Claude Code
 
 Restart Claude Code to reload MCP configuration:
+
 1. Close Claude Code completely
 2. Reopen Claude Code
 3. The MCP servers defined in `.mcp.json` will start automatically
@@ -168,23 +173,25 @@ This allows `gh` to fall back to keyring-based authentication.
 ## Security Notes
 
 **NEVER:**
+
 - Commit `.env` file to git
 - Share your API keys or tokens
 - Paste tokens in code comments or documentation
 - Include secrets in logs or error messages
 
 **DO:**
+
 - Keep `.env` in `.gitignore` (already configured)
 - Regenerate tokens immediately if exposed
 - Use the free tiers where available (DeepL free: 500K chars/month)
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `.mcp.json` | Project-level MCP server configuration (uses `${VAR}` expansion for secrets) |
-| `.env` | Local secrets file (gitignored, never committed) |
-| `.env.example` | Template showing required variables |
+| File           | Purpose                                                                      |
+| -------------- | ---------------------------------------------------------------------------- |
+| `.mcp.json`    | Project-level MCP server configuration (uses `${VAR}` expansion for secrets) |
+| `.env`         | Local secrets file (gitignored, never committed)                             |
+| `.env.example` | Template showing required variables                                          |
 
 ## Related Documentation
 

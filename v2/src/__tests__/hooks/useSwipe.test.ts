@@ -11,7 +11,11 @@ import { useSwipe } from '../../hooks/useSwipe';
  * @param clientY - Y coordinate of touch point
  * @returns Mock touch event object
  */
-function createTouchEvent(type: 'touchstart' | 'touchend', clientX: number, clientY: number) {
+function createTouchEvent(
+  type: 'touchstart' | 'touchend',
+  clientX: number,
+  clientY: number
+) {
   const touches = type === 'touchstart' ? [{ clientX, clientY }] : [];
   const changedTouches = [{ clientX, clientY }];
 
@@ -41,7 +45,11 @@ describe('useSwipe', () => {
    * @param down - Mock function for down swipe callback
    * @returns Object containing cast callback functions with proper typing
    */
-  const castToCallbacks = (left: ReturnType<typeof vi.fn>, right: ReturnType<typeof vi.fn>, down: ReturnType<typeof vi.fn>) => ({
+  const castToCallbacks = (
+    left: ReturnType<typeof vi.fn>,
+    right: ReturnType<typeof vi.fn>,
+    down: ReturnType<typeof vi.fn>
+  ) => ({
     left: left as unknown as () => void,
     right: right as unknown as () => void,
     down: down as unknown as () => void,
@@ -49,17 +57,27 @@ describe('useSwipe', () => {
 
   describe('Basic swipe detection', () => {
     it('should detect left swipe with default threshold (50px)', () => {
-      const { left, right, down } = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
-      const { result } = renderHook(() =>
-        useSwipe(left, right, down)
+      const { left, right, down } = castToCallbacks(
+        onSwipeLeft,
+        onSwipeRight,
+        onSwipeDown
       );
+      const { result } = renderHook(() => useSwipe(left, right, down));
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -69,15 +87,22 @@ describe('useSwipe', () => {
 
     it('should detect right swipe with default threshold (50px)', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent('touchstart', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeRight).toHaveBeenCalledOnce();
@@ -87,15 +112,26 @@ describe('useSwipe', () => {
 
     it('should detect downward swipe with default threshold (50px)', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 150) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 150) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -107,15 +143,26 @@ describe('useSwipe', () => {
   describe('Threshold enforcement', () => {
     it('should not trigger swipe if distance is below threshold', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 90, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 90, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -125,26 +172,45 @@ describe('useSwipe', () => {
 
     it('should respect custom threshold configuration', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { threshold: 100 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { threshold: 100 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
 
       onSwipeLeft.mockClear();
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', -10, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', -10, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -152,16 +218,27 @@ describe('useSwipe', () => {
 
     it('should trigger swipe at threshold distance boundary', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { threshold: 50 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { threshold: 50 });
+        })()
       );
 
       // Test at exactly threshold distance (50px)
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -171,15 +248,26 @@ describe('useSwipe', () => {
   describe('Direction isolation', () => {
     it('should ignore diagonal swipes (left movement with vertical movement)', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 160) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 40, 160) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -188,15 +276,26 @@ describe('useSwipe', () => {
 
     it('should detect left swipe with minimal vertical movement', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 90) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 40, 90) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -205,15 +304,26 @@ describe('useSwipe', () => {
 
     it('should detect down swipe with minimal horizontal movement', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 90, 160) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 90, 160) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -224,15 +334,26 @@ describe('useSwipe', () => {
   describe('maxImages configuration', () => {
     it('should skip horizontal navigation when maxImages is 1', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 1 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { maxImages: 1 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -241,15 +362,26 @@ describe('useSwipe', () => {
 
     it('should skip horizontal navigation when maxImages is 0', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 0 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { maxImages: 0 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -258,15 +390,26 @@ describe('useSwipe', () => {
 
     it('should allow horizontal navigation when maxImages > 1', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 5 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { maxImages: 5 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -274,15 +417,26 @@ describe('useSwipe', () => {
 
     it('should allow down swipe regardless of maxImages setting', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 1 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { maxImages: 1 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 160) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 160) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -292,36 +446,59 @@ describe('useSwipe', () => {
   describe('Edge cases and special scenarios', () => {
     it('should handle multiple swipes in sequence', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 40, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
 
       onSwipeLeft.mockClear();
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 40, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent('touchstart', 40, 100) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeRight).toHaveBeenCalledOnce();
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 160) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 160) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();
@@ -329,11 +506,16 @@ describe('useSwipe', () => {
 
     it('should handle touch end without prior touch start', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -343,15 +525,26 @@ describe('useSwipe', () => {
 
     it('should handle upward swipe (ignored)', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 40) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 40) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeDown).not.toHaveBeenCalled();
@@ -361,15 +554,26 @@ describe('useSwipe', () => {
 
     it('should handle very large swipe distances', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', -500, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', -500, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -377,15 +581,26 @@ describe('useSwipe', () => {
 
     it('should handle zero movement (no swipe)', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 100, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -395,21 +610,34 @@ describe('useSwipe', () => {
 
     it('should reset state after touch end', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       onSwipeLeft.mockClear();
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 40, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 40, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -419,15 +647,26 @@ describe('useSwipe', () => {
   describe('Callback execution and independence', () => {
     it('should only call the triggered swipe callback', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -447,21 +686,37 @@ describe('useSwipe', () => {
       });
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 60, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 60, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', -20, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', -20, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
@@ -477,11 +732,19 @@ describe('useSwipe', () => {
       });
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 100, 100) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            100,
+            100
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 50, 100) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
@@ -491,7 +754,10 @@ describe('useSwipe', () => {
   describe('Touch event handler return values', () => {
     it('should return valid touch event handlers', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       expect(result.current).toHaveProperty('onTouchStart');
@@ -502,7 +768,10 @@ describe('useSwipe', () => {
 
     it('should return stable handler functions across re-renders', () => {
       const { result, rerender } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down);
+        })()
       );
 
       const initialHandlers = result.current;
@@ -517,26 +786,45 @@ describe('useSwipe', () => {
   describe('Practical usage scenarios', () => {
     it('should support image gallery navigation pattern', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 10 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { maxImages: 10 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            200,
+            300
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 140, 300) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 140, 300) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).toHaveBeenCalledOnce();
 
       onSwipeLeft.mockClear();
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 140, 300) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            140,
+            300
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 200, 300) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 200, 300) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeRight).toHaveBeenCalledOnce();
@@ -544,25 +832,44 @@ describe('useSwipe', () => {
 
     it('should support modal close pattern', () => {
       const { result } = renderHook(() =>
-        (() => { const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown); return useSwipe(c.left, c.right, c.down, { maxImages: 1 }); })()
+        (() => {
+          const c = castToCallbacks(onSwipeLeft, onSwipeRight, onSwipeDown);
+          return useSwipe(c.left, c.right, c.down, { maxImages: 1 });
+        })()
       );
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            200,
+            300
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 140, 300) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 140, 300) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeLeft).not.toHaveBeenCalled();
 
       act(() => {
-        result.current.onTouchStart(createTouchEvent('touchstart', 200, 300) as unknown as React.TouchEvent);
+        result.current.onTouchStart(
+          createTouchEvent(
+            'touchstart',
+            200,
+            300
+          ) as unknown as React.TouchEvent
+        );
       });
 
       act(() => {
-        result.current.onTouchEnd(createTouchEvent('touchend', 200, 400) as unknown as React.TouchEvent);
+        result.current.onTouchEnd(
+          createTouchEvent('touchend', 200, 400) as unknown as React.TouchEvent
+        );
       });
 
       expect(onSwipeDown).toHaveBeenCalledOnce();

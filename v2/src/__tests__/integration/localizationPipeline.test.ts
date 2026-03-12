@@ -135,10 +135,9 @@ describe('getLocalizedProjects() — cross-locale merge', () => {
     const titlesDiffer = en.some(
       (enProject, i) => enProject.title !== fr[i].title
     );
-    expect(
-      titlesDiffer,
-      'At least some EN and FR titles should differ'
-    ).toBe(true);
+    expect(titlesDiffer, 'At least some EN and FR titles should differ').toBe(
+      true
+    );
   });
 
   /**
@@ -187,10 +186,9 @@ describe('getLocalizedProjects() — cross-locale merge', () => {
       expect(enProject.tags).toEqual(frProject.tags);
       expect(enProject.altGrid).toBe(frProject.altGrid);
       expect(enProject.videos).toEqual(frProject.videos);
-      expect(
-        enProject.images.length,
-        `${enProject.id}: image count`
-      ).toBe(frProject.images.length);
+      expect(enProject.images.length, `${enProject.id}: image count`).toBe(
+        frProject.images.length
+      );
 
       for (let j = 0; j < enProject.images.length; j++) {
         expect(enProject.images[j].url).toBe(frProject.images[j].url);
@@ -302,11 +300,7 @@ describe('getLocalizedProject() and getLocalizedImageCaption()', () => {
    * captions from the locale JSON.
    */
   it('should return empty string from getLocalizedImageCaption for EN (short-circuit path)', async () => {
-    const caption = await getLocalizedImageCaption(
-      'collabspace',
-      0,
-      'en'
-    );
+    const caption = await getLocalizedImageCaption('collabspace', 0, 'en');
     // EN short-circuit reads from PROJECTS base data where caption is ''
     expect(caption).toBe('');
   });
@@ -316,11 +310,7 @@ describe('getLocalizedProject() and getLocalizedImageCaption()', () => {
    * the full locale data lookup path.
    */
   it('should return a translated FR caption from getLocalizedImageCaption', async () => {
-    const caption = await getLocalizedImageCaption(
-      'collabspace',
-      0,
-      'fr'
-    );
+    const caption = await getLocalizedImageCaption('collabspace', 0, 'fr');
     expect(caption).toBe('Collabspace - Analyses');
   });
 
@@ -329,16 +319,8 @@ describe('getLocalizedProject() and getLocalizedImageCaption()', () => {
    * for both EN (short-circuit) and FR (full lookup) code paths.
    */
   it('should return empty string for an out-of-bounds image index', async () => {
-    const enCaption = await getLocalizedImageCaption(
-      'collabspace',
-      9999,
-      'en'
-    );
-    const frCaption = await getLocalizedImageCaption(
-      'collabspace',
-      9999,
-      'fr'
-    );
+    const enCaption = await getLocalizedImageCaption('collabspace', 9999, 'en');
+    const frCaption = await getLocalizedImageCaption('collabspace', 9999, 'fr');
     expect(enCaption).toBe('');
     expect(frCaption).toBe('');
   });
@@ -379,13 +361,10 @@ describe('Localization Pipeline — unknown locale fallback', () => {
    */
   it('should fall back to base PROJECTS data when locale JSON does not exist', async () => {
     vi.resetModules();
-    const { getLocalizedProjects: freshGetLocalizedProjects } = await import(
-      '../../data/localization'
-    );
+    const { getLocalizedProjects: freshGetLocalizedProjects } =
+      await import('../../data/localization');
 
-    const projects = await freshGetLocalizedProjects(
-      'xx' as Locale
-    );
+    const projects = await freshGetLocalizedProjects('xx' as Locale);
 
     expect(projects).toHaveLength(PROJECTS.length);
     expect(projects[0].id).toBe(PROJECTS[0].id);
@@ -400,9 +379,8 @@ describe('Localization Pipeline — unknown locale fallback', () => {
    */
   it('should return base project data from getLocalizedProject for an unknown locale', async () => {
     vi.resetModules();
-    const { getLocalizedProject: freshGetLocalizedProject } = await import(
-      '../../data/localization'
-    );
+    const { getLocalizedProject: freshGetLocalizedProject } =
+      await import('../../data/localization');
 
     const project = await freshGetLocalizedProject(
       'collabspace',

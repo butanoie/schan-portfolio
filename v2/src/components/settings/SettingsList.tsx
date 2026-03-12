@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Box, Typography } from "@mui/material";
-import { ThemeSwitcher } from "./ThemeSwitcher";
-import { LanguageSwitcher } from "./LanguageSwitcher";
-import { AnimationsSwitcher } from "./AnimationsSwitcher";
-import { useI18n } from "@/src/hooks/useI18n";
+import { Box, Typography } from '@mui/material';
+import { ThemeSwitcher } from './ThemeSwitcher';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { AnimationsSwitcher } from './AnimationsSwitcher';
+import { useI18n } from '@/src/hooks/useI18n';
 
 /**
  * Configuration for each settings section displayed in the list.
@@ -22,9 +22,9 @@ interface SettingsSection {
  * so each consumer renders its own component tree.
  */
 const SETTINGS_SECTIONS: SettingsSection[] = [
-  { labelKey: "settings.theme", Component: ThemeSwitcher },
-  { labelKey: "settings.language", Component: LanguageSwitcher },
-  { labelKey: "settings.animations", Component: AnimationsSwitcher },
+  { labelKey: 'settings.theme', Component: ThemeSwitcher },
+  { labelKey: 'settings.language', Component: LanguageSwitcher },
+  { labelKey: 'settings.animations', Component: AnimationsSwitcher },
 ];
 
 /**
@@ -58,7 +58,9 @@ interface SettingsListProps {
  * <SettingsList separator={<Divider sx={{ my: 2 }} />} />
  * ```
  */
-export function SettingsList({ separator }: SettingsListProps): React.ReactNode {
+export function SettingsList({
+  separator,
+}: SettingsListProps): React.ReactNode {
   const { t } = useI18n();
 
   return (
@@ -66,12 +68,15 @@ export function SettingsList({ separator }: SettingsListProps): React.ReactNode 
       {SETTINGS_SECTIONS.map((section, index) => {
         const isLast = index === SETTINGS_SECTIONS.length - 1;
         return (
-          <Box key={section.labelKey} sx={!separator && !isLast ? { mb: 2 } : undefined}>
+          <Box
+            key={section.labelKey}
+            sx={!separator && !isLast ? { mb: 2 } : undefined}
+          >
             <Typography
               variant="body2"
               sx={{
                 mb: 1,
-                fontSize: "0.875rem",
+                fontSize: '0.875rem',
                 opacity: 0.7,
               }}
             >

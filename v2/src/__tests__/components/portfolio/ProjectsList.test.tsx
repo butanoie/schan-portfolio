@@ -11,9 +11,8 @@ import ThemeProvider from '../../../components/ThemeProvider';
  * Mock useMediaQuery for consistent testing
  */
 vi.mock('@mui/material', async () => {
-  const actual = await vi.importActual<typeof import('@mui/material')>(
-    '@mui/material'
-  );
+  const actual =
+    await vi.importActual<typeof import('@mui/material')>('@mui/material');
   return {
     ...actual,
     useMediaQuery: vi.fn(() => false),
@@ -88,7 +87,9 @@ describe('ProjectsList', () => {
    * Test: Component renders without crashing
    */
   it('renders without crashing', () => {
-    const { container } = render(<ProjectsList projects={[]} />, { wrapper: Wrapper });
+    const { container } = render(<ProjectsList projects={[]} />, {
+      wrapper: Wrapper,
+    });
     expect(container).toBeInTheDocument();
   });
 
@@ -96,7 +97,9 @@ describe('ProjectsList', () => {
    * Test: Renders empty list with no projects
    */
   it('renders empty list with no projects', () => {
-    const { container } = render(<ProjectsList projects={[]} />, { wrapper: Wrapper });
+    const { container } = render(<ProjectsList projects={[]} />, {
+      wrapper: Wrapper,
+    });
     const box = container.querySelector('div');
     expect(box).toBeInTheDocument();
   });
@@ -163,7 +166,9 @@ describe('ProjectsList', () => {
       createMockProject('first', 'First Project'),
       createMockProject('second', 'Second Project'),
     ];
-    const { container } = render(<ProjectsList projects={projects} />, { wrapper: Wrapper });
+    const { container } = render(<ProjectsList projects={projects} />, {
+      wrapper: Wrapper,
+    });
 
     const headings = container.querySelectorAll('h2');
     expect(headings[0]).toHaveTextContent('Third Project');
@@ -179,7 +184,9 @@ describe('ProjectsList', () => {
       createMockProject('project-1', 'Project One'),
       createMockProject('project-2', 'Project Two'),
     ];
-    const { container } = render(<ProjectsList projects={projects} />, { wrapper: Wrapper });
+    const { container } = render(<ProjectsList projects={projects} />, {
+      wrapper: Wrapper,
+    });
 
     const sections = container.querySelectorAll('section');
     expect(sections.length).toBe(2);
@@ -195,7 +202,9 @@ describe('ProjectsList', () => {
     const project2 = createMockProject('p2', 'Project Two');
     project2.tags = ['Vue', 'JavaScript', 'Tailwind'];
 
-    render(<ProjectsList projects={[project1, project2]} />, { wrapper: Wrapper });
+    render(<ProjectsList projects={[project1, project2]} />, {
+      wrapper: Wrapper,
+    });
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('Vue')).toBeInTheDocument();
     expect(screen.getByText('Tailwind')).toBeInTheDocument();
@@ -205,7 +214,10 @@ describe('ProjectsList', () => {
    * Test: Projects with videos render video embeds
    */
   it('projects with videos render video embeds', () => {
-    const projectWithVideo = createMockProject('video-project', 'Video Project');
+    const projectWithVideo = createMockProject(
+      'video-project',
+      'Video Project'
+    );
     projectWithVideo.videos = [
       {
         type: 'vimeo',
@@ -215,7 +227,10 @@ describe('ProjectsList', () => {
       },
     ];
 
-    const { container } = render(<ProjectsList projects={[projectWithVideo]} />, { wrapper: Wrapper });
+    const { container } = render(
+      <ProjectsList projects={[projectWithVideo]} />,
+      { wrapper: Wrapper }
+    );
     // Should have iframe for video
     expect(container.querySelector('iframe')).toBeInTheDocument();
   });
@@ -236,7 +251,9 @@ describe('ProjectsList', () => {
       caption: `Image ${i + 1}`,
     }));
 
-    render(<ProjectsList projects={[projectFewImages, projectManyImages]} />, { wrapper: Wrapper });
+    render(<ProjectsList projects={[projectFewImages, projectManyImages]} />, {
+      wrapper: Wrapper,
+    });
     expect(screen.getByText('Few Images')).toBeInTheDocument();
     expect(screen.getByText('Many Images')).toBeInTheDocument();
   });
@@ -258,7 +275,10 @@ describe('ProjectsList', () => {
     longProject.desc = [
       'This is a very long description with multiple paragraphs.',
       'It contains extensive information about the project and its features.',
-      ...Array.from({ length: 10 }, (_, i) => `Paragraph ${i + 1}: Lorem ipsum dolor sit amet.`),
+      ...Array.from(
+        { length: 10 },
+        (_, i) => `Paragraph ${i + 1}: Lorem ipsum dolor sit amet.`
+      ),
     ];
     render(<ProjectsList projects={[longProject]} />, { wrapper: Wrapper });
     expect(screen.getByText('Long Project')).toBeInTheDocument();
@@ -286,7 +306,9 @@ describe('ProjectsList', () => {
       createMockProject('project-1', 'Project One'),
       createMockProject('project-2', 'Project Two'),
     ];
-    const { container } = render(<ProjectsList projects={projects} />, { wrapper: Wrapper });
+    const { container } = render(<ProjectsList projects={projects} />, {
+      wrapper: Wrapper,
+    });
 
     // Each ProjectDetail has mb: 8 (64px) and a divider
     const dividers = container.querySelectorAll('hr');
@@ -303,7 +325,9 @@ describe('ProjectsList', () => {
     const altProject = createMockProject('alt', 'Alternate Grid');
     altProject.altGrid = true;
 
-    render(<ProjectsList projects={[regularProject, altProject]} />, { wrapper: Wrapper });
+    render(<ProjectsList projects={[regularProject, altProject]} />, {
+      wrapper: Wrapper,
+    });
     expect(screen.getByText('Regular Grid')).toBeInTheDocument();
     expect(screen.getByText('Alternate Grid')).toBeInTheDocument();
   });

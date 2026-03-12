@@ -224,10 +224,7 @@ describe('LoadMoreButton', () => {
         />
       );
       const button = screen.getByRole('button');
-      expect(button).toHaveAttribute(
-        'aria-label',
-        'Load 13 more projects'
-      );
+      expect(button).toHaveAttribute('aria-label', 'Load 13 more projects');
     });
 
     it('should have aria-label when disabled', () => {

@@ -11,7 +11,7 @@
  * @see https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#create-or-update-your-instrumentationts-file
  */
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 /**
  * Registers Sentry for the active Next.js server runtime.
@@ -20,11 +20,11 @@ import * as Sentry from "@sentry/nextjs";
  * `process.env.NEXT_RUNTIME`. Called once by Next.js at server startup.
  */
 export async function register(): Promise<void> {
-  if (process.env.NEXT_RUNTIME === "nodejs") {
-    await import("./sentry.server.config");
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    await import('./sentry.server.config');
   }
-  if (process.env.NEXT_RUNTIME === "edge") {
-    await import("./sentry.edge.config");
+  if (process.env.NEXT_RUNTIME === 'edge') {
+    await import('./sentry.edge.config');
   }
 }
 

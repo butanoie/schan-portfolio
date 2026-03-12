@@ -1,20 +1,16 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import "./print.css";
-import { openSans, oswald, gochiHand } from "@/src/lib/fonts";
-import { ThemeContextProvider } from "@/src/contexts/ThemeContext";
-import { AnimationsContextProvider } from "@/src/contexts/AnimationsContext";
-import ThemeProvider from "@/src/components/ThemeProvider";
-import MainLayout from "@/src/components/common/MainLayout";
-import { LocaleProvider } from "@/src/components/i18n/LocaleProvider";
-import LocaleProviderErrorFallback from "@/src/components/i18n/LocaleProviderErrorFallback";
-import PostHogProvider from "@/src/components/PostHogProvider";
-import {
-  SITE_METADATA,
-  SITE_URL,
-  OG_IMAGE,
-} from "@/src/constants/seo";
-import { getPersonSchema } from "@/src/lib/seo";
+import type { Metadata } from 'next';
+import './globals.css';
+import './print.css';
+import { openSans, oswald, gochiHand } from '@/src/lib/fonts';
+import { ThemeContextProvider } from '@/src/contexts/ThemeContext';
+import { AnimationsContextProvider } from '@/src/contexts/AnimationsContext';
+import ThemeProvider from '@/src/components/ThemeProvider';
+import MainLayout from '@/src/components/common/MainLayout';
+import { LocaleProvider } from '@/src/components/i18n/LocaleProvider';
+import LocaleProviderErrorFallback from '@/src/components/i18n/LocaleProviderErrorFallback';
+import PostHogProvider from '@/src/components/PostHogProvider';
+import { SITE_METADATA, SITE_URL, OG_IMAGE } from '@/src/constants/seo';
+import { getPersonSchema } from '@/src/lib/seo';
 
 /**
  * Comprehensive metadata export for the entire application.
@@ -36,12 +32,12 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
-    type: "website",
-    locale: "en_US",
+    type: 'website',
+    locale: 'en_US',
     url: SITE_URL,
     siteName: SITE_METADATA.title,
     title: SITE_METADATA.title,

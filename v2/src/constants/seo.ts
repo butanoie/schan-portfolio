@@ -14,23 +14,23 @@
 /**
  * Base URL for the site - used for canonical URLs and absolute URLs in metadata
  */
-export const SITE_URL = "https://portfolio.singchan.com";
+export const SITE_URL = 'https://portfolio.singchan.com';
 
 /**
  * Author information used in Person schema and throughout metadata
  */
 export const AUTHOR = {
-  name: "Sing Chan",
-  jobTitle: "Technical Product Leader & User Experience Architect",
-  tagline: "Creating accessible, inclusive digital experiences",
+  name: 'Sing Chan',
+  jobTitle: 'Technical Product Leader & User Experience Architect',
+  tagline: 'Creating accessible, inclusive digital experiences',
 } as const;
 
 /**
  * Social media links for the author
  */
 export const SOCIAL_LINKS = {
-  github: "https://github.com/butanoie",
-  linkedin: "https://linkedin.com/in/singchandesign",
+  github: 'https://github.com/butanoie',
+  linkedin: 'https://linkedin.com/in/singchandesign',
 } as const;
 
 /**
@@ -39,16 +39,16 @@ export const SOCIAL_LINKS = {
 export const SITE_METADATA = {
   title: "Sing Chan's Portfolio",
   description:
-    "Portfolio of Sing Chan - Technical Product Leader & User Experience Architect",
+    'Portfolio of Sing Chan - Technical Product Leader & User Experience Architect',
   keywords: [
-    "product designer",
-    "developer",
-    "accessibility",
-    "inclusive design",
-    "web design",
-    "react",
-    "typescript",
-    "portfolio",
+    'product designer',
+    'developer',
+    'accessibility',
+    'inclusive design',
+    'web design',
+    'react',
+    'typescript',
+    'portfolio',
   ],
 };
 
@@ -58,54 +58,55 @@ export const SITE_METADATA = {
  */
 export const PAGE_METADATA = {
   home: {
-    title: "Sing Chan's Portfolio - Technical Product Leader & User Experience Architect",
+    title:
+      "Sing Chan's Portfolio - Technical Product Leader & User Experience Architect",
     description:
-      "Portfolio of Sing Chan - creating accessible, inclusive digital experiences with design and development",
+      'Portfolio of Sing Chan - creating accessible, inclusive digital experiences with design and development',
     keywords: [
       ...SITE_METADATA.keywords,
-      "portfolio",
-      "projects",
-      "design portfolio",
+      'portfolio',
+      'projects',
+      'design portfolio',
     ],
   },
   resume: {
     title: "Resume - Sing Chan's Portfolio",
     description:
-      "Professional resume and experience of Sing Chan, Technical Product Leader & User Experience Architect",
+      'Professional resume and experience of Sing Chan, Technical Product Leader & User Experience Architect',
     keywords: [
       ...SITE_METADATA.keywords,
-      "resume",
-      "experience",
-      "skills",
-      "work experience",
+      'resume',
+      'experience',
+      'skills',
+      'work experience',
     ],
   },
   colophon: {
     title: "Colophon - Sing Chan's Portfolio",
     description:
-      "Technical details about how this portfolio website was built, including technologies, tools, and design decisions",
+      'Technical details about how this portfolio website was built, including technologies, tools, and design decisions',
     keywords: [
       ...SITE_METADATA.keywords,
-      "colophon",
-      "technology",
-      "tools",
-      "next.js",
-      "react",
-      "web technologies",
+      'colophon',
+      'technology',
+      'tools',
+      'next.js',
+      'react',
+      'web technologies',
     ],
   },
   samples: {
     title: "Writing Samples - Sing Chan's Portfolio",
     description:
-      "Professional writing samples and documentation artifacts from Sing Chan, including product strategy, agile artifacts, UX design, and technical documentation",
+      'Professional writing samples and documentation artifacts from Sing Chan, including product strategy, agile artifacts, UX design, and technical documentation',
     keywords: [
       ...SITE_METADATA.keywords,
-      "writing samples",
-      "documentation",
-      "product strategy",
-      "agile artifacts",
-      "technical writing",
-      "UX documentation",
+      'writing samples',
+      'documentation',
+      'product strategy',
+      'agile artifacts',
+      'technical writing',
+      'UX documentation',
     ],
   },
 };
@@ -118,6 +119,6 @@ export const OG_IMAGE = {
   url: `${SITE_URL}/og-image.png`,
   width: 1200,
   height: 630,
-  type: "image/png",
+  type: 'image/png',
   alt: "Sing Chan's Portfolio",
 } as const;

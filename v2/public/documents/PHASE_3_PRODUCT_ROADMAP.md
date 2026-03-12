@@ -83,7 +83,12 @@ Show full project content inline with layout variants based on viewport, video p
 **Description:** Implement layout selection returning one of 5 variants.
 
 ```tsx
-type LayoutVariant = 'wide-video' | 'wide-regular' | 'wide-alternate' | 'narrow' | 'narrow-video';
+type LayoutVariant =
+  | 'wide-video'
+  | 'wide-regular'
+  | 'wide-alternate'
+  | 'narrow'
+  | 'narrow-video';
 
 function getLayoutVariant(project: Project, isMobile: boolean): LayoutVariant {
   if (isMobile) return project.videos.length > 0 ? 'narrow-video' : 'narrow';
@@ -684,11 +689,11 @@ All PBIs must meet:
 
 ## Phase 3 Actuals
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Components Created | ~15 | 13+ |
-| Unit Tests | 100+ | 125+ |
-| Test Coverage | 80%+ | 85%+ |
-| TypeScript Errors | 0 | 0 |
-| ESLint Violations | 0 | 0 |
-| WCAG Compliance | 2.2 AA | Achieved |
+| Metric             | Target | Actual   |
+| ------------------ | ------ | -------- |
+| Components Created | ~15    | 13+      |
+| Unit Tests         | 100+   | 125+     |
+| Test Coverage      | 80%+   | 85%+     |
+| TypeScript Errors  | 0      | 0        |
+| ESLint Violations  | 0      | 0        |
+| WCAG Compliance    | 2.2 AA | Achieved |

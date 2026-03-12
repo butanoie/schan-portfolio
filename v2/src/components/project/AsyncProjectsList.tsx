@@ -213,7 +213,8 @@ export function AsyncProjectsList({
             borderRadius: 1,
           }}
         >
-          {t('asyncProjectsList.loadingError', { ns: 'components' })}: {error.message}
+          {t('asyncProjectsList.loadingError', { ns: 'components' })}:{' '}
+          {error.message}
         </Box>
       )}
     </ErrorBoundary>
@@ -225,7 +226,9 @@ export function AsyncProjectsList({
    */
   if (shouldShowLoadMore) {
     return (
-      <ProjectLoadingProvider value={contextValue}>{content}</ProjectLoadingProvider>
+      <ProjectLoadingProvider value={contextValue}>
+        {content}
+      </ProjectLoadingProvider>
     );
   }
 

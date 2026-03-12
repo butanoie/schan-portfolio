@@ -21,7 +21,9 @@ import { LocaleProvider } from '@/src/components/i18n/LocaleProvider';
  */
 function createWrapper(initialLocale: 'en' | 'fr' = 'en') {
   return function Wrapper({ children }: { children: ReactNode }) {
-    return <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>;
+    return (
+      <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>
+    );
   };
 }
 
@@ -62,7 +64,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should not render when locale is English', () => {
       const Wrapper = createWrapper('en');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const alert = container.querySelector('[role="alert"]');
       expect(alert).not.toBeInTheDocument();
@@ -70,7 +74,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should return null when locale is not French', () => {
       const Wrapper = createWrapper('en');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       // Container should be empty
       expect(container.firstChild).toBeNull();
@@ -98,7 +104,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should display localized strings when French is active', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const alert = container.querySelector('[role="alert"]');
       // Alert should contain strong tag (title) and div (message)
@@ -113,7 +121,9 @@ describe('FrenchTranslationAlert', () => {
   describe('Styling', () => {
     it('should render with outlined info alert variant', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const alert = container.querySelector('[role="alert"]');
       // MUI Alert with variant="outlined" and severity="info"
@@ -122,7 +132,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should be properly contained within maxWidth container', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const muiContainer = container.querySelector('[class*="Container"]');
       expect(muiContainer).toBeInTheDocument();
@@ -130,7 +142,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should have proper spacing', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       // Should have padding for visual spacing
       const muiContainer = container.querySelector('[class*="Container"]');
@@ -158,7 +172,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should have semantic HTML structure', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const alert = container.querySelector('[role="alert"]');
       // Should contain strong for title and div for message
@@ -167,7 +183,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should be visually distinguishable with info severity', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const alert = container.querySelector('[role="alert"]');
       // Should have info styling (MUI applies severity styles)
@@ -179,7 +197,9 @@ describe('FrenchTranslationAlert', () => {
   describe('Locale-based Visibility', () => {
     it('should not render for English locale', () => {
       const Wrapper = createWrapper('en');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       expect(container.firstChild).toBeNull();
     });
@@ -215,7 +235,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should display when inside MainLayout', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       // Alert component should be a direct child of a container
       const muiContainer = container.querySelector('[class*="Container"]');
@@ -243,7 +265,9 @@ describe('FrenchTranslationAlert', () => {
   describe('Edge Cases', () => {
     it('should handle rapid locale switches gracefully', () => {
       const Wrapper = createWrapper('en');
-      const { rerender } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { rerender } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       // Switch locales multiple times
       const FrenchWrapper = createWrapper('fr');
@@ -266,7 +290,9 @@ describe('FrenchTranslationAlert', () => {
 
     it('should display only once per French locale', () => {
       const Wrapper = createWrapper('fr');
-      const { container } = render(<FrenchTranslationAlert />, { wrapper: Wrapper });
+      const { container } = render(<FrenchTranslationAlert />, {
+        wrapper: Wrapper,
+      });
 
       const alerts = container.querySelectorAll('[role="alert"]');
       // Should only have one alert

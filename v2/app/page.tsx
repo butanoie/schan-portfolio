@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { fetchProjects } from "../src/lib/projectDataServer";
-import { AsyncProjectsList } from "../src/components/project/AsyncProjectsList";
-import { LocalizedPortfolioDeck } from "../src/components/i18n/LocalizedPortfolioDeck";
-import { Container } from "@mui/material";
-import { DEFAULT_LOCALE } from "@/src/lib/i18n-constants";
-import { PAGE_METADATA, SITE_URL, OG_IMAGE } from "@/src/constants/seo";
+import type { Metadata } from 'next';
+import { fetchProjects } from '../src/lib/projectDataServer';
+import { AsyncProjectsList } from '../src/components/project/AsyncProjectsList';
+import { LocalizedPortfolioDeck } from '../src/components/i18n/LocalizedPortfolioDeck';
+import { Container } from '@mui/material';
+import { DEFAULT_LOCALE } from '@/src/lib/i18n-constants';
+import { PAGE_METADATA, SITE_URL, OG_IMAGE } from '@/src/constants/seo';
 
 /**
  * Forces static generation for the home page.
  * Fails the build if any dynamic API (cookies, headers, searchParams)
  * is accidentally introduced, preventing silent SSG regression.
  */
-export const dynamic = "error";
+export const dynamic = 'error';
 
 /**
  * Metadata for the home page.
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: PAGE_METADATA.home.title,
     description: PAGE_METADATA.home.description,
     url: SITE_URL,
-    type: "website",
+    type: 'website',
     images: [
       {
         url: OG_IMAGE.url,

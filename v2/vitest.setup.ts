@@ -168,39 +168,37 @@ beforeAll(() => {
    * @param contextId - The context type (e.g., "2d")
    * @returns A mock canvas context object with common drawing methods
    */
-  HTMLCanvasElement.prototype.getContext = vi.fn(
-    (contextId: string) => {
-      if (contextId === '2d') {
-        return {
-          fillRect: vi.fn(),
-          clearRect: vi.fn(),
-          getImageData: vi.fn(() => ({ data: [] })),
-          putImageData: vi.fn(),
-          createImageData: vi.fn(() => ({ data: [] })),
-          setTransform: vi.fn(),
-          drawImage: vi.fn(),
-          save: vi.fn(),
-          fillText: vi.fn(),
-          restore: vi.fn(),
-          beginPath: vi.fn(),
-          moveTo: vi.fn(),
-          lineTo: vi.fn(),
-          closePath: vi.fn(),
-          stroke: vi.fn(),
-          translate: vi.fn(),
-          scale: vi.fn(),
-          rotate: vi.fn(),
-          arc: vi.fn(),
-          fill: vi.fn(),
-          measureText: vi.fn(() => ({ width: 0 })),
-          transform: vi.fn(),
-          rect: vi.fn(),
-          clip: vi.fn(),
-        } as unknown as CanvasRenderingContext2D;
-      }
-      return null;
+  HTMLCanvasElement.prototype.getContext = vi.fn((contextId: string) => {
+    if (contextId === '2d') {
+      return {
+        fillRect: vi.fn(),
+        clearRect: vi.fn(),
+        getImageData: vi.fn(() => ({ data: [] })),
+        putImageData: vi.fn(),
+        createImageData: vi.fn(() => ({ data: [] })),
+        setTransform: vi.fn(),
+        drawImage: vi.fn(),
+        save: vi.fn(),
+        fillText: vi.fn(),
+        restore: vi.fn(),
+        beginPath: vi.fn(),
+        moveTo: vi.fn(),
+        lineTo: vi.fn(),
+        closePath: vi.fn(),
+        stroke: vi.fn(),
+        translate: vi.fn(),
+        scale: vi.fn(),
+        rotate: vi.fn(),
+        arc: vi.fn(),
+        fill: vi.fn(),
+        measureText: vi.fn(() => ({ width: 0 })),
+        transform: vi.fn(),
+        rect: vi.fn(),
+        clip: vi.fn(),
+      } as unknown as CanvasRenderingContext2D;
     }
-  ) as unknown as HTMLCanvasElement['getContext'];
+    return null;
+  }) as unknown as HTMLCanvasElement['getContext'];
 });
 
 /**
@@ -368,7 +366,9 @@ Object.defineProperty(window, 'localStorage', {
    */
   const shouldSuppressWarning = (message: unknown) => {
     const text = String(message);
-    return text.includes('Using kebab-case for css properties in objects is not supported');
+    return text.includes(
+      'Using kebab-case for css properties in objects is not supported'
+    );
   };
 
   const originalWarn = console.warn;

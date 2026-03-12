@@ -3,7 +3,7 @@
  * Defines the structure for technologies, design philosophy, and Buta story.
  */
 
-import { PageDeckData } from "./pageDeck";
+import { PageDeckData } from './pageDeck';
 
 /**
  * Individual technology entry with details.

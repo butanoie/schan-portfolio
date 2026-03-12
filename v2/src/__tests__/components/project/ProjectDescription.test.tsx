@@ -22,7 +22,9 @@ describe('ProjectDescription', () => {
    */
   it('renders without crashing with multiple paragraphs', () => {
     const { container } = render(
-      <ProjectDescription paragraphs={["First paragraph", "Second paragraph"]} />
+      <ProjectDescription
+        paragraphs={['First paragraph', 'Second paragraph']}
+      />
     );
     expect(container).toBeInTheDocument();
   });
@@ -185,7 +187,7 @@ describe('ProjectDescription', () => {
   it('handles complex nested HTML in paragraphs', () => {
     const paragraphs = [
       'This is a <strong>complex</strong> description with <a href="/link">multiple</a> types of <em>formatting</em>.',
-      'Second paragraph with <ul><li>Feature 1</li><li>Feature 2</li></ul>'
+      'Second paragraph with <ul><li>Feature 1</li><li>Feature 2</li></ul>',
     ];
     render(<ProjectDescription paragraphs={paragraphs} />);
     expect(screen.getByText(/complex/)).toBeInTheDocument();
@@ -210,7 +212,9 @@ describe('ProjectDescription', () => {
   it('renders tags in floated layout', () => {
     const paragraphs = 'Test description';
     const tags = ['React', 'TypeScript', 'MUI'];
-    render(<ProjectDescription paragraphs={paragraphs} tags={tags} floatTags />);
+    render(
+      <ProjectDescription paragraphs={paragraphs} tags={tags} floatTags />
+    );
     tags.forEach((tag) => {
       expect(screen.getByText(tag)).toBeInTheDocument();
     });
@@ -222,7 +226,9 @@ describe('ProjectDescription', () => {
   it('works without tags', () => {
     const paragraphs = 'Test description without tags';
     render(<ProjectDescription paragraphs={paragraphs} />);
-    expect(screen.getByText('Test description without tags')).toBeInTheDocument();
+    expect(
+      screen.getByText('Test description without tags')
+    ).toBeInTheDocument();
   });
 
   /**
@@ -231,7 +237,9 @@ describe('ProjectDescription', () => {
   it('works with empty tags array', () => {
     const paragraphs = 'Test description with empty tags';
     render(<ProjectDescription paragraphs={paragraphs} tags={[]} />);
-    expect(screen.getByText('Test description with empty tags')).toBeInTheDocument();
+    expect(
+      screen.getByText('Test description with empty tags')
+    ).toBeInTheDocument();
   });
 
   /**
@@ -241,7 +249,9 @@ describe('ProjectDescription', () => {
     const paragraphs = 'This is a project about building web apps';
     const tags = ['Frontend', 'JavaScript'];
     render(<ProjectDescription paragraphs={paragraphs} tags={tags} />);
-    expect(screen.getByText('This is a project about building web apps')).toBeInTheDocument();
+    expect(
+      screen.getByText('This is a project about building web apps')
+    ).toBeInTheDocument();
     expect(screen.getByText('Frontend')).toBeInTheDocument();
     expect(screen.getByText('JavaScript')).toBeInTheDocument();
   });
@@ -252,7 +262,9 @@ describe('ProjectDescription', () => {
   it('floatTags defaults to false when not specified', () => {
     const paragraphs = 'Test description';
     const tags = ['React'];
-    const { container } = render(<ProjectDescription paragraphs={paragraphs} tags={tags} />);
+    const { container } = render(
+      <ProjectDescription paragraphs={paragraphs} tags={tags} />
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -263,7 +275,9 @@ describe('ProjectDescription', () => {
     const paragraphs = 'Test description';
     const tags = ['React', 'TypeScript'];
     const circa = '2022-2023';
-    render(<ProjectDescription paragraphs={paragraphs} tags={tags} circa={circa} />);
+    render(
+      <ProjectDescription paragraphs={paragraphs} tags={tags} circa={circa} />
+    );
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
     expect(screen.getByText('2022-2023')).toBeInTheDocument();
@@ -288,7 +302,12 @@ describe('ProjectDescription', () => {
     const tags = ['React'];
     const circa = '2022-2023';
     render(
-      <ProjectDescription paragraphs={paragraphs} tags={tags} circa={circa} floatTags />
+      <ProjectDescription
+        paragraphs={paragraphs}
+        tags={tags}
+        circa={circa}
+        floatTags
+      />
     );
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('2022-2023')).toBeInTheDocument();
@@ -299,7 +318,9 @@ describe('ProjectDescription', () => {
    */
   it('handles malformed HTML gracefully', () => {
     const malformedParagraph = 'Unclosed paragraph<p>Another paragraph</p>';
-    const { container } = render(<ProjectDescription paragraphs={malformedParagraph} />);
+    const { container } = render(
+      <ProjectDescription paragraphs={malformedParagraph} />
+    );
     expect(container).toBeInTheDocument();
     expect(screen.getByText(/Unclosed paragraph/)).toBeInTheDocument();
   });
@@ -309,7 +330,9 @@ describe('ProjectDescription', () => {
    */
   it('handles very long content without crashing', () => {
     const longContent = 'Lorem ipsum dolor sit amet. '.repeat(500);
-    const { container } = render(<ProjectDescription paragraphs={longContent} />);
+    const { container } = render(
+      <ProjectDescription paragraphs={longContent} />
+    );
     expect(container).toBeInTheDocument();
     expect(screen.getByText(/Lorem ipsum/)).toBeInTheDocument();
   });
@@ -337,7 +360,9 @@ describe('ProjectDescription', () => {
    */
   it('handles whitespace-only paragraph', () => {
     const paragraphs = ['   '];
-    const { container } = render(<ProjectDescription paragraphs={paragraphs} />);
+    const { container } = render(
+      <ProjectDescription paragraphs={paragraphs} />
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -346,7 +371,9 @@ describe('ProjectDescription', () => {
    */
   it('handles multiple empty paragraphs', () => {
     const paragraphs = ['', '', ''];
-    const { container } = render(<ProjectDescription paragraphs={paragraphs} />);
+    const { container } = render(
+      <ProjectDescription paragraphs={paragraphs} />
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -357,7 +384,7 @@ describe('ProjectDescription', () => {
     const paragraphs = [
       'First paragraph with <strong>bold text</strong>',
       'Second paragraph with <a href="#">a link</a>',
-      'Third paragraph plain text'
+      'Third paragraph plain text',
     ];
     render(<ProjectDescription paragraphs={paragraphs} />);
     expect(screen.getByText('First paragraph with')).toBeInTheDocument();

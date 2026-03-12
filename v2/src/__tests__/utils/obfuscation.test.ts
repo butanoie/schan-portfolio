@@ -250,7 +250,8 @@ describe('rot13', () => {
   });
 
   it('should handle mailto URI with encoded parameters', () => {
-    const mailtoUri = 'mailto:sing@singchan.com?subject=Contact via Portfolio Site';
+    const mailtoUri =
+      'mailto:sing@singchan.com?subject=Contact via Portfolio Site';
     const obfuscated = rot13(mailtoUri);
 
     // Should be reversible

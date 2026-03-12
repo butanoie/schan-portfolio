@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import { Container } from "@mui/material";
-import SamplesContent from "../../src/components/samples/SamplesContent";
-import { PAGE_METADATA, SITE_URL, OG_IMAGE } from "@/src/constants/seo";
+import type { Metadata } from 'next';
+import { Container } from '@mui/material';
+import SamplesContent from '../../src/components/samples/SamplesContent';
+import { PAGE_METADATA, SITE_URL, OG_IMAGE } from '@/src/constants/seo';
 
 /**
  * Metadata for the Writing Samples page.
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: PAGE_METADATA.samples.title,
     description: PAGE_METADATA.samples.description,
     url: `${SITE_URL}/samples`,
-    type: "website",
+    type: 'website',
     images: [
       {
         url: OG_IMAGE.url,

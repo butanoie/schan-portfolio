@@ -61,7 +61,9 @@ export function FrenchTranslationAlert(): React.ReactNode {
           },
         }}
       >
-        <strong>{t('frenchTranslationAlert.title', { ns: 'components' })}</strong>
+        <strong>
+          {t('frenchTranslationAlert.title', { ns: 'components' })}
+        </strong>
         <div>{t('frenchTranslationAlert.message', { ns: 'components' })}</div>
       </Alert>
     </Container>

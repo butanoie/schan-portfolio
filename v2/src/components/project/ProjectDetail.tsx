@@ -1,12 +1,18 @@
 'use client';
 
 import type { Project } from '../../types';
-import { useMediaQuery, useTheme, Box, Divider, Typography } from '@mui/material';
+import {
+  useMediaQuery,
+  useTheme,
+  Box,
+  Divider,
+  Typography,
+} from '@mui/material';
 import { ProjectDescription } from './ProjectDescription';
 import { VideoEmbed } from './VideoEmbed';
 import { ProjectGallery } from './ProjectGallery';
-import { usePalette } from "../../hooks/usePalette";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
+import { usePalette } from '../../hooks/usePalette';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
 
 /**
  * Props for the ProjectDetail component.
@@ -58,10 +64,7 @@ type LayoutVariant =
  * getLayoutVariant({ videos: [], altGrid: true }, true)
  * // Returns: 'narrow'
  */
-function getLayoutVariant(
-  project: Project,
-  isMobile: boolean
-): LayoutVariant {
+function getLayoutVariant(project: Project, isMobile: boolean): LayoutVariant {
   const hasVideo = project.videos && project.videos.length > 0;
 
   if (isMobile) {
@@ -125,22 +128,22 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   return (
     <Box component="section" className="project-detail">
       {/* Divider between projects */}
-      <Divider sx={{ mt: 6, mb: 4, mx: {xs:0, sm: 4, md: 8} }} />
+      <Divider sx={{ mt: 6, mb: 4, mx: { xs: 0, sm: 4, md: 8 } }} />
 
       {/* Project title always full width */}
-    <Typography
-      component="h2"
-      sx={{
-        fontFamily: FONT_FAMILY_HEADING,
-        textAlign: 'center',
-        color: palette.text.primary,
-        fontSize: "2rem",
-        mt: 0,
-        mb: 2,
-      }}
-    >
-      {project.title}
-    </Typography>
+      <Typography
+        component="h2"
+        sx={{
+          fontFamily: FONT_FAMILY_HEADING,
+          textAlign: 'center',
+          color: palette.text.primary,
+          fontSize: '2rem',
+          mt: 0,
+          mb: 2,
+        }}
+      >
+        {project.title}
+      </Typography>
 
       {/* Layout-specific content */}
       <LayoutContent variant={layoutVariant} project={project} />
@@ -162,7 +165,13 @@ const GRID_GAP = { xs: 2, sm: 3, md: 4 };
  * @param props.project - The project data to pass to the layout
  * @returns The rendered layout component for the given variant
  */
-function LayoutContent({ variant, project }: { variant: LayoutVariant; project: Project }): React.ReactNode {
+function LayoutContent({
+  variant,
+  project,
+}: {
+  variant: LayoutVariant;
+  project: Project;
+}): React.ReactNode {
   switch (variant) {
     case 'wide-video':
       return <WideLeftDescriptionLayout project={project} hasVideo />;
@@ -191,7 +200,10 @@ function LayoutContent({ variant, project }: { variant: LayoutVariant; project: 
  * @param props.hasVideo - Whether to render a video embed above the gallery (default: false)
  * @returns The rendered wide layout with left description column
  */
-function WideLeftDescriptionLayout({ project, hasVideo = false }: ProjectDetailProps & { hasVideo?: boolean }) {
+function WideLeftDescriptionLayout({
+  project,
+  hasVideo = false,
+}: ProjectDetailProps & { hasVideo?: boolean }) {
   return (
     <Box
       className="project-layout-grid"
@@ -274,9 +286,7 @@ function NarrowLayout({ project }: ProjectDetailProps) {
         circa={project.circa}
         sx={{ mb: 3 }}
       />
-      {hasVideo && (
-        <VideoEmbed video={project.videos[0]} sx={{ mb: 3 }} />
-      )}
+      {hasVideo && <VideoEmbed video={project.videos[0]} sx={{ mb: 3 }} />}
       <ProjectGallery images={project.images} />
     </Box>
   );

@@ -12,13 +12,13 @@
  * - dark: Dark mode with inverted colors for reduced eye strain
  * - highContrast: High contrast black and white for accessibility
  */
-export type ThemeMode = "light" | "dark" | "highContrast";
+export type ThemeMode = 'light' | 'dark' | 'highContrast';
 
 /**
  * System color scheme preference.
  * Reflects the user's OS-level dark mode setting.
  */
-export type ColorScheme = "light" | "dark";
+export type ColorScheme = 'light' | 'dark';
 
 /**
  * Theme color palette configuration.
@@ -50,4 +50,3 @@ export interface ThemePalette {
     text: string;
   };
 }
-

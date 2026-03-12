@@ -38,17 +38,17 @@ export function rot13(str: string): string {
 
     // Handle uppercase letters (ROT13)
     if (charCode >= 65 && charCode <= 90) {
-      return String.fromCharCode(65 + (charCode - 65 + 13) % 26);
+      return String.fromCharCode(65 + ((charCode - 65 + 13) % 26));
     }
 
     // Handle lowercase letters (ROT13)
     if (charCode >= 97 && charCode <= 122) {
-      return String.fromCharCode(97 + (charCode - 97 + 13) % 26);
+      return String.fromCharCode(97 + ((charCode - 97 + 13) % 26));
     }
 
     // Handle digits (ROT5)
     if (charCode >= 48 && charCode <= 57) {
-      return String.fromCharCode(48 + (charCode - 48 + 5) % 10);
+      return String.fromCharCode(48 + ((charCode - 48 + 5) % 10));
     }
 
     return char;

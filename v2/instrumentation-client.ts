@@ -13,16 +13,17 @@
  * @see https://docs.sentry.io/platforms/javascript/guides/nextjs/
  */
 
-import * as Sentry from "@sentry/nextjs";
-import { isDoNotTrackEnabled } from "@/src/lib/privacy";
+import * as Sentry from '@sentry/nextjs';
+import { isDoNotTrackEnabled } from '@/src/lib/privacy';
 
 const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
 if (isProduction && dsn && !isDoNotTrackEnabled()) {
   Sentry.init({
     dsn,
-    environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
+    environment:
+      process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
 
     // Capture 100% of errors — portfolio is low-traffic, every error matters
     sampleRate: 1.0,

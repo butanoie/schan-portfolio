@@ -1,5 +1,5 @@
-import { Box, Typography, Chip } from "@mui/material";
-import { BRAND_COLORS } from "../../constants";
+import { Box, Typography, Chip } from '@mui/material';
+import { BRAND_COLORS } from '../../constants';
 
 /**
  * Props for the ClientList component.
@@ -39,7 +39,6 @@ export default function ClientList({
   cardTextColor,
   sectionHeading,
 }: ClientListProps) {
-
   return (
     <Box component="section" aria-labelledby="clients-heading">
       <Box
@@ -57,7 +56,7 @@ export default function ClientList({
           sx={{
             fontWeight: 600,
             color: cardTextColor,
-            fontSize: { xs: "1.1rem", md: "1.25rem" },
+            fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 1.5,
           }}
         >
@@ -67,8 +66,8 @@ export default function ClientList({
         {/* Client Chips */}
         <Box
           sx={{
-            display: "flex",
-            flexWrap: "wrap",
+            display: 'flex',
+            flexWrap: 'wrap',
             gap: 0.75,
           }}
         >
@@ -79,12 +78,12 @@ export default function ClientList({
               size="small"
               sx={{
                 backgroundColor: BRAND_COLORS.sage,
-                color: "#ffffff",
+                color: '#ffffff',
                 fontWeight: 600,
-                fontSize: "0.75rem",
-                height: "26px",
-                borderRadius: "3px",
-                "& .MuiChip-label": {
+                fontSize: '0.75rem',
+                height: '26px',
+                borderRadius: '3px',
+                '& .MuiChip-label': {
                   px: 1.25,
                 },
               }}

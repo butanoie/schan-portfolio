@@ -7,44 +7,48 @@
  * @module Footer.test
  */
 
-import { render, screen, act } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import Footer from "../../../components/common/Footer";
-import { usePathname } from "next/navigation";
-import { useProjectLoading } from "../../../contexts/ProjectLoadingContext";
-import { useI18n } from "../../../hooks/useI18n";
-import { useAnimations } from "../../../hooks/useAnimations";
-import { testAccessibility, canReceiveFocus, hasAccessibleName } from "../../utils/axe-helpers";
+import { render, screen, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import Footer from '../../../components/common/Footer';
+import { usePathname } from 'next/navigation';
+import { useProjectLoading } from '../../../contexts/ProjectLoadingContext';
+import { useI18n } from '../../../hooks/useI18n';
+import { useAnimations } from '../../../hooks/useAnimations';
+import {
+  testAccessibility,
+  canReceiveFocus,
+  hasAccessibleName,
+} from '../../utils/axe-helpers';
 
 /**
  * Mock next/navigation module
  */
-vi.mock("next/navigation", () => ({
+vi.mock('next/navigation', () => ({
   usePathname: vi.fn(),
 }));
 
 /**
  * Mock ProjectLoadingContext
  */
-vi.mock("../../../contexts/ProjectLoadingContext", () => ({
+vi.mock('../../../contexts/ProjectLoadingContext', () => ({
   useProjectLoading: vi.fn(),
 }));
 
 /**
  * Mock useI18n hook
  */
-vi.mock("../../../hooks/useI18n", () => ({
+vi.mock('../../../hooks/useI18n', () => ({
   useI18n: vi.fn(),
 }));
 
 /**
  * Mock useAnimations hook
  */
-vi.mock("../../../hooks/useAnimations", () => ({
+vi.mock('../../../hooks/useAnimations', () => ({
   useAnimations: vi.fn(),
 }));
 
-describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
+describe('Footer - WCAG 2.2 Level AA Accessibility', () => {
   /**
    * Default mock translations for all tests.
    */
@@ -58,20 +62,21 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
      */
     t: (key: string, params?: Record<string, unknown>): string => {
       const translations: Record<string, string> = {
-        "nav.portfolio": "Portfolio",
-        "nav.resume": "Résumé",
-        "nav.samples": "Samples",
-        "nav.colophon": "Colophon",
-        "footer.butaThought": "Buta's thought",
-        "footer.allProjectsLoaded": "All projects loaded",
-        "footer.thankYou": "Thank you",
-        "footer.copyright": "© {year} Sing Chan",
-        "footer.trademarks": "Buta is a trademark",
-        "loadMoreButton.loading": "Loading projects...",
-        "loadMoreButton.loadMore": "Load {remainingCount} more",
-        "loadMoreButton.allLoaded": "All projects loaded",
-        "loadMoreButton.loadingAria": "Loading projects",
-        "loadMoreButton.loadMoreCountAria": "Load {remainingCount} more projects",
+        'nav.portfolio': 'Portfolio',
+        'nav.resume': 'Résumé',
+        'nav.samples': 'Samples',
+        'nav.colophon': 'Colophon',
+        'footer.butaThought': "Buta's thought",
+        'footer.allProjectsLoaded': 'All projects loaded',
+        'footer.thankYou': 'Thank you',
+        'footer.copyright': '© {year} Sing Chan',
+        'footer.trademarks': 'Buta is a trademark',
+        'loadMoreButton.loading': 'Loading projects...',
+        'loadMoreButton.loadMore': 'Load {remainingCount} more',
+        'loadMoreButton.allLoaded': 'All projects loaded',
+        'loadMoreButton.loadingAria': 'Loading projects',
+        'loadMoreButton.loadMoreCountAria':
+          'Load {remainingCount} more projects',
       };
 
       let result = translations[key] || key;
@@ -95,17 +100,21 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
     /**
      * Mock usePathname to return home page by default
      */
-    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue("/");
+    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue('/');
 
     /**
      * Mock useProjectLoading to return null (no loading context)
      */
-    (useProjectLoading as unknown as ReturnType<typeof vi.fn>).mockReturnValue(null);
+    (useProjectLoading as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      null
+    );
 
     /**
      * Mock useI18n to return translation function
      */
-    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockTranslations);
+    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      mockTranslations
+    );
 
     /**
      * Mock useAnimations hook
@@ -122,12 +131,12 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 2.1.1 - Keyboard Accessible
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should render as semantic footer element", () => {
+  it('should render as semantic footer element', () => {
     render(<Footer />);
 
-    const footer = screen.getByRole("contentinfo");
+    const footer = screen.getByRole('contentinfo');
     expect(footer).toBeInTheDocument();
-    expect(footer.tagName).toBe("FOOTER");
+    expect(footer.tagName).toBe('FOOTER');
   });
 
   /**
@@ -136,10 +145,10 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 1.3.1 - Info and Relationships
    * WCAG 2.4.1 - Bypass Blocks
    */
-  it("should have navigation landmark with proper label", () => {
+  it('should have navigation landmark with proper label', () => {
     render(<Footer />);
 
-    const nav = screen.getByRole("navigation", { name: /footer navigation/i });
+    const nav = screen.getByRole('navigation', { name: /footer navigation/i });
     expect(nav).toBeInTheDocument();
   });
 
@@ -149,10 +158,10 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 2.1.1 - Keyboard Accessible
    * WCAG 2.5.8 - Target Size
    */
-  it("should have keyboard accessible navigation links", () => {
+  it('should have keyboard accessible navigation links', () => {
     render(<Footer />);
 
-    const buttons = screen.getAllByRole("link");
+    const buttons = screen.getAllByRole('link');
     expect(buttons.length).toBeGreaterThanOrEqual(3);
 
     buttons.forEach((button) => {
@@ -166,12 +175,16 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should have accessible names for all navigation links", () => {
+  it('should have accessible names for all navigation links', () => {
     render(<Footer />);
 
-    expect(screen.getByRole("link", { name: /portfolio/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /résumé|resume/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /colophon/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /portfolio/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /résumé|resume/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /colophon/i })).toBeInTheDocument();
   });
 
   /**
@@ -179,13 +192,15 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.4.8 - Location
    */
-  it("should indicate active page link", () => {
-    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue("/resume");
+  it('should indicate active page link', () => {
+    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      '/resume'
+    );
 
     render(<Footer />);
 
-    const resumeLink = screen.getByRole("link", { name: /résumé|resume/i });
-    expect(resumeLink).toHaveAttribute("aria-current", "page");
+    const resumeLink = screen.getByRole('link', { name: /résumé|resume/i });
+    expect(resumeLink).toHaveAttribute('aria-current', 'page');
   });
 
   /**
@@ -193,7 +208,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.1.1 - Non-text Content
    */
-  it("should display copyright notice", () => {
+  it('should display copyright notice', () => {
     const currentYear = new Date().getFullYear();
 
     render(<Footer />);
@@ -206,11 +221,13 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.2 Level AA comprehensive scan
    */
-  it("should pass axe accessibility audit", async () => {
+  it('should pass axe accessibility audit', async () => {
     const { container } = render(<Footer />);
 
     await act(async () => {
-      await testAccessibility({ container } as unknown as Parameters<typeof testAccessibility>[0]);
+      await testAccessibility({ container } as unknown as Parameters<
+        typeof testAccessibility
+      >[0]);
     });
   });
 
@@ -219,7 +236,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.1.1 - Non-text Content
    */
-  it("should have alt text for Buta mascot image", () => {
+  it('should have alt text for Buta mascot image', () => {
     render(<Footer />);
 
     const butaImage = screen.getByAltText(/buta.*pig mascot/i);
@@ -231,13 +248,15 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should have accessible label for thought bubble on non-home pages", () => {
-    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue("/resume");
+  it('should have accessible label for thought bubble on non-home pages', () => {
+    (usePathname as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      '/resume'
+    );
 
     render(<Footer />);
 
-    const thoughtBubble = screen.getByRole("img", {
-      name: /buta.*thought/i
+    const thoughtBubble = screen.getByRole('img', {
+      name: /buta.*thought/i,
     });
     expect(thoughtBubble).toBeInTheDocument();
   });
@@ -248,7 +267,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should render Load More button with accessible label on home page", () => {
+  it('should render Load More button with accessible label on home page', () => {
     const loadingContext = {
       isHomePage: true,
       loading: false,
@@ -258,12 +277,14 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
       onLoadMore: vi.fn(),
     };
 
-    (useProjectLoading as unknown as ReturnType<typeof vi.fn>).mockReturnValue(loadingContext);
+    (useProjectLoading as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      loadingContext
+    );
 
     render(<Footer />);
 
-    const thoughtBubble = screen.getByRole("img", {
-      name: /load more projects/i
+    const thoughtBubble = screen.getByRole('img', {
+      name: /load more projects/i,
     });
     expect(thoughtBubble).toBeInTheDocument();
   });
@@ -273,7 +294,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should display all loaded message with accessible label", () => {
+  it('should display all loaded message with accessible label', () => {
     const loadingContext = {
       isHomePage: true,
       loading: false,
@@ -283,12 +304,14 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
       onLoadMore: vi.fn(),
     };
 
-    (useProjectLoading as unknown as ReturnType<typeof vi.fn>).mockReturnValue(loadingContext);
+    (useProjectLoading as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      loadingContext
+    );
 
     render(<Footer />);
 
-    const allLoadedBubble = screen.getByRole("img", {
-      name: /all projects loaded/i
+    const allLoadedBubble = screen.getByRole('img', {
+      name: /all projects loaded/i,
     });
     expect(allLoadedBubble).toBeInTheDocument();
   });
@@ -298,10 +321,10 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.4.3 - Contrast (Minimum)
    */
-  it("should have sufficient color contrast for navigation buttons", () => {
+  it('should have sufficient color contrast for navigation buttons', () => {
     render(<Footer />);
 
-    const navButtons = screen.getAllByRole("link");
+    const navButtons = screen.getAllByRole('link');
 
     navButtons.forEach((button) => {
       const computedStyle = window.getComputedStyle(button);
@@ -315,11 +338,11 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should have proper heading structure in footer", () => {
+  it('should have proper heading structure in footer', () => {
     render(<Footer />);
 
     // Navigation should be first interactive element
-    const nav = screen.getByRole("navigation");
+    const nav = screen.getByRole('navigation');
     expect(nav).toBeInTheDocument();
   });
 
@@ -328,7 +351,7 @@ describe("Footer - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1 - Operable
    */
-  it("should have text content visible in DOM", () => {
+  it('should have text content visible in DOM', () => {
     render(<Footer />);
 
     // Copyright text should always be present

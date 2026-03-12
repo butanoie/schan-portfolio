@@ -7,28 +7,28 @@
  * @module LanguageSwitcher.test
  */
 
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { LanguageSwitcher } from "../../../components/settings/LanguageSwitcher";
-import { useLocale } from "../../../hooks/useLocale";
-import { useI18n } from "../../../hooks/useI18n";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { LanguageSwitcher } from '../../../components/settings/LanguageSwitcher';
+import { useLocale } from '../../../hooks/useLocale';
+import { useI18n } from '../../../hooks/useI18n';
 
 /**
  * Mock useLocale hook
  */
-vi.mock("../../../hooks/useLocale", () => ({
+vi.mock('../../../hooks/useLocale', () => ({
   useLocale: vi.fn(),
 }));
 
 /**
  * Mock useI18n hook
  */
-vi.mock("../../../hooks/useI18n", () => ({
+vi.mock('../../../hooks/useI18n', () => ({
   useI18n: vi.fn(),
 }));
 
-describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
+describe('LanguageSwitcher - WCAG 2.2 Level AA Accessibility', () => {
   /**
    * Mock translations for testing
    */
@@ -41,9 +41,9 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
      */
     t: (key: string): string => {
       const translations: Record<string, string> = {
-        "settings.language": "Select language",
-        "settings.english": "English",
-        "settings.french": "Français",
+        'settings.language': 'Select language',
+        'settings.english': 'English',
+        'settings.french': 'Français',
       };
       return translations[key] || key;
     },
@@ -64,14 +64,16 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
      * Mock useLocale hook to return English by default
      */
     (useLocale as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      locale: "en",
+      locale: 'en',
       setLocale: mockSetLocale,
     });
 
     /**
      * Mock useI18n to return translation function
      */
-    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockTranslations);
+    (useI18n as unknown as ReturnType<typeof vi.fn>).mockReturnValue(
+      mockTranslations
+    );
   });
 
   /**
@@ -79,10 +81,10 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should render language switcher with toggle group", () => {
+  it('should render language switcher with toggle group', () => {
     render(<LanguageSwitcher />);
 
-    const group = screen.getByRole("group", { name: /select language/i });
+    const group = screen.getByRole('group', { name: /select language/i });
     expect(group).toBeInTheDocument();
   });
 
@@ -92,11 +94,15 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    * WCAG 4.1.2 - Name, Role, Value
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should render both language buttons with accessible names", () => {
+  it('should render both language buttons with accessible names', () => {
     render(<LanguageSwitcher />);
 
-    expect(screen.getByRole("button", { name: /english/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /français|french/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /english/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /français|french/i })
+    ).toBeInTheDocument();
   });
 
   /**
@@ -104,11 +110,11 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should indicate selected language button", () => {
+  it('should indicate selected language button', () => {
     render(<LanguageSwitcher />);
 
-    const englishButton = screen.getByRole("button", { name: /english/i });
-    expect(englishButton).toHaveAttribute("aria-pressed", "true");
+    const englishButton = screen.getByRole('button', { name: /english/i });
+    expect(englishButton).toHaveAttribute('aria-pressed', 'true');
   });
 
   /**
@@ -116,11 +122,13 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should indicate non-selected language button", () => {
+  it('should indicate non-selected language button', () => {
     render(<LanguageSwitcher />);
 
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
-    expect(frenchButton).toHaveAttribute("aria-pressed", "false");
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
+    expect(frenchButton).toHaveAttribute('aria-pressed', 'false');
   });
 
   /**
@@ -128,12 +136,12 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should be keyboard navigable", async () => {
+  it('should be keyboard navigable', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
-    const englishButton = screen.getByRole("button", { name: /english/i });
+    const englishButton = screen.getByRole('button', { name: /english/i });
 
     // Tab to button
     await user.tab();
@@ -141,7 +149,9 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
 
     // Tab to next button
     await user.tab();
-    expect(screen.getByRole("button", { name: /français|french/i })).toHaveFocus();
+    expect(
+      screen.getByRole('button', { name: /français|french/i })
+    ).toHaveFocus();
   });
 
   /**
@@ -149,18 +159,20 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should change language with Enter key", async () => {
+  it('should change language with Enter key', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
 
     // Focus and activate with Enter
     frenchButton.focus();
-    await user.keyboard("{Enter}");
+    await user.keyboard('{Enter}');
 
-    expect(mockSetLocale).toHaveBeenCalledWith("fr");
+    expect(mockSetLocale).toHaveBeenCalledWith('fr');
   });
 
   /**
@@ -168,18 +180,20 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should change language with Space key", async () => {
+  it('should change language with Space key', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
 
     // Focus and activate with Space
     frenchButton.focus();
-    await user.keyboard(" ");
+    await user.keyboard(' ');
 
-    expect(mockSetLocale).toHaveBeenCalledWith("fr");
+    expect(mockSetLocale).toHaveBeenCalledWith('fr');
   });
 
   /**
@@ -187,15 +201,17 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should change language with mouse click", async () => {
+  it('should change language with mouse click', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
     await user.click(frenchButton);
 
-    expect(mockSetLocale).toHaveBeenCalledWith("fr");
+    expect(mockSetLocale).toHaveBeenCalledWith('fr');
   });
 
   /**
@@ -203,27 +219,29 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should navigate with arrow keys", async () => {
+  it('should navigate with arrow keys', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
-    const englishButton = screen.getByRole("button", { name: /english/i });
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const englishButton = screen.getByRole('button', { name: /english/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
 
     englishButton.focus();
     expect(englishButton).toHaveFocus();
 
     // Arrow right to navigate to next button (MUI ToggleButtonGroup handles this)
     // The behavior may be different in jsdom, so verify buttons are accessible
-    await user.keyboard("{ArrowRight}");
+    await user.keyboard('{ArrowRight}');
 
     // Verify both buttons are accessible
     expect(englishButton).toBeInTheDocument();
     expect(frenchButton).toBeInTheDocument();
 
     // Arrow left back
-    await user.keyboard("{ArrowLeft}");
+    await user.keyboard('{ArrowLeft}');
 
     // Verify buttons are still accessible
     expect(englishButton).toBeInTheDocument();
@@ -234,13 +252,15 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should call onChange callback when language is selected", async () => {
+  it('should call onChange callback when language is selected', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<LanguageSwitcher onChange={onChange} />);
 
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
     await user.click(frenchButton);
 
     expect(onChange).toHaveBeenCalled();
@@ -251,13 +271,13 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should not call onChange when clicking already selected language", async () => {
+  it('should not call onChange when clicking already selected language', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<LanguageSwitcher onChange={onChange} />);
 
-    const englishButton = screen.getByRole("button", { name: /english/i });
+    const englishButton = screen.getByRole('button', { name: /english/i });
     await user.click(englishButton);
 
     // onClick handler fired but setLocale checks for null (exclusive mode)
@@ -269,7 +289,7 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 1.3.1 - Info and Relationships
    */
-  it("should display language button labels", () => {
+  it('should display language button labels', () => {
     render(<LanguageSwitcher />);
 
     expect(screen.getByText(/english/i)).toBeInTheDocument();
@@ -281,10 +301,10 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.5.8 - Target Size (Minimum)
    */
-  it("should have sufficient touch target size", () => {
+  it('should have sufficient touch target size', () => {
     render(<LanguageSwitcher />);
 
-    const buttons = screen.getAllByRole("button");
+    const buttons = screen.getAllByRole('button');
 
     // Verify all language buttons are present and properly rendered
     expect(buttons.length).toBe(2);
@@ -297,7 +317,7 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
 
       // Verify buttons have proper MUI classes
       const classes = button.className;
-      expect(classes).toContain("MuiToggleButton-root");
+      expect(classes).toContain('MuiToggleButton-root');
     });
   });
 
@@ -306,10 +326,10 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1 - Operable
    */
-  it("should apply className prop", () => {
+  it('should apply className prop', () => {
     const { container } = render(<LanguageSwitcher className="custom-class" />);
 
-    const wrapper = container.querySelector(".custom-class");
+    const wrapper = container.querySelector('.custom-class');
     expect(wrapper).toBeInTheDocument();
   });
 
@@ -318,26 +338,28 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 4.1.2 - Name, Role, Value
    */
-  it("should allow all language selections", async () => {
+  it('should allow all language selections', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
     // Get both language buttons
-    const englishButton = screen.getByRole("button", { name: /english/i });
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const englishButton = screen.getByRole('button', { name: /english/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
 
     // Verify both buttons are present and interactive
     expect(englishButton).toBeInTheDocument();
     expect(frenchButton).toBeInTheDocument();
 
     // Initially English is selected
-    expect(englishButton).toHaveAttribute("aria-pressed", "true");
-    expect(frenchButton).toHaveAttribute("aria-pressed", "false");
+    expect(englishButton).toHaveAttribute('aria-pressed', 'true');
+    expect(frenchButton).toHaveAttribute('aria-pressed', 'false');
 
     // Click French button
     await user.click(frenchButton);
-    expect(mockSetLocale).toHaveBeenCalledWith("fr");
+    expect(mockSetLocale).toHaveBeenCalledWith('fr');
 
     // Reset mock
     mockSetLocale.mockClear();
@@ -354,15 +376,15 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.4.4 - Link Purpose (In Context)
    */
-  it("should have unique and descriptive button labels", () => {
+  it('should have unique and descriptive button labels', () => {
     render(<LanguageSwitcher />);
 
-    const englishBtn = screen.getByRole("button", { name: /english/i });
-    const frenchBtn = screen.getByRole("button", { name: /français|french/i });
+    const englishBtn = screen.getByRole('button', { name: /english/i });
+    const frenchBtn = screen.getByRole('button', { name: /français|french/i });
 
     expect(englishBtn).not.toEqual(frenchBtn);
-    expect(englishBtn.getAttribute("aria-label")).not.toEqual(
-      frenchBtn.getAttribute("aria-label")
+    expect(englishBtn.getAttribute('aria-label')).not.toEqual(
+      frenchBtn.getAttribute('aria-label')
     );
   });
 
@@ -371,22 +393,24 @@ describe("LanguageSwitcher - WCAG 2.2 Level AA Accessibility", () => {
    *
    * WCAG 2.1.1 - Keyboard Accessible
    */
-  it("should support both keyboard and mouse interaction", async () => {
+  it('should support both keyboard and mouse interaction', async () => {
     const user = userEvent.setup();
 
     render(<LanguageSwitcher />);
 
     // Keyboard interaction
-    const englishButton = screen.getByRole("button", { name: /english/i });
+    const englishButton = screen.getByRole('button', { name: /english/i });
     englishButton.focus();
-    await user.keyboard("{Enter}");
+    await user.keyboard('{Enter}');
 
     // Mouse interaction
-    const frenchButton = screen.getByRole("button", { name: /français|french/i });
+    const frenchButton = screen.getByRole('button', {
+      name: /français|french/i,
+    });
     await user.click(frenchButton);
 
     // Both should have triggered setLocale calls
     expect(mockSetLocale).toHaveBeenCalledTimes(1);
-    expect(mockSetLocale).toHaveBeenCalledWith("fr");
+    expect(mockSetLocale).toHaveBeenCalledWith('fr');
   });
 });

@@ -226,7 +226,11 @@ function createControlledLocaleWrapper(initialLocale: Locale): {
  * @returns Promise resolving to the first PAGE_SIZE English projects
  */
 async function getInitialEnglishProjects() {
-  const response = await getProjects({ page: 1, pageSize: PAGE_SIZE, locale: 'en' });
+  const response = await getProjects({
+    page: 1,
+    pageSize: PAGE_SIZE,
+    locale: 'en',
+  });
   return response.items;
 }
 
@@ -674,8 +678,7 @@ describe('useProjectLoader — locale lifecycle integration', () => {
 
     it('should allow clean loadMore in correct locale after concurrent switch', async () => {
       const initialProjects = await getInitialEnglishProjects();
-      const { wrapper, setWrapperLocale } =
-        createControlledLocaleWrapper('en');
+      const { wrapper, setWrapperLocale } = createControlledLocaleWrapper('en');
 
       const { result, rerender } = renderHook(
         () => useProjectLoader(initialProjects, PAGE_SIZE),

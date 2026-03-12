@@ -1,6 +1,7 @@
 # Microsoft Defender for Storage - PowerShell Scripts Documentation
 
 ## Table of Contents
+
 1. [Overview](#overview)
 2. [Important Background](#important-background)
 3. [Prerequisites](#prerequisites)
@@ -19,6 +20,7 @@
 These PowerShell scripts are designed to bulk disable Microsoft Defender for Storage on specific storage accounts and verify the configuration. This is necessary for the **new Defender for Storage plan** ($10 per account pricing model).
 
 **Key Scripts:**
+
 - `Disable-DefenderForStorage.ps1` - Disables Defender on multiple storage accounts
 - `Verify-DefenderForStorage.ps1` - Verifies the Defender status after changes
 
@@ -31,33 +33,37 @@ These PowerShell scripts are designed to bulk disable Microsoft Defender for Sto
 The **AzDefenderPlanAutoEnable** tag method **DOES NOT WORK** for the new Defender for Storage plan. The tag only works for the legacy "classic" plan.
 
 For the new plan (launched March 28, 2023), you must:
+
 1. Use the Azure REST API to disable Defender at the storage account level
 2. Set the `overrideSubscriptionLevelSettings` flag to `true` to prevent Azure policies from re-enabling protection
 
 ### New Plan vs Classic Plan
 
-| Feature | Classic Plan | New Plan |
-|---------|-------------|----------|
-| **Pricing** | $0.02 per 10K transactions | $10/account + $0.1492 per 1M transactions over 73M |
-| **Exclusion Method** | AzDefenderPlanAutoEnable tag | API override settings |
-| **Availability** | Deprecated (unavailable after Feb 5, 2025) | Current recommended plan |
-| **Features** | Basic threat detection | Enhanced monitoring, malware scanning, sensitive data detection |
+| Feature              | Classic Plan                               | New Plan                                                        |
+| -------------------- | ------------------------------------------ | --------------------------------------------------------------- |
+| **Pricing**          | $0.02 per 10K transactions                 | $10/account + $0.1492 per 1M transactions over 73M              |
+| **Exclusion Method** | AzDefenderPlanAutoEnable tag               | API override settings                                           |
+| **Availability**     | Deprecated (unavailable after Feb 5, 2025) | Current recommended plan                                        |
+| **Features**         | Basic threat detection                     | Enhanced monitoring, malware scanning, sensitive data detection |
 
 ---
 
 ## Prerequisites
 
 ### Required Software
+
 - **Azure PowerShell Module** (Az module)
   ```powershell
   Install-Module -Name Az -AllowClobber -Force
   ```
 
 ### Required Permissions
+
 - **Security Admin** OR **Contributor** role on the Azure subscription
 - Minimum: **Reader** role for verification script only
 
 ### Azure Subscription Requirements
+
 - Storage accounts must exist in the specified subscription
 - Defender for Storage must be enabled at the subscription level (to override it at account level)
 
@@ -70,6 +76,7 @@ For the new plan (launched March 28, 2023), you must:
 **Purpose:** Bulk disable Microsoft Defender for Storage on storage accounts listed in a text file.
 
 **What it does:**
+
 - Reads storage account names from a text file
 - Searches for each account across all resource groups in the subscription
 - Calls the Azure REST API to disable Defender for Storage
@@ -77,15 +84,18 @@ For the new plan (launched March 28, 2023), you must:
 - Generates a CSV report with results
 
 **Parameters:**
+
 - `FilePath` (Required) - Path to text file with storage account names
 - `SubscriptionId` (Required) - Azure subscription ID (GUID format)
 - `DisableClassicPlan` (Optional) - Switch to also disable classic Defender for Storage (ATP)
 
 **Output:**
+
 - Console output with color-coded status
 - CSV file: `DefenderDisableResults-YYYYMMDD-HHMMSS.csv`
 
 **Example Usage:**
+
 ```powershell
 # Disable NEW Defender plan only
 .\Disable-DefenderForStorage.ps1 -FilePath ".\exclude-list.txt" -SubscriptionId "12345678-1234-1234-1234-123456789012"
@@ -101,6 +111,7 @@ For the new plan (launched March 28, 2023), you must:
 **Purpose:** Verify that Defender for Storage is properly disabled on specified accounts.
 
 **What it does:**
+
 - Reads storage account names from the same text file
 - Queries the Azure REST API for current Defender status on BOTH plans:
   - **NEW Defender for Storage plan** (2023+ with $10/account pricing)
@@ -110,16 +121,19 @@ For the new plan (launched March 28, 2023), you must:
 - Generates a comprehensive verification report showing both plans
 
 **Parameters:**
+
 - `FilePath` (Required) - Path to text file with storage account names
 - `SubscriptionId` (Required) - Azure subscription ID (GUID format)
 - `DetailedOutput` (Optional) - Switch to show additional configuration details
 
 **Output:**
+
 - Console output with color-coded verification for both NEW and CLASSIC plans
 - CSV file: `DefenderVerifyResults-YYYYMMDD-HHMMSS.csv`
   - Includes columns for both NewPlanEnabled and ClassicPlanEnabled
 
 **Example Usage:**
+
 ```powershell
 # Basic verification
 .\Verify-DefenderForStorage.ps1 -FilePath ".\exclude-list.txt" -SubscriptionId "12345678-1234-1234-1234-123456789012"
@@ -148,7 +162,8 @@ devstoragetest
 # testaccount123
 ```
 
-**Important:** 
+**Important:**
+
 - Use only the storage account name (not the full resource ID)
 - One account per line
 - Lines starting with `#` are treated as comments and ignored
@@ -168,6 +183,7 @@ cd C:\Scripts\DefenderForStorage
 ```
 
 **Which option should you use?**
+
 - **Without `-DisableClassicPlan`**: Use this if you only have the NEW plan enabled (recommended for most cases)
 - **With `-DisableClassicPlan`**: Use this if:
   - You're migrating from the classic plan to the new plan
@@ -175,6 +191,7 @@ cd C:\Scripts\DefenderForStorage
   - You want to ensure both are disabled
 
 The script will:
+
 1. Connect to Azure (prompt for login if needed)
 2. Display the list of accounts to process
 3. Ask for confirmation before proceeding
@@ -194,11 +211,13 @@ The script will:
 ```
 
 **Expected Results:**
+
 - ✓ Green = Both Defender plans are disabled (or only NEW plan if not using classic)
 - ✗ Red = One or both Defender plans are still enabled (needs attention)
 - ⚠ Yellow = Account not found or error
 
 **Understanding the Output:**
+
 - **NEW Plan**: The current $10/account pricing model (launched March 2023)
 - **CLASSIC Plan (ATP)**: Legacy per-transaction pricing model (being phased out)
 
@@ -221,6 +240,7 @@ If CLASSIC shows "Not Configured" - this is normal if you never used the classic
 ### Input Text File Format
 
 **Correct Format:**
+
 ```text
 storageaccount1
 storageaccount2
@@ -228,6 +248,7 @@ storageaccount3
 ```
 
 **With Comments (also valid):**
+
 ```text
 # Production accounts
 storageaccount1
@@ -239,6 +260,7 @@ devstorageacct2
 ```
 
 **Invalid Formats:**
+
 ```text
 # DO NOT USE THESE FORMATS:
 
@@ -257,6 +279,7 @@ rg1/storageaccount1
 Both scripts generate CSV files with the following structure:
 
 **Disable Script CSV:**
+
 ```csv
 StorageAccount,ResourceGroup,Status,Message,Timestamp
 storageaccount1,rg-production,Success,Defender disabled successfully (HTTP 200),2026-01-19 14:30:15
@@ -264,6 +287,7 @@ storageaccount2,rg-dev,Failed,HTTP 403 - Insufficient permissions,2026-01-19 14:
 ```
 
 **Verify Script CSV:**
+
 ```csv
 StorageAccount,ResourceGroup,NewPlanEnabled,ClassicPlanEnabled,OverrideEnabled,MalwareScanning,SensitiveData,Status,Timestamp
 storageaccount1,rg-production,DISABLED,Not Configured,ENABLED,N/A,N/A,Verified,2026-01-20 10:15:30
@@ -282,6 +306,7 @@ storageaccount3,rg-test,DISABLED,DISABLED,ENABLED,N/A,N/A,Verified,2026-01-20 10
 **Cause:** Storage account doesn't exist or is in a different subscription.
 
 **Solution:**
+
 1. Verify the storage account name is correct (case-sensitive)
 2. Check that you're using the correct subscription ID
 3. Run this command to list all storage accounts:
@@ -296,6 +321,7 @@ storageaccount3,rg-test,DISABLED,DISABLED,ENABLED,N/A,N/A,Verified,2026-01-20 10
 **Cause:** Your account doesn't have required permissions.
 
 **Solution:**
+
 1. Verify you have **Security Admin** or **Contributor** role
 2. Check role assignments:
    ```powershell
@@ -310,6 +336,7 @@ storageaccount3,rg-test,DISABLED,DISABLED,ENABLED,N/A,N/A,Verified,2026-01-20 10
 **Cause:** Azure Policy is overriding your settings.
 
 **Solution:**
+
 1. Check for Azure Policies that might re-enable Defender:
    - "Configure Microsoft Defender for Storage to be enabled"
    - "Configure basic Microsoft Defender for Storage to be enabled"
@@ -323,6 +350,7 @@ storageaccount3,rg-test,DISABLED,DISABLED,ENABLED,N/A,N/A,Verified,2026-01-20 10
 #### Issue 4: "MissingSubscription" error or HTTP 404
 
 **Error Message:**
+
 ```
 ✗ Failed - HTTP Status: 404
 Response: {
@@ -338,32 +366,35 @@ Response: {
 **Solution:**
 
 1. **Verify you're connected to the correct subscription:**
+
    ```powershell
    Get-AzContext
    # Should show your subscription ID and name
-   
+
    # If wrong, set correct subscription:
    Set-AzContext -SubscriptionId "your-subscription-id"
    ```
 
 2. **Check the resource ID format:**
+
    ```powershell
    # Get a storage account and check its ID format
    $sa = Get-AzStorageAccount -ResourceGroupName "your-rg" -Name "your-storage-account"
    Write-Host "Resource ID: $($sa.Id)"
-   
+
    # Should look like:
    # /subscriptions/{sub-id}/resourceGroups/{rg}/providers/Microsoft.Storage/storageAccounts/{name}
    ```
 
 3. **Verify Microsoft.Security provider is registered:**
+
    ```powershell
    # Check registration status
    Get-AzResourceProvider -ProviderNamespace Microsoft.Security
-   
+
    # If not registered, register it:
    Register-AzResourceProvider -ProviderNamespace Microsoft.Security
-   
+
    # Wait for registration to complete (takes 1-2 minutes)
    while ((Get-AzResourceProvider -ProviderNamespace Microsoft.Security).RegistrationState -ne "Registered") {
        Write-Host "Waiting for Microsoft.Security provider registration..."
@@ -373,9 +404,10 @@ Response: {
    ```
 
 4. **If the error persists**, this may indicate you're in Azure Government cloud. Check your cloud environment:
+
    ```powershell
    (Get-AzContext).Environment.Name
-   
+
    # If it shows "AzureUSGovernment" or similar, you may need to use different endpoints
    # Connect to Azure Government:
    Connect-AzAccount -Environment AzureUSGovernment
@@ -390,6 +422,7 @@ Response: {
 **Cause:** Az PowerShell module is outdated or not installed.
 
 **Solution:**
+
 ```powershell
 # Update Az module
 Update-Module -Name Az -Force
@@ -406,6 +439,7 @@ Install-Module -Name Az -AllowClobber -Force
 **Cause:** Storage account is using subscription-level default settings with no override.
 
 **Solution:**
+
 - This is expected if Defender was never explicitly configured at the account level
 - Check subscription-level Defender settings in Azure Portal
 - If subscription-level Defender is disabled, the account is protected by default
@@ -419,11 +453,13 @@ Install-Module -Name Az -AllowClobber -Force
 **Solution:**
 
 **Option 1: Use the script with -DisableClassicPlan flag:**
+
 ```powershell
 .\Disable-DefenderForStorage.ps1 -FilePath ".\list.txt" -SubscriptionId "xxx" -DisableClassicPlan
 ```
 
 **Option 2: Manually disable via PowerShell:**
+
 ```powershell
 # Get storage account
 $storageAccount = Get-AzStorageAccount -ResourceGroupName "your-rg" -Name "your-storage-account"
@@ -437,12 +473,14 @@ Get-AzSecurityAdvancedThreatProtection -ResourceId $resourceId
 ```
 
 **Option 3: Disable via Azure Portal:**
+
 1. Navigate to your storage account
 2. Go to **Security + networking** → **Microsoft Defender for Cloud**
 3. Look for "Advanced Threat Protection" or "Classic plan"
 4. Set to **Off**
 
 **Note:** If you're on the subscription-level classic plan, you may need to:
+
 1. Add the tag: `AzDefenderPlanAutoEnable=off` to the storage account
 2. Then disable ATP on the account
 3. This prevents the subscription policy from re-enabling it
@@ -452,12 +490,14 @@ Get-AzSecurityAdvancedThreatProtection -ResourceId $resourceId
 ### Debugging Tips
 
 **Enable Verbose Output:**
+
 ```powershell
 $VerbosePreference = "Continue"
 .\Disable-DefenderForStorage.ps1 -FilePath ".\list.txt" -SubscriptionId "xxx" -Verbose
 ```
 
 **Check Both Plan Statuses Manually:**
+
 ```powershell
 $storageAccount = Get-AzStorageAccount -ResourceGroupName "rg-name" -Name "storage-name"
 $resourceId = $storageAccount.Id
@@ -475,6 +515,7 @@ Write-Host "CLASSIC Plan Response:" $classicResult.Content
 
 **Check API Response Details:**
 Add this after the `Invoke-AzRestMethod` call in the script:
+
 ```powershell
 Write-Host "API Response: $($result.Content)" -ForegroundColor Magenta
 ```
@@ -511,6 +552,7 @@ $apiVersion = "2025-XX-XX"  # Or newer version
 To skip the confirmation prompt (for automation):
 
 In `Disable-DefenderForStorage.ps1`, comment out or remove:
+
 ```powershell
 # $confirmation = Read-Host "Do you want to proceed...?"
 # if ($confirmation -ne "yes") {
@@ -542,7 +584,7 @@ Add this function to send email on completion:
 ```powershell
 function Send-CompletionEmail {
     param([string]$Subject, [string]$Body)
-    
+
     Send-MailMessage `
         -From "azure-scripts@company.com" `
         -To "admin@company.com" `
@@ -578,8 +620,8 @@ To only process storage accounts in specific resource groups:
 
 ```powershell
 # After retrieving all storage accounts:
-$allStorageAccounts = Get-AzStorageAccount | Where-Object { 
-    $_.ResourceGroupName -in @("rg-prod", "rg-dev", "rg-test") 
+$allStorageAccounts = Get-AzStorageAccount | Where-Object {
+    $_.ResourceGroupName -in @("rg-prod", "rg-dev", "rg-test")
 }
 ```
 
@@ -595,7 +637,7 @@ function Invoke-WithRetry {
         [ScriptBlock]$ScriptBlock,
         [int]$MaxRetries = 3
     )
-    
+
     $attempt = 1
     while ($attempt -le $MaxRetries) {
         try {
@@ -622,19 +664,19 @@ $result = Invoke-WithRetry {
 
 #### Disable-DefenderForStorage.ps1 Parameters
 
-| Parameter | Type | Required | Validation | Description |
-|-----------|------|----------|------------|-------------|
-| `FilePath` | string | Yes | Must exist | Path to text file with account names |
-| `SubscriptionId` | string | Yes | GUID format | Azure subscription ID |
-| `DisableClassicPlan` | switch | No | N/A | Also disable classic Defender (ATP) |
+| Parameter            | Type   | Required | Validation  | Description                          |
+| -------------------- | ------ | -------- | ----------- | ------------------------------------ |
+| `FilePath`           | string | Yes      | Must exist  | Path to text file with account names |
+| `SubscriptionId`     | string | Yes      | GUID format | Azure subscription ID                |
+| `DisableClassicPlan` | switch | No       | N/A         | Also disable classic Defender (ATP)  |
 
 #### Verify-DefenderForStorage.ps1 Parameters
 
-| Parameter | Type | Required | Validation | Description |
-|-----------|------|----------|------------|-------------|
-| `FilePath` | string | Yes | Must exist | Path to text file with account names |
-| `SubscriptionId` | string | Yes | GUID format | Azure subscription ID |
-| `DetailedOutput` | switch | No | N/A | Show additional configuration details |
+| Parameter        | Type   | Required | Validation  | Description                           |
+| ---------------- | ------ | -------- | ----------- | ------------------------------------- |
+| `FilePath`       | string | Yes      | Must exist  | Path to text file with account names  |
+| `SubscriptionId` | string | Yes      | GUID format | Azure subscription ID                 |
+| `DetailedOutput` | switch | No       | N/A         | Show additional configuration details |
 
 ---
 
@@ -690,14 +732,17 @@ $body = @{
 ```
 
 **Line 1:** `isEnabled = $false`
+
 - Disables Microsoft Defender for Storage on this account
 
 **Line 2:** `overrideSubscriptionLevelSettings = $true` ⚠️ **CRITICAL**
+
 - Tells Azure to use THIS account's settings instead of subscription defaults
 - Without this, Azure policies will re-enable Defender within 24 hours
 - This is the equivalent of checking "Override subscription-level settings" in the Portal
 
 **If you want to disable specific features only:**
+
 ```powershell
 $body = @{
     properties = @{
@@ -723,10 +768,12 @@ $body = @{
 ### Defender for Storage Pricing (New Plan)
 
 **Base Cost:**
+
 - $10 per storage account per month
 - Includes up to 73 million transactions
 
 **Additional Costs:**
+
 - $0.1492 per 1 million transactions over 73M threshold
 - Malware Scanning: $0.15 per GB scanned (optional add-on)
 - Sensitive Data Detection: Included in base price
@@ -736,6 +783,7 @@ $body = @{
 **Scenario:** Storage account with 200M transactions per month
 
 **Without Exclusion (Defender Enabled):**
+
 ```
 Base cost:           $10.00
 Overage (127M):      $18.95   (127 × $0.1492)
@@ -743,6 +791,7 @@ Total:               $28.95 per month
 ```
 
 **With Exclusion (Defender Disabled):**
+
 ```
 Total:               $0.00 per month
 Savings:             $28.95 per month
@@ -785,22 +834,24 @@ Annual Savings:      $347.40
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.2 | January 2026 | Added classic Defender for Storage (ATP) checking and disable capability |
-| 1.1 | January 2026 | Updated API version from 2022-12-01-preview to 2025-01-01 (latest stable) |
-| 1.0 | January 2026 | Initial release with bulk disable and verify scripts |
+| Version | Date         | Changes                                                                   |
+| ------- | ------------ | ------------------------------------------------------------------------- |
+| 1.2     | January 2026 | Added classic Defender for Storage (ATP) checking and disable capability  |
+| 1.1     | January 2026 | Updated API version from 2022-12-01-preview to 2025-01-01 (latest stable) |
+| 1.0     | January 2026 | Initial release with bulk disable and verify scripts                      |
 
 ---
 
 ## Support and Maintenance
 
 **Script Maintenance:**
+
 - Review quarterly for API updates
 - Test after major Azure updates
 - Update API version if Microsoft deprecates current version
 
 **Contact:**
+
 - For Azure questions: Contact your Azure administrator
 - For script issues: Review troubleshooting section or contact IT Operations team
 
@@ -853,6 +904,6 @@ Get-AzSecurityAdvancedThreatProtection -ResourceId "/subscriptions/.../storageAc
 
 ---
 
-*Last Updated: January 2026*
-*Script Version: 1.2*
-*Documentation Version: 1.2*
+_Last Updated: January 2026_
+_Script Version: 1.2_
+_Documentation Version: 1.2_

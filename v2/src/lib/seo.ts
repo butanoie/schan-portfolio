@@ -18,9 +18,9 @@ import {
   BreadcrumbList,
   CreativeWork,
   WithContext,
-} from "schema-dts";
-import { AUTHOR, SITE_URL, SOCIAL_LINKS } from "@/src/constants/seo";
-import type { Project } from "@/src/types/project";
+} from 'schema-dts';
+import { AUTHOR, SITE_URL, SOCIAL_LINKS } from '@/src/constants/seo';
+import type { Project } from '@/src/types/project';
 
 /**
  * Removes HTML tags from a string while preserving text content.
@@ -36,7 +36,7 @@ import type { Project } from "@/src/types/project";
  * stripHtml("<ul><li>Item 1</li><li>Item 2</li></ul>") // Returns "Item 1Item 2"
  */
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "");
+  return html.replace(/<[^>]*>/g, '');
 }
 
 /**
@@ -57,7 +57,7 @@ export function truncate(text: string, maxLength: number = 160): string {
   if (text.length <= maxLength) {
     return text;
   }
-  return text.substring(0, maxLength - 3) + "...";
+  return text.substring(0, maxLength - 3) + '...';
 }
 
 /**
@@ -85,8 +85,8 @@ export function truncate(text: string, maxLength: number = 160): string {
  */
 export function getPersonSchema(): WithContext<Person> {
   return {
-    "@context": "https://schema.org",
-    "@type": "Person",
+    '@context': 'https://schema.org',
+    '@type': 'Person',
     name: AUTHOR.name,
     jobTitle: AUTHOR.jobTitle,
     url: SITE_URL,
@@ -118,11 +118,11 @@ export function getPersonSchema(): WithContext<Person> {
  */
 export function getOrganizationSchema(): Organization {
   return {
-    "@type": "Organization",
+    '@type': 'Organization',
     name: `${AUTHOR.name} Portfolio`,
     url: SITE_URL,
     founder: {
-      "@type": "Person",
+      '@type': 'Person',
       name: AUTHOR.name,
     },
     sameAs: Object.values(SOCIAL_LINKS),
@@ -160,9 +160,9 @@ export function getBreadcrumbSchema(
   items: Array<{ name: string; url: string }>
 ): BreadcrumbList {
   return {
-    "@type": "BreadcrumbList",
+    '@type': 'BreadcrumbList',
     itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
+      '@type': 'ListItem',
       position: index + 1,
       name: item.name,
       item: item.url,
@@ -217,15 +217,15 @@ export function getProjectSchema(project: Project): CreativeWork {
     : undefined;
 
   return {
-    "@type": "CreativeWork",
+    '@type': 'CreativeWork',
     name: stripHtml(project.title),
     description: truncatedDesc,
     datePublished: project.circa,
     image: imageUrl,
     creator: {
-      "@type": "Person",
+      '@type': 'Person',
       name: AUTHOR.name,
     },
-    keywords: project.tags.join(", "),
+    keywords: project.tags.join(', '),
   };
 }

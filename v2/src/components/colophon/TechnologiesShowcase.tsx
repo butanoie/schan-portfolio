@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -10,14 +10,14 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LaunchIcon from "@mui/icons-material/Launch";
-import type { TechnologiesContent, Technology } from "../../types/colophon";
-import { BRAND_COLORS } from "../../constants";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
-import { usePalette } from "../../hooks/usePalette";
-import { useI18n } from "../../hooks/useI18n";
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LaunchIcon from '@mui/icons-material/Launch';
+import type { TechnologiesContent, Technology } from '../../types/colophon';
+import { BRAND_COLORS } from '../../constants';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
+import { usePalette } from '../../hooks/usePalette';
+import { useI18n } from '../../hooks/useI18n';
 
 /**
  * Props for the TechnologiesShowcase component.
@@ -56,18 +56,18 @@ function TechnologyCard({ tech }: { tech: Technology }) {
       className="technology-card"
       variant="outlined"
       sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: palette.card.background,
       }}
     >
       <CardContent sx={{ flexGrow: 1 }}>
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             mb: 1,
           }}
         >
@@ -76,7 +76,7 @@ function TechnologyCard({ tech }: { tech: Technology }) {
             sx={{
               fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
-              fontSize: "1rem",
+              fontSize: '1rem',
               color: palette.card.heading,
             }}
           >
@@ -87,11 +87,15 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               href={tech.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={t("colophon.technologies.visitWebsiteAriaLabel", { name: tech.name, ns: "pages" })}
+              aria-label={t('colophon.technologies.visitWebsiteAriaLabel', {
+                name: tech.name,
+                ns: 'pages',
+              })}
               sx={{
                 color: palette.card.text,
-                "&:hover": {
-                  color: mode === "highContrast" ? "#000000" : BRAND_COLORS.maroon,
+                '&:hover': {
+                  color:
+                    mode === 'highContrast' ? '#000000' : BRAND_COLORS.maroon,
                 },
               }}
             >
@@ -135,15 +139,15 @@ export default function TechnologiesShowcase({
   const { palette } = usePalette();
   const { t } = useI18n(); // Used in TechnologyCard and V1 section headers
   const [v1AccordionExpanded, setV1AccordionExpanded] = useState(() => {
-    if (typeof window !== "undefined") {
-      return window.matchMedia("print").matches;
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('print').matches;
     }
     return false;
   });
 
   // Detect print mode and always expand V1 accordion when printing
   useEffect(() => {
-    const printMediaQuery = window.matchMedia("print");
+    const printMediaQuery = window.matchMedia('print');
 
     /**
      * Handles print mode changes and updates accordion state.
@@ -155,13 +159,12 @@ export default function TechnologiesShowcase({
     };
 
     // Listen for print mode changes
-    printMediaQuery.addEventListener("change", handlePrintChange);
+    printMediaQuery.addEventListener('change', handlePrintChange);
 
     return () => {
-      printMediaQuery.removeEventListener("change", handlePrintChange);
+      printMediaQuery.removeEventListener('change', handlePrintChange);
     };
   }, []);
-
 
   return (
     <Box
@@ -169,7 +172,7 @@ export default function TechnologiesShowcase({
       aria-labelledby="technologies-heading"
       sx={{
         mb: 6,
-        pb: 1
+        pb: 1,
       }}
     >
       <Typography
@@ -179,13 +182,13 @@ export default function TechnologiesShowcase({
         component="h2"
         sx={{
           color: palette.secondary,
-          fontSize: "2rem",
+          fontSize: '2rem',
           mt: 0,
           mb: 2,
-          textAlign: "center"
+          textAlign: 'center',
         }}
       >
-        {t("colophon.technologies.heading", { ns: "pages" })}
+        {t('colophon.technologies.heading', { ns: 'pages' })}
       </Typography>
 
       {intro.map((paragraph, index) => (
@@ -194,7 +197,7 @@ export default function TechnologiesShowcase({
           variant="body1"
           sx={{
             mb: index < intro.length - 1 ? 2 : 4,
-            lineHeight: 1.7
+            lineHeight: 1.7,
           }}
         >
           {paragraph}
@@ -203,7 +206,7 @@ export default function TechnologiesShowcase({
 
       {/* V2 Technologies by Category */}
       {categories.map((category) => (
-        <Box 
+        <Box
           className="technologies-category"
           key={category.label}
           sx={{ mb: 4 }}
@@ -214,7 +217,7 @@ export default function TechnologiesShowcase({
             sx={{
               fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
-              fontSize: "1.25rem",
+              fontSize: '1.25rem',
               mb: 2,
             }}
           >
@@ -222,11 +225,11 @@ export default function TechnologiesShowcase({
           </Typography>
           <Box
             sx={{
-              display: "grid",
+              display: 'grid',
               gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
+                xs: '1fr',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
               },
               gap: 2,
             }}
@@ -245,8 +248,8 @@ export default function TechnologiesShowcase({
         onChange={(_, isExpanded) => setV1AccordionExpanded(isExpanded)}
         sx={{
           mt: 4,
-          backgroundColor: "background.paper",
-          "&:before": { display: "none" },
+          backgroundColor: 'background.paper',
+          '&:before': { display: 'none' },
         }}
       >
         <AccordionSummary
@@ -260,27 +263,23 @@ export default function TechnologiesShowcase({
             sx={{
               fontFamily: FONT_FAMILY_HEADING,
               fontWeight: 600,
-              fontSize: "1.25rem",
+              fontSize: '1.25rem',
             }}
           >
-            {t("colophon.technologies.v1.heading", { ns: "pages" })}
+            {t('colophon.technologies.v1.heading', { ns: 'pages' })}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mb: 2 }}
-          >
-            {t("colophon.technologies.v1.description", { ns: "pages" })}
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            {t('colophon.technologies.v1.description', { ns: 'pages' })}
           </Typography>
           <Box
             sx={{
-              display: "grid",
+              display: 'grid',
               gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
+                xs: '1fr',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
               },
               gap: 2,
             }}

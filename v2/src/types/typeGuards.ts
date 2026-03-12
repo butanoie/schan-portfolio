@@ -1,5 +1,9 @@
 import { Project, ProjectImage, ProjectVideo } from './project';
-import { VIDEO_ID_PATTERNS, STRING_CONSTRAINTS, DIMENSION_CONSTRAINTS } from '../constants/app';
+import {
+  VIDEO_ID_PATTERNS,
+  STRING_CONSTRAINTS,
+  DIMENSION_CONSTRAINTS,
+} from '../constants/app';
 
 /**
  * Regex pattern for valid Vimeo video IDs.
@@ -71,7 +75,12 @@ export function isValidUrlPath(url: string): boolean {
   }
 
   // Block command injection attempts first
-  if (url.includes(';') || url.includes('|') || url.includes('&') || url.includes('`')) {
+  if (
+    url.includes(';') ||
+    url.includes('|') ||
+    url.includes('&') ||
+    url.includes('`')
+  ) {
     return false;
   }
 
@@ -124,7 +133,11 @@ export function isValidDimension(
   }
 
   // Check bounds (must be integer)
-  return Number.isInteger(dimension) && dimension >= minDimension && dimension <= maxDimension;
+  return (
+    Number.isInteger(dimension) &&
+    dimension >= minDimension &&
+    dimension <= maxDimension
+  );
 }
 
 /**
@@ -151,7 +164,10 @@ export function isValidDimension(
  * - Prevents semicolon injection (e.g., `; malicious_code`)
  * - Prevents path traversal attempts (e.g., `../../`)
  */
-export function isValidVideoId(id: string, platform: 'vimeo' | 'youtube'): boolean {
+export function isValidVideoId(
+  id: string,
+  platform: 'vimeo' | 'youtube'
+): boolean {
   if (typeof id !== 'string') {
     throw new TypeError('Video ID must be a string');
   }
@@ -334,14 +350,18 @@ export function isProject(obj: any): obj is Project {
   }
 
   // Validate desc array
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (!Array.isArray(obj.desc) || !obj.desc.every((item: any) => typeof item === 'string')) {
+  if (
+    !Array.isArray(obj.desc) ||
+    !obj.desc.every((item: unknown) => typeof item === 'string')
+  ) {
     return false;
   }
 
   // Validate tags array
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (!Array.isArray(obj.tags) || !obj.tags.every((tag: any) => typeof tag === 'string')) {
+  if (
+    !Array.isArray(obj.tags) ||
+    !obj.tags.every((tag: unknown) => typeof tag === 'string')
+  ) {
     return false;
   }
 
@@ -373,7 +393,9 @@ export function validateProjects(data: any[]): data is Project[] {
 
   for (let i = 0; i < data.length; i++) {
     if (!isProject(data[i])) {
-      throw new Error(`Invalid project at index ${i}: ${JSON.stringify(data[i])}`);
+      throw new Error(
+        `Invalid project at index ${i}: ${JSON.stringify(data[i])}`
+      );
     }
   }
 

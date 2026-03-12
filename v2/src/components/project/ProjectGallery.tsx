@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Box } from "@mui/material";
-import type { SxProps, Theme } from "@mui/material/styles";
-import dynamic from "next/dynamic";
-import type { ProjectImage as ProjectImageType } from "../../types";
-import { ProjectImage } from "./ProjectImage";
-import { useLightbox } from "../../hooks";
+import { Box } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
+import type { ProjectImage as ProjectImageType } from '../../types';
+import { ProjectImage } from './ProjectImage';
+import { useLightbox } from '../../hooks';
 
 /**
  * Lazily-loaded lightbox modal component.
@@ -23,7 +23,7 @@ const ProjectLightbox = dynamic(
    * @returns The module with ProjectLightbox as the default export
    */
   () =>
-    import("./ProjectLightbox").then((m) => ({ default: m.ProjectLightbox })),
+    import('./ProjectLightbox').then((m) => ({ default: m.ProjectLightbox })),
   {
     ssr: false,
     /**
@@ -104,15 +104,15 @@ function getGridColumns(
   altGrid: boolean
 ): Record<string, string> {
   if (narrow) {
-    return { xs: "repeat(4, 1fr)", md: "repeat(2, 1fr)" };
+    return { xs: 'repeat(4, 1fr)', md: 'repeat(2, 1fr)' };
   }
   if (fourColumns) {
-    return { xs: "repeat(4, 1fr)" };
+    return { xs: 'repeat(4, 1fr)' };
   }
   if (altGrid) {
-    return { xs: "1fr", md: "repeat(4, 1fr)" };
+    return { xs: '1fr', md: 'repeat(4, 1fr)' };
   }
-  return { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" };
+  return { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' };
 }
 
 /**
@@ -159,7 +159,7 @@ export function ProjectGallery({
       {/* Thumbnail Grid */}
       <Box
         sx={{
-          display: "grid",
+          display: 'grid',
           gridTemplateColumns: getGridColumns(narrow, fourColumns, altGrid),
           gap: 2,
         }}
@@ -174,8 +174,9 @@ export function ProjectGallery({
               borderRadius: 2,
               boxShadow: 2,
               opacity: 0.85,
-              transition: "box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out",
-              "&:hover": {
+              transition:
+                'box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out',
+              '&:hover': {
                 boxShadow: 4,
                 opacity: 1,
               },

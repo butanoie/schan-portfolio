@@ -86,19 +86,17 @@ const resources = {
  * Uses static resources loaded at build time for optimal Turbopack compatibility.
  */
 if (!i18next.isInitialized) {
-  i18next
-    .use(initReactI18next)
-    .init({
-      fallbackLng: 'en',
-      defaultNS: 'common',
-      ns: ['common', 'pages', 'components'],
-      interpolation: {
-        escapeValue: false, // React already protects against XSS
-      },
-      resources,
-      saveMissing: false,
-      showSupportNotice: false,
-    });
+  i18next.use(initReactI18next).init({
+    fallbackLng: 'en',
+    defaultNS: 'common',
+    ns: ['common', 'pages', 'components'],
+    interpolation: {
+      escapeValue: false, // React already protects against XSS
+    },
+    resources,
+    saveMissing: false,
+    showSupportNotice: false,
+  });
 }
 
 export default i18next;

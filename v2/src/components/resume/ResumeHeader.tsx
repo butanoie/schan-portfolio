@@ -1,14 +1,14 @@
-import { Box, Typography, Button, Stack } from "@mui/material";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import DownloadIcon from "@mui/icons-material/Download";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
-import LinkIcon from "@mui/icons-material/Link";
-import type { ResumeHeaderContent } from "../../types/resume";
-import { BRAND_COLORS, NAV_COLORS } from "../../constants";
-import { FONT_FAMILY_HEADING } from "@/src/lib/fontConstants";
-import { rot13 } from "../../utils/obfuscation";
+import { Box, Typography, Button, Stack } from '@mui/material';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import DownloadIcon from '@mui/icons-material/Download';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LinkIcon from '@mui/icons-material/Link';
+import type { ResumeHeaderContent } from '../../types/resume';
+import { BRAND_COLORS, NAV_COLORS } from '../../constants';
+import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
+import { rot13 } from '../../utils/obfuscation';
 
 /**
  * Props for the ResumeHeader component.
@@ -69,11 +69,11 @@ export default function ResumeHeader({
       sx={{
         pt: 4,
         pb: { xs: 0, md: 0 },
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
         gap: { xs: 3, md: 4 },
-        justifyContent: "space-between",
-        alignItems: { xs: "stretch", md: "flex-end" },
+        justifyContent: 'space-between',
+        alignItems: { xs: 'stretch', md: 'flex-end' },
       }}
     >
       {/* Left Section: Name and Tagline */}
@@ -92,7 +92,7 @@ export default function ResumeHeader({
             fontFamily: FONT_FAMILY_HEADING,
             fontWeight: 700,
             color: textPrimaryColor,
-            fontSize: { xs: "2rem", md: "2.5rem" },
+            fontSize: { xs: '2rem', md: '2.5rem' },
             mb: 2,
           }}
         >
@@ -105,7 +105,7 @@ export default function ResumeHeader({
             <Typography
               variant="body1"
               sx={{
-                fontSize: { xs: "1rem", md: "1.1rem" },
+                fontSize: { xs: '1rem', md: '1.1rem' },
                 fontWeight: 600,
                 color: textPrimaryColor,
               }}
@@ -115,7 +115,7 @@ export default function ResumeHeader({
             <Typography
               variant="body1"
               sx={{
-                fontSize: { xs: "0.95rem", md: "1rem" },
+                fontSize: { xs: '0.95rem', md: '1rem' },
                 lineHeight: 1.6,
                 color: textSecondaryColor,
                 mt: 0.5,
@@ -128,7 +128,7 @@ export default function ResumeHeader({
           <Typography
             variant="body1"
             sx={{
-              fontSize: { xs: "1rem", md: "1.1rem" },
+              fontSize: { xs: '1rem', md: '1.1rem' },
               lineHeight: 1.6,
               color: textPrimaryColor,
             }}
@@ -143,17 +143,19 @@ export default function ResumeHeader({
         direction="column"
         spacing={1}
         sx={{
-          flex: { xs: "100%", md: "0 0 33%" },
-          minWidth: "320px",
+          flex: { xs: '100%', md: '0 0 33%' },
+          minWidth: '320px',
         }}
       >
         {contactLinks.map((link, index) => {
           const IconComponent = iconMap[link.icon];
-          const isDownload = link.icon === "download";
-          const isPrintOnly = link.icon === "link";
-          const isSageColor = ["email", "phone", "linkedin", "github"].includes(link.icon);
+          const isDownload = link.icon === 'download';
+          const isPrintOnly = link.icon === 'link';
+          const isSageColor = ['email', 'phone', 'linkedin', 'github'].includes(
+            link.icon
+          );
           // Decode obfuscated email and phone labels and URLs
-          const shouldDecode = ["email", "phone"].includes(link.icon);
+          const shouldDecode = ['email', 'phone'].includes(link.icon);
           const displayLabel = shouldDecode ? rot13(link.label) : link.label;
           const displayUrl = shouldDecode ? rot13(link.url) : link.url;
 
@@ -162,28 +164,32 @@ export default function ResumeHeader({
               key={index}
               variant="contained"
               href={displayUrl}
-              target={isDownload ? "_blank" : undefined}
-              rel={isDownload ? "noopener noreferrer" : undefined}
+              target={isDownload ? '_blank' : undefined}
+              rel={isDownload ? 'noopener noreferrer' : undefined}
               startIcon={<IconComponent />}
-              aria-label={`${displayLabel}${isDownload ? " (opens in new tab)" : ""}`}
-              className={isDownload ? "no-print" : isPrintOnly ? "print-only" : undefined}
+              aria-label={`${displayLabel}${isDownload ? ' (opens in new tab)' : ''}`}
+              className={
+                isDownload ? 'no-print' : isPrintOnly ? 'print-only' : undefined
+              }
               sx={{
-                backgroundColor: isSageColor ? BRAND_COLORS.sage : BRAND_COLORS.maroon,
-                color: "#ffffff",
-                textTransform: "none",
-                fontSize: "0.95rem",
+                backgroundColor: isSageColor
+                  ? BRAND_COLORS.sage
+                  : BRAND_COLORS.maroon,
+                color: '#ffffff',
+                textTransform: 'none',
+                fontSize: '0.95rem',
                 fontWeight: 600,
                 px: 3,
                 py: 1,
-                width: "100%",
-                justifyContent: "flex-start",
+                width: '100%',
+                justifyContent: 'flex-start',
                 gap: 1,
-                boxShadow: "none",
-                "&:hover": {
+                boxShadow: 'none',
+                '&:hover': {
                   backgroundColor: isSageColor
                     ? NAV_COLORS.inactiveHover
                     : BRAND_COLORS.maroonDark,
-                  boxShadow: "none",
+                  boxShadow: 'none',
                 },
               }}
             >

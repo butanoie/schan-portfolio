@@ -51,7 +51,16 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['.NET 9', '.NET MAUI', 'C#', 'Reqnroll', 'xUnit', 'Selenium', 'Gherkin', 'Claude Code'],
+    tags: [
+      '.NET 9',
+      '.NET MAUI',
+      'C#',
+      'Reqnroll',
+      'xUnit',
+      'Selenium',
+      'Gherkin',
+      'Claude Code',
+    ],
     images: [
       {
         url: '/images/gallery/csDownload/download-light.png',
@@ -84,7 +93,17 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['.NET 8', 'C#', 'React.js', 'Fluent UI', 'JointJS+', 'Kubernetes', 'SQL Server', 'CosmosDB', 'Azure Cloud Services'],
+    tags: [
+      '.NET 8',
+      'C#',
+      'React.js',
+      'Fluent UI',
+      'JointJS+',
+      'Kubernetes',
+      'SQL Server',
+      'CosmosDB',
+      'Azure Cloud Services',
+    ],
     images: [
       {
         url: '/images/gallery/collabspace/analytics.jpg',
@@ -137,7 +156,15 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['Outlook', 'SharePoint Server', 'SharePoint Online', 'ASP.Net', 'C#', 'WPF', 'XSLT'],
+    tags: [
+      'Outlook',
+      'SharePoint Server',
+      'SharePoint Online',
+      'ASP.Net',
+      'C#',
+      'WPF',
+      'XSLT',
+    ],
     images: [
       {
         url: '/images/gallery/collabmail/attachment-add.png',
@@ -170,7 +197,16 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['SharePoint Server', 'SQL Server', 'ASP.Net', 'C#', 'Dojo Toolkit', 'JointJS+', 'ASP.Net AJAX', 'XSLT'],
+    tags: [
+      'SharePoint Server',
+      'SQL Server',
+      'ASP.Net',
+      'C#',
+      'Dojo Toolkit',
+      'JointJS+',
+      'ASP.Net AJAX',
+      'XSLT',
+    ],
     images: [
       {
         url: '/images/gallery/clm/library.jpg',
@@ -319,7 +355,16 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['SharePoint 2010', 'SharePoint 2007', 'ASP.Net', 'C#', 'jQuery', 'ASP.Net AJAX', 'Telerik RadControls', 'XSLT'],
+    tags: [
+      'SharePoint 2010',
+      'SharePoint 2007',
+      'ASP.Net',
+      'C#',
+      'jQuery',
+      'ASP.Net AJAX',
+      'Telerik RadControls',
+      'XSLT',
+    ],
     images: [
       {
         url: '/images/gallery/spMisc/collabware.jpg',
@@ -400,7 +445,13 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['Dynamics ERP', 'ASP.Net', 'C#', 'ASP.Net AJAX', 'Telerik RadControls'],
+    tags: [
+      'Dynamics ERP',
+      'ASP.Net',
+      'C#',
+      'ASP.Net AJAX',
+      'Telerik RadControls',
+    ],
     images: [
       {
         url: '/images/gallery/cornerstone/home.jpg',
@@ -433,7 +484,14 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['Windows Live Services', 'Silverlight', 'Bing Maps', 'ASP.Net', 'C#', 'ASP.Net AJAX'],
+    tags: [
+      'Windows Live Services',
+      'Silverlight',
+      'Bing Maps',
+      'ASP.Net',
+      'C#',
+      'ASP.Net AJAX',
+    ],
     images: [
       {
         url: '/images/gallery/contosoriders/home.jpg',
@@ -461,7 +519,12 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['Adobe Flex', 'ActionScript 3.0', 'Nintendo Wii-mote', '10 Foot UI Design'],
+    tags: [
+      'Adobe Flex',
+      'ActionScript 3.0',
+      'Nintendo Wii-mote',
+      '10 Foot UI Design',
+    ],
     images: [
       {
         url: '/images/gallery/bpDashboard/home.jpg',
@@ -600,7 +663,14 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['grASP CMS', 'ASP Classic', 'SQL Server', 'XSLT', 'Adobe Flash', 'ActionScript 2.0'],
+    tags: [
+      'grASP CMS',
+      'ASP Classic',
+      'SQL Server',
+      'XSLT',
+      'Adobe Flash',
+      'ActionScript 2.0',
+    ],
     images: [
       {
         url: '/images/gallery/gi/home.jpg',
@@ -666,7 +736,14 @@ export const PROJECTS: readonly Project[] = [
     title: '',
     desc: [],
     circa: '',
-    tags: ['ASP Classic', 'SQL Server', 'Server JScript', 'XSLT', 'Adobe Flash', 'ActionScript 2.0'],
+    tags: [
+      'ASP Classic',
+      'SQL Server',
+      'Server JScript',
+      'XSLT',
+      'Adobe Flash',
+      'ActionScript 2.0',
+    ],
     images: [
       {
         url: '/images/gallery/grASP/ldb.jpg',

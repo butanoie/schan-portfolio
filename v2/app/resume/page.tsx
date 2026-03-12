@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Container, Box, Divider } from "@mui/material";
+import { Container, Box, Divider } from '@mui/material';
 import {
   ResumeHeader,
   ProfessionalSummary,
@@ -9,11 +9,11 @@ import {
   Education,
   ClientList,
   ConferenceSpeaker,
-} from "../../src/components/resume";
-import { getLocalizedResumeData } from "../../src/data/resume";
-import { useI18n } from "../../src/hooks/useI18n";
-import { usePalette } from "../../src/hooks/usePalette";
-import "./print.css";
+} from '../../src/components/resume';
+import { getLocalizedResumeData } from '../../src/data/resume';
+import { useI18n } from '../../src/hooks/useI18n';
+import { usePalette } from '../../src/hooks/usePalette';
+import './print.css';
 
 /**
  * Resume page component.
@@ -71,8 +71,8 @@ export default function ResumePage() {
       {/* Two Column Layout - Responsive */}
       <Box
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
           gap: { xs: 6, md: 6 },
         }}
       >
@@ -81,8 +81,8 @@ export default function ResumePage() {
         <Box
           sx={{
             order: { xs: 1, md: 2 },
-            flex: { xs: "1", md: "0 0 33%" },
-            minWidth: "320px",
+            flex: { xs: '1', md: '0 0 33%' },
+            minWidth: '320px',
           }}
         >
           <CoreCompetencies
@@ -111,7 +111,9 @@ export default function ResumePage() {
           <ConferenceSpeaker
             content={data.speaking}
             cardTextColor={palette.card.text}
-            sectionHeading={t('resume.conferenceSpeaker.heading', { ns: 'pages' })}
+            sectionHeading={t('resume.conferenceSpeaker.heading', {
+              ns: 'pages',
+            })}
           />
         </Box>
 
@@ -120,7 +122,7 @@ export default function ResumePage() {
         <Box
           sx={{
             order: { xs: 2, md: 1 },
-            flex: { xs: "1", md: "1" },
+            flex: { xs: '1', md: '1' },
           }}
         >
           <ProfessionalSummary />

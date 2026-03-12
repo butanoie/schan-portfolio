@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Hook for accessing the current theme palette.
@@ -9,9 +9,9 @@
  * @module hooks/usePalette
  */
 
-import { useThemeContext } from "@/src/contexts/ThemeContext";
-import { getPaletteByMode } from "@/src/lib/themes";
-import type { ThemePalette, ThemeMode } from "@/src/types/theme";
+import { useThemeContext } from '@/src/contexts/ThemeContext';
+import { getPaletteByMode } from '@/src/lib/themes';
+import type { ThemePalette, ThemeMode } from '@/src/types/theme';
 
 /**
  * Return value for the usePalette hook.
@@ -62,13 +62,12 @@ interface UsePaletteReturn {
  * }
  * ```
  */
-export function usePalette(
-  options?: { hydrationSafe?: boolean }
-): UsePaletteReturn {
+export function usePalette(options?: {
+  hydrationSafe?: boolean;
+}): UsePaletteReturn {
   const { mode, isMounted } = useThemeContext();
 
-  const effectiveMode =
-    options?.hydrationSafe && !isMounted ? "light" : mode;
+  const effectiveMode = options?.hydrationSafe && !isMounted ? 'light' : mode;
 
   return {
     palette: getPaletteByMode(effectiveMode),

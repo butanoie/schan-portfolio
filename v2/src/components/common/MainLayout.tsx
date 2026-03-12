@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { createContext, useState, useCallback } from "react";
-import { Box, Container } from "@mui/material";
-import { usePathname } from "next/navigation";
-import Header from "./Header";
-import Footer from "./Footer";
-import { FrenchTranslationAlert } from "./FrenchTranslationAlert";
-import { ProjectLoadingProvider } from "../../contexts/ProjectLoadingContext";
-import { useI18n } from "@/src/hooks/useI18n";
+import React, { createContext, useState, useCallback } from 'react';
+import { Box, Container } from '@mui/material';
+import { usePathname } from 'next/navigation';
+import Header from './Header';
+import Footer from './Footer';
+import { FrenchTranslationAlert } from './FrenchTranslationAlert';
+import { ProjectLoadingProvider } from '../../contexts/ProjectLoadingContext';
+import { useI18n } from '@/src/hooks/useI18n';
 
 /**
  * Represents the loading state for projects in the async list.
@@ -68,7 +68,8 @@ export default function MainLayout({
   // home. This avoids stale state issues without needing effects or refs,
   // since MainLayout never unmounts in the Next.js App Router.
   const isHome = pathname === '/';
-  const [projectLoadingState, setProjectLoadingState] = useState<ProjectLoadingState | null>(null);
+  const [projectLoadingState, setProjectLoadingState] =
+    useState<ProjectLoadingState | null>(null);
   const effectiveLoadingState = isHome ? projectLoadingState : null;
 
   /**
@@ -98,7 +99,9 @@ export default function MainLayout({
           py: 4,
         }}
       >
-        <ProjectLoadingStateBridgeContext.Provider value={{ onStateChange: handleStateChange }}>
+        <ProjectLoadingStateBridgeContext.Provider
+          value={{ onStateChange: handleStateChange }}
+        >
           {children}
         </ProjectLoadingStateBridgeContext.Provider>
       </Container>
@@ -109,9 +112,9 @@ export default function MainLayout({
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
       }}
     >
       {/* Skip to main content link for keyboard navigation */}
@@ -119,16 +122,16 @@ export default function MainLayout({
         component="a"
         href="#main-content"
         sx={{
-          position: "absolute",
-          left: "-9999px",
+          position: 'absolute',
+          left: '-9999px',
           zIndex: 999,
-          padding: "1em",
-          backgroundColor: "primary.main",
-          color: "primary.contrastText",
-          textDecoration: "none",
-          "&:focus": {
-            left: "50%",
-            transform: "translateX(-50%)",
+          padding: '1em',
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+          textDecoration: 'none',
+          '&:focus': {
+            left: '50%',
+            transform: 'translateX(-50%)',
             top: 0,
           },
         }}
@@ -150,4 +153,3 @@ export default function MainLayout({
     </Box>
   );
 }
-

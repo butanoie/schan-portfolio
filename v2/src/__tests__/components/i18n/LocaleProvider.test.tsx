@@ -208,7 +208,9 @@ describe('LocaleProvider', () => {
 
   describe('Error Handling', () => {
     it('should handle i18next initialization errors gracefully', async () => {
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       vi.mocked(i18next.changeLanguage).mockRejectedValueOnce(
         new Error('i18next failed')
@@ -232,7 +234,9 @@ describe('LocaleProvider', () => {
     });
 
     it('should continue functioning after i18next error', async () => {
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       vi.mocked(i18next.changeLanguage).mockRejectedValueOnce(
         new Error('i18next failed')

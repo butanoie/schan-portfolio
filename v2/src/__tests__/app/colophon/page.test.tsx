@@ -1,11 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "../../../__tests__/test-utils";
-import { ReactNode } from "react";
-import ColophonPage from "../../../../app/colophon/page";
-import { ThemeContextProvider } from "../../../../src/contexts/ThemeContext";
-import { AnimationsContextProvider } from "../../../../src/contexts/AnimationsContext";
-import { LocaleProvider } from "../../../../src/components/i18n/LocaleProvider";
-import ThemeProvider from "../../../../src/components/ThemeProvider";
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '../../../__tests__/test-utils';
+import { ReactNode } from 'react';
+import ColophonPage from '../../../../app/colophon/page';
+import { ThemeContextProvider } from '../../../../src/contexts/ThemeContext';
+import { AnimationsContextProvider } from '../../../../src/contexts/AnimationsContext';
+import { LocaleProvider } from '../../../../src/components/i18n/LocaleProvider';
+import ThemeProvider from '../../../../src/components/ThemeProvider';
 
 /**
  * Mock Next.js Image component for testing.
@@ -15,7 +15,7 @@ import ThemeProvider from "../../../../src/components/ThemeProvider";
  * @param props.alt - Image alt text
  * @returns An img element
  */
-vi.mock("next/image", () => ({
+vi.mock('next/image', () => ({
   // eslint-disable-next-line jsdoc/require-jsdoc
   default: ({
     src,
@@ -64,110 +64,110 @@ function Wrapper({ children }: { children: ReactNode }) {
  * - Design Philosophy section
  * - Buta Story section
  */
-describe("ColophonPage", () => {
-  it("should render the Choice Cuts header image", () => {
+describe('ColophonPage', () => {
+  it('should render the Choice Cuts header image', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     const headerImage = screen.getByAltText(/choice cuts.*pork cuts diagram/i);
     expect(headerImage).toBeInTheDocument();
-    expect(headerImage).toHaveAttribute("src", "/images/choice_cuts@2x-en.png");
+    expect(headerImage).toHaveAttribute('src', '/images/choice_cuts@2x-en.png');
   });
 
-  it("should render the About section with Colophon heading", () => {
+  it('should render the About section with Colophon heading', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
-      screen.getByRole("heading", { name: /colophon/i, level: 1 })
+      screen.getByRole('heading', { name: /colophon/i, level: 1 })
     ).toBeInTheDocument();
   });
 
-  it("should render the Technologies section", () => {
+  it('should render the Technologies section', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
-      screen.getByRole("heading", { name: /technologies/i, level: 2 })
+      screen.getByRole('heading', { name: /technologies/i, level: 2 })
     ).toBeInTheDocument();
   });
 
-  it("should render the Design & Typography section", () => {
+  it('should render the Design & Typography section', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
-      screen.getByRole("heading", { name: /design & typography/i, level: 2 })
+      screen.getByRole('heading', { name: /design & typography/i, level: 2 })
     ).toBeInTheDocument();
   });
 
-  it("should render the Buta Story section", () => {
+  it('should render the Buta Story section', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // The Buta Story has a visually hidden heading for accessibility
     expect(
-      screen.getByRole("heading", { name: /the story of buta/i, level: 2 })
+      screen.getByRole('heading', { name: /the story of buta/i, level: 2 })
     ).toBeInTheDocument();
   });
 
-  it("should render the Boo vs Bu comparison image", () => {
+  it('should render the Boo vs Bu comparison image', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     const versusImage = screen.getByAltText(/boo vs bu/i);
     expect(versusImage).toBeInTheDocument();
   });
 
-  it("should render all major content sections", () => {
+  it('should render all major content sections', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Verify all four sections are present via their aria-labeled regions
     expect(
-      screen.getByRole("region", { name: /colophon/i })
+      screen.getByRole('region', { name: /colophon/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("region", { name: /technologies/i })
+      screen.getByRole('region', { name: /technologies/i })
     ).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /design/i })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /buta/i })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: /design/i })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: /buta/i })).toBeInTheDocument();
   });
 
-  it("should render color palette swatches", () => {
+  it('should render color palette swatches', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for some of the color names from the palette
-    expect(screen.getByText("Sakura")).toBeInTheDocument();
-    expect(screen.getByText("Maroon")).toBeInTheDocument();
-    expect(screen.getByText("Graphite")).toBeInTheDocument();
+    expect(screen.getByText('Sakura')).toBeInTheDocument();
+    expect(screen.getByText('Maroon')).toBeInTheDocument();
+    expect(screen.getByText('Graphite')).toBeInTheDocument();
   });
 
-  it("should render typography samples", () => {
+  it('should render typography samples', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for font names
-    expect(screen.getByText("Open Sans")).toBeInTheDocument();
-    expect(screen.getByText("Oswald")).toBeInTheDocument();
-    expect(screen.getByText("Gochi Hand")).toBeInTheDocument();
+    expect(screen.getByText('Open Sans')).toBeInTheDocument();
+    expect(screen.getByText('Oswald')).toBeInTheDocument();
+    expect(screen.getByText('Gochi Hand')).toBeInTheDocument();
   });
 
-  it("should render technology categories", () => {
+  it('should render technology categories', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     // Check for V2 technology category headings
-    expect(screen.getByText("Core Stack")).toBeInTheDocument();
-    expect(screen.getByText("Development Experience")).toBeInTheDocument();
-    expect(screen.getByText("AI-Powered Development")).toBeInTheDocument();
-    expect(screen.getByText("UI & Styling")).toBeInTheDocument();
-    expect(screen.getByText("Testing & Quality Assurance")).toBeInTheDocument();
-    expect(screen.getByText("Deployment & CI/CD")).toBeInTheDocument();
+    expect(screen.getByText('Core Stack')).toBeInTheDocument();
+    expect(screen.getByText('Development Experience')).toBeInTheDocument();
+    expect(screen.getByText('AI-Powered Development')).toBeInTheDocument();
+    expect(screen.getByText('UI & Styling')).toBeInTheDocument();
+    expect(screen.getByText('Testing & Quality Assurance')).toBeInTheDocument();
+    expect(screen.getByText('Deployment & CI/CD')).toBeInTheDocument();
   });
 
-  it("should render the V1 technologies accordion", () => {
+  it('should render the V1 technologies accordion', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
     expect(
-      screen.getByRole("button", { name: /original v1 technologies/i })
+      screen.getByRole('button', { name: /original v1 technologies/i })
     ).toBeInTheDocument();
   });
 
-  it("should have proper article landmark", () => {
+  it('should have proper article landmark', () => {
     render(<ColophonPage />, { wrapper: Wrapper });
 
-    expect(screen.getByRole("article")).toBeInTheDocument();
+    expect(screen.getByRole('article')).toBeInTheDocument();
   });
 });

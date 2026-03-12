@@ -473,8 +473,12 @@ describe('useLightbox', () => {
 
       expect(result.current.openLightbox).toBe(initialHandlers.openLightbox);
       expect(result.current.closeLightbox).toBe(initialHandlers.closeLightbox);
-      expect(result.current.handleNextImage).toBe(initialHandlers.handleNextImage);
-      expect(result.current.handlePreviousImage).toBe(initialHandlers.handlePreviousImage);
+      expect(result.current.handleNextImage).toBe(
+        initialHandlers.handleNextImage
+      );
+      expect(result.current.handlePreviousImage).toBe(
+        initialHandlers.handlePreviousImage
+      );
     });
 
     it('should update handlers when imagesCount changes', () => {

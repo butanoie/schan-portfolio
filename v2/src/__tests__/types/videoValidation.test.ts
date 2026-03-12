@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  isValidVideoId,
-  isProjectVideo,
-} from '../../types/typeGuards';
+import { isValidVideoId, isProjectVideo } from '../../types/typeGuards';
 
 describe('Video ID Validation', () => {
   describe('isValidVideoId', () => {
@@ -116,16 +113,30 @@ describe('Video ID Validation', () => {
 
     describe('Error handling', () => {
       it('should throw TypeError if ID is not a string', () => {
-        expect(() => isValidVideoId(null as unknown as string, 'vimeo')).toThrow(TypeError);
-        expect(() => isValidVideoId(undefined as unknown as string, 'youtube')).toThrow(TypeError);
-        expect(() => isValidVideoId(123 as unknown as string, 'vimeo')).toThrow(TypeError);
-        expect(() => isValidVideoId({} as unknown as string, 'youtube')).toThrow(TypeError);
-        expect(() => isValidVideoId([] as unknown as string, 'vimeo')).toThrow(TypeError);
+        expect(() =>
+          isValidVideoId(null as unknown as string, 'vimeo')
+        ).toThrow(TypeError);
+        expect(() =>
+          isValidVideoId(undefined as unknown as string, 'youtube')
+        ).toThrow(TypeError);
+        expect(() => isValidVideoId(123 as unknown as string, 'vimeo')).toThrow(
+          TypeError
+        );
+        expect(() =>
+          isValidVideoId({} as unknown as string, 'youtube')
+        ).toThrow(TypeError);
+        expect(() => isValidVideoId([] as unknown as string, 'vimeo')).toThrow(
+          TypeError
+        );
       });
 
       it('should throw TypeError for invalid platform', () => {
-        expect(() => isValidVideoId('12345678', 'invalid' as unknown as 'vimeo')).toThrow(TypeError);
-        expect(() => isValidVideoId('dQw4w9WgXcQ', 'VIMEO' as unknown as 'vimeo')).toThrow(TypeError);
+        expect(() =>
+          isValidVideoId('12345678', 'invalid' as unknown as 'vimeo')
+        ).toThrow(TypeError);
+        expect(() =>
+          isValidVideoId('dQw4w9WgXcQ', 'VIMEO' as unknown as 'vimeo')
+        ).toThrow(TypeError);
       });
     });
 
