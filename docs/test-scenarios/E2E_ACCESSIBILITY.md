@@ -5,6 +5,14 @@
 
 All pages must pass WCAG 2.2 Level AA axe scans across all visual configurations and interactive states.
 
+## Implementation Decisions
+
+- **Theme/locale matrix setup:** Use `seedTheme()`/`seedLocale()` via `addInitScript` before `goto()` (not settings panel UI). The matrix tests validate axe compliance, not the settings interaction — that's covered by the interactive states group and the future `settings.spec.ts`.
+- **Lightbox scan scope:** Full-page axe scan with the dialog open (not scoped to the dialog element via `AxeBuilder.include()`). This catches backdrop/overlay issues in addition to dialog content.
+- **Lightbox target:** First project's first image (`openLightboxForImage(0, 0)`) — simplest and most stable selector.
+- **Keyboard navigation scope:** Targeted test covering ~5-8 representative elements on the home page (nav links, buttons, settings gear) with visible focus indicator checks. Not an exhaustive tab-through of every element.
+- **Browser configuration:** Rely on default Playwright config (Chromium + WebKit). No per-browser `test.describe.configure` needed.
+
 ```gherkin
 Feature: Accessibility Compliance
 
@@ -60,9 +68,9 @@ Feature: Accessibility Compliance
 
   Scenario: Lightbox dialog passes axe scan
     Given the home page is loaded
-    And a project image thumbnail is clicked to open the lightbox
-    When an axe accessibility scan is run on the dialog
-    Then there are zero violations within the lightbox dialog
+    And the first project's first image thumbnail is clicked to open the lightbox
+    When a full-page axe accessibility scan is run
+    Then there are zero violations
 
   Scenario: Settings popover passes axe scan
     Given any page is loaded

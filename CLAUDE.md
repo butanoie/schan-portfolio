@@ -190,11 +190,18 @@ When adding new infrastructure, create docs in the appropriate `docs/` subdirect
 
 ## Feature Development Workflow
 
-When using the feature-dev skill (or any structured multi-phase workflow), after Phase 3 (Clarifying Questions) answers are received, always update relevant documentation with the decisions made before proceeding to Phase 4 (Architecture Design). This includes:
+### Post-Architecture Documentation Gate
 
-- **Architecture docs** — Update specifications with confirmed details, refined selectors, or new technical constraints
-- **Roadmaps** — Reflect scope changes, new checklist items, or adjusted priorities
-- **GitHub issues** — Sync issue bodies with the latest decisions and technical notes
+**CRITICAL: After Phase 4 (Architecture Design) is approved by the user, you MUST update documentation BEFORE proceeding to Phase 5 (Implementation).** Do NOT skip this step. Do NOT start writing code until docs are updated. Treat missing doc updates as a blocker, equivalent to a failing build.
+
+Phase 3 captures user preferences; Phase 4 translates them into concrete technical choices. Documentation should reflect the fully-formed decisions, not partial ones.
+
+**Checklist (review each item explicitly):**
+
+- **Scenario docs** (`docs/test-scenarios/`) — Update with confirmed implementation decisions, refined scope, or amended Gherkin
+- **Architecture docs** (`docs/guides/`) — Update specifications with confirmed details, refined selectors, or new technical constraints
+- **Roadmaps** (`docs/active/`) — Reflect scope changes, new checklist items, or adjusted priorities
+- **GitHub issues** — Post a comment syncing the latest decisions and technical notes
 - **CLAUDE.md** — Add new conventions or standards that emerged from the discussion
 
 This ensures documentation stays ahead of implementation, not behind it.
@@ -207,9 +214,13 @@ cd v2 && npm run lint && npm run typecheck && npm run format:check && npm test
 ```
 This catches issues that code-review agents miss (JSDoc, React hooks rules, formatting). Run this after Phase 5 (Implementation) and after Phase 6 (Quality Review) fixes.
 
-After Phase 6 (Quality Review) issues have been **fixed**, update documentation in two steps before Phase 7 (Summary):
+### Post-Review Documentation Gate
 
-1. **Update project docs** alongside the fixes — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.
+**CRITICAL: After Phase 6 (Quality Review) issues have been fixed, you MUST update documentation BEFORE proceeding to Phase 7 (Summary).** Do NOT skip this step. Treat missing doc updates as a blocker, equivalent to a failing build.
+
+**Checklist (complete both steps):**
+
+1. **Update project docs** — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.
 2. **Run `/claude-md-management:revise-claude-md`** — capture gotchas and conventions into directory-scoped CLAUDE.md files (e.g., `v2/e2e/CLAUDE.md`, `v2/src/components/CLAUDE.md`). Create new scoped CLAUDE.md files when a feature introduces a new directory with its own conventions. Only add to root CLAUDE.md if the learning applies project-wide.
 
 ## Changelog
