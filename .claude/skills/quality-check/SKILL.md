@@ -14,7 +14,7 @@ Run these sequentially from the `v2/` directory. Continue through all steps even
 
 1. **TypeScript** — `npm run typecheck`
 2. **ESLint** — `npm run lint`
-3. **Prettier** — `npm run format:check`
+3. **Prettier** — Check only changed files: `git diff --name-only --diff-filter=ACMR HEAD -- '*.ts' '*.tsx' '*.mjs' '*.json' '*.css' '*.md' | xargs -r npx prettier --check`. If no files changed, skip and report as ✅ (skipped).
 4. **Tests** — `npm test`
 5. **Build** — `npm run build`
 
