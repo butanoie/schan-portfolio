@@ -118,9 +118,10 @@ function validateEmail(email: string): string {
 /**
  * Displays a badge with a label and optional counter.
  *
- * @param label - The text to display in the badge
- * @param count - Optional count number to display as a small circle
- * @param variant - Visual style variant ('default' | 'success' | 'error', default: 'default')
+ * @param props - Component props
+ * @param props.label - The text to display in the badge
+ * @param props.count - Optional count number to display as a small circle
+ * @param props.variant - Visual style variant ('default' | 'success' | 'error', default: 'default')
  * @returns A styled badge element
  *
  * @example
@@ -152,7 +153,8 @@ export function Badge({ label, count, variant = 'default' }: BadgeProps) {
  * Provides authentication context to child components.
  * Must wrap components that use the useAuth hook.
  *
- * @param children - React components to wrap with auth context
+ * @param props - Component props
+ * @param props.children - React components to wrap with auth context
  * @returns A context provider component
  * @throws {Error} If no auth service is configured
  *
@@ -190,11 +192,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 /**
  * Renders a data table with sorting, filtering, and pagination.
  *
- * @param data - Array of row objects to display
- * @param columns - Column definitions (name, label, sortable, formatter)
- * @param onRowClick - Optional callback fired when a row is clicked
- * @param isLoading - Whether table is in loading state (default: false)
- * @param pageSize - Rows per page (default: 10)
+ * @param props - Component props
+ * @param props.data - Array of row objects to display
+ * @param props.columns - Column definitions (name, label, sortable, formatter)
+ * @param props.onRowClick - Optional callback fired when a row is clicked
+ * @param props.isLoading - Whether table is in loading state (default: false)
+ * @param props.pageSize - Rows per page (default: 10)
  * @returns A fully featured data table component
  *
  * **State Managed:**
@@ -492,7 +495,6 @@ interface Paginated<T> {
  * Parses a JSON string with comprehensive error handling.
  *
  * @param jsonString - The JSON string to parse
- * @param fallback - Optional default value if parsing fails
  * @returns Parsed JSON object
  * @throws {SyntaxError} If JSON is invalid
  * @throws {Error} If jsonString is null/undefined
@@ -701,6 +703,95 @@ function MyComponent() {
 }
 ```
 
+### ❌ Missing Return Type Annotation
+
+When `require-returns-type` is off (TypeScript provides types), the return type must still
+be clear from the TypeScript signature. If you omit both the TypeScript annotation AND the
+JSDoc `{type}`, the return type is only discoverable by reading the implementation.
+
+```typescript
+// BAD: No return type — reader must trace through to understand what comes back
+/**
+ * Fetches the first page of English projects.
+ *
+ * @returns Promise resolving to the first 5 English projects
+ */
+async function getInitialProjects() {
+  const response = await getProjects({ page: 1, pageSize: 5, locale: 'en' });
+  return response.items;
+}
+```
+
+**Fix:**
+```typescript
+// GOOD: Explicit return type annotation matches the @returns description
+/**
+ * Fetches the first page of English projects.
+ *
+ * @returns {Promise<Project[]>} Promise resolving to the first 5 English projects
+ */
+async function getInitialProjects(): Promise<Project[]> {
+  const response = await getProjects({ page: 1, pageSize: 5, locale: 'en' });
+  return response.items;
+}
+```
+
+> **Rule of thumb:** Always add an explicit TypeScript return type annotation on functions.
+> The `{type}` in `@returns` is optional when the TypeScript annotation is present, but
+> including both provides maximum clarity.
+
+### ❌ Undocumented Mutable Ref Parameters
+
+When a function or component accepts a mutable `{ current: T }` ref object, the JSDoc
+must clearly describe the ref-pattern semantics (who writes, when, and what `.current`
+holds). The parameter name must also end in `Ref` to satisfy `react-hooks/immutability`.
+
+```typescript
+// BAD: "captured" doesn't convey ref semantics; JSDoc doesn't explain mutability
+/**
+ * Wraps children in a context provider that captures state.
+ *
+ * @param props - Component props
+ * @param props.children - The React tree to wrap
+ * @param props.captured - Object holding the latest state
+ * @returns JSX element with the context provider
+ */
+function BridgeWrapper({
+  children,
+  captured,
+}: {
+  children: ReactNode;
+  captured: { current: LoadingState | null };
+}) { /* ... */ }
+```
+
+**Fix:**
+```typescript
+// GOOD: "capturedRef" suffix satisfies lint; JSDoc describes mutability contract
+/**
+ * Wraps children in a context provider that captures state.
+ *
+ * @param props - Component props
+ * @param props.children - The React tree to wrap
+ * @param props.capturedRef - Mutable ref object whose `.current` is written on each
+ * state change callback. Starts as `null` and is updated with the latest
+ * `LoadingState` whenever the bridge `useEffect` fires.
+ * @returns JSX element with the context provider
+ */
+function BridgeWrapper({
+  children,
+  capturedRef,
+}: {
+  children: ReactNode;
+  capturedRef: React.RefObject<LoadingState | null>;
+}) { /* ... */ }
+```
+
+> **Key points:**
+> - Name the parameter with a `Ref` suffix (`capturedRef`, `stateRef`, `valueRef`)
+> - Use `React.RefObject<T>` as the type instead of `{ current: T }`
+> - Document who writes to `.current`, when, and what the initial value is
+
 ### ❌ Incomplete Component Documentation
 
 ```typescript
@@ -716,9 +807,10 @@ function Button({ onClick, children, disabled, ...rest }) {
 /**
  * A reusable button component.
  *
- * @param onClick - Callback fired when button is clicked
- * @param children - Button label text
- * @param disabled - Whether the button is disabled (default: false)
+ * @param props - Component props
+ * @param props.onClick - Callback fired when button is clicked
+ * @param props.children - Button label text
+ * @param props.disabled - Whether the button is disabled (default: false)
  * @returns A button element
  */
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -767,7 +859,8 @@ function functionName(paramName: Type): ReturnType {
 /**
  * [Brief description of component purpose].
  *
- * @param [propName] - [Description and default]
+ * @param props - Component props
+ * @param props.[propName] - [Description and default]
  * @returns A [description] element
  *
  * @example
@@ -880,9 +973,11 @@ export const simpleConfig = () => ({});
 Before committing code, verify:
 
 - [ ] **Functions:** Have JSDoc with @param, @returns, and description
+- [ ] **Return types:** Explicit TypeScript return type annotation on all functions
 - [ ] **Components:** Document props, context usage, and state
 - [ ] **Hooks:** Include dependency array explanation
 - [ ] **Types:** Have property-level documentation
+- [ ] **Ref parameters:** Named with `Ref` suffix, documented with mutability semantics
 - [ ] **Error handling:** Document what errors can be thrown
 - [ ] **Complex logic:** Include inline comments explaining the "why"
 - [ ] **No `any` types:** Use proper type definitions
