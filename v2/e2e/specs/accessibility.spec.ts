@@ -197,19 +197,23 @@ test.describe('Accessibility Compliance', () => {
      * Scenario: Skip link moves focus to main content.
      *
      * Given any page is loaded
-     * When the user presses Tab once
+     * When the user presses Tab once (Alt+Tab on WebKit)
      * Then the skip-to-main-content link receives focus
      * When the user presses Enter
      * Then focus moves to the main content area
      */
     test('Given page loaded, When Tab then Enter on skip link, Then focus moves to main content', async ({
       homePage,
+      browserName,
     }) => {
       await homePage.goto();
       await expect(homePage.mainContent).toBeVisible();
 
       // When: Tab to skip link
-      await homePage.page.keyboard.press('Tab');
+      // WebKit on macOS excludes links from the default Tab cycle.
+      // Alt+Tab includes all focusable elements (links + form controls).
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+      await homePage.page.keyboard.press(tabKey);
 
       // Then: skip link has focus
       await expect(homePage.skipLink).toBeFocused();

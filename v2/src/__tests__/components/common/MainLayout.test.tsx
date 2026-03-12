@@ -138,11 +138,13 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
   });
 
   /**
-   * Test: Main content area has proper id for skip link
+   * Test: Main content area has proper id and tabindex for skip link target
    *
    * WCAG 2.4.1 - Bypass Blocks
+   * The main content area must be focusable (tabindex="-1") so that the
+   * skip link anchor (#main-content) moves focus to it after activation.
    */
-  it('should have main content area with id', () => {
+  it('should have main content area with id and tabindex for skip link', () => {
     render(
       <MainLayout>
         <div>Test content</div>
@@ -151,6 +153,7 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
 
     const main = screen.getByRole('main');
     expect(main).toHaveAttribute('id', 'main-content');
+    expect(main).toHaveAttribute('tabindex', '-1');
   });
 
   /**

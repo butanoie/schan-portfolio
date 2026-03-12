@@ -93,10 +93,14 @@ export default function MainLayout({
       <Container
         component="main"
         id="main-content"
+        tabIndex={-1}
         maxWidth="lg"
         sx={{
           flex: 1,
           py: 4,
+          '&:focus': {
+            outline: 'none',
+          },
         }}
       >
         <ProjectLoadingStateBridgeContext.Provider
