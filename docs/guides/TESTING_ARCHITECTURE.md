@@ -187,13 +187,16 @@ A separate `tsconfig.e2e.json` extends the main config to avoid polluting it wit
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["@playwright/test"],
+    "types": ["@playwright/test", "node"],
     "baseUrl": ".",
     "paths": { "@/*": ["./*"] }
   },
-  "include": ["e2e/**/*.ts"]
+  "include": ["e2e/**/*.ts"],
+  "exclude": ["node_modules"]
 }
 ```
+
+**Note:** `"node"` is required in `types` because `global-setup.ts` imports `fs` and `path`. The explicit `"exclude": ["node_modules"]` overrides the parent's `"exclude"` which includes `"e2e"` — without this, the child tsconfig would inherit the parent's exclusion and find no input files.
 
 **Isolation requirement:** The main `tsconfig.json` must add `"e2e"` to its `"exclude"` array. Without this, `tsc --noEmit` will fail with conflicts between `vitest/globals` and `@playwright/test` type declarations (both define `test`, `expect`, and `describe` in the global scope). Similarly, `vitest.config.ts` must add `'e2e'` to its `exclude` array to prevent Vitest from discovering `.spec.ts` files in the `e2e/specs/` directory.
 

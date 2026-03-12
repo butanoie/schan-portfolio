@@ -269,7 +269,7 @@ export default function TechnologiesShowcase({
             {t('colophon.technologies.v1.heading', { ns: 'pages' })}
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails id="v1-technologies-content">
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             {t('colophon.technologies.v1.description', { ns: 'pages' })}
           </Typography>
