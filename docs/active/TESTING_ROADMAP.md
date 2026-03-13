@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Phases 5–14 complete. All E2E spec phases, CI integration, and redundancy audit done.
+**Status:** All phases (1–14) complete. Integration tests, E2E specs, CI integration, and redundancy audit all done.
 
 ---
 
