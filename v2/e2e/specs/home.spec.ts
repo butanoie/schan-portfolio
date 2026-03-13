@@ -111,8 +111,13 @@ test.describe('Home page — progressive loading', () => {
         await expect(homePage.projectSections()).toHaveCount(expectedCount);
       }
 
-      await expect(homePage.loadMoreButton).toBeHidden();
-      await expect(homePage.completionBubble).toBeVisible();
+      // After the final batch renders, React still needs to:
+      // 1. Complete the loadMore async (setLoading(false) in `finally`)
+      // 2. Re-derive hasMore = false from the new project count
+      // 3. Re-render Footer to unmount the LoadMore ThoughtBubble
+      // WebKit in CI is slow enough that this exceeds the default 5s timeout.
+      await expect(homePage.loadMoreButton).toBeHidden({ timeout: 10_000 });
+      await expect(homePage.completionBubble).toBeVisible({ timeout: 10_000 });
     });
   });
 
