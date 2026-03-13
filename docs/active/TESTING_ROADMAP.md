@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Phase 6 (Accessibility) spec written — 21 tests, pending browser verification. Ready for Phase 7 (Navigation).
+**Status:** Phase 11 (Content Pages) complete — 13 tests. Phases 5–11 done. Next: Phase 10 (Lightbox) or Phase 12 (Responsive).
 
 ---
 
@@ -180,7 +180,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 - [x] Implement interactive state scans (lightbox, settings popover, hamburger)
 - [x] Implement skip link test
 - [x] Implement keyboard navigation test
-- [ ] Verify all pass on Chromium and WebKit
+- [x] Verify all pass on Chromium and WebKit
 
 ---
 
@@ -193,12 +193,12 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `navigation.spec.ts`
-- [ ] Implement route loading tests (all 4 pages)
-- [ ] Implement `aria-current` tests
-- [ ] Implement preference persistence across navigation
-- [ ] Implement direct URL access tests
-- [ ] Implement footer nav link tests
+- [x] Create `navigation.spec.ts`
+- [x] Implement route loading tests (all 4 pages)
+- [x] Implement `aria-current` tests
+- [x] Implement preference persistence across navigation
+- [x] Implement direct URL access tests
+- [x] Implement footer nav link tests
 
 ---
 
@@ -211,14 +211,14 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `settings.spec.ts`
-- [ ] Implement theme switching tests (3 themes)
-- [ ] Implement theme persistence tests (reload + navigation)
-- [ ] Implement language switching tests (UI text, projects, disclaimer)
-- [ ] Implement language persistence tests
-- [ ] Implement animations toggle tests
-- [ ] Implement popover open/close tests
-- [ ] Implement mobile settings tests (settings controls inline within drawer, no popover)
+- [x] Create `settings.spec.ts`
+- [x] Implement theme switching tests (3 themes)
+- [x] Implement theme persistence tests (reload + navigation)
+- [x] Implement language switching tests (UI text, projects, disclaimer)
+- [x] Implement language persistence tests
+- [x] Implement animations toggle tests
+- [x] Implement popover open/close tests
+- [x] Implement mobile settings tests (settings controls inline within drawer, no popover)
 
 ---
 
@@ -231,13 +231,13 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `home.spec.ts`
-- [ ] Implement initial load tests (5 projects, Load More visible)
-- [ ] Implement Load More tests (skeleton → 10 projects)
-- [ ] Implement all-loaded completion state test
-- [ ] Implement project structure tests
-- [ ] Implement video embed test
-- [ ] Implement French Load More test
+- [x] Create `home.spec.ts`
+- [x] Implement initial load tests (5 projects, Load More visible)
+- [x] Implement Load More tests (skeleton → 10 projects)
+- [x] Implement all-loaded completion state test
+- [x] Implement project structure tests
+- [x] Implement video embed test
+- [x] Implement French Load More test
 
 ---
 
@@ -269,21 +269,21 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `resume.spec.ts`
-  - [ ] Section presence tests (all 7 sections via `aria-labelledby`)
-  - [ ] Contact button tests (LinkedIn, GitHub, email, phone links)
-  - [ ] PDF download link test (`aria-label` containing "opens in new tab")
-  - [ ] French locale content test
-- [ ] Create `colophon.spec.ts`
-  - [ ] Section presence tests (technologies, design philosophy, buta story)
-  - [ ] V1 accordion expand/collapse test
-  - [ ] Technology card external link tests
-  - [ ] French locale content test
-- [ ] Create `samples.spec.ts`
-  - [ ] All 5 artifact sections present
-  - [ ] Download button tests (PDF and Markdown formats)
-  - [ ] Artifact without download button (Cost Savings Roadmap) renders correctly
-  - [ ] French locale content test
+- [x] Create `resume.spec.ts`
+  - [x] Section presence tests (all 7 sections via `aria-labelledby`)
+  - [x] Contact button tests (LinkedIn, GitHub, email, phone links)
+  - [x] PDF download link test (`aria-label` containing "opens in new tab")
+  - [x] French locale content test
+- [x] Create `colophon.spec.ts`
+  - [x] Section presence tests (technologies, design philosophy, buta story)
+  - [x] V1 accordion expand/collapse test
+  - [x] Technology card external link tests
+  - [x] French locale content test
+- [x] Create `samples.spec.ts`
+  - [x] All 5 artifact sections present
+  - [x] Download button tests (PDF and Markdown formats)
+  - [x] Artifact without download button (Cost Savings Roadmap) renders correctly
+  - [x] French locale content test
 
 ---
 
