@@ -61,6 +61,10 @@ vitest.config.ts # Test configuration
 - **If replacing logic, verify behavioral equivalence** — a replacement that handles the "happy path" but drops an edge-case cleanup (e.g., clearing stale state on navigation) introduces a regression
 - **Do not write comments claiming behavior that isn't implemented** — e.g., never claim state "resets automatically" unless the mechanism (like a `key` prop) actually exists in the code
 
+### JSDoc in Tests
+- **Inline test helpers need full JSDoc** — `jsdoc/require-jsdoc` applies to `const` arrow functions inside `it()` bodies, not just module exports. Do not downgrade JSDoc to `//` comments on these helpers.
+- **Functions with return types need `@returns`** — `jsdoc/require-returns` fires on any function with an explicit return type annotation, including test helpers.
+
 ### Localization (i18n)
 **CRITICAL: All user-facing strings MUST be localized via the i18n system. No hardcoded strings in components.**
 

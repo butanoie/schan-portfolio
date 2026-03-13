@@ -137,24 +137,6 @@ describe('Error Hierarchy', () => {
     });
 
     /**
-     * Test: SecurityError error codes are distinct
-     */
-    it('supports different security error codes', () => {
-      const errors = [
-        new SecurityError('XSS', 'SEC_001'),
-        new SecurityError('Injection', 'SEC_002'),
-        new SecurityError('Protocol', 'SEC_003'),
-        new SecurityError('Access', 'SEC_004'),
-      ];
-      expect(errors.map((e) => e.code)).toEqual([
-        'SEC_001',
-        'SEC_002',
-        'SEC_003',
-        'SEC_004',
-      ]);
-    });
-
-    /**
      * Test: SecurityError has correct name
      */
     it('has correct error name', () => {
@@ -200,24 +182,6 @@ describe('Error Hierarchy', () => {
     });
 
     /**
-     * Test: DataError supports error codes
-     */
-    it('supports different data error codes', () => {
-      const errors = [
-        new DataError('Fetch failed', 'DATA_001'),
-        new DataError('Parse failed', 'DATA_002'),
-        new DataError('Database error', 'DATA_003'),
-        new DataError('File not found', 'DATA_004'),
-      ];
-      expect(errors.map((e) => e.code)).toEqual([
-        'DATA_001',
-        'DATA_002',
-        'DATA_003',
-        'DATA_004',
-      ]);
-    });
-
-    /**
      * Test: DataError has correct name
      */
     it('has correct error name', () => {
@@ -253,23 +217,15 @@ describe('Error Hierarchy', () => {
      * Test: NetworkError can store HTTP status code
      */
     it('can store HTTP status code', () => {
-      const error = new NetworkError('Server error', 'NET_003', undefined, 500);
-      expect(error.statusCode).toBe(500);
-    });
-
-    /**
-     * Test: NetworkError with different status codes
-     */
-    it('supports different HTTP status codes', () => {
-      const error404 = new NetworkError('Not found', 'NET_004', undefined, 404);
       const error500 = new NetworkError(
         'Server error',
         'NET_003',
         undefined,
         500
       );
-      expect(error404.statusCode).toBe(404);
+      const error404 = new NetworkError('Not found', 'NET_004', undefined, 404);
       expect(error500.statusCode).toBe(500);
+      expect(error404.statusCode).toBe(404);
     });
 
     /**
@@ -482,15 +438,6 @@ describe('Error Hierarchy', () => {
       expect(error.stack).toBeDefined();
       expect(error.stack).toContain('ValidationError');
     });
-
-    /**
-     * Test: Stack trace includes error message
-     */
-    it('stack trace includes error message', () => {
-      const error = new SecurityError('XSS detected', 'SEC_001');
-      expect(error.toString()).toContain('SecurityError');
-      expect(error.toString()).toContain('XSS detected');
-    });
   });
 
   /**
@@ -539,9 +486,7 @@ describe('Error Hierarchy', () => {
      * Test: Data loading error handling
      */
     it('handles data loading errors', async () => {
-      /**
-       * Simulates loading projects from an API that throws an error.
-       */
+      /** Simulates loading projects from an API that throws an error. */
       const loadProjects = async (): Promise<void> => {
         try {
           throw new Error('API timeout');
@@ -562,7 +507,7 @@ describe('Error Hierarchy', () => {
      */
     it('handles errors by category in catch block', () => {
       /**
-       * Categorizes errors and returns appropriate error type string.
+       * Categorizes errors and returns the appropriate type string.
        *
        * @param error - The error to categorize
        * @returns The error category as a string

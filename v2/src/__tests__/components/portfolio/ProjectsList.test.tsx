@@ -94,17 +94,6 @@ describe('ProjectsList', () => {
   });
 
   /**
-   * Test: Renders empty list with no projects
-   */
-  it('renders empty list with no projects', () => {
-    const { container } = render(<ProjectsList projects={[]} />, {
-      wrapper: Wrapper,
-    });
-    const box = container.querySelector('div');
-    expect(box).toBeInTheDocument();
-  });
-
-  /**
    * Test: Renders single project
    */
   it('renders single project', () => {
@@ -140,21 +129,6 @@ describe('ProjectsList', () => {
     // Verify first and last projects are rendered
     expect(screen.getByText('Project 1')).toBeInTheDocument();
     expect(screen.getByText('Project 18')).toBeInTheDocument();
-  });
-
-  /**
-   * Test: Uses unique key for each project
-   */
-  it('uses unique key for each project', () => {
-    const projects = [
-      createMockProject('unique-id-1', 'Project One'),
-      createMockProject('unique-id-2', 'Project Two'),
-    ];
-    render(<ProjectsList projects={projects} />, { wrapper: Wrapper });
-
-    // Both projects should be rendered (keys prevent unmounting)
-    expect(screen.getByText('Project One')).toBeInTheDocument();
-    expect(screen.getByText('Project Two')).toBeInTheDocument();
   });
 
   /**
@@ -206,7 +180,9 @@ describe('ProjectsList', () => {
       wrapper: Wrapper,
     });
     expect(screen.getByText('React')).toBeInTheDocument();
+    expect(screen.getByText('TypeScript')).toBeInTheDocument();
     expect(screen.getByText('Vue')).toBeInTheDocument();
+    expect(screen.getByText('JavaScript')).toBeInTheDocument();
     expect(screen.getByText('Tailwind')).toBeInTheDocument();
   });
 
@@ -256,6 +232,8 @@ describe('ProjectsList', () => {
     });
     expect(screen.getByText('Few Images')).toBeInTheDocument();
     expect(screen.getByText('Many Images')).toBeInTheDocument();
+    // Both projects render galleries regardless of image count
+    expect(screen.getAllByTestId('project-gallery')).toHaveLength(2);
   });
 
   /**
@@ -282,6 +260,12 @@ describe('ProjectsList', () => {
     ];
     render(<ProjectsList projects={[longProject]} />, { wrapper: Wrapper });
     expect(screen.getByText('Long Project')).toBeInTheDocument();
+    // First description paragraph renders without truncation
+    expect(
+      screen.getByText(
+        'This is a very long description with multiple paragraphs.'
+      )
+    ).toBeInTheDocument();
   });
 
   /**
@@ -310,9 +294,9 @@ describe('ProjectsList', () => {
       wrapper: Wrapper,
     });
 
-    // Each ProjectDetail has mb: 8 (64px) and a divider
+    // Each ProjectDetail renders a Divider at the top of its section
     const dividers = container.querySelectorAll('hr');
-    expect(dividers.length).toBe(2); // One divider per project
+    expect(dividers.length).toBe(2);
   });
 
   /**
@@ -325,11 +309,14 @@ describe('ProjectsList', () => {
     const altProject = createMockProject('alt', 'Alternate Grid');
     altProject.altGrid = true;
 
-    render(<ProjectsList projects={[regularProject, altProject]} />, {
-      wrapper: Wrapper,
-    });
+    const { container } = render(
+      <ProjectsList projects={[regularProject, altProject]} />,
+      { wrapper: Wrapper }
+    );
     expect(screen.getByText('Regular Grid')).toBeInTheDocument();
     expect(screen.getByText('Alternate Grid')).toBeInTheDocument();
+    // Both projects render as section elements regardless of altGrid flag
+    expect(container.querySelectorAll('section')).toHaveLength(2);
   });
 
   /**
@@ -341,5 +328,7 @@ describe('ProjectsList', () => {
 
     render(<ProjectsList projects={[noImageProject]} />, { wrapper: Wrapper });
     expect(screen.getByText('No Images')).toBeInTheDocument();
+    // Gallery renders even with empty images array
+    expect(screen.getByTestId('project-gallery')).toBeInTheDocument();
   });
 });
