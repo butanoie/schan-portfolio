@@ -9,6 +9,7 @@
 - `ToggleButtonGroup` renders as `role="group"` — individual buttons get `aria-pressed="true"` when selected
 - `Drawer` renders as `role="dialog"` — locate drawer contents via the `<nav>` landmark inside it
 - `Popover`/`Modal` sets `aria-hidden` on ALL sibling DOM branches while open — any `getByRole` query targeting elements outside the modal will fail. Pre-capture references before opening, or close the modal before querying siblings.
+- `ThoughtBubble` (`Footer.tsx`) uses `role="img"` — all children become presentational and invisible to assistive technologies. The Load More button inside it is not discoverable by screen readers. The `aria-label` on the bubble is hardcoded English (not translated).
 
 ## Accessibility Patterns
 

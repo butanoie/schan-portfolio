@@ -2,8 +2,9 @@
  * HomePage POM — the portfolio home page (/).
  *
  * Provides locators and actions for the project list, progressive loading,
- * gallery images, and the project lightbox. Composes the ProjectLightbox
- * sub-POM for lightbox interactions.
+ * gallery images, video embeds, project tags, completion state, and the
+ * project lightbox. Composes the ProjectLightbox sub-POM for lightbox
+ * interactions.
  *
  * @module e2e/pages/HomePage
  */
@@ -16,8 +17,29 @@ export class HomePage extends BasePage {
   /** ProjectLightbox sub-POM for image lightbox interactions. */
   readonly lightbox: ProjectLightbox;
 
-  /** "Load more projects" button for progressive loading. */
+  /**
+   * "Load more projects" button for progressive loading.
+   *
+   * Scoped via the ThoughtBubble's `aria-label` ("Load more projects button")
+   * rather than by button text, because the button text changes to
+   * "Loading projects..." / "Chargement des projets..." during fetch.
+   * The ThoughtBubble's aria-label is hardcoded in English regardless of
+   * locale, so this locator works for both English and French.
+   *
+   * Uses a DOM locator (not `getByRole('button')`) because the ThoughtBubble
+   * has `role="img"`, which makes all children presentational and invisible
+   * to ARIA role queries.
+   */
   readonly loadMoreButton: Locator;
+
+  /**
+   * Completion thought bubble shown when all projects are loaded.
+   *
+   * The Footer renders a `ThoughtBubble` with `role="img"` and an
+   * `aria-label` containing "All projects loaded" when `allLoaded` is true.
+   * Scoped to `page` (not `mainContent`) because the bubble is in `<footer>`.
+   */
+  readonly completionBubble: Locator;
 
   /**
    * Initialize home page locators and compose the ProjectLightbox sub-POM.
@@ -27,7 +49,14 @@ export class HomePage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.lightbox = new ProjectLightbox(page);
-    this.loadMoreButton = page.getByRole('button', { name: /load more/i });
+    // Scope to ThoughtBubble's aria-label (stable across loading states and locales)
+    // then find the button inside it.
+    this.loadMoreButton = page
+      .getByRole('img', { name: /load more projects button/i })
+      .locator('button');
+    this.completionBubble = page.getByRole('img', {
+      name: /all projects loaded/i,
+    });
   }
 
   /**
@@ -47,6 +76,24 @@ export class HomePage extends BasePage {
   }
 
   /**
+   * Get a specific project section container by index.
+   *
+   * Each `ProjectDetail` renders as `<section class="project-detail">`.
+   * Use this to scope child queries (tags, video) to a specific project.
+   *
+   * **Selector exception:** Uses `.project-detail` CSS class instead of
+   * a semantic ARIA selector because `<section>` without an accessible name
+   * maps to `generic` role, not `region`. This parallels the legacy
+   * `data-testid="project-gallery"` exception in `galleryImages()`.
+   *
+   * @param projectIndex - Zero-based index of the project
+   * @returns Locator for the project section element
+   */
+  projectSection(projectIndex: number): Locator {
+    return this.mainContent.locator('.project-detail').nth(projectIndex);
+  }
+
+  /**
    * Get gallery images within a specific project section.
    *
    * Uses the legacy `data-testid="project-gallery"` for scoping
@@ -60,6 +107,32 @@ export class HomePage extends BasePage {
       .locator('[data-testid="project-gallery"]')
       .nth(projectIndex)
       .getByRole('img');
+  }
+
+  /**
+   * Get tag chips within a specific project section.
+   *
+   * Tags are rendered as MUI `Chip` components inside `ProjectTagsContainer`.
+   * Uses `.MuiChip-root` class selector since Chips have no semantic ARIA role.
+   *
+   * @param projectIndex - Zero-based index of the project
+   * @returns Locator for all Chip elements within the project section
+   */
+  projectTags(projectIndex: number): Locator {
+    return this.projectSection(projectIndex).locator('.MuiChip-root');
+  }
+
+  /**
+   * Get the Vimeo video embed iframe within a specific project section.
+   *
+   * The `VideoEmbed` component renders an `<iframe>` with a `title`
+   * attribute (e.g., "Vimeo video player") for accessibility.
+   *
+   * @param projectIndex - Zero-based index of the project
+   * @returns Locator for the iframe element within the project section
+   */
+  videoEmbed(projectIndex: number): Locator {
+    return this.projectSection(projectIndex).locator('iframe');
   }
 
   /**
