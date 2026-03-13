@@ -72,6 +72,88 @@ jobs:
         working-directory: v2
         run: npm run test
 
+  e2e:
+    needs: [check-changes, tests]
+    runs-on: ubuntu-latest
+    if: needs.check-changes.outputs.has-v2-changes == 'true'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: 'npm'
+          cache-dependency-path: 'v2/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: v2
+        run: npm ci --no-fund --loglevel=error
+
+      - name: Get Playwright version
+        id: playwright-version
+        working-directory: v2
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: v2
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        working-directory: v2
+        run: npx playwright install-deps chromium webkit
+
+      - name: Build Next.js
+        working-directory: v2
+        run: npm run build
+
+      - name: Run E2E tests — Chromium
+        working-directory: v2
+        run: npx playwright test --project=chromium --reporter=blob,list
+        env:
+          PLAYWRIGHT_BLOB_OUTPUT_FILE: blob-report/chromium.zip
+
+      - name: Run E2E tests — WebKit (non-blocking)
+        working-directory: v2
+        run: npx playwright test --project=webkit --reporter=blob,list
+        continue-on-error: true
+        env:
+          PLAYWRIGHT_BLOB_OUTPUT_FILE: blob-report/webkit.zip
+
+      - name: Merge reports
+        if: always()
+        working-directory: v2
+        run: npx playwright merge-reports --reporter=html ./blob-report
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: v2/playwright-report
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload test results (screenshots, traces)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: v2/e2e/test-results
+          if-no-files-found: ignore
+          retention-days: 7
+
   deploy:
     needs: [check-changes, tests]
     runs-on: ubuntu-latest
@@ -105,7 +187,7 @@ jobs:
   # Always runs so non-code PRs (where tests/deploy are skipped) can still merge.
   # In branch protection settings, replace individual job checks with this one.
   gate:
-    needs: [check-changes, tests, deploy]
+    needs: [check-changes, tests, e2e, deploy]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -113,12 +195,17 @@ jobs:
         env:
           HAS_V2_CHANGES: ${{ needs.check-changes.outputs.has-v2-changes }}
           TESTS_RESULT: ${{ needs.tests.result }}
+          E2E_RESULT: ${{ needs.e2e.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
         run: |
           # If v2 changes were detected, all jobs must have succeeded
           if [ "$HAS_V2_CHANGES" == "true" ]; then
             if [ "$TESTS_RESULT" != "success" ]; then
               echo "Tests failed or were cancelled"
+              exit 1
+            fi
+            if [ "$E2E_RESULT" != "success" ]; then
+              echo "E2E tests failed or were cancelled"
               exit 1
             fi
             if [ "$DEPLOY_RESULT" != "success" ]; then

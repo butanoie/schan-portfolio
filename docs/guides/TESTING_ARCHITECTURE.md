@@ -154,7 +154,7 @@ v2/
   reporter: [['html', { outputFolder: 'e2e/reports/html' }], ['list']],
 
   use: {
-    baseURL: 'http://localhost:3000',   // All page.goto() calls use relative paths
+    baseURL: 'http://localhost:3100',   // All page.goto() calls use relative paths
     trace: 'on-first-retry',           // Capture traces only on failure retry
   },
 
@@ -164,9 +164,9 @@ v2/
   ],
 
   webServer: {
-    command: 'npm run start',    // NOT build — build is a prerequisite
-    port: 3000,
-    reuseExistingServer: !process.env.CI,
+    command: 'npm run start -- -p 3100',  // NOT build — build is a prerequisite
+    port: 3100,
+    reuseExistingServer: false,
   },
 
   globalSetup: './e2e/global-setup.ts',  // Validates .next/BUILD_ID exists (relative to config at v2/)
@@ -522,11 +522,19 @@ All spec files import `test` and `expect` from `base.fixture.ts` instead of `@pl
 
 ## Future Considerations
 
-### CI Integration (deferred)
+### CI Integration
 
-- Add `test:e2e` to `test-deploy-dev.yml` after unit tests, before deploy
-- Cache Playwright browsers with `actions/cache` keyed on `playwright --version`
-- Upload `e2e/reports/html` as GitHub Actions artifact on failure
+Playwright E2E tests run in a separate `e2e` job in `test-deploy-dev.yml`, triggered on PRs to main.
+
+**Architecture decisions:**
+
+- **Separate job** (`e2e`) — runs after `tests` (lint/typecheck/unit), in parallel with `deploy`
+- **Single job, sequential browser steps** — Chromium runs first (blocking), then WebKit with `continue-on-error: true` (soft-fail). Avoids the GitHub Actions matrix defect where `continue-on-error` on a matrix entry masks the overall job result
+- **E2E does not gate deployment** — deploy proceeds independently; only the `gate` job (branch protection) requires E2E to pass
+- **Playwright browser caching** — `actions/cache` keyed on `playwright-{os}-{version}`. Cache stores browser binaries (`~/.cache/ms-playwright`); system deps (`install-deps`) reinstalled each run since apt packages aren't cached
+- **Blob reporter for sequential runs** — each browser step uses `--reporter=blob,list` to produce uniquely-named `.zip` blobs; `merge-reports --reporter=html` combines them into a single unified HTML report at `playwright-report/`. This avoids the overwrite problem with sequential HTML reporter runs
+- **Artifacts** — merged HTML report and test results (screenshots, traces) uploaded via `actions/upload-artifact` on every run; `if-no-files-found: ignore` prevents upload failures when no artifacts exist
+- **No build caching** — Next.js build runs fresh in the E2E job (~30-60s); caching `.next/` output adds complexity without meaningful time savings
 
 ### Visual Regression (deferred)
 
