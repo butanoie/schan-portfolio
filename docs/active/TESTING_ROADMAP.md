@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Phase 11 (Content Pages) complete — 13 tests. Phases 5–11 done. Next: Phase 10 (Lightbox) or Phase 12 (Responsive).
+**Status:** Phases 5–12 complete. All E2E spec phases done. Next: Phase 13 (CI Integration).
 
 ---
 
@@ -250,13 +250,12 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `lightbox.spec.ts`
-- [ ] Implement open/close tests (button, Escape)
-- [ ] Implement keyboard navigation tests (ArrowRight, ArrowLeft, wrap)
-- [ ] Implement button navigation tests
-- [ ] Implement touch gesture tests (with WebKit skip annotation if needed)
-- [ ] Implement ARIA live region assertions
-- [ ] Implement single-image edge case
+- [x] Create `lightbox.spec.ts`
+- [x] Implement open/close tests (button, Escape, focus return)
+- [x] Implement keyboard navigation tests (ArrowRight, ArrowLeft, wrap)
+- [x] Implement button navigation tests
+- [x] Implement touch gesture tests
+- [x] Implement ARIA live region assertions
 
 ---
 
@@ -296,12 +295,12 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `responsive.spec.ts`
-- [ ] Implement mobile hamburger visibility tests
-- [ ] Implement hamburger drawer interaction tests (open/close, `aria-expanded` state)
-- [ ] Implement drawer navigation tests (nav links + inline settings controls)
-- [ ] Implement desktop nav visibility tests
-- [ ] Implement footer responsive tests
+- [x] Create `responsive.spec.ts`
+- [x] Implement mobile hamburger visibility tests (hamburger visible, desktop nav links absent)
+- [x] Implement hamburger drawer interaction tests (nav links + inline settings controls visible)
+- [x] Implement drawer navigation tests (Resume link closes drawer, loads page)
+- [x] Implement desktop nav visibility tests (nav visible, hamburger absent, gear button visible)
+- [x] Implement footer responsive tests (hidden on mobile, visible on desktop)
 
 ---
 

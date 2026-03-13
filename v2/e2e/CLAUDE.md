@@ -7,7 +7,7 @@ See [TESTING_ARCHITECTURE.md](../../docs/guides/TESTING_ARCHITECTURE.md) for the
 ## Gotchas
 
 - **Avoid `networkidle`** in `page.goto()` — PostHog/Sentry background requests prevent settling. Use `'load'` or `'domcontentloaded'` and explicit locator waits instead.
-- **`next/dynamic` with `ssr: false`** — components are absent from initial HTML. Use `waitFor({ state: 'visible', timeout: 10_000 })` before `isVisible()` checks, or the check returns false during hydration.
+- **`next/dynamic` with `ssr: false`** — components are absent from initial HTML. Use `expect(locator).toBeVisible({ timeout: 10_000 })` for assertions, or `waitFor({ state: 'visible', timeout: 10_000 })` before `isVisible()` checks, or the check returns false during hydration.
 - **tsconfig `extends` inherits `exclude`** — `tsconfig.e2e.json` must explicitly override `exclude` to avoid inheriting the parent's `"e2e"` exclusion.
 - **Page objects hold locators and actions only** — never assertions. Tests own all assertions.
 - **Semantic ARIA selectors only** — no new `data-testid` attributes. One legacy exception exists in `ProjectGallery.tsx`.
@@ -32,3 +32,6 @@ See [TESTING_ARCHITECTURE.md](../../docs/guides/TESTING_ARCHITECTURE.md) for the
 - **MUI Accordion duplicate `id` on content** — `AccordionDetails` and its parent `<div role="region">` both receive the `id` from `aria-controls`, causing Playwright strict mode violations. Target `.MuiAccordionDetails-root` inside the accordion instead of the `id` directly.
 - **Playwright `filter({ has })` matches children, not self** — `locator.filter({ has: page.locator('[href*="foo"]') })` finds elements whose *children* match, not the element itself. To filter by an attribute on the element, use CSS attribute selectors: `parent.locator('a[href*="foo"]')`.
 - **Fenced Gherkin in JSDoc** — use `` ```gherkin `` fenced code blocks for scenario comments above tests (matching `home.spec.ts`), not plain prose.
+- **`desktopNav` is the shared nav landmark** — `getByRole('navigation', { name: /main navigation/i })` matches the parent `<Box component="nav">` in Header, which wraps both the hamburger (mobile) and NavButtons (desktop). It is always visible. To assert "no desktop nav buttons on mobile", check `desktopNav.getByRole('link').toHaveCount(0)` instead of `desktopNav.not.toBeVisible()`.
+- **Use `toHaveCount(0)` for React-conditional elements, not `not.toBeVisible()`** — Footer nav (`{!isMobile && <FooterNavLinks />}`) and MUI Drawer content (`keepMounted` defaults to `false`) are unmounted from the DOM, not CSS-hidden. `not.toBeVisible()` passes vacuously on absent elements and won't catch locator typos or regressions. Use `toHaveCount(0)` to confirm true DOM absence.
+- **`toBeVisible({ timeout })` replaces `waitFor` + `toBeVisible`** — For `next/dynamic` hydration waits, `expect(locator).toBeVisible({ timeout: 10_000 })` retries internally. A separate `waitFor({ state: 'visible' })` before `toBeVisible()` is redundant.
