@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Phases 5–12 complete. All E2E spec phases done. Phase 14 (redundancy audit) complete. Next: Phase 13 (CI Integration).
+**Status:** Phases 5–14 complete. All E2E spec phases, CI integration, and redundancy audit done.
 
 ---
 
@@ -318,14 +318,16 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 - Playwright browsers cached with `actions/cache` keyed on version
 - Artifacts (HTML report, screenshots, traces) uploaded on failure only
 
+**PR:** [#156](https://github.com/butanoie/schan-portfolio/pull/156)
+
 ### Checklist
 
-- [ ] Add `e2e` job to `test-deploy-dev.yml` with build + Chromium + WebKit steps
-- [ ] Cache Playwright browsers with `actions/cache` keyed on `playwright-{os}-{version}`
-- [ ] Upload `e2e/reports/html` and `e2e/test-results/` as artifacts on failure
-- [ ] Update `gate` job to check `e2e` result
-- [ ] Rename workflow to "Test and Deploy"
-- [ ] Verify CI pipeline passes end-to-end
+- [x] Add `e2e` job to `test-deploy-dev.yml` with build + Chromium + WebKit steps
+- [x] Cache Playwright browsers with `actions/cache` keyed on `playwright-{os}-{version}`
+- [x] Upload `e2e/reports/html` and `e2e/test-results/` as artifacts (blob reporter for CI, merged into unified HTML report)
+- [x] Update `gate` job to check `e2e` result
+- [x] Rename workflow to "Test and Deploy"
+- [x] Verify CI pipeline passes end-to-end
 
 ---
 
