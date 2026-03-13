@@ -89,18 +89,16 @@ test.describe('Lightbox — Open / Close', () => {
 
   /**
    * ```gherkin
-   * Given the lightbox is open
+   * Given the lightbox is open (opened from thumbnail 0)
    * When the user closes the lightbox
-   * Then focus is not trapped in the removed dialog
+   * Then focus returns to the triggering thumbnail button
    * ```
    *
-   * The triggering `<img>` is not natively focusable and the lightbox
-   * unmounts via conditional rendering (`selectedIndex === null`),
-   * preventing MUI Dialog's built-in focus restoration. This test
-   * verifies focus falls back to the document body rather than being
-   * lost or trapped.
+   * Thumbnails are wrapped in `<button>` elements for keyboard access.
+   * On lightbox close, `ProjectGallery` restores focus to the button
+   * that originally opened the lightbox (WCAG 2.4.3 Focus Order).
    */
-  test('Given open lightbox, When closed, Then focus is not trapped in dialog', async ({
+  test('Given open lightbox, When closed, Then focus returns to triggering thumbnail', async ({
     homePage,
   }) => {
     await homePage.goto();
@@ -109,10 +107,10 @@ test.describe('Lightbox — Open / Close', () => {
     await homePage.lightbox.closeByButton();
 
     await expect(homePage.lightbox.dialog).toBeHidden();
-    // Focus falls to #main-content (which has tabindex="-1" for the skip link).
-    // The triggering <img> is not natively focusable, so MUI Dialog's focus
-    // restoration targets the nearest focusable ancestor.
-    await expect(homePage.mainContent).toBeFocused();
+    // Focus returns to the thumbnail button that opened the lightbox
+    await expect(
+      homePage.galleryThumbnailButtons(OPEN_CLOSE_PROJECT).nth(0)
+    ).toBeFocused();
   });
 });
 

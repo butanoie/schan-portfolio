@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef, useCallback } from 'react';
 import { Box } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
@@ -150,6 +151,58 @@ export function ProjectGallery({
     handleNextImage,
   } = useLightbox(images.length);
 
+  /**
+   * Refs for each thumbnail button, used to restore focus when the lightbox closes.
+   * Stored as a mutable ref object mapping image index to button element.
+   * The ref map persists across renders without causing re-renders.
+   * Cleanup is automatic: React calls the ref callback with `null` on unmount
+   * (e.g., when the images array shrinks), which deletes the stale entry.
+   */
+  const thumbnailRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
+
+  /**
+   * Tracks which thumbnail opened the lightbox, so focus can return to it on close.
+   * Stored as a ref to avoid re-renders when the lightbox opens.
+   */
+  const openerIndexRef = useRef<number | null>(null);
+
+  /**
+   * Opens the lightbox at the given index and records the opener for focus return.
+   *
+   * @param index - Zero-based index of the image to display
+   */
+  const handleOpenLightbox = useCallback(
+    (index: number) => {
+      openerIndexRef.current = index;
+      openLightbox(index);
+    },
+    [openLightbox]
+  );
+
+  /**
+   * Closes the lightbox and restores focus to the thumbnail that opened it.
+   * This satisfies WCAG 2.4.3 (Focus Order) — after a modal closes, focus
+   * should return to the triggering element.
+   */
+  const handleCloseLightbox = useCallback(() => {
+    const openerIndex = openerIndexRef.current;
+    closeLightbox();
+
+    // Restore focus to the thumbnail that triggered the lightbox
+    if (openerIndex !== null) {
+      const button = thumbnailRefs.current.get(openerIndex);
+      // rAF ensures the Dialog unmount completes before focusing.
+      // This relies on ProjectLightbox being conditionally mounted
+      // ({selectedIndex !== null && ...}), making unmount synchronous.
+      // If this ever changes to always-mounted with open={...},
+      // replace rAF with a transitionend listener.
+      requestAnimationFrame(() => {
+        button?.focus();
+      });
+    }
+    openerIndexRef.current = null;
+  }, [closeLightbox]);
+
   return (
     <Box
       sx={sx}
@@ -169,7 +222,14 @@ export function ProjectGallery({
             key={index}
             image={image}
             size="thumbnail"
-            onClick={() => openLightbox(index)}
+            onClick={() => handleOpenLightbox(index)}
+            buttonRef={(el: HTMLButtonElement | null) => {
+              if (el) {
+                thumbnailRefs.current.set(index, el);
+              } else {
+                thumbnailRefs.current.delete(index);
+              }
+            }}
             sx={{
               borderRadius: 2,
               boxShadow: 2,
@@ -191,7 +251,7 @@ export function ProjectGallery({
         <ProjectLightbox
           images={images}
           selectedIndex={selectedIndex}
-          onClose={closeLightbox}
+          onClose={handleCloseLightbox}
           onPrevious={handlePreviousImage}
           onNext={handleNextImage}
         />

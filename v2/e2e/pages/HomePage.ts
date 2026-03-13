@@ -136,9 +136,30 @@ export class HomePage extends BasePage {
   }
 
   /**
+   * Get gallery thumbnail buttons within a specific project section.
+   *
+   * Each thumbnail image is wrapped in a `<button>` with an aria-label
+   * like "View {caption} in lightbox". These are the keyboard-focusable
+   * interactive elements that open the lightbox.
+   *
+   * @param projectIndex - Zero-based index of the project
+   * @returns Locator for thumbnail buttons within the project's gallery
+   */
+  galleryThumbnailButtons(projectIndex: number): Locator {
+    // Matches the `projectImage.viewInLightbox` aria-label across locales:
+    //   en: "View {caption} in lightbox" → matches "lightbox"
+    //   fr: "Afficher {caption} dans la visionneuse" → matches "visionneuse"
+    // When adding a new locale, add its keyword to this regex.
+    return this.page
+      .locator('[data-testid="project-gallery"]')
+      .nth(projectIndex)
+      .getByRole('button', { name: /lightbox|visionneuse/i });
+  }
+
+  /**
    * Click a gallery thumbnail to open the lightbox.
    *
-   * Clicks the specified image and waits for the lightbox dialog
+   * Clicks the specified thumbnail button and waits for the lightbox dialog
    * to become visible (accounts for `next/dynamic` chunk loading).
    *
    * @param projectIndex - Zero-based index of the project
@@ -148,7 +169,7 @@ export class HomePage extends BasePage {
     projectIndex: number,
     imageIndex: number
   ): Promise<void> {
-    await this.galleryImages(projectIndex).nth(imageIndex).click();
+    await this.galleryThumbnailButtons(projectIndex).nth(imageIndex).click();
     await this.lightbox.waitForOpen();
   }
 }
