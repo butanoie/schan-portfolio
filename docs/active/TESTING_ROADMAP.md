@@ -25,7 +25,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 | 10 | E2E: Project Lightbox | Playwright | Medium | ~18 | [E2E_LIGHTBOX](../test-scenarios/E2E_LIGHTBOX.md) |
 | 11 | E2E: Resume, Colophon, Samples Pages | Playwright | Medium | ~15 | [E2E_CONTENT_PAGES](../test-scenarios/E2E_CONTENT_PAGES.md) |
 | 12 | E2E: Responsive Layouts | Playwright | Medium | ~12 | [E2E_RESPONSIVE](../test-scenarios/E2E_RESPONSIVE.md) |
-| 13 | CI Integration (future) | CI/CD | Low | 0 (infra) | — |
+| 13 | CI Integration | CI/CD | Low | 0 (infra) | — |
 
 **Total estimated new tests: ~187**
 
@@ -304,17 +304,26 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ---
 
-## Phase 13: CI Integration (Future)
+## Phase 13: CI Integration
 
 **Goal:** Add Playwright E2E tests to the GitHub Actions CI pipeline.
+**Issue:** [#140](https://github.com/butanoie/schan-portfolio/issues/140)
+
+### Architecture
+
+- Separate `e2e` job in `test-deploy-dev.yml` (runs after `tests`, parallel with `deploy`)
+- Single job with sequential browser steps: Chromium (blocking) → WebKit (soft-fail via `continue-on-error`)
+- E2E does not gate deployment; only the `gate` job requires it for merge
+- Playwright browsers cached with `actions/cache` keyed on version
+- Artifacts (HTML report, screenshots, traces) uploaded on failure only
 
 ### Checklist
 
-- [ ] Add `test:e2e` step to `test-deploy-dev.yml` (after unit tests, before deploy)
-- [ ] Add `npm run build` step before E2E tests
-- [ ] Cache Playwright browsers with `actions/cache` keyed on `npx playwright --version`
-- [ ] Upload `e2e/reports/html` as GitHub Actions artifact on failure
-- [ ] Upload `e2e/test-results/` (screenshots, traces) as artifact on failure
+- [ ] Add `e2e` job to `test-deploy-dev.yml` with build + Chromium + WebKit steps
+- [ ] Cache Playwright browsers with `actions/cache` keyed on `playwright-{os}-{version}`
+- [ ] Upload `e2e/reports/html` and `e2e/test-results/` as artifacts on failure
+- [ ] Update `gate` job to check `e2e` result
+- [ ] Rename workflow to "Test and Deploy"
 - [ ] Verify CI pipeline passes end-to-end
 
 ---
