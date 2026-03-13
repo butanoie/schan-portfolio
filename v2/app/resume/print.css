@@ -15,7 +15,7 @@
  * are handled by v2/app/print.css and do not need to be repeated here.
  *
  * Light theme colors are enforced globally:
- * - Sage green: #85b09c
+ * - Sage green: #587A68
  * - Duck egg: #dcebe4
  * - Dark text: #2c2c2c
  */
@@ -245,7 +245,7 @@
     > div
     > div
     > div {
-    border-left: 3px solid #85b09c !important;
+    border-left: 3px solid #587a68 !important;
     padding-left: 4pt !important;
     print-color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;

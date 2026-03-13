@@ -127,6 +127,9 @@ If you discover code without documentation:
 - Keep components small and focused (Single Responsibility Principle)
 - **Persistent layouts preserve state**: Next.js App Router layouts (e.g., `MainLayout`) never unmount during navigation. `useState` does NOT reset when a dependency changes — state persists until explicitly cleared. When refactoring layout components, verify that navigation-related state cleanup (e.g., `useEffect` that clears state on route change) is preserved.
 
+### Color Palette Changes
+**CRITICAL: When modifying any color in `BRAND_COLORS` or `NAV_COLORS` (in `v2/src/constants/colors.ts`), check ALL related states** — hover, active, disabled — across the full constant file. Colors are cross-referenced (e.g., `BRAND_COLORS.sage` is the default background, `NAV_COLORS.inactiveHover` is its hover state). Changing one without the other eliminates visual hover feedback.
+
 ### Refactoring Safety
 **CRITICAL: Before removing or replacing any code during refactoring, check its git history (`git log -p --follow` or `git blame`) to understand WHY it exists.** Code that looks redundant may be a deliberate bug fix. Specifically:
 - **Never remove a `useEffect` without understanding its purpose** — it may handle cleanup, state resets, or edge cases that aren't obvious from reading the code alone

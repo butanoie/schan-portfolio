@@ -33,8 +33,8 @@ export const BRAND_COLORS = {
   /** Dark charcoal for primary text */
   graphite: '#2C2C2C',
 
-  /** Sage green for footer background */
-  sage: '#85B09C',
+  /** Sage green for footer background and tag chips (WCAG AA: 4.76:1 with white) */
+  sage: '#587A68',
 } as const;
 
 /**
@@ -50,8 +50,8 @@ export const UI_COLORS = {
   /** Secondary text color for thought bubble */
   secondaryText: '#555555',
 
-  /** Light gray for copyright text on dark backgrounds */
-  copyrightText: '#f1f1f1',
+  /** White for copyright text on sage green background (WCAG AA: 4.76:1) */
+  copyrightText: '#FFFFFF',
 } as const;
 
 /**
@@ -65,10 +65,10 @@ export const NAV_COLORS = {
   activeHover: '#8B1538',
 
   /** Inactive navigation button background */
-  inactive: '#6a8a7a',
+  inactive: '#4B6858',
 
   /** Inactive navigation button hover */
-  inactiveHover: '#5a7a6a',
+  inactiveHover: '#3D5A4A',
 
   /** Navigation button text color */
   text: '#ffffff',
