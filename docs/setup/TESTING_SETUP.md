@@ -271,7 +271,7 @@ When writing new tests, choose the correct level to avoid redundancy across the 
 ## Related Documentation
 
 - [Testing Architecture](../guides/TESTING_ARCHITECTURE.md) — Integration & E2E test architecture (POM, Playwright, axe)
-- [Testing Roadmap](../active/TESTING_ROADMAP.md) — Integration & E2E test implementation roadmap
+- [Testing Roadmap](../archive/TESTING_ROADMAP.md) — Integration & E2E test implementation roadmap (completed)
 - [Accessibility Testing](../accessibility/ACCESSIBILITY_TESTING.md) — Manual and automated a11y testing procedures
 - [Accessibility Testing Checklist](../accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md) — Testing checklist
 - [Modernization Plan](../archive/MODERNIZATION_PLAN.md) — Coverage goals and testing strategy

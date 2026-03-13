@@ -2,7 +2,7 @@
 
 Gherkin-syntax test scenarios for the v2 portfolio application. These are evergreen specifications — they describe *what* the tests verify, independent of the implementation roadmap.
 
-For implementation status and checklists, see the [Testing Roadmap](../active/TESTING_ROADMAP.md).
+For implementation status and checklists, see the [Testing Roadmap](../archive/TESTING_ROADMAP.md).
 For technical architecture, see the [Testing Architecture](../guides/TESTING_ARCHITECTURE.md).
 
 ## Integration Tests (Vitest)
