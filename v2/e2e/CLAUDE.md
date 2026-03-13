@@ -1,5 +1,23 @@
 # E2E Testing (Playwright)
 
+## Commands
+```bash
+npm run test:e2e                              # Run all E2E tests (must build first)
+npm run build && npx playwright test          # Build + run all
+npx playwright test specs/home.spec.ts        # Run a single spec
+npx playwright test --headed                  # Run with visible browser
+npx playwright test --project=chromium        # Run in specific browser
+npx playwright test --grep "load more"        # Run tests matching pattern
+npx playwright show-report                    # Open last HTML report
+```
+
+## CI Integration
+- **Workflow:** `.github/workflows/test-deploy-dev.yml` — `e2e` job runs after `tests`, parallel with `deploy`
+- **Blob reporter in CI** — sequential `--project=chromium` / `--project=webkit` runs overwrite the HTML report; CI uses `--reporter=blob,list` + `merge-reports --reporter=html` to produce a combined report
+- **WebKit is soft-fail** — `continue-on-error: true` on the WebKit step; Chromium failures block merge, WebKit failures don't
+- **Browser caching** — `actions/cache` keyed on `playwright-{os}-{version}`; cache stores browser binaries only, system deps (`install-deps`) reinstalled each run
+- **`if: always()`** for artifact uploads, not `if: failure()` — `continue-on-error` steps don't trigger `failure()` condition
+
 ## Architecture Reference
 
 See [TESTING_ARCHITECTURE.md](../../docs/guides/TESTING_ARCHITECTURE.md) for the full E2E architecture spec (POM design, selectors, fixtures, config).
@@ -19,7 +37,7 @@ See [TESTING_ARCHITECTURE.md](../../docs/guides/TESTING_ARCHITECTURE.md) for the
 - **Gherkin test titles required** — test names must use `Given..., When..., Then...` shorthand format per TESTING_ARCHITECTURE.md. Full Gherkin goes in JSDoc above each test.
 - **Run `npm run test:e2e` after writing specs** — lint, typecheck, and unit tests do NOT catch Playwright runtime errors (e.g., unknown fixture parameters). Always run E2E tests before considering a spec complete.
 - **WebKit excludes links from default Tab cycle** — Safari/WebKit on macOS only tabs through form controls. Use `Alt+Tab` in WebKit tests to include links. Check `browserName` fixture: `const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab'`.
-- **E2E tests run on port 3100** — the Playwright `webServer` starts `next start -p 3100` with `reuseExistingServer: false`, so it never conflicts with a dev server on port 3000 and always starts a fresh production server. This avoids Next.js Dev Tools injecting focusable elements (iframe, buttons) that break keyboard navigation tab-order assertions.
+- **E2E tests run on port 3100** — the Playwright `webServer` starts `next start -p 3100` with `reuseExistingServer: false`, so it never conflicts with a dev server on port 3000 and always starts a fresh production server.
 - **E2E tests use production build** — `npm run build` must complete before `npx playwright test`. The webServer runs `npm run start` (not dev).
 - **MUI Popover `aria-hidden` on siblings** — while a Popover/Modal is open, MUI sets `aria-hidden="true"` on all sibling DOM branches. `getByRole` queries for elements outside the popover (nav links, footer, gear button) will fail. **Fix:** close the popover before asserting sibling elements, or pre-capture bounding boxes/data before opening.
 - **MUI Popover backdrop blocks pointer events** — the invisible backdrop intercepts clicks. To "click the gear button" while the popover is open, use `page.mouse.click(x, y)` at pre-captured coordinates instead of `locator.click()`.

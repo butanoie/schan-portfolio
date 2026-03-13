@@ -17,6 +17,7 @@ npm run test:watch   # Vitest (watch mode)
 npm run test:coverage # Vitest with coverage
 npm run format:check # Prettier check
 npm run format       # Prettier auto-format
+npm run test:e2e     # Playwright E2E tests (requires build first)
 ```
 
 ### Project Structure
@@ -47,19 +48,7 @@ vitest.config.ts # Test configuration
 
 ## Code Quality Standards
 
-### TypeScript Best Practices
-- Use explicit types; avoid `any`
-- Leverage type inference where appropriate
-- Use strict mode (`strict: true` in tsconfig.json)
-- Prefer interfaces over type aliases for object shapes
-- Use const assertions for literal types
-
 ### React Best Practices
-- Use functional components with hooks
-- Avoid prop drilling; use Context or composition
-- Memoize expensive computations with `useMemo`
-- Memoize callback functions with `useCallback`
-- Keep components small and focused (Single Responsibility Principle)
 - **Persistent layouts preserve state**: Next.js App Router layouts (e.g., `MainLayout`) never unmount during navigation. `useState` does NOT reset when a dependency changes — state persists until explicitly cleared. When refactoring layout components, verify that navigation-related state cleanup (e.g., `useEffect` that clears state on route change) is preserved.
 
 ### Color Palette Changes
@@ -71,24 +60,6 @@ vitest.config.ts # Test configuration
 - **Check if the code was added as a bug fix** — look at commit messages and PR descriptions for context like "fix:", "bugfix", or issue references
 - **If replacing logic, verify behavioral equivalence** — a replacement that handles the "happy path" but drops an edge-case cleanup (e.g., clearing stale state on navigation) introduces a regression
 - **Do not write comments claiming behavior that isn't implemented** — e.g., never claim state "resets automatically" unless the mechanism (like a `key` prop) actually exists in the code
-
-### Testing Requirements
-- Write tests for all new functionality
-- Aim for high test coverage (80%+ for critical paths)
-- Test edge cases and error conditions
-- Use descriptive test names that explain what is being tested
-
-### Error Handling
-- Always handle errors appropriately
-- Use try-catch for async operations
-- Provide meaningful error messages
-- Log errors for debugging
-
-### Security
-- Validate all user input
-- Sanitize data before rendering
-- Use environment variables for sensitive data
-- Never commit secrets or API keys
 
 ### Localization (i18n)
 **CRITICAL: All user-facing strings MUST be localized via the i18n system. No hardcoded strings in components.**
@@ -107,4 +78,3 @@ vitest.config.ts # Test configuration
 ```bash
 npm run lint && npm run typecheck && npm run format:check && npm test
 ```
-This catches issues that code-review agents miss (JSDoc, React hooks rules, formatting). Run this after Phase 5 (Implementation) and after Phase 6 (Quality Review) fixes.

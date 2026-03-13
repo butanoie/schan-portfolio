@@ -1,4 +1,4 @@
-name: Lint, Type Check, Unit Test, and Deploy
+name: Test and Deploy
 
 on:
   pull_request:
@@ -24,7 +24,8 @@ jobs:
           git diff --name-only origin/${{ github.base_ref }}...HEAD > /tmp/changed_files.txt
 
           # Check if any changes are in v2/ folder or .github/workflows/
-          has_v2_changes=$(grep -E '^(v2/|\.github/workflows/)' /tmp/changed_files.txt | wc -l)
+          # Exclude CLAUDE.md files — they don't affect builds or releases
+          has_v2_changes=$(grep -E '^(v2/|\.github/workflows/)' /tmp/changed_files.txt | grep -vi 'claude\.md' | wc -l)
 
           if [ $has_v2_changes -gt 0 ]; then
             echo "has-v2-changes=true" >> $GITHUB_OUTPUT
@@ -114,7 +115,7 @@ jobs:
           TESTS_RESULT: ${{ needs.tests.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
         run: |
-          # If v2 changes were detected, tests and deploy must have succeeded
+          # If v2 changes were detected, all jobs must have succeeded
           if [ "$HAS_V2_CHANGES" == "true" ]; then
             if [ "$TESTS_RESULT" != "success" ]; then
               echo "Tests failed or were cancelled"
