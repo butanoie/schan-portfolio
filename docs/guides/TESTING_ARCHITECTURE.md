@@ -210,7 +210,7 @@ All page objects extend `BasePage`, which encapsulates the persistent shell:
 - `mainContent` → `locator('#main-content')`
 - `settings` → `SettingsPanel` sub-POM instance
 - `navigation` → `Navigation` sub-POM instance
-- `goto(path)` → navigates and waits for `networkidle`
+- `goto(path)` → navigates and waits for `domcontentloaded`
 - `activateSkipLink()` → Tab + Enter to exercise the skip link
 
 #### SettingsPanel (sub-POM)
@@ -339,6 +339,8 @@ If a locator proves fragile, add an `aria-label` to the production element (impr
 Excludes third-party iframes (PostHog, Sentry).
 
 The `accessibility.spec.ts` runs full-page axe scans across: **4 baseline (light/EN) + 8 theme matrix (dark + highContrast) + 4 locale matrix (FR) = 16 static page scans**, plus scans on interactive states (lightbox, settings popover, hamburger menu).
+
+**Theme/locale matrix strategy:** The matrix tests use `seedTheme()`/`seedLocale()` (via `addInitScript` before `goto()`) rather than driving the settings UI. This isolates the axe scan from the settings panel interaction, which is tested separately in the interactive states group and in `settings.spec.ts`.
 
 ### Responsive Testing
 

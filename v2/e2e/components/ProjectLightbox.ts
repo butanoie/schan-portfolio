@@ -70,10 +70,14 @@ export class ProjectLightbox {
   }
 
   /**
-   * Wait for the lightbox dialog to open and become visible.
+   * Wait for the lightbox dialog to open and become fully visible.
    *
    * Uses extended timeout to account for `next/dynamic` chunk loading
-   * on first open.
+   * on first open. CSS transition settling (e.g., MUI Fade opacity) is
+   * handled by `runAxeScan()` via `waitForTransitionsToSettle()`, so no
+   * additional delay is needed here.
+   *
+   * @returns Resolves when the lightbox is visible
    */
   async waitForOpen(): Promise<void> {
     await this.dialog.waitFor({ state: 'visible', timeout: 10_000 });

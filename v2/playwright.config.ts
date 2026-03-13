@@ -17,7 +17,7 @@ export default defineConfig({
   reporter: [['html', { outputFolder: 'e2e/reports/html' }], ['list']],
 
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3100',
     trace: 'on-first-retry',
   },
 
@@ -27,9 +27,9 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npm run start',
-    port: 3000,
-    reuseExistingServer: !process.env.CI,
+    command: 'npm run start -- -p 3100',
+    port: 3100,
+    reuseExistingServer: false,
   },
 
   globalSetup: './e2e/global-setup.ts',

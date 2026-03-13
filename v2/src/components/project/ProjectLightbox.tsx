@@ -419,6 +419,7 @@ export function ProjectLightbox({
       }}
       slotProps={{
         paper: {
+          'aria-label': t('projectLightbox.ariaLabel', { ns: 'components' }),
           sx: {
             overflow: 'hidden',
             backgroundColor: 'rgba(0, 0, 0, 0.9)',
@@ -432,7 +433,6 @@ export function ProjectLightbox({
       }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      aria-label={t('projectLightbox.ariaLabel', { ns: 'components' })}
     >
       {/* Close Button - Top Right */}
       <IconButton
@@ -471,12 +471,12 @@ export function ProjectLightbox({
           variant="body1"
           sx={{
             color: '#FFFFFF',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: '#000000',
             borderRadius: 1,
             textAlign: 'center',
             maxWidth: { xs: '90vw', md: '80vw' },
-            px: 2,
-            py: 0.5,
+            px: 3,
+            py: 1,
             flexShrink: 0,
             marginTop: 'auto',
             marginBottom: '24px',
@@ -583,10 +583,11 @@ export function ProjectLightbox({
               aria-hidden="true"
               sx={{
                 color: '#FFFFFF',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                backgroundColor: '#000000',
                 borderRadius: 1,
-                px: 2,
-                py: 0.5,
+                px: 3,
+                py: 1,
+                mx: 2,
                 fontSize: '0.875rem',
               }}
             >

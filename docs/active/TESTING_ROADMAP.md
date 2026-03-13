@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Phase 5 (Playwright infrastructure) complete. Ready for Phase 6 (Accessibility).
+**Status:** Phase 6 (Accessibility) spec written — 21 tests, pending browser verification. Ready for Phase 7 (Navigation).
 
 ---
 
@@ -173,13 +173,13 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ### Checklist
 
-- [ ] Create `accessibility.spec.ts`
-- [ ] Implement baseline axe scans (4 pages, light theme, English)
-- [ ] Implement theme matrix scans (4 pages x 2 additional themes)
-- [ ] Implement locale matrix scans (4 pages in French)
-- [ ] Implement interactive state scans (lightbox, settings popover, hamburger)
-- [ ] Implement skip link test
-- [ ] Implement keyboard navigation test
+- [x] Create `accessibility.spec.ts`
+- [x] Implement baseline axe scans (4 pages, light theme, English)
+- [x] Implement theme matrix scans (4 pages x 2 additional themes)
+- [x] Implement locale matrix scans (4 pages in French)
+- [x] Implement interactive state scans (lightbox, settings popover, hamburger)
+- [x] Implement skip link test
+- [x] Implement keyboard navigation test
 - [ ] Verify all pass on Chromium and WebKit
 
 ---

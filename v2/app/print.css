@@ -11,7 +11,7 @@
  * Color Palette (Light Theme):
  * - Primary Text: #2c2c2c (dark gray)
  * - Background: #ffffff (white)
- * - Accent/Buttons: #85b09c (sage green)
+ * - Accent/Buttons: #587A68 (sage green)
  * - Secondary Background: #dcebe4 (duck egg)
  * - Links: #00008b (dark blue)
  *
@@ -451,7 +451,7 @@
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    background-color: #85b09c !important;
+    background-color: #587a68 !important;
     color: white !important;
     border: none !important;
     font-size: 9pt !important;
@@ -469,7 +469,7 @@
   /* Style chips with sage green */
   .MuiChip-root {
     display: inline-block !important;
-    background-color: #85b09c !important;
+    background-color: #587a68 !important;
     color: white !important;
     border: none !important;
     font-size: 7pt !important;
