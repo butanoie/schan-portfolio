@@ -5,8 +5,9 @@
  * from the initial HTML and appears only after React hydration. The `open()`
  * method waits with an extended timeout to handle this delay.
  *
- * On desktop, clicking the gear button opens an MUI Popover (note: not a
- * Dialog, so no `role="dialog"`). On mobile, settings controls are rendered
+ * On desktop, clicking the gear button opens an MUI Popover with
+ * `role="region"` on the Paper slot (for WCAG landmark containment).
+ * On mobile, settings controls are rendered
  * inline within the navigation drawer — callers should use
  * `navigation.openDrawer()` first and interact with controls directly.
  *

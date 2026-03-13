@@ -5,8 +5,8 @@
  *
  * Displays a gear icon button. Clicking opens a popover below the button
  * containing theme, language, and animations controls. The popover remains open while
- * adjusting settings and only closes when the gear button is toggled,
- * Escape is pressed, or clicking outside the popover.
+ * adjusting settings and closes only via Escape or clicking outside the popover
+ * (re-clicking the gear button while open is a no-op).
  *
  * Accessibility features:
  * - Fully keyboard accessible: Tab to focus, Enter/Space to open
@@ -14,6 +14,7 @@
  * - Click outside closes popover (MUI built-in)
  * - Focus returns to button when popover closes (MUI built-in)
  * - ARIA attributes for expanded state and popover relationship
+ * - Popover Paper has role="region" with aria-label for landmark containment (WCAG region rule)
  * - Screen reader announces button purpose and expanded state
  * - Respects prefers-reduced-motion for transitions
  * - Focus visible outline on keyboard navigation
@@ -113,7 +114,7 @@ interface SettingsButtonProps {
  * - `open`: Boolean indicating if popover is visible
  *
  * Event handling:
- * - Click button: toggles popover open/closed
+ * - Click button: opens popover (re-clicking while open is a no-op)
  * - Click outside or Escape: closes popover
  * - Theme, language, or animations selection: keeps popover open (allows multiple adjustments)
  *
@@ -208,6 +209,8 @@ export function SettingsButton({
         }}
         slotProps={{
           paper: {
+            role: 'region' as const,
+            'aria-label': t('settings.title'),
             sx: {
               mt: 1,
               p: 2,
