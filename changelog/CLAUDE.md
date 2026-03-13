@@ -1,7 +1,5 @@
 # Changelog — Entry Format and Template
 
-> Supplements the root `CLAUDE.md`. See root for when to create changelog entries and commit standards.
-
 ## Required Sections
 
 Every changelog entry must include:
