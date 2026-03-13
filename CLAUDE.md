@@ -96,6 +96,17 @@ When adding new infrastructure, create docs in the appropriate `docs/` subdirect
 
 ## Feature Development Workflow
 
+### Documentation Gate Tasks — Required at Task Creation
+
+**CRITICAL: When creating the initial task list (Phase 1), you MUST create two documentation gate tasks and set them as blockers.** Do NOT skip this. These tasks are the enforcement mechanism for the gates below — without them, gates are consistently missed because the active skill prompt overrides passive CLAUDE.md instructions.
+
+**Required tasks:**
+
+1. **"Doc gate: update docs before implementation"** — Create as a task. Set it as `blockedBy` the architecture task (Phase 4) and as `blocks` the implementation task (Phase 5). Description must include the Post-Architecture checklist below.
+2. **"Doc gate: update docs before summary"** — Create as a task. Set it as `blockedBy` the quality review task (Phase 6) and as `blocks` the summary task (Phase 7). Description must include the Post-Review checklist below.
+
+These tasks ensure the gates appear in the active task list at the right time, rather than relying on memory to consult CLAUDE.md mid-workflow.
+
 ### Post-Architecture Documentation Gate
 
 **CRITICAL: After Phase 4 (Architecture Design) is approved by the user, you MUST update documentation BEFORE proceeding to Phase 5 (Implementation).** Do NOT skip this step. Do NOT start writing code until docs are updated. Treat missing doc updates as a blocker, equivalent to a failing build. This gate applies even when an external skill (e.g., feature-dev) defines its own phase transition — external skills do not know about project-specific gates.

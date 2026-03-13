@@ -300,7 +300,7 @@ Extends `BasePage` for `/colophon`. Sections use `aria-labelledby`:
 - `butaSection` → `locator('section[aria-labelledby="buta-heading"]')` (heading is visually hidden / sr-only)
 - `v1Accordion` → `locator('#v1-accordion')`
 - `v1AccordionSummary` → `locator('#v1-technologies-header')`
-- `v1AccordionContent` → `locator('#v1-technologies-content')`
+- `v1AccordionContent` → `locator('#v1-accordion .MuiAccordionDetails-root')` (MUI wraps `AccordionDetails` in a `region` div that also receives the `aria-controls` target ID, creating duplicate `#v1-technologies-content` elements — scope to the `AccordionDetails` class instead)
 - `expandV1Accordion()` / `collapseV1Accordion()` — checks `aria-expanded` state before clicking to avoid toggling in the wrong direction
 
 #### SamplesPage
