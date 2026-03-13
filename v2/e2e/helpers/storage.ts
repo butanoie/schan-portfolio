@@ -56,3 +56,26 @@ export async function seedLocale(
     localStorage.setItem('locale', l);
   }, locale);
 }
+
+/**
+ * Seed the animations preference before page navigation.
+ *
+ * Must be called before `page.goto()` — `addInitScript` runs before
+ * any page JavaScript, ensuring the AnimationsContext reads the correct
+ * value on mount.
+ *
+ * @param page - Playwright Page instance
+ * @param enabled - Whether animations should be enabled
+ *
+ * @example
+ * await seedAnimations(page, false);
+ * await page.goto('/');
+ */
+export async function seedAnimations(
+  page: Page,
+  enabled: boolean
+): Promise<void> {
+  await page.addInitScript((e) => {
+    localStorage.setItem('portfolio-animations-enabled', e);
+  }, String(enabled));
+}

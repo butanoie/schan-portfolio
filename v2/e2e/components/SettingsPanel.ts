@@ -97,14 +97,60 @@ export class SettingsPanel {
   }
 
   /**
-   * Close the settings popover by pressing Escape.
+   * Close the settings popover by pressing Escape (desktop only).
    *
-   * The gear button's `onClick` handler unconditionally opens the popover
-   * (no toggle logic), so clicking it again does not close it. The popover
-   * closes via MUI's `onClose` — triggered by Escape or clicking outside.
+   * The popover closes via MUI's `onClose` — triggered by Escape,
+   * clicking outside, or clicking the gear button area (the MUI backdrop
+   * intercepts the click). Use {@link closeViaGearButton} to test the
+   * gear-button toggle path specifically.
+   *
+   * On mobile there is no popover. Calling this method on a mobile
+   * viewport will press Escape (dismissing the navigation drawer) and
+   * `waitFor` will resolve immediately since `#settings-popover` is
+   * detached. Use `navigation.closeDrawer()` instead.
    */
   async close(): Promise<void> {
     await this.page.keyboard.press('Escape');
+    await this.popover.waitFor({ state: 'hidden' });
+  }
+
+  /**
+   * Close the settings popover by clicking the gear button area (desktop only).
+   *
+   * MUI Popover renders an invisible backdrop that intercepts pointer
+   * events. Clicking the gear button's coordinates hits the backdrop,
+   * which fires `onClose` and closes the popover — giving the user
+   * toggle behavior. Playwright's `click()` fails actionability because
+   * the backdrop blocks it, so this method uses `page.mouse.click()`
+   * at the gear button's center coordinates instead.
+   *
+   * **Important:** The MUI modal sets `aria-hidden` on siblings while
+   * the popover is open, preventing `getByRole` from finding the gear
+   * button. The bounding box must be captured *before* calling
+   * {@link open}. If no pre-captured box is provided, this method
+   * attempts to resolve the locator and will fail if the popover is open.
+   *
+   * @param preCapturedBox - Gear button bounding box captured before
+   * opening the popover. If omitted, `boundingBox()` is called on
+   * the gear button locator (only works when the popover is closed).
+   * @param preCapturedBox.x - Left edge x-coordinate
+   * @param preCapturedBox.y - Top edge y-coordinate
+   * @param preCapturedBox.width - Element width in pixels
+   * @param preCapturedBox.height - Element height in pixels
+   */
+  async closeViaGearButton(preCapturedBox?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }): Promise<void> {
+    const box = preCapturedBox ?? (await this.gearButton.boundingBox());
+    if (!box) {
+      throw new Error(
+        'Gear button bounding box unavailable — capture it before calling open()'
+      );
+    }
+    await this.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
     await this.popover.waitFor({ state: 'hidden' });
   }
 
