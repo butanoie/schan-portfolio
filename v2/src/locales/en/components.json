@@ -20,7 +20,8 @@
     "loadingImage": "Loading image"
   },
   "projectImage": {
-    "unavailable": "Image unavailable"
+    "unavailable": "Image unavailable",
+    "viewInLightbox": "View {{caption}} in lightbox"
   },
   "loadMoreButton": {
     "loading": "Loading projects...",

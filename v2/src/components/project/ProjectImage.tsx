@@ -25,6 +25,9 @@ interface ProjectImageProps {
 
   /** Additional MUI sx styles */
   sx?: SxProps<Theme>;
+
+  /** Ref forwarded to the interactive button wrapper (used for focus return) */
+  buttonRef?: React.Ref<HTMLButtonElement>;
 }
 
 /**
@@ -44,6 +47,7 @@ interface ProjectImageProps {
  * @param props.priority - Priority loading for above-the-fold images
  * @param props.onClick - Click handler for image interactions
  * @param props.sx - Additional MUI sx styles
+ * @param props.buttonRef - Ref forwarded to the interactive button wrapper (used for focus return)
  * @returns Optimized image element
  *
  * @example
@@ -62,6 +66,7 @@ export function ProjectImage({
   priority = false,
   onClick,
   sx,
+  buttonRef,
 }: ProjectImageProps) {
   const [imageError, setImageError] = useState(false);
   const { shouldAnimate } = useAnimations();
@@ -76,30 +81,26 @@ export function ProjectImage({
     setImageError(true);
   };
 
-  if (imageError) {
-    // Fallback UI for broken images, maintains aspect ratio
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'grey.200',
-          width: '100%',
-          aspectRatio: '4 / 3',
-          ...sx,
-        }}
-        role="img"
-        aria-label={image.caption}
-      >
-        <Typography sx={{ color: 'grey.500' }}>
-          {t('projectImage.unavailable', { ns: 'components' })}
-        </Typography>
-      </Box>
-    );
-  }
-
-  return (
+  // Determine visual content: error fallback or optimized image
+  const content = imageError ? (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'grey.200',
+        width: '100%',
+        aspectRatio: '4 / 3',
+        ...sx,
+      }}
+      role="img"
+      aria-label={image.caption}
+    >
+      <Typography sx={{ color: 'grey.500' }}>
+        {t('projectImage.unavailable', { ns: 'components' })}
+      </Typography>
+    </Box>
+  ) : (
     <Box
       sx={{
         position: 'relative',
@@ -120,15 +121,42 @@ export function ProjectImage({
         fill
         sizes="100vw"
         priority={priority}
-        onClick={onClick}
         onError={handleError}
         placeholder="blur"
         blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg=="
         style={{
-          cursor: onClick ? 'pointer' : 'default',
           objectFit: 'cover',
         }}
       />
     </Box>
   );
+
+  // Wrap in interactive button when clickable (keyboard-accessible).
+  // Uses a native <button> for built-in Tab focus, Enter/Space activation,
+  // and implicit role="button" — no manual onKeyDown needed.
+  if (onClick) {
+    return (
+      <Box
+        component="button"
+        ref={buttonRef}
+        onClick={onClick}
+        aria-label={t('projectImage.viewInLightbox', {
+          ns: 'components',
+          caption: image.caption,
+        })}
+        sx={{
+          border: 'none',
+          padding: 0,
+          background: 'none',
+          cursor: 'pointer',
+          display: 'block',
+          width: '100%',
+        }}
+      >
+        {content}
+      </Box>
+    );
+  }
+
+  return content;
 }

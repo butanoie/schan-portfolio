@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '../../test-utils';
+import userEvent from '@testing-library/user-event';
 import { ProjectImage } from '../../../components/project/ProjectImage';
 import type { ProjectImage as ProjectImageType } from '../../../types';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -230,35 +231,35 @@ describe('ProjectImage', () => {
 
   describe('Interactions and Styling', () => {
     /**
-     * Test: Renders with clickable styles when onClick prop provided
+     * Test: Wraps image in a button when onClick prop provided
      */
-    it('renders with clickable styles when onClick prop provided', () => {
+    it('wraps image in a button when onClick prop provided', () => {
       const onClick = vi.fn();
       render(<ProjectImage image={mockImage} onClick={onClick} />);
 
-      const image = screen.getByTestId('mock-image');
-      expect(image).toHaveStyle({ cursor: 'pointer' });
+      const button = screen.getByRole('button');
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveStyle({ cursor: 'pointer' });
     });
 
     /**
-     * Test: Renders with default cursor when no onClick handler
+     * Test: Does not render a button when no onClick handler
      */
-    it('renders with default cursor when no onClick handler', () => {
+    it('does not render a button when no onClick handler', () => {
       render(<ProjectImage image={mockImage} />);
 
-      const image = screen.getByTestId('mock-image');
-      expect(image).toHaveStyle({ cursor: 'default' });
+      expect(screen.queryByRole('button')).not.toBeInTheDocument();
     });
 
     /**
-     * Test: Click handler is called when image is clicked
+     * Test: Click handler is called when button wrapper is clicked
      */
-    it('calls onClick handler when image is clicked', () => {
+    it('calls onClick handler when button is clicked', () => {
       const onClick = vi.fn();
       render(<ProjectImage image={mockImage} onClick={onClick} />);
 
-      const image = screen.getByTestId('mock-image');
-      fireEvent.click(image);
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
 
       expect(onClick).toHaveBeenCalledTimes(1);
     });
@@ -318,6 +319,79 @@ describe('ProjectImage', () => {
 
       const fallback = screen.getByRole('img', { name: /test image caption/i });
       expect(fallback).toBeInTheDocument();
+    });
+
+    /**
+     * Test: Button wrapper has correct aria-label when onClick provided
+     */
+    it('button wrapper has correct aria-label with caption', () => {
+      render(<ProjectImage image={mockImage} onClick={() => {}} />);
+
+      const button = screen.getByRole('button', {
+        name: /view test image caption in lightbox/i,
+      });
+      expect(button).toBeInTheDocument();
+    });
+
+    /**
+     * Test: Error fallback button wrapper has correct aria-label
+     */
+    it('error fallback button has correct aria-label', () => {
+      const { rerender } = render(
+        <ProjectImage image={mockImage} onClick={() => {}} />
+      );
+      fireEvent.error(screen.getByTestId('mock-image'));
+      rerender(<ProjectImage image={mockImage} onClick={() => {}} />);
+
+      const button = screen.getByRole('button', {
+        name: /view test image caption in lightbox/i,
+      });
+      expect(button).toBeInTheDocument();
+    });
+
+    /**
+     * Test: Keyboard Enter activates onClick on the button wrapper
+     */
+    it('activates onClick on Enter key press', async () => {
+      const user = userEvent.setup();
+      const onClick = vi.fn();
+      render(<ProjectImage image={mockImage} onClick={onClick} />);
+
+      const button = screen.getByRole('button');
+      button.focus();
+      await user.keyboard('{Enter}');
+
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    /**
+     * Test: Keyboard Space activates onClick on the button wrapper
+     */
+    it('activates onClick on Space key press', async () => {
+      const user = userEvent.setup();
+      const onClick = vi.fn();
+      render(<ProjectImage image={mockImage} onClick={onClick} />);
+
+      const button = screen.getByRole('button');
+      button.focus();
+      await user.keyboard(' ');
+
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    /**
+     * Test: buttonRef is forwarded to the button element
+     */
+    it('forwards buttonRef to the button element', () => {
+      const ref = {
+        current: null,
+      } as React.MutableRefObject<HTMLButtonElement | null>;
+      render(
+        <ProjectImage image={mockImage} onClick={() => {}} buttonRef={ref} />
+      );
+
+      const button = screen.getByRole('button');
+      expect(ref.current).toBe(button);
     });
   });
 
@@ -419,9 +493,11 @@ describe('ProjectImage', () => {
       const image = screen.getByTestId('mock-image');
       expect(image.getAttribute('src')).toBe(mockImage.url);
       expect(image.getAttribute('data-priority')).toBe('true');
-      expect(image).toHaveStyle({ cursor: 'pointer' });
 
-      fireEvent.click(image);
+      const button = screen.getByRole('button');
+      expect(button).toHaveStyle({ cursor: 'pointer' });
+
+      fireEvent.click(button);
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
@@ -446,10 +522,9 @@ describe('ProjectImage', () => {
       render(<ProjectImage image={mockImage} onClick={() => {}} />);
 
       // With reduced motion enabled (set in vitest.setup.ts matchMedia mock),
-      // transitions should be disabled
-      const wrapper = screen.getByTestId('mock-image').parentElement;
-      // Should have 'none' or very short transition
-      expect(wrapper).toBeInTheDocument();
+      // transitions should be disabled. The image wrapper is inside the button.
+      const imageWrapper = screen.getByTestId('mock-image').parentElement;
+      expect(imageWrapper).toBeInTheDocument();
     });
   });
 });

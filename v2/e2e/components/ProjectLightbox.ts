@@ -5,10 +5,11 @@
  * loads only after the first thumbnail click. `waitForOpen()` accounts for
  * both chunk loading and the dialog mount.
  *
- * The `swipe()` method uses mouse-based gesture simulation for cross-browser
- * compatibility. Note: the production `useSwipe` hook listens for
- * `touchstart`/`touchend` events, so mouse-based simulation may not trigger
- * the handler in all browsers. Test specs should verify and annotate accordingly.
+ * Touch gestures use `swipeByTouch()`, which dispatches real `TouchEvent`
+ * objects via `locator.evaluate()` inside the browser context. This correctly
+ * exercises the production `useSwipe` hook that listens for
+ * `touchstart`/`touchend`. The legacy `swipe()` method uses mouse events
+ * and cannot trigger touch handlers — it is retained but deprecated.
  *
  * @module e2e/components/ProjectLightbox
  */
@@ -36,7 +37,9 @@ export class ProjectLightbox {
 
   /**
    * ARIA live region announcing image position to screen readers.
-   * Uses `role="status"` with `aria-live="assertive"`.
+   * Scoped with `[role="status"][aria-live="assertive"]` to distinguish it
+   * from the loading spinner, which also uses `role="status"` but has no
+   * `aria-live` attribute.
    *
    * Only rendered when the project has more than one image
    * (`showNavigation` is true). Tests for single-image projects
@@ -65,8 +68,8 @@ export class ProjectLightbox {
       '[role="status"][aria-live="assertive"]'
     );
     this.counter = this.dialog
-      .locator('[aria-hidden="true"]')
-      .filter({ hasText: /of/i });
+      .locator('p[aria-hidden="true"]')
+      .filter({ hasText: /^\d+ of \d+$/ });
   }
 
   /**
@@ -85,6 +88,8 @@ export class ProjectLightbox {
 
   /**
    * Wait for the lightbox dialog to close and become hidden.
+   *
+   * @returns Resolves when the lightbox is no longer visible
    */
   async waitForClose(): Promise<void> {
     await this.dialog.waitFor({ state: 'hidden' });
@@ -123,9 +128,9 @@ export class ProjectLightbox {
   /**
    * Simulate a swipe gesture using mouse events.
    *
-   * Uses mouse.down → mouse.move → mouse.up to simulate touch swipes.
-   * Note: production `useSwipe` uses touch events, so this may not
-   * trigger in all browsers. Annotate tests accordingly.
+   * @deprecated Use {@link swipeByTouch} instead. The production `useSwipe`
+   * hook listens for `touchstart`/`touchend` events. This mouse-based method
+   * cannot trigger those handlers and is retained only as a reference.
    *
    * @param direction - Swipe direction ('left' advances, 'right' goes back)
    */
@@ -143,6 +148,79 @@ export class ProjectLightbox {
     await this.page.mouse.down();
     await this.page.mouse.move(endX, centerY, { steps: 10 });
     await this.page.mouse.up();
+  }
+
+  /**
+   * Simulate a touch swipe by dispatching real `TouchEvent` objects.
+   *
+   * Constructs `Touch` and `TouchEvent` instances inside the browser via
+   * `locator.evaluate()`, bypassing CDP serialization limits on `TouchList`.
+   * This correctly exercises the production `useSwipe` hook, which reads
+   * `e.touches[0].clientX` on `touchstart` and `e.changedTouches[0].clientX`
+   * on `touchend`.
+   *
+   * The default delta of 80px clears the 50px `SWIPE_THRESHOLD` used by
+   * `useSwipe` with comfortable margin. Override via `options.deltaX` for
+   * threshold-boundary tests.
+   *
+   * Works on both Chromium and WebKit (Desktop Safari). Uses generic `Event`
+   * objects with `touches`/`changedTouches` defined via `Object.defineProperty`
+   * instead of the `Touch`/`TouchEvent` constructors, because Desktop Safari
+   * (WebKit) does not support the `Touch()` constructor (iOS-only API).
+   * The `useSwipe` hook only reads `e.touches[0].clientX` and
+   * `e.changedTouches[0].clientX`, so plain coordinate objects suffice.
+   *
+   * @param direction - 'left' fires onSwipeLeft (next image); 'right' fires onSwipeRight (prev)
+   * @param options - Optional overrides
+   * @param options.deltaX - Horizontal swipe distance in pixels (default: 80)
+   */
+  async swipeByTouch(
+    direction: SwipeDirection,
+    options?: { deltaX?: number }
+  ): Promise<void> {
+    const box = await this.dialog.boundingBox();
+    if (!box) return;
+
+    const deltaX = options?.deltaX ?? 80;
+    const centerX = box.x + box.width / 2;
+    const centerY = box.y + box.height / 2;
+
+    // Left swipe: finger moves from right-of-center to left-of-center
+    // Right swipe: finger moves from left-of-center to right-of-center
+    const startX =
+      direction === 'left' ? centerX + deltaX / 2 : centerX - deltaX / 2;
+    const endX =
+      direction === 'left' ? centerX - deltaX / 2 : centerX + deltaX / 2;
+
+    await this.dialog.evaluate(
+      (el, coords) => {
+        // Use generic Event with defineProperty to attach touch data.
+        // The Touch() constructor is unavailable in Desktop Safari/WebKit.
+        const startEvent = new Event('touchstart', {
+          bubbles: true,
+          cancelable: true,
+        });
+        Object.defineProperty(startEvent, 'touches', {
+          value: [{ clientX: coords.startX, clientY: coords.centerY }],
+        });
+        Object.defineProperty(startEvent, 'changedTouches', {
+          value: [{ clientX: coords.startX, clientY: coords.centerY }],
+        });
+
+        const endEvent = new Event('touchend', {
+          bubbles: true,
+          cancelable: true,
+        });
+        Object.defineProperty(endEvent, 'touches', { value: [] });
+        Object.defineProperty(endEvent, 'changedTouches', {
+          value: [{ clientX: coords.endX, clientY: coords.centerY }],
+        });
+
+        el.dispatchEvent(startEvent);
+        el.dispatchEvent(endEvent);
+      },
+      { startX, endX, centerY }
+    );
   }
 
   /**

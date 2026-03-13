@@ -20,7 +20,8 @@
     "loadingImage": "Chargement de l'image"
   },
   "projectImage": {
-    "unavailable": "Image non disponible"
+    "unavailable": "Image non disponible",
+    "viewInLightbox": "Afficher {{caption}} dans la visionneuse"
   },
   "loadMoreButton": {
     "loading": "Chargement des projets...",
