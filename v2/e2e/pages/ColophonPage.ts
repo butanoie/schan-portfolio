@@ -46,7 +46,12 @@ export class ColophonPage extends BasePage {
     this.butaSection = page.locator('section[aria-labelledby="buta-heading"]');
     this.v1Accordion = page.locator('#v1-accordion');
     this.v1AccordionSummary = page.locator('#v1-technologies-header');
-    this.v1AccordionContent = page.locator('#v1-technologies-content');
+    // MUI Accordion wraps AccordionDetails in a region div that
+    // also receives the id from aria-controls, creating duplicate IDs.
+    // Target the AccordionDetails element specifically.
+    this.v1AccordionContent = page.locator(
+      '#v1-accordion .MuiAccordionDetails-root'
+    );
   }
 
   /**
