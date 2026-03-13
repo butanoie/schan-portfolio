@@ -100,6 +100,8 @@ test.describe('Home page — progressive loading', () => {
 
       // Click Load More and wait for the next batch to render before re-clicking.
       // 18 projects in batches of 5 (5→10→15→18), so 3 clicks total.
+      // Each cycle includes a 1s simulated delay + skeleton render + project mount,
+      // which exceeds the default 5s timeout on slow WebKit CI runners.
       let expectedCount = INITIAL_PROJECT_COUNT;
 
       while (expectedCount < TOTAL_PROJECT_COUNT) {
@@ -108,7 +110,9 @@ test.describe('Home page — progressive loading', () => {
           expectedCount + BATCH_SIZE,
           TOTAL_PROJECT_COUNT
         );
-        await expect(homePage.projectSections()).toHaveCount(expectedCount);
+        await expect(homePage.projectSections()).toHaveCount(expectedCount, {
+          timeout: 10_000,
+        });
       }
 
       // After the final batch renders, React still needs to:
