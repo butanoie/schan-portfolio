@@ -73,16 +73,14 @@ export class ProjectLightbox {
    * Wait for the lightbox dialog to open and become fully visible.
    *
    * Uses extended timeout to account for `next/dynamic` chunk loading
-   * on first open. After the dialog becomes visible, waits for the MUI
-   * Fade transition (300ms) to complete so axe-core computes correct
-   * contrast ratios against fully opaque elements.
+   * on first open. CSS transition settling (e.g., MUI Fade opacity) is
+   * handled by `runAxeScan()` via `waitForTransitionsToSettle()`, so no
+   * additional delay is needed here.
    *
-   * @returns Resolves when the lightbox is fully visible and the Fade transition has completed
+   * @returns Resolves when the lightbox is visible
    */
   async waitForOpen(): Promise<void> {
     await this.dialog.waitFor({ state: 'visible', timeout: 10_000 });
-    // Wait for MUI Fade transition to reach full opacity (300ms + margin)
-    await this.page.waitForTimeout(500);
   }
 
   /**
