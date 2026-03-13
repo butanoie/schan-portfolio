@@ -1,5 +1,5 @@
 ---
-name: quality-check
+name: run-checks
 description: Run all quality gates (typecheck, lint, test, build)
 disable-model-invocation: true
 ---
