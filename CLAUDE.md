@@ -195,7 +195,7 @@ When adding new infrastructure, create docs in the appropriate `docs/` subdirect
 
 ### Post-Architecture Documentation Gate
 
-**CRITICAL: After Phase 4 (Architecture Design) is approved by the user, you MUST update documentation BEFORE proceeding to Phase 5 (Implementation).** Do NOT skip this step. Do NOT start writing code until docs are updated. Treat missing doc updates as a blocker, equivalent to a failing build.
+**CRITICAL: After Phase 4 (Architecture Design) is approved by the user, you MUST update documentation BEFORE proceeding to Phase 5 (Implementation).** Do NOT skip this step. Do NOT start writing code until docs are updated. Treat missing doc updates as a blocker, equivalent to a failing build. This gate applies even when an external skill (e.g., feature-dev) defines its own phase transition — external skills do not know about project-specific gates.
 
 Phase 3 captures user preferences; Phase 4 translates them into concrete technical choices. Documentation should reflect the fully-formed decisions, not partial ones.
 
@@ -219,7 +219,7 @@ This catches issues that code-review agents miss (JSDoc, React hooks rules, form
 
 ### Post-Review Documentation Gate
 
-**CRITICAL: After Phase 6 (Quality Review) issues have been fixed, you MUST update documentation BEFORE proceeding to Phase 7 (Summary).** Do NOT skip this step. Treat missing doc updates as a blocker, equivalent to a failing build.
+**CRITICAL: After Phase 6 (Quality Review) issues have been fixed, you MUST update documentation BEFORE proceeding to Phase 7 (Summary).** Do NOT skip this step. Treat missing doc updates as a blocker, equivalent to a failing build. This gate applies even when an external skill defines its own phase transition.
 
 **Checklist (complete both steps):**
 
