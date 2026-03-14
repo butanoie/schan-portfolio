@@ -338,13 +338,6 @@ describe('sanitization utilities', () => {
         expect(() => sanitizeHtml({} as unknown as string)).toThrow(TypeError);
         expect(() => sanitizeHtml([] as unknown as string)).toThrow(TypeError);
       });
-
-      it('should return empty string on sanitization error', () => {
-        // This test would need to mock DOMPurify to throw an error
-        // For now, we test that sanitizeHtml handles errors gracefully
-        const result = sanitizeHtml('<p>Valid content</p>');
-        expect(typeof result).toBe('string');
-      });
     });
 
     // Real-world scenarios

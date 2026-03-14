@@ -14,7 +14,7 @@ This document covers the project's testing setup: Vitest, React Testing Library,
 | @vitest/coverage-v8         | Code coverage reporting                           |
 | jsdom                       | DOM environment for Node.js                       |
 
-**Current stats:** 1,199 tests across 65 test files (as of 2026-03-11).
+**Current stats:** 1,203 tests across 68 test files (as of 2026-03-13).
 
 ## Commands
 
@@ -242,10 +242,36 @@ Coverage reports:
 | `v2/src/__tests__/utils/axe-helpers.ts` | Accessibility testing helpers                         |
 | `v2/src/__tests__/README.md`            | Testing conventions guide                             |
 
+## Testing Level Guidelines
+
+When writing new tests, choose the correct level to avoid redundancy across the test pyramid.
+
+### When to write a unit test (Vitest)
+
+- **Pure logic**: functions, type guards, formatters, validators — no DOM or browser needed
+- **Component rendering**: verifying ARIA attributes, prop variations, conditional rendering
+- **Hook behavior**: state transitions, error guards, context provider contracts
+- **Event listener lifecycle**: attach/detach, cleanup on unmount, ref-based updates
+
+### When to write an E2E test (Playwright)
+
+- **Persistence**: localStorage round-trips across reloads or navigation
+- **CSS computed styles**: `data-theme` attribute, `transition-property`, contrast
+- **Real browser APIs**: touch events, focus management, `next/dynamic` chunk loading
+- **Cross-component integration**: settings popover + MUI `aria-hidden` side effects
+- **Full user flows**: navigation → state change → page transition → state persists
+
+### Avoiding redundancy
+
+- **Do not re-test delegation chains.** If `isProjectVideo` delegates to `isValidVideoId`, test the ID validation in `isValidVideoId`'s suite. Only test `isProjectVideo` for its own logic (type checking, field extraction, wiring).
+- **Do not duplicate "Enhanced Security" blocks.** Security-specific inputs (injection strings, path traversal) belong in the lowest-level function's test suite. Higher-level guards inherit coverage through delegation.
+- **Cross-level overlap is OK when complementary.** Unit tests for keyboard navigation (isolated, fast) and E2E tests for keyboard navigation (real browser focus) are both valuable — they catch different failure modes.
+- **Use `test.each` for pattern groups.** When 4+ tests follow the same structure (same function, same assertion, varying input), group them under a shared `describe` with separate `it` blocks for clear failure names.
+
 ## Related Documentation
 
 - [Testing Architecture](../guides/TESTING_ARCHITECTURE.md) — Integration & E2E test architecture (POM, Playwright, axe)
-- [Testing Roadmap](../active/TESTING_ROADMAP.md) — Integration & E2E test implementation roadmap
+- [Testing Roadmap](../archive/TESTING_ROADMAP.md) — Integration & E2E test implementation roadmap (completed)
 - [Accessibility Testing](../accessibility/ACCESSIBILITY_TESTING.md) — Manual and automated a11y testing procedures
 - [Accessibility Testing Checklist](../accessibility/ACCESSIBILITY_TESTING_CHECKLIST.md) — Testing checklist
 - [Modernization Plan](../archive/MODERNIZATION_PLAN.md) — Coverage goals and testing strategy

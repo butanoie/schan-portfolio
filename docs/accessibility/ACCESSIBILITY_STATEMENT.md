@@ -1,6 +1,6 @@
 # Accessibility Statement
 
-**Last Updated:** March 3, 2026
+**Last Updated:** March 13, 2026
 
 ## Commitment to Accessibility
 
@@ -90,13 +90,15 @@ This conformance claim applies to:
 
 We use automated accessibility testing tools to continuously verify compliance:
 
-- **vitest-axe:** Accessibility testing in our test suite (axe-core engine)
-- **WCAG Rules:** 11 WCAG success criteria automatically validated
-- **Test Coverage:** 93 dedicated accessibility test cases across 30 test files
+- **vitest-axe:** Unit-level accessibility testing (axe-core engine)
+- **@axe-core/playwright:** E2E accessibility scans against fully-rendered pages in real browsers
+- **WCAG Rules:** 11 WCAG 2.2 AA success criteria automatically validated at both unit and E2E layers
+- **Test Coverage:** 93 unit-level + 21 E2E accessibility test cases (42 runs across Chromium and WebKit)
 
 **Automated Test Results (March 2026):**
-- 1,132 total tests passing across 58 test files
-- 89.57% code coverage (exceeds 80% target)
+- 1,203 unit tests passing across 68 test files
+- 208 E2E tests passing (including 42 accessibility scans) across Chromium and WebKit
+- 91.85% code coverage (exceeds 80% target)
 - 0 accessibility violations detected
 - 0 TypeScript errors (strict mode)
 - 0 ESLint errors (including jsx-a11y rules)
@@ -113,6 +115,8 @@ We perform regular manual testing including:
 
 ### Testing Tools Used
 
+- axe-core via vitest-axe (unit tests)
+- @axe-core/playwright (E2E tests — Chromium + WebKit)
 - axe DevTools browser extension
 - WAVE (Web Accessibility Evaluation Tool)
 - Google Lighthouse
@@ -268,6 +272,7 @@ We welcome feedback on the accessibility of this website. If you encounter any a
 |------|---------|--------|
 | 2026-02-06 | Initial WCAG 2.2 Level AA compliance | ✅ Complete |
 | 2026-03-03 | Automated audit refresh — 1,132 tests, 89.57% coverage, 0 violations | ✅ Complete |
+| 2026-03-13 | E2E accessibility suite — 42 axe scans across browsers, 5 defects fixed (skip link, contrast, landmarks, dialog discovery, color palette) | ✅ Complete |
 
 ---
 
@@ -299,6 +304,6 @@ Email: sing@singchan.com
 
 ---
 
-**This accessibility statement was last reviewed and updated on March 3, 2026.**
+**This accessibility statement was last reviewed and updated on March 13, 2026.**
 
 **Commitment:** We are committed to maintaining and improving the accessibility of this website and will make updates as needed to ensure ongoing compliance with WCAG 2.2 Level AA standards.
