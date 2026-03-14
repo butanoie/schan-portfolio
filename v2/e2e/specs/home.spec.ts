@@ -100,18 +100,23 @@ test.describe('Home page — progressive loading', () => {
 
       // Click Load More and wait for the next batch to render before re-clicking.
       // 18 projects in batches of 5 (5→10→15→18), so 3 clicks total.
-      // Each cycle includes a 1s simulated delay + skeleton render + project mount,
-      // which exceeds the default 5s timeout on slow WebKit CI runners.
+      //
+      // Each cycle: 1s simulated delay → skeleton render → project mount → setLoading(false).
+      // On slow WebKit CI runners we must:
+      //   1. Explicitly wait for the button to be enabled (previous load complete)
+      //   2. Click
+      //   3. Wait for the new project count with an extended timeout
       let expectedCount = INITIAL_PROJECT_COUNT;
 
       while (expectedCount < TOTAL_PROJECT_COUNT) {
+        await expect(homePage.loadMoreButton).toBeEnabled({ timeout: 15_000 });
         await homePage.loadMoreButton.click();
         expectedCount = Math.min(
           expectedCount + BATCH_SIZE,
           TOTAL_PROJECT_COUNT
         );
         await expect(homePage.projectSections()).toHaveCount(expectedCount, {
-          timeout: 10_000,
+          timeout: 15_000,
         });
       }
 
@@ -237,10 +242,12 @@ test.describe('Home page — progressive loading', () => {
         INITIAL_PROJECT_COUNT
       );
 
-      await expect(homePage.loadMoreButton).toBeVisible();
+      await expect(homePage.loadMoreButton).toBeEnabled({ timeout: 15_000 });
       await homePage.loadMoreButton.click();
 
-      await expect(homePage.projectSections()).toHaveCount(10);
+      await expect(homePage.projectSections()).toHaveCount(10, {
+        timeout: 15_000,
+      });
 
       // Verify a French title from batch 2 — project 6 (index 5): "Servus Credit Union - café"
       const batch2Heading = homePage.projectSections().nth(5);
@@ -282,10 +289,12 @@ test.describe('Home page — progressive loading', () => {
       await expect(firstHeading).toContainText(/Téléchargeur/);
 
       // Click French Load More
-      await expect(homePage.loadMoreButton).toBeVisible();
+      await expect(homePage.loadMoreButton).toBeEnabled({ timeout: 15_000 });
       await homePage.loadMoreButton.click();
 
-      await expect(homePage.projectSections()).toHaveCount(10);
+      await expect(homePage.projectSections()).toHaveCount(10, {
+        timeout: 15_000,
+      });
 
       // Verify French title from batch 2
       const batch2Heading = homePage.projectSections().nth(5);
