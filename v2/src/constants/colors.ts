@@ -35,6 +35,9 @@ export const BRAND_COLORS = {
 
   /** Sage green for footer background and tag chips (WCAG AA: 4.76:1 with white) */
   sage: '#587A68',
+
+  /** Rose pink for hover states on sage green backgrounds (contrast: ~3.8:1) */
+  roseHover: '#FFD6E0',
 } as const;
 
 /**

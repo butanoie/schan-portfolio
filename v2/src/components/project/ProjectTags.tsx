@@ -3,6 +3,7 @@
 import { Box, Chip, SxProps, Theme } from '@mui/material';
 import { BRAND_COLORS } from '../../constants';
 import { usePalette } from '../../hooks/usePalette';
+import { getHcContainerSx, getHcChipSx } from '../../utils/highContrastStyles';
 
 /** Shared styling for tag and circa chips (everything except backgroundColor) */
 const BASE_CHIP_SX = {
@@ -60,14 +61,7 @@ export function ProjectTagsContainer({
   circa,
   sx,
 }: ProjectTagsContainerProps) {
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
-
-  const chipBg = isHighContrast ? '#000000' : BRAND_COLORS.sage;
-  const chipColor = isHighContrast ? '#FFFFFF' : '#ffffff';
-  const chipBorder = isHighContrast ? '1px solid #FFFFFF' : 'none';
-  const circaBg = isHighContrast ? '#FFFFFF' : BRAND_COLORS.maroon;
-  const circaColor = isHighContrast ? '#000000' : '#ffffff';
+  const { isHighContrast } = usePalette();
 
   return (
     <Box
@@ -75,9 +69,7 @@ export function ProjectTagsContainer({
         display: 'flex',
         flexWrap: 'wrap',
         gap: 0.75,
-        backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
-        border: isHighContrast ? '1px solid #FFFFFF' : 'none',
-        borderRadius: isHighContrast ? 0 : 2,
+        ...getHcContainerSx(isHighContrast),
         p: 1.5,
         ...sx,
       }}
@@ -89,9 +81,12 @@ export function ProjectTagsContainer({
           size="small"
           sx={{
             ...BASE_CHIP_SX,
-            backgroundColor: circaBg,
-            color: circaColor,
-            border: chipBorder,
+            ...getHcChipSx(isHighContrast, BRAND_COLORS.maroon),
+            // Invert circa chip in HC for visual distinction from tag chips
+            ...(isHighContrast && {
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+            }),
           }}
         />
       )}
@@ -102,9 +97,7 @@ export function ProjectTagsContainer({
           size="small"
           sx={{
             ...BASE_CHIP_SX,
-            backgroundColor: chipBg,
-            color: chipColor,
-            border: chipBorder,
+            ...getHcChipSx(isHighContrast),
           }}
         />
       ))}

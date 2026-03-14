@@ -163,8 +163,7 @@ export default function Footer() {
   const pathname = usePathname();
   const loadingContext = useProjectLoading();
   const { t } = useI18n();
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -366,7 +365,7 @@ function FooterNavLinks({ pathname, t, isHighContrast }: FooterNavLinksProps): R
                     ? NAV_COLORS.text
                     : isHighContrast
                       ? '#FFFF00'
-                      : '#FFD6E0',
+                      : BRAND_COLORS.roseHover,
                   textDecoration: active ? 'none' : undefined,
                 },
               }}

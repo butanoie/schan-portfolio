@@ -134,7 +134,7 @@ function ColorSwatchCard({ color }: { color: ColorSwatch }) {
  * @returns A card displaying the typography sample
  */
 function TypographySampleCard({ font }: { font: TypographyEntry }) {
-  const { palette, mode } = usePalette();
+  const { palette, isHighContrast } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -186,7 +186,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               })}
               sx={{
                 color: palette.card.text,
-                '&:hover': mode === 'highContrast'
+                '&:hover': isHighContrast
                   ? {
                       backgroundColor: '#000000',
                       color: '#FFFFFF',
@@ -194,7 +194,7 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
                   : {
                       color: palette.card.hoverText,
                     },
-                ...(mode === 'highContrast' && {
+                ...(isHighContrast && {
                   '&:focus-visible': {
                     outline: '3px solid #000000',
                     outlineOffset: '2px',

@@ -243,12 +243,14 @@ export function getLocalizedResumeData(t: TranslationFunction): ResumeData {
       {
         label: t('resume.skills.everydayTools', { ns: 'pages' }),
         skills: [
+          'Visual Studio Code',
+          'Visual Studio',
           'Azure DevOps',
           'Application Insights',
+          'Jira',
+          'Confluence',
           'Rancher',
           'Graphana',
-          'Visual Studio',
-          'Visual Studio Code',
           'Kubernetes',
           'Photoshop',
           'Basalmiq',

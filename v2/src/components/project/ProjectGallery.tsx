@@ -134,8 +134,7 @@ export function ProjectGallery({
   fourColumns = false,
   sx,
 }: ProjectGalleryProps) {
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
 
   /**
    * Manage lightbox state and image navigation.

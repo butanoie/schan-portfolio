@@ -30,8 +30,7 @@ import {
 export function NavButtons(): React.ReactNode {
   const pathname = usePathname();
   const { t } = useI18n();
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
   const navLinks = getNavLinks();
 
   return (

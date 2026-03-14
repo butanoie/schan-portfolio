@@ -131,7 +131,7 @@ export function SettingsButton({
 }: SettingsButtonProps): React.ReactNode {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
-  const { palette, mode } = usePalette();
+  const { palette, isHighContrast } = usePalette();
   const { t } = useI18n();
   const { animationsEnabled } = useAnimations();
 
@@ -180,7 +180,7 @@ export function SettingsButton({
                   : 'none',
                 '&:hover': {
                   color:
-                    mode === 'highContrast' ? '#FFFF00' : BRAND_COLORS.maroon,
+                    isHighContrast ? '#FFFF00' : BRAND_COLORS.maroon,
                 },
                 '@media (prefers-reduced-motion: reduce)': {
                   transition: 'none',

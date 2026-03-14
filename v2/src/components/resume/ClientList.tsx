@@ -1,5 +1,5 @@
 import { Box, Typography, Chip } from '@mui/material';
-import { BRAND_COLORS } from '../../constants';
+import { getHcContainerSx, getHcChipSx } from '../../utils/highContrastStyles';
 
 /**
  * Props for the ClientList component.
@@ -48,9 +48,7 @@ export default function ClientList({
     <Box component="section" aria-labelledby="clients-heading">
       <Box
         sx={{
-          backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
-          border: isHighContrast ? '1px solid #FFFFFF' : 'none',
-          borderRadius: isHighContrast ? 0 : 2,
+          ...getHcContainerSx(isHighContrast),
           p: 2.5,
         }}
       >
@@ -83,13 +81,10 @@ export default function ClientList({
               label={client}
               size="small"
               sx={{
-                backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.sage,
-                color: '#ffffff',
-                border: isHighContrast ? '1px solid #FFFFFF' : 'none',
+                ...getHcChipSx(isHighContrast),
                 fontWeight: 600,
                 fontSize: '0.75rem',
                 height: '26px',
-                borderRadius: isHighContrast ? 0 : '3px',
                 '& .MuiChip-label': {
                   px: 1.25,
                 },

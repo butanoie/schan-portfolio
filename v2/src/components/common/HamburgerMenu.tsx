@@ -47,6 +47,42 @@ function getDrawerIconButtonSx(theme: Theme) {
 }
 
 /**
+ * Returns sx styling for a mobile nav list item based on active state and theme mode.
+ * Mirrors the desktop `getNavButtonSx` pattern for ListItemButton.
+ *
+ * @param active - Whether this item represents the current page
+ * @param isHighContrast - Whether high-contrast mode is active
+ * @returns SxProps for the ListItemButton
+ */
+function getDrawerNavItemSx(active: boolean, isHighContrast: boolean) {
+  if (isHighContrast) {
+    return {
+      backgroundColor: active ? '#FFFFFF' : '#000000',
+      color: active ? '#000000' : '#FFFFFF',
+      border: '1px solid #FFFFFF',
+      borderRadius: 0,
+      py: 1.5,
+      '&:hover': {
+        backgroundColor: active ? '#000000' : '#FFFFFF',
+        color: active ? '#FFFFFF' : '#000000',
+      },
+    };
+  }
+
+  return {
+    backgroundColor: active ? NAV_COLORS.active : BRAND_COLORS.sage,
+    color: NAV_COLORS.text,
+    borderRadius: 1,
+    py: 1.5,
+    '&:hover': {
+      backgroundColor: active
+        ? NAV_COLORS.activeHover
+        : NAV_COLORS.inactiveHover,
+    },
+  };
+}
+
+/**
  * Hamburger menu component for mobile navigation.
  *
  * Displays a menu icon button on mobile devices (< 600px) that opens
@@ -77,8 +113,7 @@ export default function HamburgerMenu() {
   const theme = useTheme();
   const { t } = useI18n();
   const { animationsEnabled } = useAnimations();
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const navItems = getNavLinks();
@@ -160,39 +195,7 @@ export default function HamburgerMenu() {
                     href={item.href}
                     onClick={handleClose}
                     aria-current={active ? 'page' : undefined}
-                    sx={{
-                      backgroundColor: isHighContrast
-                        ? active
-                          ? '#FFFFFF'
-                          : '#000000'
-                        : active
-                          ? NAV_COLORS.active
-                          : BRAND_COLORS.sage,
-                      color: isHighContrast
-                        ? active
-                          ? '#000000'
-                          : '#FFFFFF'
-                        : NAV_COLORS.text,
-                      border: isHighContrast
-                        ? '1px solid #FFFFFF'
-                        : 'none',
-                      borderRadius: isHighContrast ? 0 : 1,
-                      py: 1.5,
-                      '&:hover': {
-                        backgroundColor: isHighContrast
-                          ? active
-                            ? '#000000'
-                            : '#FFFFFF'
-                          : active
-                            ? NAV_COLORS.activeHover
-                            : NAV_COLORS.inactiveHover,
-                        color: isHighContrast
-                          ? active
-                            ? '#FFFFFF'
-                            : '#000000'
-                          : undefined,
-                      },
-                    }}
+                    sx={getDrawerNavItemSx(active, isHighContrast)}
                   >
                     <ListItemIcon
                       sx={{

@@ -66,8 +66,7 @@ export function AnimationsSwitcher({
 }: AnimationsSwitcherProps): React.ReactNode {
   const { animationsEnabled, setAnimationsEnabled } = useAnimations();
   const { t } = useI18n();
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
 
   /**
    * Handle animations toggle change.
@@ -89,23 +88,18 @@ export function AnimationsSwitcher({
             checked={animationsEnabled}
             onChange={handleChange}
             aria-label={t('settings.animationsToggle')}
-            sx={{
-              '& .MuiSwitch-switchBase.Mui-checked': {
-                color: isHighContrast ? '#FFFFFF' : BRAND_COLORS.sage,
-              },
-              '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                backgroundColor: isHighContrast
-                  ? '#FFFFFF'
-                  : BRAND_COLORS.sage,
-                opacity: isHighContrast ? 1 : undefined,
-              },
-              ...(isHighContrast && {
-                '& .MuiSwitch-track': {
-                  backgroundColor: '#767676',
-                  border: '1px solid #FFFFFF',
-                },
-              }),
-            }}
+            sx={
+              isHighContrast
+                ? undefined
+                : {
+                    '& .MuiSwitch-switchBase.Mui-checked': {
+                      color: BRAND_COLORS.sage,
+                    },
+                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                      backgroundColor: BRAND_COLORS.sage,
+                    },
+                  }
+            }
           />
         }
         label={

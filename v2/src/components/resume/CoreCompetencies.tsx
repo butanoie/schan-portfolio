@@ -1,6 +1,6 @@
 import { Box, Typography, Chip } from '@mui/material';
 import type { SkillCategory } from '../../types/resume';
-import { BRAND_COLORS } from '../../constants';
+import { getHcContainerSx, getHcChipSx } from '../../utils/highContrastStyles';
 
 /**
  * Props for the CoreCompetencies component.
@@ -47,9 +47,7 @@ export default function CoreCompetencies({
           key={categoryIndex}
           sx={{
             mb: 3,
-            backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
-            border: isHighContrast ? '1px solid #FFFFFF' : 'none',
-            borderRadius: isHighContrast ? 0 : 2,
+            ...getHcContainerSx(isHighContrast),
             p: 2.5,
           }}
         >
@@ -85,15 +83,10 @@ export default function CoreCompetencies({
                 label={skill}
                 size="small"
                 sx={{
-                  backgroundColor: isHighContrast
-                    ? '#000000'
-                    : BRAND_COLORS.sage,
-                  color: '#ffffff',
-                  border: isHighContrast ? '1px solid #FFFFFF' : 'none',
+                  ...getHcChipSx(isHighContrast),
                   fontWeight: 600,
                   fontSize: '0.8rem',
                   height: '28px',
-                  borderRadius: isHighContrast ? 0 : '3px',
                   '& .MuiChip-label': {
                     px: 1.5,
                   },

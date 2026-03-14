@@ -45,8 +45,7 @@ import './print.css';
  */
 export default function ResumePage() {
   const { t } = useI18n();
-  const { palette, mode } = usePalette({ hydrationSafe: true });
-  const isHighContrast = mode === 'highContrast';
+  const { palette, isHighContrast } = usePalette({ hydrationSafe: true });
   const data = getLocalizedResumeData(t);
 
   return (

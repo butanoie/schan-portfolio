@@ -61,8 +61,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }): React.JSX.Element {
   const { t } = useI18n();
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
   const pathname = usePathname();
 
   // Project loading context state - shared between AsyncProjectsList and Footer.

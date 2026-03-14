@@ -54,8 +54,7 @@ export default function ArtifactSection({
   intro,
   items,
 }: ArtifactSectionProps) {
-  const { palette, mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { palette, isHighContrast } = usePalette();
   const { t } = useI18n();
 
   return (

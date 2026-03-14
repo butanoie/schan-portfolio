@@ -71,8 +71,7 @@ export function ProjectImage({
   const [imageError, setImageError] = useState(false);
   const { shouldAnimate } = useAnimations();
   const { t } = useI18n();
-  const { mode } = usePalette();
-  const isHighContrast = mode === 'highContrast';
+  const { isHighContrast } = usePalette();
 
   const imageSrc = size === 'thumbnail' ? image.tnUrl : image.url;
 

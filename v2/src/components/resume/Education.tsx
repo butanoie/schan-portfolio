@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import type { EducationEntry } from '../../types/resume';
 import { BRAND_COLORS } from '../../constants';
+import { getHcContainerSx } from '../../utils/highContrastStyles';
 
 /**
  * Props for the Education component.
@@ -50,9 +51,7 @@ export default function Education({
     <Box component="section" aria-labelledby="education-heading">
       <Box
         sx={{
-          backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
-          border: isHighContrast ? '1px solid #FFFFFF' : 'none',
-          borderRadius: isHighContrast ? 0 : 2,
+          ...getHcContainerSx(isHighContrast),
           p: 2.5,
         }}
       >
