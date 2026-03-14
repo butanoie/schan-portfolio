@@ -22,6 +22,9 @@ interface UsePaletteReturn {
 
   /** The current theme mode (light, dark, highContrast) */
   mode: ThemeMode;
+
+  /** Whether high-contrast mode is active (convenience derived from mode) */
+  isHighContrast: boolean;
 }
 
 /**
@@ -72,5 +75,6 @@ export function usePalette(options?: {
   return {
     palette: getPaletteByMode(effectiveMode),
     mode: effectiveMode,
+    isHighContrast: effectiveMode === 'highContrast',
   };
 }

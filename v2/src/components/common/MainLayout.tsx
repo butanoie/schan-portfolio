@@ -8,6 +8,7 @@ import Footer from './Footer';
 import { FrenchTranslationAlert } from './FrenchTranslationAlert';
 import { ProjectLoadingProvider } from '../../contexts/ProjectLoadingContext';
 import { useI18n } from '@/src/hooks/useI18n';
+import { usePalette } from '@/src/hooks/usePalette';
 
 /**
  * Represents the loading state for projects in the async list.
@@ -60,6 +61,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }): React.JSX.Element {
   const { t } = useI18n();
+  const { isHighContrast } = usePalette();
   const pathname = usePathname();
 
   // Project loading context state - shared between AsyncProjectsList and Footer.
@@ -130,8 +132,9 @@ export default function MainLayout({
           left: '-9999px',
           zIndex: 999,
           padding: '1em',
-          backgroundColor: 'primary.main',
-          color: 'primary.contrastText',
+          backgroundColor: isHighContrast ? '#000000' : 'primary.main',
+          color: isHighContrast ? '#FFFF00' : 'primary.contrastText',
+          border: isHighContrast ? '2px solid #FFFF00' : 'none',
           textDecoration: 'none',
           '&:focus': {
             left: '50%',

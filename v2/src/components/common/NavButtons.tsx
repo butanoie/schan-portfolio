@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '@/src/hooks/useI18n';
+import { usePalette } from '@/src/hooks/usePalette';
 import {
   getNavLinks,
   isActivePath,
@@ -29,6 +30,7 @@ import {
 export function NavButtons(): React.ReactNode {
   const pathname = usePathname();
   const { t } = useI18n();
+  const { isHighContrast } = usePalette();
   const navLinks = getNavLinks();
 
   return (
@@ -44,7 +46,7 @@ export function NavButtons(): React.ReactNode {
             startIcon={link.icon}
             size="medium"
             aria-current={active ? 'page' : undefined}
-            sx={getNavButtonSx(active)}
+            sx={getNavButtonSx(active, isHighContrast)}
           >
             {t(link.labelKey)}
           </Button>

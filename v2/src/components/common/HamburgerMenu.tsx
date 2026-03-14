@@ -23,6 +23,7 @@ import { usePathname } from 'next/navigation';
 import { BRAND_COLORS, NAV_COLORS } from '../../constants';
 import { useI18n } from '@/src/hooks/useI18n';
 import { useAnimations } from '@/src/hooks/useAnimations';
+import { usePalette } from '@/src/hooks/usePalette';
 import { FONT_FAMILY_BODY } from '@/src/lib/fontConstants';
 import { SettingsList } from '../settings/SettingsList';
 import { getNavLinks, isActivePath } from '../../utils/navigation';
@@ -41,6 +42,42 @@ function getDrawerIconButtonSx(theme: Theme) {
     minHeight: 44,
     '&:hover': {
       backgroundColor: alpha(theme.palette.secondary.main, 0.08),
+    },
+  };
+}
+
+/**
+ * Returns sx styling for a mobile nav list item based on active state and theme mode.
+ * Mirrors the desktop `getNavButtonSx` pattern for ListItemButton.
+ *
+ * @param active - Whether this item represents the current page
+ * @param isHighContrast - Whether high-contrast mode is active
+ * @returns SxProps for the ListItemButton
+ */
+function getDrawerNavItemSx(active: boolean, isHighContrast: boolean) {
+  if (isHighContrast) {
+    return {
+      backgroundColor: active ? '#FFFFFF' : '#000000',
+      color: active ? '#000000' : '#FFFFFF',
+      border: '1px solid #FFFFFF',
+      borderRadius: 0,
+      py: 1.5,
+      '&:hover': {
+        backgroundColor: active ? '#000000' : '#FFFFFF',
+        color: active ? '#FFFFFF' : '#000000',
+      },
+    };
+  }
+
+  return {
+    backgroundColor: active ? NAV_COLORS.active : BRAND_COLORS.sage,
+    color: NAV_COLORS.text,
+    borderRadius: 1,
+    py: 1.5,
+    '&:hover': {
+      backgroundColor: active
+        ? NAV_COLORS.activeHover
+        : NAV_COLORS.inactiveHover,
     },
   };
 }
@@ -76,6 +113,7 @@ export default function HamburgerMenu() {
   const theme = useTheme();
   const { t } = useI18n();
   const { animationsEnabled } = useAnimations();
+  const { isHighContrast } = usePalette();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const navItems = getNavLinks();
@@ -157,23 +195,11 @@ export default function HamburgerMenu() {
                     href={item.href}
                     onClick={handleClose}
                     aria-current={active ? 'page' : undefined}
-                    sx={{
-                      backgroundColor: active
-                        ? NAV_COLORS.active
-                        : BRAND_COLORS.sage,
-                      color: NAV_COLORS.text,
-                      borderRadius: 1,
-                      py: 1.5,
-                      '&:hover': {
-                        backgroundColor: active
-                          ? NAV_COLORS.activeHover
-                          : NAV_COLORS.inactiveHover,
-                      },
-                    }}
+                    sx={getDrawerNavItemSx(active, isHighContrast)}
                   >
                     <ListItemIcon
                       sx={{
-                        color: NAV_COLORS.text,
+                        color: 'inherit',
                         minWidth: 40,
                       }}
                     >
@@ -186,7 +212,7 @@ export default function HamburgerMenu() {
                           sx: {
                             fontFamily: FONT_FAMILY_BODY,
                             fontWeight: 600,
-                            color: NAV_COLORS.text,
+                            color: 'inherit',
                           },
                         },
                       }}

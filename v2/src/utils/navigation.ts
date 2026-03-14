@@ -81,13 +81,37 @@ export function isActivePath(pathname: string | null, href: string): boolean {
  * whether the link matches the current pathname.
  *
  * @param isActive - Whether the button represents the currently active page
+ * @param isHighContrast - Whether high-contrast mode is active
  * @returns SxProps object with background, color, font, and hover styling
  *
  * @example
  * const sx = getNavButtonSx(isActivePath(pathname, link.href));
  * <Button sx={sx}>{label}</Button>
  */
-export function getNavButtonSx(isActive: boolean): SxProps<Theme> {
+export function getNavButtonSx(
+  isActive: boolean,
+  isHighContrast = false
+): SxProps<Theme> {
+  if (isHighContrast) {
+    return {
+      backgroundColor: isActive ? '#FFFFFF' : '#000000',
+      color: isActive ? '#000000' : '#FFFFFF',
+      fontFamily: FONT_FAMILY_BODY,
+      fontWeight: 600,
+      textTransform: 'none',
+      borderRadius: 0,
+      border: '1px solid #FFFFFF',
+      boxShadow: 0,
+      px: 3,
+      py: 0.75,
+      '&:hover': {
+        backgroundColor: isActive ? '#000000' : '#FFFFFF',
+        color: isActive ? '#FFFFFF' : '#000000',
+        boxShadow: 0,
+      },
+    };
+  }
+
   return {
     backgroundColor: isActive ? NAV_COLORS.active : BRAND_COLORS.sage,
     color: NAV_COLORS.text,

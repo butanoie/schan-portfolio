@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import type { EducationEntry } from '../../types/resume';
 import { BRAND_COLORS } from '../../constants';
+import { getHcContainerSx } from '../../utils/highContrastStyles';
 
 /**
  * Props for the Education component.
@@ -14,6 +15,9 @@ export interface EducationProps {
 
   /** Pre-translated section heading text (e.g., "Education & Certifications") */
   sectionHeading: string;
+
+  /** Whether high-contrast mode is active */
+  isHighContrast?: boolean;
 }
 
 /**
@@ -29,6 +33,7 @@ export interface EducationProps {
  * @param props.education - Array of education entries (degrees, certifications)
  * @param props.cardTextColor - Theme-aware text color from parent's palette
  * @param props.sectionHeading - Pre-translated heading text
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A section displaying the education entries
  *
  * @example
@@ -38,13 +43,15 @@ export default function Education({
   education,
   cardTextColor,
   sectionHeading,
+  isHighContrast = false,
 }: EducationProps) {
+  const textColor = isHighContrast ? '#FFFFFF' : cardTextColor;
+
   return (
     <Box component="section" aria-labelledby="education-heading">
       <Box
         sx={{
-          backgroundColor: BRAND_COLORS.duckEgg,
-          borderRadius: 2,
+          ...getHcContainerSx(isHighContrast),
           p: 2.5,
         }}
       >
@@ -55,7 +62,7 @@ export default function Education({
           component="h3"
           sx={{
             fontWeight: 600,
-            color: cardTextColor,
+            color: textColor,
             fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 1.5,
           }}
@@ -75,7 +82,7 @@ export default function Education({
             <Box
               key={index}
               sx={{
-                borderLeft: `3px solid ${BRAND_COLORS.sage}`,
+                borderLeft: `3px solid ${isHighContrast ? '#FFFFFF' : BRAND_COLORS.sage}`,
                 pl: 1.5,
               }}
             >
@@ -83,7 +90,7 @@ export default function Education({
                 variant="body2"
                 sx={{
                   fontWeight: 600,
-                  color: cardTextColor,
+                  color: textColor,
                   fontSize: '0.9rem',
                 }}
               >
@@ -92,7 +99,7 @@ export default function Education({
               <Typography
                 variant="body2"
                 sx={{
-                  color: cardTextColor,
+                  color: textColor,
                   fontSize: '0.85rem',
                   mt: 0.25,
                 }}
@@ -102,7 +109,7 @@ export default function Education({
               <Typography
                 variant="body2"
                 sx={{
-                  color: cardTextColor,
+                  color: textColor,
                   fontSize: '0.8rem',
                   mt: 0.25,
                 }}

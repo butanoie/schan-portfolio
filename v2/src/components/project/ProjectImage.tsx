@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import type { ProjectImage as ProjectImageType } from '../../types';
-import { useI18n, useAnimations } from '../../hooks';
+import { useI18n, useAnimations, usePalette } from '../../hooks';
 
 /**
  * Props for the ProjectImage component.
@@ -71,6 +71,7 @@ export function ProjectImage({
   const [imageError, setImageError] = useState(false);
   const { shouldAnimate } = useAnimations();
   const { t } = useI18n();
+  const { isHighContrast } = usePalette();
 
   const imageSrc = size === 'thumbnail' ? image.tnUrl : image.url;
 
@@ -151,6 +152,12 @@ export function ProjectImage({
           cursor: 'pointer',
           display: 'block',
           width: '100%',
+          '&:focus-visible': isHighContrast
+            ? {
+                outline: '3px solid #FFFF00',
+                outlineOffset: '3px',
+              }
+            : undefined,
         }}
       >
         {content}

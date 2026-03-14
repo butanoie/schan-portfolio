@@ -17,6 +17,7 @@
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import HamburgerMenu from '../../../components/common/HamburgerMenu';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 import { useMediaQuery } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import * as UseI18nModule from '../../../hooks/useI18n';
@@ -75,6 +76,17 @@ vi.mock('../../../components/settings/AnimationsSwitcher', () => ({
 /**
  * Test suite for HamburgerMenu component.
  */
+/**
+ * Wrapper providing ThemeContext for HamburgerMenu tests.
+ *
+ * @param props - Component props
+ * @param props.children - Child components to render within the theme context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
+
 describe('HamburgerMenu', () => {
   /**
    * Mock translation function that returns the key.
@@ -129,7 +141,7 @@ describe('HamburgerMenu', () => {
   it('renders on mobile devices (< 600px)', () => {
     vi.mocked(useMediaQuery).mockReturnValue(true);
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     const hamburgerButton = screen.getByRole('button', {
       name: 'Open navigation menu',
@@ -143,7 +155,7 @@ describe('HamburgerMenu', () => {
   it('does not render on desktop devices (>= 600px)', () => {
     vi.mocked(useMediaQuery).mockReturnValue(false);
 
-    const { container } = render(<HamburgerMenu />);
+    const { container } = render(<HamburgerMenu />, { wrapper: Wrapper });
 
     expect(container.firstChild).toBeNull();
   });
@@ -152,7 +164,7 @@ describe('HamburgerMenu', () => {
    * Test: Hamburger button opens the drawer
    */
   it('opens drawer when hamburger button is clicked', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     const hamburgerButton = screen.getByRole('button', {
       name: 'Open navigation menu',
@@ -176,7 +188,7 @@ describe('HamburgerMenu', () => {
    * Test: Close button closes the drawer
    */
   it('closes drawer when close button is clicked', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     const hamburgerButton = screen.getByRole('button', {
@@ -200,7 +212,7 @@ describe('HamburgerMenu', () => {
    * Test: Escape key closes the drawer
    */
   it('closes drawer when Escape key is pressed', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     const hamburgerButton = screen.getByRole('button', {
@@ -226,7 +238,7 @@ describe('HamburgerMenu', () => {
    * Test: All navigation links are rendered
    */
   it('renders all navigation links in the drawer', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -243,7 +255,7 @@ describe('HamburgerMenu', () => {
    * Test: Navigation links have correct hrefs
    */
   it('renders navigation links with correct href attributes', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -269,7 +281,7 @@ describe('HamburgerMenu', () => {
   it('indicates active page with aria-current attribute', () => {
     vi.mocked(usePathname).mockReturnValue('/resume');
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -290,7 +302,7 @@ describe('HamburgerMenu', () => {
   it('marks home page as active only for exact "/" path', () => {
     vi.mocked(usePathname).mockReturnValue('/');
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -309,7 +321,7 @@ describe('HamburgerMenu', () => {
    * Test: Drawer closes after clicking a navigation link
    */
   it('closes drawer after clicking a navigation link', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -330,7 +342,7 @@ describe('HamburgerMenu', () => {
    * Test: Settings section is rendered
    */
   it('renders settings section with title', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -345,7 +357,7 @@ describe('HamburgerMenu', () => {
    * Test: Theme switcher is present
    */
   it('renders theme switcher in settings section', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -361,7 +373,7 @@ describe('HamburgerMenu', () => {
    * Test: Language switcher is present
    */
   it('renders language switcher in settings section', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -377,7 +389,7 @@ describe('HamburgerMenu', () => {
    * Test: Animations switcher is present
    */
   it('renders animations switcher in settings section', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -393,7 +405,7 @@ describe('HamburgerMenu', () => {
    * Test: Divider separates navigation from settings
    */
   it('renders divider between navigation and settings', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -409,7 +421,7 @@ describe('HamburgerMenu', () => {
    * Test: Hamburger button has proper ARIA attributes when closed
    */
   it('has aria-expanded="false" when drawer is closed', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     const hamburgerButton = screen.getByRole('button', {
       name: 'Open navigation menu',
@@ -422,7 +434,7 @@ describe('HamburgerMenu', () => {
    * Test: Hamburger button has proper ARIA attributes when open
    */
   it('has aria-expanded="true" when drawer is open', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     const hamburgerButton = screen.getByRole('button', {
       name: 'Open navigation menu',
@@ -445,7 +457,7 @@ describe('HamburgerMenu', () => {
       isMounted: true,
     });
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -472,7 +484,7 @@ describe('HamburgerMenu', () => {
       isMounted: true,
     });
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -500,7 +512,7 @@ describe('HamburgerMenu', () => {
       locale: 'en',
     });
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -526,7 +538,7 @@ describe('HamburgerMenu', () => {
   it('correctly identifies active page on /colophon', () => {
     vi.mocked(usePathname).mockReturnValue('/colophon');
 
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -545,7 +557,7 @@ describe('HamburgerMenu', () => {
    * Test: Component structure for accessibility
    */
   it('has proper navigation landmark structure', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
@@ -563,7 +575,7 @@ describe('HamburgerMenu', () => {
    * Test: Drawer renders all required elements
    */
   it('renders drawer with all navigation and settings elements', () => {
-    render(<HamburgerMenu />);
+    render(<HamburgerMenu />, { wrapper: Wrapper });
 
     // Open drawer
     fireEvent.click(
