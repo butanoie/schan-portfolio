@@ -14,7 +14,6 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LaunchIcon from '@mui/icons-material/Launch';
 import type { TechnologiesContent, Technology } from '../../types/colophon';
-import { BRAND_COLORS } from '../../constants';
 import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
 import { usePalette } from '../../hooks/usePalette';
 import { useI18n } from '../../hooks/useI18n';
@@ -48,7 +47,7 @@ export interface TechnologiesShowcaseProps {
  * ```
  */
 function TechnologyCard({ tech }: { tech: Technology }) {
-  const { palette, mode } = usePalette();
+  const { palette, isHighContrast } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -93,10 +92,20 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               })}
               sx={{
                 color: palette.card.text,
-                '&:hover': {
-                  color:
-                    mode === 'highContrast' ? '#000000' : BRAND_COLORS.maroon,
-                },
+                '&:hover': isHighContrast
+                  ? {
+                      backgroundColor: '#000000',
+                      color: '#FFFFFF',
+                    }
+                  : {
+                      color: palette.card.hoverText,
+                    },
+                ...(isHighContrast && {
+                  '&:focus-visible': {
+                    outline: '3px solid #000000',
+                    outlineOffset: '2px',
+                  },
+                }),
               }}
             >
               <LaunchIcon sx={{ fontSize: 16 }} />

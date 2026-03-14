@@ -48,5 +48,7 @@ export interface ThemePalette {
     heading: string;
     /** Card body text color */
     text: string;
+    /** Hover color for interactive elements inside cards (e.g., icon links) */
+    hoverText: string;
   };
 }

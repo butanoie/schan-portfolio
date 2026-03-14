@@ -10,6 +10,7 @@
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import MainLayout from '../../../components/common/MainLayout';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '../../../hooks/useI18n';
 import { testAccessibility, canReceiveFocus } from '../../utils/axe-helpers';
@@ -64,6 +65,17 @@ vi.mock('../../../components/common/Footer', () => ({
   default: () => <div data-testid="footer-mock">Footer</div>,
 }));
 
+/**
+ * Wrapper providing ThemeContext for MainLayout tests.
+ *
+ * @param props - Component props
+ * @param props.children - Child components to render within the theme context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
+
 describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
   /**
    * Mock translations for testing
@@ -110,9 +122,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should have skip to main content link', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const skipLink = screen.getByRole('link', { name: /skip to main/i });
@@ -128,9 +140,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should have keyboard accessible skip link', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const skipLink = screen.getByRole('link', { name: /skip to main/i });
@@ -146,9 +158,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should have main content area with id and tabindex for skip link', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const main = screen.getByRole('main');
@@ -163,9 +175,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should have main landmark', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const main = screen.getByRole('main');
@@ -179,9 +191,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should render header component', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     expect(screen.getByTestId('header-mock')).toBeInTheDocument();
@@ -194,9 +206,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should render footer component', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     expect(screen.getByTestId('footer-mock')).toBeInTheDocument();
@@ -211,9 +223,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
     const testContent = 'Test page content';
 
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>{testContent}</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     expect(screen.getByText(testContent)).toBeInTheDocument();
@@ -226,9 +238,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should hide skip link off-screen initially', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const skipLink = screen.getByRole('link', { name: /skip to main/i });
@@ -246,9 +258,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should show skip link on focus', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const skipLink = screen.getByRole('link', {
@@ -267,9 +279,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should have proper semantic structure (flex layout)', () => {
     const { container } = render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     // Check that the layout has the main Box wrapper with flex properties
@@ -288,9 +300,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should pass axe accessibility audit', async () => {
     const { container } = render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     await act(async () => {
@@ -307,9 +319,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should fill full viewport height', () => {
     const { container } = render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const wrapper = container.firstChild as HTMLElement;
@@ -327,9 +339,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should have flexible main content area', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     const main = screen.getByRole('main');
@@ -351,9 +363,9 @@ describe('MainLayout - WCAG 2.2 Level AA Accessibility', () => {
    */
   it('should use translated text for skip link', () => {
     render(
-      <MainLayout>
+      <Wrapper><MainLayout>
         <div>Test content</div>
-      </MainLayout>
+      </MainLayout></Wrapper>
     );
 
     // The skip link uses t() function which should resolve to the translation

@@ -54,7 +54,7 @@ export default function ArtifactSection({
   intro,
   items,
 }: ArtifactSectionProps) {
-  const { palette } = usePalette();
+  const { palette, isHighContrast } = usePalette();
   const { t } = useI18n();
 
   return (
@@ -145,12 +145,19 @@ export default function ArtifactSection({
                   sx={{
                     minHeight: 44,
                     width: 120,
-                    backgroundColor: BRAND_COLORS.sage,
-                    color: NAV_COLORS.text,
+                    backgroundColor: isHighContrast
+                      ? '#000000'
+                      : BRAND_COLORS.sage,
+                    color: isHighContrast ? '#FFFFFF' : NAV_COLORS.text,
+                    border: isHighContrast ? '1px solid #FFFFFF' : 'none',
                     boxShadow: 0,
                     textTransform: 'none',
                     '&:hover': {
-                      backgroundColor: NAV_COLORS.inactiveHover,
+                      backgroundColor: isHighContrast
+                        ? '#FFFFFF'
+                        : NAV_COLORS.inactiveHover,
+                      borderColor: isHighContrast ? '#000000' : undefined,
+                      color: isHighContrast ? '#000000' : undefined,
                       boxShadow: 0,
                     },
                   }}

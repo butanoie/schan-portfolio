@@ -1,5 +1,9 @@
+'use client';
+
 import { Box, Chip, SxProps, Theme } from '@mui/material';
 import { BRAND_COLORS } from '../../constants';
+import { usePalette } from '../../hooks/usePalette';
+import { getHcContainerSx, getHcChipSx } from '../../utils/highContrastStyles';
 
 /** Shared styling for tag and circa chips (everything except backgroundColor) */
 const BASE_CHIP_SX = {
@@ -57,14 +61,15 @@ export function ProjectTagsContainer({
   circa,
   sx,
 }: ProjectTagsContainerProps) {
+  const { isHighContrast } = usePalette();
+
   return (
     <Box
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
         gap: 0.75,
-        backgroundColor: BRAND_COLORS.duckEgg,
-        borderRadius: 2,
+        ...getHcContainerSx(isHighContrast),
         p: 1.5,
         ...sx,
       }}
@@ -74,7 +79,15 @@ export function ProjectTagsContainer({
           className="project-circa"
           label={circa}
           size="small"
-          sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.maroon }}
+          sx={{
+            ...BASE_CHIP_SX,
+            ...getHcChipSx(isHighContrast, BRAND_COLORS.maroon),
+            // Invert circa chip in HC for visual distinction from tag chips
+            ...(isHighContrast && {
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+            }),
+          }}
         />
       )}
       {tags?.map((tag) => (
@@ -82,7 +95,10 @@ export function ProjectTagsContainer({
           key={tag}
           label={tag}
           size="small"
-          sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.sage }}
+          sx={{
+            ...BASE_CHIP_SX,
+            ...getHcChipSx(isHighContrast),
+          }}
         />
       ))}
     </Box>

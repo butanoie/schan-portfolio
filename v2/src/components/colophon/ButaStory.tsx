@@ -65,6 +65,7 @@ export default function ButaStory({ content }: ButaStoryProps) {
         sx={{
           p: 2,
           backgroundColor: 'transparent',
+          border: 'none',
           width: '100%',
         }}
       >

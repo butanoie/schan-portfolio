@@ -1,6 +1,6 @@
 import { Box, Typography, Chip } from '@mui/material';
 import type { SkillCategory } from '../../types/resume';
-import { BRAND_COLORS } from '../../constants';
+import { getHcContainerSx, getHcChipSx } from '../../utils/highContrastStyles';
 
 /**
  * Props for the CoreCompetencies component.
@@ -11,6 +11,9 @@ export interface CoreCompetenciesProps {
 
   /** Theme-aware text color for card content, sourced from parent's palette.card.text */
   cardTextColor: string;
+
+  /** Whether high-contrast mode is active */
+  isHighContrast?: boolean;
 }
 
 /**
@@ -26,6 +29,7 @@ export interface CoreCompetenciesProps {
  * @param props - Component props containing skill categories
  * @param props.categories - Array of skill categories with labels and skill lists
  * @param props.cardTextColor - Theme-aware text color from parent's palette
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A section displaying categorized skills
  *
  * @example
@@ -34,6 +38,7 @@ export interface CoreCompetenciesProps {
 export default function CoreCompetencies({
   categories,
   cardTextColor,
+  isHighContrast = false,
 }: CoreCompetenciesProps) {
   return (
     <Box component="section" aria-labelledby="skills-heading">
@@ -42,8 +47,7 @@ export default function CoreCompetencies({
           key={categoryIndex}
           sx={{
             mb: 3,
-            backgroundColor: BRAND_COLORS.duckEgg,
-            borderRadius: 2,
+            ...getHcContainerSx(isHighContrast),
             p: 2.5,
           }}
         >
@@ -57,7 +61,7 @@ export default function CoreCompetencies({
             }
             sx={{
               fontWeight: 600,
-              color: cardTextColor,
+              color: isHighContrast ? '#FFFFFF' : cardTextColor,
               fontSize: { xs: '1.1rem', md: '1.25rem' },
               mb: 1.5,
             }}
@@ -79,12 +83,10 @@ export default function CoreCompetencies({
                 label={skill}
                 size="small"
                 sx={{
-                  backgroundColor: BRAND_COLORS.sage,
-                  color: '#ffffff',
+                  ...getHcChipSx(isHighContrast),
                   fontWeight: 600,
                   fontSize: '0.8rem',
                   height: '28px',
-                  borderRadius: '3px',
                   '& .MuiChip-label': {
                     px: 1.5,
                   },

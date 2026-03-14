@@ -19,6 +19,7 @@ import {
 import { getNavLinks, isActivePath } from '../../utils/navigation';
 import { LoadMoreButton } from '../project/LoadMoreButton';
 import { useI18n } from '@/src/hooks/useI18n';
+import { usePalette } from '@/src/hooks/usePalette';
 import { FONT_FAMILY_BODY, FONT_FAMILY_CURSIVE } from '@/src/lib/fontConstants';
 
 /**
@@ -29,6 +30,8 @@ interface ThoughtBubbleProps {
   children: React.ReactNode;
   /** Accessibility label for the bubble */
   ariaLabel: string;
+  /** Whether high-contrast mode is active */
+  isHighContrast?: boolean;
 }
 
 /** Current year, computed once at module load to avoid hydration mismatch */
@@ -51,9 +54,18 @@ const THOUGHT_BUBBLE_TEXT_SX = {
  * @param props - Component props
  * @param props.children - Content to display inside the bubble
  * @param props.ariaLabel - Accessibility label for the bubble
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A styled thought bubble container
  */
-function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
+function ThoughtBubble({
+  children,
+  ariaLabel,
+  isHighContrast = false,
+}: ThoughtBubbleProps) {
+  const bubbleBg = isHighContrast ? '#000000' : UI_COLORS.cardBackground;
+  const bubbleBorder = isHighContrast ? '#FFFFFF' : UI_COLORS.border;
+  const bubbleTextColor = isHighContrast ? '#FFFFFF' : UI_COLORS.secondaryText;
+
   return (
     <Box
       sx={{
@@ -63,10 +75,10 @@ function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
         width: 180,
         height: 90,
         padding: '15px 16px',
-        border: `2px solid ${UI_COLORS.border}`,
+        border: `2px solid ${bubbleBorder}`,
         textAlign: 'center',
-        color: UI_COLORS.secondaryText,
-        backgroundColor: UI_COLORS.cardBackground,
+        color: bubbleTextColor,
+        backgroundColor: bubbleBg,
         borderRadius: '160px / 80px',
         display: 'flex',
         flexDirection: 'column',
@@ -93,8 +105,8 @@ function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
           right: 30,
           width: 17,
           height: 17,
-          border: `2px solid ${UI_COLORS.border}`,
-          backgroundColor: UI_COLORS.cardBackground,
+          border: `2px solid ${bubbleBorder}`,
+          backgroundColor: bubbleBg,
           borderRadius: '50%',
           display: 'block',
           '@media (min-width: 760px)': {
@@ -109,8 +121,8 @@ function ThoughtBubble({ children, ariaLabel }: ThoughtBubbleProps) {
           right: 20,
           width: 8,
           height: 8,
-          border: `2px solid ${UI_COLORS.border}`,
-          backgroundColor: UI_COLORS.cardBackground,
+          border: `2px solid ${bubbleBorder}`,
+          backgroundColor: bubbleBg,
           borderRadius: '50%',
           display: 'block',
           '@media (min-width: 760px)': {
@@ -151,6 +163,7 @@ export default function Footer() {
   const pathname = usePathname();
   const loadingContext = useProjectLoading();
   const { t } = useI18n();
+  const { isHighContrast } = usePalette();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -219,6 +232,7 @@ export default function Footer() {
           pathname={pathname}
           loadingContext={loadingContext}
           t={t}
+          isHighContrast={isHighContrast}
         />
       </Container>
 
@@ -227,7 +241,8 @@ export default function Footer() {
         maxWidth={false}
         disableGutters
         sx={{
-          backgroundColor: BRAND_COLORS.sage,
+          backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.sage,
+          borderTop: isHighContrast ? '1px solid #FFFFFF' : 'none',
           pt: 2,
           pb: 0,
           pl: { xs: 2, sm: 3, md: 4, lg: 10 },
@@ -249,7 +264,7 @@ export default function Footer() {
             }}
           >
             {/* Navigation Links - Hidden on mobile */}
-            {!isMobile && <FooterNavLinks pathname={pathname} t={t} />}
+            {!isMobile && <FooterNavLinks pathname={pathname} t={t} isHighContrast={isHighContrast} />}
 
             {/* Copyright */}
             <Typography
@@ -280,6 +295,8 @@ interface FooterNavLinksProps {
   pathname: string;
   /** Translation function from useI18n */
   t: (key: string, options?: Record<string, unknown>) => string;
+  /** Whether high-contrast mode is active */
+  isHighContrast: boolean;
 }
 
 /**
@@ -292,9 +309,10 @@ interface FooterNavLinksProps {
  * @param props - Component props
  * @param props.pathname - Current URL pathname for highlighting the active link
  * @param props.t - Translation function for localized link labels
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A nav element with text-style footer links
  */
-function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
+function FooterNavLinks({ pathname, t, isHighContrast }: FooterNavLinksProps): React.ReactNode {
   const navLinks = getNavLinks();
 
   return (
@@ -333,16 +351,22 @@ function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
             <MuiLink
               component={Link}
               href={link.href}
-              underline={active ? 'always' : 'hover'}
+              underline={active ? 'none' : 'hover'}
               aria-current={active ? 'page' : undefined}
               sx={{
                 color: NAV_COLORS.text,
                 fontFamily: FONT_FAMILY_BODY,
-                fontWeight: active ? 700 : 600,
+                fontWeight: active ? 800 : 600,
                 fontSize: '0.875rem',
+                textDecoration: active ? 'none' : undefined,
                 textDecorationColor: active ? NAV_COLORS.text : 'inherit',
                 '&:hover': {
-                  color: NAV_COLORS.text,
+                  color: active
+                    ? NAV_COLORS.text
+                    : isHighContrast
+                      ? '#FFFF00'
+                      : BRAND_COLORS.roseHover,
+                  textDecoration: active ? 'none' : undefined,
                 },
               }}
             >
@@ -365,6 +389,8 @@ interface FooterThoughtBubbleProps {
   loadingContext: ProjectLoadingContextValue | undefined;
   /** Translation function from useI18n */
   t: (key: string, options?: Record<string, unknown>) => string;
+  /** Whether high-contrast mode is active */
+  isHighContrast: boolean;
 }
 
 /**
@@ -380,20 +406,28 @@ interface FooterThoughtBubbleProps {
  * @param props.pathname - Current URL pathname
  * @param props.loadingContext - Project loading context value
  * @param props.t - Translation function
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns The appropriate thought bubble, or null if none should be shown
  */
 function FooterThoughtBubble({
   pathname,
   loadingContext,
   t,
+  isHighContrast,
 }: FooterThoughtBubbleProps): React.ReactNode {
   // Non-home pages: default thought bubble
   if (pathname !== '/') {
     return (
       <ThoughtBubble
         ariaLabel={`Buta's thought bubble saying: ${t('footer.butaThought')}`}
+        isHighContrast={isHighContrast}
       >
-        <Typography sx={THOUGHT_BUBBLE_TEXT_SX}>
+        <Typography
+          sx={{
+            ...THOUGHT_BUBBLE_TEXT_SX,
+            color: isHighContrast ? '#FFFFFF' : UI_COLORS.secondaryText,
+          }}
+        >
           {t('footer.butaThought')}
         </Typography>
       </ThoughtBubble>
@@ -408,7 +442,10 @@ function FooterThoughtBubble({
   // Home page: Load More button
   if (loadingContext.hasMore) {
     return (
-      <ThoughtBubble ariaLabel="Load more projects button">
+      <ThoughtBubble
+        ariaLabel="Load more projects button"
+        isHighContrast={isHighContrast}
+      >
         <LoadMoreButton
           onClick={loadingContext.onLoadMore}
           loading={loadingContext.loading}
@@ -422,17 +459,25 @@ function FooterThoughtBubble({
   // Home page: All projects loaded
   if (loadingContext.allLoaded) {
     return (
-      <ThoughtBubble ariaLabel={t('footer.allProjectsLoaded')}>
+      <ThoughtBubble
+        ariaLabel={t('footer.allProjectsLoaded')}
+        isHighContrast={isHighContrast}
+      >
         <Typography
           sx={{
             ...THOUGHT_BUBBLE_TEXT_SX,
             margin: 0,
-            color: BRAND_COLORS.maroon,
+            color: isHighContrast ? '#FFFFFF' : BRAND_COLORS.maroon,
           }}
         >
           {t('footer.allProjectsLoaded')}
         </Typography>
-        <Typography sx={THOUGHT_BUBBLE_TEXT_SX}>
+        <Typography
+          sx={{
+            ...THOUGHT_BUBBLE_TEXT_SX,
+            color: isHighContrast ? '#FFFFFF' : UI_COLORS.secondaryText,
+          }}
+        >
           {t('footer.thankYou')}
         </Typography>
       </ThoughtBubble>

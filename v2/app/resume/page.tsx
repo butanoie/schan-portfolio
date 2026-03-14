@@ -45,7 +45,7 @@ import './print.css';
  */
 export default function ResumePage() {
   const { t } = useI18n();
-  const { palette } = usePalette({ hydrationSafe: true });
+  const { palette, isHighContrast } = usePalette({ hydrationSafe: true });
   const data = getLocalizedResumeData(t);
 
   return (
@@ -64,6 +64,7 @@ export default function ResumePage() {
         content={data.header}
         textPrimaryColor={palette.text.primary}
         textSecondaryColor={palette.text.secondary}
+        isHighContrast={isHighContrast}
       />
 
       <Divider sx={{ my: { xs: 3, md: 4 } }} />
@@ -88,6 +89,7 @@ export default function ResumePage() {
           <CoreCompetencies
             categories={data.skillCategories}
             cardTextColor={palette.card.text}
+            isHighContrast={isHighContrast}
           />
 
           <Divider sx={{ my: 3 }} />
@@ -96,6 +98,7 @@ export default function ResumePage() {
             education={data.education}
             cardTextColor={palette.card.text}
             sectionHeading={t('resume.education.heading', { ns: 'pages' })}
+            isHighContrast={isHighContrast}
           />
 
           <Divider sx={{ my: 3 }} />
@@ -104,6 +107,7 @@ export default function ResumePage() {
             clients={data.clients}
             cardTextColor={palette.card.text}
             sectionHeading={t('resume.clients.heading', { ns: 'pages' })}
+            isHighContrast={isHighContrast}
           />
 
           <Divider sx={{ my: 3 }} />
@@ -114,6 +118,7 @@ export default function ResumePage() {
             sectionHeading={t('resume.conferenceSpeaker.heading', {
               ns: 'pages',
             })}
+            isHighContrast={isHighContrast}
           />
         </Box>
 
