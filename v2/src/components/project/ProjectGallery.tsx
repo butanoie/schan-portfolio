@@ -6,7 +6,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
 import type { ProjectImage as ProjectImageType } from '../../types';
 import { ProjectImage } from './ProjectImage';
-import { useLightbox } from '../../hooks';
+import { useLightbox, usePalette } from '../../hooks';
 
 /**
  * Lazily-loaded lightbox modal component.
@@ -134,6 +134,9 @@ export function ProjectGallery({
   fourColumns = false,
   sx,
 }: ProjectGalleryProps) {
+  const { mode } = usePalette();
+  const isHighContrast = mode === 'highContrast';
+
   /**
    * Manage lightbox state and image navigation.
    * The hook provides:
@@ -231,13 +234,17 @@ export function ProjectGallery({
               }
             }}
             sx={{
-              borderRadius: 2,
-              boxShadow: 2,
-              opacity: 0.85,
-              transition:
-                'box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out',
+              borderRadius: isHighContrast ? 0 : 2,
+              boxShadow: isHighContrast ? 'none' : 2,
+              border: isHighContrast ? '2px solid #FFFFFF' : 'none',
+              opacity: isHighContrast ? 1 : 0.85,
+              transition: isHighContrast
+                ? 'none'
+                : 'box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out',
               '&:hover': {
-                boxShadow: 4,
+                boxShadow: isHighContrast ? 'none' : 4,
+                outline: isHighContrast ? '3px solid #FFFF00' : 'none',
+                outlineOffset: isHighContrast ? '3px' : undefined,
                 opacity: 1,
               },
             }}

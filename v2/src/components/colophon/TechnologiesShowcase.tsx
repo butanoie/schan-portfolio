@@ -14,7 +14,6 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LaunchIcon from '@mui/icons-material/Launch';
 import type { TechnologiesContent, Technology } from '../../types/colophon';
-import { BRAND_COLORS } from '../../constants';
 import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
 import { usePalette } from '../../hooks/usePalette';
 import { useI18n } from '../../hooks/useI18n';
@@ -93,10 +92,13 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               })}
               sx={{
                 color: palette.card.text,
-                '&:hover': {
-                  color:
-                    mode === 'highContrast' ? '#000000' : BRAND_COLORS.maroon,
-                },
+                // In HC mode, omit sx hover color so the theme's MuiLink
+                // styleOverrides (yellow hover) can take effect.
+                ...(mode !== 'highContrast' && {
+                  '&:hover': {
+                    color: palette.card.hoverText,
+                  },
+                }),
               }}
             >
               <LaunchIcon sx={{ fontSize: 16 }} />

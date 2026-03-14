@@ -14,6 +14,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeMode, ThemePalette } from '@/src/types/theme';
 import { THEME_PALETTES } from '@/src/constants/colors';
 import { FONT_FAMILY_BODY, FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
+import { applyHighContrastOverrides } from './highContrastOverrides';
 
 /**
  * Create a Material UI theme from a palette configuration.
@@ -97,10 +98,7 @@ function createThemeFromPalette(palette: ThemePalette) {
           root: {
             transition: 'all 150ms ease-in-out',
             '&:focus-visible': {
-              outline:
-                palette.mode === 'highContrast'
-                  ? '2px solid #FFFF00'
-                  : `2px solid ${palette.primary}`,
+              outline: `2px solid ${palette.primary}`,
               outlineOffset: '2px',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -112,10 +110,7 @@ function createThemeFromPalette(palette: ThemePalette) {
           root: {
             transition: 'all 150ms ease-in-out',
             '&:focus-visible': {
-              outline:
-                palette.mode === 'highContrast'
-                  ? '2px solid #FFFF00'
-                  : `2px solid ${palette.primary}`,
+              outline: `2px solid ${palette.primary}`,
               outlineOffset: '2px',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -133,10 +128,7 @@ function createThemeFromPalette(palette: ThemePalette) {
               color: palette.secondary,
             },
             '&:focus-visible': {
-              outline:
-                palette.mode === 'highContrast'
-                  ? '2px solid #FFFF00'
-                  : `2px solid ${palette.primary}`,
+              outline: `2px solid ${palette.primary}`,
               outlineOffset: '2px',
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -195,9 +187,11 @@ export const darkTheme = createThemeFromPalette(THEME_PALETTES.dark);
 /**
  * High-contrast theme configuration.
  * Black and white theme for maximum accessibility (WCAG AAA).
+ * Applies dedicated HC overrides (shadows removed, solid borders,
+ * hatched disabled pattern) on top of the base theme.
  */
-export const highContrastTheme = createThemeFromPalette(
-  THEME_PALETTES.highContrast
+export const highContrastTheme = applyHighContrastOverrides(
+  createThemeFromPalette(THEME_PALETTES.highContrast)
 );
 
 /** Map of theme mode to MUI theme object for direct lookup. */

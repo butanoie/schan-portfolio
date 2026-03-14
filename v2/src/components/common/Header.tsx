@@ -79,7 +79,7 @@ const HamburgerMenu = dynamic(
  * @returns An app bar with site branding, social icons, and accessible navigation menu
  */
 export default function Header() {
-  const { palette } = usePalette();
+  const { palette, mode } = usePalette();
   const { t } = useI18n();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
@@ -89,7 +89,7 @@ export default function Header() {
     minWidth: 44,
     minHeight: 44,
     '&:hover': {
-      color: BRAND_COLORS.maroon,
+      color: mode === 'highContrast' ? '#FFFF00' : BRAND_COLORS.maroon,
     },
   };
 

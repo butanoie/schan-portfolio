@@ -186,10 +186,13 @@ function TypographySampleCard({ font }: { font: TypographyEntry }) {
               })}
               sx={{
                 color: palette.card.text,
-                '&:hover': {
-                  color:
-                    mode === 'highContrast' ? '#000000' : BRAND_COLORS.maroon,
-                },
+                // In HC mode, omit sx hover color so the theme's MuiLink
+                // styleOverrides (yellow hover) can take effect.
+                ...(mode !== 'highContrast' && {
+                  '&:hover': {
+                    color: palette.card.hoverText,
+                  },
+                }),
               }}
             >
               <LaunchIcon sx={{ fontSize: 16 }} />

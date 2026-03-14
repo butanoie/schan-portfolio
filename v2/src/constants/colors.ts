@@ -152,6 +152,7 @@ export const THEME_PALETTES = {
       background: '#f5f9fd',
       heading: '#1A1A1A',
       text: '#333333',
+      hoverText: '#8B1538',
     },
   },
 
@@ -185,6 +186,7 @@ export const THEME_PALETTES = {
       background: '#f5f9fd',
       heading: '#1A1A1A',
       text: '#333333',
+      hoverText: '#E85775',
     },
   },
 
@@ -217,6 +219,7 @@ export const THEME_PALETTES = {
       background: '#FFFFFF',
       heading: '#000000',
       text: '#000000',
+      hoverText: '#000000',
     },
   },
 } as const;
