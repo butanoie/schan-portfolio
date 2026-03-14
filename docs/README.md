@@ -29,10 +29,8 @@ This directory contains all project documentation organized by purpose.
   - Integration: [Localization Pipeline](test-scenarios/INT_LOCALIZATION_PIPELINE.md) · [Server Data Fetching](test-scenarios/INT_SERVER_DATA_FETCHING.md) · [useProjectLoader](test-scenarios/INT_USE_PROJECT_LOADER.md) · [AsyncProjectsList](test-scenarios/INT_ASYNC_PROJECTS_LIST.md)
   - E2E: [Accessibility](test-scenarios/E2E_ACCESSIBILITY.md) · [Navigation](test-scenarios/E2E_NAVIGATION.md) · [Settings](test-scenarios/E2E_SETTINGS.md) · [Home Page](test-scenarios/E2E_HOME_PAGE.md) · [Lightbox](test-scenarios/E2E_LIGHTBOX.md) · [Content Pages](test-scenarios/E2E_CONTENT_PAGES.md) · [Responsive](test-scenarios/E2E_RESPONSIVE.md)
 
-### **Active Plans**
-- **[TESTING_ROADMAP.md](active/TESTING_ROADMAP.md)** - Integration & E2E test implementation roadmap (13 phases)
-
 ### **Archive** (Completed Plans)
+- **[TESTING_ROADMAP.md](archive/TESTING_ROADMAP.md)** - Integration & E2E test implementation roadmap (14 phases, completed)
 - **[MODERNIZATION_PLAN.md](archive/MODERNIZATION_PLAN.md)** - Overall 7-phase project roadmap
 - **[PHASE7_DETAILED_PLAN.md](archive/PHASE7_DETAILED_PLAN.md)** - Monitoring & Observability
 - **[PHASE4_DETAILED_PLAN.md](archive/PHASE4_DETAILED_PLAN.md)** - Enhanced Features

@@ -5,7 +5,7 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 **Architecture reference:** [TESTING_ARCHITECTURE.md](../guides/TESTING_ARCHITECTURE.md)
 **Test scenarios:** [test-scenarios/](../test-scenarios/) (Gherkin-syntax scenarios)
 
-**Status:** Phases 5–12 complete. All E2E spec phases done. Next: Phase 13 (CI Integration).
+**Status:** All phases (1–14) complete. Integration tests, E2E specs, CI integration, and redundancy audit all done.
 
 ---
 
@@ -25,7 +25,8 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 | 10 | E2E: Project Lightbox | Playwright | Medium | ~18 | [E2E_LIGHTBOX](../test-scenarios/E2E_LIGHTBOX.md) |
 | 11 | E2E: Resume, Colophon, Samples Pages | Playwright | Medium | ~15 | [E2E_CONTENT_PAGES](../test-scenarios/E2E_CONTENT_PAGES.md) |
 | 12 | E2E: Responsive Layouts | Playwright | Medium | ~12 | [E2E_RESPONSIVE](../test-scenarios/E2E_RESPONSIVE.md) |
-| 13 | CI Integration (future) | CI/CD | Low | 0 (infra) | — |
+| 13 | CI Integration | CI/CD | Low | 0 (infra) | — |
+| 14 | Test Redundancy Audit | Maintenance | Medium | -32 (pruned) | — |
 
 **Total estimated new tests: ~187**
 
@@ -304,18 +305,53 @@ Phased implementation plan for integration tests (Vitest) and E2E/UI tests (Play
 
 ---
 
-## Phase 13: CI Integration (Future)
+## Phase 13: CI Integration
 
 **Goal:** Add Playwright E2E tests to the GitHub Actions CI pipeline.
+**Issue:** [#140](https://github.com/butanoie/schan-portfolio/issues/140)
+
+### Architecture
+
+- Separate `e2e` job in `test-deploy-dev.yml` (runs after `tests`, parallel with `deploy`)
+- Single job with sequential browser steps: Chromium (blocking) → WebKit (soft-fail via `continue-on-error`)
+- E2E does not gate deployment; only the `gate` job requires it for merge
+- Playwright browsers cached with `actions/cache` keyed on version
+- Artifacts (HTML report, screenshots, traces) uploaded on failure only
+
+**PR:** [#156](https://github.com/butanoie/schan-portfolio/pull/156)
 
 ### Checklist
 
-- [ ] Add `test:e2e` step to `test-deploy-dev.yml` (after unit tests, before deploy)
-- [ ] Add `npm run build` step before E2E tests
-- [ ] Cache Playwright browsers with `actions/cache` keyed on `npx playwright --version`
-- [ ] Upload `e2e/reports/html` as GitHub Actions artifact on failure
-- [ ] Upload `e2e/test-results/` (screenshots, traces) as artifact on failure
-- [ ] Verify CI pipeline passes end-to-end
+- [x] Add `e2e` job to `test-deploy-dev.yml` with build + Chromium + WebKit steps
+- [x] Cache Playwright browsers with `actions/cache` keyed on `playwright-{os}-{version}`
+- [x] Upload `e2e/reports/html` and `e2e/test-results/` as artifacts (blob reporter for CI, merged into unified HTML report)
+- [x] Update `gate` job to check `e2e` result
+- [x] Rename workflow to "Test and Deploy"
+- [x] Verify CI pipeline passes end-to-end
+
+---
+
+## Phase 14: Test Redundancy Audit
+
+**Issue:** [#157](https://github.com/butanoie/schan-portfolio/issues/157)
+**PR:** [#158](https://github.com/butanoie/schan-portfolio/pull/158)
+
+**Goal:** Audit all tests for redundancy, remove duplicates, strengthen weak tests, and document testing level guidelines.
+
+### Checklist
+
+- [x] Audit cross-layer (unit vs E2E) overlap — confirmed complementary, no changes needed
+- [x] Remove delegation-chain duplicates from `typeGuards.test.ts` (Enhanced Security + Edge Cases blocks)
+- [x] Remove enumeration duplicates from `errors.test.ts` (supports different codes, stack trace)
+- [x] Remove weak assertion from `sanitization.test.ts` (sanitization error test)
+- [x] Remove delegation-chain duplicates from `videoValidation.test.ts` (isProjectVideo Security block)
+- [x] Remove exact duplicates from `ProjectsList.test.tsx` (empty list, unique key)
+- [x] Strengthen 5 weak `ProjectsList` tests with assertions on the varied field
+- [x] Move surviving edge cases into core describe blocks
+- [x] Add "Testing Level Guidelines" section to `TESTING_SETUP.md`
+- [x] Verify all 1,203 tests pass with coverage ≥80%
+
+**Result:** 32 tests removed, 0 coverage regression (statements: 92.38%, branches: 83.96%, functions: 93.28%, lines: 91.85%).
 
 ---
 
@@ -337,5 +373,5 @@ These should be addressed before or during Phase 1:
 | Accessibility coverage | axe scans pass on all pages across themes (light, dark, highContrast), locales (EN, FR), and interactive states |
 | Browser coverage | All E2E tests pass on Chromium and WebKit |
 | Responsive coverage | Mobile and desktop layouts verified |
-| Existing tests | All 1,199 existing tests continue to pass |
+| Existing tests | All 1,203 tests continue to pass (post-audit count) |
 | Coverage thresholds | 80% lines/functions/branches/statements maintained |

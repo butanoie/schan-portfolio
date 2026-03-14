@@ -180,18 +180,6 @@ describe('Video ID Validation', () => {
       });
 
       describe('YouTube injection attempts', () => {
-        it('should block URL with query parameter injection', () => {
-          expect(isValidVideoId('dQw4w9Wg?cmd=x', 'youtube')).toBe(false);
-        });
-
-        it('should block URL with fragment injection', () => {
-          expect(isValidVideoId('dQw4w9Wg#cmd', 'youtube')).toBe(false);
-        });
-
-        it('should block javascript: protocol', () => {
-          expect(isValidVideoId('javascript:al', 'youtube')).toBe(false);
-        });
-
         it('should block unicode characters', () => {
           expect(isValidVideoId('dQw4w9Wgǚ̌', 'youtube')).toBe(false);
         });
@@ -345,50 +333,5 @@ describe('Video ID Validation', () => {
       });
     });
 
-    describe('Security: Injection Prevention', () => {
-      it('should reject YouTube video with URL injection attempt', () => {
-        expect(
-          isProjectVideo({
-            type: 'youtube',
-            id: 'dQw4w9Wg?cmd=x',
-            width: 560,
-            height: 315,
-          })
-        ).toBe(false);
-      });
-
-      it('should reject Vimeo video with URL injection attempt', () => {
-        expect(
-          isProjectVideo({
-            type: 'vimeo',
-            id: '123456789;cmd',
-            width: 640,
-            height: 360,
-          })
-        ).toBe(false);
-      });
-
-      it('should reject video with javascript protocol injection', () => {
-        expect(
-          isProjectVideo({
-            type: 'youtube',
-            id: 'javascript:alert',
-            width: 560,
-            height: 315,
-          })
-        ).toBe(false);
-      });
-
-      it('should reject video with path traversal attempt', () => {
-        expect(
-          isProjectVideo({
-            type: 'vimeo',
-            id: '../../etc/passwd',
-            width: 640,
-            height: 360,
-          })
-        ).toBe(false);
-      });
-    });
   });
 });

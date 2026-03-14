@@ -100,8 +100,7 @@ describe('Data Layer Integration', () => {
  * are populated and differ between locales.
  *
  * Deeper localization pipeline tests (cache behavior, caption index alignment,
- * unknown locale fallback) are planned for localizationPipeline.test.ts (Phase 1,
- * not yet implemented — see docs/active/TESTING_ROADMAP.md).
+ * unknown locale fallback) are covered in localizationPipeline.test.ts.
  */
 describe('Data Layer — Locale Consistency', () => {
   it('should return the same number of projects for both locales', async () => {

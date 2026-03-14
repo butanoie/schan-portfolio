@@ -2,21 +2,21 @@
 
 **For Developers:** How to run, write, and maintain accessibility tests
 
-**Date:** February 6, 2026
+**Date:** March 13, 2026
 **WCAG Standard:** WCAG 2.2 Level AA
-**Framework:** Vitest + vitest-axe
+**Frameworks:** Vitest + vitest-axe (unit) · Playwright + @axe-core/playwright (E2E)
 
 ---
 
 ## Quick Start
 
-### Run Automated Tests
+### Run Unit Tests
 
 ```bash
-# Run all tests
+# Run all unit tests
 npm test
 
-# Run only accessibility tests
+# Run only accessibility-related unit tests
 npm test -- --grep "accessibility|axe"
 
 # Run with coverage
@@ -24,6 +24,25 @@ npm run test:coverage
 
 # Watch mode for development
 npm test -- --watch
+```
+
+### Run E2E Accessibility Tests
+
+```bash
+# Build first (E2E runs against production build)
+npm run build
+
+# Run all E2E tests (includes accessibility suite)
+npm run test:e2e
+
+# Run only accessibility E2E tests
+npx playwright test specs/accessibility.spec.ts
+
+# Run in a specific browser
+npx playwright test specs/accessibility.spec.ts --project=chromium
+
+# Run with visible browser for debugging
+npx playwright test specs/accessibility.spec.ts --headed
 ```
 
 ### Run Browser Audits
@@ -39,12 +58,18 @@ npm run preview
 
 ## Overview
 
-This project uses **vitest-axe** for automated accessibility testing. vitest-axe wraps the axe-core engine to provide Vitest-compatible matchers. All component tests include accessibility checks using the `testAccessibility()` helper function.
+This project uses a two-layer accessibility testing approach:
+
+1. **Unit tests** (vitest-axe) — validate individual components in isolation using jsdom
+2. **E2E tests** (@axe-core/playwright) — validate fully-rendered pages in real browsers (Chromium + WebKit)
+
+Both layers enforce the same 11 WCAG 2.2 AA rules. The E2E layer catches issues that unit tests cannot detect: MUI Portal rendering outside ARIA landmarks, CSS transition timing affecting contrast calculations, cross-browser keyboard navigation differences, and `aria-label` placement issues in MUI v7.
 
 **Key Tools:**
-- **vitest-axe** - Vitest integration for axe-core accessibility engine
-- **@testing-library/react** - Component testing utilities
-- **@testing-library/user-event** - User interaction simulation
+- **vitest-axe** — Vitest integration for axe-core accessibility engine
+- **@axe-core/playwright** — E2E axe scans against real browser engines
+- **@testing-library/react** — Component testing utilities
+- **@testing-library/user-event** — User interaction simulation
 
 ---
 
@@ -52,7 +77,9 @@ This project uses **vitest-axe** for automated accessibility testing. vitest-axe
 
 ### Test Location
 
-All accessibility tests are located in `v2/src/__tests__/`:
+### Unit Tests
+
+Unit-level accessibility tests are located in `v2/src/__tests__/`:
 
 ```
 v2/src/__tests__/
@@ -71,6 +98,27 @@ v2/src/__tests__/
 └── utils/
     └── axe-helpers.ts (Testing utilities)
 ```
+
+### E2E Tests
+
+E2E accessibility tests are located in `v2/e2e/`:
+
+```
+v2/e2e/
+├── specs/
+│   └── accessibility.spec.ts    # 21 WCAG 2.2 AA axe scans
+├── helpers/
+│   └── axe.ts                   # runAxeScan() — shared axe-core wrapper
+└── fixtures/
+    └── base.fixture.ts          # Page object fixtures
+```
+
+The E2E suite covers 5 categories:
+- **Per-page baseline scans** (4 tests) — every page in default state
+- **Theme matrix** (8 tests) — all pages × dark + high-contrast themes
+- **Locale matrix** (4 tests) — all pages in French locale
+- **Interactive states** (3 tests) — lightbox, settings popover, mobile hamburger
+- **Keyboard navigation** (2 tests) — skip link focus transfer, tab order
 
 ### Test Utilities
 
