@@ -26,6 +26,7 @@
 import { Box, Switch, FormControlLabel, Typography } from '@mui/material';
 import { useAnimations } from '@/src/hooks/useAnimations';
 import { useI18n } from '@/src/hooks/useI18n';
+import { usePalette } from '@/src/hooks/usePalette';
 import { BRAND_COLORS } from '@/src/constants';
 
 /**
@@ -65,6 +66,8 @@ export function AnimationsSwitcher({
 }: AnimationsSwitcherProps): React.ReactNode {
   const { animationsEnabled, setAnimationsEnabled } = useAnimations();
   const { t } = useI18n();
+  const { mode } = usePalette();
+  const isHighContrast = mode === 'highContrast';
 
   /**
    * Handle animations toggle change.
@@ -88,11 +91,20 @@ export function AnimationsSwitcher({
             aria-label={t('settings.animationsToggle')}
             sx={{
               '& .MuiSwitch-switchBase.Mui-checked': {
-                color: BRAND_COLORS.sage,
+                color: isHighContrast ? '#FFFFFF' : BRAND_COLORS.sage,
               },
               '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                backgroundColor: BRAND_COLORS.sage,
+                backgroundColor: isHighContrast
+                  ? '#FFFFFF'
+                  : BRAND_COLORS.sage,
+                opacity: isHighContrast ? 1 : undefined,
               },
+              ...(isHighContrast && {
+                '& .MuiSwitch-track': {
+                  backgroundColor: '#767676',
+                  border: '1px solid #FFFFFF',
+                },
+              }),
             }}
           />
         }

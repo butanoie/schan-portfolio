@@ -1,5 +1,8 @@
+'use client';
+
 import { Box, Chip, SxProps, Theme } from '@mui/material';
 import { BRAND_COLORS } from '../../constants';
+import { usePalette } from '../../hooks/usePalette';
 
 /** Shared styling for tag and circa chips (everything except backgroundColor) */
 const BASE_CHIP_SX = {
@@ -57,14 +60,24 @@ export function ProjectTagsContainer({
   circa,
   sx,
 }: ProjectTagsContainerProps) {
+  const { mode } = usePalette();
+  const isHighContrast = mode === 'highContrast';
+
+  const chipBg = isHighContrast ? '#000000' : BRAND_COLORS.sage;
+  const chipColor = isHighContrast ? '#FFFFFF' : '#ffffff';
+  const chipBorder = isHighContrast ? '1px solid #FFFFFF' : 'none';
+  const circaBg = isHighContrast ? '#FFFFFF' : BRAND_COLORS.maroon;
+  const circaColor = isHighContrast ? '#000000' : '#ffffff';
+
   return (
     <Box
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
         gap: 0.75,
-        backgroundColor: BRAND_COLORS.duckEgg,
-        borderRadius: 2,
+        backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
+        border: isHighContrast ? '1px solid #FFFFFF' : 'none',
+        borderRadius: isHighContrast ? 0 : 2,
         p: 1.5,
         ...sx,
       }}
@@ -74,7 +87,12 @@ export function ProjectTagsContainer({
           className="project-circa"
           label={circa}
           size="small"
-          sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.maroon }}
+          sx={{
+            ...BASE_CHIP_SX,
+            backgroundColor: circaBg,
+            color: circaColor,
+            border: chipBorder,
+          }}
         />
       )}
       {tags?.map((tag) => (
@@ -82,7 +100,12 @@ export function ProjectTagsContainer({
           key={tag}
           label={tag}
           size="small"
-          sx={{ ...BASE_CHIP_SX, backgroundColor: BRAND_COLORS.sage }}
+          sx={{
+            ...BASE_CHIP_SX,
+            backgroundColor: chipBg,
+            color: chipColor,
+            border: chipBorder,
+          }}
         />
       ))}
     </Box>

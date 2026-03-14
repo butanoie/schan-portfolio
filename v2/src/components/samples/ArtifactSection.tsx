@@ -155,10 +155,10 @@ export default function ArtifactSection({
                     textTransform: 'none',
                     '&:hover': {
                       backgroundColor: isHighContrast
-                        ? '#000000'
+                        ? '#FFFFFF'
                         : NAV_COLORS.inactiveHover,
-                      borderColor: isHighContrast ? '#FFFF00' : undefined,
-                      color: isHighContrast ? '#FFFF00' : undefined,
+                      borderColor: isHighContrast ? '#000000' : undefined,
+                      color: isHighContrast ? '#000000' : undefined,
                       boxShadow: 0,
                     },
                   }}

@@ -1,6 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import { ProjectTagsContainer } from '../../../components/project/ProjectTags';
+import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 import { describe, it, expect } from 'vitest';
+
+/**
+ * Wrapper providing ThemeContext for ProjectTagsContainer tests.
+ *
+ * @param props - Component props
+ * @param props.children - Child components to render within the theme context
+ * @returns The children wrapped with ThemeContextProvider
+ */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <ThemeContextProvider>{children}</ThemeContextProvider>;
+}
 
 /**
  * Test suite for ProjectTagsContainer component.
@@ -11,7 +23,7 @@ describe('ProjectTagsContainer', () => {
    * Test: Component renders without crashing
    */
   it('renders without crashing', () => {
-    const { container } = render(<ProjectTagsContainer />);
+    const { container } = render(<Wrapper><ProjectTagsContainer /></Wrapper>);
     expect(container).toBeInTheDocument();
   });
 
@@ -20,7 +32,7 @@ describe('ProjectTagsContainer', () => {
    */
   it('renders tags', () => {
     const tags = ['React', 'TypeScript', 'MUI'];
-    render(<ProjectTagsContainer tags={tags} />);
+    render(<Wrapper><ProjectTagsContainer tags={tags} /></Wrapper>);
     tags.forEach((tag) => {
       expect(screen.getByText(tag)).toBeInTheDocument();
     });
@@ -31,7 +43,7 @@ describe('ProjectTagsContainer', () => {
    */
   it('renders circa chip', () => {
     const circa = '2022-2023';
-    render(<ProjectTagsContainer circa={circa} />);
+    render(<Wrapper><ProjectTagsContainer circa={circa} /></Wrapper>);
     expect(screen.getByText(circa)).toBeInTheDocument();
   });
 
@@ -41,7 +53,7 @@ describe('ProjectTagsContainer', () => {
   it('renders tags and circa together', () => {
     const tags = ['React', 'TypeScript'];
     const circa = '2022-2023';
-    render(<ProjectTagsContainer tags={tags} circa={circa} />);
+    render(<Wrapper><ProjectTagsContainer tags={tags} circa={circa} /></Wrapper>);
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
     expect(screen.getByText(circa)).toBeInTheDocument();
@@ -51,7 +63,7 @@ describe('ProjectTagsContainer', () => {
    * Test: Renders empty container when no tags or circa
    */
   it('renders empty container when no tags or circa', () => {
-    const { container } = render(<ProjectTagsContainer />);
+    const { container } = render(<Wrapper><ProjectTagsContainer /></Wrapper>);
     expect(container.querySelector('div')).toBeInTheDocument();
   });
 
@@ -59,7 +71,7 @@ describe('ProjectTagsContainer', () => {
    * Test: Accepts custom sx prop
    */
   it('accepts custom sx prop for styling', () => {
-    const { container } = render(<ProjectTagsContainer sx={{ mb: 2 }} />);
+    const { container } = render(<Wrapper><ProjectTagsContainer sx={{ mb: 2 }} /></Wrapper>);
     expect(container).toBeInTheDocument();
   });
 
@@ -68,7 +80,7 @@ describe('ProjectTagsContainer', () => {
    */
   it('renders with single tag', () => {
     const tags = ['React'];
-    render(<ProjectTagsContainer tags={tags} />);
+    render(<Wrapper><ProjectTagsContainer tags={tags} /></Wrapper>);
     expect(screen.getByText('React')).toBeInTheDocument();
   });
 
@@ -76,7 +88,7 @@ describe('ProjectTagsContainer', () => {
    * Test: Renders with empty tags array
    */
   it('renders with empty tags array', () => {
-    const { container } = render(<ProjectTagsContainer tags={[]} />);
+    const { container } = render(<Wrapper><ProjectTagsContainer tags={[]} /></Wrapper>);
     expect(container).toBeInTheDocument();
   });
 
@@ -92,7 +104,7 @@ describe('ProjectTagsContainer', () => {
       'PostgreSQL',
       'Docker',
     ];
-    render(<ProjectTagsContainer tags={tags} />);
+    render(<Wrapper><ProjectTagsContainer tags={tags} /></Wrapper>);
     tags.forEach((tag) => {
       expect(screen.getByText(tag)).toBeInTheDocument();
     });
@@ -105,7 +117,7 @@ describe('ProjectTagsContainer', () => {
     const tags = ['React', 'TypeScript'];
     const circa = '2022-2023';
     const { container } = render(
-      <ProjectTagsContainer tags={tags} circa={circa} />
+      <Wrapper><ProjectTagsContainer tags={tags} circa={circa} /></Wrapper>
     );
 
     const chips = container.querySelectorAll('.MuiChip-root');

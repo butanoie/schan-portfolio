@@ -92,11 +92,18 @@ function TechnologyCard({ tech }: { tech: Technology }) {
               })}
               sx={{
                 color: palette.card.text,
-                // In HC mode, omit sx hover color so the theme's MuiLink
-                // styleOverrides (yellow hover) can take effect.
-                ...(mode !== 'highContrast' && {
-                  '&:hover': {
-                    color: palette.card.hoverText,
+                '&:hover': mode === 'highContrast'
+                  ? {
+                      backgroundColor: '#000000',
+                      color: '#FFFFFF',
+                    }
+                  : {
+                      color: palette.card.hoverText,
+                    },
+                ...(mode === 'highContrast' && {
+                  '&:focus-visible': {
+                    outline: '3px solid #000000',
+                    outlineOffset: '2px',
                   },
                 }),
               }}

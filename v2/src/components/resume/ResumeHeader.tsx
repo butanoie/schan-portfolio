@@ -22,6 +22,9 @@ export interface ResumeHeaderProps {
 
   /** Theme-aware secondary text color, sourced from parent's textSecondaryColor */
   textSecondaryColor: string;
+
+  /** Whether high-contrast mode is active */
+  isHighContrast?: boolean;
 }
 
 /**
@@ -50,6 +53,7 @@ const iconMap = {
  * @param props.content - Header content data (name, tagline, contact links)
  * @param props.textPrimaryColor - Theme-aware primary text color from parent's palette
  * @param props.textSecondaryColor - Theme-aware secondary text color from parent's palette
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A section displaying the resume header
  *
  * @example
@@ -59,6 +63,7 @@ export default function ResumeHeader({
   content,
   textPrimaryColor,
   textSecondaryColor,
+  isHighContrast = false,
 }: ResumeHeaderProps) {
   const { name, tagline, contactLinks } = content;
 
@@ -172,10 +177,13 @@ export default function ResumeHeader({
                 isDownload ? 'no-print' : isPrintOnly ? 'print-only' : undefined
               }
               sx={{
-                backgroundColor: isSageColor
-                  ? BRAND_COLORS.sage
-                  : BRAND_COLORS.maroon,
-                color: '#ffffff',
+                backgroundColor: isHighContrast
+                  ? '#000000'
+                  : isSageColor
+                    ? BRAND_COLORS.sage
+                    : BRAND_COLORS.maroon,
+                color: isHighContrast ? '#FFFFFF' : '#ffffff',
+                border: isHighContrast ? '1px solid #FFFFFF' : 'none',
                 textTransform: 'none',
                 fontSize: '0.95rem',
                 fontWeight: 600,
@@ -186,9 +194,13 @@ export default function ResumeHeader({
                 gap: 1,
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: isSageColor
-                    ? NAV_COLORS.inactiveHover
-                    : BRAND_COLORS.maroonDark,
+                  backgroundColor: isHighContrast
+                    ? '#000000'
+                    : isSageColor
+                      ? NAV_COLORS.inactiveHover
+                      : BRAND_COLORS.maroonDark,
+                  borderColor: isHighContrast ? '#FFFF00' : undefined,
+                  color: isHighContrast ? '#FFFF00' : undefined,
                   boxShadow: 'none',
                 },
               }}

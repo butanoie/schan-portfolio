@@ -265,7 +265,7 @@ export default function Footer() {
             }}
           >
             {/* Navigation Links - Hidden on mobile */}
-            {!isMobile && <FooterNavLinks pathname={pathname} t={t} />}
+            {!isMobile && <FooterNavLinks pathname={pathname} t={t} isHighContrast={isHighContrast} />}
 
             {/* Copyright */}
             <Typography
@@ -296,6 +296,8 @@ interface FooterNavLinksProps {
   pathname: string;
   /** Translation function from useI18n */
   t: (key: string, options?: Record<string, unknown>) => string;
+  /** Whether high-contrast mode is active */
+  isHighContrast: boolean;
 }
 
 /**
@@ -308,9 +310,10 @@ interface FooterNavLinksProps {
  * @param props - Component props
  * @param props.pathname - Current URL pathname for highlighting the active link
  * @param props.t - Translation function for localized link labels
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A nav element with text-style footer links
  */
-function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
+function FooterNavLinks({ pathname, t, isHighContrast }: FooterNavLinksProps): React.ReactNode {
   const navLinks = getNavLinks();
 
   return (
@@ -349,16 +352,22 @@ function FooterNavLinks({ pathname, t }: FooterNavLinksProps): React.ReactNode {
             <MuiLink
               component={Link}
               href={link.href}
-              underline={active ? 'always' : 'hover'}
+              underline={active ? 'none' : 'hover'}
               aria-current={active ? 'page' : undefined}
               sx={{
                 color: NAV_COLORS.text,
                 fontFamily: FONT_FAMILY_BODY,
-                fontWeight: active ? 700 : 600,
+                fontWeight: active ? 800 : 600,
                 fontSize: '0.875rem',
+                textDecoration: active ? 'none' : undefined,
                 textDecorationColor: active ? NAV_COLORS.text : 'inherit',
                 '&:hover': {
-                  color: NAV_COLORS.text,
+                  color: active
+                    ? NAV_COLORS.text
+                    : isHighContrast
+                      ? '#FFFF00'
+                      : '#FFD6E0',
+                  textDecoration: active ? 'none' : undefined,
                 },
               }}
             >

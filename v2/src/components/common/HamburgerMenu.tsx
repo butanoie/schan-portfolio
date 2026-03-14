@@ -23,6 +23,7 @@ import { usePathname } from 'next/navigation';
 import { BRAND_COLORS, NAV_COLORS } from '../../constants';
 import { useI18n } from '@/src/hooks/useI18n';
 import { useAnimations } from '@/src/hooks/useAnimations';
+import { usePalette } from '@/src/hooks/usePalette';
 import { FONT_FAMILY_BODY } from '@/src/lib/fontConstants';
 import { SettingsList } from '../settings/SettingsList';
 import { getNavLinks, isActivePath } from '../../utils/navigation';
@@ -76,6 +77,8 @@ export default function HamburgerMenu() {
   const theme = useTheme();
   const { t } = useI18n();
   const { animationsEnabled } = useAnimations();
+  const { mode } = usePalette();
+  const isHighContrast = mode === 'highContrast';
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const navItems = getNavLinks();
@@ -158,22 +161,42 @@ export default function HamburgerMenu() {
                     onClick={handleClose}
                     aria-current={active ? 'page' : undefined}
                     sx={{
-                      backgroundColor: active
-                        ? NAV_COLORS.active
-                        : BRAND_COLORS.sage,
-                      color: NAV_COLORS.text,
-                      borderRadius: 1,
+                      backgroundColor: isHighContrast
+                        ? active
+                          ? '#FFFFFF'
+                          : '#000000'
+                        : active
+                          ? NAV_COLORS.active
+                          : BRAND_COLORS.sage,
+                      color: isHighContrast
+                        ? active
+                          ? '#000000'
+                          : '#FFFFFF'
+                        : NAV_COLORS.text,
+                      border: isHighContrast
+                        ? '1px solid #FFFFFF'
+                        : 'none',
+                      borderRadius: isHighContrast ? 0 : 1,
                       py: 1.5,
                       '&:hover': {
-                        backgroundColor: active
-                          ? NAV_COLORS.activeHover
-                          : NAV_COLORS.inactiveHover,
+                        backgroundColor: isHighContrast
+                          ? active
+                            ? '#000000'
+                            : '#FFFFFF'
+                          : active
+                            ? NAV_COLORS.activeHover
+                            : NAV_COLORS.inactiveHover,
+                        color: isHighContrast
+                          ? active
+                            ? '#FFFFFF'
+                            : '#000000'
+                          : undefined,
                       },
                     }}
                   >
                     <ListItemIcon
                       sx={{
-                        color: NAV_COLORS.text,
+                        color: 'inherit',
                         minWidth: 40,
                       }}
                     >
@@ -186,7 +209,7 @@ export default function HamburgerMenu() {
                           sx: {
                             fontFamily: FONT_FAMILY_BODY,
                             fontWeight: 600,
-                            color: NAV_COLORS.text,
+                            color: 'inherit',
                           },
                         },
                       }}

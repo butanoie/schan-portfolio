@@ -14,6 +14,9 @@ export interface ConferenceSpeakerProps {
 
   /** Pre-translated section heading text (e.g., "Conference Speaking") */
   sectionHeading: string;
+
+  /** Whether high-contrast mode is active */
+  isHighContrast?: boolean;
 }
 
 /**
@@ -30,6 +33,7 @@ export interface ConferenceSpeakerProps {
  * @param props.content - Speaking history data (intro text and events array)
  * @param props.cardTextColor - Theme-aware text color from parent's palette
  * @param props.sectionHeading - Pre-translated heading text
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A section displaying conference speaking history
  *
  * @example
@@ -39,15 +43,18 @@ export default function ConferenceSpeaker({
   content,
   cardTextColor,
   sectionHeading,
+  isHighContrast = false,
 }: ConferenceSpeakerProps) {
   const { intro, events } = content;
+  const textColor = isHighContrast ? '#FFFFFF' : cardTextColor;
 
   return (
     <Box component="section" aria-labelledby="speaking-heading">
       <Box
         sx={{
-          backgroundColor: BRAND_COLORS.duckEgg,
-          borderRadius: 2,
+          backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
+          border: isHighContrast ? '1px solid #FFFFFF' : 'none',
+          borderRadius: isHighContrast ? 0 : 2,
           p: 2.5,
         }}
       >
@@ -57,7 +64,7 @@ export default function ConferenceSpeaker({
           variant="h3"
           sx={{
             fontWeight: 600,
-            color: cardTextColor,
+            color: textColor,
             fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 1.5,
           }}
@@ -70,7 +77,7 @@ export default function ConferenceSpeaker({
           <Typography
             variant="body2"
             sx={{
-              color: cardTextColor,
+              color: textColor,
               fontSize: '0.9rem',
               mb: 1.5,
             }}
@@ -91,7 +98,7 @@ export default function ConferenceSpeaker({
             <Box
               key={index}
               sx={{
-                borderLeft: `3px solid ${BRAND_COLORS.sage}`,
+                borderLeft: `3px solid ${isHighContrast ? '#FFFFFF' : BRAND_COLORS.sage}`,
                 pl: 1.5,
               }}
             >
@@ -99,7 +106,7 @@ export default function ConferenceSpeaker({
                 variant="body2"
                 sx={{
                   fontWeight: 600,
-                  color: cardTextColor,
+                  color: textColor,
                   fontSize: '0.9rem',
                 }}
               >
@@ -108,7 +115,7 @@ export default function ConferenceSpeaker({
               <Typography
                 variant="body2"
                 sx={{
-                  color: cardTextColor,
+                  color: textColor,
                   fontSize: '0.85rem',
                   mt: 0.25,
                 }}
@@ -120,7 +127,7 @@ export default function ConferenceSpeaker({
                 <Typography
                   variant="body2"
                   sx={{
-                    color: cardTextColor,
+                    color: textColor,
                     fontSize: '0.8rem',
                     mt: 0.25,
                   }}

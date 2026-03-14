@@ -13,6 +13,9 @@ export interface ClientListProps {
 
   /** Pre-translated section heading text (e.g., "Enterprise Clients") */
   sectionHeading: string;
+
+  /** Whether high-contrast mode is active */
+  isHighContrast?: boolean;
 }
 
 /**
@@ -29,6 +32,7 @@ export interface ClientListProps {
  * @param props.clients - Array of client company names
  * @param props.cardTextColor - Theme-aware text color from parent's palette
  * @param props.sectionHeading - Pre-translated heading text
+ * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A section displaying the client list
  *
  * @example
@@ -38,13 +42,15 @@ export default function ClientList({
   clients,
   cardTextColor,
   sectionHeading,
+  isHighContrast = false,
 }: ClientListProps) {
   return (
     <Box component="section" aria-labelledby="clients-heading">
       <Box
         sx={{
-          backgroundColor: BRAND_COLORS.duckEgg,
-          borderRadius: 2,
+          backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.duckEgg,
+          border: isHighContrast ? '1px solid #FFFFFF' : 'none',
+          borderRadius: isHighContrast ? 0 : 2,
           p: 2.5,
         }}
       >
@@ -55,7 +61,7 @@ export default function ClientList({
           component="h3"
           sx={{
             fontWeight: 600,
-            color: cardTextColor,
+            color: isHighContrast ? '#FFFFFF' : cardTextColor,
             fontSize: { xs: '1.1rem', md: '1.25rem' },
             mb: 1.5,
           }}
@@ -77,12 +83,13 @@ export default function ClientList({
               label={client}
               size="small"
               sx={{
-                backgroundColor: BRAND_COLORS.sage,
+                backgroundColor: isHighContrast ? '#000000' : BRAND_COLORS.sage,
                 color: '#ffffff',
+                border: isHighContrast ? '1px solid #FFFFFF' : 'none',
                 fontWeight: 600,
                 fontSize: '0.75rem',
                 height: '26px',
-                borderRadius: '3px',
+                borderRadius: isHighContrast ? 0 : '3px',
                 '& .MuiChip-label': {
                   px: 1.25,
                 },

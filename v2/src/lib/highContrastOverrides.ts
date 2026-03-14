@@ -128,7 +128,7 @@ export function applyHighContrastOverrides(baseTheme: Theme): Theme {
         styleOverrides: {
           root: {
             boxShadow: 'none',
-            borderBottom: `1px solid ${HC_WHITE}`,
+            border: 'none',
           },
         },
       },
@@ -232,6 +232,53 @@ export function applyHighContrastOverrides(baseTheme: Theme): Theme {
           },
           arrow: {
             color: HC_WHITE,
+          },
+        },
+      },
+
+      MuiSwitch: {
+        styleOverrides: {
+          root: {
+            '& .MuiSwitch-switchBase.Mui-checked': {
+              color: HC_WHITE,
+            },
+            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+              backgroundColor: HC_WHITE,
+              opacity: 1,
+            },
+            '& .MuiSwitch-track': {
+              backgroundColor: HC_DISABLED,
+              border: `1px solid ${HC_WHITE}`,
+            },
+          },
+        },
+      },
+
+      MuiToggleButtonGroup: {
+        styleOverrides: {
+          root: {
+            border: `1px solid ${HC_WHITE}`,
+          },
+        },
+      },
+
+      MuiToggleButton: {
+        styleOverrides: {
+          root: {
+            color: HC_WHITE,
+            borderColor: HC_WHITE,
+            '&.Mui-selected': {
+              backgroundColor: HC_WHITE,
+              color: HC_BLACK,
+              '&:hover': {
+                backgroundColor: HC_WHITE,
+                color: HC_BLACK,
+              },
+            },
+            '&:hover': {
+              backgroundColor: HC_YELLOW,
+              color: HC_BLACK,
+            },
           },
         },
       },
