@@ -19,6 +19,8 @@ The project follows enterprise-grade practices throughout:
 
 The goal is to show that a personal project, when treated with the same rigour as a team-based product, becomes a credible demonstration of process maturity — not just technical skill.
 
+**[How the process itself evolved](docs/SDLC_EVOLUTION.md)** — Over 48 days and 523 commits, the project's SDLC grew from "plan → build → commit → move on" into a documentation-gated, CI-enforced, AI-assisted development workflow. That document traces the full arc: the early days of free-form commits and no CI, through the inflection point where process rules became machine-readable code, to the current state of automated quality gates and specialized review agents.
+
 ## Status
 
 **All 8 Phases Complete** — Deployed on Railway with full monitoring, analytics, and comprehensive test coverage.
@@ -76,6 +78,7 @@ npm run typecheck     # TypeScript check
 
 ## Documentation
 
+- **[SDLC Evolution](docs/SDLC_EVOLUTION.md)** — How the development process matured across 7 eras, from zero CI to self-enforcing quality gates
 - **[v2 README](v2/README.md)** — Getting started and development guide
 - **Guides**
   - [Testing Architecture](docs/guides/TESTING_ARCHITECTURE.md) — Integration & E2E test architecture (POM, Playwright, axe)
