@@ -27,7 +27,7 @@
       },
       "costSavings": {
         "heading": "Mesurer l'impact",
-        "intro": "La documentation n'est pas seulement une question de planification — il s'agit de prouver les résultats. Cette section montre comment une analyse structurée, des guides opérationnels et des rapports clairs peuvent identifier et valider des réductions de coûts significatives — transformant les audits d'infrastructure en résultats commerciaux mesurables d'une valeur de plus de 360 000 dollars canadiens en économies annualisées pour Collabware."
+        "intro": "La documentation n'est pas seulement une question de planification - il s'agit de prouver les résultats. Cette section montre comment une analyse structurée, des guides opérationnels et des rapports clairs permettent d'identifier et de valider des réductions de coûts significatives - transformant les audits d'infrastructure en résultats commerciaux mesurables d'une valeur de plus de 360 000 dollars canadiens d'économies annualisées."
       }
     },
     "artifacts": {
@@ -68,7 +68,7 @@
         "description": "Stratégie d'assurance qualité pilotée par BDD avec intégration CI/CD, couvrant la structure de la pyramide de test, la sélection des outils et les objectifs de couverture."
       },
       "onboardingGuide": {
-        "title": "Guide d'intégration des connaissances produit Collabspace",
+        "title": "Guide d'intégration de la connaissance des produits",
         "description": "Programme d'intégration en 14 modules conçu pour les nouveaux membres de l'équipe, couvrant la façon dont les clients utilisent les principales fonctionnalités et la connaissance du domaine."
       },
       "changelogStrategy": {
