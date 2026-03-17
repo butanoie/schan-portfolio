@@ -1,5 +1,11 @@
 {
   "enabledPlugins": {},
+  "permissions": {
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(gh issue close:*)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {

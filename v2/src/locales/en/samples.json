@@ -27,7 +27,7 @@
       },
       "costSavings": {
         "heading": "Measuring the Impact",
-        "intro": "Documentation isn't just about planning — it's about proving results. This section showcases how structured analysis, operational runbooks, and clear reporting can identify and validate significant cost reductions — turning infrastructure audits into measurable business outcomes worth over $360K CAD in annualized savings for Collabware."
+        "intro": "Documentation isn't just about planning — it's about proving results. This section showcases how structured analysis, operational runbooks, and clear reporting can identify and validate significant cost reductions — turning infrastructure audits into measurable business outcomes worth over $360K CAD in annualized savings."
       }
     },
     "artifacts": {
@@ -68,7 +68,7 @@
         "description": "BDD-driven QA strategy with CI/CD integration, covering test pyramid structure, tooling selection, and coverage targets."
       },
       "onboardingGuide": {
-        "title": "Collabspace Product Knowledge Onboarding Guide",
+        "title": "Product Knowledge Onboarding Guide",
         "description": "14-module onboarding curriculum designed for new team members, covering how customers use the major feature areas and domain knowledge."
       },
       "changelogStrategy": {

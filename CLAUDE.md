@@ -66,14 +66,28 @@ When adding new infrastructure, create docs in the appropriate `docs/` subdirect
 - **GitHub issues** — Post a comment syncing the latest decisions and technical notes
 - **CLAUDE.md** — Add new conventions or standards that emerged from the discussion
 
+### Quality Review — Parallel Agents
+
+Launch four review agents in parallel during Phase 6. All must complete before closing the review phase. The three `code-reviewer` rows invoke the same agent with different task prompts passed as the focus description.
+
+| Agent (focus) | Review scope |
+|---------------|-------------|
+| `code-reviewer` — simplicity | DRY, elegance, unnecessary complexity |
+| `code-reviewer` — correctness | Bugs, edge cases, functional correctness |
+| `code-reviewer` — conventions | Project abstractions, naming, file placement |
+| `a11y-reviewer` | WCAG 2.2 Level AA — semantic HTML, ARIA, keyboard nav, contrast, motion |
+
+The `a11y-reviewer` agent is defined at `.claude/agents/a11y-reviewer.md`. Pass it the list of changed component files. Any **Critical** finding blocks merge; **Warning** findings must be triaged (fix or file as tracked issue) before the doc gate proceeds. **Info** findings are advisory only.
+
 ### Post-Review Documentation Gate
 
 **CRITICAL: After Phase 6 (Quality Review) issues have been fixed, you MUST update documentation BEFORE proceeding to Phase 7 (Summary).** Do NOT skip this step. Treat missing doc updates as a blocker, equivalent to a failing build.
 
-**Checklist (complete both steps):**
+**Checklist (complete all steps):**
 
-1. **Update project docs** — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.
-2. **Run `/claude-md-management:revise-claude-md`** — capture gotchas and conventions into directory-scoped CLAUDE.md files (e.g., `v2/e2e/CLAUDE.md`, `v2/src/components/CLAUDE.md`). Create new scoped CLAUDE.md files when a feature introduces a new directory with its own conventions. Only add to root CLAUDE.md if the learning applies project-wide.
+1. **Confirm a11y triage** — all `a11y-reviewer` Critical findings are resolved; all Warning findings are fixed or filed as tracked issues.
+2. **Update project docs** — sync architecture specs with implementation reality, check off completed roadmap items, and note any deferred work.
+3. **Run `/claude-md-management:revise-claude-md`** — capture gotchas and conventions into directory-scoped CLAUDE.md files (e.g., `v2/e2e/CLAUDE.md`, `v2/src/components/CLAUDE.md`). Create new scoped CLAUDE.md files when a feature introduces a new directory with its own conventions. Only add to root CLAUDE.md if the learning applies project-wide.
 
 ## Changelog
 
@@ -98,4 +112,21 @@ See `changelog/CLAUDE.md` for required sections, template structure, and best pr
 - **Significant changes require changelog**
 - **Commit references** - Link changelog in commit message when applicable
 - **Review requirement** - Verify changelog entry during code review
+
+## Agent Worktree Isolation
+
+When spawning sub-agents, use `isolation: "worktree"` for work that modifies the working tree in ways that could conflict with the parent session.
+
+### Use worktree isolation when
+
+- **Dependency upgrades** — `npm install` / lockfile changes corrupt the parent session's `node_modules` if run in the same tree
+- **Major refactors** — widespread file renames or moves that would conflict if the parent agent also has files open
+- **Architectural spikes** — exploratory branches where the agent may abandon or rewrite files; keeps the main tree clean
+- **Parallel destructive agents** — any time two or more agents would write to overlapping files simultaneously
+
+### Do not use worktree isolation for
+
+- Read-only agents (code reviewers, `a11y-reviewer`, analysis tasks) — no writes, so isolation adds overhead with no benefit
+- Single-file edits or small additive changes — coordination cost outweighs the protection
+- Agents that only run shell commands against a build artifact (e.g., Playwright against `next start`)
 
