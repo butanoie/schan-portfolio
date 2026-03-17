@@ -1,6 +1,6 @@
-# SDLC Evolution: schan-portfolio (Jan 25 – Mar 14, 2026)
+# SDLC Evolution: schan-portfolio (Jan 25 – Mar 16, 2026)
 
-**48 days, ~523 commits, 50 changelogs, 50 merge commits across 8+ phases.**
+**50 days, ~523 commits, 50 changelogs, 50 merge commits across 8+ phases.**
 
 ---
 
@@ -107,7 +107,7 @@ This era introduced comprehensive testing infrastructure:
 
 ---
 
-## Era 7: "Continuous Refinement" (Mar 13–14) — Current
+## Era 7: "Continuous Refinement" (Mar 13–14)
 
 The current state shows a mature, iterative process:
 
@@ -119,19 +119,36 @@ The current state shows a mature, iterative process:
 
 ---
 
+## Era 8: "Autonomous Enforcement & Parallel Workflows" (Mar 16) — Current
+
+This era introduced the project's first **deterministic process gate** and formalized parallel agent workflows:
+
+- **Commit and issue permission gates** — `permissions.ask` rules in `.claude/settings.json` force an interactive approval prompt before any `git commit` or `gh issue close` command. The Era 5 rule "never commit unless asked" is now structurally enforced via the platform's native permission system rather than relying on CLAUDE.md instructions
+- **Four parallel review agents** — Phase 6 (Quality Review) formalized in CLAUDE.md as a mandatory four-agent parallel pipeline: three `code-reviewer` instances (simplicity, correctness, conventions) plus `a11y-reviewer` (WCAG 2.2 Level AA). Critical a11y findings block merge
+- **Worktree isolation guidelines** — CLAUDE.md documents when sub-agents should use `isolation: "worktree"` (dependency upgrades, major refactors, architectural spikes) vs. when to skip it (read-only agents, small edits)
+- **`.claude/rules/` migration** — project knowledge moved from personal memory (`~/.claude/projects/.../memory/`) to committed `.claude/rules/*.md` files, making workflow conventions portable across collaborators
+
+See [ERA8_ROADMAP.md](active/ERA8_ROADMAP.md) for implementation details and deferred capabilities (additional hooks, agent teams, monitoring, DX improvements).
+
+The SDLC became: issue → branch → plan → architecture → **doc gate** → implement → **commit permission gate** → lint/typecheck/test (husky) → **parallel review (4 agents)** → **doc gate** → changelog → PR → CI → staging → production.
+
+---
+
 ## Summary: The Arc
 
-| Aspect | Early (Jan 25) | Now (Mar 14) |
-|--------|----------------|--------------|
-| Commits | Free-form messages | Conventional commits with issue refs |
-| Branching | Direct to main | Feature branches → PR → CI → merge |
-| Code review | None | Plugin-based AI agents + human review |
-| Testing | Local lint only | Unit + Integration + E2E (Playwright) + a11y |
-| CI/CD | None | GitHub Actions: lint, test, E2E, staging gate, prod deploy |
-| Documentation | Aspirational plan | Enforced gates with checklists |
-| Changelogs | Retroactive | Mandatory per significant change |
-| Process governance | Informal | Codified in CLAUDE.md, machine-enforced |
-| AI tooling | Basic Claude Code | Plugins, specialized agents, skills, memory, hooks |
-| Deploys | Manual | Automated staging → gated production with rollback |
+| Aspect | Early (Jan 25) | Era 7 (Mar 14) | Era 8 (Mar 16) |
+|--------|----------------|-----------------|----------------|
+| Commits | Free-form messages | Conventional commits with issue refs | Permission-gated commits + issue closes |
+| Branching | Direct to main | Feature branches → PR → CI → merge | + worktree isolation guidelines |
+| Code review | None | Plugin-based AI agents + human review | 4 parallel review agents (3 code + a11y) |
+| Testing | Local lint only | Unit + Integration + E2E (Playwright) + a11y | *(unchanged — mature)* |
+| CI/CD | None | GitHub Actions: lint, test, E2E, staging gate, prod deploy | *(unchanged — mature)* |
+| Documentation | Aspirational plan | Enforced gates with checklists | + a11y triage step in Post-Review gate |
+| Changelogs | Retroactive | Mandatory per significant change | *(unchanged — mature)* |
+| Process governance | Informal | Codified in CLAUDE.md, machine-enforced | First structural permission gate |
+| AI tooling | Basic Claude Code | Plugins, specialized agents, skills, memory, hooks | Permission gates, parallel agents, portable rules |
+| Deploys | Manual | Automated staging → gated production with rollback | *(unchanged — mature)* |
 
-The project's SDLC evolved from a solo developer's "plan and build" sprint into a **documentation-gated, CI-enforced, AI-assisted development workflow** — all within 48 days. The most distinctive characteristic is that the process itself is version-controlled and AI-readable: CLAUDE.md serves as both human documentation and machine instruction, making the SDLC self-enforcing.
+The project's SDLC evolved from a solo developer's "plan and build" sprint into a **documentation-gated, CI-enforced, AI-assisted development workflow** — all within 50 days. The most distinctive characteristic is that the process itself is version-controlled and AI-readable: CLAUDE.md serves as both human documentation and machine instruction, making the SDLC self-enforcing.
+
+Era 8 crossed a threshold: **the first rule that cannot be forgotten**. Where Era 5 said "never commit unless asked" and relied on the AI's compliance, Era 8 made it a `permissions.ask` gate — the platform's native permission system forces an interactive approval prompt before the command executes. Where Era 7 ran review agents one at a time as convention, Era 8 formalized four parallel agents as the standard quality review pipeline. The process is no longer just self-documenting; it is beginning to self-enforce.
