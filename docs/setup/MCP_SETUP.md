@@ -15,6 +15,7 @@ MCP Servers
     ├── context7           (documentation search)
     ├── playwright         (browser automation)
     ├── posthog            (analytics queries)
+    ├── sentry             (error tracking queries)
     └── github             (GitHub API — disabled by default)
 ```
 
@@ -60,6 +61,7 @@ Recommended plugins for this project:
 | `context7`   | Library documentation search | Looking up Next.js, MUI, React docs          |
 | `playwright` | Browser automation & testing | Visual testing, screenshots                  |
 | `posthog`    | PostHog analytics queries    | Querying analytics data, managing dashboards |
+| `sentry`     | Sentry error tracking        | Querying errors, issues, releases            |
 | `github`     | GitHub API access            | PR management, issue tracking (optional)     |
 
 > **Note:** The `github` plugin is separate from the `GITHUB_TOKEN` environment variable. Claude Code can also access GitHub via the `gh` CLI if authenticated (see [Git Auth memory note](#troubleshooting)).
