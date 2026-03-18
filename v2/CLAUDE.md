@@ -82,3 +82,5 @@ vitest.config.ts # Test configuration
 ```bash
 npm run lint && npm run typecheck && npm run format:check && npm test
 ```
+
+**Accessibility gate (Phase 6):** Any component added or modified must be reviewed by the `a11y-reviewer` agent as part of Phase 6. This supplements the automated axe tests in the unit test suite. See `.claude/agents/a11y-reviewer.md` for the full checklist.
