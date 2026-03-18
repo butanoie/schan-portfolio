@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       has-v2-changes: ${{ steps.detect.outputs.has-v2-changes }}
+      should-deploy: ${{ steps.detect.outputs.should-deploy }}
 
     steps:
       - name: Checkout code
@@ -19,18 +20,28 @@ jobs:
 
       - name: Detect v2 folder changes
         id: detect
+        env:
+          IS_DEPENDABOT: ${{ github.actor == 'dependabot[bot]' }}
         run: |
           # Get list of changed files compared to base branch
           git diff --name-only origin/${{ github.base_ref }}...HEAD > /tmp/changed_files.txt
 
-          # Check if any changes are in v2/ folder or .github/workflows/
+          # has-v2-changes: v2/ app code or this workflow (test-deploy-dev.yml) changed
           # Exclude CLAUDE.md files — they don't affect builds or releases
-          has_v2_changes=$(grep -E '^(v2/|\.github/workflows/)' /tmp/changed_files.txt | grep -vi 'claude\.md' | wc -l)
+          # Other deploy-*.yml workflows are manual and tested separately
+          has_v2_changes=$(grep -E '^(v2/|\.github/workflows/test-deploy-dev\.yml)' /tmp/changed_files.txt | grep -vi 'claude\.md' | wc -l)
 
-          if [ $has_v2_changes -gt 0 ]; then
+          if [ "$has_v2_changes" -gt 0 ]; then
             echo "has-v2-changes=true" >> $GITHUB_OUTPUT
           else
             echo "has-v2-changes=false" >> $GITHUB_OUTPUT
+          fi
+
+          # should-deploy: has v2 changes AND not a Dependabot PR
+          if [ "$has_v2_changes" -gt 0 ] && [ "$IS_DEPENDABOT" != "true" ]; then
+            echo "should-deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "should-deploy=false" >> $GITHUB_OUTPUT
           fi
 
           echo "Changed files:"
@@ -157,7 +168,7 @@ jobs:
   deploy:
     needs: [check-changes, tests]
     runs-on: ubuntu-latest
-    if: needs.check-changes.outputs.has-v2-changes == 'true'
+    if: needs.check-changes.outputs.should-deploy == 'true'
     # ⚠️ REQUIRES MANUAL APPROVAL
     # This deployment is protected by environment rules.
     # A reviewer must approve before deployment proceeds.
@@ -194,11 +205,12 @@ jobs:
       - name: Check job results
         env:
           HAS_V2_CHANGES: ${{ needs.check-changes.outputs.has-v2-changes }}
+          SHOULD_DEPLOY: ${{ needs.check-changes.outputs.should-deploy }}
           TESTS_RESULT: ${{ needs.tests.result }}
           E2E_RESULT: ${{ needs.e2e.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
         run: |
-          # If v2 changes were detected, all jobs must have succeeded
+          # Tests and E2E are required when v2/ or test-deploy-dev.yml changed
           if [ "$HAS_V2_CHANGES" == "true" ]; then
             if [ "$TESTS_RESULT" != "success" ]; then
               echo "Tests failed or were cancelled"
@@ -208,9 +220,14 @@ jobs:
               echo "E2E tests failed or were cancelled"
               exit 1
             fi
+          fi
+
+          # Deploy is required only when should-deploy is true (not Dependabot)
+          if [ "$SHOULD_DEPLOY" == "true" ]; then
             if [ "$DEPLOY_RESULT" != "success" ]; then
               echo "Deploy failed or was cancelled"
               exit 1
             fi
           fi
+
           echo "All required checks passed"

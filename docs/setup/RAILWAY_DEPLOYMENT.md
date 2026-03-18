@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project automatically deploys to Railway's development environment whenever a pull request to the `main` branch passes all tests. The deployment is smart—it only runs tests and deploys if changes are detected in the `v2/` folder or GitHub workflow files. Manual approval is required before deployment proceeds.
+This project automatically deploys to Railway's development environment whenever a pull request to the `main` branch passes all tests. The deployment is smart—it only runs tests and deploys if changes are detected in the `v2/` folder or `test-deploy-dev.yml`, and skips deployment for Dependabot PRs. Manual approval is required before deployment proceeds.
 
 **Project:** Sing Portfolio
 **Environment:** Development
-**Deployment Trigger:** Every PR to `main` branch with v2/ or workflow changes (after lint, type check, and unit tests pass)
+**Deployment Trigger:** Every non-Dependabot PR to `main` branch with v2/ or `test-deploy-dev.yml` changes (after lint, type check, and unit tests pass)
 **Deploy Directory:** `v2/` (Next.js application)
 **Approval:** Manual approval required per environment configuration
 
@@ -98,8 +98,8 @@ The workflow is already configured in [`.github/workflows/test-deploy-dev.yml`](
 ```yaml
 # Smart change detection
 check-changes:
-  # Detects if v2/ folder or .github/workflows/ changed
-  # Outputs: has-v2-changes (true/false)
+  # Detects if v2/ folder or test-deploy-dev.yml changed
+  # Outputs: has-v2-changes (true/false), should-deploy (true/false)
 
 # Tests only run if changes detected
 tests:
@@ -107,10 +107,10 @@ tests:
   if: needs.check-changes.outputs.has-v2-changes == 'true'
   # Runs: lint, type-check, test
 
-# Deployment only runs if tests pass
+# Deployment only runs if tests pass AND not Dependabot
 deploy:
   needs: [check-changes, tests]
-  if: needs.check-changes.outputs.has-v2-changes == 'true'
+  if: needs.check-changes.outputs.should-deploy == 'true'
   environment: "Sing Portfolio / development"
 ```
 
@@ -120,11 +120,11 @@ deploy:
 deploy:
   needs: [check-changes, tests]
   runs-on: ubuntu-latest
-  if: needs.check-changes.outputs.has-v2-changes == 'true'
+  if: needs.check-changes.outputs.should-deploy == 'true'
   environment: "Sing Portfolio / development"
   steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Install Railway CLI
       run: npm install -g @railway/cli
@@ -138,8 +138,8 @@ deploy:
 **Explanation:**
 
 - **Smart Detection**: The `check-changes` job prevents unnecessary test runs when only docs or other non-v2 files change
-- **Tests Conditional**: Tests only run if v2/ or workflow files changed (saves CI time)
-- **Deployment Conditional**: Deployment only runs if changes detected AND tests pass
+- **Tests Conditional**: Tests only run if v2/ or `test-deploy-dev.yml` changed (saves CI time)
+- **Deployment Conditional**: Deployment only runs if changes detected AND tests pass AND PR author is not Dependabot
 - `--project`: Specifies which Railway project to deploy to (using the unique project ID from variables)
 - `--service`: Specifies which service within the project to deploy (loaded from variables)
 - `--environment`: Specifies the deployment environment (development)
@@ -211,23 +211,30 @@ To add an extra layer of safety, configure required reviewers for the developmen
    - Check the "development" environment
    - Look for the new deployment in the deployments list
 
-⚠️ **Important:** The workflow ONLY triggers on changes in the `v2/` folder or `.github/workflows/` folder. Changes to docs or other files won't trigger the workflow.
+⚠️ **Important:** Tests only run when changes are detected in the `v2/` folder or `test-deploy-dev.yml`. Changes to other workflow files, docs, or other folders won't trigger tests. Dependabot PRs run tests but skip deployment.
 
 ## Workflow Behavior
 
 ### When Tests and Deployment Run
 
 ✅ PR is opened against `main` branch
-✅ Changes detected in `v2/` folder OR `.github/workflows/` folder
+✅ Changes detected in `v2/` folder or `test-deploy-dev.yml`
 ✅ All lint, type check, and unit tests pass
 ✅ Manual approval provided by configured reviewer(s)
+✅ PR author is not `dependabot[bot]`
 
 ### When Tests Skip (Workflow Still Runs)
 
 ⏭️ PR targets `main` branch
-⏭️ Changes only in `docs/`, `changelog/`, or other non-v2 folders
+⏭️ Changes only in `docs/`, `changelog/`, other `deploy-*.yml` workflows, or other non-v2 folders
 ⏭️ The workflow runs but `check-changes` outputs `has-v2-changes=false`
 ⏭️ Tests and deployment jobs are skipped (saves CI time)
+
+### When Deployment is Skipped (Tests Still Run)
+
+⏭️ PR has `v2/` or `test-deploy-dev.yml` changes but author is `dependabot[bot]`
+⏭️ Tests and E2E run normally to validate dependency changes
+⏭️ Deploy is skipped — dependency bumps don't need dev environment validation
 
 ### When Deployment Does NOT Run
 
@@ -239,33 +246,37 @@ To add an extra layer of safety, configure required reviewers for the developmen
 
 ## Smart Change Detection
 
-The workflow includes intelligent change detection to save CI time and resources. The `check-changes` job identifies whether the `v2/` application folder or `.github/workflows/` folder was modified.
+The workflow includes intelligent change detection to save CI time and resources. The `check-changes` job identifies whether the `v2/` application folder or `test-deploy-dev.yml` was modified, and whether the PR author is Dependabot.
 
 ### How It Works
 
 1. **PR Opened**: When you open a PR to `main`, the workflow runs
 2. **Change Detection**: The `check-changes` job compares files changed against the base branch
 3. **Decision**:
-   - If `v2/` or `.github/workflows/` files changed → Tests and deployment jobs run
-   - If only `docs/`, `changelog/`, or other folders changed → Tests and deployment jobs are skipped (fast feedback)
+   - If `v2/` or `test-deploy-dev.yml` changed → Tests run; deploy runs if not Dependabot
+   - If only other `deploy-*.yml` workflows, `docs/`, `changelog/`, or other folders changed → Tests and deployment are skipped
+   - If Dependabot is the PR author → Tests run but deploy is skipped
 4. **Result**: You see clear indication of whether tests ran or were skipped
 
 ### Benefits
 
-- ✅ **Saves CI Time** - No unnecessary test runs for documentation-only changes
-- ✅ **Faster Feedback** - Immediate result for doc-only PRs without waiting for tests
+- ✅ **Saves CI Time** - No unnecessary test runs for documentation-only or unrelated workflow changes
+- ✅ **Faster Feedback** - Immediate result for non-app PRs without waiting for tests
 - ✅ **Efficient Resources** - Reduces compute costs and CI pipeline strain
+- ✅ **Dependabot Efficiency** - Dependency bumps are tested but not deployed to dev
 - ✅ **Clear Status** - GitHub shows which jobs ran and why
 
 ### Example Scenarios
 
-| Changes                         | Tests Run? | Deploy?                 | Why                            |
-| ------------------------------- | ---------- | ----------------------- | ------------------------------ |
-| Changes in `v2/src/`            | ✅ Yes     | ✅ Yes (after approval) | Application code changed       |
-| Changes in `.github/workflows/` | ✅ Yes     | ✅ Yes (after approval) | Workflow configuration changed |
-| Changes in `docs/` only         | ❌ No      | ❌ No                   | Only documentation changed     |
-| Changes in `changelog/` only    | ❌ No      | ❌ No                   | Only changelog changed         |
-| Mix of `v2/` + `docs/`          | ✅ Yes     | ✅ Yes (after approval) | Application code changed       |
+| Changes                                | Tests Run? | Deploy?                 | Why                                         |
+| -------------------------------------- | ---------- | ----------------------- | ------------------------------------------- |
+| Changes in `v2/src/`                   | ✅ Yes     | ✅ Yes (after approval) | Application code changed                    |
+| Changes in `test-deploy-dev.yml`       | ✅ Yes     | ✅ Yes (after approval) | PR pipeline workflow changed                |
+| Changes in other `deploy-*.yml` only   | ❌ No      | ❌ No                   | Manual deploy workflows — test separately   |
+| Changes in `docs/` only               | ❌ No      | ❌ No                   | Only documentation changed                  |
+| Changes in `changelog/` only          | ❌ No      | ❌ No                   | Only changelog changed                      |
+| Mix of `v2/` + `docs/`                | ✅ Yes     | ✅ Yes (after approval) | Application code changed                    |
+| Dependabot bumps `v2/` dependencies   | ✅ Yes     | ❌ No                   | Dependency changes tested but not deployed   |
 
 ### Deployment Environment Variables
 
@@ -296,7 +307,7 @@ If you need to add or modify environment variables:
 - **Workflow File:** `.github/workflows/test-deploy-dev.yml`
 - **Workflow Name:** "Lint, Type Check, Unit Test, and Deploy"
 - **Trigger:** Pull requests to `main` branch
-- **Smart Execution:** Only runs tests/deploy if `v2/` or `.github/workflows/` folders changed
+- **Smart Execution:** Only runs tests/deploy if `v2/` or `test-deploy-dev.yml` changed; skips deploy for Dependabot PRs
 - **Environment:** `Sing Portfolio / development`
 
 **Development (Manual):**
@@ -339,7 +350,7 @@ If you need to add or modify environment variables:
 **Solutions:**
 
 - Verify the PR targets the `main` branch
-- Verify changes are in the `v2/` folder or `.github/workflows/` folder (check the `check-changes` job output)
+- Verify changes are in the `v2/` folder or `test-deploy-dev.yml` (check the `check-changes` job output)
 - Check that all previous jobs (check-changes, lint, type-check, test) completed successfully
 - Verify the deployment is pending approval (check GitHub Actions checks section)
 - Review the workflow file for syntax errors
