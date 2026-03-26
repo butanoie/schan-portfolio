@@ -21,6 +21,7 @@ import {
 } from 'schema-dts';
 import { AUTHOR, SITE_URL, SOCIAL_LINKS } from '@/src/constants/seo';
 import type { Project } from '@/src/types/project';
+import striptags from 'striptags';
 
 /**
  * Removes HTML tags from a string while preserving text content.
@@ -36,7 +37,7 @@ import type { Project } from '@/src/types/project';
  * stripHtml("<ul><li>Item 1</li><li>Item 2</li></ul>") // Returns "Item 1Item 2"
  */
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '');
+  return striptags(html);
 }
 
 /**
