@@ -31,6 +31,9 @@ export interface Role {
 
   /** End date of the role, or "Present" if current */
   endDate: string | 'Present';
+
+  /** Per-role bullet points highlighting key achievements and responsibilities */
+  contributions?: string[];
 }
 
 /**
@@ -43,12 +46,6 @@ export interface Job {
 
   /** Array of roles held at this company, ordered chronologically */
   roles: Role[];
-
-  /** Optional main description paragraph about responsibilities and achievements */
-  description?: string;
-
-  /** Optional bullet points for key contributions (used for detailed job entries) */
-  keyContributions?: string[];
 }
 
 /**

@@ -48,16 +48,18 @@ describe('ProfessionalSummary', () => {
 
     // Check for key phrases from the summary
     expect(
-      screen.getByText(/Product and UX leader with 25\+ years/i)
+      screen.getByText(
+        /Technical product and engineering leader with 25\+ years/i
+      )
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/enterprise SaaS, collaboration platforms/i)
+      screen.getByText(/enterprise SaaS, front-end architecture/i)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/building UX practices from the ground up/i)
+      screen.getByText(/Built teams, UX practices, and engineering standards/i)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/federal agencies, Fortune 500 companies/i)
+      screen.getByText(/government, Fortune 500 companies/i)
     ).toBeInTheDocument();
   });
 
@@ -89,7 +91,9 @@ describe('ProfessionalSummary', () => {
 
     // Check for key French phrases from the summary
     expect(
-      screen.getByText(/Responsable produit et UX avec plus de 25 ans/i)
+      screen.getByText(
+        /Leader technique en matière de produits et d'ingénierie/i
+      )
     ).toBeInTheDocument();
   });
 
@@ -116,7 +120,7 @@ describe('ProfessionalSummary', () => {
 
     // The full summary should be present as a complete text block
     const summaryText = screen.getByText(
-      /Product and UX leader with 25\+ years of experience spanning enterprise SaaS, collaboration platforms, and front-end architecture\. Unique ability to operate across the full stack/i
+      /Technical product and engineering leader with 25\+ years of experience spanning enterprise SaaS, front-end architecture, and cross-functional product delivery\. Built teams, UX practices/i
     );
     expect(summaryText).toBeInTheDocument();
   });

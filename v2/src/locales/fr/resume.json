@@ -22,7 +22,7 @@
     },
     "professionalSummary": {
       "heading": "Résumé professionnel",
-      "content": "Responsable produit et UX avec plus de 25 ans d'expérience dans les domaines du SaaS d'entreprise, des plateformes collaboratives et de l'architecture front-end. Capacité unique à opérer sur l'ensemble de la pile, de la collecte des exigences à la conception des interactions et aux frameworks front-end, en passant par l'optimisation de l'infrastructure cloud et l'automatisation de l'assurance qualité. Expérience avérée dans la mise en place de pratiques UX à partir de zéro, le mentorat d'équipes de développement et la conduite de l'exécution de produits interfonctionnels. Vaste portefeuille de clients comprenant des agences fédérales, des entreprises du Fortune 500, des institutions financières et des entreprises du secteur de l'énergie et des ressources naturelles."
+      "content": "Leader technique en matière de produits et d'ingénierie avec plus de 25 ans d'expérience dans le domaine du SaaS, de l'architecture frontale et de la livraison de produits interfonctionnels. A mis en place des équipes, des pratiques UX et des normes d'ingénierie à partir de la base dans plusieurs organisations. Il a encadré des développeurs de l'enseignement coopératif jusqu'à des postes de direction, tout en restant à l'écoute de React, TypeScript et .NET/C#. A dirigé le développement de produits de 0 à 1 dans des environnements certifiés FedRAMP et conformes à SOC-2, de la découverte du client et de la conception de l'interaction à l'optimisation de l'infrastructure cloud. Praticien du développement AI-first au quotidien. Vaste portefeuille de clients comprenant des gouvernements, des entreprises Fortune 500 et des organisations dans des secteurs hautement réglementés."
     },
     "workExperience": {
       "heading": "Expérience professionnelle",
@@ -30,95 +30,104 @@
       "jobs": [
         {
           "company": "Collabware Systems",
-          "description": "J'ai récemment dirigé un audit d'optimisation des coûts de l'infrastructure cloud Azure, identifiant et mettant en œuvre des réductions de 40% qui ont éliminé plus de 360 000 CAD en coûts d'hébergement annualisés.",
-          "contributions": [
-            "Piloté l'exécution du produit pour les solutions de collaboration d'entreprise, en dirigeant les équipes interfonctionnelles UX, AQ, ingénierie et opérations cloud",
-            "Géré l'équipe d'assurance qualité pour développer un cadre complet d'automatisation AQ, améliorant la couverture des tests et réduisant les défauts de régression dans les cycles de sortie",
-            "Partenariat avec les opérations cloud pour surveiller la santé du système, maintenir la conformité SLA et assurer la fiabilité de la plateforme",
-            "Conçu et livré un programme d'intégration des connaissances produit pour les nouveaux membres de l'équipe, réduisant le délai de productivité de plus de 50% - d'un mois à deux semaines",
-            "Menées entretiens de découverte client et sessions de parties prenantes pour définir les priorités des fonctionnalités et valider l'adéquation produit-marché",
-            "Traduit les exigences des clients et des parties prenantes en priorités de feuille de route exploitables, en alignant les besoins commerciaux sur la capacité d'ingénierie",
-            "Géré le backlog produit et la planification des sprints en collaboration avec les équipes d'ingénierie, améliorant la prévisibilité des livraisons",
-            "Propriétaire de la conception d'interaction, de la stratégie d'expérience utilisateur et des cadres de développement front-end pour tous les produits Collabware"
-          ],
           "roles": [
             {
               "title": "VP, Produit",
               "startDate": "Mai 2020",
-              "endDate": "Mars 2026"
+              "endDate": "Mars 2026",
+              "contributions": [
+                "Élimination de plus de 360 000 $ CAD en coûts d'hébergement annualisés en dirigeant un audit de l'infrastructure Azure Cloud qui a permis d'identifier et de mettre en œuvre des réductions de 40 %",
+                "A conduit l'exécution des produits pour les solutions d'entreprise, en dirigeant les équipes interfonctionnelles UX, QA, ingénierie et CloudOps",
+                "Développement d'un cadre d'automatisation de l'assurance qualité, améliorant la couverture des tests et réduisant les défauts de régression",
+                "Partenariat avec CloudOps pour surveiller la santé du système, maintenir la conformité aux accords de niveau de service et assurer la fiabilité de la plateforme",
+                "Gestion des escalades de support de niveau 3 et développement d'outils internes de dépannage et de correction des données pour l'équipe de support",
+                "Conception et mise en œuvre d'un programme d'intégration des connaissances sur les produits pour les nouveaux membres de l'équipe, ce qui a permis de réduire le délai de productivité de plus de 50 %, passant d'un mois à deux semaines",
+                "Planification, développement, test et livraison de Collabspace Export Downloader solo en moins d'un mois en utilisant un SDLC AI-first avec Claude Code. Application de bureau conforme aux normes WCAG 2.2 AA de .NET 9 / MAUI 9 avec localisation en 4 langues"
+              ]
             },
             {
               "title": "Gestionnaire de produit",
               "startDate": "Mars 2018",
-              "endDate": "Mai 2020"
+              "endDate": "Mai 2020",
+              "contributions": [
+                "Conduite d'entretiens de découverte avec les clients et de sessions avec les parties prenantes afin de définir les priorités en matière de fonctionnalités et de valider l'adéquation produit-marché",
+                "Traduire les exigences en priorités exploitables de la feuille de route du produit, en alignant les besoins de l'entreprise sur les capacités de l'ingénierie",
+                "Gestion du carnet de commandes et de la planification des sprints en collaboration avec les équipes d'ingénieurs, ce qui a permis d'améliorer la prévisibilité des livraisons"
+              ]
             },
             {
               "title": "Architecte d'expérience utilisateur",
               "startDate": "Août 2011",
-              "endDate": "Mars 2018"
+              "endDate": "Mars 2018",
+              "contributions": [
+                "Architecte de l'évolution de la plateforme frontale de Collabware CLM à Collabspace, en passant de SharePoint sur site à SaaS natif dans le nuage",
+                "A établi le système de conception des composants, les normes de codage et les pratiques de développement UX adoptées par l'équipe d'ingénieurs"
+              ]
             }
           ]
         },
         {
           "company": "Habanero Consulting Group",
-          "description": "Embauché comme premier développeur d'expérience utilisateur au sein de l'organisation afin de combler les problèmes de communication entre les équipes de conception et d'ingénierie.",
-          "contributions": [
-            "Construire la pratique de développement UX à partir de la base, introduire des modèles et des normes de processus frontaux, et évangéliser le rôle du développeur UX",
-            "Mentoré les nouveaux développeurs UX et grandi l'équipe front-end jusqu'à 8 développeurs",
-            "Pris en charge les responsabilités de gestion de groupe et d'allocation des ressources"
-          ],
           "roles": [
             {
               "title": "Développeur d'expérience utilisateur",
               "startDate": "Mai 2006",
-              "endDate": "Juillet 2011"
-            }
-          ]
-        },
-        {
-          "company": "Daniel Choi Design Associates (DCDA)",
-          "contributions": [
-            "Géré et dirigé le développement de projets interactifs, depuis la couche base de données jusqu'à l'interface utilisateur, y compris la sécurité, les tests, le déploiement et la documentation"
-          ],
-          "roles": [
-            {
-              "title": "Développeur principal (contrat)",
-              "startDate": "2005",
-              "endDate": "2006"
-            }
-          ]
-        },
-        {
-          "company": "Local Lola Design Team (LLDT)",
-          "contributions": [
-            "Développé des applications Flash, des scripts côté client et du balisage XHTML/CSS pour les projets LLDT",
-            "Consulté sur la conception d'interfaces et fourni une assistance à la programmation pour le développement de CustomBlox, la solution CMS ASP.Net de LLDT"
-          ],
-          "roles": [
-            {
-              "title": "Développeur Flash et d'expérience utilisateur (contrat)",
-              "startDate": "2003",
-              "endDate": "2006"
+              "endDate": "Juillet 2011",
+              "contributions": [
+                "Engagé en tant que premier développeur UX dans l'organisation pour combler les lacunes de communication entre les équipes de conception et d'ingénierie",
+                "Il a mis en place la pratique de développement UX à partir de la base, a introduit des modèles et des normes de processus frontaux et a évangélisé le rôle du développeur UX",
+                "Il a encadré de nouveaux développeurs UX et a développé l'équipe front-end jusqu'à ce qu'elle compte 8 développeurs",
+                "A assumé des responsabilités en matière de gestion de groupe et d'affectation des ressources"
+              ]
             }
           ]
         },
         {
           "company": "Grey Advertising Vancouver",
-          "contributions": [
-            "Développé grASP, un CMS interne modulaire et extensible utilisé dans les projets interactifs de Grey",
-            "Développé et maintenu les sites Web et applications externes et internes de Grey",
-            "Géré les ressources, les calendriers de projet et les relations avec les fournisseurs et les clients"
-          ],
           "roles": [
             {
               "title": "Producteur interactif",
               "startDate": "Juillet 2004",
-              "endDate": "Mai 2006"
+              "endDate": "Mai 2006",
+              "contributions": [
+                "Gestion des ressources, des calendriers de projets et des relations avec les fournisseurs et les clients"
+              ]
             },
             {
               "title": "Développeur interactif",
               "startDate": "Juillet 1999",
-              "endDate": "Juin 2004"
+              "endDate": "Juin 2004",
+              "contributions": [
+                "Développement de grASP, un CMS interne modulaire et extensible utilisé pour les projets interactifs de Grey",
+                "Développement et maintenance des sites web et des applications internes et externes de Grey"
+              ]
+            }
+          ]
+        },
+        {
+          "company": "Daniel Choi Design Associates",
+          "roles": [
+            {
+              "title": "Développeur principal (contrat)",
+              "startDate": "2005",
+              "endDate": "2006",
+              "contributions": [
+                "Gestion et direction du développement de projets interactifs, de la couche de base de données jusqu'à l'interface utilisateur"
+              ]
+            }
+          ]
+        },
+        {
+          "company": "Local Lola Design Team (LLDT)",
+          "roles": [
+            {
+              "title": "Développeur Flash et d'expérience utilisateur (contrat)",
+              "startDate": "2003",
+              "endDate": "2006",
+              "contributions": [
+                "Développement d'applications Flash, de scripts côté client et de balises XHTML/CSS pour les projets LLDT",
+                "Assistance à la conception d'interfaces et à la programmation dans le cadre du développement de CustomBlox, la solution ASP.Net CMS de LLDT"
+              ]
             }
           ]
         }
@@ -127,7 +136,7 @@
     "skills": {
       "coreCompetencies": "Compétences clés",
       "everydayTools": "Outils quotidiens",
-      "onceInAWhile": "De temps en temps"
+      "productMethodology": "Produit et méthodologie"
     },
     "education": {
       "heading": "Éducation et certifications",

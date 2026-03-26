@@ -1,5 +1,71 @@
+import { useMemo } from 'react';
 import { Box, Typography, Chip } from '@mui/material';
 import { getHcContainerSx, getHcChipSx } from '../../utils/highContrastStyles';
+
+/**
+ * Estimates the rendered pixel width of a chip based on its label text.
+ *
+ * Uses average character width for the chip font (0.75rem/600 weight) plus
+ * horizontal padding (px: 1.25 = 10px each side) and chip border.
+ *
+ * @param label - The chip label text
+ * @returns Estimated width in pixels
+ */
+function estimateChipWidth(label: string): number {
+  const AVG_CHAR_WIDTH = 6.8;
+  const CHIP_HORIZONTAL_PADDING = 24;
+  return label.length * AVG_CHAR_WIDTH + CHIP_HORIZONTAL_PADDING;
+}
+
+/**
+ * Reorders items using first-fit-decreasing bin packing to minimize
+ * wasted horizontal space in a flex-wrap layout.
+ *
+ * Sorts items by estimated width (descending), then greedily assigns each
+ * item to the first row that has enough remaining space. The result is a
+ * flat array ordered by row, producing denser rows when rendered in a
+ * flex-wrap container.
+ *
+ * @param items - Array of string labels to pack
+ * @param containerWidth - Estimated container width in pixels
+ * @param gap - Gap between items in pixels
+ * @returns Reordered array of labels optimized for row density
+ */
+function packForDensity(
+  items: string[],
+  containerWidth: number,
+  gap: number
+): string[] {
+  const measured = items.map((name) => ({
+    name,
+    width: estimateChipWidth(name),
+  }));
+
+  measured.sort((a, b) => b.width - a.width);
+
+  const rows: { items: typeof measured; remaining: number }[] = [];
+
+  for (const item of measured) {
+    let placed = false;
+    for (const row of rows) {
+      const needed = row.items.length > 0 ? item.width + gap : item.width;
+      if (row.remaining >= needed) {
+        row.items.push(item);
+        row.remaining -= needed;
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) {
+      rows.push({
+        items: [item],
+        remaining: containerWidth - item.width,
+      });
+    }
+  }
+
+  return rows.flatMap((row) => row.items.map((i) => i.name));
+}
 
 /**
  * Props for the ClientList component.
@@ -19,12 +85,13 @@ export interface ClientListProps {
 }
 
 /**
- * ClientList displays enterprise clients in a multi-column grid.
+ * ClientList displays enterprise clients as chips with bin-packed ordering.
  *
  * Features:
  * - Client names displayed as MUI Chip components
+ * - First-fit-decreasing bin packing reorders chips to minimize wasted
+ * horizontal space in the flex-wrap layout (like a Tetris puzzle)
  * - Sage green background for chips
- * - Chips wrap to fit within sidebar width
  * - Compact spacing for efficient display
  * - Print-friendly layout
  *
@@ -44,6 +111,16 @@ export default function ClientList({
   sectionHeading,
   isHighContrast = false,
 }: ClientListProps) {
+  /** Estimated card inner width in px after p:2.5 padding */
+  const CONTAINER_WIDTH_PX = 280;
+  /** Matches gap: 0.75 (MUI spacing × 8 = 6px) */
+  const CHIP_GAP_PX = 6;
+
+  const packedClients = useMemo(
+    () => packForDensity(clients, CONTAINER_WIDTH_PX, CHIP_GAP_PX),
+    [clients]
+  );
+
   return (
     <Box component="section" aria-labelledby="clients-heading">
       <Box
@@ -67,7 +144,7 @@ export default function ClientList({
           {sectionHeading}
         </Typography>
 
-        {/* Client Chips */}
+        {/* Client Chips — bin-packed for row density */}
         <Box
           sx={{
             display: 'flex',
@@ -75,7 +152,7 @@ export default function ClientList({
             gap: 0.75,
           }}
         >
-          {clients.map((client, index) => (
+          {packedClients.map((client, index) => (
             <Chip
               key={index}
               label={client}

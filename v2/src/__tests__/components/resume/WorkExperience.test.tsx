@@ -4,10 +4,11 @@ import WorkExperience from '../../../components/resume/WorkExperience';
 import type { Job } from '../../../types/resume';
 import { ThemeContextProvider } from '../../../contexts/ThemeContext';
 import { LocaleProvider } from '../../../components/i18n/LocaleProvider';
+import { testAccessibility } from '../../utils/axe-helpers';
 
 /**
  * Tests for the WorkExperience component.
- * Verifies the work history display with companies, roles, and descriptions.
+ * Verifies the work history display with companies, roles, and per-role contributions.
  */
 
 /**
@@ -33,19 +34,18 @@ describe('WorkExperience', () => {
           title: 'Senior Developer',
           startDate: 'January 2020',
           endDate: 'Present',
+          contributions: [
+            'Implemented new features',
+            'Mentored junior developers',
+            'Improved code quality',
+          ],
         },
         {
           title: 'Developer',
           startDate: 'June 2018',
           endDate: 'December 2019',
+          contributions: ['Built internal tooling'],
         },
-      ],
-      description:
-        'Developed innovative solutions and led technical initiatives.',
-      keyContributions: [
-        'Implemented new features',
-        'Mentored junior developers',
-        'Improved code quality',
       ],
     },
     {
@@ -55,9 +55,9 @@ describe('WorkExperience', () => {
           title: 'Junior Developer',
           startDate: 'May 2016',
           endDate: 'May 2018',
+          contributions: ['Built web applications'],
         },
       ],
-      description: 'Built web applications and maintained existing systems.',
     },
   ];
 
@@ -88,30 +88,17 @@ describe('WorkExperience', () => {
     expect(screen.getByText('May 2016 - May 2018')).toBeInTheDocument();
   });
 
-  it('should render job descriptions', () => {
-    render(<WorkExperience jobs={mockJobs} />, { wrapper: Wrapper });
-
-    expect(
-      screen.getByText(
-        'Developed innovative solutions and led technical initiatives.'
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'Built web applications and maintained existing systems.'
-      )
-    ).toBeInTheDocument();
-  });
-
-  it('should render key contributions when present', () => {
+  it('should render per-role contributions inline after each role', () => {
     render(<WorkExperience jobs={mockJobs} />, { wrapper: Wrapper });
 
     expect(screen.getByText('Implemented new features')).toBeInTheDocument();
     expect(screen.getByText('Mentored junior developers')).toBeInTheDocument();
     expect(screen.getByText('Improved code quality')).toBeInTheDocument();
+    expect(screen.getByText('Built internal tooling')).toBeInTheDocument();
+    expect(screen.getByText('Built web applications')).toBeInTheDocument();
   });
 
-  it('should not render key contributions when absent', () => {
+  it('should not render contributions when absent', () => {
     const jobsWithoutContributions: Job[] = [
       {
         company: 'Simple Company',
@@ -122,7 +109,6 @@ describe('WorkExperience', () => {
             endDate: 'Present',
           },
         ],
-        description: 'Simple description',
       },
     ];
 
@@ -130,9 +116,21 @@ describe('WorkExperience', () => {
       wrapper: Wrapper,
     });
 
+    const lists = screen
+      .getByRole('region', { name: /work experience/i })
+      .querySelectorAll('ul');
+    expect(lists).toHaveLength(0);
+  });
+
+  it('should render all company names as h3 headings', () => {
+    render(<WorkExperience jobs={mockJobs} />, { wrapper: Wrapper });
+
     expect(
-      screen.queryByText('Implemented new features')
-    ).not.toBeInTheDocument();
+      screen.getByRole('heading', { name: 'Test Company Inc', level: 3 })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Another Company LLC', level: 3 })
+    ).toBeInTheDocument();
   });
 
   it('should have proper accessibility attributes', () => {
@@ -147,9 +145,15 @@ describe('WorkExperience', () => {
   it('should render with empty jobs array', () => {
     render(<WorkExperience jobs={[]} />, { wrapper: Wrapper });
 
-    // Should still render the heading
     expect(
       screen.getByRole('heading', { name: /work experience/i, level: 2 })
     ).toBeInTheDocument();
+  });
+
+  it('should pass axe accessibility tests', async () => {
+    const result = render(<WorkExperience jobs={mockJobs} />, {
+      wrapper: Wrapper,
+    });
+    await testAccessibility(result);
   });
 });

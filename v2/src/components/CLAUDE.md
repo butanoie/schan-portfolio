@@ -15,3 +15,11 @@
 ## Accessibility Patterns
 
 - **Skip link targets need `tabindex="-1"`** — Anchor targets like `#main-content` on non-interactive elements (`<main>`, `<div>`) must have `tabindex="-1"` to receive focus after skip link activation. Pair with `outline: none` on `:focus` to avoid a confusing focus ring on landmarks.
+
+## Resume Work Experience DOM Contract
+
+`WorkExperience.tsx` renders per-role contributions (not job-level). The print CSS at `app/resume/print.css` targets this exact DOM structure with child combinator selectors. If the nesting changes, the print layout breaks. See the DOM structure comment in `print.css` for the expected hierarchy.
+
+## ClientList Bin Packing
+
+`ClientList.tsx` uses a first-fit-decreasing bin-packing algorithm to reorder client chips for row density. `CONTAINER_WIDTH_PX` (280) and `CHIP_GAP_PX` (6) are coupled to the component's `p: 2.5` padding and `gap: 0.75` respectively — update both if either changes.
