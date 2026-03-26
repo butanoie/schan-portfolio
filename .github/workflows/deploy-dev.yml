@@ -1,5 +1,8 @@
 name: Manual Deploy to Development
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
