@@ -2,9 +2,9 @@
  * Resume — section presence, contact links, PDF download, and French locale.
  *
  * Verifies all 7 résumé sections are visible, contact buttons carry
- * correct href patterns (LinkedIn, GitHub, mailto, tel), the PDF
- * download link has the "(opens in new tab)" aria-label suffix and
- * points to a .pdf file, and French locale translates section headings.
+ * correct href patterns (LinkedIn, GitHub), the PDF download link has
+ * the "(opens in new tab)" aria-label suffix and points to a .pdf file,
+ * and French locale translates section headings.
  *
  * Scenario doc: docs/test-scenarios/E2E_CONTENT_PAGES.md
  *
@@ -50,11 +50,9 @@ test.describe('Resume', () => {
      * When the header section is visible
      * Then a contact link with href containing "linkedin.com" is present
      * And a contact link with href containing "github.com" is present
-     * And a contact link with href beginning with "mailto:" is present
-     * And a contact link with href beginning with "tel:" is present
      * ```
      */
-    test('Given resume page loaded, When header visible, Then LinkedIn, GitHub, email, and phone links are present', async ({
+    test('Given resume page loaded, When header visible, Then LinkedIn and GitHub links are present', async ({
       resumePage,
     }) => {
       await resumePage.goto();
@@ -68,16 +66,6 @@ test.describe('Resume', () => {
       // GitHub
       await expect(
         resumePage.headerSection.locator('a[href*="github.com"]')
-      ).toHaveCount(1);
-
-      // Email (rot13-decoded at render time → mailto: href)
-      await expect(
-        resumePage.headerSection.locator('a[href^="mailto:"]')
-      ).toHaveCount(1);
-
-      // Phone (rot13-decoded at render time → tel: href)
-      await expect(
-        resumePage.headerSection.locator('a[href^="tel:"]')
       ).toHaveCount(1);
     });
   });

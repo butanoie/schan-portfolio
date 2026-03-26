@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { Container, Box, Divider } from '@mui/material';
 import {
   ResumeHeader,
@@ -46,7 +47,7 @@ import './print.css';
 export default function ResumePage() {
   const { t } = useI18n();
   const { palette, isHighContrast } = usePalette({ hydrationSafe: true });
-  const data = getLocalizedResumeData(t);
+  const data = useMemo(() => getLocalizedResumeData(t), [t]);
 
   return (
     <Container

@@ -2,13 +2,10 @@ import { Box, Typography, Button, Stack } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import DownloadIcon from '@mui/icons-material/Download';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import LinkIcon from '@mui/icons-material/Link';
 import type { ResumeHeaderContent } from '../../types/resume';
 import { BRAND_COLORS, NAV_COLORS } from '../../constants';
 import { FONT_FAMILY_HEADING } from '@/src/lib/fontConstants';
-import { rot13 } from '../../utils/obfuscation';
 
 /**
  * Props for the ResumeHeader component.
@@ -35,8 +32,6 @@ const iconMap = {
   linkedin: LinkedInIcon,
   github: GitHubIcon,
   download: DownloadIcon,
-  email: EmailIcon,
-  phone: PhoneIcon,
 };
 
 /**
@@ -156,23 +151,17 @@ export default function ResumeHeader({
           const IconComponent = iconMap[link.icon];
           const isDownload = link.icon === 'download';
           const isPrintOnly = link.icon === 'link';
-          const isSageColor = ['email', 'phone', 'linkedin', 'github'].includes(
-            link.icon
-          );
-          // Decode obfuscated email and phone labels and URLs
-          const shouldDecode = ['email', 'phone'].includes(link.icon);
-          const displayLabel = shouldDecode ? rot13(link.label) : link.label;
-          const displayUrl = shouldDecode ? rot13(link.url) : link.url;
+          const isSageColor = ['linkedin', 'github'].includes(link.icon);
 
           return (
             <Button
               key={index}
               variant="contained"
-              href={displayUrl}
+              href={link.url}
               target={isDownload ? '_blank' : undefined}
               rel={isDownload ? 'noopener noreferrer' : undefined}
               startIcon={<IconComponent />}
-              aria-label={`${displayLabel}${isDownload ? ' (opens in new tab)' : ''}`}
+              aria-label={`${link.label}${isDownload ? ' (opens in new tab)' : ''}`}
               className={
                 isDownload ? 'no-print' : isPrintOnly ? 'print-only' : undefined
               }
@@ -205,7 +194,7 @@ export default function ResumeHeader({
                 },
               }}
             >
-              {displayLabel}
+              {link.label}
             </Button>
           );
         })}

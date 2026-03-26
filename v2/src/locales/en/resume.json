@@ -12,9 +12,7 @@
       "speakingEngagements": "Speaking Engagements"
     },
     "contact": {
-      "label": "Contact",
-      "email": "Email",
-      "phone": "Phone"
+      "label": "Contact"
     },
     "header": {
       "tagline": "Technical Product Leader & User Experience Architect – Bridging Usability, Engineering & Business Strategy",
@@ -22,7 +20,7 @@
     },
     "professionalSummary": {
       "heading": "Professional Summary",
-      "content": "Product and UX leader with 25+ years of experience spanning enterprise SaaS, collaboration platforms, and front-end architecture. Unique ability to operate across the full stack—from requirements gathering, interaction design and front-end frameworks to cloud infrastructure optimization and QA automation. Proven track record of building UX practices from the ground up, mentoring development teams, and driving cross-functional product execution. Extensive client portfolio including federal agencies, Fortune 500 companies, financial institutions, and energy and natural resources companies."
+      "content": "Technical product and engineering leader with 25+ years of experience spanning enterprise SaaS, front-end architecture, and cross-functional product delivery. Built teams, UX practices, and engineering standards from the ground up at multiple organizations. Mentored developers from co-op through senior roles while staying hands-on in React, TypeScript, and .NET/C#. Led 0-to-1 product development in FedRAMP-certified and SOC-2 compliant environments, from customer discovery and interaction design through cloud infrastructure optimization. Daily AI-first development practitioner. Extensive client portfolio including government, Fortune 500 companies, and organizations in highly regulated industries."
     },
     "workExperience": {
       "heading": "Work Experience",
@@ -30,95 +28,104 @@
       "jobs": [
         {
           "company": "Collabware Systems",
-          "description": "Recently led an Azure Cloud infrastructure cost optimization audit, identifying and implementing reductions of 40% that eliminated over $360,000 CAD in annualized hosting costs.",
-          "contributions": [
-            "Drove product execution for enterprise collaboration solutions, leading cross-functional UX, QA, engineering and cloud operations teams",
-            "Managed quality assurance team to develop comprehensive QA automation framework, improving test coverage and reducing regression defects across release cycles",
-            "Partnered with cloud operations to monitor system health, maintain SLA compliance, and ensure platform reliability",
-            "Designed and delivered product knowledge onboarding program for new team members, reducing time-to-productivity by over 50% — from one month to two weeks",
-            "Conducted customer discovery interviews and stakeholder sessions to define feature priorities and validate product-market fit",
-            "Translated customer and stakeholder requirements into actionable product roadmap priorities, aligning business needs with engineering capacity",
-            "Managed product backlog and sprint planning in collaboration with engineering teams, improving delivery predictability",
-            "Owned interaction design, user experience strategy, and front-end development frameworks for all Collabware products"
-          ],
           "roles": [
             {
               "title": "VP, Product",
               "startDate": "May 2020",
-              "endDate": "March 2026"
+              "endDate": "March 2026",
+              "contributions": [
+                "Eliminated over $360,000 CAD in annualized hosting costs by leading an Azure Cloud infrastructure audit that identified and implemented 40% reductions",
+                "Drove product execution for enterprise solutions, leading cross-functional UX, QA, engineering, and CloudOps teams",
+                "Led QA automation framework development, improving test coverage and reducing regression defects",
+                "Partnered with CloudOps to monitor system health, maintain SLA compliance, and ensure platform reliability",
+                "Handled Tier 3 support escalations and built internal troubleshooting and data fix-up tools for the support team",
+                "Designed and delivered product knowledge onboarding program for new team members, reducing time-to-productivity by over 50%, from one month to two weeks",
+                "Planned, developed, tested, and shipped Collabspace Export Downloader solo in under a month using an AI-first SDLC with Claude Code. .NET 9 / MAUI 9 WCAG 2.2 AA-compliant desktop application with 4-language localization"
+              ]
             },
             {
               "title": "Product Manager",
               "startDate": "March 2018",
-              "endDate": "May 2020"
+              "endDate": "May 2020",
+              "contributions": [
+                "Conducted customer discovery interviews and stakeholder sessions to define feature priorities and validate product-market fit",
+                "Translated requirements into actionable product roadmap priorities, aligning business needs with engineering capacity",
+                "Managed product backlog and sprint planning in collaboration with engineering teams, improving delivery predictability"
+              ]
             },
             {
               "title": "User Experience Architect",
               "startDate": "August 2011",
-              "endDate": "March 2018"
+              "endDate": "March 2018",
+              "contributions": [
+                "Architected the front-end platform evolution from Collabware CLM to Collabspace, transitioning from on-premises SharePoint to cloud-native SaaS",
+                "Established the component design system, coding standards, and UX development practices adopted by the engineering team"
+              ]
             }
           ]
         },
         {
           "company": "Habanero Consulting Group",
-          "description": "Hired as the first UX developer in the organization to bridge communication gaps between design and engineering teams.",
-          "contributions": [
-            "Built the UX development practice from the ground up, introduced front-end process patterns and standards, and evangelized UX developer role",
-            "Mentored new UX developers and grew the front-end team to 8 developers",
-            "Took on group management and resource allocation responsibilities"
-          ],
           "roles": [
             {
               "title": "User Experience Developer",
               "startDate": "May 2006",
-              "endDate": "July 2011"
-            }
-          ]
-        },
-        {
-          "company": "Daniel Choi Design Associates (DCDA)",
-          "contributions": [
-            "Managed and led development of interactive projects, from the database layer all the way up to the front-end, including security, testing, deployment and documentation"
-          ],
-          "roles": [
-            {
-              "title": "Lead Developer (Contract)",
-              "startDate": "2005",
-              "endDate": "2006"
-            }
-          ]
-        },
-        {
-          "company": "Local Lola Design Team (LLDT)",
-          "contributions": [
-            "Developed Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects",
-            "Consulted on interface design and provided programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution"
-          ],
-          "roles": [
-            {
-              "title": "Flash and User Experience Developer (Contract)",
-              "startDate": "2003",
-              "endDate": "2006"
+              "endDate": "July 2011",
+              "contributions": [
+                "Hired as the first UX developer in the organization to bridge communication gaps between design and engineering teams",
+                "Built the UX development practice from the ground up, introduced front-end process patterns and standards, and evangelized the UX developer role",
+                "Mentored new UX developers and grew the front-end team to 8 developers",
+                "Took on group management and resource allocation responsibilities"
+              ]
             }
           ]
         },
         {
           "company": "Grey Advertising Vancouver",
-          "contributions": [
-            "Developed grASP, a modular and extensible in-house CMS used on Grey interactive projects",
-            "Developed and maintained Grey's external and internal web sites and applications",
-            "Managed resources, project schedules, and vendor and customer relationships"
-          ],
           "roles": [
             {
               "title": "Interactive Producer",
               "startDate": "July 2004",
-              "endDate": "May 2006"
+              "endDate": "May 2006",
+              "contributions": [
+                "Managed resources, project schedules, and vendor and customer relationships"
+              ]
             },
             {
               "title": "Interactive Developer",
               "startDate": "July 1999",
-              "endDate": "June 2004"
+              "endDate": "June 2004",
+              "contributions": [
+                "Developed grASP, a modular and extensible in-house CMS used on Grey interactive projects",
+                "Developed and maintained Grey's external and internal web sites and applications"
+              ]
+            }
+          ]
+        },
+        {
+          "company": "Daniel Choi Design Associates",
+          "roles": [
+            {
+              "title": "Lead Developer (Contract)",
+              "startDate": "2005",
+              "endDate": "2006",
+              "contributions": [
+                "Managed and led development of interactive projects, from the database layer all the way up to the front-end"
+              ]
+            }
+          ]
+        },
+        {
+          "company": "Local Lola Design Team (LLDT)",
+          "roles": [
+            {
+              "title": "Flash and User Experience Developer (Contract)",
+              "startDate": "2003",
+              "endDate": "2006",
+              "contributions": [
+                "Developed Flash applications, client-side scripting and XHTML/CSS markup for LLDT projects",
+                "Provided interface design and programming assistance with development of CustomBlox, LLDT's ASP.Net CMS solution"
+              ]
             }
           ]
         }
@@ -127,7 +134,7 @@
     "skills": {
       "coreCompetencies": "Core Competencies",
       "everydayTools": "Everyday Tools",
-      "onceInAWhile": "Once in a While"
+      "productMethodology": "Product & Methodology"
     },
     "education": {
       "heading": "Education & Certifications",
