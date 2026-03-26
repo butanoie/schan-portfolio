@@ -12,9 +12,7 @@
       "speakingEngagements": "Speaking Engagements"
     },
     "contact": {
-      "label": "Contact",
-      "email": "Email",
-      "phone": "Phone"
+      "label": "Contact"
     },
     "header": {
       "tagline": "Technical Product Leader & User Experience Architect – Bridging Usability, Engineering & Business Strategy",

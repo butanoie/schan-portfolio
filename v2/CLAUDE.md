@@ -46,6 +46,10 @@ vitest.config.ts # Test configuration
 - `vitest.config.ts` — Test configuration
 - `eslint.config.mjs` — Lint rules
 
+### Root-Level File Patterns
+- **Metadata routes** (`robots.ts`, `sitemap.ts`) — use Next.js `MetadataRoute` convention with typed exports. Only for files Next.js has built-in support for.
+- **Custom text files** (`llms.txt/route.ts`, `llms-full.txt/route.ts`) — use App Router route handlers at `app/<filename>/route.ts`. Require `export const dynamic = 'force-static'` for SSG (route handlers default to dynamic).
+
 ## Code Quality Standards
 
 ### React Best Practices

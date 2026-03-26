@@ -21,8 +21,6 @@ Feature: Resume Page
     When the header section is visible
     Then a contact link with href containing "linkedin.com" is present
     And a contact link with href containing "github.com" is present
-    And a contact link with href beginning with "mailto:" is present
-    And a contact link with href beginning with "tel:" is present
 
   Scenario: PDF download link is visible with .pdf href
     Given the résumé page is loaded

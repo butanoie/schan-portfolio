@@ -22,7 +22,7 @@ export const SITE_URL = 'https://portfolio.singchan.com';
 export const AUTHOR = {
   name: 'Sing Chan',
   jobTitle: 'Technical Product Leader & User Experience Architect',
-  tagline: 'Creating accessible, inclusive digital experiences',
+  tagline: 'Bridging Usability, Engineering & Business Strategy',
 } as const;
 
 /**
