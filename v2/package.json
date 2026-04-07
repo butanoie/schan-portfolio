@@ -61,7 +61,7 @@
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
     "schema-dts": "^2.0.0",
-    "typescript": "^5",
+    "typescript": "^6",
     "vitest": "^4.0.18",
     "vitest-axe": "^0.1.0"
   },
