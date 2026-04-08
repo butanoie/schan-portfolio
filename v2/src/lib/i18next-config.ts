@@ -95,7 +95,6 @@ if (!i18next.isInitialized) {
     },
     resources,
     saveMissing: false,
-    showSupportNotice: false,
   });
 }
 
