@@ -179,8 +179,7 @@ export function SettingsButton({
                   ? 'color 150ms ease-in-out'
                   : 'none',
                 '&:hover': {
-                  color:
-                    isHighContrast ? '#FFFF00' : BRAND_COLORS.maroon,
+                  color: isHighContrast ? '#FFFF00' : BRAND_COLORS.maroon,
                 },
                 '@media (prefers-reduced-motion: reduce)': {
                   transition: 'none',

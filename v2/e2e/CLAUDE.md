@@ -1,6 +1,7 @@
 # E2E Testing (Playwright)
 
 ## Commands
+
 ```bash
 npm run test:e2e                              # Run all E2E tests (must build first)
 npm run build && npx playwright test          # Build + run all
@@ -12,6 +13,7 @@ npx playwright show-report                    # Open last HTML report
 ```
 
 ## CI Integration
+
 - **Workflow:** `.github/workflows/test-deploy-dev.yml` — `e2e` job runs after `tests`, parallel with `deploy`
 - **Blob reporter in CI** — sequential `--project=chromium` / `--project=webkit` runs overwrite the HTML report; CI uses `--reporter=blob,list` + `merge-reports --reporter=html` to produce a combined report
 - **WebKit is soft-fail** — `continue-on-error: true` on the WebKit step; Chromium failures block merge, WebKit failures don't
@@ -48,8 +50,8 @@ See [TESTING_ARCHITECTURE.md](../../docs/guides/TESTING_ARCHITECTURE.md) for the
 - **Avoid `isVisible()` polling loops for stateful buttons** — buttons whose text changes during async operations (e.g., "Load more" → "Loading projects...") cause text-based locators to briefly resolve to zero elements mid-fetch. Use deterministic count-based loops (click → assert `toHaveCount(expectedN)` → repeat) instead of `while (isVisible())`.
 - **WebKit `Touch()` constructor unavailable** — Desktop Safari/WebKit does not support `new Touch()` (iOS-only API). To dispatch touch events, use `new Event('touchstart', { bubbles: true })` with `Object.defineProperty` to attach `touches`/`changedTouches` as plain coordinate arrays. See `ProjectLightbox.swipeByTouch()` for the pattern.
 - **MUI Accordion duplicate `id` on content** — `AccordionDetails` and its parent `<div role="region">` both receive the `id` from `aria-controls`, causing Playwright strict mode violations. Target `.MuiAccordionDetails-root` inside the accordion instead of the `id` directly.
-- **Playwright `filter({ has })` matches children, not self** — `locator.filter({ has: page.locator('[href*="foo"]') })` finds elements whose *children* match, not the element itself. To filter by an attribute on the element, use CSS attribute selectors: `parent.locator('a[href*="foo"]')`.
-- **Fenced Gherkin in JSDoc** — use `` ```gherkin `` fenced code blocks for scenario comments above tests (matching `home.spec.ts`), not plain prose.
+- **Playwright `filter({ has })` matches children, not self** — `locator.filter({ has: page.locator('[href*="foo"]') })` finds elements whose _children_ match, not the element itself. To filter by an attribute on the element, use CSS attribute selectors: `parent.locator('a[href*="foo"]')`.
+- **Fenced Gherkin in JSDoc** — use ` ```gherkin ` fenced code blocks for scenario comments above tests (matching `home.spec.ts`), not plain prose.
 - **`desktopNav` is the shared nav landmark** — `getByRole('navigation', { name: /main navigation/i })` matches the parent `<Box component="nav">` in Header, which wraps both the hamburger (mobile) and NavButtons (desktop). It is always visible. To assert "no desktop nav buttons on mobile", check `desktopNav.getByRole('link').toHaveCount(0)` instead of `desktopNav.not.toBeVisible()`.
 - **Use `toHaveCount(0)` for React-conditional elements, not `not.toBeVisible()`** — Footer nav (`{!isMobile && <FooterNavLinks />}`) and MUI Drawer content (`keepMounted` defaults to `false`) are unmounted from the DOM, not CSS-hidden. `not.toBeVisible()` passes vacuously on absent elements and won't catch locator typos or regressions. Use `toHaveCount(0)` to confirm true DOM absence.
 - **`toBeVisible({ timeout })` replaces `waitFor` + `toBeVisible`** — For `next/dynamic` hydration waits, `expect(locator).toBeVisible({ timeout: 10_000 })` retries internally. A separate `waitFor({ state: 'visible' })` before `toBeVisible()` is redundant.

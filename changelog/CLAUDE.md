@@ -4,6 +4,8 @@
 
 Every changelog entry must include:
 
+**Version convention:** This project does not track semantic versions. Always use `2.x`. Do not ask the user for a version number.
+
 ### Header Metadata
 ```markdown
 # Title - Brief Description
@@ -12,7 +14,7 @@ Every changelog entry must include:
 **Time:** HH:MM:SS TZ
 **Type:** [Phase Completion | Infrastructure | Feature | Configuration | etc.]
 **Phase:** [If applicable]
-**Version:** vX.Y.Z
+**Version:** 2.x
 ```
 
 ### Core Sections
@@ -67,7 +69,7 @@ Every changelog entry must include:
 **Date:** YYYY-MM-DD
 **Time:** HH:MM:SS TZ
 **Type:** [Type]
-**Version:** vX.Y.Z
+**Version:** 2.x
 
 ## Summary
 

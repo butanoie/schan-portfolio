@@ -6,11 +6,15 @@
 - `AccordionDetails` does NOT auto-assign `id` from `AccordionSummary`'s `aria-controls` — you must set `id` explicitly on both elements
 - `AccordionDetails` with explicit `id` + `AccordionSummary` with `aria-controls` creates **duplicate IDs** in the DOM — MUI wraps `AccordionDetails` in a `<div role="region">` that also receives the `aria-controls` target ID. Use `.MuiAccordionDetails-root` in E2E tests to disambiguate.
 - `Popover` does NOT have a landmark role by default — add `role="region"` + `aria-label` via `slotProps.paper` (with `as const` for TypeScript) when the popover must satisfy the axe `region` rule (WCAG landmark containment). Use `role="region"` rather than `role="dialog"` since Popovers are non-modal. The settings popover already has this applied.
-- `Dialog` `aria-label` must go on `slotProps.paper`, NOT as a direct prop — MUI v7 places `role="dialog"` on the Paper element, not the root. Direct props land on the root (`role="generic"`), breaking `getByRole('dialog', { name: ... })` queries.
+- `Dialog` `aria-label` must go on `slotProps.paper`, NOT as a direct prop — MUI places `role="dialog"` on the Paper element, not the root. Direct props land on the root (`role="generic"`), breaking `getByRole('dialog', { name: ... })` queries.
 - `ToggleButtonGroup` renders as `role="group"` — individual buttons get `aria-pressed="true"` when selected
 - `Drawer` renders as `role="dialog"` — locate drawer contents via the `<nav>` landmark inside it
 - `Popover`/`Modal` sets `aria-hidden` on ALL sibling DOM branches while open — any `getByRole` query targeting elements outside the modal will fail. Pre-capture references before opening, or close the modal before querying siblings.
 - `ThoughtBubble` (`Footer.tsx`) uses `role="img"` — all children become presentational and invisible to assistive technologies. The Load More button inside it is not discoverable by screen readers. The `aria-label` on the bubble is hardcoded English (not translated).
+
+## MUI Icon Test IDs
+
+- MUI auto-generates `data-testid` from the **icon module name**, not the local import alias. `import X from '@mui/icons-material/ErrorOutlined'` stamps `data-testid="ErrorOutlinedIcon"` regardless of what `X` is renamed to. When renaming an icon import path (e.g., MUI v9's `Outline` → `Outlined` migration), grep tests for `getByTestId('<OldName>Icon')` — typecheck will not catch these.
 
 ## Accessibility Patterns
 

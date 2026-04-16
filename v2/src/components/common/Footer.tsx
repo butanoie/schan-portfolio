@@ -264,7 +264,13 @@ export default function Footer() {
             }}
           >
             {/* Navigation Links - Hidden on mobile */}
-            {!isMobile && <FooterNavLinks pathname={pathname} t={t} isHighContrast={isHighContrast} />}
+            {!isMobile && (
+              <FooterNavLinks
+                pathname={pathname}
+                t={t}
+                isHighContrast={isHighContrast}
+              />
+            )}
 
             {/* Copyright */}
             <Typography
@@ -312,7 +318,11 @@ interface FooterNavLinksProps {
  * @param props.isHighContrast - Whether high-contrast mode is active
  * @returns A nav element with text-style footer links
  */
-function FooterNavLinks({ pathname, t, isHighContrast }: FooterNavLinksProps): React.ReactNode {
+function FooterNavLinks({
+  pathname,
+  t,
+  isHighContrast,
+}: FooterNavLinksProps): React.ReactNode {
   const navLinks = getNavLinks();
 
   return (

@@ -23,7 +23,11 @@ describe('ProjectTagsContainer', () => {
    * Test: Component renders without crashing
    */
   it('renders without crashing', () => {
-    const { container } = render(<Wrapper><ProjectTagsContainer /></Wrapper>);
+    const { container } = render(
+      <Wrapper>
+        <ProjectTagsContainer />
+      </Wrapper>
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -32,7 +36,11 @@ describe('ProjectTagsContainer', () => {
    */
   it('renders tags', () => {
     const tags = ['React', 'TypeScript', 'MUI'];
-    render(<Wrapper><ProjectTagsContainer tags={tags} /></Wrapper>);
+    render(
+      <Wrapper>
+        <ProjectTagsContainer tags={tags} />
+      </Wrapper>
+    );
     tags.forEach((tag) => {
       expect(screen.getByText(tag)).toBeInTheDocument();
     });
@@ -43,7 +51,11 @@ describe('ProjectTagsContainer', () => {
    */
   it('renders circa chip', () => {
     const circa = '2022-2023';
-    render(<Wrapper><ProjectTagsContainer circa={circa} /></Wrapper>);
+    render(
+      <Wrapper>
+        <ProjectTagsContainer circa={circa} />
+      </Wrapper>
+    );
     expect(screen.getByText(circa)).toBeInTheDocument();
   });
 
@@ -53,7 +65,11 @@ describe('ProjectTagsContainer', () => {
   it('renders tags and circa together', () => {
     const tags = ['React', 'TypeScript'];
     const circa = '2022-2023';
-    render(<Wrapper><ProjectTagsContainer tags={tags} circa={circa} /></Wrapper>);
+    render(
+      <Wrapper>
+        <ProjectTagsContainer tags={tags} circa={circa} />
+      </Wrapper>
+    );
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
     expect(screen.getByText(circa)).toBeInTheDocument();
@@ -63,7 +79,11 @@ describe('ProjectTagsContainer', () => {
    * Test: Renders empty container when no tags or circa
    */
   it('renders empty container when no tags or circa', () => {
-    const { container } = render(<Wrapper><ProjectTagsContainer /></Wrapper>);
+    const { container } = render(
+      <Wrapper>
+        <ProjectTagsContainer />
+      </Wrapper>
+    );
     expect(container.querySelector('div')).toBeInTheDocument();
   });
 
@@ -71,7 +91,11 @@ describe('ProjectTagsContainer', () => {
    * Test: Accepts custom sx prop
    */
   it('accepts custom sx prop for styling', () => {
-    const { container } = render(<Wrapper><ProjectTagsContainer sx={{ mb: 2 }} /></Wrapper>);
+    const { container } = render(
+      <Wrapper>
+        <ProjectTagsContainer sx={{ mb: 2 }} />
+      </Wrapper>
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -80,7 +104,11 @@ describe('ProjectTagsContainer', () => {
    */
   it('renders with single tag', () => {
     const tags = ['React'];
-    render(<Wrapper><ProjectTagsContainer tags={tags} /></Wrapper>);
+    render(
+      <Wrapper>
+        <ProjectTagsContainer tags={tags} />
+      </Wrapper>
+    );
     expect(screen.getByText('React')).toBeInTheDocument();
   });
 
@@ -88,7 +116,11 @@ describe('ProjectTagsContainer', () => {
    * Test: Renders with empty tags array
    */
   it('renders with empty tags array', () => {
-    const { container } = render(<Wrapper><ProjectTagsContainer tags={[]} /></Wrapper>);
+    const { container } = render(
+      <Wrapper>
+        <ProjectTagsContainer tags={[]} />
+      </Wrapper>
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -104,7 +136,11 @@ describe('ProjectTagsContainer', () => {
       'PostgreSQL',
       'Docker',
     ];
-    render(<Wrapper><ProjectTagsContainer tags={tags} /></Wrapper>);
+    render(
+      <Wrapper>
+        <ProjectTagsContainer tags={tags} />
+      </Wrapper>
+    );
     tags.forEach((tag) => {
       expect(screen.getByText(tag)).toBeInTheDocument();
     });
@@ -117,7 +153,9 @@ describe('ProjectTagsContainer', () => {
     const tags = ['React', 'TypeScript'];
     const circa = '2022-2023';
     const { container } = render(
-      <Wrapper><ProjectTagsContainer tags={tags} circa={circa} /></Wrapper>
+      <Wrapper>
+        <ProjectTagsContainer tags={tags} circa={circa} />
+      </Wrapper>
     );
 
     const chips = container.querySelectorAll('.MuiChip-root');

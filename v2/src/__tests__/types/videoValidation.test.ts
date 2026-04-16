@@ -332,6 +332,5 @@ describe('Video ID Validation', () => {
         ).toBe(false);
       });
     });
-
   });
 });
