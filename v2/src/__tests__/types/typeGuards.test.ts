@@ -466,5 +466,4 @@ describe('Type Guards', () => {
       expect(isValidDimension(150, 10, 100)).toBe(false); // Too large
     });
   });
-
 });

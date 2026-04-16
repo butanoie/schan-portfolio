@@ -127,7 +127,9 @@ describe('ProjectDescription', () => {
    */
   it('renders line breaks', () => {
     const paragraph = 'Line 1<br />Line 2';
-    const { container } = renderWithTheme(<ProjectDescription paragraphs={paragraph} />);
+    const { container } = renderWithTheme(
+      <ProjectDescription paragraphs={paragraph} />
+    );
     expect(container.querySelector('br')).toBeInTheDocument();
   });
 
@@ -136,7 +138,9 @@ describe('ProjectDescription', () => {
    */
   it('sanitizes dangerous HTML (script tags)', () => {
     const paragraph = 'Safe text<script>alert("xss")</script>';
-    const { container } = renderWithTheme(<ProjectDescription paragraphs={paragraph} />);
+    const { container } = renderWithTheme(
+      <ProjectDescription paragraphs={paragraph} />
+    );
     expect(container.querySelector('script')).not.toBeInTheDocument();
     expect(screen.getByText('Safe text')).toBeInTheDocument();
   });
@@ -146,7 +150,9 @@ describe('ProjectDescription', () => {
    */
   it('sanitizes dangerous HTML (onclick handlers)', () => {
     const paragraph = '<div onclick="alert(\'xss\')">Click me</div>';
-    const { container } = renderWithTheme(<ProjectDescription paragraphs={paragraph} />);
+    const { container } = renderWithTheme(
+      <ProjectDescription paragraphs={paragraph} />
+    );
     const div = container.querySelector('div');
     if (div) {
       expect(div).not.toHaveAttribute('onclick');
@@ -187,7 +193,9 @@ describe('ProjectDescription', () => {
    * Test: Handles empty paragraph array
    */
   it('handles empty paragraph array', () => {
-    const { container } = renderWithTheme(<ProjectDescription paragraphs={[]} />);
+    const { container } = renderWithTheme(
+      <ProjectDescription paragraphs={[]} />
+    );
     expect(container).toBeInTheDocument();
   });
 
@@ -196,7 +204,9 @@ describe('ProjectDescription', () => {
    */
   it('memoizes sanitization for performance', () => {
     const paragraphs = ['Test content'];
-    const { rerender } = renderWithTheme(<ProjectDescription paragraphs={paragraphs} />);
+    const { rerender } = renderWithTheme(
+      <ProjectDescription paragraphs={paragraphs} />
+    );
 
     // Re-render with same paragraphs - should use memoized value
     rerender(<ProjectDescription paragraphs={paragraphs} />);
@@ -311,7 +321,9 @@ describe('ProjectDescription', () => {
   it('renders circa chip without tags', () => {
     const paragraphs = 'Test description';
     const circa = '2022-2023';
-    renderWithTheme(<ProjectDescription paragraphs={paragraphs} circa={circa} />);
+    renderWithTheme(
+      <ProjectDescription paragraphs={paragraphs} circa={circa} />
+    );
     expect(screen.getByText('2022-2023')).toBeInTheDocument();
     expect(screen.getByText('Test description')).toBeInTheDocument();
   });

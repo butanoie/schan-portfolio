@@ -354,7 +354,7 @@ describe('ErrorBoundary', () => {
       );
 
       // Check for the error icon using MUI's data-testid
-      const errorIcon = screen.getByTestId('ErrorOutlineIcon');
+      const errorIcon = screen.getByTestId('ErrorOutlinedIcon');
       expect(errorIcon).toBeInTheDocument();
       expect(errorIcon).toHaveAttribute('aria-hidden', 'true');
     });

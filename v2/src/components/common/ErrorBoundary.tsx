@@ -3,7 +3,7 @@
 import React, { ReactNode, ReactElement } from 'react';
 import * as Sentry from '@sentry/nextjs';
 import { Box, Typography, Button, Container } from '@mui/material';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlined';
 import { useI18n } from '@/src/hooks/useI18n';
 
 /**
