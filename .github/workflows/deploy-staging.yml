@@ -43,7 +43,7 @@ jobs:
 
       - name: Verify commit exists on main
         if: github.event.inputs.commit_sha != ''
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.validate.outputs.deploy_sha }}
 
